@@ -76,12 +76,12 @@ extended to carry the complete recipe.
 
 ## Testing and limitations
 
-This package combines the exact main and Value components already tested on
-the project camera. The combined file passes offline updater, checksum and
-packaging checks. The new combined file itself has not received a separate
-physical flash test. Range/edit/reset/custom-mode tests and basic Windows
-Workspace backup/restore and ORF redevelopment have passed; Windows JPEG
-export has not been separately verified.
+The exact combined release BIN has been installed successfully on the project
+camera after restoring stock firmware. Stock restoration and installation of
+this alpha were confirmed on 17 October 2026. Offline updater, checksum and
+packaging checks also pass. Range/edit/reset/custom-mode tests and basic
+Windows Workspace backup/restore and ORF redevelopment have passed; Windows
+JPEG export has not been separately verified.
 
 No recording-limit, grain, sharpening or other unrelated changes are included.
 The added labels are English. Delete keeps its stock behavior outside the
