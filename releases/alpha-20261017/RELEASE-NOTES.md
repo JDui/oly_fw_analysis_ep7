@@ -10,8 +10,8 @@ and patch details. **Both firmware BINs include main and
 OSD components (44,433,408 bytes each)**, so the Value bitmap is included and
 no previous HSL installation is required.
 
-[Release README](https://github.com/fishcu/pen-f-hsl/blob/alpha-20261017/releases/alpha-20261017/README.md)
-· [Installation and downgrade instructions](https://github.com/fishcu/pen-f-hsl/blob/alpha-20261017/releases/alpha-20261017/INSTALLATION.md)
+[Release README](https://github.com/fishcu/oly_fw_analysis/blob/alpha-20261017/releases/alpha-20261017/README.md)
+· [Installation and downgrade instructions](https://github.com/fishcu/oly_fw_analysis/blob/alpha-20261017/releases/alpha-20261017/INSTALLATION.md)
 
 Install BIN SHA256:
 ```text
