@@ -19,7 +19,7 @@ typedef struct {
     int raw_result; /* meaningful only when called */
     int status; /* stock wrapper vocabulary: 0 success, -2 timeout, -1 failure */
     int wire_status;
-    ep7t_ticket ticket; /* independent value; cleanup obligation on rejected send */
+    ep7t_ticket ticket; /* receive: admitted format; send: CLEANUP ONLY, even if route changed */
 } ep7q_result;
 /* Every pointer/extent must name an actual live owned object, nonaliasing ops and
  * outputs. Native command is >=16, descriptor is >=312 from the expanded frame

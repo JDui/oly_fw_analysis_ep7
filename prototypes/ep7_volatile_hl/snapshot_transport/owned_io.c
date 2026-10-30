@@ -51,8 +51,9 @@ ep7q_result ep7q_descriptor_send(const ep7q_ops *ops,unsigned handle,int timeout
     unsigned char scratch[EP7W_MAX];unsigned maximum=descriptor_max(handle);size_t bytes;
     ep7q_result r=rejected();ep7t_ticket carried;
     if(!descriptor || extent<EP7W_MAX)return r;
-    r.wire_status=ep7w_ticket(EP7W_DESCRIPTOR,descriptor,EP7W_MAX,&r.ticket);
-    carried=maximum==EP7W_MAX?r.ticket:(ep7t_ticket){0,0};
+    r.wire_status=ep7w_ticket(EP7W_DESCRIPTOR,descriptor,EP7W_MAX,&carried);
+    (void)ep7w_retirement_ticket(descriptor,&r.ticket);
+    if(maximum!=EP7W_MAX)carried=(ep7t_ticket){0,0};
     memset(descriptor+EP7W_DESCRIPTOR,0,EP7W_TRAILER);
     if(!qualify(ops,handle,maximum,false))return r;
     if(!ep7w_encode(EP7W_DESCRIPTOR,descriptor,carried,scratch,sizeof scratch,&bytes))return r;

@@ -107,3 +107,7 @@ descriptor要求真实312字节拥有权；发送先消费票据，失败/legacy
 [descriptor接收桥](DESCRIPTOR_RECEIVE_BINDING.md)已覆盖四处直接接收及两条共享helper
 调用链；共享范围检查复用于materializer。未知非扩展队列按原ABI恢复原厂接收；
 扩展队列未知消费者拒绝，等待完整闭包。下一项为发送桥及消费/清理接合。
+
+[descriptor发送桥](DESCRIPTOR_SEND_BINDING.md)已实现：三种拥有者布局、旧格式回退、
+失败/route变化票据清理接管，host和目标对象检查通过。G2剩余producer command、
+worker claim/retire、drain/失败路径接合；G3/G6仍须实现真实context provider和安装组。

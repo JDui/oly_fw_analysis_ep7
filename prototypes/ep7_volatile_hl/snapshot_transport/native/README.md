@@ -65,3 +65,11 @@ to a potentially short stock buffer. [Evidence and fallback contract](../../../.
 `--receive-abi-only` checks the combined receiver object set and18 instructions
 in the descriptor bridge, including the local branch relocation to RET44. Native
 context providers and stock addresses remain unresolved until installation review.
+
+`descriptor_send_*` and `../forward.c` now implement the shared603dfaa1 send seam
+for the three owned descriptor routes. The17-instruction bridge retains the36-byte
+native frame and restores original300-byte send for unqualified/nonexpanded work.
+Owned send failure, legacy routing and lost route eligibility transfer a ticket
+VALUE to a mandatory retirement owner; a failed lock cannot silently discard that
+obligation. The target provider remains unresolved. [Derivation and results](../../../../docs/ep7/DESCRIPTOR_SEND_BINDING.md).
+Use `--queue-pipeline-abi-only` for the current combined command/receive/send set.

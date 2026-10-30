@@ -39,6 +39,12 @@ materializer三调用链已实现[有界栈映射与接收桥](MATERIALIZER_RECE
 诊断复跑通过，原因仍未定位。共享helper仅对非扩展未知队列恢复原厂路径；4c/ab/4f
 未知消费者拒绝接收，不能据此宣称全接收闭包。下一项为发送和最终claim/retire。
 
+三段descriptor[发送与清理接口](DESCRIPTOR_SEND_BINDING.md)已实现，32条原厂指令和
+17条目标桥指令核对通过。strict/ASan/UBSan通过，完整16-job主机链现使用真实forward
+和owned receive；失败锁清理保留票据值，route变化仅保留撤销资格。原生retirement
+owner仍未绑定。检查器增加`--asan-verbose`诊断选项，不改测试/30秒超时。下一项为
+producer command与worker claim/drain清理，以及G3/G6 context和安装发布。
+
 ## 本轮恢复后的增量
 
 - 在既有 controller sidecar 中实现 `ep7c_resolve_live`，无需额外 token map。

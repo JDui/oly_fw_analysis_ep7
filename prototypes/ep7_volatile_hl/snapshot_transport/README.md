@@ -119,3 +119,13 @@ has no unresolved symbols across transport/wire/owned I/O/memory objects. Owned
 I/O uses1161 text bytes; compiler local command-receive/descriptor-receive/send
 frames are220/104/400 bytes. The400-byte send frame must enter the later full
 call-chain budget. No target link, hook installation or firmware build occurred.
+
+`forward.c` now owns the sender's cleanup decision. It requires a callback that
+accepts the independent retirement value, including unresolved poll-lock cleanup.
+`ep7w_retirement_ticket` can recover cleanup identity after kind/route changes;
+it never licenses claim/apply. The ordinary wire decoder keeps its route checks.
+The current [host integration](../../../research/ep7/descriptor-send-integration-host.json)
+uses this forwarder for all three relay stages and16 job slots, plus explicit
+failed-send/legacy/route-change cleanup. Run the same checker with optional
+`--asan-verbose` to capture sanitizer startup diagnostics without changing tests
+or their timeout. See [native sender constraints](../../../docs/ep7/DESCRIPTOR_SEND_BINDING.md).

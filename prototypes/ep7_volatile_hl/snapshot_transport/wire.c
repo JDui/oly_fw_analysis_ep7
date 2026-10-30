@@ -62,3 +62,14 @@ int ep7w_decode(unsigned n,const unsigned char *wire,size_t actual,
     if(status!=EP7W_REJECT)memcpy(native,wire,n);
     return status;
 }
+bool ep7w_retirement_ticket(const unsigned char *p,ep7t_ticket *out)
+{
+    ep7t_ticket t;
+    if(!out)return false;
+    *out=(ep7t_ticket){0,0};
+    if(!p || get32(p+EP7W_DESCRIPTOR)!=MARKER)return false;
+    t.metadata=metadata(EP7W_DESCRIPTOR,p);
+    t.serial=(uint64_t)get32(p+EP7W_DESCRIPTOR+4)|((uint64_t)get32(p+EP7W_DESCRIPTOR+8)<<32);
+    if(!t.metadata || !t.serial)return false;
+    *out=t;return true;
+}
