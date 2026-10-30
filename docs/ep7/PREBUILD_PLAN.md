@@ -99,3 +99,7 @@ owned I/O已经实现并通过定向strict/ASan/UBSan及目标对象检查，见
 descriptor要求真实312字节拥有权；发送先消费票据，失败/legacy路径保留清理义务。
 首次sanitizer超时未复现，原因未定位；报告保留此记录。下一项是materializer三调用链
 的具体栈资格和桥接，原生backend、安装/任务域仍未绑定。
+
+[materializer接收桥](MATERIALIZER_RECEIVE_BINDING.md)已实现，包含三种调用链的有界
+栈映射和本地raw receive接合；strict/ASan/UBSan及目标对象检查通过。context provider
+仍作为未解析符号等待G3/G6，未绕过资格条件。其余relay/worker收发与claim/retire继续推进。

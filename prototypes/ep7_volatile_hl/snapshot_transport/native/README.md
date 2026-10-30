@@ -41,3 +41,18 @@ snapshots remain independent. Lock failure returns false and preserves the clean
 obligation. A native adapter must serialize teardown and new admissions; this API
 does not stop queues/producers, free native metadata, or cancel an already running
 stock job. [Focused host report](../../../../research/ep7/snapshot-shutdown-integration-host.json).
+
+## Exact materializer receive seam
+
+`materializer_bridge.s`, `materializer_binding.c` and `materializer_layout.c` now
+implement the603dfc9b receive adapter for three explicitly identified call chains.
+The portable mapper requires a trusted installation flag and current-task stack
+bounds before reading PCs/pointers. The target entry maps those addresses to the
+owned command receiver and real local raw receive veneer. The required context
+provider remains unresolved; no default-true qualifier is supplied.
+
+See the [stack derivation, evidence and limitations](../../../../docs/ep7/MATERIALIZER_RECEIVE_BINDING.md).
+The target checker adds `--materializer-abi-only`; it checks four bridge
+instructions, the exact native return frame, relocation, symbols and local sizes.
+The existing integration exercises the mapper and owned receiver on bounded host
+stack fixtures. Neither result claims native execution or installed frame edits.

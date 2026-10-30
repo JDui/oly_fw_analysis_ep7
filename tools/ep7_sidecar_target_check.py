@@ -7,6 +7,7 @@ parser.add_argument('--tool-prefix',required=True,help='trusted installed tool p
 mode=parser.add_mutually_exclusive_group()
 mode.add_argument('--transport-only',action='store_true',help='compile snapshot transport, wire codec, owned queue I/O and existing memory support')
 mode.add_argument('--queue-abi-only',action='store_true',help='assemble local raw queue veneers and compile their GCC caller probes')
+mode.add_argument('--materializer-abi-only',action='store_true',help='compile exact materializer receiver, frame mapper and local queue bridge closure')
 args=parser.parse_args()
 root=Path(__file__).resolve().parents[1];core=root/'prototypes/ep7_volatile_hl';prefix=args.tool_prefix
 versions={n:subprocess.check_output([prefix+n,'--version'],text=True).splitlines()[0] for n in ['gcc','as','ld','objdump']}
@@ -18,6 +19,13 @@ if args.transport_only:
  flags.append('-fstack-usage')
 if args.queue_abi_only:
  files={'queue_bridge':core/'snapshot_transport/native/queue_bridges.s','caller':core/'snapshot_transport/native/bridge_caller.c'}
+if args.materializer_abi_only:
+ files={'materializer_bridge':core/'snapshot_transport/native/materializer_bridge.s',
+        'materializer_layout':core/'snapshot_transport/native/materializer_layout.c',
+        'materializer_binding':core/'snapshot_transport/native/materializer_binding.c',
+        'queue_bridge':core/'snapshot_transport/native/queue_bridges.s',
+        'owned_io':core/'snapshot_transport/owned_io.c','wire':core/'snapshot_transport/wire.c','memory':core/'target/memory.c'}
+ flags.append('-fstack-usage')
 objects={};definitions={};undefined=set()
 with tempfile.TemporaryDirectory() as temp:
  for name,src in files.items():
@@ -62,14 +70,26 @@ with tempfile.TemporaryDirectory() as temp:
      if [line.strip() for line in body.splitlines() if line.strip()]!=expected_body:raise ValueError('GCC queue caller ABI changed: '+label)
     objects[name]['compiler_assembly']=caller
     objects[name]['checked_instructions']=sum(map(len,expected_calls.values()))
-  if args.transport_only:
+  if args.materializer_abi_only and name=='materializer_bridge':
+   dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   if len(ins)!=4 or ins[0]!=('mov','sp,a1') or ins[1]!=('mov','a1,d1') or ins[2][0]!='call' or not ins[2][1].endswith(',[],0') or ins[3]!=('ret','[d2,d3,a2,a3],44'):
+    raise ValueError('materializer bridge ABI changed')
+   if dis.count('R_MN10300_PCREL32')!=1 or '_ep7q_materializer_entry+0x1' not in dis:
+    raise ValueError('materializer entry relocation changed')
+   objects[name]['checked_instructions']=len(ins)
+   objects[name]['incoming_native_frame_bytes']=44
+   objects[name]['additional_bridge_frame_bytes']=0
+  if args.transport_only or args.materializer_abi_only:
    objects[name]['size_output']=subprocess.check_output([prefix+'size',str(obj)],text=True).splitlines()[1].split()[:4]
-   objects[name]['stack_usage']=obj.with_suffix('.su').read_text().splitlines()
+   if src.suffix=='.c':objects[name]['stack_usage']=obj.with_suffix('.su').read_text().splitlines()
 external=undefined-set(definitions)
 expected=set() if args.transport_only else {'_ep7_controller_sidecar_unresolved','ep7_stock_state_service_unresolved'}
 if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved'}
+if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved'}
 if external!=expected:raise ValueError('unexpected external symbols '+repr(external))
 scope='Snapshot transport, wire codec, owned queue I/O and memory target objects only' if args.transport_only else 'Current seven-object controller sidecar target compile and symbol closure only'
 if args.queue_abi_only:scope='Local raw queue callable ABI bridges only; no native queue invocation'
+if args.materializer_abi_only:scope='Exact materializer receive bridge and bounded frame mapper; context provider/native addresses unresolved'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))

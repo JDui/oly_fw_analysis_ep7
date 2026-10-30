@@ -29,6 +29,11 @@ owned I/O实现已完成：148字节command scratch、312字节descriptor receiv
 源码未改即通过，原因未确认。send局部栈400字节，不能把单函数结果当完整栈预算。
 下一项落实materializer三调用链的实际栈资格、进入桥及安装前置条件。
 
+materializer三调用链已实现[有界栈映射与接收桥](MATERIALIZER_RECEIVE_BINDING.md)：
+资格检查后才取得16字节command和312字节descriptor。strict/ASan/UBSan及目标对象
+检查通过，四条桥指令/return frame/relocation已核对。context provider仍未绑定，
+不能用布局匹配替代安装/任务域证据。下一项为其余relay/worker收发seam和claim/retire。
+
 ## 本轮恢复后的增量
 
 - 在既有 controller sidecar 中实现 `ep7c_resolve_live`，无需额外 token map。

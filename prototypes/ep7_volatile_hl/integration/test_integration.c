@@ -6,6 +6,7 @@
 #include "snapshot_transport/transport.h"
 #include "snapshot_transport/wire.h"
 #include "snapshot_transport/owned_io.h"
+#include "snapshot_transport/native/materializer.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <limits.h>
@@ -177,6 +178,42 @@ static int send_queue(void *ctx,unsigned handle,const void *in,unsigned bytes,in
 }
 static ep7q_ops queue_ops(queue_fixture *q)
 { ep7q_ops ops={q,qualify_queue,receive_queue,send_queue};return ops; }
+static void materializer_boundaries(void){
+    unsigned char bytes[864]={0};uint32_t w=0x1000;ep7q_materializer_args a;
+    ep7q_stack s={bytes,w,sizeof bytes,true};unsigned char *command=bytes+196;
+    queue_fixture q={0};ep7q_ops ops=queue_ops(&q);ep7q_result r;ep7t_ticket t={100,3};size_t n;
+    put32(bytes+44,0x603dfca2);put32(bytes+48,UINT32_MAX);
+    put32(bytes+484,0x603dfb7d);put32(bytes+532,0x603df8c0);put32(bytes+56,w+552);
+    assert(ep7q_materializer_layout(&s,w,0x4b,&a));
+    assert(a.command==w+196 && a.descriptor==w+552 && a.timeout==-1 && a.origin==EP7Q_NORMAL);
+    /* Resolve actual fixture addresses and run the owned receiver from this
+       bounded frame map. Materializer prefix writes and native entry stay mocked. */
+    put32(command+8,19);put32(command+12,100);
+    assert(ep7w_encode(16,command,t,q.bytes,sizeof q.bytes,&n));
+    q.length=(unsigned)n;q.raw=(int)n;q.qualified=true;
+    r=ep7q_command_receive(&ops,0x4b,a.timeout,bytes+(a.command-w),16,bytes+(a.descriptor-w),312);
+    assert(r.status==0 && r.ticket.serial==3 && bytes[852]=='E');
+    s.extent--;assert(!ep7q_materializer_layout(&s,w,0x4b,&a) && !a.descriptor);s.extent++;
+    put32(bytes+56,w+556);assert(!ep7q_materializer_layout(&s,w,0x4b,&a));put32(bytes+56,w+552);
+    put32(bytes+532,0);assert(!ep7q_materializer_layout(&s,w,0x4b,&a));
+    put32(bytes+484,0x603e0594);put32(bytes+56,w+496);s.extent=808;
+    assert(ep7q_materializer_layout(&s,w,0x4b,&a) && a.origin==EP7Q_DRAIN_FIRST && a.descriptor==w+496);
+    put32(bytes+484,0x603e05d2);
+    assert(ep7q_materializer_layout(&s,w,0x4b,&a) && a.origin==EP7Q_DRAIN_NEXT);
+    put32(bytes+484,0x603dfb7d);s.extent=488;
+    assert(!ep7q_materializer_layout(&s,w,0x4b,&a)); /* no parent word mapped */
+    put32(bytes+484,0x12345678);
+    assert(!ep7q_materializer_layout(&s,w,0x4b,&a)); /* unknown call chain */
+    put32(bytes+44,0);assert(!ep7q_materializer_layout(&s,w,0x4b,&a));
+    /* Inactive publication must reject before accessing the supplied mapping. */
+    s.expanded_group_ready=false;s.bytes=(const unsigned char *)(uintptr_t)1;
+    assert(!ep7q_materializer_layout(&s,w,0x4b,&a));
+    s.bytes=bytes;s.expanded_group_ready=true;
+    assert(!ep7q_materializer_layout(&s,w,0x4c,&a));
+    assert(!ep7q_materializer_layout(&s,w+1,0x4b,&a));
+    s.low=UINT32_MAX-3;
+    assert(!ep7q_materializer_layout(&s,UINT32_MAX-3,0x4b,&a)); /* address wrap */
+}
 static void owned_io_boundaries(void){
     queue_fixture q={0};ep7q_ops ops=queue_ops(&q);ep7q_result r;unsigned calls;
     struct {unsigned char prefix[16];uint32_t guard;} command;
@@ -342,7 +379,7 @@ int main(void){
     assert(send(0x9014,0)==1);assert(send(0x9032,-7)==1);text_is(frame(),"L ALL -7");
     setter_status=0;f=frame();assert(ep7_text_present(&widget_token,&f)==0);setter_status=1;
     n=text_calls;f.category=1;assert(ep7_text_present(&widget_token,&f)==0);assert(text_calls==n);
-    transport_boundaries();wire_boundaries();owned_io_boundaries();capture_vertical_slice();
+    transport_boundaries();wire_boundaries();materializer_boundaries();owned_io_boundaries();capture_vertical_slice();
     assert(!held && current_queries==0);
     puts("router -> sidecar -> owned command receive -> three owned queue relays -> ticket -> 16 job slots: PASS; native queue backend/ABI/materializer mocked");return 0;
 }
