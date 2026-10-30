@@ -29,6 +29,10 @@ int ep7w_ticket(unsigned prefix,const unsigned char *wire,size_t actual,ep7t_tic
  * marker/identity/serial even when preprocessing changed route fields. Never use
  * this result to authorize claim/apply; ordinary ep7w_ticket retains route gates. */
 bool ep7w_retirement_ticket(const unsigned char *owned_descriptor,ep7t_ticket *);
+/* Local owned trailer only: change E7T1 to E7C1, retaining its serial for cleanup.
+ * E7C1 cannot authorize wire forwarding/claim; retirement accepts either marker.
+ * Returns false without writes for other markers. No native provenance inferred. */
+bool ep7w_mark_consumed(unsigned char *owned_trailer);
 /* Write ONLY an independently owned 12-byte trailer. Does not read a descriptor
  * prefix, which may not yet be materialized. Zero/invalid ticket clears trailer.
  * Later wire inspection and registry claim still qualify route/metadata identity. */

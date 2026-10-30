@@ -37,6 +37,10 @@ bool ep7t_claim(ep7t *,ep7t_ticket,ep7p_snapshot *);
  * old queued tickets remain invalid, even when both slot and address are reused.
  * Already claimed copies are independent values, not revoked by this call. */
 bool ep7t_retire(ep7t *,ep7t_ticket);
+/* Idempotent owned cleanup: a valid full key already absent is also complete.
+ * False means invalid key/context or failed lock; retain the cleanup obligation.
+ * A stale serial cannot retire a newer ticket at the same metadata address. */
+bool ep7t_retire_owned(ep7t *,ep7t_ticket);
 /* Teardown/abort of the admitted pipeline: clear all outstanding records while
  * preserving serial, initialization and lock binding. No native frees, reset of
  * sequence, or revocation of already copied snapshots. Idempotent on success.

@@ -38,6 +38,7 @@ if args.queue_pipeline_abi_only:
  files['forward']=core/'snapshot_transport/forward.c'
  files['transport']=core/'snapshot_transport/transport.c'
  files['producer']=core/'snapshot_transport/producer.c'
+ files['consumer']=core/'snapshot_transport/consumer.c'
  files['queue_send_binding']=core/'snapshot_transport/native/queue_send_binding.c'
  files.update({n:core/'snapshot_transport/native'/p for n,p in
      [('descriptor_send_bridge','descriptor_send_bridge.s'),('descriptor_send_layout','descriptor_send_layout.c'),('descriptor_send_binding','descriptor_send_binding.c'),

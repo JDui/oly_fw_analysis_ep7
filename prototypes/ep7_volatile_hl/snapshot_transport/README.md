@@ -136,3 +136,11 @@ send when admission fails. The full host integration uses this producer for all1
 jobs. Native scope bridges and the corrected notification-preserving sender are
 described in [PRODUCER_SCOPE_BINDING](../../../docs/ep7/PRODUCER_SCOPE_BINDING.md).
 No source capture/current-task provider is silently supplied by these modules.
+
+`consumer.c` now consumes the actual owned descriptor before its first claim,
+including a failed lock or unsupported route. Local marker`E7C1` retains only
+cleanup identity; it is never accepted by ordinary wire admission. Idempotent
+retirement distinguishes an absent old key from a failed lock, retaining the
+descriptor on failure until cleanup succeeds. The16-job integration now calls
+this consumer directly. See [owned consumer](../../../docs/ep7/OWNED_CONSUMER.md)
+for results and remaining native worker/ACK/drain duties.

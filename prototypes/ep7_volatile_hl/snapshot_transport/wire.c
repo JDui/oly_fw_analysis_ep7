@@ -1,6 +1,7 @@
 #include "wire.h"
 #include <string.h>
 #define MARKER UINT32_C(0x31543745) /* E7T1, wire protocol marker, not provenance */
+#define CONSUMED UINT32_C(0x31433745) /* E7C1, local cleanup only, never wire admission */
 static uint32_t get32(const unsigned char *p)
 { return (uint32_t)p[0]|((uint32_t)p[1]<<8)|((uint32_t)p[2]<<16)|((uint32_t)p[3]<<24); }
 static void put32(unsigned char *p,uint32_t v)
@@ -64,12 +65,19 @@ int ep7w_decode(unsigned n,const unsigned char *wire,size_t actual,
 }
 bool ep7w_retirement_ticket(const unsigned char *p,ep7t_ticket *out)
 {
-    ep7t_ticket t;
+    ep7t_ticket t;uint32_t marker;
     if(!out)return false;
     *out=(ep7t_ticket){0,0};
-    if(!p || get32(p+EP7W_DESCRIPTOR)!=MARKER)return false;
+    if(!p)return false;
+    marker=get32(p+EP7W_DESCRIPTOR);
+    if(marker!=MARKER && marker!=CONSUMED)return false;
     t.metadata=metadata(EP7W_DESCRIPTOR,p);
     t.serial=(uint64_t)get32(p+EP7W_DESCRIPTOR+4)|((uint64_t)get32(p+EP7W_DESCRIPTOR+8)<<32);
     if(!t.metadata || !t.serial)return false;
     *out=t;return true;
+}
+bool ep7w_mark_consumed(unsigned char *p)
+{
+    if(!p || get32(p)!=MARKER)return false;
+    put32(p,CONSUMED);return true;
 }

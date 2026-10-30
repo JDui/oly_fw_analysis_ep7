@@ -115,3 +115,7 @@ worker claim/retire、drain/失败路径接合；G3/G6仍须实现真实context 
 [producer scope](PRODUCER_SCOPE_BINDING.md)已实现并通过host/目标对象检查，metadata仍148。
 发送路径发现并修正raw发送绕过原厂通知的问题，改为调用600514b6；没有原生部署。
 G2尾端仍有worker claim/retire和drain/失败处理，snapshot来源与任务/安装provider尚未绑定。
+
+[owned consumer](OWNED_CONSUMER.md)已实现一次领取和幂等撤销，host16-job链及目标对象检查
+通过。失败锁保留清理责任并禁止后续claim；原生worker job/cleanup、ACK/drain与失败保持
+策略是下一接合点，不能把portable完成结果等同于原生free前已撤销。

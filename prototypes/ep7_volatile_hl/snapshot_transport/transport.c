@@ -67,3 +67,11 @@ bool ep7t_invalidate_all(ep7t *p)
     memset(p->entries,0,sizeof p->entries);
     p->ops.unlock(p->ops.ctx);return true;
 }
+bool ep7t_retire_owned(ep7t *p,ep7t_ticket t)
+{
+    ep7t_entry *e;
+    if(!t.metadata || !t.serial || !enter(p))return false;
+    e=find(p,t);
+    if(e)memset(e,0,sizeof *e);
+    p->ops.unlock(p->ops.ctx);return true;
+}

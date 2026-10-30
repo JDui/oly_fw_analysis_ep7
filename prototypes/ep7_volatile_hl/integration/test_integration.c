@@ -6,6 +6,7 @@
 #include "snapshot_transport/transport.h"
 #include "snapshot_transport/wire.h"
 #include "snapshot_transport/owned_io.h"
+#include "snapshot_transport/consumer.h"
 #include "snapshot_transport/native/materializer.h"
 #include "snapshot_transport/native/descriptor_receive.h"
 #include "snapshot_transport/native/descriptor_send.h"
@@ -100,11 +101,13 @@ static void transport_boundaries(void){
     assert(ep7t_publish(&t,now));
     assert(!ep7t_claim(&t,old,&out) && out.profile==1); /* reused address */
     assert(!ep7t_retire(&t,old));
+    assert(ep7t_retire_owned(&t,old)); /* absent old key must not clear now */
     assert(!ep7t_prepare(&t,1,&source,&sentinel) && sentinel.serial==99);
     fail_lock=true;
     assert(!ep7t_claim(&t,now,&out) && out.profile==1);
     assert(!ep7t_retire(&t,now));
     fail_lock=false;
+    assert(t.entries[0].ticket.serial==now.serial);
     /* Consumer stays neutral after failed claim; retry cleanup only. */
     assert(ep7t_retire(&t,now));assert(!ep7t_claim(&t,now,&out));
     assert(ep7t_prepare(&t,1,&source,&now));assert(ep7t_publish(&t,now));
@@ -196,6 +199,44 @@ static unsigned named_notifications;
 int ep7_gcc_queue_send_preserving_hooks(unsigned handle,const void *p,unsigned bytes,int timeout){
     int status;assert(named_queue_fixture);
     status=send_queue(named_queue_fixture,handle,p,bytes,timeout);++named_notifications;return status;
+}
+static void consumer_boundaries(void){
+    ep7t transport={0};ep7t_ticket ticket,read;ep7p_snapshot frozen={3,{0}},out={1,{0}};
+    unsigned char descriptor[EP7W_MAX]={0},prefix[300],guard[300];unsigned scenario;
+    assert(ep7t_init(&transport,(ep7p_ops){NULL,lock,unlock,current}));frozen.hl[0]=7;
+    put32(descriptor+48,100);put32(descriptor+52,19);put16(descriptor+194,0x2001);
+    memcpy(prefix,descriptor,300);
+    /* Success, failed claim lock, and unsupported route are each one attempt. */
+    for(scenario=0;scenario<3;scenario++){
+        assert(ep7t_prepare(&transport,100,&frozen,&ticket) && ep7t_publish(&transport,ticket));
+        memcpy(descriptor,prefix,300);assert(ep7w_write_trailer(descriptor+300,ticket));
+        out.profile=1;out.hl[0]=2;
+        if(scenario==1)fail_lock=true;
+        if(scenario==2)put32(descriptor+52,16);
+        assert(ep7q_claim_owned(&transport,descriptor,sizeof descriptor,&out)==(scenario==0));
+        assert(out.profile==(scenario==0?3u:1u) && out.hl[0]==(scenario==0?7:2));
+        fail_lock=false;put32(descriptor+52,19);
+        assert(!ep7q_claim_owned(&transport,descriptor,sizeof descriptor,&out));
+        assert(ep7w_ticket(300,descriptor,sizeof descriptor,&read)==EP7W_LEGACY && !read.serial);
+        assert(ep7w_retirement_ticket(descriptor,&read) && read.serial==ticket.serial);
+        fail_lock=true;assert(!ep7q_retire_owned(&transport,descriptor,sizeof descriptor));
+        assert(ep7w_retirement_ticket(descriptor,&read) && read.serial==ticket.serial);
+        fail_lock=false;assert(ep7q_retire_owned(&transport,descriptor,sizeof descriptor));
+        assert(ep7q_retire_owned(&transport,descriptor,sizeof descriptor));
+        assert(!ep7w_retirement_ticket(descriptor,&read) && !read.serial);
+        assert(!ep7t_claim(&transport,ticket,&out));
+        assert(out.hl[0]==(scenario==0?7:2)); /* independent value survives cleanup */
+        assert(!memcmp(descriptor,prefix,300));
+    }
+    /* Drain a published but never claimed descriptor; external cancellation is
+       already complete and remains idempotent at ACK. */
+    assert(ep7t_prepare(&transport,100,&frozen,&ticket) && ep7t_publish(&transport,ticket));
+    assert(ep7w_write_trailer(descriptor+300,ticket));
+    assert(ep7t_retire_owned(&transport,ticket));
+    assert(ep7q_retire_owned(&transport,descriptor,sizeof descriptor));
+    memset(guard,0x5a,sizeof guard);
+    assert(!ep7q_claim_owned(&transport,guard,sizeof guard,&out));
+    assert(!ep7q_retire_owned(&transport,guard,sizeof guard) && guard[299]==0x5a);
 }
 static void materializer_boundaries(void){
     unsigned char bytes[864]={0};uint32_t w=0x1000;ep7q_materializer_args a;
@@ -312,7 +353,7 @@ static void descriptor_receive_boundaries(void){
 typedef struct {ep7t *transport;ep7t_ticket pending;unsigned calls;} retirement_fixture;
 static void take_retirement(void *ctx,ep7t_ticket ticket){
     retirement_fixture *owner=ctx;++owner->calls;assert(!owner->pending.serial);
-    if(!ep7t_retire(owner->transport,ticket))owner->pending=ticket;
+    if(!ep7t_retire_owned(owner->transport,ticket))owner->pending=ticket;
 }
 static void descriptor_send_boundaries(void){
     static const uint32_t cases[][4]={
@@ -400,7 +441,7 @@ static void producer_boundaries(void){
     stack.expanded_group_ready=false;stack.bytes=(const unsigned char *)(uintptr_t)1;
     assert(!ep7q_producer_layout(&stack,w,&in,label,&args));
 }
-static ep7t_ticket wire_relay_fixture(ep7t *transport,ep7q_capture_scope *scope){
+static ep7t_ticket wire_relay_fixture(ep7t *transport,ep7q_capture_scope *scope,unsigned char *delivered){
     unsigned char cmd[EP7W_COMMAND]={0},native[EP7W_MAX];
     queue_fixture q={0};ep7q_ops ops=queue_ops(&q);ep7q_result result;
     retirement_fixture owner={transport,{0},0};ep7q_forward_ops forward={ops,&owner,take_retirement};
@@ -425,7 +466,7 @@ static ep7t_ticket wire_relay_fixture(ep7t *transport,ep7q_capture_scope *scope)
         assert(result.ticket.serial==ticket.serial && result.ticket.metadata==ticket.metadata);
         assert(!memcmp(native,q.bytes,300));native[192]=(unsigned char)i;
     }
-    return result.ticket;
+    memcpy(delivered,native,sizeof native);return result.ticket;
 }
 static void capture_vertical_slice(void){
     ep7p_snapshot frozen,after;capture_host h={0};unsigned i,j;
@@ -457,15 +498,15 @@ static void capture_vertical_slice(void){
     assert(ep7p_capture(&core,11,3,&after));assert(after.hl[0]==0 && after.hl[12]==0);
     assert(ep7t_init(&transport,(ep7p_ops){NULL,lock,unlock,current}));
     for(i=0;i<16;i++){
-        ep7l_result result;ep7q_capture_scope scope;h.slot=i;
+        ep7l_result result;ep7q_capture_scope scope;unsigned char descriptor[EP7W_MAX];h.slot=i;
         /* Each fixture job gets a new ticket. Native relay is still modeled:
            every copied descriptor must explicitly carry THIS full ticket. */
         ep7q_capture_scope_init(&scope,7,&frozen);
         assert(!ep7t_claim(&transport,previous,&delivered));
-        ticket=wire_relay_fixture(&transport,&scope);
-        assert(ep7t_claim(&transport,ticket,&delivered));
-        assert(!ep7t_claim(&transport,ticket,&after));
-        assert(ep7t_retire(&transport,ticket));previous=ticket;
+        ticket=wire_relay_fixture(&transport,&scope,descriptor);
+        assert(ep7q_claim_owned(&transport,descriptor,sizeof descriptor,&delivered));
+        assert(!ep7q_claim_owned(&transport,descriptor,sizeof descriptor,&after));
+        assert(ep7q_retire_owned(&transport,descriptor,sizeof descriptor));previous=ticket;
         result=ep7l_run(&core,&ops,&h,&delivered);
         assert(result.registered && result.applied==1 && result.readers==1 && result.cleaned && !result.quarantined);
         assert(result.native_status==-123 && h.cleanups==i+1 && !h.owner);
@@ -526,7 +567,7 @@ int main(void){
     assert(send(0x9014,0)==1);assert(send(0x9032,-7)==1);text_is(frame(),"L ALL -7");
     setter_status=0;f=frame();assert(ep7_text_present(&widget_token,&f)==0);setter_status=1;
     n=text_calls;f.category=1;assert(ep7_text_present(&widget_token,&f)==0);assert(text_calls==n);
-    transport_boundaries();wire_boundaries();materializer_boundaries();owned_io_boundaries();descriptor_receive_boundaries();descriptor_send_boundaries();producer_boundaries();capture_vertical_slice();
+    transport_boundaries();wire_boundaries();consumer_boundaries();materializer_boundaries();owned_io_boundaries();descriptor_receive_boundaries();descriptor_send_boundaries();producer_boundaries();capture_vertical_slice();
     assert(!held && current_queries==0);
     puts("router -> sidecar -> owned command receive -> three owned forward/receive relays -> ticket -> 16 job slots: PASS; native queue backend/ABI/materializer mocked");return 0;
 }

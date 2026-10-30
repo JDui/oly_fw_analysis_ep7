@@ -52,6 +52,11 @@ producer已通过[自有栈scope接合](PRODUCER_SCOPE_BINDING.md)：提前复�
 ASan超时已在最小PIE程序初始化阶段独立复现；non-PIE检查通过，详见诊断报告。
 当前12个原生/capture/context外部符号未绑定，整体固件构建未开始；下一项为worker/drain。
 
+[owned consumer](OWNED_CONSUMER.md)已接入完整16-job主机链：首次尝试先标记仅可清理，
+锁失败/路由变化不能晚领取；清理失败保留原描述符票据，成功/重复清理幂等。strict、
+ASan/UBSan和目标对象检查通过，consumer文本180字节。原生worker allocation/job登记、
+cleanup前撤销及ACK/drain保持策略仍未绑定；下一个节点继续落实这些实际seam。
+
 ## 本轮恢复后的增量
 
 - 在既有 controller sidecar 中实现 `ep7c_resolve_live`，无需额外 token map。

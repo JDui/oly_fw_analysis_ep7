@@ -18,6 +18,8 @@ def check(record_hashes=True,asan_verbose=False):
     headers.append(CORE/'snapshot_transport/wire.h')
     sources.append(CORE/'snapshot_transport/owned_io.c')
     headers.append(CORE/'snapshot_transport/owned_io.h')
+    sources.append(CORE/'snapshot_transport/consumer.c')
+    headers.append(CORE/'snapshot_transport/consumer.h')
     sources.append(CORE/'snapshot_transport/native/materializer_layout.c')
     headers.append(CORE/'snapshot_transport/native/materializer.h')
     sources.extend(CORE/'snapshot_transport/native'/n for n in ['stack.c','descriptor_receive_layout.c'])
