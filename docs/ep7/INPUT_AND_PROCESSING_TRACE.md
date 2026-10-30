@@ -5,6 +5,11 @@ This is **static analysis, not firmware execution, device input testing or a
 working HSL port**. It deliberately stops at missing joins instead of treating
 matching numbers or similar PEN-F functions as proof.
 
+> Continuation: [GUI bridge and request ownership](GUI_AND_REQUEST_OWNERSHIP.md)
+> resolves the conditional app→GUI bridge and request producer/lifetime paths.
+> The open joins below describe the first-pass boundary, not a claim that these
+> questions cannot be investigated statically.
+
 ## 1. Logical key input is not a COLOR GUI event
 
 The E-P7 table at `0x60adc1f8` is consumed by mapper `0x60825002`:

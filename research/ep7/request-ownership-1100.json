@@ -1,0 +1,182 @@
+{
+  "scope": "Exact E-P7 1100 static ownership and transport operands; no firmware execution",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "capture_pool_initializer": {
+      "start": "0x603daf36",
+      "stop_exclusive": "0x603daf5d",
+      "sha256": "213f8d3d42da57957b570c6d3fa044b99bd2e018f00d772ae0ccd8c231a2b715",
+      "witness_count": 7
+    },
+    "capture_pool_base_constructor": {
+      "start": "0x603dd1d8",
+      "stop_exclusive": "0x603dd223",
+      "sha256": "1dc9cb44fb2b57478be555d23235e82598f4e5f773660b3734af1a0729a33d7a",
+      "witness_count": 5
+    },
+    "capture_pool_derived_constructor": {
+      "start": "0x603dda0e",
+      "stop_exclusive": "0x603dda74",
+      "sha256": "81f508113169b5eb93a5bc2e28da40a7dec95b06324c967ef001e8fdc81ec670",
+      "witness_count": 3
+    },
+    "capture_pool_resolver": {
+      "start": "0x603ddbdb",
+      "stop_exclusive": "0x603ddc20",
+      "sha256": "576ea508c21ca8e09c8750ca0296cf3f20742bbbe6ba4ca3c92be6104e4485f5",
+      "witness_count": 6
+    },
+    "capture_registry_getter": {
+      "start": "0x6029b9d1",
+      "stop_exclusive": "0x6029ba1e",
+      "sha256": "bd51a555ff39f65101a919d23ead0a2dea0d9489435b70b7a2ff20950cc01b37",
+      "witness_count": 5
+    },
+    "capture_registry_allocate_release": {
+      "start": "0x6029bdec",
+      "stop_exclusive": "0x6029be82",
+      "sha256": "cdcbb71a8f265ed8797a211b38e2a9a0683fab7ebedfd0da5e7fba9f0324e020",
+      "witness_count": 9
+    },
+    "capture_population_entry": {
+      "start": "0x602a7ea0",
+      "stop_exclusive": "0x602a7eb0",
+      "sha256": "571d8107c45e86efd4b60e84a25720a09d09e15cec09291582fc9faab999313b",
+      "witness_count": 2
+    },
+    "job_allocate_then_convert": {
+      "start": "0x603e6d04",
+      "stop_exclusive": "0x603e6d98",
+      "sha256": "b429446c809b43d4d3bd2fa8a41c30cd19cb75a43d83da00ada47749c09b3809",
+      "witness_count": 3
+    },
+    "job_constructor": {
+      "start": "0x603537eb",
+      "stop_exclusive": "0x60353915",
+      "sha256": "611153e542df848c6195a4a07cae52be61e50a35db87fbe675882fbaf8c704d3",
+      "witness_count": 4
+    },
+    "request_header": {
+      "start": "0x60354cb9",
+      "stop_exclusive": "0x60354ce4",
+      "sha256": "4fe427c4ee2ac5d92a0f1af9a3c9652b06d5ed9a7db37717e486479d4e6cca85",
+      "witness_count": 2
+    },
+    "request_producer": {
+      "start": "0x60354ce4",
+      "stop_exclusive": "0x60355098",
+      "sha256": "839cbd8dc2fc0d90a187d84fa23659047554b881fd7c9658016c2f1ef417cbf2",
+      "witness_count": 12
+    },
+    "request_wrapper": {
+      "start": "0x60355409",
+      "stop_exclusive": "0x60355419",
+      "sha256": "f2bb16b5a4b07599d14836cf40033470486294f85f13d568ac3fb8fa164b071c",
+      "witness_count": 2
+    },
+    "job_parameter_getter": {
+      "start": "0x60353cfb",
+      "stop_exclusive": "0x60353d02",
+      "sha256": "ba2c3eeea4dfe070ae1ea54f309550538c8d28bc41f5a5e5a89cfca8a57fad93",
+      "witness_count": 1
+    },
+    "table_borrow_wrappers": {
+      "start": "0x6035109b",
+      "stop_exclusive": "0x603510af",
+      "sha256": "618480d9e94c5e674a5051ab062786afdae58ec71905e92963d6d52096d0f11d",
+      "witness_count": 2
+    },
+    "table_slot_and_publish": {
+      "start": "0x603510af",
+      "stop_exclusive": "0x60351174",
+      "sha256": "b27d85669697cabd7bc56453ae1a8a5b8091c0247e1f0c4ecc1ca814adb80f2d",
+      "witness_count": 15
+    },
+    "table_borrow_scope": {
+      "start": "0x6036884d",
+      "stop_exclusive": "0x603688ed",
+      "sha256": "1f93531317e5528952806d3db838b4d6962dbcbde808d4510e53d88031672511",
+      "witness_count": 6
+    },
+    "current_S_to_capture": {
+      "start": "0x602a85c4",
+      "stop_exclusive": "0x602a86b7",
+      "sha256": "494e3ca44cf8811b46304cace7ca8a5d73ed85c54674aa956cd63c5b9aedaa43",
+      "witness_count": 3
+    },
+    "capture_to_job": {
+      "start": "0x603e62d1",
+      "stop_exclusive": "0x603e66a0",
+      "sha256": "424b9579656e45a4610e021ecf7e9e022d66734d32f2f91951c734070f0ee820",
+      "witness_count": 8
+    },
+    "alternate_capture_to_job": {
+      "start": "0x603e8af1",
+      "stop_exclusive": "0x603e91e4",
+      "sha256": "b63cf8b8ec50c218922fcf004584fe0a068b7125918d3218c74207460a12bb52",
+      "witness_count": 6
+    },
+    "compact_to_parameters": {
+      "start": "0x60324071",
+      "stop_exclusive": "0x60324376",
+      "sha256": "9210f9fd2f45f173c5a0b1692eeb0a7ce59341699b396368ecd976630c2e8f9a",
+      "witness_count": 5
+    }
+  },
+  "instruction_witness_count": 106,
+  "job": {
+    "allocation_request_bytes": 15488,
+    "parameter_offset": 36,
+    "parameter_zeroed_bytes": 6556,
+    "embedded_request_offset": 11364,
+    "request_bytes": 1884,
+    "request_callback": "0x60355fd4",
+    "borrowed_table_pointer_offset": 13252
+  },
+  "saturation_transport": {
+    "current_record": "0xf6ea",
+    "sector_count": 12,
+    "capture_halfwords_offset": 24058,
+    "compact_bytes_offset": 2119,
+    "job_parameter_bytes_offset": 5538,
+    "job_absolute_bytes_offset": 5574,
+    "request_bytes_offset": 1816
+  },
+  "capture_registry": {
+    "base": "0x6223d178",
+    "first_valid_id": 1,
+    "last_valid_id": 25,
+    "stride_operand": 24,
+    "pointer_offset": 12,
+    "handle_halfword_offset": 16,
+    "valid_flag_mask": 4,
+    "pool_type_selector": "0x1500",
+    "pool_pointer_from_ROM": "0xa269d980",
+    "configured_slot_count": 25,
+    "backing_base": "0xaf6037c0",
+    "slot_stride_operand": 41984,
+    "resolver": "0x603ddbdb",
+    "current_pool_RAM_state_not_established": true
+  },
+  "table_lifetime": {
+    "resource_pointer_in_job": 4752,
+    "resource_current_table_pointer": 15416,
+    "resource_reader_count_halfword": 15436,
+    "candidate_slots": 3,
+    "selection_base_offset": 2408,
+    "stride_operand": 4184,
+    "publish_waits_for_zero_reader_count": true,
+    "borrowed_pointer_copied_to_request_offset": 1524
+  },
+  "limitations": [
+    "Static slot-stride multiply opcode still requires precise MN103 semantics.",
+    "Acquire/release counter routines do not themselves establish atomic cross-core safety.",
+    "Not all producer/capture pool/reuse paths or async completion edges are mapped.",
+    "No spare extension storage, safe patch address or H/L pixel behavior is established."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

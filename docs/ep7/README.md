@@ -71,7 +71,7 @@ python3 -m unittest discover -s tests -p 'test_ep7*.py'
 The tool checks the stock identity before invoking the explicitly selected
 disassembler; it uses a deleted-on-exit temporary decoded input and emits no
 code listing. Never point `--objdump` at an untrusted executable. No firmware is
-executed by disassembly. Ten E-P7 synthetic/guard tests and nine container tests
+executed by disassembly. Twenty E-P7 synthetic/guard tests and nine container tests
 pass; the separate exact-stock and static-disassembly runs both pass.
 
 ## Why this is plausible, but not a simple button remap
@@ -79,8 +79,10 @@ pass; the separate exact-stock and static-disassembly runs both pass.
 The subsequent [bounded input/editor and processing trace](INPUT_AND_PROCESSING_TRACE.md)
 now identifies actual E-P7 editor keys/children and a logical key translation
 table, plus the dynamic-S/fixed-HL processing boundary. It explicitly records
-the missing application-to-GUI and image-ownership joins; it does not implement
-Delete axis switching.
+its first-pass missing joins. The [GUI bridge and request ownership continuation](GUI_AND_REQUEST_OWNERSHIP.md)
+now resolves conditional forwarding, native INFO/ALL behavior and current-S capture
+transport, while retaining selected-COLOR-state and complete async lifetime gaps.
+Neither pass implements Delete axis switching.
 
 [`compare_color_generations.py`](../../tools/compare_color_generations.py) records
 a shared 3028-byte COLOR table and corresponding MN103 builder across PEN-F,
@@ -110,7 +112,7 @@ sites. PEN-F column is build 3101; E-P7 column is build 1100 only.
 | COLOR profile S starting IDs | 931, 943, 955 | **927, 939, 951, 1655** | COLOR4 cannot use `base+12*profile` |
 | Profile defaults table | `0x603c8bb0` | `0x604a8774` | Four-profile resets must preserve factory S |
 | H/L saved cells | Validated PEN-F part-1 reuse | Unknown | No assumption that padding/part 1 is free |
-| Editor/input hooks | PEN-F mapped | Physical UI documented; event/ABI map unknown | Read [controls proposal](CONTROLS.md) |
+| Editor/input hooks | PEN-F mapped | Conditional GUI bridge mapped; active COLOR state open | Read [controls proposal](CONTROLS.md) |
 | Capture/job H/L ownership | PEN-F mapped | Unknown | Live-view-only success is insufficient |
 | Updated-image acceptance/recovery | PEN-F-specific evidence | Not established | No E-P7 install instructions |
 
@@ -131,7 +133,8 @@ independently switchable; copying just the color hook would lose ownership.
    builder, preserves registers/MDR, validates one of 16 operation records and
    its parent, then reads 24 H/L bytes from the image-owned job extension.
    `layout.ld` pins the hook at **PEN-F-only `0x604f7506`** and extension at
-   `0x6069b2b0`. E-P7 job size, callback identity and record layout remain unknown.
+   `0x6069b2b0`. E-P7 now has a traced 15488-byte job allocation and 1884-byte embedded request
+   (header callback `0x60355fd4`); no safe H/L extension layout is established.
 2. `src/editor_storage/editor.s`: common dispatcher intercepts `0x9016`
    (documented Delete), validates COLOR state/children/modal/held controls, cycles
    axes and refreshes cached child indices and viewer. `layout.ld` pins dispatcher
@@ -181,7 +184,7 @@ dispatch pointers. It records static-window hashes. It emits hashes and
 non-payload metadata, no extracted firmware strings or disassembly. It produces no
 patched BIN and exposes no relaxed-hash/force option.
 
-Ten E-P7 input-free tests and nine existing synthetic container tests pass.
+Twenty E-P7 input-free tests and nine existing synthetic container tests pass.
 The real-stock audit also passed separately; these are different evidence levels.
 Native emulator/ISP, full camera boot, real input, capture and flashing checks
 have not been run.
@@ -210,8 +213,8 @@ Keep all stock/decoded files and private captures local and ignored.
    update/recovery procedure, then neutral pixel comparison and bounded H/L image
    effects across sectors. A checksum or MN103 probe is not ISP qualification.
 
-The exact-stock acquisition blocker is resolved. The user's current camera
-version is still needed before any device-specific compatibility claim; a different
+The exact-stock acquisition blocker is resolved. The user reports current camera
+version **1.1**; this is not a device readback or hardware validation. A different
 firmware must be scoped and audited separately. This does not block continued
 static research. No camera writes are authorized by this research milestone.
 

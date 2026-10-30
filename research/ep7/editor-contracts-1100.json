@@ -158,6 +158,41 @@
   "color_source_hl_fields_zero": true,
   "color_source_records": 12,
   "inspected_windows": {
+    "mode_to_editor_factory": {
+      "start": "0x60e266a9",
+      "stop_exclusive": "0x60e26789",
+      "sha256": "47cd5661358ea4a683ad02925e447210f04c6b1a719829391f699ce3604280e1"
+    },
+    "callback_installation": {
+      "start": "0x60e20760",
+      "stop_exclusive": "0x60e2086b",
+      "sha256": "669aef041eaf203efeab30d771a34113e05d665a4b28deb35c58b323eeca9005"
+    },
+    "parent_local_dispatch": {
+      "start": "0x60dd5250",
+      "stop_exclusive": "0x60dd5695",
+      "sha256": "3e2d82c2b7dd7d389de843d72113560b379c334e3076553f263e9387898750ef"
+    },
+    "parent_callback_wrapper": {
+      "start": "0x60e20cdc",
+      "stop_exclusive": "0x60e20d22",
+      "sha256": "468151187276ef93dcf6c363747539e18cbb3f1734c218cb2a03ff0321e09213"
+    },
+    "color_default_and_hold": {
+      "start": "0x60e22191",
+      "stop_exclusive": "0x60e2229f",
+      "sha256": "79e315b22d694d92740bc5adb0282b685e218f40a1a46a64069eb6a0988c9dbc"
+    },
+    "color_ok_callback": {
+      "start": "0x60e223ae",
+      "stop_exclusive": "0x60e22404",
+      "sha256": "409741faee872a6851ec6d088176da3f6042233c9131fc0f761eb3942b308056"
+    },
+    "color_info_all_callback": {
+      "start": "0x60e22579",
+      "stop_exclusive": "0x60e228e9",
+      "sha256": "d3056f119958ae54fe340d90ce611b0590c0528c31c9e3944228e8ed37c9aa1e"
+    },
     "logical_key_mapper": {
       "start": "0x60825002",
       "stop_exclusive": "0x608251e0",
@@ -189,8 +224,33 @@
       "sha256": "51538856ca2879f94c3e3e87dc7fecb9baef365d8f9fc451f1f9027f3edcabe3"
     }
   },
+  "mode_to_editor": [
+    {
+      "mode": 54,
+      "editor_key": "0x13b3"
+    },
+    {
+      "mode": 55,
+      "editor_key": "0x13b4"
+    },
+    {
+      "mode": 56,
+      "editor_key": "0x13b5"
+    },
+    {
+      "mode": 64,
+      "editor_key": "0x140c"
+    }
+  ],
+  "local_callbacks": {
+    "default": "0x60e22191",
+    "event_900c": "0x60e223ae",
+    "event_9014": "0x60e22579",
+    "timer_event": "0xf802",
+    "pending_hold_event": "0x903e"
+  },
   "physical_gpio_verified": false,
-  "application_to_gui_join_verified": false,
+  "selected_color_application_state_verified": false,
   "delete_axis_switch_implemented": false,
   "camera_accessed": false,
   "flash_ready": false

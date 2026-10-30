@@ -1,0 +1,169 @@
+# E-P7 1.1: GUI bridge and request ownership
+
+This continues the [first bounded trace](INPUT_AND_PROCESSING_TRACE.md) using
+exact stock SHA-256 `9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb`.
+All addresses are decoded-main CPU addresses. Static inspection only: no camera
+access, firmware execution, image generation or flashable patch. User-reported
+installed version is 1.1; that does not constitute a device readback.
+
+## Application events reach GUI through state-dependent forwarding
+
+The missing namespaces now have an actual code/data bridge:
+
+1. Mapper `0x60cf91d8` uses table `0x60f6dca8`: app OK `0x43` → OLY
+   `0x0100001a`, Delete `0x53` → `0x01000026`, INFO `0x57` → `0x0100002a`.
+2. State-table consumer `0x60cf304c` selects a 16-byte event row, placing its
+   second word (GUI enum) into context+32. A callback in the fourth word may
+   change the outcome. `0x60cf310b` transfers this packet to FSM object+12.
+3. Main loop `0x60cc82b2..0x60cc82ee` obtains the packet using `0x60cf2f20`,
+   then calls adapter `0x60cfcb2a`. The adapter's interface at +32 is bound to
+   GuiCaller by calls at `0x60cc7348` and `0x60cc7352` (setter `0x60cfccc8`).
+4. `GuiCallerImp::sendEvent`, `0x60dd4ba9`, indexes table `0x6113e938`:
+   enum `0x14` → local `0x900c`, enum `0x27` → `0x9016`, enum `0x25` →
+   **`0x9014` (INFO, not `0x9012`)**. Ordinary delivery goes through
+   `0x60d0ffb4` / `0x60d0ffe0`.
+
+A concrete no-callback forwarding table belongs to state **`0x2006`** (descriptor
+`0x60f522f4`, table `0x60f50dcc`, 70 rows). State **`0x5701`** has another table
+with forwarding callbacks (descriptor `0x60f5e648`). Other states suppress keys
+or override results. **Neither state has yet been proven to be the selected
+application state while COLOR editing is active.** This is a verified conditional
+bridge, not an unconditional GPIO-to-COLOR claim.
+
+## Mode selection, callbacks and native INFO/hold behavior
+
+Selector path `0x60e266a9..0x60e26789` reads property 111. On selector value 1
+it searches the eight mode/key rows at `0x61189278`; its COLOR subset maps
+54/55/56/64 to `0x13b3/0x13b4/0x13b5/0x140c`. It passes the selected key to
+factory `0x60dd518e` with kind 7 at `0x60e2677d`. The meaning of the enclosing
+selector object and its application-state identity remains to be joined.
+
+Initializer `0x60e20760` finds the key in 56-byte handler records, installs
+nonzero callbacks at parent+48 onward, and calls its init function. The four
+COLOR rows bind default `0x60e22191`, local `0x900c` callback `0x60e223ae`, and
+local `0x9014` callback **`0x60e22579`**. Vtable `0x61187534` binds parent local
+dispatcher `0x60dd5250` and callback wrapper `0x60e20cdc`.
+
+The `0x9014` callback guards modes 54/55/56/64, reads cursor properties
+1091/1096/1097/1686 and companion properties 1098/1099/1100/1687. One branch
+writes **255 (ALL)** to the corresponding cursor (`0x60e22731..0x60e22733`);
+other branches restore a remembered cursor or set 1. Global flags and additional
+guards affect the path. This is concrete support for **preserving native INFO
+single/all selection**, rather than taking INFO for H/S/L axis switching.
+
+Local `0x900c` is both a GUI event and an internal child commit message; the
+namespaces must remain distinct. The parent dispatcher can arm timer 537 with
+pending event `0x903e` on the appropriate guard. Timer event `0xf802` dispatches
+that pending event back through virtual slot 0. COLOR default handler
+`0x60e22191` handles `0x903e` by visiting all children and sending a child
+`0x900c` after a handled response. This exposes a **hold/reset propagation path**;
+it is not proof of the exact physical hold duration or every child reset effect.
+The ordinary `0x900c` callback does not install H/L persistence or transaction
+rollback. Do not describe OK as the only time stock edits become saved.
+
+The existing Delete-based axis proposal remains conditional: local `0x9016`
+has a real parent dispatch arm, but an end-to-end COLOR-active state join and
+noninterference with its guards/repeat path still need qualification.
+
+## Current saturation data is transported, not read at ISP-write time
+
+The inspected path joins these independently identifiable layouts:
+
+```text
+current typed record 0xf6ea, indices 0..11, getter 0x6005e971
+  → capture block +24058: 12 halfwords (0x602a85c4 onward)
+  → converter 0x603e62d1 / 0x603e8af1, descriptor+28 source
+  → job parameter block +5538: 12 bytes (mode 11)
+  → job +36 parameter base, absolute job +5574
+  → request producer 0x60354ce4
+  → request +1816: 12 bytes
+  → stock COLOR builder already traced in the first report
+```
+
+A compact representation converter `0x60324071` separately copies 12 bytes
+from source+2119 into parameter+5538. Job constructor `0x603537eb` requests
+15488 bytes; the wrapper `0x60355409` places its 1884-byte request at job+11364.
+This disproves the assumption that adding only an on-screen H/L value would
+necessarily carry that value into the image processing request. New H/L state
+would require a demonstrated snapshot/transport contract for every supported
+processing route; these offsets are occupied stock structures, not free space.
+
+## Generic table override is a borrowed resource
+
+The producer copies job+13252 to request+1524. The stock selector may then use
+that owner/table path instead of the fixed COLOR table. It is **not spare H/L
+extension storage**:
+
+- Job initialization sets the pointer to null.
+- Acquisition wrapper `0x6035109b` calls `0x60351156`: increments a halfword
+  reader count at resource+15436 and returns the pointer stored at resource+15416.
+- A processing scope at `0x6036884d..0x603688ed` assigns the borrowed pointer,
+  invokes processing, releases via `0x603510a5` / `0x60351167`, then clears it.
+- Selection `0x603510af` examines three candidate slots (base +2408, stride
+  operand 4184), excluding pointers at resource+15416/+15420/+15424.
+- Publication `0x60351103` waits for zero readers before changing the active
+  pointer. These routines alone do not establish atomic cross-core correctness.
+
+A local extension must respect existing ownership and in-flight readers; neither
+mutating a shared active table nor fabricating request+1524 is justified by this
+research. Full async completion, buffer reuse and all processing entry paths
+remain unqualified. H/L pixel interpretation remains uncalibrated.
+
+## Capture storage has a pool lifetime, not an unbounded tail
+
+Capture population entry `0x602a7ea0` obtains its block via `0x6029b9d1`.
+That getter checks IDs 1..25, indexes registry `0x6223d178` (stride operand 24),
+requires flag 4, and returns entry+12. Allocation-like entry `0x6029bdec` obtains
+a handle with selector **0x1500**, stores it at entry+16, resolves entry+12 via
+`0x603dba87`, and sets flag 4. Selector 0x1500 resolves ROM descriptor
+`0x6053a300` to RAM pool object `0xa269d980`: **5376 is a type selector, not an
+allocation byte count**. Release `0x6029be33` releases the handle and clears flag
+4, but does not clear the stale entry+12 pointer in the inspected window.
+
+Consequently capture+24058 has a real stock snapshot lifecycle. Unknown trailing
+bytes cannot be called free space. Further static tracing found the initializer
+at `0x603daf36..0x603daf58`: it passes count **25**, backing **`0xaf6037c0`**,
+stride operand **41984 (`0xa400`)**, and selector **`0x1500`** to `0x603dda0e`.
+Base constructor `0x603dd1d8` stores backing at object+8, stride at +12, count at
++20/+24, and selector at +22. Vtable `0x6053a868` resolves handles via
+`0x603ddbdb`, using low-byte index minus one and those fields. GNU's multiply
+opcode decoding remains qualified; no independent ISA arithmetic proof is added.
+This establishes static pool configuration, not live pool state or usable extra
+space. All retain/completion edges for descriptor+28 remain open.
+
+## Reproduction
+
+[GUI bridge report](../../research/ep7/gui-bridge-1100.json) and
+[request ownership report](../../research/ep7/request-ownership-1100.json) contain
+exact table checks, instruction operand witness counts and window fingerprints.
+The [editor report](../../research/ep7/editor-contracts-1100.json) also validates
+the four complete callback rows, mode/key subset and local dispatch table.
+Code-window hashes identify the reviewed bytes; they do not automatically prove
+all prose control-flow interpretation or a device result.
+
+```sh
+python3 tools/ep7_gui_bridge.py --stock /local/stock.BIN --objdump /trusted/mn103-objdump
+python3 tools/ep7_request_ownership.py --stock /local/stock.BIN --objdump /trusted/mn103-objdump
+python3 -m unittest discover -s tests -p 'test_ep7*.py'
+```
+
+Both instruction tools require a separately trusted MN10300 objdump (reviewed
+GNU Binutils 2.45 was used). Wrong stock fails before invoking it; decoded bytes
+exist only in a temporary directory, deleted after the run. Only JSON metadata
+is emitted. Do not supply an executable from an untrusted firmware archive.
+
+## Evidence boundary and next experiments
+
+The table and instruction reports are reproducible from the exact local stock;
+they publish addresses, operand checks and hashes, not firmware or bulk listings.
+The GUI bridge narrows the next question to **which app FSM state is selected
+while the COLOR factory-kind-7 object is active**, rather than searching arbitrary
+key tables. Ownership work narrows the other question to **where a per-image H/L
+snapshot can safely live and be transported without sharing mutable state**.
+
+Useful static work does not require a button video. If these specific joins
+cannot be established in the stock graph, the minimum future device evidence is
+selected app-state ID / outgoing enum for OK, INFO and Delete in COLOR, and
+observed capture/preview buffer lifetimes. No instrumentation or firmware write
+is authorized by this document. A normal stock-camera interaction video could
+check visible ergonomics only, not prove those internal joins or H/L correctness.

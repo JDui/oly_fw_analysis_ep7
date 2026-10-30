@@ -56,7 +56,30 @@ def inspect(raw):
                 'key name mismatch')
         keys.append(dict(label=label, logical_event=hex(logical), application_event=hex(application),
                          translation_row=hex(address), naming_row=hex(name_row)))
-    windows = {'logical_key_mapper': (0x60825002,0x608251e0),
+    mode_keys = [struct.unpack_from('<II', main, 0x61189298-BASE+i*8) for i in range(4)]
+    require(mode_keys == list(zip((54,55,56,64), EDITOR_KEYS)), 'mode/editor selection mismatch')
+    callbacks = (0x60e20a54,0x60e20bc7,0x60e20e0a,0x60e2107a,
+                 0x60e213bb,0x60e21852,0x60e21cae,0x60e21efb,
+                 0x60e22191,0x60e223ae,0x60e22579,0,0)
+    for i, key in enumerate(EDITOR_KEYS):
+        require(struct.unpack_from('<14I', main, 0x61185bdc+i*56-BASE) == (key,*callbacks),
+                'complete COLOR callback row mismatch')
+    require(struct.unpack_from('<I', main, 0x61187534-BASE)[0] == 0x60dd5250,
+            'parent dispatcher vtable mismatch')
+    require(struct.unpack_from('<I', main, 0x61187534+68-BASE)[0] == 0x60e20cdc,
+            'parent event wrapper vtable mismatch')
+    dispatch = dict(struct.unpack_from('<II', main, 0x6114040c-BASE+i*8) for i in range(16))
+    for event, target in ((0x900c,0x60dd5489),(0x9014,0x60dd55bb),
+                          (0x9016,0x60dd54e2),(0xf802,0x60dd5623)):
+        require(dispatch.get(event-0x9003) == target, 'local event dispatcher mismatch')
+    windows = {'mode_to_editor_factory': (0x60e266a9,0x60e26789),
+               'callback_installation': (0x60e20760,0x60e2086b),
+               'parent_local_dispatch': (0x60dd5250,0x60dd5695),
+               'parent_callback_wrapper': (0x60e20cdc,0x60e20d22),
+               'color_default_and_hold': (0x60e22191,0x60e2229f),
+               'color_ok_callback': (0x60e223ae,0x60e22404),
+               'color_info_all_callback': (0x60e22579,0x60e228e9),
+               'logical_key_mapper': (0x60825002,0x608251e0),
                'editor_child_constructor': (0x60e20aca,0x60e20b2d),
                'color_increment_candidate': (0x60e20e0a,0x60e20f6d),
                'color_decrement_candidate': (0x60e2107a,0x60e211cd),
@@ -73,7 +96,11 @@ def inspect(raw):
                 color_source_hl_fields_zero=True, color_source_records=12,
                 inspected_windows={name: dict(start=hex(start), stop_exclusive=hex(stop),
                     sha256=sha256(main[start-BASE:stop-BASE])) for name,(start,stop) in windows.items()},
-                physical_gpio_verified=False, application_to_gui_join_verified=False,
+                mode_to_editor=[dict(mode=mode, editor_key=hex(key)) for mode,key in mode_keys],
+                local_callbacks=dict(default='0x60e22191', event_900c='0x60e223ae',
+                                     event_9014='0x60e22579', timer_event='0xf802',
+                                     pending_hold_event='0x903e'),
+                physical_gpio_verified=False, selected_color_application_state_verified=False,
                 delete_axis_switch_implemented=False, camera_accessed=False, flash_ready=False)
 
 
