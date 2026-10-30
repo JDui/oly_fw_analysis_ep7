@@ -26,7 +26,7 @@ if args.queue_abi_only:
  files={'queue_bridge':core/'snapshot_transport/native/queue_bridges.s','caller':core/'snapshot_transport/native/bridge_caller.c'}
 if args.task_context_only:
  files={'task_context':core/'runtime/task_context.c','task_native':core/'runtime/task_context_native.c',
-        'get_tid':core/'target/get_tid_bridge.s','memory':core/'target/memory.c'}
+        'get_tid':core/'target/get_tid_bridge.s','task_delay':core/'runtime/delay_bridge.s','memory':core/'target/memory.c'}
  flags.append('-fstack-usage')
 if materializer_mode:
  files={'materializer_bridge':core/'snapshot_transport/native/materializer_bridge.s',
@@ -217,6 +217,13 @@ with tempfile.TemporaryDirectory() as temp:
    if '_ep7_gcc_job_allocate+0x1' not in dis or not re.search(r'mov\s+a0,d0',dis):
     raise ValueError('GCC pointer result no longer consumed from a0')
    objects[name]['gcc_pointer_result_a0_confirmed']=True
+  if name=='task_delay':
+   dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   if len(ins)!=5 or ins[:3]!=[('movm','[a2],(sp)'),('add','-12,sp'),('mov','1,d0')] or ins[4]!=('ret','[a2],16') or not ins[3][1].endswith(',[d2,a2,a3],16'):
+    raise ValueError('task delay frame/input changed')
+   if dis.count('R_MN10300_PCREL32')!=1 or 'ep7_stock_task_delay_unresolved+0x1' not in dis:raise ValueError('task delay relocation changed')
+   objects[name].update(checked_instructions=5,fixed_input_units=1,status_preserved=True)
   if name=='get_tid':
    dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
    ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
@@ -229,7 +236,7 @@ with tempfile.TemporaryDirectory() as temp:
    if src.suffix=='.c':objects[name]['stack_usage']=obj.with_suffix('.su').read_text().splitlines()
 external=undefined-set(definitions)
 expected=set() if args.transport_only else {'_ep7_controller_sidecar_unresolved','ep7_stock_state_service_unresolved'}
-if args.task_context_only:expected={'ep7_stock_get_tid_unresolved'}
+if args.task_context_only:expected={'ep7_stock_get_tid_unresolved','ep7_stock_task_delay_unresolved'}
 if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved','ep7_stock_receive_wrapper_unresolved'}

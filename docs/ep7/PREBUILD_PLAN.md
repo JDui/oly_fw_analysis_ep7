@@ -131,3 +131,7 @@ G2的主干代码已有producer/relay/worker/ACK，原生闭包和provider稳定
 G3已取得并实现[原厂当前TCB栈边界](CURRENT_TASK_STACK.md)，复用get_tid桥且完成定向检查。
 下一步用该只读事实构造共享provider；安装标记、私有锁稳定生命周期和永久poison处置
 必须独立绑定，不能因能读到TCB就自动开放捕获或释放路径。
+
+G3的[定时delay与清理进度约束](CLEANUP_PROGRESS.md)已核对并提供可调用ABI桥，排除会消费
+既有唤醒计数的tslp_tsk。共享provider实现须分离永久发布/停止新准入，保留poison后旧工作
+的context；等待/隔离策略未绑定前，worker和ACK中的待清理循环仍不可安装。

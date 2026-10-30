@@ -73,6 +73,11 @@ TCB+76 entry/+84 size/+88实际base及anchor范围。59原厂指令、复用get_
 通过，无新增native API桥。该视图不授予安装/代际资格；下一项为共享runtime稳定发布和
 私有锁poison/竞争分类，再把这些事实接入已有context providers。
 
+[cleanup进度原语](CLEANUP_PROGRESS.md)已核对：600313ef定时delay使用wait reason2，
+60036e23/tslp_tsk会消费TCB+21既有唤醒计数，不能混用。固定一个原生时间单位的GCC桥
+已检查，尚未装入等待callback。下一步共享runtime分离永久发布与新准入健康状态，并
+落实poison/意外delay错误时的保留策略；当前没有固件整体编译或原生执行。
+
 ## 本轮恢复后的增量
 
 - 在既有 controller sidecar 中实现 `ep7c_resolve_live`，无需额外 token map。
