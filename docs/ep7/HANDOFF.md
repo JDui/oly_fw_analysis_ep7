@@ -57,6 +57,12 @@ ASan超时已在最小PIE程序初始化阶段独立复现；non-PIE检查通过
 ASan/UBSan和目标对象检查通过，consumer文本180字节。原生worker allocation/job登记、
 cleanup前撤销及ACK/drain保持策略仍未绑定；下一个节点继续落实这些实际seam。
 
+[worker job接合](WORKER_JOB_BINDING.md)现已实现：独立48字节scope、仅资格路径请求15512、
+实际allocation身份登记、cleanup前撤销及保留失败重试。包装器新增136字节调用栈；
+原五个descriptor帧计划不再扩大。53原厂指令/一表项、59桥指令、GCC指针返回a0及
+strict/ASan/UBSan通过。当前17外部符号未绑定；真实context稳定性、等待策略和ACK/drain
+仍未闭合，不能安装hook。接下来落实ACK/drain，以及G3的实际任务/运行时上下文。
+
 ## 本轮恢复后的增量
 
 - 在既有 controller sidecar 中实现 `ep7c_resolve_live`，无需额外 token map。

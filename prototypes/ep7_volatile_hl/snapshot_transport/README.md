@@ -144,3 +144,9 @@ retirement distinguishes an absent old key from a failed lock, retaining the
 descriptor on failure until cleanup succeeds. The16-job integration now calls
 this consumer directly. See [owned consumer](../../../docs/ep7/OWNED_CONSUMER.md)
 for results and remaining native worker/ACK/drain duties.
+
+`job.c` binds that copied value to an actual fresh enlarged allocation, registers
+it once before processing and retains its token until pre-cleanup revocation
+succeeds. [Worker native bridges](../../../docs/ep7/WORKER_JOB_BINDING.md) preserve
+the original job body and carry the scope in their own stack wrapper. Runtime
+context stability and the RTOS cleanup-wait policy remain unresolved prerequisites.

@@ -20,6 +20,8 @@ def check(record_hashes=True,asan_verbose=False):
     headers.append(CORE/'snapshot_transport/owned_io.h')
     sources.append(CORE/'snapshot_transport/consumer.c')
     headers.append(CORE/'snapshot_transport/consumer.h')
+    sources.extend(CORE/'snapshot_transport'/n for n in ['job.c','native/worker_layout.c'])
+    headers.extend(CORE/'snapshot_transport'/n for n in ['job.h','native/worker.h'])
     sources.append(CORE/'snapshot_transport/native/materializer_layout.c')
     headers.append(CORE/'snapshot_transport/native/materializer.h')
     sources.extend(CORE/'snapshot_transport/native'/n for n in ['stack.c','descriptor_receive_layout.c'])

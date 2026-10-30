@@ -1,0 +1,727 @@
+{
+  "scope": "Frozen producer scope, command publication and descriptor receive/send bridges; native capture/context providers/addresses unresolved",
+  "versions": {
+    "gcc": "mn10300-elf-gcc (GCC) 13.4.0",
+    "as": "GNU assembler (GNU Binutils) 2.45",
+    "ld": "GNU ld (GNU Binutils) 2.45",
+    "objdump": "GNU objdump (GNU Binutils) 2.45"
+  },
+  "objects": {
+    "materializer_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_bridge.s",
+      "definitions": [
+        "ep7_native_materializer_receive_bridge"
+      ],
+      "undefined": [
+        "_ep7q_materializer_entry"
+      ],
+      "checked_instructions": 4,
+      "incoming_native_frame_bytes": 44,
+      "additional_bridge_frame_bytes": 0,
+      "size_output": [
+        "13",
+        "0",
+        "0",
+        "13"
+      ]
+    },
+    "materializer_layout": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_layout.c",
+      "definitions": [
+        "_ep7q_materializer_layout"
+      ],
+      "undefined": [
+        "_ep7q_stack_span",
+        "_ep7q_stack_word",
+        "_memcpy"
+      ],
+      "size_output": [
+        "383",
+        "0",
+        "0",
+        "383"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_layout.c:4:6:ep7q_materializer_layout\t60\tstatic"
+      ]
+    },
+    "materializer_binding": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_binding.c",
+      "definitions": [
+        "_ep7q_materializer_entry"
+      ],
+      "undefined": [
+        "_ep7_gcc_queue_receive_local",
+        "_ep7q_command_receive",
+        "_ep7q_materializer_context_unresolved",
+        "_ep7q_materializer_layout"
+      ],
+      "size_output": [
+        "155",
+        "0",
+        "0",
+        "155"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_binding.c:4:12:receive_local\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_binding.c:6:5:ep7q_materializer_entry\t136\tstatic"
+      ]
+    },
+    "queue_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/queue_bridges.s",
+      "definitions": [
+        "_ep7_gcc_queue_receive_local",
+        "_ep7_gcc_queue_send_local",
+        "_ep7_gcc_queue_send_preserving_hooks"
+      ],
+      "undefined": [
+        "ep7_stock_queue_receive_local_unresolved",
+        "ep7_stock_queue_send_local_unresolved",
+        "ep7_stock_queue_send_preserving_unresolved"
+      ],
+      "checked_instructions": 23,
+      "own_frame_bytes": [
+        16,
+        16,
+        24
+      ],
+      "native_nested_frames": [
+        32,
+        40,
+        48
+      ],
+      "size_output": [
+        "66",
+        "0",
+        "0",
+        "66"
+      ]
+    },
+    "stack": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/stack.c",
+      "definitions": [
+        "_ep7q_stack_span",
+        "_ep7q_stack_word"
+      ],
+      "undefined": [],
+      "size_output": [
+        "183",
+        "0",
+        "0",
+        "183"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/stack.c:2:22:ep7q_stack_span\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/stack.c:12:6:ep7q_stack_word\t12\tstatic"
+      ]
+    },
+    "owned_io": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c",
+      "definitions": [
+        "_ep7q_command_receive",
+        "_ep7q_descriptor_receive",
+        "_ep7q_descriptor_send"
+      ],
+      "undefined": [
+        "_ep7w_decode",
+        "_ep7w_encode",
+        "_ep7w_retirement_ticket",
+        "_ep7w_ticket",
+        "_ep7w_write_trailer",
+        "_memcpy",
+        "_memset"
+      ],
+      "size_output": [
+        "1114",
+        "0",
+        "0",
+        "1114"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c:13:13:qualify\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c:18:13:ep7q_command_receive\t220\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c:33:13:ep7q_descriptor_receive\t104\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c:48:13:ep7q_descriptor_send\t400\tstatic"
+      ]
+    },
+    "wire": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/wire.c",
+      "definitions": [
+        "_ep7w_decode",
+        "_ep7w_encode",
+        "_ep7w_mark_consumed",
+        "_ep7w_retirement_ticket",
+        "_ep7w_ticket",
+        "_ep7w_write_trailer"
+      ],
+      "undefined": [
+        "_memcpy",
+        "_memset"
+      ],
+      "size_output": [
+        "1062",
+        "0",
+        "0",
+        "1062"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:13:13:route_ok\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:18:6:ep7w_write_trailer\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:26:6:ep7w_encode\t44\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:42:5:ep7w_ticket\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:55:5:ep7w_decode\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:66:6:ep7w_retirement_ticket\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:79:6:ep7w_mark_consumed\t0\tstatic"
+      ]
+    },
+    "memory": {
+      "source": "prototypes/ep7_volatile_hl/target/memory.c",
+      "definitions": [
+        "_memcpy",
+        "_memset"
+      ],
+      "undefined": [],
+      "size_output": [
+        "49",
+        "0",
+        "0",
+        "49"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/target/memory.c:8:7:memcpy\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/target/memory.c:18:7:memset\t0\tstatic"
+      ]
+    },
+    "descriptor_receive_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_bridge.s",
+      "definitions": [
+        "ep7_native_descriptor_receive_bridge"
+      ],
+      "undefined": [
+        "_ep7q_descriptor_receive_entry",
+        "ep7_stock_receive_wrapper_unresolved"
+      ],
+      "checked_instructions": 18,
+      "incoming_native_frame_bytes": 44,
+      "additional_bridge_frame_bytes": 0,
+      "size_output": [
+        "45",
+        "0",
+        "0",
+        "45"
+      ]
+    },
+    "descriptor_receive_layout": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_layout.c",
+      "definitions": [
+        "_ep7q_descriptor_receive_layout",
+        "_ep7q_receive_rejection"
+      ],
+      "undefined": [
+        "_ep7q_stack_span",
+        "_ep7q_stack_word",
+        "_memcpy"
+      ],
+      "size_output": [
+        "376",
+        "0",
+        "0",
+        "376"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_layout.c:4:5:ep7q_receive_rejection\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_layout.c:6:6:ep7q_descriptor_receive_layout\t52\tstatic"
+      ]
+    },
+    "descriptor_receive_binding": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_binding.c",
+      "definitions": [
+        "_ep7q_descriptor_receive_entry"
+      ],
+      "undefined": [
+        "_ep7_gcc_queue_receive_local",
+        "_ep7q_descriptor_receive",
+        "_ep7q_descriptor_receive_context_unresolved",
+        "_ep7q_descriptor_receive_layout",
+        "_ep7q_receive_rejection"
+      ],
+      "size_output": [
+        "162",
+        "0",
+        "0",
+        "162"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_binding.c:4:12:receive_local\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_binding.c:6:5:ep7q_descriptor_receive_entry\t124\tstatic"
+      ]
+    },
+    "forward": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/forward.c",
+      "definitions": [
+        "_ep7q_forward_send"
+      ],
+      "undefined": [
+        "_ep7q_descriptor_send"
+      ],
+      "size_output": [
+        "114",
+        "0",
+        "0",
+        "114"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/forward.c:2:5:ep7q_forward_send\t72\tstatic"
+      ]
+    },
+    "transport": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/transport.c",
+      "definitions": [
+        "_ep7t_claim",
+        "_ep7t_init",
+        "_ep7t_invalidate_all",
+        "_ep7t_prepare",
+        "_ep7t_publish",
+        "_ep7t_retire",
+        "_ep7t_retire_owned"
+      ],
+      "undefined": [
+        "_memcpy",
+        "_memset"
+      ],
+      "size_output": [
+        "1029",
+        "0",
+        "0",
+        "1029"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:15:6:ep7t_init\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:21:6:ep7t_prepare\t52\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:37:6:ep7t_publish\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:45:6:ep7t_claim\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:56:6:ep7t_retire\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:64:6:ep7t_invalidate_all\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:70:6:ep7t_retire_owned\t36\tstatic"
+      ]
+    },
+    "producer": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/producer.c",
+      "definitions": [
+        "_ep7q_capture_scope_init",
+        "_ep7q_producer_send"
+      ],
+      "undefined": [
+        "_ep7t_prepare",
+        "_ep7t_publish",
+        "_ep7w_encode",
+        "_memcpy",
+        "_memset"
+      ],
+      "size_output": [
+        "399",
+        "0",
+        "0",
+        "399"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/producer.c:5:6:ep7q_capture_scope_init\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/producer.c:11:5:ep7q_producer_send\t80\tstatic"
+      ]
+    },
+    "consumer": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/consumer.c",
+      "definitions": [
+        "_ep7q_claim_owned",
+        "_ep7q_retire_owned"
+      ],
+      "undefined": [
+        "_ep7t_claim",
+        "_ep7t_retire_owned",
+        "_ep7w_mark_consumed",
+        "_ep7w_retirement_ticket",
+        "_ep7w_ticket",
+        "_memset"
+      ],
+      "size_output": [
+        "180",
+        "0",
+        "0",
+        "180"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/consumer.c:3:6:ep7q_claim_owned\t48\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/consumer.c:11:6:ep7q_retire_owned\t40\tstatic"
+      ]
+    },
+    "job": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/job.c",
+      "definitions": [
+        "_ep7j_allocate",
+        "_ep7j_begin",
+        "_ep7j_register",
+        "_ep7j_revoke"
+      ],
+      "undefined": [
+        "_ep7p_register_job",
+        "_ep7p_release_job",
+        "_ep7q_claim_owned",
+        "_memset"
+      ],
+      "size_output": [
+        "288",
+        "0",
+        "0",
+        "288"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/job.c:3:6:ep7j_begin\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/job.c:9:7:ep7j_allocate\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/job.c:23:6:ep7j_register\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/job.c:31:6:ep7j_revoke\t28\tstatic"
+      ]
+    },
+    "core": {
+      "source": "prototypes/ep7_volatile_hl/ep7p.c",
+      "definitions": [
+        "_ep7p_apply",
+        "_ep7p_axis_adjust",
+        "_ep7p_axis_adjust_result",
+        "_ep7p_axis_read",
+        "_ep7p_capture",
+        "_ep7p_direct_apply",
+        "_ep7p_edit",
+        "_ep7p_enter",
+        "_ep7p_init",
+        "_ep7p_register_job",
+        "_ep7p_register_task",
+        "_ep7p_release_job",
+        "_ep7p_release_task",
+        "_ep7p_unwind"
+      ],
+      "undefined": [
+        "_ep7p_decode",
+        "_memcpy",
+        "_memset"
+      ],
+      "size_output": [
+        "3552",
+        "0",
+        "0",
+        "3552"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:24:24:current\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:30:13:shape\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:145:13:apply_local\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:41:6:ep7p_init\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:45:6:ep7p_edit\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:50:6:ep7p_axis_read\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:55:6:ep7p_axis_adjust_result\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:75:6:ep7p_axis_adjust\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:79:6:ep7p_capture\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:85:6:ep7p_register_job\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:101:6:ep7p_release_job\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:109:6:ep7p_register_task\t48\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:120:6:ep7p_release_task\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:127:6:ep7p_enter\t68\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:135:6:ep7p_unwind\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:159:6:ep7p_apply\t84\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:179:6:ep7p_direct_apply\t132\tstatic"
+      ]
+    },
+    "decode": {
+      "source": "prototypes/ep7_volatile_hl/ep7p_decode.c",
+      "definitions": [
+        "_ep7p_decode"
+      ],
+      "undefined": [],
+      "size_output": [
+        "720",
+        "0",
+        "0",
+        "720"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ep7p_decode.c:6:6:ep7p_decode\t16\tstatic"
+      ]
+    },
+    "worker_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_bridges.s",
+      "definitions": [
+        "_ep7_gcc_job_allocate",
+        "_ep7_worker_native_return",
+        "ep7_native_worker_allocate_bridge",
+        "ep7_native_worker_cleanup_bridge",
+        "ep7_native_worker_process_bridge",
+        "ep7_native_worker_scope_bridge"
+      ],
+      "undefined": [
+        "_ep7q_worker_allocate_entry",
+        "_ep7q_worker_cleanup_entry",
+        "_ep7q_worker_process_entry",
+        "_ep7q_worker_scope_entry",
+        "ep7_stock_job_allocate_unresolved",
+        "ep7_stock_worker_cleanup_unresolved",
+        "ep7_stock_worker_job_unresolved",
+        "ep7_stock_worker_process_unresolved"
+      ],
+      "checked_instructions": 59,
+      "owned_wrapper_bytes": 80,
+      "additional_native_frame_bytes": 56,
+      "owned_scope_bytes": 48,
+      "owned_scope_offset": 32,
+      "pointer_result_register": "a0",
+      "size_output": [
+        "162",
+        "0",
+        "0",
+        "162"
+      ]
+    },
+    "worker_layout": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_layout.c",
+      "definitions": [
+        "_ep7q_worker_layout"
+      ],
+      "undefined": [
+        "_ep7q_stack_span",
+        "_ep7q_stack_word"
+      ],
+      "size_output": [
+        "419",
+        "0",
+        "0",
+        "419"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/worker_layout.c:2:6:ep7q_worker_layout\t56\tstatic"
+      ]
+    },
+    "worker_binding": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_binding.c",
+      "definitions": [
+        "_ep7q_worker_allocate_entry",
+        "_ep7q_worker_cleanup_entry",
+        "_ep7q_worker_process_entry",
+        "_ep7q_worker_scope_entry"
+      ],
+      "undefined": [
+        "_ep7_gcc_job_allocate",
+        "_ep7_worker_native_return",
+        "_ep7j_allocate",
+        "_ep7j_begin",
+        "_ep7j_register",
+        "_ep7j_revoke",
+        "_ep7q_stack_word",
+        "_ep7q_worker_context_unresolved",
+        "_ep7q_worker_layout",
+        "_memset"
+      ],
+      "size_output": [
+        "554",
+        "0",
+        "0",
+        "554"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/worker_binding.c:27:14:native_allocate\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/worker_binding.c:15:6:ep7q_worker_scope_entry\t88\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/worker_binding.c:29:7:ep7q_worker_allocate_entry\t84\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/worker_binding.c:35:6:ep7q_worker_process_entry\t84\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/worker_binding.c:42:6:ep7q_worker_cleanup_entry\t80\tstatic"
+      ]
+    },
+    "worker_caller": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_caller.c",
+      "definitions": [
+        "_ep7_probe_worker_allocation"
+      ],
+      "undefined": [
+        "_ep7_gcc_job_allocate"
+      ],
+      "gcc_pointer_result_a0_confirmed": true,
+      "size_output": [
+        "15",
+        "0",
+        "0",
+        "15"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/worker_caller.c:3:11:ep7_probe_worker_allocation\t12\tstatic"
+      ]
+    },
+    "queue_send_binding": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/queue_send_binding.c",
+      "definitions": [
+        "_ep7q_send_local_preserving"
+      ],
+      "undefined": [
+        "_ep7_gcc_queue_send_preserving_hooks"
+      ],
+      "size_output": [
+        "33",
+        "0",
+        "0",
+        "33"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/queue_send_binding.c:2:5:ep7q_send_local_preserving\t20\tstatic"
+      ]
+    },
+    "descriptor_send_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_bridge.s",
+      "definitions": [
+        "ep7_native_descriptor_send_bridge"
+      ],
+      "undefined": [
+        "_ep7q_descriptor_send_entry",
+        "ep7_stock_send_wrapper_unresolved"
+      ],
+      "checked_instructions": 17,
+      "incoming_native_frame_bytes": 36,
+      "additional_bridge_frame_bytes": 0,
+      "size_output": [
+        "44",
+        "0",
+        "0",
+        "44"
+      ]
+    },
+    "descriptor_send_layout": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_layout.c",
+      "definitions": [
+        "_ep7q_descriptor_send_layout"
+      ],
+      "undefined": [
+        "_ep7q_stack_span",
+        "_ep7q_stack_word",
+        "_memcpy"
+      ],
+      "size_output": [
+        "319",
+        "0",
+        "0",
+        "319"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_layout.c:4:6:ep7q_descriptor_send_layout\t56\tstatic"
+      ]
+    },
+    "descriptor_send_binding": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_binding.c",
+      "definitions": [
+        "_ep7q_descriptor_send_entry"
+      ],
+      "undefined": [
+        "_ep7q_descriptor_send_context_unresolved",
+        "_ep7q_descriptor_send_layout",
+        "_ep7q_forward_send",
+        "_ep7q_send_local_preserving"
+      ],
+      "size_output": [
+        "124",
+        "0",
+        "0",
+        "124"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_binding.c:4:5:ep7q_descriptor_send_entry\t92\tstatic"
+      ]
+    },
+    "producer_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_bridge.s",
+      "definitions": [
+        "_ep7_capture_scope_native_return",
+        "ep7_native_capture_scope_bridge",
+        "ep7_native_producer_send_bridge"
+      ],
+      "undefined": [
+        "_ep7q_capture_scope_entry",
+        "_ep7q_producer_entry",
+        "ep7_stock_command_send_unresolved",
+        "ep7_stock_kind19_metadata_producer_unresolved"
+      ],
+      "checked_instructions": 30,
+      "owned_scope_frame_bytes": 64,
+      "additional_native_frame_bytes": 32,
+      "owned_scope_offset": 24,
+      "size_output": [
+        "81",
+        "0",
+        "0",
+        "81"
+      ]
+    },
+    "producer_layout": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_layout.c",
+      "definitions": [
+        "_ep7q_producer_layout"
+      ],
+      "undefined": [
+        "_ep7q_stack_span",
+        "_ep7q_stack_word",
+        "_memcpy"
+      ],
+      "size_output": [
+        "386",
+        "0",
+        "0",
+        "386"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/producer_layout.c:4:6:ep7q_producer_layout\t52\tstatic"
+      ]
+    },
+    "producer_binding": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_binding.c",
+      "definitions": [
+        "_ep7q_capture_scope_entry",
+        "_ep7q_producer_entry"
+      ],
+      "undefined": [
+        "_ep7_capture_scope_native_return",
+        "_ep7q_capture_scope_init",
+        "_ep7q_capture_snapshot_unresolved",
+        "_ep7q_producer_context_unresolved",
+        "_ep7q_producer_layout",
+        "_ep7q_producer_send",
+        "_ep7q_send_local_preserving"
+      ],
+      "size_output": [
+        "197",
+        "0",
+        "0",
+        "197"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/producer_binding.c:5:6:ep7q_capture_scope_entry\t52\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/producer_binding.c:12:5:ep7q_producer_entry\t100\tstatic"
+      ]
+    }
+  },
+  "remaining_external_symbols": [
+    "_ep7q_capture_snapshot_unresolved",
+    "_ep7q_descriptor_receive_context_unresolved",
+    "_ep7q_descriptor_send_context_unresolved",
+    "_ep7q_materializer_context_unresolved",
+    "_ep7q_producer_context_unresolved",
+    "_ep7q_worker_context_unresolved",
+    "ep7_stock_command_send_unresolved",
+    "ep7_stock_job_allocate_unresolved",
+    "ep7_stock_kind19_metadata_producer_unresolved",
+    "ep7_stock_queue_receive_local_unresolved",
+    "ep7_stock_queue_send_local_unresolved",
+    "ep7_stock_queue_send_preserving_unresolved",
+    "ep7_stock_receive_wrapper_unresolved",
+    "ep7_stock_send_wrapper_unresolved",
+    "ep7_stock_worker_cleanup_unresolved",
+    "ep7_stock_worker_job_unresolved",
+    "ep7_stock_worker_process_unresolved"
+  ],
+  "hash_checks_performed": false,
+  "target_linked": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "native_adapter_installed": false
+}

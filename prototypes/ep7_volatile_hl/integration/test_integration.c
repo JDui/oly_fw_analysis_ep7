@@ -12,6 +12,7 @@
 #include "snapshot_transport/native/descriptor_send.h"
 #include "snapshot_transport/native/producer.h"
 #include "snapshot_transport/native/queue.h"
+#include "snapshot_transport/native/worker.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <limits.h>
@@ -237,6 +238,69 @@ static void consumer_boundaries(void){
     memset(guard,0x5a,sizeof guard);
     assert(!ep7q_claim_owned(&transport,guard,sizeof guard,&out));
     assert(!ep7q_retire_owned(&transport,guard,sizeof guard) && guard[299]==0x5a);
+}
+typedef struct {capture_host host;unsigned requested;bool allocation_fails;} worker_fixture;
+static void *worker_allocate(void *ctx,unsigned size){
+    worker_fixture *f=ctx;f->requested=size;
+    if(f->allocation_fails)return NULL;
+    f->host.owner=malloc(size+64u);assert(f->host.owner);f->host.job=f->host.owner+64;
+    assert((uint32_t)(uintptr_t)f->host.job && (uint32_t)(uintptr_t)f->host.job<=UINT32_MAX-size);
+    memset(f->host.job,0xa5,size);return f->host.job;
+}
+static void worker_boundaries(void){
+    ep7t transport={0};ep7t_ticket ticket;ep7j_scope scope;ep7p_snapshot frozen={3,{0}};
+    unsigned char descriptor[EP7W_MAX]={0},output[EP7P_OUTPUT];worker_fixture f={0};unsigned i,scenario;void *allocation;
+    unsigned char bytes[556]={0};uint32_t w=0x5000,label=0x70002000;ep7q_worker_args args;
+    ep7q_stack stack={bytes,w,sizeof bytes,true};
+    static const unsigned layouts[][6]={
+        {EP7Q_WORKER_ENTER,0,0,32,140,136},
+        {EP7Q_WORKER_ALLOCATE,4,0x603537fa,136,244,240},
+        {EP7Q_WORKER_PROCESS,24,0x603f2897,112,220,216},
+        {EP7Q_WORKER_CLEANUP,24,0x603f28c7,112,220,216}
+    };
+    for(i=0;i<4;i++){
+        unsigned owner=layouts[i][0]==EP7Q_WORKER_ALLOCATE?104:80;
+        memset(bytes,0,sizeof bytes);stack.extent=layouts[i][4]+312;
+        if(i){put32(bytes+layouts[i][1],layouts[i][2]);put32(bytes+owner,label);}
+        if(i==1)put32(bytes+48,0x603f2845);
+        put32(bytes+layouts[i][5],0x603f2727);put32(bytes+layouts[i][3]-8,w+layouts[i][4]);
+        assert(ep7q_worker_layout(&stack,w,layouts[i][0],w+layouts[i][4],label,&args));
+        assert(args.scope==w+layouts[i][3] && args.descriptor==w+layouts[i][4]);
+        --stack.extent;assert(!ep7q_worker_layout(&stack,w,layouts[i][0],w+layouts[i][4],label,&args));++stack.extent;
+        if(i){put32(bytes+owner,0x603f2727);assert(!ep7q_worker_layout(&stack,w,layouts[i][0],w+layouts[i][4],label,&args));}
+    }
+    stack.expanded_group_ready=false;stack.bytes=(const unsigned char *)(uintptr_t)1;
+    assert(!ep7q_worker_layout(&stack,w,EP7Q_WORKER_ENTER,w+140,label,&args));
+    assert(ep7t_init(&transport,(ep7p_ops){NULL,lock,unlock,current}));frozen.hl[0]=3;
+    put32(descriptor+48,100);put32(descriptor+52,19);put16(descriptor+194,0x2001);
+    for(scenario=0;scenario<4;scenario++){
+        assert(ep7t_prepare(&transport,100,&frozen,&ticket) && ep7t_publish(&transport,ticket));
+        assert(ep7w_write_trailer(descriptor+300,ticket));ep7j_begin(&scope,&transport,descriptor,sizeof descriptor);
+        assert(scope.state==EP7J_FROZEN);assert(ep7q_retire_owned(&transport,descriptor,sizeof descriptor));
+        f.allocation_fails=scenario==3;
+        allocation=ep7j_allocate(&scope,EP7P_STOCK,worker_allocate,&f);
+        assert(allocation==f.host.job && f.requested==EP7P_EXTENT);
+        if(f.allocation_fails){assert(!scope.allocation && !ep7j_register(&scope,&core,NULL));continue;}
+        assert(f.host.job[0]==0xa5 && f.host.job[EP7P_STOCK-1]==0xa5);
+        for(i=EP7P_STOCK;i<EP7P_EXTENT;i++)assert(f.host.job[i]==0);
+        memset(f.host.job,0,EP7P_STOCK);assert(convert(&f.host,&f.host)==0);
+        if(scenario==1)fail_lock=true;
+        assert(ep7j_register(&scope,&core,scenario==2?NULL:f.host.job)==(scenario==0));
+        fail_lock=false;assert(!ep7j_register(&scope,&core,f.host.job));
+        memset(output,0x5a,sizeof output);
+        assert(ep7p_direct_apply(&core,(uintptr_t)f.host.job+11364,output,sizeof output)==(scenario==0));
+        if(scenario==0){
+            assert(output[706]==0x48 && output[707]==0xf4);
+            fail_lock=true;assert(!ep7j_revoke(&scope,&core) && scope.job);fail_lock=false;
+        }else for(i=0;i<sizeof output;i++)assert(output[i]==0x5a);
+        assert(ep7j_revoke(&scope,&core) && !scope.job);assert(ep7j_revoke(&scope,&core));
+        cleanup(&f.host,&f.host);
+    }
+    /* No captured capability uses exactly the stock request and cannot register. */
+    ep7j_begin(&scope,NULL,NULL,0);f.allocation_fails=false;
+    allocation=ep7j_allocate(&scope,EP7P_STOCK,worker_allocate,&f);
+    assert(allocation==f.host.job && f.requested==EP7P_STOCK);
+    assert(!ep7j_register(&scope,&core,f.host.job));cleanup(&f.host,&f.host);
 }
 static void materializer_boundaries(void){
     unsigned char bytes[864]={0};uint32_t w=0x1000;ep7q_materializer_args a;
@@ -567,7 +631,7 @@ int main(void){
     assert(send(0x9014,0)==1);assert(send(0x9032,-7)==1);text_is(frame(),"L ALL -7");
     setter_status=0;f=frame();assert(ep7_text_present(&widget_token,&f)==0);setter_status=1;
     n=text_calls;f.category=1;assert(ep7_text_present(&widget_token,&f)==0);assert(text_calls==n);
-    transport_boundaries();wire_boundaries();consumer_boundaries();materializer_boundaries();owned_io_boundaries();descriptor_receive_boundaries();descriptor_send_boundaries();producer_boundaries();capture_vertical_slice();
+    transport_boundaries();wire_boundaries();consumer_boundaries();worker_boundaries();materializer_boundaries();owned_io_boundaries();descriptor_receive_boundaries();descriptor_send_boundaries();producer_boundaries();capture_vertical_slice();
     assert(!held && current_queries==0);
     puts("router -> sidecar -> owned command receive -> three owned forward/receive relays -> ticket -> 16 job slots: PASS; native queue backend/ABI/materializer mocked");return 0;
 }

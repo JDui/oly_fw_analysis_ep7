@@ -39,6 +39,11 @@ if args.queue_pipeline_abi_only:
  files['transport']=core/'snapshot_transport/transport.c'
  files['producer']=core/'snapshot_transport/producer.c'
  files['consumer']=core/'snapshot_transport/consumer.c'
+ files['job']=core/'snapshot_transport/job.c'
+ files['core']=core/'ep7p.c'
+ files['decode']=core/'ep7p_decode.c'
+ files.update({n:core/'snapshot_transport/native'/p for n,p in
+     [('worker_bridge','worker_bridges.s'),('worker_layout','worker_layout.c'),('worker_binding','worker_binding.c'),('worker_caller','worker_caller.c')]})
  files['queue_send_binding']=core/'snapshot_transport/native/queue_send_binding.c'
  files.update({n:core/'snapshot_transport/native'/p for n,p in
      [('descriptor_send_bridge','descriptor_send_bridge.s'),('descriptor_send_layout','descriptor_send_layout.c'),('descriptor_send_binding','descriptor_send_binding.c'),
@@ -162,6 +167,38 @@ with tempfile.TemporaryDirectory() as temp:
    objects[name]['owned_scope_frame_bytes']=64
    objects[name]['additional_native_frame_bytes']=32
    objects[name]['owned_scope_offset']=24
+  if name=='worker_bridge':
+   dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   expected=['add','mov','mov','mov','mov','mov','mov','add','mov','call','mov','mov','mov','mov','call','add','ret',
+             'mov','mov','add','call','add','ret','movm','add','call','ret']
+   observer=['add','mov','mov','mov','mov','mov','mov','add','mov','call','mov','mov','mov','mov','add','jmp']
+   if [mn for mn,op in ins]!=expected+observer+observer:raise ValueError('worker bridge instruction sequence changed')
+   literals={0:'-80,sp',1:'d0,(16,sp)',2:'d1,(20,sp)',3:'a0,(24,sp)',4:'a1,(28,sp)',
+             5:'sp,a0',6:'a0,d1',7:'32,a0',8:'a0,d0',10:'(16,sp),d0',11:'(20,sp),d1',
+             12:'(24,sp),a0',13:'(28,sp),a1',15:'80,sp',16:'[a2,a3],56',
+             17:'sp,a0',18:'a0,d1',19:'-16,sp',21:'16,sp',22:'[],4',23:'[a2],(sp)',24:'-12,sp',26:'[a2],16'}
+   observer_ops={0:'-16,sp',1:'d0,(12,sp)',2:'d1,(16,sp)',3:'a0,(20,sp)',4:'a1,(24,sp)',5:'a0,d0',
+                 6:'sp,a0',7:'16,a0',8:'a0,d1',10:'(12,sp),d0',11:'(16,sp),d1',12:'(20,sp),a0',13:'(24,sp),a1',14:'16,sp'}
+   for base in [27,43]:literals.update({base+i:op for i,op in observer_ops.items()})
+   if any(ins[i][1]!=op for i,op in literals.items()):raise ValueError('worker bridge frame/input preservation changed')
+   for i,mask in {9:',[],0',14:',[a2,a3],56',20:',[],0',25:',[],4',36:',[],0',52:',[],0'}.items():
+    if not ins[i][1].endswith(mask):raise ValueError('worker bridge native/GCC call frame changed')
+   addresses=re.findall(r'^\s*([0-9a-f]+):\s+(?:[0-9a-f]{2}\s+)+[a-z]',dis,re.M)
+   rows={line.split()[-1]:int(line.split()[0],16) for line in syms.splitlines() if len(line.split())>=5 and '*UND*' not in line and re.fullmatch('[0-9a-f]+',line.split()[0])}
+   if rows.get('_ep7_worker_native_return')!=int(addresses[15],16):raise ValueError('worker scope return label changed')
+   targets=['_ep7q_worker_scope_entry','ep7_stock_worker_job_unresolved','_ep7q_worker_allocate_entry',
+            'ep7_stock_job_allocate_unresolved','_ep7q_worker_process_entry','ep7_stock_worker_process_unresolved',
+            '_ep7q_worker_cleanup_entry','ep7_stock_worker_cleanup_unresolved']
+   if dis.count('R_MN10300_PCREL32')!=8 or any(symbol+'+0x1' not in dis for symbol in targets):
+    raise ValueError('worker bridge relocation targets changed')
+   objects[name].update(checked_instructions=len(ins),owned_wrapper_bytes=80,additional_native_frame_bytes=56,
+                        owned_scope_bytes=48,owned_scope_offset=32,pointer_result_register='a0')
+  if name=='worker_caller':
+   dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
+   if '_ep7_gcc_job_allocate+0x1' not in dis or not re.search(r'mov\s+a0,d0',dis):
+    raise ValueError('GCC pointer result no longer consumed from a0')
+   objects[name]['gcc_pointer_result_a0_confirmed']=True
   if args.transport_only or materializer_mode:
    objects[name]['size_output']=subprocess.check_output([prefix+'size',str(obj)],text=True).splitlines()[1].split()[:4]
    if src.suffix=='.c':objects[name]['stack_usage']=obj.with_suffix('.su').read_text().splitlines()
@@ -171,7 +208,9 @@ if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7
 if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved','ep7_stock_receive_wrapper_unresolved'}
 if args.queue_pipeline_abi_only:expected|={'_ep7q_descriptor_send_context_unresolved','ep7_stock_send_wrapper_unresolved',
-    '_ep7q_capture_snapshot_unresolved','_ep7q_producer_context_unresolved','ep7_stock_kind19_metadata_producer_unresolved','ep7_stock_command_send_unresolved'}
+    '_ep7q_capture_snapshot_unresolved','_ep7q_producer_context_unresolved','ep7_stock_kind19_metadata_producer_unresolved','ep7_stock_command_send_unresolved',
+    '_ep7q_worker_context_unresolved','ep7_stock_worker_job_unresolved','ep7_stock_job_allocate_unresolved',
+    'ep7_stock_worker_process_unresolved','ep7_stock_worker_cleanup_unresolved'}
 if external!=expected:raise ValueError('unexpected external symbols '+repr(external))
 scope='Snapshot transport, wire codec, owned queue I/O and memory target objects only' if args.transport_only else 'Current seven-object controller sidecar target compile and symbol closure only'
 if args.queue_abi_only:scope='Raw queue and notification-preserving send callable ABI bridges; no native invocation'

@@ -119,3 +119,7 @@ G2尾端仍有worker claim/retire和drain/失败处理，snapshot来源与任务
 [owned consumer](OWNED_CONSUMER.md)已实现一次领取和幂等撤销，host16-job链及目标对象检查
 通过。失败锁保留清理责任并禁止后续claim；原生worker job/cleanup、ACK/drain与失败保持
 策略是下一接合点，不能把portable完成结果等同于原生free前已撤销。
+
+[worker allocation/process/cleanup桥](WORKER_JOB_BINDING.md)已按原厂seam实现，自有scope
+跨越原job函数；host与目标对象检查通过。实际等待/稳定context仍未绑定，不能将重试循环
+视为已验证RTOS策略。下一项为ACK/drain撤销与G3运行时供应，随后集中关闭未解析provider。
