@@ -1,0 +1,95 @@
+{
+  "kernel": "6.18.40.1-microsoft-standard-WSL2",
+  "scope": "Minimal sanitizer runtime diagnostic, not firmware validation",
+  "variants": {
+    "default_pie": {
+      "compiler_flags": [],
+      "elf_type": "Type:                              DYN (Position-Independent Executable file)",
+      "runs": [
+        {
+          "attempt": 1,
+          "returncode": -9,
+          "timeout": true,
+          "stdout": "",
+          "stderr_bytes": 21614368,
+          "sanitizer_init_done": false,
+          "deadly_signal": true
+        }
+      ]
+    },
+    "fixed_executable": {
+      "compiler_flags": [
+        "-fno-pie",
+        "-no-pie"
+      ],
+      "elf_type": "Type:                              EXEC (Executable file)",
+      "runs": [
+        {
+          "attempt": 1,
+          "returncode": 0,
+          "timeout": false,
+          "stdout": "MAIN\n",
+          "stderr_bytes": 14125,
+          "sanitizer_init_done": true,
+          "deadly_signal": false
+        },
+        {
+          "attempt": 2,
+          "returncode": 0,
+          "timeout": false,
+          "stdout": "MAIN\n",
+          "stderr_bytes": 14125,
+          "sanitizer_init_done": true,
+          "deadly_signal": false
+        },
+        {
+          "attempt": 3,
+          "returncode": 0,
+          "timeout": false,
+          "stdout": "MAIN\n",
+          "stderr_bytes": 14125,
+          "sanitizer_init_done": true,
+          "deadly_signal": false
+        },
+        {
+          "attempt": 4,
+          "returncode": 0,
+          "timeout": false,
+          "stdout": "MAIN\n",
+          "stderr_bytes": 14125,
+          "sanitizer_init_done": true,
+          "deadly_signal": false
+        },
+        {
+          "attempt": 5,
+          "returncode": 0,
+          "timeout": false,
+          "stdout": "MAIN\n",
+          "stderr_bytes": 14125,
+          "sanitizer_init_done": true,
+          "deadly_signal": false
+        },
+        {
+          "attempt": 6,
+          "returncode": 0,
+          "timeout": false,
+          "stdout": "MAIN\n",
+          "stderr_bytes": 14125,
+          "sanitizer_init_done": true,
+          "deadly_signal": false
+        }
+      ]
+    }
+  },
+  "source_text": "#include <unistd.h>\nint main(void){return write(1,\"MAIN\\n\",5)==5?0:1;}\n",
+  "common_compiler_flags": [
+    "-std=c11",
+    "-O1",
+    "-g",
+    "-fsanitize=address,undefined",
+    "-fno-sanitize-recover=all"
+  ],
+  "environment": "ASAN_OPTIONS=detect_leaks=0:verbosity=1",
+  "per_run_timeout_seconds": 3,
+  "interpretation": "Default PIE ASan startup failure reproduced independently of EP7 code before its MAIN marker and before ASan Init done. Non-PIE is an observed local mitigation, not a proved general runtime root cause."
+}

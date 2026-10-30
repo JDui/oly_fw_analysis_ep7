@@ -129,3 +129,10 @@ uses this forwarder for all three relay stages and16 job slots, plus explicit
 failed-send/legacy/route-change cleanup. Run the same checker with optional
 `--asan-verbose` to capture sanitizer startup diagnostics without changing tests
 or their timeout. See [native sender constraints](../../../docs/ep7/DESCRIPTOR_SEND_BINDING.md).
+
+`producer.c` now carries a previously frozen snapshot in an owned one-use scope,
+publishes its ticket before command enqueue, and delegates neutral16-byte stock
+send when admission fails. The full host integration uses this producer for all16
+jobs. Native scope bridges and the corrected notification-preserving sender are
+described in [PRODUCER_SCOPE_BINDING](../../../docs/ep7/PRODUCER_SCOPE_BINDING.md).
+No source capture/current-task provider is silently supplied by these modules.

@@ -73,3 +73,25 @@ Owned send failure, legacy routing and lost route eligibility transfer a ticket
 VALUE to a mandatory retirement owner; a failed lock cannot silently discard that
 obligation. The target provider remains unresolved. [Derivation and results](../../../../docs/ep7/DESCRIPTOR_SEND_BINDING.md).
 Use `--queue-pipeline-abi-only` for the current combined command/receive/send set.
+
+## Frozen producer scope and preserved send notifications
+
+`producer_*` wraps only602ac3de with an explicitly owned64-byte scope frame and
+another32-byte native metadata-call frame. It carries the earlier frozen value
+to602ac869 through a checked stack chain and a linked wrapper-return label. The
+portable producer consumes one sampling opportunity, prepares/publishes a ticket
+before enqueue, and transfers failure cleanup by value. Metadata stays148 bytes.
+The capture snapshot provider must still prove native sidecar ownership/exclusion.
+
+Native send integration now uses the added10-instruction
+`ep7_gcc_queue_send_preserving_hooks` veneer to600514b6, preserving its conditional
+post-send60051078 notification. Direct raw send would omit it and is no longer
+used by candidate producer/descriptor adapters. `queue_send_binding.c` translates
+named timeout-2 into the existing callback vocabulary so normalized-2 survives.
+Current queue-bridge checks cover23 instructions/three native relocations; old
+13-instruction/two-target reports above are historical.
+
+[Scope derivation and current reports](../../../../docs/ep7/PRODUCER_SCOPE_BINDING.md)
+record30 producer bridge instructions,12 unresolved native/provider symbols and
+strict/ASan/UBSan integration. Sanitizer executables now use non-PIE placement after
+an independent minimal-program startup failure reproduction; checks remain enabled.

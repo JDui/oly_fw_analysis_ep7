@@ -9,6 +9,8 @@
 #include "snapshot_transport/native/materializer.h"
 #include "snapshot_transport/native/descriptor_receive.h"
 #include "snapshot_transport/native/descriptor_send.h"
+#include "snapshot_transport/native/producer.h"
+#include "snapshot_transport/native/queue.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <limits.h>
@@ -165,6 +167,7 @@ static void wire_boundaries(void){
 typedef struct {
     unsigned char bytes[EP7W_MAX];unsigned length,maximum,receives,sends;
     int raw;bool qualified;
+    ep7t *claim_transport;bool claimed,fail_lock_after_send;ep7p_snapshot claimed_snapshot;
 } queue_fixture;
 static bool qualify_queue(void *ctx,unsigned handle,unsigned maximum){
     queue_fixture *q=ctx;assert(handle && maximum<=EP7W_MAX);
@@ -176,10 +179,24 @@ static int receive_queue(void *ctx,unsigned handle,void *out,int timeout){
 }
 static int send_queue(void *ctx,unsigned handle,const void *in,unsigned bytes,int timeout){
     queue_fixture *q=ctx;(void)handle;assert(timeout==-1);++q->sends;
-    assert(bytes<=q->maximum);memcpy(q->bytes,in,bytes);q->length=bytes;return q->raw;
+    assert(bytes<=q->maximum);memcpy(q->bytes,in,bytes);q->length=bytes;
+    if(q->claim_transport && handle==0x4b && bytes==28 && q->raw>=0){
+        ep7t_ticket ticket;assert(ep7w_ticket(16,q->bytes,bytes,&ticket)==EP7W_TAGGED);
+        q->claimed=ep7t_claim(q->claim_transport,ticket,&q->claimed_snapshot);assert(q->claimed);
+    }
+    if(q->fail_lock_after_send)fail_lock=true;
+    return q->raw;
 }
 static ep7q_ops queue_ops(queue_fixture *q)
 { ep7q_ops ops={q,qualify_queue,receive_queue,send_queue};return ops; }
+/* Models the named native send's normalized result and notification. The C
+   status adapter is real; its MN10300 veneer/native wrapper are not executed. */
+static queue_fixture *named_queue_fixture;
+static unsigned named_notifications;
+int ep7_gcc_queue_send_preserving_hooks(unsigned handle,const void *p,unsigned bytes,int timeout){
+    int status;assert(named_queue_fixture);
+    status=send_queue(named_queue_fixture,handle,p,bytes,timeout);++named_notifications;return status;
+}
 static void materializer_boundaries(void){
     unsigned char bytes[864]={0};uint32_t w=0x1000;ep7q_materializer_args a;
     ep7q_stack s={bytes,w,sizeof bytes,true};unsigned char *command=bytes+196;
@@ -347,15 +364,52 @@ static void descriptor_send_boundaries(void){
     s.expanded_group_ready=false;s.bytes=(const unsigned char *)(uintptr_t)1;
     assert(!ep7q_descriptor_send_layout(&s,w,&in,&args));
 }
-static ep7t_ticket wire_relay_fixture(ep7t *transport,ep7t_ticket ticket){
+static void producer_boundaries(void){
+    ep7t transport={0};queue_fixture q={0};retirement_fixture owner={&transport,{0},0};
+    ep7q_producer_ops ops={&transport,{queue_ops(&q),&owner,take_retirement}};
+    ep7p_snapshot snapshot={3,{0}};ep7q_capture_scope scope;ep7t_ticket ticket;
+    unsigned char command[16]={0},bytes[180]={0};uint32_t w=0x4000,label=0x70001000;unsigned calls;
+    ep7q_stack stack={bytes,w,sizeof bytes,true};ep7q_producer_input in={0x4b,16,w+52,UINT32_MAX};ep7q_producer_args args;
+    assert(ep7t_init(&transport,(ep7p_ops){NULL,lock,unlock,current}));
+    put32(command+8,19);put32(command+12,100);q.qualified=true;snapshot.hl[0]=3;
+    ep7q_capture_scope_init(&scope,7,&snapshot);snapshot.hl[0]=0;q.claim_transport=&transport;
+    assert(ep7q_producer_send(&ops,&scope,0x4b,-1,command,16)==0 && scope.state==EP7Q_SCOPE_CONSUMED);
+    assert(q.claimed && q.claimed_snapshot.profile==3 && q.claimed_snapshot.hl[0]==3);
+    assert(ep7w_ticket(16,q.bytes,q.length,&ticket)==EP7W_TAGGED && ep7t_retire(&transport,ticket));
+    q.claim_transport=NULL;calls=q.sends;
+    assert(ep7q_producer_send(&ops,&scope,0x4b,-1,command,16)==256 && q.sends==calls);
+    ep7q_capture_scope_init(&scope,7,&snapshot);fail_lock=true;
+    assert(ep7q_producer_send(&ops,&scope,0x4b,-1,command,16)==256 && scope.state==EP7Q_SCOPE_CONSUMED);
+    fail_lock=false;
+    assert(ep7q_producer_send(&ops,&scope,0x4b,-1,command,16)==256 && q.sends==calls); /* no late backfill */
+    ep7q_capture_scope_init(&scope,7,&snapshot);q.raw=-2;q.fail_lock_after_send=true;
+    named_queue_fixture=&q;ops.forward.queue.send=ep7q_send_local_preserving;
+    assert(ep7q_producer_send(&ops,&scope,0x4b,-1,command,16)==-2 && owner.pending.serial && owner.calls==1);
+    assert(named_notifications==1);named_queue_fixture=NULL;ops.forward.queue.send=send_queue;
+    fail_lock=false;q.fail_lock_after_send=false;assert(ep7t_retire(&transport,owner.pending));owner.pending=(ep7t_ticket){0};
+    ep7q_capture_scope_init(&scope,7,&snapshot);q.qualified=false;calls=q.sends;
+    assert(ep7q_producer_send(&ops,&scope,0x4b,-1,command,16)==256 && q.sends==calls && owner.calls==1);
+    put32(bytes+48,0x602ac870);put32(bytes+80,label);put32(bytes+176,0x602ac3e3);
+    put32(bytes+44,7);put32(bytes+96,7);put32(bytes+104,7);
+    assert(ep7q_producer_layout(&stack,w,&in,label,&args) && args.scope==w+104 && args.command==w+52 && args.timeout==-1);
+    --stack.extent;assert(!ep7q_producer_layout(&stack,w,&in,label,&args) && !args.scope);++stack.extent;
+    put32(bytes+96,8);assert(!ep7q_producer_layout(&stack,w,&in,label,&args));put32(bytes+96,7);
+    put32(bytes+80,0x602ac3e3);assert(!ep7q_producer_layout(&stack,w,&in,label,&args));put32(bytes+80,label);
+    ++in.command;assert(!ep7q_producer_layout(&stack,w,&in,label,&args));--in.command;
+    assert(!ep7q_producer_layout(&stack,w,&in,0,&args));
+    stack.expanded_group_ready=false;stack.bytes=(const unsigned char *)(uintptr_t)1;
+    assert(!ep7q_producer_layout(&stack,w,&in,label,&args));
+}
+static ep7t_ticket wire_relay_fixture(ep7t *transport,ep7q_capture_scope *scope){
     unsigned char cmd[EP7W_COMMAND]={0},native[EP7W_MAX];
     queue_fixture q={0};ep7q_ops ops=queue_ops(&q);ep7q_result result;
     retirement_fixture owner={transport,{0},0};ep7q_forward_ops forward={ops,&owner,take_retirement};
-    size_t n;unsigned i;static const unsigned queues[]={0x4c,0xab,0x4f};
+    ep7q_producer_ops producer={transport,forward};ep7t_ticket ticket;
+    unsigned i;static const unsigned queues[]={0x4c,0xab,0x4f};
     q.qualified=true;
-    put32(cmd+8,19);put32(cmd+12,(uint32_t)ticket.metadata);
-    assert(ep7w_encode(EP7W_COMMAND,cmd,ticket,q.bytes,sizeof q.bytes,&n));
-    q.length=(unsigned)n;q.raw=(int)n;
+    put32(cmd+8,19);put32(cmd+12,100);q.raw=0;
+    assert(ep7q_producer_send(&producer,scope,0x4b,-1,cmd,sizeof cmd)==0 && q.length==28 && !owner.calls);
+    assert(ep7w_ticket(16,q.bytes,q.length,&ticket)==EP7W_TAGGED);q.raw=(int)q.length;
     result=ep7q_command_receive(&ops,0x4b,-1,cmd,sizeof cmd,native,sizeof native);
     assert(result.called && result.status==0 && result.ticket.serial==ticket.serial);
     /* Materializer is still a native fixture; serializer/relay codec is real.
@@ -403,13 +457,12 @@ static void capture_vertical_slice(void){
     assert(ep7p_capture(&core,11,3,&after));assert(after.hl[0]==0 && after.hl[12]==0);
     assert(ep7t_init(&transport,(ep7p_ops){NULL,lock,unlock,current}));
     for(i=0;i<16;i++){
-        ep7l_result result;h.slot=i;
+        ep7l_result result;ep7q_capture_scope scope;h.slot=i;
         /* Each fixture job gets a new ticket. Native relay is still modeled:
            every copied descriptor must explicitly carry THIS full ticket. */
-        assert(ep7t_prepare(&transport,100,&frozen,&ticket));
-        assert(ep7t_publish(&transport,ticket));
+        ep7q_capture_scope_init(&scope,7,&frozen);
         assert(!ep7t_claim(&transport,previous,&delivered));
-        ticket=wire_relay_fixture(&transport,ticket);
+        ticket=wire_relay_fixture(&transport,&scope);
         assert(ep7t_claim(&transport,ticket,&delivered));
         assert(!ep7t_claim(&transport,ticket,&after));
         assert(ep7t_retire(&transport,ticket));previous=ticket;
@@ -473,7 +526,7 @@ int main(void){
     assert(send(0x9014,0)==1);assert(send(0x9032,-7)==1);text_is(frame(),"L ALL -7");
     setter_status=0;f=frame();assert(ep7_text_present(&widget_token,&f)==0);setter_status=1;
     n=text_calls;f.category=1;assert(ep7_text_present(&widget_token,&f)==0);assert(text_calls==n);
-    transport_boundaries();wire_boundaries();materializer_boundaries();owned_io_boundaries();descriptor_receive_boundaries();descriptor_send_boundaries();capture_vertical_slice();
+    transport_boundaries();wire_boundaries();materializer_boundaries();owned_io_boundaries();descriptor_receive_boundaries();descriptor_send_boundaries();producer_boundaries();capture_vertical_slice();
     assert(!held && current_queries==0);
     puts("router -> sidecar -> owned command receive -> three owned forward/receive relays -> ticket -> 16 job slots: PASS; native queue backend/ABI/materializer mocked");return 0;
 }

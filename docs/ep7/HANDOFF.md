@@ -45,6 +45,13 @@ materializer三调用链已实现[有界栈映射与接收桥](MATERIALIZER_RECE
 owner仍未绑定。检查器增加`--asan-verbose`诊断选项，不改测试/30秒超时。下一项为
 producer command与worker claim/drain清理，以及G3/G6 context和安装发布。
 
+producer已通过[自有栈scope接合](PRODUCER_SCOPE_BINDING.md)：提前复制已冻结值，发送点
+生成28字节command，失败不晚补填。原metadata148不变。发现原600514b6含发送后
+通知，已将producer和descriptor发送均改为保留该原厂封装；此前raw send路径从未安装。
+48条原厂指令、30条producer桥指令、23条queue桥指令及host strict/ASan/UBSan通过。
+ASan超时已在最小PIE程序初始化阶段独立复现；non-PIE检查通过，详见诊断报告。
+当前12个原生/capture/context外部符号未绑定，整体固件构建未开始；下一项为worker/drain。
+
 ## 本轮恢复后的增量
 
 - 在既有 controller sidecar 中实现 `ep7c_resolve_live`，无需额外 token map。

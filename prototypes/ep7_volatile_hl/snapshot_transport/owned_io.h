@@ -10,6 +10,8 @@ typedef struct {
     /* Synchronous local raw ABI vocabulary. No capacity arg exists in stock:
      * backend must copy <= the qualified maximum and retain no buffer on return.
      * Receive returns actual length or negative error; send returns native status.
+     * A preserving named-send binding may map normalized timeout-2 back to-50
+     * for this vocabulary; do not bypass native post-send queue notifications.
      * Do NOT substitute remote wrappers with positive255 allocation failures. */
     int (*receive)(void *,unsigned,void *,int);
     int (*send)(void *,unsigned,const void *,unsigned,int);

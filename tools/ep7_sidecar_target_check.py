@@ -6,7 +6,7 @@ parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--tool-prefix',required=True,help='trusted installed tool path prefix ending mn10300-elf-')
 mode=parser.add_mutually_exclusive_group()
 mode.add_argument('--transport-only',action='store_true',help='compile snapshot transport, wire codec, owned queue I/O and existing memory support')
-mode.add_argument('--queue-abi-only',action='store_true',help='assemble local raw queue veneers and compile their GCC caller probes')
+mode.add_argument('--queue-abi-only',action='store_true',help='assemble raw queue and notification-preserving send veneers plus GCC caller probes')
 mode.add_argument('--materializer-abi-only',action='store_true',help='compile exact materializer receiver, frame mapper and local queue bridge closure')
 mode.add_argument('--receive-abi-only',action='store_true',help='compile command and descriptor receiver bridges and bounded stack mappers')
 mode.add_argument('--queue-pipeline-abi-only',action='store_true',help='compile command/descriptor receive and descriptor forward bridges')
@@ -36,8 +36,12 @@ if receiver_mode:
      [('descriptor_receive_bridge','descriptor_receive_bridge.s'),('descriptor_receive_layout','descriptor_receive_layout.c'),('descriptor_receive_binding','descriptor_receive_binding.c')]})
 if args.queue_pipeline_abi_only:
  files['forward']=core/'snapshot_transport/forward.c'
+ files['transport']=core/'snapshot_transport/transport.c'
+ files['producer']=core/'snapshot_transport/producer.c'
+ files['queue_send_binding']=core/'snapshot_transport/native/queue_send_binding.c'
  files.update({n:core/'snapshot_transport/native'/p for n,p in
-     [('descriptor_send_bridge','descriptor_send_bridge.s'),('descriptor_send_layout','descriptor_send_layout.c'),('descriptor_send_binding','descriptor_send_binding.c')]})
+     [('descriptor_send_bridge','descriptor_send_bridge.s'),('descriptor_send_layout','descriptor_send_layout.c'),('descriptor_send_binding','descriptor_send_binding.c'),
+      ('producer_bridge','producer_bridge.s'),('producer_layout','producer_layout.c'),('producer_binding','producer_binding.c')]})
 objects={};definitions={};undefined=set()
 with tempfile.TemporaryDirectory() as temp:
  for name,src in files.items():
@@ -54,22 +58,24 @@ with tempfile.TemporaryDirectory() as temp:
    definitions[symbol]=name
   undefined|=und
   objects[name]=dict(source=str(src.relative_to(root)),definitions=sorted(defs),undefined=sorted(und))
-  if args.queue_abi_only:
+  if (args.queue_abi_only or args.queue_pipeline_abi_only) and name in {'queue_bridge','caller'}:
    if name=='queue_bridge':
     dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
     ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
     expected_ins=[('movm','[a2],(sp)'),('add','-12,sp'),('mov','d1,a0'),('mov','(28,sp),d1'),('call',None),('ret','[a2],16'),
-                  ('movm','[a2],(sp)'),('add','-12,sp'),('mov','d1,a0'),('mov','(28,sp),d1'),('mov','(32,sp),a1'),('call',None),('ret','[a2],16')]
+                  ('movm','[a2],(sp)'),('add','-12,sp'),('mov','d1,a0'),('mov','(28,sp),d1'),('mov','(32,sp),a1'),('call',None),('ret','[a2],16'),
+                  ('movm','[a2],(sp)'),('add','-20,sp'),('mov','d1,(12,sp)'),('mov','(36,sp),d1'),('mov','d1,(16,sp)'),
+                  ('mov','sp,a0'),('add','12,a0'),('mov','(40,sp),d1'),('call',None),('ret','[a2],24')]
     if len(ins)!=len(expected_ins):raise ValueError('queue bridge instruction count changed')
     for actual,want in zip(ins,expected_ins):
      if actual[0]!=want[0] or (want[1] is not None and actual[1].strip()!=want[1]):raise ValueError('queue bridge operand changed')
-    if ',[d2,d3,a2,a3],32' not in ins[4][1] or ',[d2,d3,a2,a3],40' not in ins[11][1]:raise ValueError('queue native save/frame changed')
-    if dis.count('R_MN10300_PCREL32')!=2:raise ValueError('queue bridge relocation count changed')
-    for target in ('ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved'):
+    if ',[d2,d3,a2,a3],32' not in ins[4][1] or ',[d2,d3,a2,a3],40' not in ins[11][1] or ',[d2,d3,a2,a3],48' not in ins[21][1]:raise ValueError('queue native save/frame changed')
+    if dis.count('R_MN10300_PCREL32')!=3:raise ValueError('queue bridge relocation count changed')
+    for target in ('ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'):
      if target+'+0x1' not in dis:raise ValueError('queue bridge relocation target changed')
     objects[name]['checked_instructions']=len(ins)
-    objects[name]['own_frame_bytes']=16
-    objects[name]['native_nested_frames']=[32,40]
+    objects[name]['own_frame_bytes']=[16,16,24]
+    objects[name]['native_nested_frames']=[32,40,48]
    else:
     assembly=Path(temp)/'caller.s'
     subprocess.run([prefix+'gcc',*flags,'-S',str(src),'-o',str(assembly)],check=True)
@@ -130,20 +136,46 @@ with tempfile.TemporaryDirectory() as temp:
    objects[name]['checked_instructions']=len(ins)
    objects[name]['incoming_native_frame_bytes']=36
    objects[name]['additional_bridge_frame_bytes']=0
+  if args.queue_pipeline_abi_only and name=='producer_bridge':
+   dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   wanted=[('add','-64,sp'),('mov','d0,(16,sp)'),('mov','a2,d1'),('mov','d1,(20,sp)'),
+           ('mov','sp,a0'),('add','24,a0'),('mov','a0,(12,sp)'),('call',None),('mov','(16,sp),d0'),
+           ('call',None),('add','64,sp'),('ret','[d2,a2,a3],32'),
+           ('mov','d0,(12,sp)'),('mov','d1,(16,sp)'),('mov','a0,(20,sp)'),('mov','a1,(24,sp)'),
+           ('mov','sp,a0'),('add','12,a0'),('mov','a0,d0'),('mov','sp,a1'),('mov','a1,d1'),
+           ('call',None),('cmp','256,d0'),('bne',None),('mov','(12,sp),d0'),('mov','(16,sp),d1'),
+           ('mov','(20,sp),a0'),('mov','(24,sp),a1'),('jmp',None),('ret','[d2,d3],48')]
+   if len(ins)!=len(wanted):raise ValueError('producer bridge instruction count changed')
+   for actual,want in zip(ins,wanted):
+    if actual[0]!=want[0] or (want[1] is not None and actual[1].strip()!=want[1]):raise ValueError('producer bridge operand changed')
+   addresses=re.findall(r'^\s*([0-9a-f]+):\s+(?:[0-9a-f]{2}\s+)+[a-z]',dis,re.M)
+   rows={line.split()[-1]:int(line.split()[0],16) for line in syms.splitlines() if line.split() and line.split()[-1] in {'.Lproduced','_ep7_capture_scope_native_return'}}
+   if not ins[7][1].endswith(',[],0') or not ins[9][1].endswith(',[d2,a2,a3],32') or not ins[21][1].endswith(',[],0') or rows.get('_ep7_capture_scope_native_return')!=int(addresses[10],16) or rows.get('.Lproduced')!=int(addresses[-1],16):
+    raise ValueError('producer scope return label or native/GCC frames changed')
+   if dis.count('R_MN10300_PCREL32')!=4 or dis.count('R_MN10300_PCREL8')!=1 or '.Lproduced+0x1' not in dis:
+    raise ValueError('producer bridge relocation count/branch changed')
+   for symbol in ['_ep7q_capture_scope_entry','ep7_stock_kind19_metadata_producer_unresolved','_ep7q_producer_entry','ep7_stock_command_send_unresolved']:
+    if symbol+'+0x1' not in dis:raise ValueError('producer bridge relocation target changed')
+   objects[name]['checked_instructions']=len(ins)
+   objects[name]['owned_scope_frame_bytes']=64
+   objects[name]['additional_native_frame_bytes']=32
+   objects[name]['owned_scope_offset']=24
   if args.transport_only or materializer_mode:
    objects[name]['size_output']=subprocess.check_output([prefix+'size',str(obj)],text=True).splitlines()[1].split()[:4]
    if src.suffix=='.c':objects[name]['stack_usage']=obj.with_suffix('.su').read_text().splitlines()
 external=undefined-set(definitions)
 expected=set() if args.transport_only else {'_ep7_controller_sidecar_unresolved','ep7_stock_state_service_unresolved'}
-if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved'}
-if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved'}
-if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_receive_wrapper_unresolved'}
-if args.queue_pipeline_abi_only:expected|={'_ep7q_descriptor_send_context_unresolved','ep7_stock_send_wrapper_unresolved'}
+if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
+if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
+if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved','ep7_stock_receive_wrapper_unresolved'}
+if args.queue_pipeline_abi_only:expected|={'_ep7q_descriptor_send_context_unresolved','ep7_stock_send_wrapper_unresolved',
+    '_ep7q_capture_snapshot_unresolved','_ep7q_producer_context_unresolved','ep7_stock_kind19_metadata_producer_unresolved','ep7_stock_command_send_unresolved'}
 if external!=expected:raise ValueError('unexpected external symbols '+repr(external))
 scope='Snapshot transport, wire codec, owned queue I/O and memory target objects only' if args.transport_only else 'Current seven-object controller sidecar target compile and symbol closure only'
-if args.queue_abi_only:scope='Local raw queue callable ABI bridges only; no native queue invocation'
+if args.queue_abi_only:scope='Raw queue and notification-preserving send callable ABI bridges; no native invocation'
 if args.materializer_abi_only:scope='Exact materializer receive bridge and bounded frame mapper; context provider/native addresses unresolved'
 if args.receive_abi_only:scope='Command and descriptor receive bridges with bounded stack mappers; native context providers/addresses unresolved'
-if args.queue_pipeline_abi_only:scope='Command/descriptor receive and owned descriptor send/retirement bridges; native context providers/addresses unresolved'
+if args.queue_pipeline_abi_only:scope='Frozen producer scope, command publication and descriptor receive/send bridges; native capture/context providers/addresses unresolved'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))

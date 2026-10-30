@@ -111,3 +111,7 @@ descriptor要求真实312字节拥有权；发送先消费票据，失败/legacy
 [descriptor发送桥](DESCRIPTOR_SEND_BINDING.md)已实现：三种拥有者布局、旧格式回退、
 失败/route变化票据清理接管，host和目标对象检查通过。G2剩余producer command、
 worker claim/retire、drain/失败路径接合；G3/G6仍须实现真实context provider和安装组。
+
+[producer scope](PRODUCER_SCOPE_BINDING.md)已实现并通过host/目标对象检查，metadata仍148。
+发送路径发现并修正raw发送绕过原厂通知的问题，改为调用600514b6；没有原生部署。
+G2尾端仍有worker claim/retire和drain/失败处理，snapshot来源与任务/安装provider尚未绑定。

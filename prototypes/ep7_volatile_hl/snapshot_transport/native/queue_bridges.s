@@ -26,3 +26,22 @@ _ep7_gcc_queue_send_local:
  call ep7_stock_queue_send_local_unresolved,[d2,d3,a2,a3],40
  ret [a2],16
 .size _ep7_gcc_queue_send_local,.-_ep7_gcc_queue_send_local
+
+/* Sending must retain600514b6 post-send notification60051078. Its native input
+ * is a pointer/count pair at a0, timeout in d1, handle in d0; normalized result.
+ * Own24-byte envelope: pair at12/16, saved a2 at20. Incoming GCC words3/4
+ * therefore arrive at36/40. Named wrapper CALL frame48 preserves its hooks. */
+.global _ep7_gcc_queue_send_preserving_hooks
+.type _ep7_gcc_queue_send_preserving_hooks,@function
+_ep7_gcc_queue_send_preserving_hooks:
+ movm [a2],(sp)
+ add -20,sp
+ mov d1,(12,sp)
+ mov (36,sp),d1
+ mov d1,(16,sp)
+ mov sp,a0
+ add 12,a0
+ mov (40,sp),d1
+ call ep7_stock_queue_send_preserving_unresolved,[d2,d3,a2,a3],48
+ ret [a2],24
+.size _ep7_gcc_queue_send_preserving_hooks,.-_ep7_gcc_queue_send_preserving_hooks

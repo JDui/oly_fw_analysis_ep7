@@ -39,3 +39,7 @@ pipeline失效；禁止保留descriptor指针。原生责任方尚未绑定，�
 
 下一步接通捕获producer的28字节command、最终worker的claim/retire、drain/失败退出，
 并落实任务域、真实栈界限、安装发布和清理责任方。当前收发桥不能单独安装。
+
+后续[producer接合](PRODUCER_SCOPE_BINDING.md)发现600514b6还包含发送后的通知。
+当前descriptor sender已改为复用该原厂封装，保留通知与错误路径；上文旧目标报告的
+直接raw send接合已被替代，未曾安装。最新联合对象/主机报告见producer文档。
