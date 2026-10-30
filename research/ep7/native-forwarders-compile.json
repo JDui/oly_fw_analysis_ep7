@@ -1,0 +1,16 @@
+{
+  "assembler_sha256": "5833fa140051525c4d432be6a931abc32e6b866f2a7152f16c1751a5f3122d6c",
+  "source_sha256": "782e53fe34321573ae8f0847cd15bc718c14d1b9cb9114f48868686b1b43fc96",
+  "header_sha256": "3cae9d32f314d8a19e42c06f3ff7da439685a0cb904f7840ffc7d66cd72d81fd",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "object_sha256": "79f377da4d16e87931f4da81c42eb9c26af8d973771fbc91256bc0b14294540b",
+  "relocations_unresolved": 4,
+  "exact_tail_jump_count": 4,
+  "text_bytes": 20,
+  "header_syntax_passed": true,
+  "assembled": true,
+  "linked": false,
+  "executed": false,
+  "installed": false,
+  "native_C_ABI_qualified": false
+}

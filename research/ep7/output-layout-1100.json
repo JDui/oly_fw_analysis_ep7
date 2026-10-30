@@ -1,0 +1,102 @@
+{
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "window_start": "0x603b0068",
+  "window_end_exclusive": "0x603b02de",
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false,
+  "window_sha256": "9224e6fdc738f1f8e1279a3ecded39019e3c50b348e03cabbdf74ec9aee0d05b",
+  "witness_count": 31,
+  "output_base": "*(setup+12)",
+  "records": [
+    {
+      "output_record": 0,
+      "input_bin": 0,
+      "source12_lane_offset": 706,
+      "source16_lane_offset": 710,
+      "saturation_offset": 708
+    },
+    {
+      "output_record": 1,
+      "input_bin": 2,
+      "source12_lane_offset": 730,
+      "source16_lane_offset": 734,
+      "saturation_offset": 732
+    },
+    {
+      "output_record": 2,
+      "input_bin": 4,
+      "source12_lane_offset": 754,
+      "source16_lane_offset": 758,
+      "saturation_offset": 756
+    },
+    {
+      "output_record": 3,
+      "input_bin": 6,
+      "source12_lane_offset": 778,
+      "source16_lane_offset": 782,
+      "saturation_offset": 780
+    },
+    {
+      "output_record": 4,
+      "input_bin": 8,
+      "source12_lane_offset": 802,
+      "source16_lane_offset": 806,
+      "saturation_offset": 804
+    },
+    {
+      "output_record": 5,
+      "input_bin": 10,
+      "source12_lane_offset": 826,
+      "source16_lane_offset": 830,
+      "saturation_offset": 828
+    },
+    {
+      "output_record": 6,
+      "input_bin": 1,
+      "source12_lane_offset": 850,
+      "source16_lane_offset": 854,
+      "saturation_offset": 852
+    },
+    {
+      "output_record": 7,
+      "input_bin": 3,
+      "source12_lane_offset": 874,
+      "source16_lane_offset": 878,
+      "saturation_offset": 876
+    },
+    {
+      "output_record": 8,
+      "input_bin": 5,
+      "source12_lane_offset": 898,
+      "source16_lane_offset": 902,
+      "saturation_offset": 900
+    },
+    {
+      "output_record": 9,
+      "input_bin": 7,
+      "source12_lane_offset": 922,
+      "source16_lane_offset": 926,
+      "saturation_offset": 924
+    },
+    {
+      "output_record": 10,
+      "input_bin": 9,
+      "source12_lane_offset": 946,
+      "source16_lane_offset": 950,
+      "saturation_offset": 948
+    },
+    {
+      "output_record": 11,
+      "input_bin": 11,
+      "source12_lane_offset": 970,
+      "source16_lane_offset": 974,
+      "saturation_offset": 972
+    }
+  ],
+  "required_buffer_length": 976,
+  "hue_lightness_calibration_verified": false,
+  "firmware_modified": false
+}

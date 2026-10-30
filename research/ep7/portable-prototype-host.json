@@ -1,0 +1,53 @@
+{
+  "scope": "Self-authored host integration only; native adapters remain unbound",
+  "compiler_version": "cc (Debian 14.2.0-19) 14.2.0",
+  "compiler_sha256": "a23ecab8ff08f09ad8c80602c2c5df7f49e09c25905cb8975902e101bf72635f",
+  "sources": {
+    "ep7_ui_adapter_contract.h": "1f3292d41e88abdc2cecbe6d4e46de3c633fad591cae1a3391828d5447992b8e",
+    "ep7p.c": "50c4b4fb227d2ea7d80b57388406e4189be608e0ae72d0b10f5a236b7819a9d8",
+    "ep7p.h": "edb3d18f9bfd56930ba1b7d30cca81d2b30204113fcf2c63ec28a3a91ab16c31",
+    "ep7p_ui.c": "cadb1699069f35616bc69cf09062bbc6c227239d3c61e39c42ddf42faef61fe7",
+    "ep7p_ui.h": "13ceab4efbad8ec0f8383ada52781099eed71cecfd98c068ba48e6871d9bc9df",
+    "native_boundary_contract.h": "3cae9d32f314d8a19e42c06f3ff7da439685a0cb904f7840ffc7d66cd72d81fd",
+    "test_ep7p.c": "7707ad682255846ea46f8e0ac0ca1e8d47415a7978518ffc89892033b0684113",
+    "test_ui_contract.c": "c8d3d0b7ed31b78fcb18bef245e68e06dff204aae253a4b013e41f769cf0d560",
+    "test_ui_integration.c": "f8a514a7b8e6b915018a7916c419b0e4c8f2ef01095ec4df37b1278defdbca89"
+  },
+  "tests": [
+    {
+      "test": "core",
+      "configuration": "strict",
+      "passed": true,
+      "output": "independent exhaustion and cross-job unwind checks passed\nportable integration: all assertions passed (host only)"
+    },
+    {
+      "test": "normalized_ui_to_output",
+      "configuration": "strict",
+      "passed": true,
+      "output": "normalized UI -> captured profile -> fresh job -> scoped CPU lanes -> cleanup: PASS (host only)"
+    },
+    {
+      "test": "core",
+      "configuration": "asan_ubsan",
+      "passed": true,
+      "output": "independent exhaustion and cross-job unwind checks passed\nportable integration: all assertions passed (host only)"
+    },
+    {
+      "test": "normalized_ui_to_output",
+      "configuration": "asan_ubsan",
+      "passed": true,
+      "output": "normalized UI -> captured profile -> fresh job -> scoped CPU lanes -> cleanup: PASS (host only)"
+    }
+  ],
+  "ui_header_syntax_passed": true,
+  "asan_ubsan_requested": true,
+  "sanitizer_recovery_enabled": false,
+  "leak_sanitizer_enabled": false,
+  "actual_multithread_stress_tested": false,
+  "host_prototype_executed": true,
+  "firmware_executed": false,
+  "native_adapter_installed": false,
+  "camera_accessed": false,
+  "pixel_calibration_verified": false,
+  "flash_ready": false
+}

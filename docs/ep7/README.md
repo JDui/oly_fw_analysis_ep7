@@ -241,3 +241,12 @@ separates four-profile 16-bit S records from 32-bit alternate-bank cells,
 verifies all 70 S filter selections, and scopes an inline native-job snapshot
 alternative. Neither part-1 ownership nor expanded allocation provenance is
 yet qualified; no firmware patch is enabled.
+
+## Compile-checkable prototype, not an install image
+
+The [volatile H/L C prototype](../../prototypes/ep7_volatile_hl/) now connects
+normalized UI edits, immutable capture values, independently qualified host
+allocations, task scopes and the exact E-P7 coefficient lane layout. Its host
+integration is executable; its native adapters are intentionally unbound.
+See [UI seams](NATIVE_UI_ADAPTER.md) and [native ABI limits](NATIVE_HOOK_ABI.md).
+No persistence, target execution, calibrated pixels or flash-ready firmware is claimed.

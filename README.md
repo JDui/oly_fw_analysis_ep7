@@ -18,8 +18,10 @@ Current work:
   COLOR GUI machine event table does not directly admit local `0x9016`.
 - Byte-verify all **four** COLOR profiles, including noncontiguous COLOR4 IDs,
   raw selectors **1–4**, storage/recall and conditional CPU coefficient construction.
-- Develop image-owned H/L snapshot and task-scoped admission contracts; the
-  native task query is identified, but safe context lifetime and hooks are not implemented.
+- Develop a [compile-checkable volatile H/L prototype](prototypes/ep7_volatile_hl/):
+  normalized UI → captured-profile snapshot → fresh host job → scoped CPU lanes.
+  Host integration tests run; native UI/ABI/lifetime adapters remain unbound,
+  settings reset on boot, and **camera HSL has not been demonstrated**.
 - Establish E-P7-specific storage, capture, rendering and recovery evidence before
   enabling any patch builder. No E-P7 patch offsets or install image are supplied.
 
