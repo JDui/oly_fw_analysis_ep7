@@ -31,6 +31,12 @@ bool ep7c_register_fresh(ep7c *,unsigned state,uintptr_t node,uintptr_t associat
 /* MUST succeed immediately BEFORE any native prefix read; remain in same
  * serialized controller interval through seal/copy. Does not pin native memory. */
 bool ep7c_authorize(ep7c *,unsigned state,uintptr_t node,uint64_t token);
+/* Resolve ONLY a caller-proven currently live node, inside the same exclusive
+ * controller interval through authorize/prefix access/seal/copyout or forget.
+ * Never use this to upgrade a queued/stale pointer into a fresh capability:
+ * address reuse is indistinguishable here. No native reads or memory pinning.
+ * On failure *token is unchanged; caller MUST branch on the returned status. */
+bool ep7c_resolve_live(ep7c *,unsigned state,uintptr_t node,uint64_t *token);
 /* Exactly one sampling attempt, at caller-proven population completion.
  * Unsupported profile/failure/early attempt permanently neutral for this token.
  * settings callbacks cannot reenter sidecar. Captured profile, NOT current GUI.

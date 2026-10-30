@@ -1,5 +1,13 @@
 # E-P7 HSL port: research status
 
+## Current prebuild work
+
+See the [complete prebuild plan](PREBUILD_PLAN.md) and
+[lifecycle hook inventory](LIFECYCLE_HOOK_INVENTORY.md). The current source inventory
+cross-check covers 13 node frees, 3 non-node frees and both state-service seams;
+it is not fresh stock validation or native lifecycle closure. A separate
+Terra/max chat is designing the VM research environment.
+
 ## Latest source-only integration milestone
 
 - [Actual portable vertical slice](../../prototypes/ep7_volatile_hl/integration/):

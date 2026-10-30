@@ -1,0 +1,123 @@
+{
+  "scope": "Cross-reference existing probe literals; never import probes or read firmware.\n\nA passing inventory is NOT native lifecycle closure or byte revalidation.",
+  "source_inventory_consistent": true,
+  "node_free_sites": 13,
+  "non_node_free_sites": 3,
+  "state_service_sites": 2,
+  "checked": [
+    {
+      "address": "0x602a31b1",
+      "probe": "tools/ep7_expanded_node.py",
+      "line": 187,
+      "classification": "node"
+    },
+    {
+      "address": "0x602a4461",
+      "probe": "tools/ep7_expanded_node.py",
+      "line": 223,
+      "classification": "node"
+    },
+    {
+      "address": "0x6029f1c2",
+      "probe": "tools/ep7_expanded_node.py",
+      "line": 144,
+      "classification": "node"
+    },
+    {
+      "address": "0x602a4220",
+      "probe": "tools/ep7_expanded_node.py",
+      "line": 216,
+      "classification": "node"
+    },
+    {
+      "address": "0x6029f6ba",
+      "probe": "tools/ep7_expanded_node.py",
+      "line": 170,
+      "classification": "node"
+    },
+    {
+      "address": "0x602a29ab",
+      "probe": "tools/ep7_node_disposal.py",
+      "line": 14,
+      "classification": "node"
+    },
+    {
+      "address": "0x602a2a00",
+      "probe": "tools/ep7_node_disposal.py",
+      "line": 15,
+      "classification": "node"
+    },
+    {
+      "address": "0x602a2a48",
+      "probe": "tools/ep7_node_disposal.py",
+      "line": 16,
+      "classification": "node"
+    },
+    {
+      "address": "0x602a2ab5",
+      "probe": "tools/ep7_node_disposal.py",
+      "line": 17,
+      "classification": "node"
+    },
+    {
+      "address": "0x602a427d",
+      "probe": "tools/ep7_node_state_tables.py",
+      "line": 15,
+      "classification": "node"
+    },
+    {
+      "address": "0x602a44d8",
+      "probe": "tools/ep7_node_state_tables.py",
+      "line": 17,
+      "classification": "node"
+    },
+    {
+      "address": "0x602a2cb9",
+      "probe": "tools/ep7_node_state_tables.py",
+      "line": 19,
+      "classification": "node"
+    },
+    {
+      "address": "0x602a2d0d",
+      "probe": "tools/ep7_node_state_tables.py",
+      "line": 20,
+      "classification": "node"
+    },
+    {
+      "address": "0x6029f6c2",
+      "probe": "tools/ep7_expanded_node.py",
+      "line": 172,
+      "classification": "envelope"
+    },
+    {
+      "address": "0x6029f6cb",
+      "probe": "tools/ep7_expanded_node.py",
+      "line": 174,
+      "classification": "arguments"
+    },
+    {
+      "address": "0x602a4286",
+      "probe": "tools/ep7_node_state_tables.py",
+      "line": 15,
+      "classification": "wrapper"
+    },
+    {
+      "address": "0x60289c5e",
+      "probe": "tools/ep7_node_state_guard.py",
+      "line": 9,
+      "classification": "state_service"
+    },
+    {
+      "address": "0x60289d02",
+      "probe": "tools/ep7_node_state_guard.py",
+      "line": 10,
+      "classification": "state_service"
+    }
+  ],
+  "hash_checks_performed": false,
+  "stock_bytes_revalidated": false,
+  "native_closure_proven": false,
+  "target_compiled": false,
+  "firmware_compile_ready": false,
+  "camera_accessed": false
+}

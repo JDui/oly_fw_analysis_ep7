@@ -1,7 +1,7 @@
 # E-P7 HSL port research / E-P7 HSL 移植研究
 
-> **EP7 checkpoint: research paused at the user’s request; no flash-ready E-P7 firmware.**
-> **当前研究检查点已提交，按用户要求暂停；PEN-F H/S/L 到 E-P7 的移植尚未完成，禁止把 PEN-F 固件或偏移直接用于 E-P7。**
+> **EP7 research resumed: current-live node/token join host-tested; no flash-ready E-P7 firmware.**
+> **已按用户要求恢复研究，推进捕获节点与 token 接合；PEN-F H/S/L 到 E-P7 的移植尚未完成，禁止把 PEN-F 固件或偏移直接用于 E-P7。**
 
 **本地运行： [Windows / WSL / Linux QUICKSTART](docs/ep7/QUICKSTART.md)** · **[当前交接与阻塞](docs/ep7/HANDOFF.md)**
 

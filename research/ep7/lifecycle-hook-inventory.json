@@ -1,0 +1,200 @@
+{
+  "scope": "Source evidence inventory only; no stock verification or native installation",
+  "sources": {
+    "expanded": {
+      "probe": "tools/ep7_expanded_node.py",
+      "notes": "docs/ep7/EXPANDED_NODE_FEASIBILITY.md"
+    },
+    "disposal": {
+      "probe": "tools/ep7_node_disposal.py",
+      "notes": "docs/ep7/NODE_DISPOSAL.md"
+    },
+    "states": {
+      "probe": "tools/ep7_node_state_tables.py",
+      "notes": "docs/ep7/NODE_STATE_TABLES.md"
+    },
+    "guard": {
+      "probe": "tools/ep7_node_state_guard.py",
+      "notes": "docs/ep7/NODE_STATE_GUARD.md"
+    }
+  },
+  "free_sites": [
+    {
+      "address": "0x602a31b1",
+      "source": "expanded",
+      "object_kind": "node",
+      "route": "allocation/population failure cleanup",
+      "node_operand_hint": "a0; caller retains original node",
+      "obligation": "within_state_review",
+      "hook_installed": false
+    },
+    {
+      "address": "0x602a4461",
+      "source": "expanded",
+      "object_kind": "node",
+      "route": "consumer cleanup; capture retirement conditional on node+44",
+      "node_operand_hint": "a0 original node",
+      "obligation": "within_state_review",
+      "hook_installed": false
+    },
+    {
+      "address": "0x6029f1c2",
+      "source": "expanded",
+      "object_kind": "node",
+      "route": "shared node queue drain",
+      "node_operand_hint": "a2 -> a0",
+      "obligation": "alternate_route_review",
+      "hook_installed": false
+    },
+    {
+      "address": "0x602a4220",
+      "source": "expanded",
+      "object_kind": "node",
+      "route": "event43 first queue drain",
+      "node_operand_hint": "a2 -> a0",
+      "obligation": "within_state_review",
+      "hook_installed": false
+    },
+    {
+      "address": "0x6029f6ba",
+      "source": "expanded",
+      "object_kind": "node",
+      "route": "alternate callback event55 old node",
+      "node_operand_hint": "a2 -> a0",
+      "obligation": "alternate_route_review",
+      "hook_installed": false
+    },
+    {
+      "address": "0x602a29ab",
+      "source": "disposal",
+      "object_kind": "node",
+      "route": "event42 associated+6==1 conditional completion",
+      "node_operand_hint": "a3 -> a0",
+      "obligation": "conditional_route_review",
+      "hook_installed": false
+    },
+    {
+      "address": "0x602a2a00",
+      "source": "disposal",
+      "object_kind": "node",
+      "route": "event42 normal completion flags0x18",
+      "node_operand_hint": "a3 -> a0",
+      "obligation": "within_state_review",
+      "hook_installed": false
+    },
+    {
+      "address": "0x602a2a48",
+      "source": "disposal",
+      "object_kind": "node",
+      "route": "event4d conditional completion flags0x30",
+      "node_operand_hint": "a2 -> a0",
+      "obligation": "conditional_route_review",
+      "hook_installed": false
+    },
+    {
+      "address": "0x602a2ab5",
+      "source": "disposal",
+      "object_kind": "node",
+      "route": "event4c normal completion flags0x18",
+      "node_operand_hint": "d2 -> a0",
+      "obligation": "within_state_review",
+      "hook_installed": false
+    },
+    {
+      "address": "0x602a427d",
+      "source": "states",
+      "object_kind": "node",
+      "route": "event43 second queue drain wrapper[0]",
+      "node_operand_hint": "a3 -> a0",
+      "obligation": "within_state_review",
+      "hook_installed": false
+    },
+    {
+      "address": "0x602a44d8",
+      "source": "states",
+      "object_kind": "node",
+      "route": "event4c helper446d completion",
+      "node_operand_hint": "a3 -> a0",
+      "obligation": "within_state_review",
+      "hook_installed": false
+    },
+    {
+      "address": "0x602a2cb9",
+      "source": "states",
+      "object_kind": "node",
+      "route": "state34 event42 completion",
+      "node_operand_hint": "a2 -> a0",
+      "obligation": "state_exit_revocation_required",
+      "hook_installed": false
+    },
+    {
+      "address": "0x602a2d0d",
+      "source": "states",
+      "object_kind": "node",
+      "route": "state34 event4c completion",
+      "node_operand_hint": "d2 -> a0",
+      "obligation": "state_exit_revocation_required",
+      "hook_installed": false
+    },
+    {
+      "address": "0x6029f6c2",
+      "source": "expanded",
+      "object_kind": "envelope",
+      "route": "event55 callback envelope",
+      "node_operand_hint": "not node",
+      "obligation": "exclude_from_node_hooks",
+      "hook_installed": false
+    },
+    {
+      "address": "0x6029f6cb",
+      "source": "expanded",
+      "object_kind": "arguments",
+      "route": "event55 callback arguments",
+      "node_operand_hint": "not node",
+      "obligation": "exclude_from_node_hooks",
+      "hook_installed": false
+    },
+    {
+      "address": "0x602a4286",
+      "source": "states",
+      "object_kind": "wrapper",
+      "route": "event43 second drain wrapper",
+      "node_operand_hint": "not node",
+      "obligation": "exclude_from_node_hooks",
+      "hook_installed": false
+    }
+  ],
+  "state_service_sites": [
+    {
+      "address": "0x60289c5e",
+      "source": "guard",
+      "expected_operand": "0x6028a882,[d2,d3,a2,a3],32",
+      "hook_installed": false
+    },
+    {
+      "address": "0x60289d02",
+      "source": "guard",
+      "expected_operand": "0x6028a882,[d2,d3,a2,a3],32",
+      "hook_installed": false
+    }
+  ],
+  "open_aliases": [
+    {
+      "identity": "0x6223dd54",
+      "kind": "global node alias",
+      "closure_proven": false
+    },
+    {
+      "identity": "0x6223df64",
+      "kind": "asynchronous descriptor with callback 0x6029e8f1",
+      "closure_proven": false
+    },
+    {
+      "identity": "0x6223e2f0",
+      "kind": "wrapper queue carrying node pointer",
+      "closure_proven": false
+    }
+  ],
+  "native_closure_proven": false,
+  "firmware_compile_ready": false
+}

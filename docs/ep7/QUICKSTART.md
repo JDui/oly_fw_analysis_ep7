@@ -89,4 +89,4 @@ python3 tools/ep7_stock_audit.py --stock firmware_files/OLY_E_142_1100_0000_0000
 
 提供 `git rev-parse HEAD`、`python3 --version`、`gcc --version`、执行的命令与错误/JSON。
 先检查输出不含个人路径等不希望公开的信息。恢复研究时从 [HANDOFF](HANDOFF.md) 继续；
-当前按用户要求暂停，不后台刷写或继续实机操作。
+现已恢复电脑端研究，当前未进行刷写或实机操作。

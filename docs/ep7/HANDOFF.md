@@ -1,7 +1,37 @@
-# E-P7 研究检查点 / 暂停交接
+# E-P7 研究检查点 / 恢复研究
 
-日期：2026-10-30 UTC。用户要求提交当前进度供本地运行，之后再通知继续。
-**研究已暂停；没有安排继续研究、刷机或相机操作。**
+恢复日期：2026-10-30（Asia/Shanghai）。用户已要求继续推进研究测试。
+**本轮推进电脑端捕获身份接合；未进行刷机或相机操作。**
+
+## 本轮恢复后的增量
+
+- 在既有 controller sidecar 中实现 `ep7c_resolve_live`，无需额外 token map。
+  仅限调用方已证明存活且持有独占 controller 区间的节点；不接受以裸地址查询
+  结果替代存活证明。旧裸地址遇到复用会查出新 token，这一限制已有可执行用例。
+- 定向验证 COLOR4 快照冻结、忘记/复用、state33 重入、退出/重进、状态不一致
+  poison 与全部8个槽位。严格 C11 和 ASan/UBSan 通过，无 SHA 校验。
+- 现有检查器新增 `--host-only [--sanitize]`，不依赖原厂固件或目标工具链。
+  见[执行报告](../../research/ep7/controller-sidecar-live-join-host.json)与
+  [接口契约](../../prototypes/ep7_volatile_hl/controller_sidecar/README.md)。
+- 本轮修改没有交叉编译；原生 node→token 调用点、对象存活/排他性证明及完整
+  释放路径绑定仍待解决。旧交叉编译报告不代表此次源码已验证。
+
+## 编译前路线与本轮推进
+
+已建立 [G0–G8 完整编译前计划](PREBUILD_PLAN.md)。本轮首先完成
+[生命周期证据清单](LIFECYCLE_HOOK_INVENTORY.md)：13个 node free、3个非 node free、
+两处状态服务 call；源 witness 核对通过，不代表本次原厂字节重验或原生闭包。
+新工具 `tools/ep7_lifecycle_inventory.py` 无需固件/交叉工具链，不执行 SHA 校验。
+
+独立聊天“EP7 固件研究虚拟机环境设计”（gpt-6.1-terra / max）同步负责环境设计，
+输出 `docs/ep7/VM_ENVIRONMENT_PLAN.md`。本聊天继续负责 G1/G2 身份/生命周期。
+当前工作区没有私有原厂输入与目标工具链；下一步机器码资格审查需要准备这些输入。
+未开始固件整体编译、打包或相机操作。
+
+## 原暂停检查点（历史记录）
+
+以下记录保留原检查点范围；其中“未实现 token lookup”已由上面的主机实现更新，
+其余原生绑定与固件安装阻塞仍然存在。
 当前检查点内容以本分支提交为准：`git rev-parse HEAD`。
 上一公开基线是 `9ff36d84fb6ac6f7e7c7b1b98833660cdbbf9099`；本检查点在其上保存已审新增工作。
 

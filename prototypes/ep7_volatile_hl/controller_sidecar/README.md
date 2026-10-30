@@ -75,17 +75,43 @@ actual backend/core/decoder/memory/observer/bridge to separate target objects,
 checks definitions/undefined-symbol closure WITHOUT linking or target execution.
 Native evidence: docs/ep7/{NODE_STATE_GUARD,NODE_DISPOSAL,CAPTURE_ATTACHMENT}.md.
 
-## Paused checkpoint: native token join remains unbound
+## Current-live node/token join (host validated, native binding unbound)
 
-The implemented API returns a fresh token at registration and requires that token
-at authorize/seal/copyout/forget. Actual selected-producer/free hooks may expose
-only a native node pointer, because the native56-byte node remains unchanged.
-No live-label-to-token lookup or explicit token-handoff adapter is implemented
-or reviewed here. Therefore this backend does NOT yet constitute a usable native
-handoff/free-hook integration. An external token map must not be silently assumed.
-A possible current-live-label lookup would still require native object lifetime
-and controller exclusion; it would not detect a stale queued pointer resolving
-a newly reused allocation's token, nor pin memory. That extension is not part of
-this reviewed checkpoint. Placement research was not started before the user's
-stop request; no executable region, runtime placement or near trampoline is
-qualified by this module.
+`ep7c_resolve_live(runtime, state, node, &token)` now resolves a registered,
+current-generation node label without reading native memory. It uses the existing
+bounded registry rather than a second token map. Failure leaves the output token
+unchanged; callers must check the return before using it. State mismatch poisons
+and clears the registry through the same admission policy as other operations.
+
+The required synchronous adapter order is:
+
+1. Independently prove that the native node is currently live and hold the exclusive
+   controller interval. A queued pointer alone is insufficient.
+2. Resolve its token, then authorize before reading its native prefix.
+3. Seal/copyout under that same interval, or forget before the original native free.
+4. Transfer only an owned snapshot value across a later asynchronous boundary.
+
+This is an implemented lookup primitive, not an installed native adapter. A stale
+pointer numerically equal to a reused node resolves the NEW token; the test records
+that limitation explicitly. Old tokens cannot authorize or forget the new entry.
+No API here pins memory, proves controller exclusion, or qualifies a free hook.
+Native initialization, actual hook ABI/placement and complete free coverage remain
+unbound. No executable region or runtime placement has been qualified.
+
+Focused fixture coverage includes COLOR4 H/L snapshot freezing after later edits,
+forget/reuse, all eight registry slots, state33 reentry invalidation, sentinel255,
+state exit/reentry, mismatch poisoning, and preservation of a copied snapshot after
+node invalidation. It executes the existing sidecar/core/transition implementation.
+
+Run without a target toolchain, firmware input or SHA checks:
+
+```sh
+python3 prototypes/ep7_volatile_hl/controller_sidecar/check.py --host-only --sanitize
+```
+
+The [current host report](../../../research/ep7/controller-sidecar-live-join-host.json)
+records strict C11 and ASan/UBSan success using GCC12.2 in an existing Docker image
+on the Windows host. The repository was mounted read-only and networking disabled.
+LeakSanitizer was disabled, as in the prior checker. The earlier target report
+predates this extension: the modified source has NOT been cross-compiled, linked,
+installed or executed on the camera.

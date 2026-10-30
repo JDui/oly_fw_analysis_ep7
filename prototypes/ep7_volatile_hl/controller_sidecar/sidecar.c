@@ -53,6 +53,18 @@ bool ep7c_register_fresh(ep7c *p,unsigned state,uintptr_t node,uintptr_t associa
 }
 bool ep7c_authorize(ep7c *p,unsigned state,uintptr_t node,uint64_t token)
 { return state_ok(p,state) && lookup(p,node,token)!=NULL; }
+bool ep7c_resolve_live(ep7c *p,unsigned state,uintptr_t node,uint64_t *token)
+{
+ unsigned i;
+ if(!state_ok(p,state) || !node || !token)return false;
+ for(i=0;i<EP7C_CAP;i++) {
+  const ep7c_entry *e=&p->entries[i];
+  if(e->token && e->node==node && e->generation==p->generation) {
+   *token=e->token;return true;
+  }
+ }
+ return false;
+}
 static bool prefix_ok(const ep7c_entry *e,const ep7c_prefix *v)
 { return v && v->associated==e->associated && v->capture && v->capture_id>=1u && v->capture_id<=25u && v->raw_mode==11u && v->selector>=1u && v->selector<=4u; }
 bool ep7c_seal(ep7c *p,unsigned state,uintptr_t node,uint64_t token,const ep7c_prefix *v,bool complete,ep7p *settings)
