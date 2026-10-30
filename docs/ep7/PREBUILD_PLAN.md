@@ -80,4 +80,6 @@ G6 依赖 E 的工具链设计和 G1–G4 的候选接口；G8 汇合全部结�
 G6 放置/安装仍未闭合。可以持续推进离线研究和自写主机代码，不存在可承诺的安全
 试刷时间。下一步是审明 G1 的具体别名/事件释放义务，再决定 G2 的传递方案。
 
-最新实际进展：[当前工具链](CURRENT_TOOLCHAIN.md)、[异步别名接合](ASYNC_NODE_ALIASES.md)。
+最新实际进展：[当前工具链](CURRENT_TOOLCHAIN.md)、[异步别名接合](ASYNC_NODE_ALIASES.md)、
+[异步调度生命周期](ASYNC_DISPATCH_LIFETIME.md)。下一实现批次为G2独立快照传递接口，
+不在异步回调中重新查询controller sidecar；原生身份承载和排他性仍是接入条件。

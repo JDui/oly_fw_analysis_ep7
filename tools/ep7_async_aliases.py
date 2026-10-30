@@ -78,7 +78,7 @@ W = {
 }
 
 
-def inspect(stock, objdump):
+def inspect(stock, objdump, windows=WINDOWS, witnesses=W):
     version=subprocess.check_output([str(objdump),'--version'],text=True).splitlines()[0]
     checked=0
     unknown=[]
@@ -90,18 +90,18 @@ def inspect(stock, objdump):
         table=0x601a9198+(39-7)*4
         if struct.unpack_from('<I',data,table-BASE)[0]!=0x6010b351:
             raise ValueError('type39 dispatch row mismatch')
-        for start,stop in WINDOWS:
+        for start,stop in windows:
             asm=subprocess.check_output([str(objdump),'-b','binary','-m','mn10300','-D','-z',
                 '--insn-width=16',f'--adjust-vma={BASE:#x}',f'--start-address={start:#x}',
                 f'--stop-address={stop:#x}',str(image)],text=True)
-            for address,(mn,op) in W.items():
+            for address,(mn,op) in witnesses.items():
                 if start<=address<stop:
                     require_instruction(asm,address,mn,op)
                     checked+=1
             for line in asm.splitlines():
                 if '\tudf' in line:
                     unknown.append(line.split(':',1)[0].strip())
-    if checked!=len(W):raise ValueError('uncovered witness')
+    if checked!=len(witnesses):raise ValueError('uncovered witness')
     return dict(scope=__doc__,objdump_version=version,input_structure=identity,
         checked_instructions=checked,type39_dispatch_row=hex(table),
         async_descriptor='0x6223df5c',node_field_offset=8,callback='0x6029e8f1',
