@@ -19,6 +19,7 @@ Current work:
   enabling any patch builder. No E-P7 patch offsets or install image are supplied.
 
 Start with the [research status, compatibility matrix and port plan](docs/ep7/README.md),
+[bounded input/editor and processing trace](docs/ep7/INPUT_AND_PROCESSING_TRACE.md),
 [controls proposal](docs/ep7/CONTROLS.md), and
 [read-only stock audit](tools/ep7_stock_audit.py).
 The audit emits JSON only and never contacts a camera. The official **1.1/1100

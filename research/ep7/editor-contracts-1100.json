@@ -1,0 +1,197 @@
+{
+  "scope": "Static data tables and inspected-window identity only; no complete physical key-to-editor chain",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "editors": [
+    {
+      "profile": 1,
+      "editor_key": "0x13b3",
+      "descriptor": "0x61186c7c",
+      "child_array": "0x61186934",
+      "child_count": 13,
+      "cursor_property": 1091,
+      "saturation_properties": [
+        927,
+        928,
+        929,
+        930,
+        931,
+        932,
+        933,
+        934,
+        935,
+        936,
+        937,
+        938
+      ],
+      "handler_row": "0x61185bdc",
+      "increment_candidate": "0x60e20e0a",
+      "decrement_candidate": "0x60e2107a"
+    },
+    {
+      "profile": 2,
+      "editor_key": "0x13b4",
+      "descriptor": "0x61186c84",
+      "child_array": "0x6118699c",
+      "child_count": 13,
+      "cursor_property": 1096,
+      "saturation_properties": [
+        939,
+        940,
+        941,
+        942,
+        943,
+        944,
+        945,
+        946,
+        947,
+        948,
+        949,
+        950
+      ],
+      "handler_row": "0x61185c14",
+      "increment_candidate": "0x60e20e0a",
+      "decrement_candidate": "0x60e2107a"
+    },
+    {
+      "profile": 3,
+      "editor_key": "0x13b5",
+      "descriptor": "0x61186c8c",
+      "child_array": "0x61186a04",
+      "child_count": 13,
+      "cursor_property": 1097,
+      "saturation_properties": [
+        951,
+        952,
+        953,
+        954,
+        955,
+        956,
+        957,
+        958,
+        959,
+        960,
+        961,
+        962
+      ],
+      "handler_row": "0x61185c4c",
+      "increment_candidate": "0x60e20e0a",
+      "decrement_candidate": "0x60e2107a"
+    },
+    {
+      "profile": 4,
+      "editor_key": "0x140c",
+      "descriptor": "0x61186c94",
+      "child_array": "0x61186a6c",
+      "child_count": 13,
+      "cursor_property": 1686,
+      "saturation_properties": [
+        1655,
+        1656,
+        1657,
+        1658,
+        1659,
+        1660,
+        1661,
+        1662,
+        1663,
+        1664,
+        1665,
+        1666
+      ],
+      "handler_row": "0x61185c84",
+      "increment_candidate": "0x60e20e0a",
+      "decrement_candidate": "0x60e2107a"
+    }
+  ],
+  "crt": {
+    "editor_key": "0x13a9",
+    "child_count": 2,
+    "properties": [
+      617,
+      618
+    ]
+  },
+  "logical_key_translation": [
+    {
+      "label": "ok_press",
+      "logical_event": "0x2000004",
+      "application_event": "0x43",
+      "translation_row": "0x60adc290",
+      "naming_row": "0x60a6eef0"
+    },
+    {
+      "label": "ok_release",
+      "logical_event": "0x2010004",
+      "application_event": "0x44",
+      "translation_row": "0x60adc298",
+      "naming_row": "0x60a6eef8"
+    },
+    {
+      "label": "delete_press",
+      "logical_event": "0x2000084",
+      "application_event": "0x53",
+      "translation_row": "0x60adc2c0",
+      "naming_row": "0x60a6ef70"
+    },
+    {
+      "label": "delete_release",
+      "logical_event": "0x2010084",
+      "application_event": "0x54",
+      "translation_row": "0x60adc2c8",
+      "naming_row": "0x60a6ef78"
+    },
+    {
+      "label": "info_press",
+      "logical_event": "0x2001205",
+      "application_event": "0x57",
+      "translation_row": "0x60adc2d0",
+      "naming_row": "0x60a6ef90"
+    },
+    {
+      "label": "info_release",
+      "logical_event": "0x2011205",
+      "application_event": "0x58",
+      "translation_row": "0x60adc2d8",
+      "naming_row": "0x60a6ef98"
+    }
+  ],
+  "color_source_hl_fields_zero": true,
+  "color_source_records": 12,
+  "inspected_windows": {
+    "logical_key_mapper": {
+      "start": "0x60825002",
+      "stop_exclusive": "0x608251e0",
+      "sha256": "94602a882a07229ea0be05a9d637dc76d98ad2cd036fd2239136af16d5a7b9a3"
+    },
+    "editor_child_constructor": {
+      "start": "0x60e20aca",
+      "stop_exclusive": "0x60e20b2d",
+      "sha256": "2335a3d8bce93eb61315d7d2e9ce3fd4ba3426095508f64919a554a4e130d279"
+    },
+    "color_increment_candidate": {
+      "start": "0x60e20e0a",
+      "stop_exclusive": "0x60e20f6d",
+      "sha256": "c9881f5c67d3c7781fd24368b3f6ee992844abeb1bed2c8ac89c97e4e643836a"
+    },
+    "color_decrement_candidate": {
+      "start": "0x60e2107a",
+      "stop_exclusive": "0x60e211cd",
+      "sha256": "b96ef06271d6aa4287c97c8327a9939f730ac8b6a48b33d52c88decdad8235a1"
+    },
+    "color_processing_caller": {
+      "start": "0x603b1466",
+      "stop_exclusive": "0x603b1517",
+      "sha256": "189581bf00beef3dd4b3b30ec687d468a53a1afeace95fc65f32cd9d14eb9316"
+    },
+    "generic_table_packer": {
+      "start": "0x603afb94",
+      "stop_exclusive": "0x603afd26",
+      "sha256": "51538856ca2879f94c3e3e87dc7fecb9baef365d8f9fc451f1f9027f3edcabe3"
+    }
+  },
+  "physical_gpio_verified": false,
+  "application_to_gui_join_verified": false,
+  "delete_axis_switch_implemented": false,
+  "camera_accessed": false,
+  "flash_ready": false
+}
