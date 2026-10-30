@@ -1,0 +1,16 @@
+{
+  "model_name": "E-P7",
+  "model_id": "1420",
+  "version": "1100",
+  "file_name": "OLY_E_142_1100_0000_0000.BIN",
+  "file_size": "111017984",
+  "url_without_temporary_signature": "https://dl01.om-digitalsolutions.net/OMDS/FIRMWARES/0001/1420/OLY_E_142_1100_0000_0000.BIN",
+  "catalog_endpoint": "https://fw01.om-digitalsolutions.net/ww_inform/fcache.do",
+  "camera_accessed": false,
+  "download": {
+    "bytes": 111017984,
+    "hash_recorded": false
+  },
+  "acquired_local_date": "2026-10-30",
+  "temporary_signature_retained_in_public_record": false
+}

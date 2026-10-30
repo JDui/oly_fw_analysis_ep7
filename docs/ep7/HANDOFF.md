@@ -44,7 +44,8 @@
 ## 原厂主程序可用于下一步研究
 
 主程序首组件已完整提取，型号/构建/结构、加法和与自身编码回转通过，无SHA。
-整包仍在下载，尚未完成五组件验收。当前字节扫描取得global node的4个、wrapper
+随后完整整包下载成功，五组件结构/加法和/回转通过，整包main与先前首组件逐字节相等。
+见[完整报告](../../research/ep7/full-input-structure.json)。当前字节扫描取得global node的4个、wrapper
 queue的8个、async descriptor/callback各1个字面引用候选；这些还不是已反汇编的
 指令边界或生命周期结论。见 [输入准备与复现](RESEARCH_INPUTS.md)。
 
