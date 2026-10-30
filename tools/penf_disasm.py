@@ -17,16 +17,17 @@ DEFAULT_IMAGE = Path('analysis/penf_3.1/00_0100_403a0020.decoded.bin')
 DEFAULT_OBJDUMP = Path('toolchains/binutils-2.45-build/binutils/objdump')
 
 
-def refs(data, address):
-    pointers = [BASE + m.start() for m in re.finditer(re.escape(struct.pack('<I', address)), data)]
+def refs(data, address, base=BASE):
+    """Return raw reference candidates in an explicitly selected address space."""
+    pointers = [base + m.start() for m in re.finditer(re.escape(struct.pack('<I', address)), data)]
     calls = []
     for m in re.finditer(b'[\xcd\xdd]', data):
         p = m.start()
         size = 2 if data[p] == 0xcd else 4
         if p + size + 1 <= len(data):
             delta = int.from_bytes(data[p + 1:p + 1 + size], 'little', signed=True)
-            if BASE + p + delta == address:
-                calls.append(BASE + p)
+            if base + p + delta == address:
+                calls.append(base + p)
     return pointers, calls
 
 

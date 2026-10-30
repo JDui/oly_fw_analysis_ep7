@@ -1,0 +1,53 @@
+{
+  "scope": "Find raw alias reference candidates, NOT instruction or lifetime proofs.",
+  "main_bytes": 26214336,
+  "runtime_base": "0x60020020",
+  "references": [
+    {
+      "name": "global_node",
+      "address": "0x6223dd54",
+      "literal_candidates": [
+        "0x602a2941",
+        "0x602a3066",
+        "0x602a30b1",
+        "0x602a4344"
+      ],
+      "relative_call_candidates": []
+    },
+    {
+      "name": "async_descriptor",
+      "address": "0x6223df64",
+      "literal_candidates": [
+        "0x602a300d"
+      ],
+      "relative_call_candidates": []
+    },
+    {
+      "name": "async_callback",
+      "address": "0x6029e8f1",
+      "literal_candidates": [
+        "0x602a3001"
+      ],
+      "relative_call_candidates": []
+    },
+    {
+      "name": "wrapper_queue",
+      "address": "0x6223e2f0",
+      "literal_candidates": [
+        "0x6029c634",
+        "0x602a2b07",
+        "0x602a423b",
+        "0x602a424d",
+        "0x602a428f",
+        "0x602a43dd",
+        "0x602a43ee",
+        "0x602a78f4"
+      ],
+      "relative_call_candidates": []
+    }
+  ],
+  "hash_checks_performed": false,
+  "firmware_execution": false,
+  "historical_exact_byte_identity_proven": false,
+  "lifecycle_closure": false
+}

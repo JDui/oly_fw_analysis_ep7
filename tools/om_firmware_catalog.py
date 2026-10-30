@@ -41,6 +41,8 @@ def main():
     ap.add_argument('--installed', default='00001000', help='eight-digit installed build; not a desired download version')
     ap.add_argument('--response', type=Path, help='inspect saved XML instead of querying the network')
     ap.add_argument('--download', action='store_true', help='download the offered firmware; no installation')
+    ap.add_argument('--expect-version', help='reject a catalog version other than this four-digit build')
+    ap.add_argument('--no-hash', action='store_true', help='omit optional download SHA recording; retain URL/model/size checks')
     ap.add_argument('--compare', type=Path, help='compare a downloaded file against this local file')
     ap.add_argument('--out', type=Path, required=True)
     args = ap.parse_args()
@@ -48,6 +50,8 @@ def main():
         ap.error('--installed must contain eight decimal digits')
     if not re.fullmatch(r'[0-9]{4}', args.model_id):
         ap.error('--model-id must contain four decimal digits')
+    if args.expect_version and not re.fullmatch(r'[0-9]{4}', args.expect_version):
+        ap.error('--expect-version must contain four decimal digits')
     if args.compare and not args.download:
         ap.error('--compare requires --download')
     if args.out.exists():
@@ -74,6 +78,8 @@ def main():
     if len(entries) != 1:
         raise ValueError('expected one catalog entry for the requested model')
     row = entries[0]
+    if args.expect_version and row.get('version') != args.expect_version:
+        raise ValueError('catalog version differs from requested research build')
     url = urllib.parse.urlsplit(row['url'])
     summary = {k: v for k, v in row.items() if k != 'url'}
     summary['url_without_temporary_signature'] = urllib.parse.urlunsplit(url._replace(query='', fragment=''))
@@ -104,17 +110,20 @@ def main():
         if not 0 < expected_size <= 1024 * 1024 * 1024:
             raise ValueError('unexpected firmware size')
         destination = args.out / row['file_name']
-        received, digest = 0, hashlib.sha256()
+        received, digest = 0, None if args.no_hash else hashlib.sha256()
         with urllib.request.urlopen(row['url'], timeout=60) as source, destination.open('xb') as output:
             while chunk := source.read(1024 * 1024):
                 received += len(chunk)
                 if received > expected_size:
                     raise ValueError('download exceeds catalog size')
                 output.write(chunk)
-                digest.update(chunk)
+                if digest is not None:
+                    digest.update(chunk)
         if received != expected_size:
             raise ValueError('download size does not match catalog')
-        summary['download'] = {'bytes': received, 'sha256': digest.hexdigest()}
+        summary['download'] = {'bytes': received, 'hash_recorded': digest is not None}
+        if digest is not None:
+            summary['download']['sha256'] = digest.hexdigest()
         if args.compare:
             summary['download']['byte_equal_to_comparison'] = destination.read_bytes() == args.compare.read_bytes()
             summary['download']['comparison_file'] = str(args.compare)
