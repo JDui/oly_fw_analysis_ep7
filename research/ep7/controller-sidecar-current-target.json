@@ -1,0 +1,106 @@
+{
+  "scope": "Current seven-object controller sidecar target compile and symbol closure only",
+  "versions": {
+    "gcc": "mn10300-elf-gcc (GCC) 13.4.0",
+    "as": "GNU assembler (GNU Binutils) 2.45",
+    "ld": "GNU ld (GNU Binutils) 2.45",
+    "objdump": "GNU objdump (GNU Binutils) 2.45"
+  },
+  "objects": {
+    "sidecar": {
+      "source": "prototypes/ep7_volatile_hl/controller_sidecar/sidecar.c",
+      "definitions": [
+        "_ep7c_authorize",
+        "_ep7c_copyout",
+        "_ep7c_forget",
+        "_ep7c_init",
+        "_ep7c_register_fresh",
+        "_ep7c_resolve_live",
+        "_ep7c_seal",
+        "_ep7c_transition"
+      ],
+      "undefined": [
+        "_ep7p_capture",
+        "_memcpy",
+        "_memset"
+      ]
+    },
+    "transition": {
+      "source": "prototypes/ep7_volatile_hl/controller_sidecar/transition_binding.c",
+      "definitions": [
+        "_ep7_sidecar_transition_unresolved"
+      ],
+      "undefined": [
+        "_ep7_controller_sidecar_unresolved",
+        "_ep7c_transition"
+      ]
+    },
+    "observer": {
+      "source": "prototypes/ep7_volatile_hl/capture_state_guard/observer.c",
+      "definitions": [
+        "_ep7_gcc_state_transition_observer"
+      ],
+      "undefined": [
+        "_ep7_sidecar_transition_unresolved"
+      ]
+    },
+    "bridge": {
+      "source": "prototypes/ep7_volatile_hl/capture_state_guard/bridge.s",
+      "definitions": [
+        "ep7_native_state_service_bridge"
+      ],
+      "undefined": [
+        "_ep7_gcc_state_transition_observer",
+        "ep7_stock_state_service_unresolved"
+      ]
+    },
+    "core": {
+      "source": "prototypes/ep7_volatile_hl/ep7p.c",
+      "definitions": [
+        "_ep7p_apply",
+        "_ep7p_axis_adjust",
+        "_ep7p_axis_adjust_result",
+        "_ep7p_axis_read",
+        "_ep7p_capture",
+        "_ep7p_direct_apply",
+        "_ep7p_edit",
+        "_ep7p_enter",
+        "_ep7p_init",
+        "_ep7p_register_job",
+        "_ep7p_register_task",
+        "_ep7p_release_job",
+        "_ep7p_release_task",
+        "_ep7p_unwind"
+      ],
+      "undefined": [
+        "_ep7p_decode",
+        "_memcpy",
+        "_memset"
+      ]
+    },
+    "decode": {
+      "source": "prototypes/ep7_volatile_hl/ep7p_decode.c",
+      "definitions": [
+        "_ep7p_decode"
+      ],
+      "undefined": []
+    },
+    "memory": {
+      "source": "prototypes/ep7_volatile_hl/target/memory.c",
+      "definitions": [
+        "_memcpy",
+        "_memset"
+      ],
+      "undefined": []
+    }
+  },
+  "remaining_external_symbols": [
+    "_ep7_controller_sidecar_unresolved",
+    "ep7_stock_state_service_unresolved"
+  ],
+  "hash_checks_performed": false,
+  "target_linked": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "native_adapter_installed": false
+}

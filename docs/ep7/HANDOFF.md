@@ -49,6 +49,14 @@
 queue的8个、async descriptor/callback各1个字面引用候选；这些还不是已反汇编的
 指令边界或生命周期结论。见 [输入准备与复现](RESEARCH_INPUTS.md)。
 
+## 工具链与异步别名节点
+
+[当前工具链](CURRENT_TOOLCHAIN.md)已构建；新sidecar七对象目标编译和符号集合检查
+通过，仍有两个原生外部符号，无目标链接/固件构建。
+[异步节点别名研究](ASYNC_NODE_ALIASES.md)已核对62指令和type39分发表，接通两层
+回调的node传递，新增wrapper-only free4403分类。低层回调包含两条GNU命名为udf00
+的自定义指令槽，未赋予语义。下一步审查6011209b请求保持、完成/取消与调度域。
+
 ## 原暂停检查点（历史记录）
 
 以下记录保留原检查点范围；其中“未实现 token lookup”已由上面的主机实现更新，

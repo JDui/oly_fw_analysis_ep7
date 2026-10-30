@@ -1,0 +1,35 @@
+{
+  "sources": [
+    {
+      "filename": "binutils-2.45.tar.xz",
+      "url": "https://mirrors.ustc.edu.cn/gnu/binutils/binutils-2.45.tar.xz",
+      "bytes": 27868232,
+      "hash_checked": false,
+      "original_server_prefix_compared_bytes": 18874368
+    },
+    {
+      "filename": "gcc-13.4.0.tar.xz",
+      "url": "https://mirrors.ustc.edu.cn/gnu/gcc/gcc-13.4.0/gcc-13.4.0.tar.xz",
+      "bytes": 88530720,
+      "hash_checked": false,
+      "original_server_prefix_compared_bytes": 2097152
+    },
+    {
+      "filename": "mpfr-4.1.0.tar.bz2",
+      "url": "https://mirrors.ustc.edu.cn/gnu/mpfr/mpfr-4.1.0.tar.bz2",
+      "bytes": 1747243,
+      "hash_checked": false,
+      "original_server_prefix_compared_bytes": 1747243
+    },
+    {
+      "filename": "mpc-1.2.1.tar.gz",
+      "url": "https://mirrors.ustc.edu.cn/gnu/mpc/mpc-1.2.1.tar.gz",
+      "bytes": 838731,
+      "hash_checked": false,
+      "original_server_prefix_compared_bytes": 838731
+    }
+  ],
+  "mirror_list": "https://www.gnu.org/prep/ftp.en.html",
+  "hash_checks_performed": false,
+  "signature_verified": false
+}
