@@ -68,6 +68,11 @@ strict/ASan/UBSan通过。当前17外部符号未绑定；真实context稳定性
 16桥指令及host strict/ASan/UBSan通过。19个原生/context符号仍未绑定；下面转入G3共享
 runtime、实际task stack/domain和等待/poison策略，避免仅继续增加未解析provider。
 
+[当前任务实际栈视图](CURRENT_TASK_STACK.md)已实现：原厂get_tid前后核对、当前TCB链、
+TCB+76 entry/+84 size/+88实际base及anchor范围。59原厂指令、复用get_tid桥和host检查
+通过，无新增native API桥。该视图不授予安装/代际资格；下一项为共享runtime稳定发布和
+私有锁poison/竞争分类，再把这些事实接入已有context providers。
+
 ## 本轮恢复后的增量
 
 - 在既有 controller sidecar 中实现 `ep7c_resolve_live`，无需额外 token map。

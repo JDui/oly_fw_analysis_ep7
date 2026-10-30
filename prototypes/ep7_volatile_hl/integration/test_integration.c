@@ -14,6 +14,7 @@
 #include "snapshot_transport/native/queue.h"
 #include "snapshot_transport/native/worker.h"
 #include "snapshot_transport/native/ack.h"
+#include "runtime/task_context.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <limits.h>
@@ -335,6 +336,59 @@ static void ack_boundaries(void){
     put32(bytes+32,0x12345678);assert(!ep7q_ack_layout(&stack,w,w+36,&args));
     stack.expanded_group_ready=false;stack.bytes=(const unsigned char *)(uintptr_t)1;
     assert(!ep7q_ack_layout(&stack,w,w+36,&args));
+}
+typedef struct {
+    unsigned queries,reads;uint16_t id,tcb_id;uint32_t cpu,root,cell,tcb,entry,base,bytes;
+    bool query_error,late_query_error,changed_id,changed_tcb;
+} task_fixture;
+static int task_get(void *ctx,uint16_t *out){
+    task_fixture *t=ctx;++t->queries;
+    if(t->query_error || (t->late_query_error && t->queries==2))return -25;
+    *out=(uint16_t)(t->id+(t->changed_id && t->queries==2?1u:0u));return 0;
+}
+static bool task_read32(void *ctx,uint32_t address,uint32_t *out){
+    task_fixture *t=ctx;++t->reads;
+    if(address==0x8050)*out=t->cpu;
+    else if(address==0x8ff00004+4*t->cpu)*out=t->root;
+    else if(address==t->root+96)*out=t->cell;
+    else if(address==t->cell)*out=t->tcb+(t->changed_tcb && t->queries==2?4u:0u);
+    else if(address==t->tcb+76)*out=t->entry;
+    else if(address==t->tcb+84)*out=t->bytes;
+    else if(address==t->tcb+88)*out=t->base;
+    else return false;
+    return true;
+}
+static bool task_read16(void *ctx,uint32_t address,uint16_t *out){
+    task_fixture *t=ctx;++t->reads;if(address!=t->tcb+16)return false;*out=t->tcb_id;return true;
+}
+static void task_context_boundaries(void){
+    task_fixture seed={.id=0x6c,.tcb_id=0x6c,.root=0x1000,.cell=0x2000,.tcb=0x3000,
+        .entry=0x603f26a1,.base=0x8000,.bytes=8192},t=seed;
+    ep7n_task_ops ops={&t,task_get,task_read32,task_read16};ep7n_task out;unsigned scenario;
+    assert(ep7n_query_task(&ops,0x9000,&out));
+    assert(out.tid==0x6c && out.domain==0 && out.tcb==0x3000 && out.entry==0x603f26a1 && out.stack_low==0x8000 && out.stack_bytes==8192);
+    for(scenario=0;scenario<9;scenario++){
+        t=seed;
+        switch(scenario){
+        case 0:t.query_error=true;break;
+        case 1:t.cpu=1;break;
+        case 2:t.tcb_id=0x6d;break;
+        case 3:t.base=UINT32_MAX-3;break;
+        case 4:t.late_query_error=true;break;
+        case 5:t.changed_id=true;break;
+        case 6:t.changed_tcb=true;break;
+        case 7:t.root=UINT32_MAX-3;break;
+        default:t.bytes=16;break;
+        }
+        assert(!ep7n_query_task(&ops,0x9000,&out) && !out.tcb && !out.stack_bytes);
+        if(scenario==0)assert(!t.reads);
+        if(scenario==1)assert(t.reads==1); /* reject domain before any root/TCB read */
+    }
+    t=seed;assert(!ep7n_query_task(&ops,0xa000,&out));
+    t=seed;assert(!ep7n_query_task(&ops,0x7ffc,&out));
+    t=seed;assert(ep7n_query_task(&ops,0x8000,&out));
+    t=seed;t.id=t.tcb_id=0x106c;t.cpu=1;
+    assert(ep7n_query_task(&ops,0x9000,&out) && out.domain==1); /* view only; no pipeline admission */
 }
 static void materializer_boundaries(void){
     unsigned char bytes[864]={0};uint32_t w=0x1000;ep7q_materializer_args a;
@@ -665,7 +719,7 @@ int main(void){
     assert(send(0x9014,0)==1);assert(send(0x9032,-7)==1);text_is(frame(),"L ALL -7");
     setter_status=0;f=frame();assert(ep7_text_present(&widget_token,&f)==0);setter_status=1;
     n=text_calls;f.category=1;assert(ep7_text_present(&widget_token,&f)==0);assert(text_calls==n);
-    transport_boundaries();wire_boundaries();consumer_boundaries();worker_boundaries();ack_boundaries();materializer_boundaries();owned_io_boundaries();descriptor_receive_boundaries();descriptor_send_boundaries();producer_boundaries();capture_vertical_slice();
+    transport_boundaries();wire_boundaries();consumer_boundaries();worker_boundaries();ack_boundaries();task_context_boundaries();materializer_boundaries();owned_io_boundaries();descriptor_receive_boundaries();descriptor_send_boundaries();producer_boundaries();capture_vertical_slice();
     assert(!held && current_queries==0);
     puts("router -> sidecar -> owned command receive -> three owned forward/receive relays -> ticket -> 16 job slots: PASS; native queue backend/ABI/materializer mocked");return 0;
 }

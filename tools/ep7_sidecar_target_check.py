@@ -10,6 +10,7 @@ mode.add_argument('--queue-abi-only',action='store_true',help='assemble raw queu
 mode.add_argument('--materializer-abi-only',action='store_true',help='compile exact materializer receiver, frame mapper and local queue bridge closure')
 mode.add_argument('--receive-abi-only',action='store_true',help='compile command and descriptor receiver bridges and bounded stack mappers')
 mode.add_argument('--queue-pipeline-abi-only',action='store_true',help='compile command/descriptor receive and descriptor forward bridges')
+mode.add_argument('--task-context-only',action='store_true',help='compile read-only actual current-TCB stack view and reuse get_tid veneer')
 args=parser.parse_args()
 receiver_mode=args.receive_abi_only or args.queue_pipeline_abi_only
 materializer_mode=args.materializer_abi_only or receiver_mode
@@ -23,6 +24,10 @@ if args.transport_only:
  flags.append('-fstack-usage')
 if args.queue_abi_only:
  files={'queue_bridge':core/'snapshot_transport/native/queue_bridges.s','caller':core/'snapshot_transport/native/bridge_caller.c'}
+if args.task_context_only:
+ files={'task_context':core/'runtime/task_context.c','task_native':core/'runtime/task_context_native.c',
+        'get_tid':core/'target/get_tid_bridge.s','memory':core/'target/memory.c'}
+ flags.append('-fstack-usage')
 if materializer_mode:
  files={'materializer_bridge':core/'snapshot_transport/native/materializer_bridge.s',
         'materializer_layout':core/'snapshot_transport/native/materializer_layout.c',
@@ -212,11 +217,19 @@ with tempfile.TemporaryDirectory() as temp:
    if '_ep7_gcc_job_allocate+0x1' not in dis or not re.search(r'mov\s+a0,d0',dis):
     raise ValueError('GCC pointer result no longer consumed from a0')
    objects[name]['gcc_pointer_result_a0_confirmed']=True
-  if args.transport_only or materializer_mode:
+  if name=='get_tid':
+   dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   if len(ins)!=5 or ins[:3]!=[('movm','[a2],(sp)'),('add','-12,sp'),('mov','d0,a0')] or ins[4]!=('ret','[a2],16') or not ins[3][1].endswith(',[a2],4'):
+    raise ValueError('existing get_tid veneer frame/argument routing changed')
+   if dis.count('R_MN10300_PCREL32')!=1 or 'ep7_stock_get_tid_unresolved+0x1' not in dis:raise ValueError('get_tid relocation changed')
+   objects[name]['checked_instructions']=5
+  if args.transport_only or materializer_mode or args.task_context_only:
    objects[name]['size_output']=subprocess.check_output([prefix+'size',str(obj)],text=True).splitlines()[1].split()[:4]
    if src.suffix=='.c':objects[name]['stack_usage']=obj.with_suffix('.su').read_text().splitlines()
 external=undefined-set(definitions)
 expected=set() if args.transport_only else {'_ep7_controller_sidecar_unresolved','ep7_stock_state_service_unresolved'}
+if args.task_context_only:expected={'ep7_stock_get_tid_unresolved'}
 if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved','ep7_stock_receive_wrapper_unresolved'}
@@ -230,5 +243,6 @@ if args.queue_abi_only:scope='Raw queue and notification-preserving send callabl
 if args.materializer_abi_only:scope='Exact materializer receive bridge and bounded frame mapper; context provider/native addresses unresolved'
 if args.receive_abi_only:scope='Command and descriptor receive bridges with bounded stack mappers; native context providers/addresses unresolved'
 if args.queue_pipeline_abi_only:scope='Owned producer/relay/worker job/ACK pipeline objects and ABI checks; native capture/context/progress providers and addresses unresolved'
+if args.task_context_only:scope='Read-only current-task TCB stack bounds with existing get_tid veneer; no task lease, installation flag or native execution'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))

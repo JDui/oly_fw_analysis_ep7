@@ -127,3 +127,7 @@ G2尾端仍有worker claim/retire和drain/失败处理，snapshot来源与任务
 [三处ACK/drain接合](ACK_DRAIN_BINDING.md)已实现并定向验证，保留原厂通知与返回行为。
 G2的主干代码已有producer/relay/worker/ACK，原生闭包和provider稳定性仍待审；下一批
 集中处理G3真实task stack/domain、runtime发布及poison/等待策略，不把未解析契约当完成。
+
+G3已取得并实现[原厂当前TCB栈边界](CURRENT_TASK_STACK.md)，复用get_tid桥且完成定向检查。
+下一步用该只读事实构造共享provider；安装标记、私有锁稳定生命周期和永久poison处置
+必须独立绑定，不能因能读到TCB就自动开放捕获或释放路径。
