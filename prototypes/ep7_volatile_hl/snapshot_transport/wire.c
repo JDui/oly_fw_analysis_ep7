@@ -14,6 +14,14 @@ static bool route_ok(unsigned n,const unsigned char *p)
     if(n==EP7W_COMMAND)return get32(p+8)==19u;
     return get32(p+52)==19u && p[194]==1u && p[195]==0x20u;
 }
+bool ep7w_write_trailer(unsigned char *p,ep7t_ticket t)
+{
+    if(!p)return false;
+    memset(p,0,EP7W_TRAILER);
+    if(!t.metadata || t.metadata>UINT32_MAX || !t.serial)return false;
+    put32(p,MARKER);put32(p+4,(uint32_t)t.serial);put32(p+8,(uint32_t)(t.serial>>32));
+    return true;
+}
 bool ep7w_encode(unsigned n,const unsigned char *native,ep7t_ticket t,
                  unsigned char *wire,size_t capacity,size_t *written)
 {
@@ -26,23 +34,31 @@ bool ep7w_encode(unsigned n,const unsigned char *native,ep7t_ticket t,
     if(capacity<size)return false;
     memcpy(wire,native,n);
     if(tagged){
-        put32(wire+n,MARKER);put32(wire+n+4,(uint32_t)t.serial);
-        put32(wire+n+8,(uint32_t)(t.serial>>32));
+        (void)ep7w_write_trailer(wire+n,t);
     }
     *written=size;return true;
 }
-int ep7w_decode(unsigned n,const unsigned char *wire,size_t actual,
-                unsigned char *native,size_t capacity,ep7t_ticket *out)
+int ep7w_ticket(unsigned n,const unsigned char *wire,size_t actual,ep7t_ticket *out)
 {
     ep7t_ticket t;
     if(!out)return EP7W_REJECT;
     *out=(ep7t_ticket){0,0};
-    if(!prefix_ok(n) || !wire || !native || capacity<n ||
+    if(!prefix_ok(n) || !wire ||
        (actual!=n && actual!=n+EP7W_TRAILER))return EP7W_REJECT;
-    memcpy(native,wire,n);
     if(actual==n || get32(wire+n)!=MARKER || !route_ok(n,wire))return EP7W_LEGACY;
     t.metadata=metadata(n,wire);
     t.serial=(uint64_t)get32(wire+n+4)|((uint64_t)get32(wire+n+8)<<32);
     if(!t.metadata || !t.serial)return EP7W_LEGACY;
     *out=t;return EP7W_TAGGED;
+}
+int ep7w_decode(unsigned n,const unsigned char *wire,size_t actual,
+                unsigned char *native,size_t capacity,ep7t_ticket *out)
+{
+    int status;
+    if(!out)return EP7W_REJECT;
+    *out=(ep7t_ticket){0,0};
+    if(!native || capacity<n)return EP7W_REJECT;
+    status=ep7w_ticket(n,wire,actual,out);
+    if(status!=EP7W_REJECT)memcpy(native,wire,n);
+    return status;
 }

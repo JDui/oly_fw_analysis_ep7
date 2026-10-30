@@ -22,4 +22,11 @@ bool ep7w_encode(unsigned prefix,const unsigned char *native,ep7t_ticket,
  * Caller must not fall back to current metadata-address lookup or UI sampling. */
 int ep7w_decode(unsigned prefix,const unsigned char *wire,size_t actual,
                 unsigned char *native,size_t capacity,ep7t_ticket *);
+/* Inspect an owned complete message without copying its prefix; same status and
+ * ticket-clearing rules as decode. Suitable for a genuinely expanded frame. */
+int ep7w_ticket(unsigned prefix,const unsigned char *wire,size_t actual,ep7t_ticket *);
+/* Write ONLY an independently owned 12-byte trailer. Does not read a descriptor
+ * prefix, which may not yet be materialized. Zero/invalid ticket clears trailer.
+ * Later wire inspection and registry claim still qualify route/metadata identity. */
+bool ep7w_write_trailer(unsigned char *trailer,ep7t_ticket);
 #endif

@@ -22,6 +22,13 @@ descriptor拥有者的显式栈扩展（包括command drain），整体固件构
 9处新栈调整与原指令同为4字节，53指令/4任务表行核对通过。没有写入固件。
 下一项是command独立scratch、owned receive适配及三处materializer调用链ABI。
 
+owned I/O实现已完成：148字节command scratch、312字节descriptor receive、发送前
+消费票据及失败后的清理值返回。strict/ASan/UBSan定向链路及目标对象检查通过，见
+[host报告](../../research/ep7/owned-queue-integration-host.json)与
+[目标报告](../../research/ep7/owned-queue-target.json)。首次ASan运行超时30秒；诊断复跑
+源码未改即通过，原因未确认。send局部栈400字节，不能把单函数结果当完整栈预算。
+下一项落实materializer三调用链的实际栈资格、进入桥及安装前置条件。
+
 ## 本轮恢复后的增量
 
 - 在既有 controller sidecar 中实现 `ep7c_resolve_live`，无需额外 token map。

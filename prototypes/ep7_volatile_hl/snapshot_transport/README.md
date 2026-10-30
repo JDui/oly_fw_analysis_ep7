@@ -93,3 +93,29 @@ ordering, producer shutdown and task-domain qualifications remain external dutie
 [Native queue research and remaining seams](../../../docs/ep7/QUEUE_TICKET_CARRIAGE.md)
 show why enlarged queue configuration and all receive adapters must be installed
 together. Merely changing send length would overwrite existing stock buffers.
+
+## Owned queue I/O
+
+`owned_io.c` implements the receive/send policy behind a qualified synchronous
+local backend. Command receive uses a separate148-byte scratch, accepts actual
+length16/28, copies only16 bytes to the stock command object, and writes the ticket
+to an independently owned312-byte descriptor. Descriptor receive handles the
+expanded4c/ab/4f queues and legacy-only4d, clearing the trailer before every attempt.
+It never derives allocation provenance from a numeric extent or protocol marker.
+
+Send consumes the descriptor trailer before passing a separate300/312-byte copy
+to the backend. A failed send cannot be retried with the old ticket; the result
+retains that ticket for explicit retirement. Native qualification must prove the
+frame/queue installation group, task domain, queue maximum and stable lifetime
+through I/O. No callback can substitute the remote positive255 wrapper.
+
+[Focused host report](../../../research/ep7/owned-queue-integration-host.json)
+records strict and ASan/UBSan success for capacity, timeout, stale-tail, alternate
+queue, failed-send retry and the three-relay/16-job integration. One initial
+ASan/UBSan invocation timed out at30 seconds; diagnostic rerun passed unchanged,
+so its cause is unconfirmed. The native backend, materializer and ABI execution
+remain fixtures. [Target report](../../../research/ep7/owned-queue-target.json)
+has no unresolved symbols across transport/wire/owned I/O/memory objects. Owned
+I/O uses1161 text bytes; compiler local command-receive/descriptor-receive/send
+frames are220/104/400 bytes. The400-byte send frame must enter the later full
+call-chain budget. No target link, hook installation or firmware build occurred.

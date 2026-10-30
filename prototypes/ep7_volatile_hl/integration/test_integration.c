@@ -5,6 +5,7 @@
 #include "controller_sidecar/sidecar.h"
 #include "snapshot_transport/transport.h"
 #include "snapshot_transport/wire.h"
+#include "snapshot_transport/owned_io.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <limits.h>
@@ -158,24 +159,88 @@ static void wire_boundaries(void){
     assert(!ep7w_encode(EP7W_COMMAND,cmd,t,wire,sizeof wire,&n));
     assert(ep7w_encode(EP7W_COMMAND,cmd,(ep7t_ticket){0},wire,sizeof wire,&n) && n==16);
 }
+typedef struct {
+    unsigned char bytes[EP7W_MAX];unsigned length,maximum,receives,sends;
+    int raw;bool qualified;
+} queue_fixture;
+static bool qualify_queue(void *ctx,unsigned handle,unsigned maximum){
+    queue_fixture *q=ctx;assert(handle && maximum<=EP7W_MAX);
+    q->maximum=maximum;return q->qualified;
+}
+static int receive_queue(void *ctx,unsigned handle,void *out,int timeout){
+    queue_fixture *q=ctx;(void)handle;assert(timeout==0 || timeout==-1);++q->receives;
+    assert(q->length<=q->maximum);memcpy(out,q->bytes,q->length);return q->raw;
+}
+static int send_queue(void *ctx,unsigned handle,const void *in,unsigned bytes,int timeout){
+    queue_fixture *q=ctx;(void)handle;assert(timeout==-1);++q->sends;
+    assert(bytes<=q->maximum);memcpy(q->bytes,in,bytes);q->length=bytes;return q->raw;
+}
+static ep7q_ops queue_ops(queue_fixture *q)
+{ ep7q_ops ops={q,qualify_queue,receive_queue,send_queue};return ops; }
+static void owned_io_boundaries(void){
+    queue_fixture q={0};ep7q_ops ops=queue_ops(&q);ep7q_result r;unsigned calls;
+    struct {unsigned char prefix[16];uint32_t guard;} command;
+    unsigned char descriptor[EP7W_MAX];ep7t_ticket ticket={100,1},read;
+    memset(command.prefix,0xcc,sizeof command.prefix);command.guard=0x12345678;
+    memset(descriptor,0xa5,sizeof descriptor);
+    q.qualified=true;q.length=148;q.raw=148;memset(q.bytes,0x5a,sizeof q.bytes);
+    r=ep7q_command_receive(&ops,0x4b,0,command.prefix,16,descriptor,sizeof descriptor);
+    assert(r.called && r.status==-1 && !r.ticket.serial && command.guard==0x12345678);
+    assert(command.prefix[0]==0xcc && descriptor[300]==0);
+    calls=q.receives;
+    r=ep7q_command_receive(&ops,0x4b,0,command.prefix,16,descriptor,300);
+    assert(!r.called && q.receives==calls); /* extent cannot be upgraded by size/tag */
+    q.length=0;q.raw=-50;
+    assert(ep7w_write_trailer(descriptor+300,ticket));
+    r=ep7q_descriptor_receive(&ops,0x4c,0,descriptor,sizeof descriptor);
+    assert(r.called && r.status==-2 && descriptor[300]==0);
+    q.raw=-42;r=ep7q_descriptor_receive(&ops,0x4f,0,descriptor,sizeof descriptor);
+    assert(r.called && r.status==-1);
+    q.raw=255;r=ep7q_command_receive(&ops,0x4b,0,command.prefix,16,descriptor,sizeof descriptor);
+    assert(r.called && r.status==-1 && command.prefix[0]==0xcc); /* not bytes copied */
+    q.qualified=false;calls=q.receives;assert(ep7w_write_trailer(descriptor+300,ticket));
+    r=ep7q_descriptor_receive(&ops,0xab,0,descriptor,sizeof descriptor);
+    assert(!r.called && q.receives==calls && descriptor[300]==0);
+    q.qualified=true;q.raw=300;q.length=300;memset(q.bytes,0,sizeof q.bytes);
+    put32(q.bytes+48,100);put32(q.bytes+52,19);put16(q.bytes+194,0x2001);
+    assert(ep7w_write_trailer(descriptor+300,ticket));
+    r=ep7q_descriptor_receive(&ops,0x4d,0,descriptor,sizeof descriptor);
+    assert(r.called && r.status==0 && r.wire_status==EP7W_LEGACY && !r.ticket.serial);
+    assert(ep7w_ticket(300,descriptor,312,&read)==EP7W_LEGACY);
+    assert(ep7w_write_trailer(descriptor+300,ticket));q.raw=-50;
+    r=ep7q_descriptor_send(&ops,0x4c,-1,descriptor,sizeof descriptor);
+    assert(r.called && r.status==-2 && r.ticket.serial==ticket.serial && q.length==312);
+    assert(descriptor[300]==0);q.raw=0;
+    r=ep7q_descriptor_send(&ops,0x4c,-1,descriptor,sizeof descriptor);
+    assert(r.called && r.status==0 && !r.ticket.serial && q.length==300);
+    assert(ep7w_write_trailer(descriptor+300,ticket));calls=q.sends;
+    r=ep7q_descriptor_send(&ops,0x999,-1,descriptor,sizeof descriptor);
+    assert(!r.called && q.sends==calls && r.ticket.serial==ticket.serial && descriptor[300]==0);
+}
 static ep7t_ticket wire_relay_fixture(ep7t_ticket ticket){
-    unsigned char cmd[EP7W_COMMAND]={0},native[EP7W_DESCRIPTOR],wire[EP7W_MAX];
-    ep7t_ticket received={0};size_t n;unsigned i;
+    unsigned char cmd[EP7W_COMMAND]={0},native[EP7W_MAX];
+    queue_fixture q={0};ep7q_ops ops=queue_ops(&q);ep7q_result result;
+    size_t n;unsigned i;static const unsigned queues[]={0x4c,0xab,0x4f};
+    q.qualified=true;
     put32(cmd+8,19);put32(cmd+12,(uint32_t)ticket.metadata);
-    assert(ep7w_encode(EP7W_COMMAND,cmd,ticket,wire,sizeof wire,&n));
-    assert(ep7w_decode(EP7W_COMMAND,wire,n,native,sizeof native,&received)==EP7W_TAGGED);
+    assert(ep7w_encode(EP7W_COMMAND,cmd,ticket,q.bytes,sizeof q.bytes,&n));
+    q.length=(unsigned)n;q.raw=(int)n;
+    result=ep7q_command_receive(&ops,0x4b,-1,cmd,sizeof cmd,native,sizeof native);
+    assert(result.called && result.status==0 && result.ticket.serial==ticket.serial);
     /* Materializer is still a native fixture; serializer/relay codec is real.
        Arbitrary prefix bytes model fields owned by stock preprocessing. */
-    memset(native,0x5a,sizeof native);
-    put32(native+48,received.metadata);put32(native+52,19);put16(native+194,0x2001);
+    memset(native,0x5a,EP7W_DESCRIPTOR); /* preserve independently owned trailer */
+    put32(native+48,ticket.metadata);put32(native+52,19);put16(native+194,0x2001);
     for(i=0;i<3;i++){
-        assert(ep7w_encode(EP7W_DESCRIPTOR,native,received,wire,sizeof wire,&n) && n==312);
-        assert(!memcmp(native,wire,300));memset(native,0,sizeof native);
-        assert(ep7w_decode(EP7W_DESCRIPTOR,wire,n,native,sizeof native,&received)==EP7W_TAGGED);
-        assert(received.serial==ticket.serial && received.metadata==ticket.metadata);
-        assert(!memcmp(native,wire,300));native[192]=(unsigned char)i;
+        q.raw=0;result=ep7q_descriptor_send(&ops,queues[i],-1,native,sizeof native);
+        assert(result.called && result.status==0 && q.length==312 && native[300]==0);
+        assert(!memcmp(native,q.bytes,300));memset(native,0,sizeof native);
+        q.raw=(int)q.length;result=ep7q_descriptor_receive(&ops,queues[i],-1,native,sizeof native);
+        assert(result.called && result.status==0 && result.wire_status==EP7W_TAGGED);
+        assert(result.ticket.serial==ticket.serial && result.ticket.metadata==ticket.metadata);
+        assert(!memcmp(native,q.bytes,300));native[192]=(unsigned char)i;
     }
-    return received;
+    return result.ticket;
 }
 static void capture_vertical_slice(void){
     ep7p_snapshot frozen,after;capture_host h={0};unsigned i,j;
@@ -277,7 +342,7 @@ int main(void){
     assert(send(0x9014,0)==1);assert(send(0x9032,-7)==1);text_is(frame(),"L ALL -7");
     setter_status=0;f=frame();assert(ep7_text_present(&widget_token,&f)==0);setter_status=1;
     n=text_calls;f.category=1;assert(ep7_text_present(&widget_token,&f)==0);assert(text_calls==n);
-    transport_boundaries();wire_boundaries();capture_vertical_slice();
+    transport_boundaries();wire_boundaries();owned_io_boundaries();capture_vertical_slice();
     assert(!held && current_queries==0);
-    puts("router -> sidecar -> 28-byte command -> three 312-byte wire relays -> one-use ticket -> 16 job slots: PASS; native queue/ABI/materializer mocked");return 0;
+    puts("router -> sidecar -> owned command receive -> three owned queue relays -> ticket -> 16 job slots: PASS; native queue backend/ABI/materializer mocked");return 0;
 }

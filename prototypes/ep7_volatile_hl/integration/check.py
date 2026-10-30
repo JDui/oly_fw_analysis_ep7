@@ -16,6 +16,8 @@ def check(record_hashes=True):
     headers.append(CORE/'snapshot_transport/transport.h')
     sources.append(CORE/'snapshot_transport/wire.c')
     headers.append(CORE/'snapshot_transport/wire.h')
+    sources.append(CORE/'snapshot_transport/owned_io.c')
+    headers.append(CORE/'snapshot_transport/owned_io.h')
     results={}
     with tempfile.TemporaryDirectory(prefix='ep7-ui-actual-host-') as tmp:
         for name,extra in [('strict',[]),('asan_ubsan',['-fsanitize=address,undefined','-fno-sanitize-recover=all'])]:

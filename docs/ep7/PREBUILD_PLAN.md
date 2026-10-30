@@ -93,3 +93,9 @@ G6 放置/安装仍未闭合。可以持续推进离线研究和自写主机代�
 本地raw队列ABI及pipeline票据撤销已实现；[五个descriptor栈对象的扩展计划](DESCRIPTOR_FRAME_PLAN.md)
 核对通过（53指令、4任务行、9个同宽指令片段）。下一项为command独立scratch与
 owned descriptor receive适配，随后落实三个materializer调用链的寄存器/栈ABI。
+
+owned I/O已经实现并通过定向strict/ASan/UBSan及目标对象检查，见
+[主机报告](../../research/ep7/owned-queue-integration-host.json)。command使用148字节独立scratch，
+descriptor要求真实312字节拥有权；发送先消费票据，失败/legacy路径保留清理义务。
+首次sanitizer超时未复现，原因未定位；报告保留此记录。下一项是materializer三调用链
+的具体栈资格和桥接，原生backend、安装/任务域仍未绑定。
