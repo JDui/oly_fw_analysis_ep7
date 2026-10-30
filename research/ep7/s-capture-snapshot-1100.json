@@ -1,0 +1,100 @@
+{
+  "scope": "Exact stock static capture mode/profile and twelve sequential S reads; atomicity not established",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "facts": {
+    "mode_profile_map": {
+      "111": [
+        "0x9481",
+        0
+      ],
+      "211": [
+        "0x9d11",
+        0
+      ],
+      "908": [
+        "0xf6b1",
+        0
+      ],
+      "973": [
+        "0xf731",
+        0
+      ]
+    },
+    "capture_mode_offset": 24053,
+    "capture_selector_offset": 24083,
+    "capture_S_offset": 24058,
+    "sequential_S_reads": 12,
+    "atomicity_proven": false,
+    "actual_race_demonstrated": false,
+    "admission_candidate": "0x602a86b7",
+    "hook_implemented": false,
+    "limitations": [
+      "No spanning lock identified within reviewed windows; not a global no-lock claim.",
+      "Runtime scheduler/writer serialization and address-dispatch selector range remain unqualified.",
+      "Rawmode 11 is not public mode 54; selector range/conversion are not established by this probe.",
+      "Candidate admission point supplies neither spare storage nor coherent generation/lifetime ownership."
+    ]
+  },
+  "windows": {
+    "population_entry": {
+      "start": "0x602a7ea0",
+      "end_exclusive": "0x602a7eb0",
+      "sha256": "571d8107c45e86efd4b60e84a25720a09d09e15cec09291582fc9faab999313b",
+      "witness_count": 3
+    },
+    "template_copy": {
+      "start": "0x60300055",
+      "end_exclusive": "0x60300068",
+      "sha256": "cec92bbfe28681992b1eef54b0573658c3d2698460988ae587e72de52e1868cd",
+      "witness_count": 5
+    },
+    "mode_profile_S": {
+      "start": "0x602a856e",
+      "end_exclusive": "0x602a86b7",
+      "sha256": "b3619198db268d30d5cb3fc7c8f8e7802535a2a1ce111f5f04f91a2fa3845a62",
+      "witness_count": 90
+    },
+    "getter": {
+      "start": "0x6005e971",
+      "end_exclusive": "0x6005e993",
+      "sha256": "e40855115686bd100a4fb0fcd0ff4125275a7e86425e1b21eb6474f5061adb5d",
+      "witness_count": 5
+    },
+    "registry": {
+      "start": "0x6005d924",
+      "end_exclusive": "0x6005d987",
+      "sha256": "7ac71ff982e53a0d1e202d138a7172ab91988fe0b023147eb7a5c0958ff8b99e",
+      "witness_count": 6
+    },
+    "typed_reader": {
+      "start": "0x6005efbd",
+      "end_exclusive": "0x6005f005",
+      "sha256": "b19caabb1d046dffbdf35b9669392972ed504922527c934bb5fba127b7e15066",
+      "witness_count": 3
+    },
+    "immediate_caller": {
+      "start": "0x602a446d",
+      "end_exclusive": "0x602a44ba",
+      "sha256": "be454a37230de51335c1b9f6a082b4486c9701daa9aef8cb9b6c760a1088cdb9",
+      "witness_count": 19
+    },
+    "registry_helper": {
+      "start": "0x6029bc24",
+      "end_exclusive": "0x6029bc8b",
+      "sha256": "a57ade44b2ee3c21f03c56cfa5e22a34f99e698f9ae778fd4ec3870244508b1e",
+      "witness_count": 4
+    },
+    "address_dispatch": {
+      "start": "0x6005c8cc",
+      "end_exclusive": "0x6005c8e2",
+      "sha256": "944eb894f4780e02fafc19f30d674689d4ef7fe96f4409a90255d3b8a7d6f4ac",
+      "witness_count": 4
+    }
+  },
+  "instruction_witness_count": 139,
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

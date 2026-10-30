@@ -1,0 +1,116 @@
+{
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "fresh_job": {
+      "start": "0x603e6d04",
+      "stop_exclusive": "0x603e6d98",
+      "sha256": "b429446c809b43d4d3bd2fa8a41c30cd19cb75a43d83da00ada47749c09b3809",
+      "witness_count": 5
+    },
+    "native_constructor": {
+      "start": "0x603537eb",
+      "stop_exclusive": "0x60353812",
+      "sha256": "5389ec8d4fac3133da2b7cb1511b722d2ab4c885ef09c0bc094cae377d7f304a",
+      "witness_count": 2
+    },
+    "request_wrapper": {
+      "start": "0x60355409",
+      "stop_exclusive": "0x60355419",
+      "sha256": "f2bb16b5a4b07599d14836cf40033470486294f85f13d568ac3fb8fa164b071c",
+      "witness_count": 5
+    },
+    "operation_bind": {
+      "start": "0x60354b8c",
+      "stop_exclusive": "0x60354bfe",
+      "sha256": "2ec9c82cbd2a681bd552f3ef625c0c580bf1483ab3f01e6ec4e5410eec2983c3",
+      "witness_count": 5
+    },
+    "submit_request": {
+      "start": "0x60355c69",
+      "stop_exclusive": "0x60355cae",
+      "sha256": "0de99b1a0c9295f0191dc17838f042608f0a7598a7c493afaa40b76bcdf451c8",
+      "witness_count": 3
+    },
+    "submit_stack_root": {
+      "start": "0x603558ce",
+      "stop_exclusive": "0x603558e2",
+      "sha256": "da463bc8622290befd1cb557ba3bdd2cc14561007f0e6e10c2834b8d2b80e279",
+      "witness_count": 3
+    },
+    "driver_config_order": {
+      "start": "0x60334db4",
+      "stop_exclusive": "0x60334e2e",
+      "sha256": "4fa6efa3d141469bb695a0461bb23c55b3fefd2ed801ef2490e113b91ec762a3",
+      "witness_count": 3
+    },
+    "config_dispatch": {
+      "start": "0x603396dd",
+      "stop_exclusive": "0x60339704",
+      "sha256": "0dbcf6a5412cb99482eceb2f7a399141fcdee88dd108b80ed45ab742e51c06a4",
+      "witness_count": 5
+    },
+    "conditional_color_builder": {
+      "start": "0x6033985a",
+      "stop_exclusive": "0x6033987f",
+      "sha256": "ccf0a90993fe98011cfebfe54bbacd266e33b8e2d022a06279838ede08d0d3b4",
+      "witness_count": 3
+    },
+    "input_format_dispatch": {
+      "start": "0x603aaced",
+      "stop_exclusive": "0x603aad27",
+      "sha256": "ca652379b117cea8b65a8f3b5fc4cd0a0a14e54a17fa95c43f11bea9667a3caa",
+      "witness_count": 10
+    },
+    "color_cpu_calls": {
+      "start": "0x603b17e6",
+      "stop_exclusive": "0x603b182b",
+      "sha256": "8c1115d5280dd40490ccf27baa9e4135e558adcc3205b9910db2ef945b305688",
+      "witness_count": 2
+    },
+    "color_selector_caller": {
+      "start": "0x603b1466",
+      "stop_exclusive": "0x603b1517",
+      "sha256": "189581bf00beef3dd4b3b30ec687d468a53a1afeace95fc65f32cd9d14eb9316",
+      "witness_count": 1
+    },
+    "color_selector": {
+      "start": "0x603b0252",
+      "stop_exclusive": "0x603b02de",
+      "sha256": "08a8001b0e30959823acdea98eafc3dcc54897489a6da3b6dfa4a8e2fe6022ce",
+      "witness_count": 3
+    },
+    "header_stage_override": {
+      "start": "0x6035d35b",
+      "stop_exclusive": "0x6035d372",
+      "sha256": "0ae09957fbf5fd03881d1b07ba4be72b94ccfe6155aec91ba144372028575314",
+      "witness_count": 2
+    }
+  },
+  "instruction_witness_count": 52,
+  "conditional_cpu_chain": [
+    "0x603558ce",
+    "0x60355c81",
+    "0x60334ba8",
+    "0x60334db4",
+    "0x603396dd",
+    "0x603397db",
+    "0x60339870",
+    "0x603aaced",
+    "0x603b17e6 or 0x603b1819",
+    "0x603b1466",
+    "0x603b0252",
+    "0x603b0068"
+  ],
+  "limitations": [
+    "Conditional direct-call chain, not proof that every capture or stage reaches COLOR builder.",
+    "Constructor return is stored as a pointer; supported embedded shape is not allocation provenance.",
+    "Header fields may be changed after request wrapper; example stage sets request+12=0xf005.",
+    "New trailer may not be read to discover whether the allocation was enlarged. Admission needs independently established provenance and liveness.",
+    "No trailer allocation, firmware patch, camera memory read or hardware quiescence claim."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

@@ -250,3 +250,12 @@ registration and status-path witnesses. These tools remain read-only:
 python3 tools/ep7_timeout_cancel.py --stock /local/stock.BIN --objdump /trusted/mn103-objdump
 python3 tools/ep7_event10_producer.py --stock /local/stock.BIN --objdump /trusted/mn103-objdump
 ```
+
+### Scope of the asynchronous-lifetime requirement
+
+The [inline-job value alternative](STORAGE_AND_INLINE_JOB_DESIGN.md) separates
+a new asynchronous H/L buffer from values consumed synchronously on the CPU.
+Only the former automatically creates a new hardware-pointer lifetime to prove.
+The latter still requires allocation provenance before any trailer read, immutable
+capture binding, local CPU lifetime and no pointer escape; no actual H/L hook or
+expanded allocation has been qualified.

@@ -233,3 +233,11 @@ Latest research connects [command transport, ACK ordering and operation joins](C
 with explicitly unqualified host-only owner/ID contracts. The
 [native selector alternative](NATIVE_SELECTOR_DESIGN.md) preserves stock categories
 and investigates COLOR-only H/L views without assuming Delete admission.
+
+## Storage and inline-job continuation
+
+The [storage and CPU-owned H/L design](STORAGE_AND_INLINE_JOB_DESIGN.md)
+separates four-profile 16-bit S records from 32-bit alternate-bank cells,
+verifies all 70 S filter selections, and scopes an inline native-job snapshot
+alternative. Neither part-1 ownership nor expanded allocation provenance is
+yet qualified; no firmware patch is enabled.

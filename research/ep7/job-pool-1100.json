@@ -1,0 +1,71 @@
+{
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "scope": "Static allocator branch/stride evidence, not trailer ownership or allocation provenance",
+  "requested_sizes": {
+    "stock": 15488,
+    "hypothetical_plus_24": 15512
+  },
+  "branch_class": {
+    "stock": 2,
+    "hypothetical_plus_24": 2
+  },
+  "pool_stride_table": {
+    "address": "0x60026e34",
+    "values": [
+      192,
+      2112,
+      16448
+    ],
+    "sha256": "c845e3386e307ef77629b10fa221fda320b62962e3914131da84b5550334d5cc"
+  },
+  "windows": {
+    "size_dispatch": {
+      "start": "0x60022700",
+      "end_exclusive": "0x60022732",
+      "sha256": "143ceadd507c40d1038f0542a450d702196c992094bb183dc6dc1786c2cc1f8a",
+      "witness_count": 9
+    },
+    "free_dispatch": {
+      "start": "0x60022732",
+      "end_exclusive": "0x60022782",
+      "sha256": "e64e681067d6b8121d1a8f56bcb2a3d01f0b774c391e0c01b29c5e5ef291b8cb",
+      "witness_count": 4
+    },
+    "pool_stride_load": {
+      "start": "0x600228b6",
+      "end_exclusive": "0x600228d6",
+      "sha256": "8a65c6a5cfec102b11a8a34371364f77a88d06202df928c219be3b5d472470d4",
+      "witness_count": 4
+    },
+    "pool_initial_index": {
+      "start": "0x600229d4",
+      "end_exclusive": "0x600229e9",
+      "sha256": "1d0c8210a2fa621eebfa64b792d0c8e9cdc8fe95921eaf18fc64412a04eefa9c",
+      "witness_count": 3
+    },
+    "pool_recycled_index": {
+      "start": "0x60022a16",
+      "end_exclusive": "0x60022a2f",
+      "sha256": "a60dbdded094e698fce59782f08efa6743e2813fca5dca0214ae85de8ec6c690",
+      "witness_count": 3
+    },
+    "pool_return": {
+      "start": "0x60022a49",
+      "end_exclusive": "0x60022a61",
+      "sha256": "6786120cb7182ee3fe2ec0781cea52bdcbb82825c5c26d1e70c6869635b2700b",
+      "witness_count": 3
+    }
+  },
+  "instruction_witness_count": 26,
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "limitations": [
+    "Same class does not authorize writing any stock tail or establish expanded initialization.",
+    "Pool occupancy, concurrent users, guard regions and all allocator/free error paths are not qualified.",
+    "udf00 is the disassembler rendering; exact ISA multiply semantics are not independently established here.",
+    "No constructor admission, whole-job copy exclusion or safe H/L hook is established."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}
