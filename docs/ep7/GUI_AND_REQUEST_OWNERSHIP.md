@@ -260,3 +260,36 @@ completion-after-release. Passing such synthetic tests would validate a proposed
 design only—not identify free firmware storage, establish real queue lifetime,
 or qualify ISP behavior. No hook, extension address or firmware artifact is
 provided by these additional findings.
+
+
+## Top-level task check: no observed Delete rewrite on this route
+
+A focused caller trace found the actual GUI task, avoiding enumeration of every
+machine getter. Registration at `0x60cfd41c..0x60cfd431` initializes fixed machine
+object `0x6246684c` and publishes its pointer at `0x61fb2564` / `0x61fc1848`.
+The task dequeues a packet at `0x60cfd4e7` via `0x60d10133`, calls preprocessor
+`0x60e9fa88` at `0x60cfd53a`, and either consumes it on return 1 or rereads the
+packet and calls the engine at `0x60cfd558`. That call targets **`0x60d1144d`**,
+an entry inside the previously inspected engine window starting `0x60d11448`;
+scanning only calls to the earlier address misses this concrete caller.
+
+For local `0x9016`, the preprocessor uses key `0x12` (`event - 0x9004`) in its
+128-slot table at `0x611ec960`. There is no matching key. The actual linear probe
+starts at slot 18, traverses 21 slots, and reaches the empty/default slot 38 at
+`0x611eca90`. Its generic tracking table has 41 events, also without `0x9016`.
+The inspected default and state-gating branches may consume this event, but no
+rewrite into another event or direct actuator dispatch was found for it along
+this reviewed route. If passed through, the task reloads unchanged `0x9016` and
+the identified COLOR machine table rejects it before the controller handler.
+
+This strengthens the **normal task-route admission gap**, not a whole-program
+or physical-button absence claim. Diagnostic callees were not all recursively
+audited; other event producers, alias/direct paths and the app-state selection
+are not globally excluded. The local `0xf802` → pending `0x903e` timer path is
+unaffected. The GUI-machine probe now includes this task chain, the bounded hash
+probe and generic tracking-table check, plus fingerprints of the inspected gates.
+
+This completes the focused top-level-consumer question. Further input work should
+start from a specifically justified alternate producer or observed app-state
+selection, rather than blindly enumerating every machine getter. It remains
+unsafe to install only PEN-F's leaf Delete hook or to claim E-P7 HSL is working.

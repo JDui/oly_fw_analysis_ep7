@@ -35,6 +35,7 @@ E-P7 原生 COLOR 提供 **12 色区饱和度 ±5、COLOR1–4**，另有暗角�
 因此“底层 handler 支持 9016”不等于实体 Delete 能进入当前 COLOR 面板。
 原 Delete 首选方案降级为**端到端路由、modal/hold/repeat 均验证后才能启用的候选**；
 可能需要 E-P7 专属的上层事件准入，不能直接搬 PEN-F leaf hook。
+后续已沿具体 GUI task 检查预处理：在所审默认/门禁路径中，`9016` 被吞掉或原样传给该机器，未发现改码或直达 actuator 的旁路；这仍不是全程序或实体按键失效证明。
 详见 [GUI 与 capture 后续证据](GUI_AND_REQUEST_OWNERSHIP.md)。
 
 ## 设计目标：最小单手控制 + 明示事务

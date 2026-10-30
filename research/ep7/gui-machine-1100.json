@@ -92,7 +92,187 @@
       "handler": "0x60e5da87"
     }
   ],
+  "preprocessor": {
+    "event": "0x9016",
+    "key": "0x12",
+    "slot_count": 128,
+    "probe_path": [
+      {
+        "slot": 18,
+        "address": "0x611ec9f0",
+        "key": "0x5fff",
+        "target": "0x60e9fc69"
+      },
+      {
+        "slot": 19,
+        "address": "0x611ec9f8",
+        "key": "0x13",
+        "target": "0x60e9fbcc"
+      },
+      {
+        "slot": 20,
+        "address": "0x611eca00",
+        "key": "0x6000",
+        "target": "0x60e9fc69"
+      },
+      {
+        "slot": 21,
+        "address": "0x611eca08",
+        "key": "0x6815",
+        "target": "0x60e9fc13"
+      },
+      {
+        "slot": 22,
+        "address": "0x611eca10",
+        "key": "0x6816",
+        "target": "0x60e9fba1"
+      },
+      {
+        "slot": 23,
+        "address": "0x611eca18",
+        "key": "0x600a",
+        "target": "0x60e9fc69"
+      },
+      {
+        "slot": 24,
+        "address": "0x611eca20",
+        "key": "0x6002",
+        "target": "0x60e9fc69"
+      },
+      {
+        "slot": 25,
+        "address": "0x611eca28",
+        "key": "0x6003",
+        "target": "0x60e9fc6b"
+      },
+      {
+        "slot": 26,
+        "address": "0x611eca30",
+        "key": "0x6005",
+        "target": "0x60e9fc6b"
+      },
+      {
+        "slot": 27,
+        "address": "0x611eca38",
+        "key": "0x6004",
+        "target": "0x60e9fc6b"
+      },
+      {
+        "slot": 28,
+        "address": "0x611eca40",
+        "key": "0x600b",
+        "target": "0x60e9fc6b"
+      },
+      {
+        "slot": 29,
+        "address": "0x611eca48",
+        "key": "0x600c",
+        "target": "0x60e9fc6b"
+      },
+      {
+        "slot": 30,
+        "address": "0x611eca50",
+        "key": "0x5fd",
+        "target": "0x60e9fca4"
+      },
+      {
+        "slot": 31,
+        "address": "0x611eca58",
+        "key": "0x401",
+        "target": "0x60e9fcb7"
+      },
+      {
+        "slot": 32,
+        "address": "0x611eca60",
+        "key": "0x4720",
+        "target": "0x60e9fc9c"
+      },
+      {
+        "slot": 33,
+        "address": "0x611eca68",
+        "key": "0x6008",
+        "target": "0x60e9fcee"
+      },
+      {
+        "slot": 34,
+        "address": "0x611eca70",
+        "key": "0x6009",
+        "target": "0x60e9fcee"
+      },
+      {
+        "slot": 35,
+        "address": "0x611eca78",
+        "key": "0x6007",
+        "target": "0x60e9fcee"
+      },
+      {
+        "slot": 36,
+        "address": "0x611eca80",
+        "key": "0xafd",
+        "target": "0x60e9fcf6"
+      },
+      {
+        "slot": 37,
+        "address": "0x611eca88",
+        "key": "0x6807",
+        "target": "0x60e9fcff"
+      },
+      {
+        "slot": 38,
+        "address": "0x611eca90",
+        "key": "0x0",
+        "target": "0x60e9fd41"
+      }
+    ],
+    "tracking_event_count": 41,
+    "task_engine_call": "0x60cfd558",
+    "engine_entry": "0x60d1144d",
+    "normal_route_result": "Reviewed task preprocessing has no Delete rewrite/direct-actuator branch; it may consume the event or pass unchanged to the GUI machine.",
+    "limitation": "Not a whole-program exclusion of other producers/alias paths; local timer reset is unaffected."
+  },
   "windows": {
+    "task_registration": {
+      "start": "0x60cfd41c",
+      "stop_exclusive": "0x60cfd438",
+      "sha256": "13ad34f57bcbf472df1409ffad8a2a11960c666f3c25897e757ca33e2aa40495",
+      "witness_count": 3
+    },
+    "task_dequeue_and_engine": {
+      "start": "0x60cfd4d9",
+      "stop_exclusive": "0x60cfd55f",
+      "sha256": "9ce1905b0dbc9a491a6832b78bbeddbfb753cc43d5f6eb6a06d58099f2ecaeec",
+      "witness_count": 6
+    },
+    "preprocessor": {
+      "start": "0x60e9fa88",
+      "stop_exclusive": "0x60e9fdaa",
+      "sha256": "a64b472ed7cad0b3636ddd6118df42e7fd8988a1493b108c87a5e5528a16a4fa",
+      "witness_count": 11
+    },
+    "preprocessor_tracking": {
+      "start": "0x60ea04fe",
+      "stop_exclusive": "0x60ea0670",
+      "sha256": "de9f0919abb40d3a11d601b4f77fa1711c0101b6422dee95647990b7d1872540",
+      "witness_count": 3
+    },
+    "preprocessor_tracking_guard": {
+      "start": "0x60ea0ea2",
+      "stop_exclusive": "0x60ea0eb8",
+      "sha256": "940db5fc6e3141ba0ed8e3a49ccf412fa98d4a244772fb0f6a557ad632508e39",
+      "witness_count": 2
+    },
+    "preprocessor_state_gates": {
+      "start": "0x60ea0b15",
+      "stop_exclusive": "0x60ea0d1b",
+      "sha256": "1d568193705a1e97f358d598501f1982055ad4d5237df50eb3159666735d5eb4",
+      "witness_count": 8
+    },
+    "task_diagnostic": {
+      "start": "0x60e9eb89",
+      "stop_exclusive": "0x60e9ebbd",
+      "sha256": "a1fc9a7f0290fcd8416eece8810da5c78e9c3de69ebb0b7a3b8498315c8d85d8",
+      "witness_count": 1
+    },
     "controller_init": {
       "start": "0x60e5dae9",
       "stop_exclusive": "0x60e5db01",
@@ -160,11 +340,11 @@
       "witness_count": 1
     }
   },
-  "instruction_witness_count": 38,
+  "instruction_witness_count": 72,
   "direct_Delete_event_present": false,
   "event_count": 112,
   "limitations": [
-    "No claim alternate/pre-dispatch or alias routes are excluded.",
+    "Reviewed normal task preprocessing only; alternate producers or alias/direct paths are not globally excluded.",
     "No app FSM 0x5701/0x2006 association proven.",
     "Matrix stride opcode disassembles udf01; arithmetic interpretation still needs independent MN103 opcode confirmation.",
     "No physical Delete behavior or live routing qualification."

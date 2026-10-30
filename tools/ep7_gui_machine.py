@@ -7,6 +7,13 @@ sys.path.insert(0,str(ROOT/'tools'))
 from ep7_stock_audit import audit,BASE,require
 from oly_container import parse,sha256
 WINDOWS={
+ 'task_registration':(0x60cfd41c,0x60cfd438),
+ 'task_dequeue_and_engine':(0x60cfd4d9,0x60cfd55f),
+ 'preprocessor':(0x60e9fa88,0x60e9fdaa),
+ 'preprocessor_tracking':(0x60ea04fe,0x60ea0670),
+ 'preprocessor_tracking_guard':(0x60ea0ea2,0x60ea0eb8),
+ 'preprocessor_state_gates':(0x60ea0b15,0x60ea0d1b),
+ 'task_diagnostic':(0x60e9eb89,0x60e9ebbd),
  'controller_init':(0x60e5dae9,0x60e5db01),
  'controller_exit':(0x60e5db01,0x60e5db2e),
  'controller_handler':(0x60e5da87,0x60e5dae9),
@@ -20,6 +27,40 @@ WINDOWS={
  'app_callback_global_clear':(0x60cd2330,0x60cd234d),
 }
 WITNESSES={
+ 0x60cfd41c:('mov','1648781388,a2'),
+ 0x60cfd423:('call','0x60dd4b19,[],8'),
+ 0x60cfd42a:('mov','a2,(0x61fb2564)'),
+ 0x60cfd4e7:('call','0x60d10133,[d2,d3,a2,a3],20'),
+ 0x60cfd53a:('call','0x60e9fa88,[d2,a2,a3],224'),
+ 0x60cfd544:('beq','0x60cfd4e4'),
+ 0x60cfd546:('mov','(396,sp),d0'),
+ 0x60cfd552:('mov','(0x61fb2564),a0'),
+ 0x60cfd558:('call','0x60d1144d,[d2,d3,a2,a3],48'),
+ 0x60e9fb40:('add','-36868,d1'),
+ 0x60e9fb47:('and','127,d0'),
+ 0x60e9fb4d:('mov','1629407584,a1'),
+ 0x60e9fb5e:('jmp','0x60e9fd41'),
+ 0x60e9fb61:('add','8,a0'),
+ 0x60e9fd48:('call','0x60ea04fe,[d2,d3,a2,a3],28'),
+ 0x60e9fd6e:('call','0x60ea0b15,[d2,a2,a3],20'),
+ 0x60e9fd76:('call','0x60ea0bdd,[a2],8'),
+ 0x60e9fd7e:('call','0x60ea0c15,[d2,a2],12'),
+ 0x60e9fd8e:('call','0x60ea0ced,[],4'),
+ 0x60e9fda5:('mov','d2,d0'),
+ 0x60ea051a:('mov','1629406092,d0'),
+ 0x60ea0526:('call','0x60ea0ea2,[d2,d3],12'),
+ 0x60ea0665:('cmp','41,d3'),
+ 0x60ea0eb3:('beq','0x60ea0eb8'),
+ 0x60ea0eb5:('retf','[d2,d3],12'),
+ 0x60ea0b28:('cmp','3,d0'),
+ 0x60ea0b2c:('clr','d0'),
+ 0x60ea0c08:('cmp','41738,d1'),
+ 0x60ea0c10:('mov','1,d0'),
+ 0x60ea0c23:('cmp','38401,d1'),
+ 0x60ea0caa:('mov','1,d2'),
+ 0x60ea0d11:('call','0x60ea04fe,[d2,d3,a2,a3],28'),
+ 0x60ea0d16:('mov','1,d0'),
+ 0x60e9ebad:('cmp','36884,d3'),
  0x60e5daec:('mov','8,d0'),0x60e5daee:('mov','463,d1'),
  0x60e5daf1:('call','0x60e4cea8,[d2,d3,a2,a3],52'),
  0x60e5daf8:('mov','a0,(0x61fc436c)'),
@@ -87,9 +128,28 @@ def inspect_tables(main):
   paths.append(dict(event=hex(event),event_index=idx,matrix_cell=hex(cell),handler_index=handler,handler='0x60e5da87'))
  return facts,paths
 
+def inspect_preprocessor(main):
+ slots=[struct.unpack_from('<II',main,0x611ec960+i*8-BASE) for i in range(128)]
+ require(all(key != 0x12 for key,_ in slots),'unexpected Delete-specific preprocessing row')
+ path=[]
+ for n in range(128):
+  index=(0x12+n)%128;key,target=slots[index]
+  require(0x60e9fb74 <= target <= 0x60e9fd41,'preprocessor target outside reviewed dispatcher')
+  path.append(dict(slot=index,address=hex(0x611ec960+index*8),key=hex(key),target=hex(target)))
+  if key==0:break
+ else:raise ValueError('unterminated preprocessing probe')
+ require(len(path)==21 and path[-1]['slot']==38 and slots[38]==(0,0x60e9fd41),'Delete probe termination mismatch')
+ tracked=struct.unpack_from('<41H',main,0x611ec38c-BASE)
+ require(0x9016 not in tracked,'unexpected Delete tracking row')
+ return dict(event='0x9016',key='0x12',slot_count=128,probe_path=path,tracking_event_count=41,
+  task_engine_call='0x60cfd558',engine_entry='0x60d1144d',
+  normal_route_result='Reviewed task preprocessing has no Delete rewrite/direct-actuator branch; it may consume the event or pass unchanged to the GUI machine.',
+  limitation='Not a whole-program exclusion of other producers/alias paths; local timer reset is unaffected.')
+
 def inspect(raw,objdump):
  identity=audit(raw);main=parse(raw)[0].payload
  facts,paths=inspect_tables(main)
+ preprocessor=inspect_preprocessor(main)
  version=subprocess.check_output([str(objdump),'--version'],text=True).splitlines()[0]
  reports={}
  with tempfile.TemporaryDirectory(prefix='ep7-gui-machine-') as tmp:
@@ -99,7 +159,7 @@ def inspect(raw,objdump):
    witnesses=[a for a in WITNESSES if start<=a<stop]
    for address in witnesses:require_instruction(asm,address,*WITNESSES[address])
    reports[name]=dict(start=hex(start),stop_exclusive=hex(stop),sha256=sha256(main[start-BASE:stop-BASE]),witness_count=len(witnesses))
- return dict(scope='COLOR selector GUI machine4/state29 static table route only',source_sha256=identity['source_sha256'],objdump_version=version,objdump_sha256=sha256(objdump.read_bytes()),tables=facts,paths=paths,windows=reports,instruction_witness_count=len(WITNESSES),direct_Delete_event_present=False,event_count=112,limitations=['No claim alternate/pre-dispatch or alias routes are excluded.','No app FSM 0x5701/0x2006 association proven.','Matrix stride opcode disassembles udf01; arithmetic interpretation still needs independent MN103 opcode confirmation.','No physical Delete behavior or live routing qualification.'],camera_accessed=False,firmware_executed=False,flash_ready=False)
+ return dict(scope='COLOR selector GUI machine4/state29 static table route only',source_sha256=identity['source_sha256'],objdump_version=version,objdump_sha256=sha256(objdump.read_bytes()),tables=facts,paths=paths,preprocessor=preprocessor,windows=reports,instruction_witness_count=len(WITNESSES),direct_Delete_event_present=False,event_count=112,limitations=['Reviewed normal task preprocessing only; alternate producers or alias/direct paths are not globally excluded.','No app FSM 0x5701/0x2006 association proven.','Matrix stride opcode disassembles udf01; arithmetic interpretation still needs independent MN103 opcode confirmation.','No physical Delete behavior or live routing qualification.'],camera_accessed=False,firmware_executed=False,flash_ready=False)
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--stock',required=True,type=Path);p.add_argument('--objdump',required=True,type=Path);a=p.parse_args()
  print(json.dumps(inspect(a.stock.read_bytes(),a.objdump.resolve()),indent=2))

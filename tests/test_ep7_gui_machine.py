@@ -50,4 +50,31 @@ class TableTests(unittest.TestCase):
         data=self.fixture()
         struct.pack_into('<I',data,0x611a2888-probe.BASE,0x900c)
         with self.assertRaises(ValueError):probe.inspect_tables(data)
+class PreprocessorTests(unittest.TestCase):
+    def fixture(self):
+        data=bytearray(0x611ecd60-probe.BASE)
+        for i in range(128):
+            struct.pack_into('<II',data,0x611ec960+i*8-probe.BASE,i+1000,0x60e9fb74)
+        struct.pack_into('<II',data,0x611ec960+38*8-probe.BASE,0,0x60e9fd41)
+        struct.pack_into('<41H',data,0x611ec38c-probe.BASE,*range(41))
+        return data
+    def test_bounded_probe(self):
+        result=probe.inspect_preprocessor(self.fixture())
+        self.assertEqual(len(result['probe_path']),21)
+    def test_Delete_preprocessor_injection_rejected(self):
+        data=self.fixture()
+        struct.pack_into('<I',data,0x611ec960-probe.BASE,0x12)
+        with self.assertRaises(ValueError):probe.inspect_preprocessor(data)
+    def test_bad_target_rejected(self):
+        data=self.fixture()
+        struct.pack_into('<I',data,0x611ec960+18*8+4-probe.BASE,0)
+        with self.assertRaises(ValueError):probe.inspect_preprocessor(data)
+    def test_unterminated_probe_rejected(self):
+        data=self.fixture()
+        struct.pack_into('<I',data,0x611ec960+38*8-probe.BASE,999)
+        with self.assertRaises(ValueError):probe.inspect_preprocessor(data)
+    def test_Delete_tracking_injection_rejected(self):
+        data=self.fixture()
+        struct.pack_into('<H',data,0x611ec38c-probe.BASE,0x9016)
+        with self.assertRaises(ValueError):probe.inspect_preprocessor(data)
 if __name__ == '__main__': unittest.main()
