@@ -1,0 +1,135 @@
+{
+  "scope": "One fresh capture route and local retire/clone ordering only",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "allocate_result": {
+      "start": "0x6029b64e",
+      "stop_exclusive": "0x6029b686",
+      "sha256": "6c46f3fc60a404bb07186c4de5d599792fb5757ffdbbf9b160e4868acc25b0a9",
+      "witness_count": 23
+    },
+    "allocate_wrapper": {
+      "start": "0x6029b4e7",
+      "stop_exclusive": "0x6029b523",
+      "sha256": "3a4d761166890a680c9fc03cc6dae4d1b20b51d05df8ac05456d0a31f7468c0c",
+      "witness_count": 22
+    },
+    "capture_node_dequeue": {
+      "start": "0x602a3256",
+      "stop_exclusive": "0x602a3291",
+      "sha256": "2ced6cbb30f15be6f428834e43a29a4fc2d4d7287e6203b459a20e0e4e70d962",
+      "witness_count": 16
+    },
+    "clone": {
+      "start": "0x603edb9a",
+      "stop_exclusive": "0x603edbea",
+      "sha256": "e5063592d7f83e94458255669fac998e5a09e59cd84b60c685c28ede472dba35",
+      "witness_count": 23
+    },
+    "conditional_node_retire": {
+      "start": "0x602a4443",
+      "stop_exclusive": "0x602a446d",
+      "sha256": "5f3062188e336be04b8203d0f1305cf5d29c7483749c1c496b31a118d54c8df7",
+      "witness_count": 18
+    },
+    "free_slot": {
+      "start": "0x6029bdc9",
+      "stop_exclusive": "0x6029bdec",
+      "sha256": "1f1c8f50addcf30111ac62a48a2490166b792fa00ea3dd12df50647ecd9c4787",
+      "witness_count": 20
+    },
+    "fresh_node": {
+      "start": "0x602a3144",
+      "stop_exclusive": "0x602a31bb",
+      "sha256": "f0a8d09b8fab3cdbfd7b83cadb519429db0bcfe7c1a902f355b247414631a32c",
+      "witness_count": 42
+    },
+    "pool_allocate": {
+      "start": "0x6029bdec",
+      "stop_exclusive": "0x6029be33",
+      "sha256": "613c7c0b3b4f03f935a125ca843d99b4a4e2aa9b703ae640d55598f0fde275ac",
+      "witness_count": 26
+    },
+    "pool_retire": {
+      "start": "0x6029be33",
+      "stop_exclusive": "0x6029be82",
+      "sha256": "b5a49866cf743c6b4d75ff53199b7424e797107425ee6695376a945967f2797a",
+      "witness_count": 25
+    },
+    "populate_route": {
+      "start": "0x602a31bb",
+      "stop_exclusive": "0x602a3204",
+      "sha256": "9232f65d1e5fd4d6d99619be452984cef6e3ec5a809e5294770e2e53ca04b943",
+      "witness_count": 30
+    },
+    "population_entry": {
+      "start": "0x602a7ea0",
+      "stop_exclusive": "0x602a7eb0",
+      "sha256": "571d8107c45e86efd4b60e84a25720a09d09e15cec09291582fc9faab999313b",
+      "witness_count": 3
+    },
+    "population_return": {
+      "start": "0x602a8835",
+      "stop_exclusive": "0x602a8877",
+      "sha256": "acd8b6714517968e494182024a436307a34a81a53f3fed26cfdc094da13fbe65",
+      "witness_count": 18
+    },
+    "postpopulate_resolve": {
+      "start": "0x602a8dbd",
+      "stop_exclusive": "0x602a8dd3",
+      "sha256": "ef31034587610f22bb5318f7e8ea2c6f82d0a9c61508e3803dd7be4f956eb72e",
+      "witness_count": 8
+    },
+    "postpopulation_return": {
+      "start": "0x602a91bd",
+      "stop_exclusive": "0x602a91ee",
+      "sha256": "b2cf0332917ef621266f4b31dde41097207323734974bccb76eae8a2b7e3842e",
+      "witness_count": 14
+    },
+    "prepopulation_enqueue": {
+      "start": "0x602a3204",
+      "stop_exclusive": "0x602a3256",
+      "sha256": "9f4c8779b66ca09eade4a907193808a33ea5c47de27b1ee1db5554517f09d003",
+      "witness_count": 26
+    },
+    "retire_wrapper": {
+      "start": "0x6029b686",
+      "stop_exclusive": "0x6029b738",
+      "sha256": "3ac7532d196af4753d82a489a09fab1d0793728d0765fb33002d83f217b8fb3e",
+      "witness_count": 58
+    }
+  },
+  "instruction_witness_count": 372,
+  "facts": {
+    "fresh_ID_route": [
+      "0x602a3145",
+      "0x6029b4fa",
+      "0x6029b655",
+      "0x6029be1e",
+      "0x602a316f",
+      "0x602a31a4",
+      "0x602a31ea"
+    ],
+    "source_release_before_flag_clear": [
+      "0x6029be5d",
+      "0x6029be6a"
+    ],
+    "node_free_does_not_always_retire_capture": true,
+    "clone_publish_before_copy": [
+      "0x603edbc5",
+      "0x603edbce"
+    ],
+    "proposed_clone_snapshot_transfer_after_copy": "0x603edbd5"
+  },
+  "limitations": [
+    "No universal allocation/retirement coverage.",
+    "Population and descriptor transfer are not proved one atomic lifetime.",
+    "Native generation sidecar, lock, quarantine and transfer remain unimplemented.",
+    "No capture spare space or raw-pointer ownership inferred."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

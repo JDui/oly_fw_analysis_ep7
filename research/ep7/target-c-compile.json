@@ -12,6 +12,9 @@
     "-ffreestanding",
     "-fno-builtin",
     "-fno-tree-loop-distribute-patterns",
+    "-mno-setlb",
+    "-mno-liw",
+    "-fno-tree-loop-distribute-patterns",
     "-Wall",
     "-Wextra",
     "-Werror",
@@ -19,6 +22,8 @@
   ],
   "inputs": {
     "prototypes/ep7_volatile_hl/target/include/string.h": "c16c5b53a05ae26fd928c0c69a6c4b94fd726ecd82d6b0dd2965c63ebf93233c",
+    "prototypes/ep7_volatile_hl/ep7p_direct.h": "6f29cc432d126dded64714e01aeb01c8e94561d7ae791401202fd756ae9ced71",
+    "prototypes/ep7_volatile_hl/ep7p_lifecycle.h": "d91fce4ff469d9eaac0b2dad12736a0f61fbb56385a8a541db83091013eff8a1",
     "prototypes/ep7_volatile_hl/ep7p.h": "a46308465556703ee0d658f07ffb73b34cb89041377468e84c92f5f2d1663bcd",
     "prototypes/ep7_volatile_hl/ep7p_decode.h": "f4d28bb62c4801083db4c5a594882c56af68fe2440c247e9a70368ffc4f1e45d",
     "prototypes/ep7_volatile_hl/ep7p_ui.h": "13ceab4efbad8ec0f8383ada52781099eed71cecfd98c068ba48e6871d9bc9df",
@@ -38,11 +43,12 @@
       ]
     },
     "ep7p": {
-      "source_sha256": "befaec1ff6ae9f0cfa0571f5d84958ba797532b94ec23f064a27d8d2225d0ab9",
-      "assembly_sha256": "eb6d69812c54f6df6a9350eefcda75a0dfb9d29612c65c32fd01800af10c0d45",
-      "object_sha256": "d719e6fb671b4295d66d9b7b304c3be798b13646d645a61b2649703c6d700d3f",
-      "object_size": 10332,
+      "source_sha256": "0e9f1274706c0e1631cb1ebda3d35055a48200ba5c9817760f600ab9c4f63402",
+      "assembly_sha256": "ae23d75817124cfbea84ee837328fda9166218a3b2402438c3da582360fe2ad5",
+      "object_sha256": "0141fc6a7738415068b7010634af2df92ab1842291693921ac143ab988039cd3",
+      "object_size": 11332,
       "undefined_symbols": [
+        "_ep7p_decode",
         "_memcpy",
         "_memset"
       ]
@@ -71,6 +77,18 @@
       "object_sha256": "c0afce7f6efbf2408a603f02774fad8b9f4daea0cdd78eac763e6d99eddab6c1",
       "object_size": 824,
       "undefined_symbols": []
+    },
+    "ep7p_lifecycle": {
+      "source_sha256": "e937eec1ad8c41e346813c2d2c1a3d687a5585e5376e8af6a58558ef2e495932",
+      "assembly_sha256": "bb205ffc1b712061ac7a6a7a6d7c2e141943ba10deac2c3452ac1ab98fb470af",
+      "object_sha256": "c87eebc82c6c2a59cefedb8439563af6f30f2cf64bbb29b2c3fd792e0c68df6c",
+      "object_size": 2444,
+      "undefined_symbols": [
+        "_ep7p_direct_apply",
+        "_ep7p_register_job",
+        "_ep7p_release_job",
+        "_memcpy"
+      ]
     },
     "ep7p_ui_raw": {
       "source_sha256": "ffcbcc54f89d3edaca2f9060c525a20effaa668aa7688506f1d745c8a4518c25",

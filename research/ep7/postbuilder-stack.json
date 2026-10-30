@@ -1,0 +1,205 @@
+{
+  "source_hashes": {
+    "prototypes/ep7_volatile_hl/target/postbuilder/native_observer.c": "ab20a63082fd233e680055c286e0e5a2a0365c95679db99076201b4d479b1978",
+    "prototypes/ep7_volatile_hl/ep7p.c": "0e9f1274706c0e1631cb1ebda3d35055a48200ba5c9817760f600ab9c4f63402",
+    "prototypes/ep7_volatile_hl/ep7p_decode.c": "25f857efc0e07a333e931c50dc69fff1de9d10f40b117532de5f2e59eb6e2d95",
+    "prototypes/ep7_volatile_hl/target/memory.c": "adb317d4c7c3d6bcc04324ec5d6083832b6ba81c5df298b117d0cc1d183f60e7"
+  },
+  "compiler_reported_functions": {
+    "ep7_gcc_postbuilder_observer": {
+      "frame_bytes": 28,
+      "kind": "static",
+      "emitted_calls": [
+        "call _ep7p_direct_apply,[],0"
+      ]
+    },
+    "current": {
+      "frame_bytes": 36,
+      "kind": "static",
+      "emitted_calls": [
+        "calls (a0)"
+      ]
+    },
+    "shape": {
+      "frame_bytes": 24,
+      "kind": "static",
+      "emitted_calls": []
+    },
+    "apply_local": {
+      "frame_bytes": 16,
+      "kind": "static",
+      "emitted_calls": []
+    },
+    "ep7p_init": {
+      "frame_bytes": 36,
+      "kind": "static",
+      "emitted_calls": [
+        "call _memset,[],0"
+      ]
+    },
+    "ep7p_edit": {
+      "frame_bytes": 32,
+      "kind": "static",
+      "emitted_calls": [
+        "calls (a0)",
+        "call _memcpy,[],0",
+        "calls (a0)",
+        "calls (a0)"
+      ]
+    },
+    "ep7p_axis_read": {
+      "frame_bytes": 28,
+      "kind": "static",
+      "emitted_calls": [
+        "calls (a0)",
+        "call _memcpy,[],0",
+        "calls (a0)",
+        "calls (a0)"
+      ]
+    },
+    "ep7p_axis_adjust_result": {
+      "frame_bytes": 40,
+      "kind": "static",
+      "emitted_calls": [
+        "calls (a0)",
+        "calls (a0)",
+        "calls (a0)"
+      ]
+    },
+    "ep7p_axis_adjust": {
+      "frame_bytes": 40,
+      "kind": "static",
+      "emitted_calls": [
+        "call _ep7p_axis_adjust_result,[],0"
+      ]
+    },
+    "ep7p_capture": {
+      "frame_bytes": 28,
+      "kind": "static",
+      "emitted_calls": [
+        "calls (a0)",
+        "call _memcpy,[],0",
+        "calls (a0)",
+        "calls (a0)"
+      ]
+    },
+    "ep7p_register_job": {
+      "frame_bytes": 40,
+      "kind": "static",
+      "emitted_calls": [
+        "calls (a0)",
+        "call _memcpy,[],0",
+        "calls (a0)",
+        "calls (a0)",
+        "call _memcpy,[],0"
+      ]
+    },
+    "ep7p_release_job": {
+      "frame_bytes": 40,
+      "kind": "static",
+      "emitted_calls": [
+        "calls (a0)",
+        "calls (a0)",
+        "call _memset,[],0",
+        "calls (a0)"
+      ]
+    },
+    "ep7p_register_task": {
+      "frame_bytes": 48,
+      "kind": "static",
+      "emitted_calls": [
+        "calls (a0)",
+        "calls (a0)",
+        "calls (a0)",
+        "call _memset,[],0",
+        "calls (a0)",
+        "calls (a0)",
+        "calls (a0)"
+      ]
+    },
+    "ep7p_release_task": {
+      "frame_bytes": 40,
+      "kind": "static",
+      "emitted_calls": [
+        "calls (a3)",
+        "calls (a0)",
+        "call _memset,[],0",
+        "calls (a0)"
+      ]
+    },
+    "ep7p_enter": {
+      "frame_bytes": 68,
+      "kind": "static",
+      "emitted_calls": [
+        "calls (a0)",
+        "call _current,[],0",
+        "calls (a1)",
+        "call _current,[],0",
+        "call _shape,[],0",
+        "call _memcpy,[],0",
+        "calls (a1)",
+        "calls (a1)",
+        "call _memcpy,[],0",
+        "calls (a1)"
+      ]
+    },
+    "ep7p_unwind": {
+      "frame_bytes": 28,
+      "kind": "static",
+      "emitted_calls": [
+        "calls (a0)",
+        "call _current,[],0",
+        "calls (a0)",
+        "calls (a0)"
+      ]
+    },
+    "ep7p_apply": {
+      "frame_bytes": 84,
+      "kind": "static",
+      "emitted_calls": [
+        "calls (a0)",
+        "call _current,[],0",
+        "calls (a0)",
+        "call _shape,[],0",
+        "call _memcpy,[],0",
+        "call _apply_local,[],0",
+        "calls (a0)"
+      ]
+    },
+    "ep7p_direct_apply": {
+      "frame_bytes": 132,
+      "kind": "static",
+      "emitted_calls": [
+        "calls (a0)",
+        "calls (a0)",
+        "call _ep7p_decode,[],0",
+        "call _shape,[],0",
+        "call _memcpy,[],0",
+        "calls (a0)",
+        "call _apply_local,[],0"
+      ]
+    },
+    "ep7p_decode": {
+      "frame_bytes": 16,
+      "kind": "static",
+      "emitted_calls": []
+    },
+    "memcpy": {
+      "frame_bytes": 4,
+      "kind": "static",
+      "emitted_calls": []
+    },
+    "memset": {
+      "frame_bytes": 0,
+      "kind": "static",
+      "emitted_calls": []
+    }
+  },
+  "native_wrapper_nested_builder_extra_bytes": 96,
+  "observer_frame_excludes_callee_frames": true,
+  "unknown_lock_unlock_callback_depth": true,
+  "interrupt_stack_margin_unknown": true,
+  "actual_task_stack_capacity_unknown": true,
+  "target_executed": false,
+  "target_linked": false
+}

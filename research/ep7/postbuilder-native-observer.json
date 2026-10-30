@@ -1,0 +1,41 @@
+{
+  "source_sha256": "ab20a63082fd233e680055c286e0e5a2a0365c95679db99076201b4d479b1978",
+  "header_sha256": "6f29cc432d126dded64714e01aeb01c8e94561d7ae791401202fd756ae9ced71",
+  "core_header_sha256": "a46308465556703ee0d658f07ffb73b34cb89041377468e84c92f5f2d1663bcd",
+  "assembly_sha256": "7bca902a1c09d21105c78e5c2663c4db5158c28e719ba7fe64f0b44d0a5d43cc",
+  "object_sha256": "55cc0bb01b2eb5004502e02d4e4c9bcbdf3cb8768894d755b4fec98d42e21f35",
+  "tool_hashes": {
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/xgcc": "15d81798f47b501bfbf43a9a97ef9318f8d54dd6739cfba1bf04bf10a42c44dd",
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/cc1": "a61e33cd394c7af451b9e8a108f9ad36a5e437985f08b2f4fc57f8f3e372edd5",
+    "toolchains/binutils-2.45-gas-build/gas/as-new": "5833fa140051525c4d432be6a931abc32e6b866f2a7152f16c1751a5f3122d6c",
+    "toolchains/binutils-2.45-build/binutils/objdump": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268"
+  },
+  "compile_flags": [
+    "-std=c11",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-mno-setlb",
+    "-mno-liw"
+  ],
+  "undefined_symbols": [
+    "_ep7_native_runtime_unresolved",
+    "_ep7p_direct_apply"
+  ],
+  "host_64bit_compile_rejected": true,
+  "setup_offsets": [
+    4,
+    12
+  ],
+  "output_length": 976,
+  "current_task_query_used": false,
+  "last_job_global_used": false,
+  "target_linked": false,
+  "target_executed": false,
+  "native_memory_read": false,
+  "native_installation": false,
+  "flash_ready": false
+}

@@ -37,7 +37,7 @@ normalized prototype semantics, **not decoded native physical-button events**.
 python prototypes/ep7_volatile_hl/check_host.py --sanitize
 ```
 
-This compiles/runs the core, normalized/raw logical UI and bounded native-layout decode integration tests in temporary directories
+This compiles/runs the core, normalized/raw logical UI, bounded decode, direct reader and lifecycle integration tests in temporary directories
 and deletes their host executables. The [actual report](../../research/ep7/portable-prototype-host.json)
 records source hashes, compiler identity and results. Standard Python test
 discovery also runs the strict host integration when a C compiler is available.
@@ -163,16 +163,19 @@ compile reports are published, not compiler binaries or vendor code.
 | Required native adapter | Evidence available | Still missing |
 | --- | --- | --- |
 | UI child/parent/viewer | Exact creation, forwarding, category gates and teardown sites | MN103 register veneers, independent H/L child and draw paths, transactional installation |
-| Capture snapshot attachment | Raw profile mapping and post-S sampling candidate | Original-image/clone attachment with explicit sampling/transition semantics |
+| Capture snapshot attachment | Fresh registry→population and retire/clone sites | Generation-bound unsealed/sealed original-image/clone transfer; selected-node→descriptor join |
 | Enlarged fresh-job allocation | Constructor and same allocation-class evidence | Actual size/init hook, supported error-path registration and release-before-free |
-| Task-scoped lookup | Native `get_tid` candidate | Nonreused task-instance lease, qualified lock/TLS/store and all native unwind paths |
-| CPU coefficient hook | Conditional synchronous builder and exact output lane map | Native live-register/MDR/flags/stack preservation and post-builder placement |
+| Reader admission | Direct live-allocation path or legacy task-scoped alternative | Qualified lock, synchronous lifetime/no-ABA; task lease/TLS only if choosing scoped alternative |
+| CPU coefficient hook | Exact native→GCC frame/register bridge plus real32-bit setup observer | Actual stack headroom, helper contracts, safe hook placement/relocation and installation |
 | Output behavior | Host lane/bounds/neutral tests | E-P7 pixel calibration, timing, hardware and recovery validation |
 
 The [native UI contract](../../docs/ep7/NATIVE_UI_ADAPTER.md) explains why changing
 only the list length can destroy the child then leave null content. The
 [hook/ABI contract](../../docs/ep7/NATIVE_HOOK_ABI.md) describes four self-authored
-**unresolved tail forwarders**, not C-callable adapters or installed hooks.
+**unresolved tail forwarders** plus newer exact-boundary bridges, none installed.
+The [direct lifecycle](DIRECT_LIFECYCLE.md) runs real C integration without task
+queries, and [post-builder target sources](target/postbuilder/) connect the native
+frame to the actual direct reader without linking or executing target code.
 `check_native_forwarders.py` is an optional compile-only check using the separately
 built, hash-pinned GNU assembler; its object is temporary, unlinked and never run.
 

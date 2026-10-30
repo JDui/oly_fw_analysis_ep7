@@ -13,7 +13,7 @@ class HostIntegration(unittest.TestCase):
     @unittest.skipUnless(shutil.which('cc'), 'trusted host C compiler not available')
     def test_strict_core_and_ui_integration(self):
         report = CHECK.check('cc')
-        self.assertEqual([r['test'] for r in report['tests']], ['core', 'normalized_ui_to_output', 'bounded_native_decode', 'raw_logical_ui_to_output'])
+        self.assertEqual([r['test'] for r in report['tests']], ['core', 'normalized_ui_to_output', 'bounded_native_decode', 'raw_logical_ui_to_output', 'direct_observer', 'raw_ui_fresh_job_lifecycle'])
         self.assertTrue(all(r['passed'] for r in report['tests']))
         self.assertTrue(report['host_prototype_executed'])
         self.assertFalse(report['firmware_executed'])

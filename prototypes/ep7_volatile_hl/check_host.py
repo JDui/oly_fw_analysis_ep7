@@ -16,10 +16,12 @@ def check(cc, sanitize=False):
     if not compiler:
         raise ValueError('a trusted host C11 compiler must be supplied')
     flags = ['-std=c11', '-Wall', '-Wextra', '-Werror', '-pedantic']
-    cases = [('core', ['ep7p.c', 'test_ep7p.c']),
-             ('normalized_ui_to_output', ['ep7p.c', 'ep7p_ui.c', 'test_ui_integration.c']),
+    cases = [('core', ['ep7p.c', 'ep7p_decode.c', 'test_ep7p.c']),
+             ('normalized_ui_to_output', ['ep7p.c', 'ep7p_decode.c', 'ep7p_ui.c', 'test_ui_integration.c']),
              ('bounded_native_decode', ['ep7p.c', 'ep7p_decode.c', 'test_decode_integration.c']),
-             ('raw_logical_ui_to_output', ['ep7p.c', 'ep7p_ui.c', 'ep7p_ui_raw.c', 'test_ui_raw.c'])]
+             ('raw_logical_ui_to_output', ['ep7p.c', 'ep7p_decode.c', 'ep7p_ui.c', 'ep7p_ui_raw.c', 'test_ui_raw.c']),
+             ('direct_observer', ['ep7p.c', 'ep7p_decode.c', 'test_direct.c']),
+             ('raw_ui_fresh_job_lifecycle', ['ep7p.c', 'ep7p_decode.c', 'ep7p_ui.c', 'ep7p_ui_raw.c', 'ep7p_lifecycle.c', 'test_lifecycle.c'])]
     results = []
     with tempfile.TemporaryDirectory(prefix='ep7-host-prototype-') as temporary:
         for kind in (['strict', 'asan_ubsan'] if sanitize else ['strict']):

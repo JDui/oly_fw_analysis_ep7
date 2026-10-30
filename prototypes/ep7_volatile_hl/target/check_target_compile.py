@@ -12,9 +12,9 @@ def check():
  gcc=ROOT/'toolchains/gcc-13.4.0-mn10300-build/gcc/xgcc'
  gas=ROOT/'toolchains/binutils-2.45-gas-build/gas/as-new'
  od=ROOT/'toolchains/binutils-2.45-build/binutils/objdump'
- flags=['-B'+str(gcc.parent)+'/', '-std=c11','-O2','-ffreestanding','-fno-builtin','-fno-tree-loop-distribute-patterns','-Wall','-Wextra','-Werror','-I'+str(HERE/'include')]
- sources={'probe':HERE/'probe.c','ep7p':ROOT/'prototypes/ep7_volatile_hl/ep7p.c','ep7p_ui':ROOT/'prototypes/ep7_volatile_hl/ep7p_ui.c','ep7p_decode':ROOT/'prototypes/ep7_volatile_hl/ep7p_decode.c','memory':HERE/'memory.c','ep7p_ui_raw':ROOT/'prototypes/ep7_volatile_hl/ep7p_ui_raw.c'}
- expected_undef={'probe':{'_foreign_query_unresolved','_foreign_mix_unresolved','_foreign_pointer_unresolved'},'ep7p':{'_memcpy','_memset'},'ep7p_ui':{'_memset','_ep7p_axis_read','_ep7p_axis_adjust_result'},'ep7p_decode':set(),'memory':set(),'ep7p_ui_raw':{'_ep7p_ui_ops'}}
+ flags=['-B'+str(gcc.parent)+'/', '-std=c11','-O2','-ffreestanding','-fno-builtin','-fno-tree-loop-distribute-patterns','-mno-setlb','-mno-liw','-fno-tree-loop-distribute-patterns','-Wall','-Wextra','-Werror','-I'+str(HERE/'include')]
+ sources={'probe':HERE/'probe.c','ep7p':ROOT/'prototypes/ep7_volatile_hl/ep7p.c','ep7p_ui':ROOT/'prototypes/ep7_volatile_hl/ep7p_ui.c','ep7p_decode':ROOT/'prototypes/ep7_volatile_hl/ep7p_decode.c','memory':HERE/'memory.c','ep7p_lifecycle':ROOT/'prototypes/ep7_volatile_hl/ep7p_lifecycle.c','ep7p_ui_raw':ROOT/'prototypes/ep7_volatile_hl/ep7p_ui_raw.c'}
+ expected_undef={'probe':{'_foreign_query_unresolved','_foreign_mix_unresolved','_foreign_pointer_unresolved'},'ep7p':{'_memcpy','_memset','_ep7p_decode'},'ep7p_ui':{'_memset','_ep7p_axis_read','_ep7p_axis_adjust_result'},'ep7p_decode':set(),'memory':set(),'ep7p_ui_raw':{'_ep7p_ui_ops'},'ep7p_lifecycle':{'_ep7p_direct_apply','_ep7p_register_job','_ep7p_release_job','_memcpy'}}
  results={}
  with tempfile.TemporaryDirectory(prefix='ep7-compile-target-') as temp:
   for name,source in sources.items():
@@ -31,5 +31,5 @@ def check():
     for witness in ['mov d0,a0','mov (12,sp),a0','mov (16,sp),a1','call _foreign_query_unresolved,[],0','mov d2,mdr','ret [d2],4','retf [],0','movm [d2,d3,a2],(sp)']:
      if witness not in text:raise ValueError('probe ABI witness missing: '+witness)
    results[name]=dict(source_sha256=digest(source),assembly_sha256=digest(asm),object_sha256=digest(obj),object_size=obj.stat().st_size,undefined_symbols=sorted(undefined))
- return dict(compiler='GNU GCC13.4.0 mn10300-elf',tool_hashes=manifest['tools'],compile_flags=[v.replace(str(ROOT)+'/', '') for v in flags[1:]],inputs={str(p.relative_to(ROOT)):digest(p) for p in [HERE/'include/string.h',ROOT/'prototypes/ep7_volatile_hl/ep7p.h',ROOT/'prototypes/ep7_volatile_hl/ep7p_decode.h',ROOT/'prototypes/ep7_volatile_hl/ep7p_ui.h',ROOT/'prototypes/ep7_volatile_hl/ep7p_ui_raw.h',ROOT/'prototypes/ep7_volatile_hl/ep7_ui_adapter_contract.h']},results=results,target_linked=False,target_executed=False,firmware_input_used=False,native_ABI_compatible=False,flash_ready=False)
+ return dict(compiler='GNU GCC13.4.0 mn10300-elf',tool_hashes=manifest['tools'],compile_flags=[v.replace(str(ROOT)+'/', '') for v in flags[1:]],inputs={str(p.relative_to(ROOT)):digest(p) for p in [HERE/'include/string.h',ROOT/'prototypes/ep7_volatile_hl/ep7p_direct.h',ROOT/'prototypes/ep7_volatile_hl/ep7p_lifecycle.h',ROOT/'prototypes/ep7_volatile_hl/ep7p.h',ROOT/'prototypes/ep7_volatile_hl/ep7p_decode.h',ROOT/'prototypes/ep7_volatile_hl/ep7p_ui.h',ROOT/'prototypes/ep7_volatile_hl/ep7p_ui_raw.h',ROOT/'prototypes/ep7_volatile_hl/ep7_ui_adapter_contract.h']},results=results,target_linked=False,target_executed=False,firmware_input_used=False,native_ABI_compatible=False,flash_ready=False)
 if __name__=='__main__':print(json.dumps(check(),indent=2))

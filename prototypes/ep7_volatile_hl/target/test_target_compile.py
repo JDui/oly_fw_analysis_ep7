@@ -8,6 +8,6 @@ class Guard(unittest.TestCase):
    run.assert_not_called();output.assert_not_called()
  def test_actual_compile_only(self):
   result=candidate.check()
-  self.assertEqual(set(result['results']),{'probe','ep7p','ep7p_ui','ep7p_decode','memory','ep7p_ui_raw'})
+  self.assertEqual(set(result['results']),{'probe','ep7p','ep7p_ui','ep7p_decode','memory','ep7p_ui_raw','ep7p_lifecycle'})
   for key in ['target_linked','target_executed','firmware_input_used','native_ABI_compatible','flash_ready']:self.assertFalse(result[key])
 if __name__=='__main__':unittest.main()

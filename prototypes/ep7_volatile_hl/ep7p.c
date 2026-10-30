@@ -1,4 +1,6 @@
 #include "ep7p.h"
+#include "ep7p_decode.h"
+#include "ep7p_direct.h"
 #include <string.h>
 
 static bool begin(ep7p *p) { return p && p->ready && p->ops.lock(p->ops.ctx); }
@@ -140,13 +142,21 @@ bool ep7p_unwind(ep7p *p,uint64_t token) {
 static void put16(unsigned char *p,int value) {
     uint16_t u=(uint16_t)value; p[0]=(unsigned char)u; p[1]=(unsigned char)(u>>8);
 }
-bool ep7p_apply(ep7p *p,uint64_t scope,uint64_t token,const ep7p_observation *o,unsigned char *out,size_t len) {
+static void apply_local(const int8_t hl[24],unsigned char *out) {
     /* Comparative LUTs: fishcu/oly_fw_analysis, patches/hsl/pen-f/src/
        image_parameters/image_parameters.s:101-104 (upstream attribution retained).
        NOT E-P7 pixel calibration. See README attribution/rights boundaries. */
     static const int hue[15]={7000,6000,5000,4000,3000,2000,1000,0,-1000,-2000,-3000,-4000,-5000,-6000,-7000};
     static const int lum[15]={-300,-250,-200,-150,-100,-50,-25,0,25,50,100,150,200,250,300};
     static const unsigned bins[12]={0,2,4,6,8,10,1,3,5,7,9,11};
+    unsigned k;
+    for(k=0;k<12;k++) {
+        int h=hl[bins[k]], l=hl[12+bins[k]];
+        if(h) put16(out+706+24*k,hue[h+7]);
+        if(l) put16(out+710+24*k,lum[l+7]);
+    }
+}
+bool ep7p_apply(ep7p *p,uint64_t scope,uint64_t token,const ep7p_observation *o,unsigned char *out,size_t len) {
     ep7p_task_slot *t; ep7p_job *j; ep7p_frame *f; int8_t hl[24]; unsigned k;
     if(!begin(p)) return false;
     t=current(p); j=job(p,token);
@@ -161,10 +171,35 @@ bool ep7p_apply(ep7p *p,uint64_t scope,uint64_t token,const ep7p_observation *o,
     /* Synchronous copy only; no extension pointer is returned or retained by output. */
     memcpy(hl,j->base+EP7P_STOCK,24);
     if(!values(hl)) return end(p,false);
-    for(k=0;k<12;k++) {
-        int h=hl[bins[k]], l=hl[12+bins[k]];
-        if(h) put16(out+706+24*k,hue[h+7]);
-        if(l) put16(out+710+24*k,lum[l+7]);
-    }
+    apply_local(hl,out);
     return end(p,true);
+}
+
+/* Separate exact-observer API. No task lookup or reader scope. */
+bool ep7p_direct_apply(ep7p *p,uintptr_t request,unsigned char *out,size_t len) {
+    ep7p_job *j=NULL; ep7p_observation observation;
+    int8_t local[24]; unsigned k; uintptr_t b;
+    if(!begin(p)) return false;
+    /* Compare integers only. Unknown request is never dereferenced. */
+    for(k=0;k<EP7P_CAP;k++) if(p->jobs[k].token &&
+        request==(uintptr_t)p->jobs[k].base+11364u) { j=&p->jobs[k]; break; }
+    if(!j || !out || len<EP7P_OUTPUT) return end(p,false);
+    b=(uintptr_t)out;
+    if(len>UINTPTR_MAX-b || runtime_overlap(p,b,len)) return end(p,false);
+    for(k=0;k<EP7P_CAP;k++) {
+        ep7p_job *other=&p->jobs[k]; uintptr_t a=(uintptr_t)other->base;
+        if(other->token && b<a+other->extent && a<b+len) return end(p,false);
+    }
+    /* On 32-bit target wire==host. Host test fixtures use the low 32-bit
+       relocation of their actual allocation; it is never dereferenced. */
+    if(!ep7p_decode(j->base,j->extent,(uint32_t)(uintptr_t)j->base,
+                    (uint32_t)request,(unsigned)j->profile+1,&observation) ||
+       !shape(j,&observation)) return end(p,false);
+    memcpy(local,j->base+EP7P_STOCK,24);
+    if(!values(local)) return end(p,false);
+    end(p,true);
+    /* Registry/job may now be revoked; only local values remain. Native caller
+       independently owns stable writable output until this function returns. */
+    apply_local(local,out);
+    return true;
 }

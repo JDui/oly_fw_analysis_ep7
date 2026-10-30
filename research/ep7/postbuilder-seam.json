@@ -1,0 +1,41 @@
+{
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "windows": [
+    {
+      "start": "0x603b00cf",
+      "end_exclusive": "0x603b00d0",
+      "sha256": "b7d25296e7bc6a6bf66da09b1c5ed273d99e3a9fc6d43e46ccb8b358fa13d4e9"
+    },
+    {
+      "start": "0x603b01c3",
+      "end_exclusive": "0x603b01d3",
+      "sha256": "6c3b40cf829793eff37bae01ee1d2514fce0bfe7fbf7657564451948193941d2"
+    },
+    {
+      "start": "0x603b0244",
+      "end_exclusive": "0x603b0247",
+      "sha256": "542251fe73f87dcc78031ea925e7f06b1c245faeeafaf14a75fe71e71bb4fb8d"
+    },
+    {
+      "start": "0x603b0252",
+      "end_exclusive": "0x603b0345",
+      "sha256": "c7ee04ecaeaf122068a7ee2f711f504d9e9609c5bbb5cce7d93bfc0f5a572274"
+    },
+    {
+      "start": "0x603b14f1",
+      "end_exclusive": "0x603b1506",
+      "sha256": "7eb4960fe50f5dd7d296011ec49e0afe020303b4ec269369114b418d6aa91960"
+    },
+    {
+      "start": "0x603b0a70",
+      "end_exclusive": "0x603b0ad1",
+      "sha256": "f49c232b4bdfb297a525161c3367e964b6b9a241ed83a35c1f5a2434d767b0ff"
+    }
+  ],
+  "witness_count": 33,
+  "flags_dead_at_continuation": true,
+  "full_transitive_a1_liveness_proven": false,
+  "conservative_volatile_save_design": true,
+  "firmware_executed": false,
+  "flash_ready": false
+}

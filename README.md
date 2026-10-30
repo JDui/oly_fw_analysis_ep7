@@ -19,7 +19,9 @@ Current work:
 - Byte-verify all **four** COLOR profiles, including noncontiguous COLOR4 IDs,
   raw selectors **1–4**, storage/recall and conditional CPU coefficient construction.
 - Develop a [compile-checkable volatile H/L prototype](prototypes/ep7_volatile_hl/):
-  normalized UI → captured-profile snapshot → fresh host job → scoped CPU lanes.
+  raw logical UI → captured-profile snapshot → fresh host job → bounded CPU lanes.
+  A direct lifecycle path now avoids task-ID lookup; an exact-site native→GCC
+  bridge and32-bit setup observer compile, but remain unlinked/uninstalled.
   Host integration tests run, and verified-source MN10300 GCC compiles the core,
   UI and bounded job decoder to unlinked objects. Native UI/lifetime adapters remain unbound,
   settings reset on boot, and **camera HSL has not been demonstrated**.
@@ -33,6 +35,7 @@ Start with the [research status, compatibility matrix and port plan](docs/ep7/RE
 [native selector design](docs/ep7/NATIVE_SELECTOR_DESIGN.md),
 [storage and inline-job design](docs/ep7/STORAGE_AND_INLINE_JOB_DESIGN.md),
 [capture admission](docs/ep7/CAPTURE_ADMISSION.md),
+[capture attachment lifetime](docs/ep7/CAPTURE_ATTACHMENT.md),
 [task-scoped design](docs/ep7/TASK_SCOPED_ADMISSION.md),
 [controls proposal](docs/ep7/CONTROLS.md),
 [logical wheel mapping](docs/ep7/UI_EVENT_MAPPING.md), and
