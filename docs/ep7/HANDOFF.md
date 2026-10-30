@@ -28,6 +28,19 @@
 当前工作区没有私有原厂输入与目标工具链；下一步机器码资格审查需要准备这些输入。
 未开始固件整体编译、打包或相机操作。
 
+## 后续软件接合节点
+
+实际 vertical slice 已接入 controller sidecar：register/resolve/authorize/seal/copyout
+→节点撤销/33重入→后续 UI 修改→16个 fresh-job operation；捕获快照保持不变。
+提前 copyout 的新节点不能晚 seal，NULL snapshot 路线仍完成原厂处理/清理 fixture，
+输出保持中性。strict 与 ASan/UBSan 通过，见
+[执行报告](../../research/ep7/sidecar-vertical-slice-host.json)。
+这是主机按值传递契约的集成，未实现原生 metadata/descriptor handoff。
+
+环境设计已由 Terra/max 完成，见 [VM_ENVIRONMENT_PLAN](VM_ENVIRONMENT_PLAN.md)。
+当前正在从官方目录取得1100原厂输入及 GNU binutils2.45 源码；下载尚未验收。
+旧 SHA guard 保留；新增的可选无哈希记录和结构检查入口不宣称历史逐字节身份。
+
 ## 原暂停检查点（历史记录）
 
 以下记录保留原检查点范围；其中“未实现 token lookup”已由上面的主机实现更新，

@@ -68,3 +68,26 @@ snapshot timing, actual request stability or completion/lifetime qualification.
 The fixture never retains a reader callback after process returns. A padded host
 allocation avoids common sanitizer low32-zero synthetic wire addresses; remaining
 32-bit wire overflow fails an assertion rather than weakening the decoder.
+
+## Sidecar-to-job continuation (2026-10-30)
+
+The fixture now uses the real controller sidecar for fresh registration, current
+live token resolution, authorize, seal and copyout. It retires the node and commits
+33->33 before further UI edits and all16 job operations. The copied snapshot keeps
+captured H+3/L-2 and only the expected coefficient bytes change. A second, reused
+node is consumed before population: subsequent seal is rejected and a NULL
+snapshot reaches the actual lifecycle, which preserves native status/cleanup and
+leaves every output byte unchanged.
+
+This closes the self-authored software join between two previously separate
+fixtures. Node labels, exclusive ownership, and the by-value handoff are host
+fixtures; no native metadata transport, queue lifetime or hook is implemented.
+
+Reproduce without optional source-hash recording:
+
+```sh
+python3 prototypes/ep7_volatile_hl/integration/check.py --no-hash
+```
+
+[Current strict and ASan/UBSan report](../../../research/ep7/sidecar-vertical-slice-host.json).
+LeakSanitizer remains disabled. No target code or firmware was executed.

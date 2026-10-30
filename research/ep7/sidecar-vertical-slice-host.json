@@ -1,0 +1,52 @@
+{
+  "scope": "Actual C router/raw/UI/core/text/sidecar/direct-lifecycle host integration; owned snapshot handoff fixture, not native metadata transport",
+  "sources": {
+    "prototypes/ep7_volatile_hl/integration/test_integration.c": null,
+    "prototypes/ep7_volatile_hl/ui_native/bridge.c": null,
+    "prototypes/ep7_volatile_hl/ep7p_ui_raw.c": null,
+    "prototypes/ep7_volatile_hl/ep7p_ui.c": null,
+    "prototypes/ep7_volatile_hl/ep7p.c": null,
+    "prototypes/ep7_volatile_hl/ep7p_decode.c": null,
+    "prototypes/ep7_volatile_hl/ep7p_lifecycle.c": null,
+    "prototypes/ep7_volatile_hl/text_viewer/text.c": null,
+    "prototypes/ep7_volatile_hl/controller_sidecar/sidecar.c": null,
+    "prototypes/ep7_volatile_hl/ui_native/bridge.h": null,
+    "prototypes/ep7_volatile_hl/ep7p_ui_raw.h": null,
+    "prototypes/ep7_volatile_hl/ep7p_ui.h": null,
+    "prototypes/ep7_volatile_hl/ep7p.h": null,
+    "prototypes/ep7_volatile_hl/ep7p_decode.h": null,
+    "prototypes/ep7_volatile_hl/ep7p_lifecycle.h": null,
+    "prototypes/ep7_volatile_hl/ep7p_direct.h": null,
+    "prototypes/ep7_volatile_hl/ep7_ui_adapter_contract.h": null,
+    "prototypes/ep7_volatile_hl/text_viewer/text.h": null,
+    "prototypes/ep7_volatile_hl/controller_sidecar/sidecar.h": null,
+    "prototypes/ep7_volatile_hl/integration/check.py": null
+  },
+  "hashes_recorded": false,
+  "runs": {
+    "strict": {
+      "passed": true,
+      "stdout": "real router -> raw/UI/core -> sidecar -> owned snapshot -> 16 job slots: PASS; early publication neutral; native transport mocked"
+    },
+    "asan_ubsan": {
+      "passed": true,
+      "stdout": "real router -> raw/UI/core -> sidecar -> owned snapshot -> 16 job slots: PASS; early publication neutral; native transport mocked"
+    }
+  },
+  "raw_dispatch_stubbed": false,
+  "text_setter_mocked": true,
+  "native_admission_mocked": true,
+  "lifecycle_native_callbacks_mocked": true,
+  "native_snapshot_transport_mocked": true,
+  "sidecar_executed": true,
+  "node_retired_before_job": true,
+  "early_publication_neutral": true,
+  "real_decoder_operation_slots_exercised": 16,
+  "renderer_implemented": false,
+  "ui_serialization": "single host thread",
+  "lsan_disabled_due_ptrace": true,
+  "current_task_queries": 0,
+  "target_executed": false,
+  "camera_accessed": false,
+  "flash_ready": false
+}

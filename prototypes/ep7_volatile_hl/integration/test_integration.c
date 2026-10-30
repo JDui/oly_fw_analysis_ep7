@@ -2,6 +2,7 @@
 #include "bridge.h"
 #include "text.h"
 #include "ep7p_lifecycle.h"
+#include "controller_sidecar/sidecar.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <limits.h>
@@ -51,7 +52,7 @@ static void unchanged(ep7p_snapshot before){
     assert(!memcmp(before.hl,after.hl,sizeof before.hl));
 }
 /* Actual lifecycle callbacks are host-owned malloc/byte fixtures, not native ABI. */
-typedef struct {unsigned char *owner,*job;unsigned slot,cleanups;unsigned char output[EP7P_OUTPUT];} capture_host;
+typedef struct {unsigned char *owner,*job;unsigned slot,cleanups;bool neutral;unsigned char output[EP7P_OUTPUT];} capture_host;
 static void put16(unsigned char *p,unsigned v){p[0]=(unsigned char)v;p[1]=(unsigned char)(v>>8);}
 static void put32(unsigned char *p,uint32_t v){unsigned i;for(i=0;i<4;i++)p[i]=(unsigned char)(v>>(8*i));}
 static int construct(void *ctx,void *descriptor,ep7l_allocation *a){
@@ -71,7 +72,7 @@ static int convert(void *ctx,void *descriptor){
 }
 static int process(void *ctx,void *descriptor,ep7l_reader reader,void *reader_ctx){
     capture_host *h=ctx;assert(descriptor==h);memset(h->output,0x5a,sizeof h->output);
-    assert(reader(reader_ctx,(uintptr_t)h->job+11364,h->output,sizeof h->output));
+    assert(reader(reader_ctx,(uintptr_t)h->job+11364,h->output,sizeof h->output)==!h->neutral);
     return -123; /* preserve mock native status independently of H/L success */
 }
 static void cleanup(void *ctx,void *descriptor){
@@ -81,6 +82,7 @@ static void cleanup(void *ctx,void *descriptor){
 }
 static void capture_vertical_slice(void){
     ep7p_snapshot frozen,after;capture_host h={0};unsigned i,j;
+    ep7c sidecar={0};ep7c_prefix prefix={2,3,1,11,3};uint64_t token,resolved;
     ep7l_ops ops={&h,construct,convert,process,cleanup};
     assert(ep7p_ui_ops.sync(&ui,session,56,4)==EP7_UI_CHANGED);
     /* Prior session was in ALL; leave it before selecting bin0. */
@@ -88,7 +90,19 @@ static void capture_vertical_slice(void){
     assert(send(0x9032,3)==1);text_is(frame(),"H 01 +3");
     assert(ep7p_ui_ops.sync(&ui,session,56,5)==EP7_UI_CHANGED);
     assert(send(0x9032,-2)==1);text_is(frame(),"L 01 -2");
-    assert(ep7p_capture(&core,11,3,&frozen));assert(frozen.hl[0]==3 && frozen.hl[12]==-2);
+    /* Host-owned node labels and exclusive single-thread lifetime. No native
+       prefix is read; this tests real sidecar -> owned value -> real job code,
+       not an implementation of native metadata/descriptor transport. */
+    assert(ep7c_init(&sidecar,33));
+    assert(ep7c_register_fresh(&sidecar,33,1,2,&token));
+    assert(ep7c_resolve_live(&sidecar,33,1,&resolved) && resolved==token);
+    assert(ep7c_authorize(&sidecar,33,1,resolved));
+    assert(ep7c_seal(&sidecar,33,1,resolved,&prefix,true,&core));
+    assert(ep7c_copyout(&sidecar,33,1,resolved,&prefix,&frozen));
+    assert(frozen.hl[0]==3 && frozen.hl[12]==-2);
+    assert(ep7c_forget(&sidecar,33,1,token));
+    ep7c_transition(&sidecar,33,33);
+    assert(!ep7c_resolve_live(&sidecar,33,1,&resolved));
     assert(send(0x9032,2)==1);assert(ep7p_ui_ops.sync(&ui,session,56,4)==EP7_UI_CHANGED);
     assert(send(0x9032,-3)==1);text_is(frame(),"H 01 +0");
     assert(ep7p_capture(&core,11,3,&after));assert(after.hl[0]==0 && after.hl[12]==0);
@@ -101,6 +115,21 @@ static void capture_vertical_slice(void){
         assert(h.output[710]==0xce && h.output[711]==0xff);
         for(j=0;j<sizeof h.output;j++)if(j!=706 && j!=707 && j!=710 && j!=711)assert(h.output[j]==0x5a);
     }
+    /* Premature publication consumes the node's sampling opportunity. Native
+       processing still executes neutral; a later UI snapshot must not backfill. */
+    assert(ep7c_register_fresh(&sidecar,33,1,2,&resolved) && resolved!=token);
+    assert(!ep7c_authorize(&sidecar,33,1,token));
+    assert(!ep7c_copyout(&sidecar,33,1,resolved,&prefix,&after));
+    assert(!ep7c_seal(&sidecar,33,1,resolved,&prefix,true,&core));
+    h.neutral=true;
+    {
+        ep7l_result result=ep7l_run(&core,&ops,&h,NULL);
+        assert(result.invoked && !result.registered && !result.applied && result.readers==1);
+        assert(result.cleaned && !result.quarantined && result.native_status==-123);
+        assert(h.cleanups==17 && !h.owner);
+        for(j=0;j<sizeof h.output;j++)assert(h.output[j]==0x5a);
+    }
+    assert(ep7c_forget(&sidecar,33,1,resolved));
 }
 int main(void){
     ep7p_snapshot snap;struct ep7_ui_frame f;unsigned i,n;
@@ -140,5 +169,5 @@ int main(void){
     n=text_calls;f.category=1;assert(ep7_text_present(&widget_token,&f)==0);assert(text_calls==n);
     capture_vertical_slice();
     assert(!held && current_queries==0);
-    puts("real router -> raw adapter -> UI -> core -> text/capture/direct lifecycle: PASS; native admission mocked, no renderer/hardware");return 0;
+    puts("real router -> raw/UI/core -> sidecar -> owned snapshot -> 16 job slots: PASS; early publication neutral; native transport mocked");return 0;
 }
