@@ -1,4 +1,36 @@
-# Olympus / OM System firmware research
+# E-P7 HSL port research / E-P7 HSL 移植研究
+
+> **EP7 branch: research in progress; no flash-ready E-P7 firmware.**
+> **当前正在研究将 PEN-F 的 H/S/L 功能移植到 E-P7，尚未完成移植，禁止把 PEN-F 固件或偏移直接用于 E-P7。**
+
+This branch investigates full per-color **Hue / Saturation / Lightness** controls
+for the E-P7, building on [fishcu/oly_fw_analysis](https://github.com/fishcu/oly_fw_analysis).
+The stock twelve-color saturation editor is not already a full-HSL editor.
+The first research target is **E-P7 1.1, internal build 1100, model 1420**,
+identified by an exact stock hash—not every firmware with a similar name.
+
+Current work:
+
+- Trace the PEN-F patch's editor, settings and image-owned H/L transport contracts.
+- Revalidate existing E-P7 COLOR table/builder landmarks with a read-only audit.
+- Design controls around E-P7's own buttons/profile switch, not PEN-F's rear lever.
+- Map all **four** COLOR profiles, including noncontiguous COLOR4 setting IDs.
+- Establish E-P7-specific storage, capture, rendering and recovery evidence before
+  enabling any patch builder. No E-P7 patch offsets or install image are supplied.
+
+Start with the [research status, compatibility matrix and port plan](docs/ep7/README.md),
+[controls proposal](docs/ep7/CONTROLS.md), and
+[read-only stock audit](tools/ep7_stock_audit.py).
+The audit emits JSON only and never contacts a camera. The exact stock input is
+not included; firmware acquisition/revalidation and hardware testing remain open.
+
+Upstream history, notices and attribution are retained. There is **no
+repository-wide license**; see [rights and provenance](RIGHTS-AND-PROVENANCE.md).
+PEN-F releases linked below are **not E-P7 releases**.
+
+---
+
+# Upstream: Olympus / OM System firmware research
 
 Shared knowledge and tools for studying and modifying Olympus and OM System
 camera firmware. The repository covers update files, startup, settings, image
