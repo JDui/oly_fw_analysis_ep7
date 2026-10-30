@@ -61,3 +61,9 @@ bool ep7t_retire(ep7t *p,ep7t_ticket t)
     if(e){memset(e,0,sizeof *e);ok=true;}
     p->ops.unlock(p->ops.ctx);return ok;
 }
+bool ep7t_invalidate_all(ep7t *p)
+{
+    if(!enter(p))return false;
+    memset(p->entries,0,sizeof p->entries);
+    p->ops.unlock(p->ops.ctx);return true;
+}

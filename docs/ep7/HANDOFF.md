@@ -14,8 +14,9 @@ G2已实现controller侧冻结值之后的[一次消费票据接口](../../proto
 上限→按实际长度接收的路径，核对154指令/9数据项。采用自有28/312字节消息缓冲，
 不能只扩大send长度或改receive参数。wire编解码已实现并贯通command→三次relay→
 票据claim→真实job代码，host strict/ASan/UBSan通过，目标对象通过。
-下一步是raw receive实际长度ABI及全部受影响接收点。原生shim/上下文尚未实现，
-整体固件构建未开始。
+本地raw receive/send ABI已实现并核对，保留实际长度；跨域positive255失败已记录。
+实验票据整批撤销已实现并通过host检查。原生hook/上下文尚未安装，下一步核对五个
+descriptor拥有者的显式栈扩展（包括command drain），整体固件构建未开始。
 
 ## 本轮恢复后的增量
 

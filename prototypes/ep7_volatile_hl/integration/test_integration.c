@@ -112,9 +112,21 @@ static void transport_boundaries(void){
     out.hl[0]=2;assert(!ep7t_claim(&t,all[0],&out) && out.hl[0]==2);
     assert(!ep7t_publish(&t,all[0]));
     assert(!ep7t_init(&t,(ep7p_ops){NULL,lock,unlock,current}));
+    /* Teardown clears prepared/published/consumed records without resetting the
+       serial or changing an independently claimed snapshot. Failed lock cannot
+       report success; retries are cleanup, not a new snapshot sampling attempt. */
+    assert(ep7t_publish(&t,all[1]));
+    fail_lock=true;assert(!ep7t_invalidate_all(&t));fail_lock=false;
+    assert(t.entries[1].ticket.serial==all[1].serial);
+    assert(ep7t_invalidate_all(&t));assert(ep7t_invalidate_all(&t));
+    assert(out.hl[0]==2 && out.hl[23]==-7);
+    for(i=0;i<EP7T_CAP;i++)assert(!ep7t_claim(&t,all[i],&out));
+    assert(!ep7t_publish(&t,all[1]));
+    assert(ep7t_prepare(&t,1,&source,&now) && now.serial>all[EP7T_CAP-1].serial);
+    assert(!ep7t_claim(&t,all[0],&out));
     /* Serial exhaustion refuses new work, keeps existing cleanup usable. */
     t.serial=UINT64_MAX;
-    for(i=0;i<EP7T_CAP;i++)assert(ep7t_retire(&t,all[i]));
+    assert(ep7t_retire(&t,now));
     assert(!ep7t_prepare(&t,1,&source,&sentinel) && sentinel.serial==99);
 }
 static void wire_boundaries(void){

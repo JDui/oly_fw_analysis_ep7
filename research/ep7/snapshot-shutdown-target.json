@@ -1,0 +1,85 @@
+{
+  "scope": "Snapshot transport, wire codec and memory target objects only",
+  "versions": {
+    "gcc": "mn10300-elf-gcc (GCC) 13.4.0",
+    "as": "GNU assembler (GNU Binutils) 2.45",
+    "ld": "GNU ld (GNU Binutils) 2.45",
+    "objdump": "GNU objdump (GNU Binutils) 2.45"
+  },
+  "objects": {
+    "transport": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/transport.c",
+      "definitions": [
+        "_ep7t_claim",
+        "_ep7t_init",
+        "_ep7t_invalidate_all",
+        "_ep7t_prepare",
+        "_ep7t_publish",
+        "_ep7t_retire"
+      ],
+      "undefined": [
+        "_memcpy",
+        "_memset"
+      ],
+      "size_output": [
+        "898",
+        "0",
+        "0",
+        "898"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:15:6:ep7t_init\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:21:6:ep7t_prepare\t52\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:37:6:ep7t_publish\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:45:6:ep7t_claim\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:56:6:ep7t_retire\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:64:6:ep7t_invalidate_all\t24\tstatic"
+      ]
+    },
+    "wire": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/wire.c",
+      "definitions": [
+        "_ep7w_decode",
+        "_ep7w_encode"
+      ],
+      "undefined": [
+        "_memcpy"
+      ],
+      "size_output": [
+        "664",
+        "0",
+        "0",
+        "664"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:12:13:route_ok\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:17:6:ep7w_encode\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:34:5:ep7w_decode\t40\tstatic"
+      ]
+    },
+    "memory": {
+      "source": "prototypes/ep7_volatile_hl/target/memory.c",
+      "definitions": [
+        "_memcpy",
+        "_memset"
+      ],
+      "undefined": [],
+      "size_output": [
+        "49",
+        "0",
+        "0",
+        "49"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/target/memory.c:8:7:memcpy\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/target/memory.c:18:7:memset\t0\tstatic"
+      ]
+    }
+  },
+  "remaining_external_symbols": [],
+  "hash_checks_performed": false,
+  "target_linked": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "native_adapter_installed": false
+}

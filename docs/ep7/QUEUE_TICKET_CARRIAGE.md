@@ -67,3 +67,14 @@ MN10300对象text664 bytes、局部frame40 bytes，无目标执行。
 它不等于上述ABI/上下文存储已安装。G2接下来落实这些精确receive/send seam的
 显式上下文和调用约定，首先闭合raw接收实际长度如何传回独立缓冲区拥有者；
 同时清点所有4c/ab/4f接收（包括shutdown/drain），G6再合并配置与hook。
+
+## 后续ABI与退出路径
+
+[本地raw队列桥](../../prototypes/ep7_volatile_hl/snapshot_transport/native/README.md)
+已通过GCC调用者/原生callee的静态对象核对；接收返回实际长度，不折叠为成功0。
+跨域封装60053ab0在分配失败时返回正数255，故不能替换成本地桥目标或只看非负返回。
+kind19两处退出通过603df93a→603eeb4d→60051372删除队列，不是额外的300字节接收。
+另有command drain603e0546，经603e058f/05cd再次调用materializer，仍须覆盖。
+已实现`ep7t_invalidate_all`供pipeline退出撤销实验记录，保留serial，host检查通过；
+这不是删除原厂metadata或停止生产者。下一步明确五个descriptor拥有者的栈扩展方案，
+以实际分配出的空间携带trailer，避免全局“当前descriptor”查找。

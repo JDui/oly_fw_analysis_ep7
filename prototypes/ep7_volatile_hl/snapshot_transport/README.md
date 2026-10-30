@@ -85,6 +85,11 @@ decode frames of 40 bytes. The three-object symbol union (transport, wire, memor
 has no unresolved symbols. [Current target report](../../../research/ep7/snapshot-wire-target.json).
 This does not include native receive scratch or a full stack-chain budget.
 
+The later [local raw queue ABI](native/README.md) supplies GCC callable veneers and
+records remote/teardown limits. Pipeline abort can now call `ep7t_invalidate_all`
+without resetting the serial or modifying already copied snapshots. Native hook
+ordering, producer shutdown and task-domain qualifications remain external duties.
+
 [Native queue research and remaining seams](../../../docs/ep7/QUEUE_TICKET_CARRIAGE.md)
 show why enlarged queue configuration and all receive adapters must be installed
 together. Merely changing send length would overwrite existing stock buffers.

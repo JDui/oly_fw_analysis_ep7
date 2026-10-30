@@ -1,0 +1,50 @@
+{
+  "scope": "Local raw queue callable ABI bridges only; no native queue invocation",
+  "versions": {
+    "gcc": "mn10300-elf-gcc (GCC) 13.4.0",
+    "as": "GNU assembler (GNU Binutils) 2.45",
+    "ld": "GNU ld (GNU Binutils) 2.45",
+    "objdump": "GNU objdump (GNU Binutils) 2.45"
+  },
+  "objects": {
+    "queue_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/queue_bridges.s",
+      "definitions": [
+        "_ep7_gcc_queue_receive_local",
+        "_ep7_gcc_queue_send_local"
+      ],
+      "undefined": [
+        "ep7_stock_queue_receive_local_unresolved",
+        "ep7_stock_queue_send_local_unresolved"
+      ],
+      "checked_instructions": 13,
+      "own_frame_bytes": 16,
+      "native_nested_frames": [
+        32,
+        40
+      ]
+    },
+    "caller": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/bridge_caller.c",
+      "definitions": [
+        "_ep7_queue_receive_probe",
+        "_ep7_queue_send_probe"
+      ],
+      "undefined": [
+        "_ep7_gcc_queue_receive_local",
+        "_ep7_gcc_queue_send_local"
+      ],
+      "compiler_assembly": "\t.file\t\"bridge_caller.c\"\n\t.section .text\n\t.global _ep7_queue_receive_probe\n\t.type\t_ep7_queue_receive_probe, @function\n_ep7_queue_receive_probe:\n\tadd -16,sp\n\tmov -1,d1\n\tmov d1,(12,sp)\n\tmov d0,d1\n\tmov 75,d0\n\tcall _ep7_gcc_queue_receive_local,[],0\n\tret [],16\n\t.size\t_ep7_queue_receive_probe, .-_ep7_queue_receive_probe\n\t.global _ep7_queue_send_probe\n\t.type\t_ep7_queue_send_probe, @function\n_ep7_queue_send_probe:\n\tadd -20,sp\n\tmov -1,d1\n\tmov d1,(16,sp)\n\tmov 312,d1\n\tmov d1,(12,sp)\n\tmov d0,d1\n\tmov 76,d0\n\tcall _ep7_gcc_queue_send_local,[],0\n\tret [],20\n\t.size\t_ep7_queue_send_probe, .-_ep7_queue_send_probe\n\t.ident\t\"GCC: (GNU) 13.4.0\"\n",
+      "checked_instructions": 16
+    }
+  },
+  "remaining_external_symbols": [
+    "ep7_stock_queue_receive_local_unresolved",
+    "ep7_stock_queue_send_local_unresolved"
+  ],
+  "hash_checks_performed": false,
+  "target_linked": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "native_adapter_installed": false
+}

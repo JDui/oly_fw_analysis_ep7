@@ -37,4 +37,10 @@ bool ep7t_claim(ep7t *,ep7t_ticket,ep7p_snapshot *);
  * old queued tickets remain invalid, even when both slot and address are reused.
  * Already claimed copies are independent values, not revoked by this call. */
 bool ep7t_retire(ep7t *,ep7t_ticket);
+/* Teardown/abort of the admitted pipeline: clear all outstanding records while
+ * preserving serial, initialization and lock binding. No native frees, reset of
+ * sequence, or revocation of already copied snapshots. Idempotent on success.
+ * Lock failure leaves records intact and the invalidation obligation pending.
+ * Native teardown ordering and producer shutdown are adapter responsibilities. */
+bool ep7t_invalidate_all(ep7t *);
 #endif
