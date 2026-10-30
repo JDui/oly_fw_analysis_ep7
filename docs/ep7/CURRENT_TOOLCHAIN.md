@@ -45,3 +45,8 @@ docker run --rm --pull never --network none --mount "type=bind,source=$ep7Root,t
 没有链接目标镜像、测量真实栈余量或安装hook。两个外部符号、原生生命周期/任务域、
 UI资源及代码放置仍未绑定；这不是“新固件已开始编译”的完成证据。
 下一步可用此环境做必要的ABI/尺寸研究与反汇编，不需要再创建独立VM才能推进。
+
+2026-10-31新增快照票据对象：检查器的`--transport-only`仅编译transport和复用的
+memory支持，不重复全部七对象。结果为text836+49 bytes、transport局部栈24–52 bytes、
+符号集合无未解析项，见[报告](../../research/ep7/snapshot-ticket-target.json)。
+间接lock回调仍需原生绑定；局部栈数字不是全调用链预算，也不是目标程序执行。

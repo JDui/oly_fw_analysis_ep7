@@ -3,6 +3,7 @@
 #include "text.h"
 #include "ep7p_lifecycle.h"
 #include "controller_sidecar/sidecar.h"
+#include "snapshot_transport/transport.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <limits.h>
@@ -80,9 +81,46 @@ static void cleanup(void *ctx,void *descriptor){
     for(i=0;i<EP7P_CAP;i++)assert(!core.jobs[i].token);
     free(h->owner);h->owner=NULL;h->job=NULL;++h->cleanups;
 }
+static void transport_boundaries(void){
+    ep7t t={0};ep7t_ticket old,now,all[EP7T_CAP],sentinel={99,99};unsigned i;
+    ep7p_snapshot source={3,{0}},out={1,{0}};
+    source.hl[0]=7;source.hl[23]=-7;
+    assert(ep7t_init(&t,(ep7p_ops){NULL,lock,unlock,current}));
+    assert(ep7t_prepare(&t,1,&source,&old));
+    assert(!ep7t_claim(&t,old,&out) && out.profile==1); /* early, burned */
+    assert(!ep7t_publish(&t,old));assert(ep7t_retire(&t,old));
+    assert(ep7t_prepare(&t,1,&source,&now) && now.serial!=old.serial);
+    assert(ep7t_publish(&t,now));
+    assert(!ep7t_claim(&t,old,&out) && out.profile==1); /* reused address */
+    assert(!ep7t_retire(&t,old));
+    assert(!ep7t_prepare(&t,1,&source,&sentinel) && sentinel.serial==99);
+    fail_lock=true;
+    assert(!ep7t_claim(&t,now,&out) && out.profile==1);
+    assert(!ep7t_retire(&t,now));
+    fail_lock=false;
+    /* Consumer stays neutral after failed claim; retry cleanup only. */
+    assert(ep7t_retire(&t,now));assert(!ep7t_claim(&t,now,&out));
+    assert(ep7t_prepare(&t,1,&source,&now));assert(ep7t_publish(&t,now));
+    assert(ep7t_retire(&t,now)); /* send failure / cancellation before receive */
+    assert(!ep7t_claim(&t,now,&out) && out.profile==1);
+    for(i=0;i<EP7T_CAP;i++)assert(ep7t_prepare(&t,i+1,&source,&all[i]));
+    assert(!ep7t_prepare(&t,100,&source,&sentinel) && sentinel.serial==99);
+    assert(ep7t_publish(&t,all[0]));
+    source.hl[0]=0; /* independently frozen */
+    assert(ep7t_claim(&t,all[0],&out) && out.hl[0]==7 && out.hl[23]==-7);
+    out.hl[0]=2;assert(!ep7t_claim(&t,all[0],&out) && out.hl[0]==2);
+    assert(!ep7t_publish(&t,all[0]));
+    assert(!ep7t_init(&t,(ep7p_ops){NULL,lock,unlock,current}));
+    /* Serial exhaustion refuses new work, keeps existing cleanup usable. */
+    t.serial=UINT64_MAX;
+    for(i=0;i<EP7T_CAP;i++)assert(ep7t_retire(&t,all[i]));
+    assert(!ep7t_prepare(&t,1,&source,&sentinel) && sentinel.serial==99);
+}
 static void capture_vertical_slice(void){
     ep7p_snapshot frozen,after;capture_host h={0};unsigned i,j;
     ep7c sidecar={0};ep7c_prefix prefix={2,3,1,11,3};uint64_t token,resolved;
+    ep7t transport={0};ep7t_ticket ticket,previous={0};
+    ep7p_snapshot delivered;
     ep7l_ops ops={&h,construct,convert,process,cleanup};
     assert(ep7p_ui_ops.sync(&ui,session,56,4)==EP7_UI_CHANGED);
     /* Prior session was in ALL; leave it before selecting bin0. */
@@ -106,8 +144,18 @@ static void capture_vertical_slice(void){
     assert(send(0x9032,2)==1);assert(ep7p_ui_ops.sync(&ui,session,56,4)==EP7_UI_CHANGED);
     assert(send(0x9032,-3)==1);text_is(frame(),"H 01 +0");
     assert(ep7p_capture(&core,11,3,&after));assert(after.hl[0]==0 && after.hl[12]==0);
+    assert(ep7t_init(&transport,(ep7p_ops){NULL,lock,unlock,current}));
     for(i=0;i<16;i++){
-        ep7l_result result;h.slot=i;result=ep7l_run(&core,&ops,&h,&frozen);
+        ep7l_result result;h.slot=i;
+        /* Each fixture job gets a new ticket. Native relay is still modeled:
+           every copied descriptor must explicitly carry THIS full ticket. */
+        assert(ep7t_prepare(&transport,100,&frozen,&ticket));
+        assert(ep7t_publish(&transport,ticket));
+        assert(!ep7t_claim(&transport,previous,&delivered));
+        assert(ep7t_claim(&transport,ticket,&delivered));
+        assert(!ep7t_claim(&transport,ticket,&after));
+        assert(ep7t_retire(&transport,ticket));previous=ticket;
+        result=ep7l_run(&core,&ops,&h,&delivered);
         assert(result.registered && result.applied==1 && result.readers==1 && result.cleaned && !result.quarantined);
         assert(result.native_status==-123 && h.cleanups==i+1 && !h.owner);
         /* Captured H+3 -> comparative -3000; L-2 -> -50, despite later UI0. */
@@ -167,7 +215,7 @@ int main(void){
     assert(send(0x9014,0)==1);assert(send(0x9032,-7)==1);text_is(frame(),"L ALL -7");
     setter_status=0;f=frame();assert(ep7_text_present(&widget_token,&f)==0);setter_status=1;
     n=text_calls;f.category=1;assert(ep7_text_present(&widget_token,&f)==0);assert(text_calls==n);
-    capture_vertical_slice();
+    transport_boundaries();capture_vertical_slice();
     assert(!held && current_queries==0);
-    puts("real router -> raw/UI/core -> sidecar -> owned snapshot -> 16 job slots: PASS; early publication neutral; native transport mocked");return 0;
+    puts("router -> sidecar -> one-use snapshot ticket -> 16 job slots: PASS; stale/early/duplicate/lock failure neutral; native ticket carriage mocked");return 0;
 }

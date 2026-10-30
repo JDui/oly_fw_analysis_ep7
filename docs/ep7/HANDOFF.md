@@ -8,8 +8,10 @@
 本机原厂整包和GNU工具链均已就绪；下文“尚无输入/下载中”属于早期过程记录。
 [异步调度生命周期](ASYNC_DISPATCH_LIFETIME.md)确认请求按指针排队、上层清零隐藏
 队列状态、worker返回后可能有第二阶段。不能据此推断完成或回调静止。
-G2继续采用controller侧复制冻结快照，下一实现批次为独立传递接口；
-原生metadata/descriptor身份承载仍未实现，固件整体构建尚未开始。
+G2已实现controller侧冻结值之后的[一次消费票据接口](../../prototypes/ep7_volatile_hl/snapshot_transport/README.md)，
+主机处理链strict/ASan/UBSan通过。目标对象另行检查，无目标执行。
+下一项是原生16-byte command/300-byte descriptor逐relay票据承载方案；
+目前host显式携带ticket，原生身份承载仍未实现，固件整体构建尚未开始。
 
 ## 本轮恢复后的增量
 

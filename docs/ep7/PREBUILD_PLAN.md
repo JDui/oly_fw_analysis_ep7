@@ -81,5 +81,8 @@ G6 放置/安装仍未闭合。可以持续推进离线研究和自写主机代�
 试刷时间。下一步是审明 G1 的具体别名/事件释放义务，再决定 G2 的传递方案。
 
 最新实际进展：[当前工具链](CURRENT_TOOLCHAIN.md)、[异步别名接合](ASYNC_NODE_ALIASES.md)、
-[异步调度生命周期](ASYNC_DISPATCH_LIFETIME.md)。下一实现批次为G2独立快照传递接口，
-不在异步回调中重新查询controller sidecar；原生身份承载和排他性仍是接入条件。
+[异步调度生命周期](ASYNC_DISPATCH_LIFETIME.md)。G2已实现
+[一次消费快照票据](../../prototypes/ep7_volatile_hl/snapshot_transport/README.md)，
+并接入实际主机处理链。不在异步回调中重新查询controller sidecar。
+下一具体缺口是原生16-byte command/300-byte descriptor每次relay的票据承载；
+未选定存储前不修改stock布局，也不能以主机通过关闭G2。
