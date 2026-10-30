@@ -41,7 +41,8 @@ typedef struct {
 bool ep7p_init(ep7p *, ep7p_ops); /* once, before sharing; never reset live state */
 bool ep7p_edit(ep7p *, unsigned profile, const int8_t hl[24]);
 /* axis 0=H / 1=L; sector 0..11 or 255=ALL; reset ignores delta.
-   Atomic profile-local adjustment, clamps logical values to [-7,+7]. */
+   Atomic profile-local adjustment, clamps to [-7,+7]. ALL uses one common
+   limited delta, preserving sector differences; reset explicitly zeros them. */
 bool ep7p_axis_read(ep7p *, unsigned profile, unsigned axis, int8_t out[12]);
 bool ep7p_axis_adjust(ep7p *, unsigned profile, unsigned axis, unsigned sector,
                       int delta, bool reset);

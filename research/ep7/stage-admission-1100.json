@@ -128,9 +128,21 @@
       "stop_exclusive": "0x603e61b5",
       "sha256": "93db3ce9dac3bfde6b34b84c6d936777f854dcbdc03115fda84205127cddc4fc",
       "witness_count": 5
+    },
+    "current_stage_call": {
+      "start": "0x60354276",
+      "stop_exclusive": "0x60354294",
+      "sha256": "a851c6d65e9f83afeaac17cdb4850f732737798b1c481c203353b43334e0d87d",
+      "witness_count": 3
+    },
+    "stage_advance_after_return": {
+      "start": "0x603542e3",
+      "stop_exclusive": "0x603542ec",
+      "sha256": "c9b16b63d033cd717edb1550ddb3feed71cd6fcc353c68c1cf2480da23722857",
+      "witness_count": 3
     }
   },
-  "instruction_witness_count": 143,
+  "instruction_witness_count": 149,
   "core_stage_fixture": {
     "stage_base": 10984,
     "stride": 12,

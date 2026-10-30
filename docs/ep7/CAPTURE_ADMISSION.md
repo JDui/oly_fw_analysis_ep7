@@ -141,10 +141,29 @@ python tools/ep7_profile_writer.py --stock /local/stock.BIN --objdump /trusted/m
 PYTHONPATH=tools python -m unittest discover -s tests -p 'test_ep7*.py'
 ```
 
-The [report](../../research/ep7/stage-admission-1100.json) checks 21 windows,
-143 instruction/operand witnesses and the stage-2 callback literal. No camera,
+The [report](../../research/ep7/stage-admission-1100.json) checks 23 windows,
+149 instruction/operand witnesses and the stage-2 callback literal. No camera,
 firmware execution, generated install image or bulk disassembly is involved.
 
 The [task-scoped continuation](TASK_SCOPED_ADMISSION.md) identifies an actual
 current-task query while keeping ID reuse, TLS and context lifetime separate
 from allocation provenance.
+
+### Bounded native-layout observation decoder
+
+The portable [`ep7p_decode.c`](../../prototypes/ep7_volatile_hl/ep7p_decode.c)
+now decodes a real host byte buffer using E-P7's request/operation/stage layout,
+rather than requiring every observation field to be manually fabricated. A
+32-bit `wire_base` is only a relocation label: no decoded address is dereferenced.
+It first verifies the embedded request address, then operation membership among
+16 records before reading backlinks. Stage 2, count bounds, callback, no mutation
+callback, type 0, packed mode 11, owner 0 and the conservative input-format gates
+are checked. The native runner calls the current stage at `6035428e` and advances
+job+11312 only after return (`603542e3`–`603542e6`).
+
+The captured selector is a separate input from the original capture attachment;
+no request field is invented for it. The decoder reads no H/L trailer and can
+accept stock-size **shape**, but stock-size buffers still fail allocation
+registration. A truthful owned/stable buffer, capture identity and independent
+allocation/task lifetime are still required. This is not a live arbitrary-memory
+reader, synchronization proof or installed native hook.

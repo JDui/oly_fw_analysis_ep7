@@ -86,5 +86,5 @@ PYTHONPATH=tools python -m unittest discover -s tests -p 'test_ep7*.py'
 ```
 
 The [report](../../research/ep7/task-identity-1100.json) validates the named
-string and 30 instruction witnesses in two windows. It invokes only the trusted
+string and 31 instruction witnesses in two windows. It invokes only the trusted
 host disassembler, never the firmware's task API.

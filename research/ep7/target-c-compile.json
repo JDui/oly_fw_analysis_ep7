@@ -1,0 +1,90 @@
+{
+  "compiler": "GNU GCC13.4.0 mn10300-elf",
+  "tool_hashes": {
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/xgcc": "15d81798f47b501bfbf43a9a97ef9318f8d54dd6739cfba1bf04bf10a42c44dd",
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/cc1": "a61e33cd394c7af451b9e8a108f9ad36a5e437985f08b2f4fc57f8f3e372edd5",
+    "toolchains/binutils-2.45-gas-build/gas/as-new": "5833fa140051525c4d432be6a931abc32e6b866f2a7152f16c1751a5f3122d6c",
+    "toolchains/binutils-2.45-build/binutils/objdump": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268"
+  },
+  "compile_flags": [
+    "-std=c11",
+    "-O2",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-fno-tree-loop-distribute-patterns",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-Iprototypes/ep7_volatile_hl/target/include"
+  ],
+  "inputs": {
+    "prototypes/ep7_volatile_hl/target/include/string.h": "c16c5b53a05ae26fd928c0c69a6c4b94fd726ecd82d6b0dd2965c63ebf93233c",
+    "prototypes/ep7_volatile_hl/ep7p.h": "a46308465556703ee0d658f07ffb73b34cb89041377468e84c92f5f2d1663bcd",
+    "prototypes/ep7_volatile_hl/ep7p_decode.h": "f4d28bb62c4801083db4c5a594882c56af68fe2440c247e9a70368ffc4f1e45d",
+    "prototypes/ep7_volatile_hl/ep7p_ui.h": "13ceab4efbad8ec0f8383ada52781099eed71cecfd98c068ba48e6871d9bc9df",
+    "prototypes/ep7_volatile_hl/ep7p_ui_raw.h": "656b1b18057538df11f614bda00ef3a0892abc3b1b5a84cf4a6ed74fda577e47",
+    "prototypes/ep7_volatile_hl/ep7_ui_adapter_contract.h": "1f3292d41e88abdc2cecbe6d4e46de3c633fad591cae1a3391828d5447992b8e"
+  },
+  "results": {
+    "probe": {
+      "source_sha256": "6d246ebadb663b78140c54e4a5aa3c1b83d0a36abc6f3a51524c23ee6088585d",
+      "assembly_sha256": "d45e7bd07567bc7624f68f02fac65232c06ad20ba45e8b2de124ee9ac59ca91a",
+      "object_sha256": "1776df54c31ce6b5f1073adedfd3d210690346e4d157fb96a99e89b32206f1e9",
+      "object_size": 1176,
+      "undefined_symbols": [
+        "_foreign_mix_unresolved",
+        "_foreign_pointer_unresolved",
+        "_foreign_query_unresolved"
+      ]
+    },
+    "ep7p": {
+      "source_sha256": "befaec1ff6ae9f0cfa0571f5d84958ba797532b94ec23f064a27d8d2225d0ab9",
+      "assembly_sha256": "eb6d69812c54f6df6a9350eefcda75a0dfb9d29612c65c32fd01800af10c0d45",
+      "object_sha256": "d719e6fb671b4295d66d9b7b304c3be798b13646d645a61b2649703c6d700d3f",
+      "object_size": 10332,
+      "undefined_symbols": [
+        "_memcpy",
+        "_memset"
+      ]
+    },
+    "ep7p_ui": {
+      "source_sha256": "cadb1699069f35616bc69cf09062bbc6c227239d3c61e39c42ddf42faef61fe7",
+      "assembly_sha256": "b954bc9412c3b75c08600b334c6c0a55501afda304d10cdd06081e40de8489c4",
+      "object_sha256": "18f5f866619ac09711454d2fdbb5e9e28a682556d360d7ec2ea540c971100b82",
+      "object_size": 4340,
+      "undefined_symbols": [
+        "_ep7p_axis_adjust_result",
+        "_ep7p_axis_read",
+        "_memset"
+      ]
+    },
+    "ep7p_decode": {
+      "source_sha256": "25f857efc0e07a333e931c50dc69fff1de9d10f40b117532de5f2e59eb6e2d95",
+      "assembly_sha256": "0b30020b32917e55e5b8862a85ce41f8b7b38ff9722e30334c8c5312cdbcf32f",
+      "object_sha256": "f8f990b92ee68a15a26a0b742e684c2813c6a1d1a070c0b49766456739182ef7",
+      "object_size": 2400,
+      "undefined_symbols": []
+    },
+    "memory": {
+      "source_sha256": "adb317d4c7c3d6bcc04324ec5d6083832b6ba81c5df298b117d0cc1d183f60e7",
+      "assembly_sha256": "11cb1ef3982fdbea97021d06f25665be5d8d06f3126fcb084bafc4937eda3d97",
+      "object_sha256": "c0afce7f6efbf2408a603f02774fad8b9f4daea0cdd78eac763e6d99eddab6c1",
+      "object_size": 824,
+      "undefined_symbols": []
+    },
+    "ep7p_ui_raw": {
+      "source_sha256": "ffcbcc54f89d3edaca2f9060c525a20effaa668aa7688506f1d745c8a4518c25",
+      "assembly_sha256": "61976d36152837967d573a496eaa0ca1161b124ed0f2243a4be2e56402c8dbf6",
+      "object_sha256": "91d8362d658d5f006df1824dad7199017930d1eb88edbd1e18679de45225a1f2",
+      "object_size": 1372,
+      "undefined_symbols": [
+        "_ep7p_ui_ops"
+      ]
+    }
+  },
+  "target_linked": false,
+  "target_executed": false,
+  "firmware_input_used": false,
+  "native_ABI_compatible": false,
+  "flash_ready": false
+}

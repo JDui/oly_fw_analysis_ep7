@@ -81,3 +81,16 @@ E-P7 原生 COLOR 提供 **12 色区饱和度 ±5、COLOR1–4**，另有暗角�
 5. **存储验收**：仅确认动作触发事务方案的持久化；取消/退出不写；重置范围精确；检查 restart 与 JPEG/ORF 实拍处理参数，不能以 UI 正确替代图像链路证据。
 
 当前可以交付的是控制设计与上游风险定位；E-P7 可刷补丁、完整输入准入/路由资格、事务取消及实机验证均未完成。下一步由静态分析定位 E-P7 本机 editor/event/property 路径，再做离线状态测试；不得把设计图或 PEN-F 通过测试写成 E-P7 兼容证明。
+
+## 当前非刷机 prototype 的实际交互语义
+
+[可编译的 volatile H/L prototype](../../prototypes/ep7_volatile_hl/) 已在 host
+把 normalized UI 编辑接到每图快照与系数输出测试，**尚未安装到原生相机 UI**。
+采用新增 category 4=H、5=L，保留 stock 0..3 与 S；INFO 风格的 normalized ALL
+切换、选色、改值与当前轴重置已有 C 实现。ALL 用整组统一 delta，在任一色带到
+边界时停止，不逐带裁剪压平差异。UI 关闭不清除已捕获图像；H/L 仅内存状态，
+重启归零，无持久保存或事务取消承诺。底栏文案应明确“易失／重启归零”，而不是
+把上面的持久化方案“实时应用并保存”照搬到此 prototype。
+
+这些是 host 回调语义，不是 E-P7 物理拨轮事件已绑定的证据。原生 parent/child/
+viewer 安装与 raw event 转换仍见 [具体 UI 接口边界](NATIVE_UI_ADAPTER.md)。

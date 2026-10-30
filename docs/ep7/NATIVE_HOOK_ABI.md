@@ -17,7 +17,7 @@ Exact stock 1420/1100 SHA256 `9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f1
 
 The downstream native functions are allowed their observed ABI clobbers. No guarantee is made that d0/d1/a0/a1, MDR, PSW, loop registers, extended registers or other live state survive them; constructor/process have meaningful return d0. `get_tid` requires `call [a2],4`, a0=aligned writable uint16 output, returns status d0; on failure the output is not valid. It is not a task-generation API.
 
-An inserted mid-function observer is a DIFFERENT adapter and is intentionally not supplied: it must save all live general/extended registers, MDR, PSW/condition flags, stack arguments and loop state, preserve stack alignment and return linkage, then restore flags after any flag-changing stack work. PEN-F `movm other` macros do not independently prove that contract on this E-P7 site. A native compiler ABI, actual portable C target compiler and register-liveness audit are still missing. Host C tests are not target ABI verification.
+An inserted mid-function observer is a DIFFERENT adapter and is intentionally not supplied: it must save all live general/extended registers, MDR, PSW/condition flags, stack arguments and loop state, preserve stack alignment and return linkage, then restore flags after any flag-changing stack work. PEN-F `movm other` macros do not independently prove that contract on this E-P7 site. A verified-source MN10300 GCC13.4 compiler now compiles the portable C core/UI/decoder and self-authored memory routines into unlinked objects. Its ABI is **not** interchangeable with the native compiler ABI: GCC first arguments use d0/d1 while native interfaces here use a0/a1. The [target probes and explicit get_tid bridge](../../prototypes/ep7_volatile_hl/target/) establish that narrow boundary only. Site-specific register-liveness and native observer adapters remain separate work; host C tests are not silicon validation.
 
 No native lock/TLS facility, scoped context store, task-reuse handling, capture snapshot attachment, constructor enlargement or error-unwind adapter is implemented by these files. Header callbacks are a host vocabulary and MUST remain unbound on target until implemented and verified. No raw last-job global is acceptable.
 
@@ -38,3 +38,17 @@ its [report](../../research/ep7/output-layout-1100.json) includes 31 instruction
 witnesses, both destination-pointer strides, and the host buffer bounds.
 The prototype headers/forwarders live in
 [`prototypes/ep7_volatile_hl`](../../prototypes/ep7_volatile_hl/).
+
+## Current initialization-order constraint
+
+The proposed outer process boundary in item4 identifies invocation ownership,
+but is **not** itself a valid time to decode/enter an embedded-request reader
+scope: request/operation fields are populated later inside processing. The
+portable bounded decoder now validates a real, stable job byte buffer only after
+initialization, including current stage index2 and the selected operation’s backlinks after
+membership among16 slots.
+An eventual adapter must carry the fresh-job capability through the outer
+invocation and create the narrow reader scope at the actual synchronous CPU
+builder observation. It must invalidate before native cleanup; failure to acquire
+the lock for revocation cannot be treated as successful cleanup permission.
+No native context propagation or failure quarantine is installed by this note.

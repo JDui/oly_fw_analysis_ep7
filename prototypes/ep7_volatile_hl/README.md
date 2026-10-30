@@ -25,7 +25,10 @@ UI bridge callbacks require a serialized UI caller. The core's lock protects
 settings/capture/jobs, but the bridge does not establish native GUI scheduling.
 A mode outside COLOR disables edits without erasing in-flight image snapshots.
 Sector navigation leaves ALL; reset clears the entire current axis; repeat
-counts outside 1–64 or repeated toggle/reset events are rejected. These are
+counts outside 1–64 or repeated toggle/reset events are rejected. ALL uses one
+common limited delta: the entire group stops at the first boundary, preserving
+inter-sector differences. It does not independently clip/flatten each band.
+Explicit axis reset is different and intentionally zeros all selected values. These are
 normalized prototype semantics, **not decoded native physical-button events**.
 
 ## Run from the repository root
@@ -34,7 +37,7 @@ normalized prototype semantics, **not decoded native physical-button events**.
 python prototypes/ep7_volatile_hl/check_host.py --sanitize
 ```
 
-This compiles/runs the core and UI integration tests in temporary directories
+This compiles/runs the core, normalized/raw logical UI and bounded native-layout decode integration tests in temporary directories
 and deletes their host executables. The [actual report](../../research/ep7/portable-prototype-host.json)
 records source hashes, compiler identity and results. Standard Python test
 discovery also runs the strict host integration when a C compiler is available.
@@ -124,6 +127,36 @@ and existing repository `RIGHTS-AND-PROVENANCE.md`. That file states there is no
 repository-wide license; scoped GNU simulator/font licenses must not be
 misapplied to this new code or the LUTs. This prototype adds no global license
 and distributes no vendor firmware image or extracted bulk code.
+
+## Bounded native-layout adapter
+
+`ep7p_decode.c` parses actual synthetic native-layout bytes in an owned host
+job buffer. The 32-bit wire address is a label, not a dereferenced pointer.
+Request membership and the operation's 56-byte slot geometry are checked before
+backlink loads; the decoder reads only fixed in-bounds job offsets. A separate
+captured-selector argument comes from the original image attachment, not from
+an invented request field or current UI mode.
+
+`test_decode_integration.c` exercises all 16 slots through decoded bytes → core
+scope → coefficient output, and rejects external pointers, PEN-F stride, bad
+backlinks, stage/type/owner/header failures. It also demonstrates that valid
+stock-size *shape* alone cannot register a trailer. Native lifetime, coherent
+observation and the compiler/register veneer remain separate requirements.
+
+## Raw logical events and target compilation
+
+`ep7p_ui_raw.c` now translates copied logical9032/9031 wheel events into value/
+sector actions and9014 into a single ALL toggle, retaining stock navigation/OK
+through explicit delegation. It requires the full signed count for **that event**;
+packet d1 is not that count. Zero is no-op and magnitude>64 is rejected before
+negation. Native shared-delta freshness and physical dial identity are not
+established by this portable struct. See [the exact-stock mapping](../../docs/ep7/UI_EVENT_MAPPING.md).
+
+The [target-only checks](target/) compile the core/UI/decoder/raw adapter and
+self-authored memory routines using verified-source MN10300 GCC13.4. The explicit
+get_tid bridge translates one GCC/native boundary with an independently reviewed
+stack contract. Objects remain unlinked/unexecuted; source-provenance and actual
+compile reports are published, not compiler binaries or vendor code.
 
 ## Native integration is still deliberately unbound
 

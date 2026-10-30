@@ -1,0 +1,38 @@
+{
+  "source_sha256": "adb317d4c7c3d6bcc04324ec5d6083832b6ba81c5df298b117d0cc1d183f60e7",
+  "test_sha256": "3a4dbb2bde673a69d9e88c7f39e259e214ebaac8fa1970aa7d4421b795a68925",
+  "flags": [
+    "-std=c11",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-fno-builtin",
+    "-fno-tree-loop-distribute-patterns"
+  ],
+  "tool_hashes": {
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/xgcc": "15d81798f47b501bfbf43a9a97ef9318f8d54dd6739cfba1bf04bf10a42c44dd",
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/cc1": "a61e33cd394c7af451b9e8a108f9ad36a5e437985f08b2f4fc57f8f3e372edd5",
+    "toolchains/binutils-2.45-gas-build/gas/as-new": "5833fa140051525c4d432be6a931abc32e6b866f2a7152f16c1751a5f3122d6c",
+    "toolchains/binutils-2.45-build/binutils/objdump": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268"
+  },
+  "host_tests": [
+    {
+      "sanitized": false,
+      "result": "freestanding byte operations: 19608 host cases passed"
+    },
+    {
+      "sanitized": true,
+      "result": "freestanding byte operations: 19608 host cases passed"
+    }
+  ],
+  "target_object_sha256": "c0afce7f6efbf2408a603f02774fad8b9f4daea0cdd78eac763e6d99eddab6c1",
+  "target_undefined_symbols": [],
+  "target_call_instructions": 0,
+  "target_linked": false,
+  "target_executed": false,
+  "firmware_input_used": false,
+  "native_ABI_qualified": false,
+  "leak_sanitizer_enabled": false
+}

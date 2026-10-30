@@ -112,6 +112,24 @@ int main(void) {
     assert(ep7p_axis_adjust(&p,1,0,255,0,true));
     { int8_t axis[12]; assert(ep7p_axis_read(&p,1,0,axis)); for(i=0;i<12;i++) assert(axis[i]==0); }
     assert(!ep7p_axis_adjust(&p,1,0,12,1,false));
+    /* ALL must not flatten a non-uniform axis at a boundary. */
+    {
+        int8_t varied[24]={0}, axis[12]; bool changed=true;
+        varied[0]=6; varied[1]=-2; varied[12]=3;
+        assert(ep7p_edit(&p,2,varied));
+        assert(ep7p_axis_adjust_result(&p,2,0,255,INT_MAX,false,&changed) && changed);
+        assert(ep7p_axis_read(&p,2,0,axis));
+        assert(axis[0]==7 && axis[1]==-1 && axis[2]==1 && axis[0]-axis[1]==8);
+        assert(ep7p_axis_adjust_result(&p,2,0,255,1,false,&changed) && !changed);
+        assert(ep7p_axis_adjust_result(&p,2,0,255,INT_MIN,false,&changed) && changed);
+        assert(ep7p_axis_read(&p,2,0,axis));
+        assert(axis[0]==1 && axis[1]==-7 && axis[2]==-5 && axis[0]-axis[1]==8);
+        assert(ep7p_axis_adjust_result(&p,2,0,255,-1,false,&changed) && !changed);
+        assert(ep7p_axis_read(&p,2,1,axis) && axis[0]==3); /* other axis untouched */
+        assert(ep7p_axis_adjust_result(&p,2,0,255,0,true,&changed) && changed);
+        assert(ep7p_axis_read(&p,2,0,axis)); for(i=0;i<12;i++) assert(axis[i]==0);
+    }
+
     /* Exhaustion cannot wrap a stale token back into validity. */
     p.serial=UINT64_MAX; b=malloc(EP7P_EXTENT); assert(b);
     assert(!ep7p_register_job(&p,b,EP7P_EXTENT,&neutral,&j)); free(b);

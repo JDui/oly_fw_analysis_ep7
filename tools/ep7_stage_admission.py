@@ -170,6 +170,15 @@ WITNESSES={1614100559: ('mov', '10984,a0'),
  1614700963: ('call', '0x603ed862,[],0'),
  1614700969: ('cmp', '0,d0'),
  1614700978: ('movbu', 'd0,(26,a2)')}
+WINDOWS.update({'current_stage_call': (0x60354276,0x60354294),
+                'stage_advance_after_return': (0x603542e3,0x603542ec)})
+WITNESSES.update({0x60354276: ('movhu','(a3),d0'),
+                 0x6035428c: ('mov','(d0,a2),a1'),
+                 0x6035428e: ('calls','(a1)'),
+                 0x603542e3: ('movhu','(a3),d0'),
+                 0x603542e5: ('inc','d0'),
+                 0x603542e6: ('movhu','d0,(a3)')})
+
 def inspect(raw,objdump):
  identity=audit(raw);main=parse(raw)[0].payload
  require(main[0x60368f55-BASE:0x60368f59-BASE]==(0x6036884d).to_bytes(4,'little'),'ordinary stage2 callback literal mismatch')

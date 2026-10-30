@@ -4,14 +4,20 @@
   "compiler_sha256": "a23ecab8ff08f09ad8c80602c2c5df7f49e09c25905cb8975902e101bf72635f",
   "sources": {
     "ep7_ui_adapter_contract.h": "1f3292d41e88abdc2cecbe6d4e46de3c633fad591cae1a3391828d5447992b8e",
-    "ep7p.c": "50c4b4fb227d2ea7d80b57388406e4189be608e0ae72d0b10f5a236b7819a9d8",
-    "ep7p.h": "edb3d18f9bfd56930ba1b7d30cca81d2b30204113fcf2c63ec28a3a91ab16c31",
+    "ep7p.c": "befaec1ff6ae9f0cfa0571f5d84958ba797532b94ec23f064a27d8d2225d0ab9",
+    "ep7p.h": "a46308465556703ee0d658f07ffb73b34cb89041377468e84c92f5f2d1663bcd",
+    "ep7p_decode.c": "25f857efc0e07a333e931c50dc69fff1de9d10f40b117532de5f2e59eb6e2d95",
+    "ep7p_decode.h": "f4d28bb62c4801083db4c5a594882c56af68fe2440c247e9a70368ffc4f1e45d",
     "ep7p_ui.c": "cadb1699069f35616bc69cf09062bbc6c227239d3c61e39c42ddf42faef61fe7",
     "ep7p_ui.h": "13ceab4efbad8ec0f8383ada52781099eed71cecfd98c068ba48e6871d9bc9df",
+    "ep7p_ui_raw.c": "ffcbcc54f89d3edaca2f9060c525a20effaa668aa7688506f1d745c8a4518c25",
+    "ep7p_ui_raw.h": "656b1b18057538df11f614bda00ef3a0892abc3b1b5a84cf4a6ed74fda577e47",
     "native_boundary_contract.h": "3cae9d32f314d8a19e42c06f3ff7da439685a0cb904f7840ffc7d66cd72d81fd",
-    "test_ep7p.c": "7707ad682255846ea46f8e0ac0ca1e8d47415a7978518ffc89892033b0684113",
+    "test_decode_integration.c": "179f34a7e0781fa077c498a085171dfbb0deaebe77648dde90a83ccc8305640f",
+    "test_ep7p.c": "8253040c153a6936d6c32e87ae76a6eb7e79f0af01034a43b7588844a6961f8d",
     "test_ui_contract.c": "c8d3d0b7ed31b78fcb18bef245e68e06dff204aae253a4b013e41f769cf0d560",
-    "test_ui_integration.c": "f8a514a7b8e6b915018a7916c419b0e4c8f2ef01095ec4df37b1278defdbca89"
+    "test_ui_integration.c": "f8a514a7b8e6b915018a7916c419b0e4c8f2ef01095ec4df37b1278defdbca89",
+    "test_ui_raw.c": "b20096cc312e1c0c48345e8606f39eb664e5dce1900e08fb255a1efccdfe4d8c"
   },
   "tests": [
     {
@@ -27,6 +33,18 @@
       "output": "normalized UI -> captured profile -> fresh job -> scoped CPU lanes -> cleanup: PASS (host only)"
     },
     {
+      "test": "bounded_native_decode",
+      "configuration": "strict",
+      "passed": true,
+      "output": "bounded native-layout bytes -> checked observation -> scoped CPU lanes: PASS (host only)"
+    },
+    {
+      "test": "raw_logical_ui_to_output",
+      "configuration": "strict",
+      "passed": true,
+      "output": "raw logical event + event-owned full delta -> normalized volatile H/L: PASS (host only)"
+    },
+    {
       "test": "core",
       "configuration": "asan_ubsan",
       "passed": true,
@@ -37,6 +55,18 @@
       "configuration": "asan_ubsan",
       "passed": true,
       "output": "normalized UI -> captured profile -> fresh job -> scoped CPU lanes -> cleanup: PASS (host only)"
+    },
+    {
+      "test": "bounded_native_decode",
+      "configuration": "asan_ubsan",
+      "passed": true,
+      "output": "bounded native-layout bytes -> checked observation -> scoped CPU lanes: PASS (host only)"
+    },
+    {
+      "test": "raw_logical_ui_to_output",
+      "configuration": "asan_ubsan",
+      "passed": true,
+      "output": "raw logical event + event-owned full delta -> normalized volatile H/L: PASS (host only)"
     }
   ],
   "ui_header_syntax_passed": true,

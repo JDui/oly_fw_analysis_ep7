@@ -1,0 +1,23 @@
+{
+  "bridge_source_sha256": "a7dd454b9209001323ba9b4b129da9b2a39a206e0256552fb3dd75a33a637265",
+  "bridge_object_sha256": "c564eae05a6aa2982901a5424490e27c59e29838545366e843c8acc793b1be1b",
+  "caller_source_sha256": "0294c17deb1dca729276153af91f7332bcd075d6992f964f4487b926601d2d57",
+  "caller_assembly_sha256": "3b16a1747e9873bc32173b99876a7aa1478dc697ca508be529b0b0aa2f3c1f74",
+  "text_bytes": 17,
+  "instructions": 5,
+  "native_relocations_unresolved": 1,
+  "stack_arithmetic_contract_passed": true,
+  "stack_model_is_not_instruction_emulation": true,
+  "tool_hashes": {
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/xgcc": "15d81798f47b501bfbf43a9a97ef9318f8d54dd6739cfba1bf04bf10a42c44dd",
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/cc1": "a61e33cd394c7af451b9e8a108f9ad36a5e437985f08b2f4fc57f8f3e372edd5",
+    "toolchains/binutils-2.45-gas-build/gas/as-new": "5833fa140051525c4d432be6a931abc32e6b866f2a7152f16c1751a5f3122d6c",
+    "toolchains/binutils-2.45-build/binutils/objdump": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268"
+  },
+  "target_linked": false,
+  "target_executed": false,
+  "native_api_executed": false,
+  "firmware_input_used": false,
+  "task_epoch_supplied": false,
+  "flash_ready": false
+}

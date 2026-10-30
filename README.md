@@ -20,7 +20,8 @@ Current work:
   raw selectors **1–4**, storage/recall and conditional CPU coefficient construction.
 - Develop a [compile-checkable volatile H/L prototype](prototypes/ep7_volatile_hl/):
   normalized UI → captured-profile snapshot → fresh host job → scoped CPU lanes.
-  Host integration tests run; native UI/ABI/lifetime adapters remain unbound,
+  Host integration tests run, and verified-source MN10300 GCC compiles the core,
+  UI and bounded job decoder to unlinked objects. Native UI/lifetime adapters remain unbound,
   settings reset on boot, and **camera HSL has not been demonstrated**.
 - Establish E-P7-specific storage, capture, rendering and recovery evidence before
   enabling any patch builder. No E-P7 patch offsets or install image are supplied.
@@ -33,7 +34,8 @@ Start with the [research status, compatibility matrix and port plan](docs/ep7/RE
 [storage and inline-job design](docs/ep7/STORAGE_AND_INLINE_JOB_DESIGN.md),
 [capture admission](docs/ep7/CAPTURE_ADMISSION.md),
 [task-scoped design](docs/ep7/TASK_SCOPED_ADMISSION.md),
-[controls proposal](docs/ep7/CONTROLS.md), and
+[controls proposal](docs/ep7/CONTROLS.md),
+[logical wheel mapping](docs/ep7/UI_EVENT_MAPPING.md), and
 [read-only stock audit](tools/ep7_stock_audit.py).
 The audit emits JSON only and never contacts a camera. The official **1.1/1100
 stock input has now been acquired and byte-validated**, including all five

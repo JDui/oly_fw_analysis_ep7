@@ -51,14 +51,20 @@ bool ep7p_axis_read(ep7p *p,unsigned profile,unsigned axis,int8_t out[12]) {
     memcpy(out,p->profiles[profile]+12*axis,12); return end(p,true);
 }
 bool ep7p_axis_adjust_result(ep7p *p,unsigned profile,unsigned axis,unsigned sector,int delta,bool reset,bool *changed) {
-    unsigned i; bool any=false; if(!changed || !begin(p)) return false;
+    unsigned i; int lower=-14,upper=14,step; bool any=false;
+    if(!changed || !begin(p)) return false;
     if(profile>=4 || axis>=2 || (sector>=12 && sector!=255)) return end(p,false);
+    /* ALL preserves inter-sector differences: one common delta stops when the
+       first selected value reaches a limit, rather than clipping each band. */
     for(i=0;i<12;i++) if(sector==255 || sector==i) {
         int v=p->profiles[profile][12*axis+i];
-        if(reset) v=0;
-        else if(delta>7-v) v=7;
-        else if(delta< -7-v) v=-7;
-        else v+=delta;
+        if(-7-v>lower) lower=-7-v;
+        if(7-v<upper) upper=7-v;
+    }
+    step=delta>upper ? upper : delta<lower ? lower : delta;
+    for(i=0;i<12;i++) if(sector==255 || sector==i) {
+        int v=p->profiles[profile][12*axis+i];
+        v=reset ? 0 : v+step;
         if(v!=p->profiles[profile][12*axis+i]) any=true;
         p->profiles[profile][12*axis+i]=(int8_t)v;
     }

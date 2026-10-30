@@ -7,7 +7,7 @@
       "start": "0x600317ac",
       "stop_exclusive": "0x600317f0",
       "sha256": "19c15595bcaf1e957343950d8bf7acf6df42e0e5da5c262d89add58499256738",
-      "witness_count": 18
+      "witness_count": 19
     },
     "named_query_caller": {
       "start": "0x612c78ec",
@@ -16,7 +16,7 @@
       "witness_count": 12
     }
   },
-  "instruction_witness_count": 30,
+  "instruction_witness_count": 31,
   "query_api": {
     "address": "0x600317ac",
     "output": "halfword through a0",

@@ -1,0 +1,132 @@
+{
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "facts": {
+    "state29_admitted": [
+      "0x9004",
+      "0x9006",
+      "0x9008",
+      "0x900a",
+      "0x9031",
+      "0x9032",
+      "0x9014"
+    ],
+    "value_wheel": "0x9032",
+    "sector_wheel": "0x9031",
+    "delta_reader": "0x60ea3b35",
+    "delta_halfword": "0x61fc4fb8",
+    "packet_d1_is_full_repeat": false,
+    "positive_delta": {
+      "value_child_event": "0x9006",
+      "sector_child_event": "0x900a"
+    },
+    "negative_delta": {
+      "value_child_event": "0x9004",
+      "sector_child_event": "0x9008"
+    },
+    "limitations": [
+      "Conditional on current COLOR controller; no GPIO/front/rear identity proof.",
+      "Full signed delta is shared state, not packet d1; event-associated freshness/serialization still requires a native adapter.",
+      "Category4/5 parent gates and independent child are not installed.",
+      "Native negative-32768 sign extension is pathological; proposed adapter must reject it and bound work.",
+      "Numerical increase/previous labels remain prototype policy unless underlying property ordering/default callback binding is separately qualified."
+    ]
+  },
+  "windows": {
+    "delta_accessors": {
+      "start": "0x60ea3b2c",
+      "stop_exclusive": "0x60ea3b3f",
+      "sha256": "35886d9f4e3b702d832d7ea655d2ad7fdd66102c9ab7f60f7592d0f206f77922",
+      "witness_count": 5
+    },
+    "dispatch_wheels": {
+      "start": "0x60dd5445",
+      "stop_exclusive": "0x60dd5489",
+      "sha256": "a7da60dd9e3007635f4e3d8a5a07362beda3c4b02cdc88f058392261e63cea5a",
+      "witness_count": 28
+    },
+    "parent_down_wrapper": {
+      "start": "0x60e2620a",
+      "stop_exclusive": "0x60e26215",
+      "sha256": "93f3494e66848e321475a8b08298ce27fa1e645b5bbc0057364be43d57534172",
+      "witness_count": 4
+    },
+    "parent_other_wheel_gate": {
+      "start": "0x60e263c0",
+      "stop_exclusive": "0x60e263cf",
+      "sha256": "69aae0929851a79c55439c86764874ea5ee65473583c92ec8f090a463a1d112f",
+      "witness_count": 8
+    },
+    "parent_up_wrapper": {
+      "start": "0x60e261e5",
+      "stop_exclusive": "0x60e261f0",
+      "sha256": "12a96aceafb808e4fb7ea59f841f861631e6c03f5c1730028fe0a9443a00383a",
+      "witness_count": 4
+    },
+    "parent_wheel_gate": {
+      "start": "0x60e262f4",
+      "stop_exclusive": "0x60e26309",
+      "sha256": "4188fc10c254a9b839e4a8bd91a67e93d40481260e094ab388fa3e2cd0c266b7",
+      "witness_count": 11
+    },
+    "sector_channel2": {
+      "start": "0x60ea0d39",
+      "stop_exclusive": "0x60ea0db4",
+      "sha256": "6e5df69dfcc695f1be27077c8da6e22e0d2b0a5f1af4c23321990b52220e1e95",
+      "witness_count": 52
+    },
+    "sector_channel4": {
+      "start": "0x60ea0db4",
+      "stop_exclusive": "0x60ea0e2f",
+      "sha256": "23db60716c5b75be29eef34bd8b10bf640a840edb670ad432973a3b0f36b1c70",
+      "witness_count": 52
+    },
+    "sector_child_forward": {
+      "start": "0x60e2141d",
+      "stop_exclusive": "0x60e2143e",
+      "sha256": "4bc934a5900cbab752aa3cffa8904bd7238ce22c4f5067ad4072d004bf4c7e64",
+      "witness_count": 15
+    },
+    "sector_wheel": {
+      "start": "0x60e21efb",
+      "stop_exclusive": "0x60e21f48",
+      "sha256": "f092c8422b1cdb04b41aa0186be5d76366181a45d0ed3f0cab2080588f4b310d",
+      "witness_count": 38
+    },
+    "value_channel3": {
+      "start": "0x60ea0e2f",
+      "stop_exclusive": "0x60ea0ea2",
+      "sha256": "be4a84073ae2706882d11ac0a53b2d11a7e7e2717365ead611cee0df23242eb4",
+      "witness_count": 48
+    },
+    "value_child_forward": {
+      "start": "0x60e20eef",
+      "stop_exclusive": "0x60e20f0a",
+      "sha256": "315704b5e6c8dcd3dd20dd2d3dd2d5cefb4e18c05eef72927853d0be49220a5d",
+      "witness_count": 13
+    },
+    "value_wheel": {
+      "start": "0x60e21cae",
+      "stop_exclusive": "0x60e21d01",
+      "sha256": "3b089ec8ae044760f66adc23b1ff27ba261da2cf0f6ebc28c84ab2fc3ddb57d1",
+      "witness_count": 41
+    },
+    "wheel_sector_wrapper": {
+      "start": "0x60e20ca6",
+      "stop_exclusive": "0x60e20cb1",
+      "sha256": "8dc10aefd502ef5daa0469a38c30810a52fdd4837028a5ab9c6ea9241324e84f",
+      "witness_count": 5
+    },
+    "wheel_value_wrapper": {
+      "start": "0x60e20c70",
+      "stop_exclusive": "0x60e20c7b",
+      "sha256": "de65ea68e9f99f502c44a2a4776a1afc8321b42f10d208c8ce076f632ce1de8f",
+      "witness_count": 5
+    }
+  },
+  "instruction_witness_count": 329,
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

@@ -28,6 +28,7 @@ class Tests(unittest.TestCase):
             0x600317e5:('mov','(a1),a1'),
             0x600317e7:('movhu','(16,a1),d0'),
             0x600317ea:('movhu','d0,(a0)'),
+            0x600317ed:('retf','[a2],4'),
             0x600317ec:('clr','d0'),
         }
         for address,instruction in expected.items():

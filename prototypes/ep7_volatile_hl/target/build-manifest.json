@@ -1,0 +1,60 @@
+{
+  "source_url": "https://gcc.gnu.org/pub/gcc/releases/gcc-13.4.0/gcc-13.4.0.tar.xz",
+  "checksum_url": "https://gcc.gnu.org/pub/gcc/releases/gcc-13.4.0/sha512.sum",
+  "dependency_url_base": "https://gcc.gnu.org/pub/gcc/infrastructure/",
+  "dependency_checksums": "verified GCC archive contrib/prerequisites.sha512",
+  "sources": {
+    "toolchains/gcc-13.4.0.tar.xz": {
+      "sha256": "9c4ce6dbb040568fdc545588ac03c5cbc95a8dbf0c7aa490170843afb59ca8f5",
+      "sha512": "9b4b83ecf51ef355b868608b8d257b2fa435c06d2719cb86657a7c2c2a0828ff4ce04e9bac1055bbcad8ed5b4da524cafaef654785e23a50233d95d89201e35f"
+    },
+    "toolchains/gcc-13.4.0/gmp-6.2.1.tar.bz2": {
+      "sha256": "eae9326beb4158c386e39a356818031bd28f3124cf915f8c5b1dc4c7a36b4d7c",
+      "sha512": "8904334a3bcc5c896ececabc75cda9dec642e401fb5397c4992c4fabea5e962c9ce8bd44e8e4233c34e55c8010cc28db0545f5f750cbdbb5f00af538dc763be9"
+    },
+    "toolchains/gcc-13.4.0/mpfr-4.1.0.tar.bz2": {
+      "sha256": "feced2d430dd5a97805fa289fed3fc8ff2b094c02d05287fd6133e7f1f0ec926",
+      "sha512": "410208ee0d48474c1c10d3d4a59decd2dfa187064183b09358ec4c4666e34d74383128436b404123b831e585d81a9176b24c7ced9d913967c5fce35d4040a0b4"
+    },
+    "toolchains/gcc-13.4.0/mpc-1.2.1.tar.gz": {
+      "sha256": "17503d2c395dfcf106b622dc142683c1199431d095367c6aacba6eec30340459",
+      "sha512": "3279f813ab37f47fdcc800e4ac5f306417d07f539593ca715876e43e04896e1d5bceccfb288ef2908a3f24b760747d0dbd0392a24b9b341bc3e12082e5c836ee"
+    }
+  },
+  "all_source_sha512_verified": true,
+  "signature_verified": false,
+  "target": "mn10300-elf",
+  "configure": [
+    "--target=mn10300-elf",
+    "--enable-languages=c",
+    "--without-headers",
+    "--disable-bootstrap",
+    "--disable-multilib",
+    "--disable-nls",
+    "--disable-shared",
+    "--disable-threads",
+    "--disable-libssp",
+    "--disable-libquadmath",
+    "--disable-libgomp",
+    "--disable-libatomic",
+    "--disable-libstdcxx",
+    "--disable-lto",
+    "--with-newlib"
+  ],
+  "make": [
+    "make",
+    "-j4",
+    "all-gcc",
+    "MAKEINFO=true"
+  ],
+  "system_install": false,
+  "linked_target_firmware": false,
+  "target_executed": false,
+  "build_status": "passed",
+  "tools": {
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/xgcc": "15d81798f47b501bfbf43a9a97ef9318f8d54dd6739cfba1bf04bf10a42c44dd",
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/cc1": "a61e33cd394c7af451b9e8a108f9ad36a5e437985f08b2f4fc57f8f3e372edd5",
+    "toolchains/binutils-2.45-gas-build/gas/as-new": "5833fa140051525c4d432be6a931abc32e6b866f2a7152f16c1751a5f3122d6c",
+    "toolchains/binutils-2.45-build/binutils/objdump": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268"
+  }
+}
