@@ -1,0 +1,124 @@
+{
+  "scope": "Fresh unparented exact-text cleanup subset, read-only",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "allocator_context_bytes": {
+      "start": "0x60cfe586",
+      "stop_exclusive": "0x60cfe5a0",
+      "sha256": "5927809f4806bc1d793d39daf3b821aa10b4c7d18319cafb8210821581073cd5",
+      "witness_count": 10
+    },
+    "base_cleanup": {
+      "start": "0x60cfe109",
+      "stop_exclusive": "0x60cfe20c",
+      "sha256": "480cd166d2b72713fe8677d20825f7d8b321969c2a9fc21d2c9589fd460eff3e",
+      "witness_count": 93
+    },
+    "base_ctor": {
+      "start": "0x60cfd747",
+      "stop_exclusive": "0x60cfd79a",
+      "sha256": "daec9078dde83aaec322243a89d31b137dc1c89083fbe89342f3a0cdf646e5a8",
+      "witness_count": 29
+    },
+    "deallocator": {
+      "start": "0x60cfe5c9",
+      "stop_exclusive": "0x60cfe5f6",
+      "sha256": "9c1059063f9673a88028e7e4345aa18c08118972e8408ab50d6a4b0673b58ac5",
+      "witness_count": 17
+    },
+    "layout_allocate": {
+      "start": "0x60cfe04f",
+      "stop_exclusive": "0x60cfe06f",
+      "sha256": "4ea31d0e2e91fe41b95f2d8469faedfa10b4721810e74e2a842f6841aa1a8c9d",
+      "witness_count": 13
+    },
+    "native_context_selection": {
+      "start": "0x60d02c64",
+      "stop_exclusive": "0x60d02c87",
+      "sha256": "58ce546246702f0c9f390dfec18fedec0749921cad6ed36f3529322408ea5dbf",
+      "witness_count": 12
+    },
+    "noop368": {
+      "start": "0x60cfeafe",
+      "stop_exclusive": "0x60cfeb01",
+      "sha256": "27bea7d8f2553c0ed4081cc731c5b541fe9ff5e085904d92ed4442095436f0b5",
+      "witness_count": 1
+    },
+    "null_parent_event": {
+      "start": "0x60d04b66",
+      "stop_exclusive": "0x60d04b9e",
+      "sha256": "cc98b46b5ac66336bd09481d6131667b06caee45331ed854b403f19a10482cb9",
+      "witness_count": 29
+    },
+    "partial_init_return": {
+      "start": "0x60d4bfee",
+      "stop_exclusive": "0x60d4c000",
+      "sha256": "c07df0ffce7259f8315f83fa1fc3ae8c831bc88f4eec4a3af2af46f46a71ffc7",
+      "witness_count": 8
+    },
+    "text_cleanup": {
+      "start": "0x60d048d0",
+      "stop_exclusive": "0x60d04925",
+      "sha256": "a0d169b9e7cba9bce272754a695517de4f8fe898d7c1a96158facf395fc5bd14",
+      "witness_count": 36
+    },
+    "text_ctor": {
+      "start": "0x60d4be0e",
+      "stop_exclusive": "0x60d4be9a",
+      "sha256": "9bd86720591e68f425f4999b2416ecc03a5d0438da91341716ffd79aebb7fe69",
+      "witness_count": 44
+    },
+    "timer_remove": {
+      "start": "0x60d11280",
+      "stop_exclusive": "0x60d112cc",
+      "sha256": "310f14da1a9c43112368adbe70c439e25576e1ddadfcac0c7cbcb137401afec7",
+      "witness_count": 33
+    },
+    "unsafe_parent_branch": {
+      "start": "0x60d04cc4",
+      "stop_exclusive": "0x60d04d0c",
+      "sha256": "611aecbd96578ce054e0de4a3a2c1b66683865deb1d2682212ac90467305c4d1",
+      "witness_count": 33
+    },
+    "visibility_byte": {
+      "start": "0x60d04c16",
+      "stop_exclusive": "0x60d04c1c",
+      "sha256": "8733197c9acaa5dfa79ec496781b2c36d3dc67a44b00e4fbbc42c73ca60336fb",
+      "witness_count": 2
+    },
+    "widget_ctor": {
+      "start": "0x60d0480b",
+      "stop_exclusive": "0x60d04852",
+      "sha256": "e1d08f6ce0f0495d9827a3467461fe1bae79c8c6a378f06636b5fcdb09e7d49b",
+      "witness_count": 22
+    }
+  },
+  "instruction_witness_count": 382,
+  "table_entries": 7,
+  "rollback_subset": {
+    "parent_offset": 20,
+    "parent_width": 4,
+    "parent_required": 0,
+    "guard_byte_offsets": [
+      68,
+      88
+    ],
+    "guard_required": 0,
+    "allocation_bytes": 180,
+    "allocator_context_offsets": [
+      28,
+      29
+    ]
+  },
+  "limitations": [
+    "Destructor alone leaks owned layout+64; native+152 cleanup required.",
+    "Arbitrary never-parented resources can hit null-parent dereference; byte guards are mandatory.",
+    "Context selection mutates shared UI allocator state; provider must save and restore prior context under serialized UI ownership.",
+    "No native provider or actual device execution is qualified by this audit."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

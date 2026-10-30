@@ -1,0 +1,133 @@
+{
+  "host_tests": [
+    "strict",
+    "asan_ubsan"
+  ],
+  "objects": {
+    "sidecar": {
+      "source": "prototypes/ep7_volatile_hl/controller_sidecar/sidecar.c",
+      "source_sha256": "20a1cd525afa815fe6ef46de804befc899b4cb8ee0fdcdf1a9e9e19ef5a3e003",
+      "object_sha256": "75642a56f08945794b158a8c4d7d40a7dbcf278b5a7214dd5b2853592e1f23b9",
+      "definitions": [
+        "_ep7c_authorize",
+        "_ep7c_copyout",
+        "_ep7c_forget",
+        "_ep7c_init",
+        "_ep7c_register_fresh",
+        "_ep7c_seal",
+        "_ep7c_transition"
+      ],
+      "undefined": [
+        "_ep7p_capture",
+        "_memcpy",
+        "_memset"
+      ]
+    },
+    "transition": {
+      "source": "prototypes/ep7_volatile_hl/controller_sidecar/transition_binding.c",
+      "source_sha256": "8c333e92659e21a7aabf2c227a4aa2e7cb84f5e15c1a4ae03200bc165a5a42c0",
+      "object_sha256": "b387a6dbe0ad9b01ec3469d79f11a6d714fb242ce56e8de10a41d59c48dd9639",
+      "definitions": [
+        "_ep7_sidecar_transition_unresolved"
+      ],
+      "undefined": [
+        "_ep7_controller_sidecar_unresolved",
+        "_ep7c_transition"
+      ]
+    },
+    "observer": {
+      "source": "prototypes/ep7_volatile_hl/capture_state_guard/observer.c",
+      "source_sha256": "41f834d62a2fd57121ca5e629389a5308ddac8c7abaa0549f567070ff9330a20",
+      "object_sha256": "2f06040c594388d796aedc6321df48e9aa56edd55e3e4e4f6daa09a83d89d5c2",
+      "definitions": [
+        "_ep7_gcc_state_transition_observer"
+      ],
+      "undefined": [
+        "_ep7_sidecar_transition_unresolved"
+      ]
+    },
+    "bridge": {
+      "source": "prototypes/ep7_volatile_hl/capture_state_guard/bridge.s",
+      "source_sha256": "16a45817c5e7018b4055c10d48507d72535a7e961b0e13849c4da31750959b4e",
+      "object_sha256": "74492e236c75585c18390036d13d425e408c606e069c63430deefbef604bb364",
+      "definitions": [
+        "ep7_native_state_service_bridge"
+      ],
+      "undefined": [
+        "_ep7_gcc_state_transition_observer",
+        "ep7_stock_state_service_unresolved"
+      ]
+    },
+    "core": {
+      "source": "prototypes/ep7_volatile_hl/ep7p.c",
+      "source_sha256": "0e9f1274706c0e1631cb1ebda3d35055a48200ba5c9817760f600ab9c4f63402",
+      "object_sha256": "0141fc6a7738415068b7010634af2df92ab1842291693921ac143ab988039cd3",
+      "definitions": [
+        "_ep7p_apply",
+        "_ep7p_axis_adjust",
+        "_ep7p_axis_adjust_result",
+        "_ep7p_axis_read",
+        "_ep7p_capture",
+        "_ep7p_direct_apply",
+        "_ep7p_edit",
+        "_ep7p_enter",
+        "_ep7p_init",
+        "_ep7p_register_job",
+        "_ep7p_register_task",
+        "_ep7p_release_job",
+        "_ep7p_release_task",
+        "_ep7p_unwind"
+      ],
+      "undefined": [
+        "_ep7p_decode",
+        "_memcpy",
+        "_memset"
+      ]
+    },
+    "decode": {
+      "source": "prototypes/ep7_volatile_hl/ep7p_decode.c",
+      "source_sha256": "25f857efc0e07a333e931c50dc69fff1de9d10f40b117532de5f2e59eb6e2d95",
+      "object_sha256": "f8f990b92ee68a15a26a0b742e684c2813c6a1d1a070c0b49766456739182ef7",
+      "definitions": [
+        "_ep7p_decode"
+      ],
+      "undefined": []
+    },
+    "memory": {
+      "source": "prototypes/ep7_volatile_hl/target/memory.c",
+      "source_sha256": "adb317d4c7c3d6bcc04324ec5d6083832b6ba81c5df298b117d0cc1d183f60e7",
+      "object_sha256": "c0afce7f6efbf2408a603f02774fad8b9f4daea0cdd78eac763e6d99eddab6c1",
+      "definitions": [
+        "_memcpy",
+        "_memset"
+      ],
+      "undefined": []
+    }
+  },
+  "remaining_external_symbols": [
+    "_ep7_controller_sidecar_unresolved",
+    "ep7_stock_state_service_unresolved"
+  ],
+  "sources": {
+    "sidecar.h": "0a27c2479c6a9758c1c8ee7475a15b4ec8509c6238185086dc9e1e90ea9a43cf",
+    "sidecar.c": "20a1cd525afa815fe6ef46de804befc899b4cb8ee0fdcdf1a9e9e19ef5a3e003",
+    "transition_binding.c": "8c333e92659e21a7aabf2c227a4aa2e7cb84f5e15c1a4ae03200bc165a5a42c0",
+    "test_sidecar.c": "a1fdeaab8ea8a7774099bff7e4b666c6f67084150ba91ab220aa023e2f0b0c03",
+    "check.py": "d1c5704d74019cabaaccb56e915e12f7b7ab05e058a1573737df10f00f3856d5",
+    "README.md": "7298630a84a8788dc6ba991a460ef56005592a8e3a0a82c65456577afeb49883"
+  },
+  "tool_hashes": {
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/xgcc": "15d81798f47b501bfbf43a9a97ef9318f8d54dd6739cfba1bf04bf10a42c44dd",
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/cc1": "a61e33cd394c7af451b9e8a108f9ad36a5e437985f08b2f4fc57f8f3e372edd5",
+    "toolchains/binutils-2.45-gas-build/gas/as-new": "5833fa140051525c4d432be6a931abc32e6b866f2a7152f16c1751a5f3122d6c",
+    "toolchains/binutils-2.45-build/binutils/objdump": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268"
+  },
+  "transition_callback_defined": true,
+  "controller_runtime_initialized": false,
+  "serialized_controller_required": true,
+  "native_prefix_dereferenced": false,
+  "native_free_coverage_proven": false,
+  "target_linked": false,
+  "target_executed": false,
+  "firmware_modified": false
+}

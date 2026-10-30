@@ -1,0 +1,52 @@
+{
+  "sha256": "5dd9af164b4590c7e82f6905c919b3cc450bb58f2d5742ab2a0e3a4eb2e26190",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "semantics_sha256": "355754c61879dc24bf6128bbba5a7931355731000e8cb213082b9b9cd4df0129",
+  "checked_instructions": 34,
+  "direct_relative_call_candidates": [
+    "0x602ac3de",
+    "0x602ac60e"
+  ],
+  "wrapper_entry_stack_offsets": {
+    "allocator_return": 4,
+    "producer_return": 36
+  },
+  "allocator_continuation": "0x602ac753",
+  "supported_producer_return": "0x602ac3e3",
+  "alternate_producer_return": "0x602ac613",
+  "capture_id_register": "d2",
+  "supported_associated_register": "a2",
+  "native_bytes": 148,
+  "proposed_explicit_request_bytes": 192,
+  "firmware_execution": false,
+  "all_indirect_callers_proven": false,
+  "allocation_success_proven": false,
+  "native_lifetime_proven": false,
+  "windows": [
+    {
+      "start": "0x602ac3d7",
+      "stop": "0x602ac3e3",
+      "sha256": "f78833d0089f89bdf18e485be9e90032dce973132f38eb25d25af08190ded75f"
+    },
+    {
+      "start": "0x602ac5ef",
+      "stop": "0x602ac613",
+      "sha256": "d8666c0bb332c88d8554aca201ca9d1add6901ff88aa23dc5d106dca7f3b1d1c"
+    },
+    {
+      "start": "0x602ac748",
+      "stop": "0x602ac873",
+      "sha256": "6d0b74495068c63f4102046b8093049b7cf13be0eb85d3f365e5c5656c767f94"
+    },
+    {
+      "start": "0x602ac8d0",
+      "stop": "0x602ac8e0",
+      "sha256": "8d8c136b715b45d494a3939e4350ab717eaa48b98ac5ffac57cec325747247d4"
+    },
+    {
+      "start": "0x602acf12",
+      "stop": "0x602acf50",
+      "sha256": "bccb7ce50b78349a1c445a9f76f3c0c947fe5072378ca1df9c79d25b13195e3b"
+    }
+  ]
+}

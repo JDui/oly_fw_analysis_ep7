@@ -1,0 +1,36 @@
+{
+  "sources": {
+    "rollback.h": "6bc70cd0aa8718d2e8f280abe30804facc0c9e1fdfbe3a2782a544660a75d35b",
+    "rollback.c": "ea93783481e2e33299d7ae3197e413653d3e4feb3c04c43a8f95653777ecf3cb",
+    "cleanup_destroy.s": "0d192266f41178f7a5176c9ac8711cdf6464b8170d7b6e311f64000ad352d57e",
+    "test_rollback.c": "3e8f7bff0b234665ee6fe8099cbff503525bf19e50bc3d3798c995cbd7e932d3",
+    "check.py": "5148328bcbfcfe28a6b3626dab3a66fcc30bb1b3c200ee2944f4d81cd73e2969",
+    "CONTRACT.md": "0189a8ba12b0f070189b0be16d025e5fa0be5fc4799ad7bfad86e71629c6ab5b"
+  },
+  "tool_hashes": {
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/xgcc": "15d81798f47b501bfbf43a9a97ef9318f8d54dd6739cfba1bf04bf10a42c44dd",
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/cc1": "a61e33cd394c7af451b9e8a108f9ad36a5e437985f08b2f4fc57f8f3e372edd5",
+    "toolchains/binutils-2.45-gas-build/gas/as-new": "5833fa140051525c4d432be6a931abc32e6b866f2a7152f16c1751a5f3122d6c",
+    "toolchains/binutils-2.45-build/binutils/objdump": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268"
+  },
+  "host_mock_cases": 9,
+  "host_asan_ubsan_passed": true,
+  "lsan_disabled": true,
+  "target_flags": [
+    "-mno-setlb",
+    "-mno-liw",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-nostdinc"
+  ],
+  "bridge_bytes": 35,
+  "bridge_instructions": 13,
+  "exact_relocations": 2,
+  "negative_mutations": 4,
+  "stack_arithmetic_passed": true,
+  "stack_model_not_emulation": true,
+  "target_executed": false,
+  "native_context_callbacks_unbound": true,
+  "native_cleanup_binding_unresolved": true,
+  "flash_ready": false
+}

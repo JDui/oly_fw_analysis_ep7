@@ -1,0 +1,103 @@
+{
+  "scope": "Unchanged container integrity and local static checksum path, NOT device acceptance, cryptographic-authentication exclusion, bootability or recovery",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "source_bytes": 111017984,
+  "exact_unchanged_byte_roundtrip": true,
+  "components": [
+    {
+      "index": 0,
+      "offset": 0,
+      "container_address": "0x406a0000",
+      "kind": "0x100",
+      "payload_bytes": 26214336,
+      "model_bytes": "1420",
+      "header_build": "0x1100",
+      "decoded_sha256": "5dd9af164b4590c7e82f6905c919b3cc450bb58f2d5742ab2a0e3a4eb2e26190",
+      "component_sum32": 0,
+      "trailer_checksum_recomputed_equals_stored": true,
+      "unchanged_encode_byte_identical": true
+    },
+    {
+      "index": 1,
+      "offset": 26214400,
+      "container_address": "0x421a0000",
+      "kind": "0x101",
+      "payload_bytes": 26214336,
+      "model_bytes": "1420",
+      "header_build": "0x100",
+      "decoded_sha256": "8606cb90e06b67aee31a1b4319b585905b66e4e3ee29c903bd328aa33b362868",
+      "component_sum32": 0,
+      "trailer_checksum_recomputed_equals_stored": true,
+      "unchanged_encode_byte_identical": true
+    },
+    {
+      "index": 2,
+      "offset": 52428800,
+      "container_address": "0x43aa0000",
+      "kind": "0x106",
+      "payload_bytes": 45219776,
+      "model_bytes": "1420",
+      "header_build": "0x100",
+      "decoded_sha256": "d0c658cb00b32783e68bcba9e24b0e2a2d9077adf995126a3d7a70ebdca3ceba",
+      "component_sum32": 0,
+      "trailer_checksum_recomputed_equals_stored": true,
+      "unchanged_encode_byte_identical": true
+    },
+    {
+      "index": 3,
+      "offset": 97648640,
+      "container_address": "0x0",
+      "kind": "0x10e",
+      "payload_bytes": 262080,
+      "model_bytes": "1420",
+      "header_build": "0x1",
+      "decoded_sha256": "00f47b0990257a9719109b8d41a1910677615c6e1622b3ca43061d6fabc8805f",
+      "component_sum32": 0,
+      "trailer_checksum_recomputed_equals_stored": true,
+      "unchanged_encode_byte_identical": true
+    },
+    {
+      "index": 4,
+      "offset": 97910784,
+      "container_address": "0x467e0000",
+      "kind": "0x102",
+      "payload_bytes": 13107136,
+      "model_bytes": "1420",
+      "header_build": "0x100",
+      "decoded_sha256": "c7f5ac1ddfafceeecd05607b6ebd512315bf1a3807b2660eef201f38b927f21f",
+      "component_sum32": 0,
+      "trailer_checksum_recomputed_equals_stored": true,
+      "unchanged_encode_byte_identical": true
+    }
+  ],
+  "checked_instructions": 29,
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "filename_string_leads": [
+    {
+      "address": "0x60f2cb24",
+      "text": "S142????BIN"
+    },
+    {
+      "address": "0x60f2cb30",
+      "text": "E142????BIN"
+    },
+    {
+      "address": "0x60f2d81c",
+      "text": "E142????BIN"
+    },
+    {
+      "address": "0x60f2cd07",
+      "text": "DCOLYMP"
+    }
+  ],
+  "native_checksum_helper": "0x600fa454",
+  "local_main_checksum_error": "0x3211",
+  "cryptographic_checks_absent_proven": false,
+  "ep7_modified_image_acceptance_proven": false,
+  "ep7_same_version_install_proven": false,
+  "ep7_partial_update_proven": false,
+  "ep7_physical_recovery_entry_proven": false,
+  "independent_rescue_loader_proven": false,
+  "firmware_image_output_created": false,
+  "firmware_executed": false
+}

@@ -1,7 +1,11 @@
 # E-P7 HSL port research / E-P7 HSL 移植研究
 
-> **EP7 branch: research in progress; no flash-ready E-P7 firmware.**
-> **当前正在研究将 PEN-F 的 H/S/L 功能移植到 E-P7，尚未完成移植，禁止把 PEN-F 固件或偏移直接用于 E-P7。**
+> **EP7 checkpoint: research paused at the user’s request; no flash-ready E-P7 firmware.**
+> **当前研究检查点已提交，按用户要求暂停；PEN-F H/S/L 到 E-P7 的移植尚未完成，禁止把 PEN-F 固件或偏移直接用于 E-P7。**
+
+**本地运行： [Windows / WSL / Linux QUICKSTART](docs/ep7/QUICKSTART.md)** · **[当前交接与阻塞](docs/ep7/HANDOFF.md)**
+
+先跑电脑端测试，不连接相机；不会生成可刷镜像。
 
 This branch investigates full per-color **Hue / Saturation / Lightness** controls
 for the E-P7, building on [fishcu/oly_fw_analysis](https://github.com/fishcu/oly_fw_analysis).
