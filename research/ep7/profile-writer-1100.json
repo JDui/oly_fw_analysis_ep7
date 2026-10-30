@@ -1,0 +1,135 @@
+{
+  "scope": "Exact stock static public64 reverse row to raw selector4 write route; no runtime or durability qualification",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "facts": {
+    "COLOR_rows": [
+      {
+        "address": "0x604bac3c",
+        "raw_mode": 11,
+        "raw_selector": 1,
+        "mono_selector": 0,
+        "public_mode": 54
+      },
+      {
+        "address": "0x604bac7c",
+        "raw_mode": 11,
+        "raw_selector": 2,
+        "mono_selector": 0,
+        "public_mode": 55
+      },
+      {
+        "address": "0x604bacbc",
+        "raw_mode": 11,
+        "raw_selector": 3,
+        "mono_selector": 0,
+        "public_mode": 56
+      },
+      {
+        "address": "0x604bacfc",
+        "raw_mode": 11,
+        "raw_selector": 4,
+        "mono_selector": 0,
+        "public_mode": 64
+      }
+    ],
+    "composite_count": 33,
+    "composite_width": 64,
+    "composite_members": [
+      111,
+      908,
+      973
+    ],
+    "native_unmatched_fallback_index": 32,
+    "native_unmatched_public_mode": 63,
+    "standalone_908_values": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "ROM_f6b1_default": 0,
+    "limitations": [
+      "Standalone 908 enumeration and composite unpack are distinct routes; this probe qualifies the raw-write edge, not every child API caller.",
+      "Capture mode/selector binding is conditional on consistent capture generation; no atomicity proof.",
+      "Full public composite also compares raw973 and zero tail; two capture fields alone do not reproduce all public getter semantics.",
+      "ROM default does not prove current or runtime bank state. Host binding rejects unsupported tuples rather than adopting native fallback63."
+    ],
+    "writer": {
+      "public_property": 111,
+      "public_value": 64,
+      "row_index": 16,
+      "row": "0x604bacfc",
+      "unpacked_pairs": [
+        [
+          111,
+          11
+        ],
+        [
+          908,
+          4
+        ],
+        [
+          973,
+          0
+        ]
+      ],
+      "raw_pair_helper": "0x602b0b20",
+      "staging_call": "0x602b0b24",
+      "typed_call": "0x602b0b2d",
+      "inhibit_getter": "0x602cc6cf",
+      "standalone_child_enum_conversion": false,
+      "runtime_write_success_qualified": false,
+      "note": "Composite-unpack raw writes do not recursively apply child908 public enumeration; inhibit and postcallbacks retain prior limits."
+    }
+  },
+  "windows": {
+    "public_setter": {
+      "start": "0x602b0bc4",
+      "end_exclusive": "0x602b0c13",
+      "sha256": "bde3216ef4ee2e0544dde58b3b35b6ab780f433ce3acd91676f4a4bbfff4ac2b",
+      "witness_count": 32
+    },
+    "reverse_translate": {
+      "start": "0x602b9deb",
+      "end_exclusive": "0x602b9e34",
+      "sha256": "45032f467d6b49d634d1afcf2010975844e286155fc3a75dc09007dffc5f76c7",
+      "witness_count": 37
+    },
+    "reverse_public_lookup": {
+      "start": "0x602b9f26",
+      "end_exclusive": "0x602b9f70",
+      "sha256": "ea00ccf63b8b6aa2e92b46f2e0fcd26cf8e7a87544ebfad6b01af78b05e93d68",
+      "witness_count": 43
+    },
+    "composite_parent_write": {
+      "start": "0x602b143e",
+      "end_exclusive": "0x602b14ad",
+      "sha256": "7003ac7a82016dd7f1c97d85a4053e8ed52ed9a10873539d13f4d8db858df9bc",
+      "witness_count": 52
+    },
+    "unpack_members": {
+      "start": "0x602b0d64",
+      "end_exclusive": "0x602b0d9b",
+      "sha256": "db1785010f1ba66fedf17d492b6a9b26cbc2e2f229aaf57033100c45181cbbd7",
+      "witness_count": 31
+    },
+    "raw_write_pair": {
+      "start": "0x602b0b20",
+      "end_exclusive": "0x602b0b38",
+      "sha256": "4b518528487bd3cae2f080d426ba20103df8776f974717b46c55f123763bedfb",
+      "witness_count": 10
+    },
+    "typed_inhibit_and_write": {
+      "start": "0x602cbc58",
+      "end_exclusive": "0x602cbcbf",
+      "sha256": "11807e7805e5fea637279b9eb7fe68901dc5421a5d0e89b96957100a34ad6700",
+      "witness_count": 49
+    }
+  },
+  "instruction_witness_count": 254,
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

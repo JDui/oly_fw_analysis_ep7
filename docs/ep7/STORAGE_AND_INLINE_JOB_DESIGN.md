@@ -200,9 +200,14 @@ serialization and other callers remain unqualified.
 
 Post-S address `602a86b7` is a **design admission candidate**, not a usable
 hook: merely adding H/L reads there does not prove consistent S/profile/H/L
-publication or extra storage. The extension must establish writer/capture
-ordering or an explicit coherent publication protocol, immutable capture
-binding and supported clone transport. The
+publication or extra storage. A minimal extension can preserve the native S
+read semantics while sampling
+an internally coherent H/L vector for the **already captured raw profile**,
+then freezing it for that image and supported clones. It must define that
+sampling point and handle or exclude unsupported recall/profile transitions.
+This does not guarantee S and H/L represent the same edit instant; stronger
+cross-axis atomicity is an optional product contract, not a universal safety
+prerequisite. No actual stock race is established by this inspection. The
 [snapshot report](../../research/ep7/s-capture-snapshot-1100.json) checks
 9 windows / 139 instruction witnesses and the mode/profile maps:
 

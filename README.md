@@ -16,7 +16,10 @@ Current work:
 - Design controls around E-P7's own buttons/profile switch, not PEN-F's rear lever.
   Delete axis switching remains a routing-qualified candidate: the identified
   COLOR GUI machine event table does not directly admit local `0x9016`.
-- Map all **four** COLOR profiles, including noncontiguous COLOR4 setting IDs.
+- Byte-verify all **four** COLOR profiles, including noncontiguous COLOR4 IDs,
+  raw selectors **1–4**, storage/recall and conditional CPU coefficient construction.
+- Develop image-owned H/L snapshot and task-scoped admission contracts; the
+  native task query is identified, but safe context lifetime and hooks are not implemented.
 - Establish E-P7-specific storage, capture, rendering and recovery evidence before
   enabling any patch builder. No E-P7 patch offsets or install image are supplied.
 
@@ -26,6 +29,8 @@ Start with the [research status, compatibility matrix and port plan](docs/ep7/RE
 [capture transport/completion](docs/ep7/CAPTURE_TRANSPORT_AND_COMPLETION.md),
 [native selector design](docs/ep7/NATIVE_SELECTOR_DESIGN.md),
 [storage and inline-job design](docs/ep7/STORAGE_AND_INLINE_JOB_DESIGN.md),
+[capture admission](docs/ep7/CAPTURE_ADMISSION.md),
+[task-scoped design](docs/ep7/TASK_SCOPED_ADMISSION.md),
 [controls proposal](docs/ep7/CONTROLS.md), and
 [read-only stock audit](tools/ep7_stock_audit.py).
 The audit emits JSON only and never contacts a camera. The official **1.1/1100

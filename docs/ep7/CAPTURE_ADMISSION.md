@@ -75,6 +75,11 @@ It is unnecessary to prove all allocators and hardware paths merely to admit
 one independently qualified synchronous invocation. It is still necessary to
 prove the selected invocation's allocation/initialization, task/nesting identity,
 lifetime and immutable capture snapshot. These obligations remain open.
+Preserving native S reads while freezing a coherent H/L vector for the captured
+profile is a narrower candidate than redesigning all S/H/L sampling to be
+cross-axis atomic. The latter may be desirable, but is not automatically a
+prerequisite. Cross-axis edit-time consistency and unsupported transition
+behavior must be stated rather than silently assumed.
 
 ## Captured raw selector is 1-based on the accepted COLOR rows
 
@@ -103,12 +108,24 @@ rejects unsupported raw mode/selector pairs instead of copying that fallback.
 It remains only a conditional field-to-profile binding, not a coherence check
 or a reproduction of all full-getter semantics.
 
-There is a real schema distinction left open: standalone property 908's list
-at `604cc0cc` is `[0,1,2,3]`, and the `f6b1` ROM default is zero, while the
-accepted composite COLOR rows use **1,2,3,4**. Do not silently clamp selector 4
-to 3 or call zero COLOR1. The public composite writer/validation path and
-runtime defaults need separate qualification; a ROM default is not current
-camera state.
+Standalone property 908's list at `604cc0cc` is `[0,1,2,3]`, and the `f6b1`
+ROM default is zero, while accepted composite COLOR rows use **1,2,3,4**.
+A follow-on setter trace now explains the distinct conversion layers:
+
+- Public `111=64` reverse lookup selects composite row 16 at `604bacfc`.
+- `602b143e` → `602b0d64` unpacks raw members `(111,11), (908,4), (973,0)`.
+- Member helper `602b0b20` calls staging setter `602cc122`, then raw typed
+  setter `602cbc5d`. It does **not** recursively call the child's public enum
+  conversion or validate raw 4 through standalone 908's list.
+- The typed write still respects inhibit via `602cc6cf`; the inner route
+  maps raw 908 to `f6b1` before `6005ea22`. Parent callbacks follow afterward.
+
+Thus standalone 908's enumeration does not constrain this composite-unpack
+route. This does not license changing standalone 908's callers, prove every
+runtime write succeeds, or establish durable/coherent publication. Do not
+clamp selector 4 to 3 or call zero COLOR1; a ROM default is not current state.
+The [writer report](../../research/ep7/profile-writer-1100.json) checks 7 windows
+/ 254 witnesses and the member/descriptor maps without writing any settings.
 
 [Raw-profile report](../../research/ep7/s-capture-profile-1100.json) checks the
 complete accepted rows, public table, fallback, descriptors and 10 helper
@@ -120,9 +137,14 @@ admission remain separate requirements.
 ```sh
 python tools/ep7_stage_admission.py --stock /local/stock.BIN --objdump /trusted/mn10300-objdump
 python tools/ep7_s_capture_profile.py --stock /local/stock.BIN --objdump /trusted/mn10300-objdump
+python tools/ep7_profile_writer.py --stock /local/stock.BIN --objdump /trusted/mn10300-objdump
 PYTHONPATH=tools python -m unittest discover -s tests -p 'test_ep7*.py'
 ```
 
 The [report](../../research/ep7/stage-admission-1100.json) checks 21 windows,
 143 instruction/operand witnesses and the stage-2 callback literal. No camera,
 firmware execution, generated install image or bulk disassembly is involved.
+
+The [task-scoped continuation](TASK_SCOPED_ADMISSION.md) identifies an actual
+current-task query while keeping ID reuse, TLS and context lifetime separate
+from allocation provenance.
