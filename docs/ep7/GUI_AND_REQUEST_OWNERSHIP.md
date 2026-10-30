@@ -167,3 +167,96 @@ selected app-state ID / outgoing enum for OK, INFO and Delete in COLOR, and
 observed capture/preview buffer lifetimes. No instrumentation or firmware write
 is authorized by this document. A normal stock-camera interaction video could
 check visible ergonomics only, not prove those internal joins or H/L correctness.
+
+
+## Further static join: COLOR GUI machine admission
+
+The object-creation chain can now be continued without a device log:
+
+```text
+GUI machine table 0x611317c4, slot 3 → descriptor 0x611a3bc8
+  machine 4 / state 29 (one-based; packed 0x041d)
+  init slot 28 at 0x611a3b50 → 0x60e5dae9
+  controller group 8, key 0x1cf → factory 0x60e4cea8
+  descriptor 0x6119cb3c → whole-actuator type 0x34
+  factory row 0x61140354 → creator 0x60e260c7
+  selector property 193 → COLOR child factory 7
+```
+
+The initialized controller is stored at global `0x61fc436c`; exit callback
+`0x60e5db01` disposes and clears it. This GUI machine/state is **not** application
+FSM state `0x5701`; the app→GUI context selection join is still separate.
+The machine descriptor has 29 states, 112 events and 138 handlers. Engine
+`0x60d11448` selects a byte-matrix entry using event index and one-based state.
+As elsewhere, the multiply opcode is not independently decoded beyond the
+reviewed operand pattern and table dimensions.
+
+For state 29, OK `0x900c`, INFO `0x9014` and `0x9015` select handler 137,
+`0x60e5da87`, which reads that controller and calls `0x60e4d032`. Its dispatcher
+calls actuator virtual slot 0. **The complete 112-entry event table at
+`0x611a2888` does not contain `0x9016`.** Lookup `0x60d1158b` returns `0xffff`
+for a missing event; the engine returns 3 before calling a handler when the index
+is outside the event count. Thus this identified table route does not directly
+admit Delete's local event to the COLOR controller.
+
+This is a concrete compatibility risk, **not proof that Delete can never arrive**.
+Preprocessing, event recoding, alias/controller queues or direct-object delivery
+have not been exhaustively excluded. A bottom-level `0x9016` handler is therefore
+insufficient justification for copying PEN-F's axis hook. The controls proposal
+now treats Delete as conditional on end-to-end routing qualification, possibly
+requiring an E-P7-specific upper-level admission change.
+
+The same table also lacks `0x903e`, but this does **not** invalidate the stock
+hold path: parent timer event `0xf802` directly dispatches pending `0x903e` through
+its virtual slot 0, without necessarily returning through this machine lookup.
+Do not infer “no reset” from that table absence.
+
+The common app callback `0x60ceac44` was also narrowed: its first callee only
+special-cases packet event `0x01070002`, not the reviewed OK/Delete/INFO events;
+the following call writes a separate global. This callback is not itself an enum
+override for those three reviewed keys. Other state callbacks remain unqualified.
+
+[GUI-machine report](../../research/ep7/gui-machine-1100.json) checks descriptor,
+factory/init/exit links, all 112 event entries for the relevant absence, handler
+selection and reviewed instruction operands. Reproduce with:
+
+```sh
+python3 tools/ep7_gui_machine.py --stock /local/stock.BIN --objdump /trusted/mn103-objdump
+```
+
+## Further capture join: allocation size is not clone extent
+
+The reviewed processing-loop predecessor `0x603e5d57` receives a **300-byte**
+transport-filled descriptor at stack+16 through `0x603df9f1`. In a selected path
+it invokes `0x603edb9a`. That helper reads descriptor+260: if nonzero, descriptor+116
+is consumed as a capture registry ID by `0x6029b9d1`; otherwise source is the
+existing descriptor+28. The producers of +116/+260 remain unknown.
+
+The helper requests **41984 bytes**, stores the returned clone pointer in global
+`0x622933dc` and descriptor+28, but copies only **27332 bytes (`0x6ac4`)** from
+the selected source. The observed S halfwords at [24058,24082) are within that
+copy. A hypothetical extension in the allocation's trailing bytes would not
+therefore be transported automatically. The allocator helper's +24776 check is
+based on its **incoming descriptor+28**, which need not be the separately selected
+registry source; those bases must not be conflated.
+
+Helper `0x603edbd8` provides a local paired release and clears the global; the
+loop calls it after a nonzero result from `0x603e16f1`. This is **not proof of
+completion of all asynchronous consumers**. The transport producer, allocation
+failure semantics and processing/completion contract still need evidence.
+
+[Capture-clone report](../../research/ep7/capture-clone-1100.json) checks the
+conditional source binding, allocation request, actual copy length, pointer write
+and local release operands. Reproduce with:
+
+```sh
+python3 tools/ep7_capture_clone.py --stock /local/stock.BIN --objdump /trusted/mn103-objdump
+```
+
+A future host-only ownership model should distinguish registry-borrow and
+local-clone provenance, require generation/lease identity under address reuse,
+explicitly transfer an H/L snapshot across clones, and reject unknown routes or
+completion-after-release. Passing such synthetic tests would validate a proposed
+design only—not identify free firmware storage, establish real queue lifetime,
+or qualify ISP behavior. No hook, extension address or firmware artifact is
+provided by these additional findings.

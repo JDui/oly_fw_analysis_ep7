@@ -71,7 +71,7 @@ python3 -m unittest discover -s tests -p 'test_ep7*.py'
 The tool checks the stock identity before invoking the explicitly selected
 disassembler; it uses a deleted-on-exit temporary decoded input and emits no
 code listing. Never point `--objdump` at an untrusted executable. No firmware is
-executed by disassembly. Twenty E-P7 synthetic/guard tests and nine container tests
+executed by disassembly. Thirty-six E-P7 synthetic/guard tests and nine container tests
 pass; the separate exact-stock and static-disassembly runs both pass.
 
 ## Why this is plausible, but not a simple button remap
@@ -82,7 +82,10 @@ table, plus the dynamic-S/fixed-HL processing boundary. It explicitly records
 its first-pass missing joins. The [GUI bridge and request ownership continuation](GUI_AND_REQUEST_OWNERSHIP.md)
 now resolves conditional forwarding, native INFO/ALL behavior and current-S capture
 transport, while retaining selected-COLOR-state and complete async lifetime gaps.
-Neither pass implements Delete axis switching.
+Neither pass implements Delete axis switching. Further tracing identifies the
+COLOR GUI machine's missing direct `0x9016` admission and a capture-clone path
+whose 27332-byte copy is smaller than its 41984-byte allocation; neither finding
+permits taking vendor padding or claiming Delete is globally unusable.
 
 [`compare_color_generations.py`](../../tools/compare_color_generations.py) records
 a shared 3028-byte COLOR table and corresponding MN103 builder across PEN-F,
@@ -184,7 +187,7 @@ dispatch pointers. It records static-window hashes. It emits hashes and
 non-payload metadata, no extracted firmware strings or disassembly. It produces no
 patched BIN and exposes no relaxed-hash/force option.
 
-Twenty E-P7 input-free tests and nine existing synthetic container tests pass.
+Thirty-six E-P7 input-free tests and nine existing synthetic container tests pass.
 The real-stock audit also passed separately; these are different evidence levels.
 Native emulator/ISP, full camera boot, real input, capture and flashing checks
 have not been run.

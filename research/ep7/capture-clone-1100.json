@@ -1,0 +1,66 @@
+{
+  "scope": "Exact E-P7 stock static source/clone operands, not runtime ownership proof",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "descriptor_processing_loop": {
+      "start": "0x603e5d57",
+      "stop_exclusive": "0x603e5fa0",
+      "sha256": "aa75c8347064d06b2c69cc322ffebc91198f1c82d5780ab45cd59ae4a2f42798",
+      "witness_count": 21
+    },
+    "source_clone_and_release": {
+      "start": "0x603edb9a",
+      "stop_exclusive": "0x603edc10",
+      "sha256": "aabf15ca83a95a173643fc727717845338e76b4ab794c5d0392d9dd9e426f654",
+      "witness_count": 21
+    },
+    "descriptor_transport_entry": {
+      "start": "0x603df9f1",
+      "stop_exclusive": "0x603dfa41",
+      "sha256": "b8940f03da90475c63f68a318b99d2a27712f984dedd2cf7b7c2d57088944831",
+      "witness_count": 2
+    },
+    "allocator_class_selector": {
+      "start": "0x603ed63d",
+      "stop_exclusive": "0x603ed6c4",
+      "sha256": "f861d1189b412a74029912fa85da584fc62aa77c08bc7550361df06304cf1052",
+      "witness_count": 4
+    }
+  },
+  "instruction_witness_count": 48,
+  "source_selection": {
+    "nonzero_flag_offset": 260,
+    "registry_id_offset": 116,
+    "registry_getter": "0x6029b9d1",
+    "alternate_pointer_offset": 28
+  },
+  "clone": {
+    "requested_bytes": 41984,
+    "copy_length_operand": 27332,
+    "copy_source": "selected registry pointer or entry descriptor+28",
+    "allocator_class_input": "entry descriptor+28, NOT necessarily selected registry pointer",
+    "descriptor_pointer_offset": 28,
+    "global_pointer": "0x622933dc",
+    "stock_S_halfword_range": [
+      24058,
+      24082
+    ],
+    "stock_S_range_inside_copy": true
+  },
+  "descriptor": {
+    "stack_offset": 16,
+    "transport_size_operand": 300,
+    "producer_and_ownership_not_established": true
+  },
+  "limitations": [
+    "Local conditional release is not proof of asynchronous job completion.",
+    "Allocator failure semantics and all clone consumers remain unqualified.",
+    "41984 allocation request does not prove extension bytes are spare or copied.",
+    "No H/L storage, patch hook, or working image processing established."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

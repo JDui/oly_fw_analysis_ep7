@@ -1,0 +1,175 @@
+{
+  "scope": "COLOR selector GUI machine4/state29 static table route only",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "tables": [
+    {
+      "label": "controller_COLOR_selector",
+      "address": "0x6119cb3c",
+      "words": [
+        "0x1cf",
+        "0x34",
+        "0x0",
+        "0x84",
+        "0x0",
+        "0x0"
+      ]
+    },
+    {
+      "label": "whole_actuator_0x34",
+      "address": "0x61140354",
+      "words": [
+        "0x34",
+        "0x60e260c7"
+      ]
+    },
+    {
+      "label": "controller_group8",
+      "address": "0x6119fadc",
+      "words": [
+        "0x8",
+        "0x6119a31c",
+        "0x1ad"
+      ]
+    },
+    {
+      "label": "GUI_state29_init",
+      "address": "0x611a3b50",
+      "words": [
+        "0x60e5dae9"
+      ]
+    },
+    {
+      "label": "GUI_state29_exit",
+      "address": "0x611a3bc4",
+      "words": [
+        "0x60e5db01"
+      ]
+    },
+    {
+      "label": "GUI_machine4",
+      "address": "0x611317d0",
+      "words": [
+        "0x611a3bc8"
+      ]
+    },
+    {
+      "label": "machine_descriptor",
+      "address": "0x611a3bc8",
+      "words": [
+        "0x70001d",
+        "0x70008a",
+        "0x611a2e30",
+        "0x611a2c08",
+        "0x611a2888",
+        "0x611a3ae0",
+        "0x611a3b54",
+        "0x0"
+      ]
+    }
+  ],
+  "paths": [
+    {
+      "event": "0x900c",
+      "event_index": 6,
+      "matrix_cell": "0x611a2efa",
+      "handler_index": 137,
+      "handler": "0x60e5da87"
+    },
+    {
+      "event": "0x9014",
+      "event_index": 10,
+      "matrix_cell": "0x611a2f6e",
+      "handler_index": 137,
+      "handler": "0x60e5da87"
+    },
+    {
+      "event": "0x9015",
+      "event_index": 11,
+      "matrix_cell": "0x611a2f8b",
+      "handler_index": 137,
+      "handler": "0x60e5da87"
+    }
+  ],
+  "windows": {
+    "controller_init": {
+      "start": "0x60e5dae9",
+      "stop_exclusive": "0x60e5db01",
+      "sha256": "abe481b4113297dce94a5d908ea10bfee817b5152e987e0710b4f7d8a9c4273f",
+      "witness_count": 4
+    },
+    "controller_exit": {
+      "start": "0x60e5db01",
+      "stop_exclusive": "0x60e5db2e",
+      "sha256": "c195368fcac5c2320d327fd10b6393dbed9b5630ddeaf21333373fc6ab36f251",
+      "witness_count": 3
+    },
+    "controller_handler": {
+      "start": "0x60e5da87",
+      "stop_exclusive": "0x60e5dae9",
+      "sha256": "bdd3d7baa68901e12d9c493d05f1f74c14ef91ed891b0243b9b22e30918aad33",
+      "witness_count": 2
+    },
+    "whole_actuator_factory": {
+      "start": "0x60dd5146",
+      "stop_exclusive": "0x60dd518e",
+      "sha256": "e45b3eed8122e290936d46c3705604f23360c976f797c5827d2333fe7621cc9c",
+      "witness_count": 3
+    },
+    "selector_creator": {
+      "start": "0x60e260c7",
+      "stop_exclusive": "0x60e26130",
+      "sha256": "1743ccadc609d3aafa8b1e02c6b2a4efa48f5b0859ceb1bb07692f07a1cf6a26",
+      "witness_count": 2
+    },
+    "machine_registration": {
+      "start": "0x60dd4b19",
+      "stop_exclusive": "0x60dd4b31",
+      "sha256": "46f53b65d6fccd57d1ceb49f9f3f0df80fb23fcb0a3361892910cf7e903750c6",
+      "witness_count": 2
+    },
+    "machine_dispatch": {
+      "start": "0x60d11448",
+      "stop_exclusive": "0x60d11566",
+      "sha256": "4524cf9cee2f70114622015f8e64b121eb2b10779c3e9490b6c1982c10a51bbb",
+      "witness_count": 12
+    },
+    "event_lookup": {
+      "start": "0x60d1158b",
+      "stop_exclusive": "0x60d115d4",
+      "sha256": "ebbbc252106e7c748e79fa158e99dee84b6b6f0bda6773a9a94e220ac453131b",
+      "witness_count": 4
+    },
+    "app_callback": {
+      "start": "0x60ceac44",
+      "stop_exclusive": "0x60ceac59",
+      "sha256": "83c231143b35fa2e87319a19caf69028c84961be64d5f217f4acb06905f4c9d5",
+      "witness_count": 3
+    },
+    "app_callback_guard": {
+      "start": "0x60cd0090",
+      "stop_exclusive": "0x60cd00ce",
+      "sha256": "d7a34f23a1ba6a438101e776a269df6d377fcc108953bb6816389e6daac67a48",
+      "witness_count": 2
+    },
+    "app_callback_global_clear": {
+      "start": "0x60cd2330",
+      "stop_exclusive": "0x60cd234d",
+      "sha256": "8f0d8799309c672851db0adc0fdb14dc7eef15af1d64309c4787af7310276f95",
+      "witness_count": 1
+    }
+  },
+  "instruction_witness_count": 38,
+  "direct_Delete_event_present": false,
+  "event_count": 112,
+  "limitations": [
+    "No claim alternate/pre-dispatch or alias routes are excluded.",
+    "No app FSM 0x5701/0x2006 association proven.",
+    "Matrix stride opcode disassembles udf01; arithmetic interpretation still needs independent MN103 opcode confirmation.",
+    "No physical Delete behavior or live routing qualification."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

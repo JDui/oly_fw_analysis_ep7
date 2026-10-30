@@ -14,6 +14,8 @@ Current work:
 - Trace the PEN-F patch's editor, settings and image-owned H/L transport contracts.
 - Revalidate existing E-P7 COLOR table/builder landmarks with a read-only audit.
 - Design controls around E-P7's own buttons/profile switch, not PEN-F's rear lever.
+  Delete axis switching remains a routing-qualified candidate: the identified
+  COLOR GUI machine event table does not directly admit local `0x9016`.
 - Map all **four** COLOR profiles, including noncontiguous COLOR4 setting IDs.
 - Establish E-P7-specific storage, capture, rendering and recovery evidence before
   enabling any patch builder. No E-P7 patch offsets or install image are supplied.
