@@ -12,7 +12,10 @@ G2已实现controller侧冻结值之后的[一次消费票据接口](../../proto
 主机处理链strict/ASan/UBSan通过。目标对象另行检查，无目标执行。
 [队列票据承载](QUEUE_TICKET_CARRIAGE.md)已接通启动配置→运行时queue字段→发送长度
 上限→按实际长度接收的路径，核对154指令/9数据项。采用自有28/312字节消息缓冲，
-不能只扩大send长度或改receive参数。原生shim/上下文尚未实现，整体固件构建未开始。
+不能只扩大send长度或改receive参数。wire编解码已实现并贯通command→三次relay→
+票据claim→真实job代码，host strict/ASan/UBSan通过，目标对象通过。
+下一步是raw receive实际长度ABI及全部受影响接收点。原生shim/上下文尚未实现，
+整体固件构建未开始。
 
 ## 本轮恢复后的增量
 

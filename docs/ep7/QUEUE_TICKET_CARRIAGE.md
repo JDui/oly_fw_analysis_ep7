@@ -61,5 +61,9 @@ ring9728→10112，以保留32条“最大长度+4字节记录头”的缓冲预
 
 这张表不是全接收点闭包：还要审查shutdown/drain、alternate caller、直接raw接口及
 跨域封装。通用receive shim不可凭句柄数值自行认定当前调用者buffer容量。
-消息编解码代码可先验证格式、边界和代际；它不等于上述ABI/上下文存储已安装。
-G2接下来落实这些精确receive/send seam的显式上下文和调用约定，G6再合并配置与hook。
+消息编解码已实现于[wire.c](../../prototypes/ep7_volatile_hl/snapshot_transport/wire.c)：
+host链实际经过28字节command及三次312字节relay，strict/ASan/UBSan通过；
+MN10300对象text664 bytes、局部frame40 bytes，无目标执行。
+它不等于上述ABI/上下文存储已安装。G2接下来落实这些精确receive/send seam的
+显式上下文和调用约定，首先闭合raw接收实际长度如何传回独立缓冲区拥有者；
+同时清点所有4c/ab/4f接收（包括shutdown/drain），G6再合并配置与hook。

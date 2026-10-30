@@ -4,7 +4,7 @@ from pathlib import Path
 import argparse,json,subprocess,tempfile
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--tool-prefix',required=True,help='trusted installed tool path prefix ending mn10300-elf-')
-parser.add_argument('--transport-only',action='store_true',help='compile only new snapshot transport plus existing memory support')
+parser.add_argument('--transport-only',action='store_true',help='compile snapshot transport, wire codec and existing memory support')
 args=parser.parse_args()
 root=Path(__file__).resolve().parents[1];core=root/'prototypes/ep7_volatile_hl';prefix=args.tool_prefix
 versions={n:subprocess.check_output([prefix+n,'--version'],text=True).splitlines()[0] for n in ['gcc','as','ld','objdump']}
@@ -12,7 +12,7 @@ include=subprocess.check_output([prefix+'gcc','-print-file-name=include'],text=T
 flags=['-std=c11','-O2','-Wall','-Wextra','-Werror','-ffreestanding','-fno-builtin','-mno-setlb','-mno-liw','-nostdinc','-I'+str(core/'target/include'),'-I'+include,'-I'+str(core)]
 files={'sidecar':core/'controller_sidecar/sidecar.c','transition':core/'controller_sidecar/transition_binding.c','observer':core/'capture_state_guard/observer.c','bridge':core/'capture_state_guard/bridge.s','core':core/'ep7p.c','decode':core/'ep7p_decode.c','memory':core/'target/memory.c'}
 if args.transport_only:
- files={'transport':core/'snapshot_transport/transport.c','memory':core/'target/memory.c'}
+ files={'transport':core/'snapshot_transport/transport.c','wire':core/'snapshot_transport/wire.c','memory':core/'target/memory.c'}
  flags.append('-fstack-usage')
 objects={};definitions={};undefined=set()
 with tempfile.TemporaryDirectory() as temp:
@@ -36,6 +36,6 @@ with tempfile.TemporaryDirectory() as temp:
 external=undefined-set(definitions)
 expected=set() if args.transport_only else {'_ep7_controller_sidecar_unresolved','ep7_stock_state_service_unresolved'}
 if external!=expected:raise ValueError('unexpected external symbols '+repr(external))
-scope='Snapshot transport and memory target objects only' if args.transport_only else 'Current seven-object controller sidecar target compile and symbol closure only'
+scope='Snapshot transport, wire codec and memory target objects only' if args.transport_only else 'Current seven-object controller sidecar target compile and symbol closure only'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))

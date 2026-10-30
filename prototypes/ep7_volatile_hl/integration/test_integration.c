@@ -4,6 +4,7 @@
 #include "ep7p_lifecycle.h"
 #include "controller_sidecar/sidecar.h"
 #include "snapshot_transport/transport.h"
+#include "snapshot_transport/wire.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <limits.h>
@@ -116,6 +117,54 @@ static void transport_boundaries(void){
     for(i=0;i<EP7T_CAP;i++)assert(ep7t_retire(&t,all[i]));
     assert(!ep7t_prepare(&t,1,&source,&sentinel) && sentinel.serial==99);
 }
+static void wire_boundaries(void){
+    unsigned char cmd[EP7W_COMMAND]={0},wire[EP7W_MAX],out[EP7W_DESCRIPTOR];
+    ep7t_ticket t={100,UINT64_C(0xfedcba9876543210)},received={0};size_t n=99;
+    put32(cmd+8,19);put32(cmd+12,100);memset(wire,0xa5,sizeof wire);
+    assert(!ep7w_encode(EP7W_COMMAND,cmd,t,wire,27,&n) && n==99 && wire[0]==0xa5);
+    assert(ep7w_encode(EP7W_COMMAND,cmd,t,wire,sizeof wire,&n) && n==28);
+    assert(wire[16]=='E' && wire[17]=='7' && wire[18]=='T' && wire[19]=='1');
+    assert(wire[20]==0x10 && wire[21]==0x32 && wire[26]==0xdc && wire[27]==0xfe);
+    assert(!memcmp(wire,cmd,sizeof cmd));
+    assert(ep7w_decode(EP7W_COMMAND,wire,n,out,sizeof out,&received)==EP7W_TAGGED);
+    assert(received.metadata==t.metadata && received.serial==t.serial);
+    memset(out,0x5a,sizeof out);
+    assert(ep7w_decode(EP7W_COMMAND,wire,27,out,sizeof out,&received)==EP7W_REJECT);
+    assert(!received.serial && !received.metadata && out[0]==0x5a);
+    assert(ep7w_decode(EP7W_COMMAND,wire,28,out,15,&received)==EP7W_REJECT && out[0]==0x5a);
+    /* Actual 16-byte legacy receive must ignore stale tail bytes in scratch. */
+    received=t;
+    assert(ep7w_decode(EP7W_COMMAND,wire,16,out,sizeof out,&received)==EP7W_LEGACY);
+    assert(!received.serial && !memcmp(out,cmd,sizeof cmd));
+    wire[16]^=1;
+    assert(ep7w_decode(EP7W_COMMAND,wire,28,out,sizeof out,&received)==EP7W_LEGACY);
+    assert(!received.serial && !memcmp(out,cmd,sizeof cmd));
+    wire[16]^=1;memset(wire+20,0,8);
+    assert(ep7w_decode(EP7W_COMMAND,wire,28,out,sizeof out,&received)==EP7W_LEGACY);
+    t.metadata=101;n=99;assert(!ep7w_encode(EP7W_COMMAND,cmd,t,wire,sizeof wire,&n) && n==99);
+    t.metadata=100;put32(cmd+8,16);
+    assert(!ep7w_encode(EP7W_COMMAND,cmd,t,wire,sizeof wire,&n));
+    assert(ep7w_encode(EP7W_COMMAND,cmd,(ep7t_ticket){0},wire,sizeof wire,&n) && n==16);
+}
+static ep7t_ticket wire_relay_fixture(ep7t_ticket ticket){
+    unsigned char cmd[EP7W_COMMAND]={0},native[EP7W_DESCRIPTOR],wire[EP7W_MAX];
+    ep7t_ticket received={0};size_t n;unsigned i;
+    put32(cmd+8,19);put32(cmd+12,(uint32_t)ticket.metadata);
+    assert(ep7w_encode(EP7W_COMMAND,cmd,ticket,wire,sizeof wire,&n));
+    assert(ep7w_decode(EP7W_COMMAND,wire,n,native,sizeof native,&received)==EP7W_TAGGED);
+    /* Materializer is still a native fixture; serializer/relay codec is real.
+       Arbitrary prefix bytes model fields owned by stock preprocessing. */
+    memset(native,0x5a,sizeof native);
+    put32(native+48,received.metadata);put32(native+52,19);put16(native+194,0x2001);
+    for(i=0;i<3;i++){
+        assert(ep7w_encode(EP7W_DESCRIPTOR,native,received,wire,sizeof wire,&n) && n==312);
+        assert(!memcmp(native,wire,300));memset(native,0,sizeof native);
+        assert(ep7w_decode(EP7W_DESCRIPTOR,wire,n,native,sizeof native,&received)==EP7W_TAGGED);
+        assert(received.serial==ticket.serial && received.metadata==ticket.metadata);
+        assert(!memcmp(native,wire,300));native[192]=(unsigned char)i;
+    }
+    return received;
+}
 static void capture_vertical_slice(void){
     ep7p_snapshot frozen,after;capture_host h={0};unsigned i,j;
     ep7c sidecar={0};ep7c_prefix prefix={2,3,1,11,3};uint64_t token,resolved;
@@ -152,6 +201,7 @@ static void capture_vertical_slice(void){
         assert(ep7t_prepare(&transport,100,&frozen,&ticket));
         assert(ep7t_publish(&transport,ticket));
         assert(!ep7t_claim(&transport,previous,&delivered));
+        ticket=wire_relay_fixture(ticket);
         assert(ep7t_claim(&transport,ticket,&delivered));
         assert(!ep7t_claim(&transport,ticket,&after));
         assert(ep7t_retire(&transport,ticket));previous=ticket;
@@ -215,7 +265,7 @@ int main(void){
     assert(send(0x9014,0)==1);assert(send(0x9032,-7)==1);text_is(frame(),"L ALL -7");
     setter_status=0;f=frame();assert(ep7_text_present(&widget_token,&f)==0);setter_status=1;
     n=text_calls;f.category=1;assert(ep7_text_present(&widget_token,&f)==0);assert(text_calls==n);
-    transport_boundaries();capture_vertical_slice();
+    transport_boundaries();wire_boundaries();capture_vertical_slice();
     assert(!held && current_queries==0);
-    puts("router -> sidecar -> one-use snapshot ticket -> 16 job slots: PASS; stale/early/duplicate/lock failure neutral; native ticket carriage mocked");return 0;
+    puts("router -> sidecar -> 28-byte command -> three 312-byte wire relays -> one-use ticket -> 16 job slots: PASS; native queue/ABI/materializer mocked");return 0;
 }

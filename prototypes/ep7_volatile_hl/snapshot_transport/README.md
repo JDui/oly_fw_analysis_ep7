@@ -34,8 +34,8 @@ or controller critical section: finish the frozen value copy, then prepare trans
 ## Native integration still required
 
 Stock kind19 envelopes carry a pointer and stock 300-byte relays do not yet carry
-this ticket. Host tests explicitly supply it; no spare metadata/descriptor bytes
-are claimed. Native producer provenance, controller exclusion, relay-owned ticket
+this ticket. The owned wire codec below supplies it in host tests; no spare
+metadata/descriptor bytes are claimed. Native producer provenance, controller exclusion, relay-owned ticket
 storage, publication/cache ordering, cancellation and ACK cleanup are unresolved.
 Tags, a current-pointer registry, or an unqualified metadata+148 read cannot fill
 that gap. The existing lock provider also needs native task-context qualification.
@@ -56,3 +56,35 @@ The GCC13.4 MN10300 object has 836 bytes of text, plus 49 bytes of existing memo
 support. Compiler-reported local static frames range from 24 to 52 bytes; this is
 not the full call-chain/interrupt stack budget. Symbol union has no unresolved
 externals, but lock callbacks remain runtime bindings. No target link was performed.
+
+## Owned wire codec: implemented after native queue research
+
+`wire.c` encodes byte-for-byte native prefixes plus an explicit 12-byte trailer:
+`E7T1`, serial low32, serial high32, all little-endian. The metadata address is
+already in command+12 or descriptor+48 and must match the ticket before encoding.
+Tagged command admission requires kind19; tagged descriptor admission additionally
+requires dispatch2001. A marker only identifies the format, never live ownership.
+
+No native descriptor tail is touched. Encoding uses caller-owned 28/312-byte
+buffers and refuses short capacity or mismatched identity without partial writes.
+Decoding consumes the **actual received byte count**, clears the previous ticket on
+every call, and copies only the stock 16/300-byte prefix. A legacy message ignores
+old trailer bytes in reused scratch. A bad marker, zero identity/serial or wrong
+route produces neutral output; unsupported lengths reject before prefix writes.
+The final worker must still claim the full ticket through `ep7t_claim`.
+
+The integration now serializes a command, models native materialization, and makes
+three actual codec round trips for each of the 16 real decoder operation slots.
+Native queues/materializer/ABI are still mocked. It also checks full-width serial
+endianness, stale scratch tails, short receive/capacity, malformed marker, zero serial,
+and wrong identity/kind. Existing ticket tests cover duplicate and old-generation
+consumption. [Current host report](../../../research/ep7/snapshot-wire-integration-host.json).
+
+The codec's MN10300 object is 664 text bytes with compiler-reported local encode/
+decode frames of 40 bytes. The three-object symbol union (transport, wire, memory)
+has no unresolved symbols. [Current target report](../../../research/ep7/snapshot-wire-target.json).
+This does not include native receive scratch or a full stack-chain budget.
+
+[Native queue research and remaining seams](../../../docs/ep7/QUEUE_TICKET_CARRIAGE.md)
+show why enlarged queue configuration and all receive adapters must be installed
+together. Merely changing send length would overwrite existing stock buffers.
