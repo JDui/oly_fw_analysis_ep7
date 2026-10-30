@@ -188,7 +188,9 @@ raw value 6 is replaced from property 211 (`9d11`). Raw mode 11 chooses
 property 908 (`f6b1`) and raw mode 12 chooses property 973 (`f731`) for the
 selector at capture+24083. These are separate observations. Raw mode 11 must
 not be confused with public COLOR mode 54, nor the selector blindly indexed
-without its native mode/range conversion.
+without its native mode/range conversion. The subsequent
+[raw-profile trace](CAPTURE_ADMISSION.md#captured-raw-selector-is-1-based-on-the-accepted-color-rows)
+now identifies accepted selectors 1–4 and the full composite getter boundary.
 
 One exact immediate caller `602a446d` gates population on `6223e33c==0`, a
 nonnull `602a3116` result, and zero from `602a3204`. Its earlier helper's
@@ -227,3 +229,7 @@ physical NVM save/checksum is not yet closed. Inline-job allocation provenance,
 immutable capture binding and the exact admitted CPU hook are also open.
 Hardware testing will eventually be needed for pixel semantics, timing and
 recovery; it is **not** a prerequisite for the remaining bounded static work.
+
+The [capture-admission continuation](CAPTURE_ADMISSION.md) narrows the dynamic
+stage family and embedded submission sites, while documenting request rebuilds
+and binder overrides that prevent stage identity alone from granting access.

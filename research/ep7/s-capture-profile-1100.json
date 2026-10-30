@@ -1,0 +1,126 @@
+{
+  "scope": "Exact stock static composite raw-to-public COLOR profile mapping; coherence not established",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "facts": {
+    "COLOR_rows": [
+      {
+        "address": "0x604bac3c",
+        "raw_mode": 11,
+        "raw_selector": 1,
+        "mono_selector": 0,
+        "public_mode": 54
+      },
+      {
+        "address": "0x604bac7c",
+        "raw_mode": 11,
+        "raw_selector": 2,
+        "mono_selector": 0,
+        "public_mode": 55
+      },
+      {
+        "address": "0x604bacbc",
+        "raw_mode": 11,
+        "raw_selector": 3,
+        "mono_selector": 0,
+        "public_mode": 56
+      },
+      {
+        "address": "0x604bacfc",
+        "raw_mode": 11,
+        "raw_selector": 4,
+        "mono_selector": 0,
+        "public_mode": 64
+      }
+    ],
+    "composite_count": 33,
+    "composite_width": 64,
+    "composite_members": [
+      111,
+      908,
+      973
+    ],
+    "native_unmatched_fallback_index": 32,
+    "native_unmatched_public_mode": 63,
+    "standalone_908_values": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "ROM_f6b1_default": 0,
+    "limitations": [
+      "Standalone 908 list is not the composite COLOR accepted-selector range; do not silently resolve this discrepancy.",
+      "Capture mode/selector binding is conditional on consistent capture generation; no atomicity proof.",
+      "Full public composite also compares raw973 and zero tail; two capture fields alone do not reproduce all public getter semantics.",
+      "ROM default does not prove current or runtime bank state. Host binding rejects unsupported tuples rather than adopting native fallback63."
+    ]
+  },
+  "windows": {
+    "public_getter": {
+      "start": "0x602b0b43",
+      "end_exclusive": "0x602b0bc4",
+      "sha256": "f468b273827240cae912924306115db4ab72ff6bd19a9b1f330e0131634f7642",
+      "witness_count": 53
+    },
+    "composite_build": {
+      "start": "0x602b0d9b",
+      "end_exclusive": "0x602b0df6",
+      "sha256": "58fabae5f6b91f43a8d8a4ab070136da1630f7a71b84f833b46fc92a7ca0099c",
+      "witness_count": 51
+    },
+    "member_lookup": {
+      "start": "0x602b15f2",
+      "end_exclusive": "0x602b1611",
+      "sha256": "ff560bf679f06689acc48163acf47bfeb2ddd3ecb6cd23638c17da36befc0ed6",
+      "witness_count": 17
+    },
+    "public_translate": {
+      "start": "0x602b9dc4",
+      "end_exclusive": "0x602b9deb",
+      "sha256": "635fdb880276aa3e79d52669bf2462d9783a84df7bed09a3a98ca99a7ccf2c6c",
+      "witness_count": 22
+    },
+    "composite_match": {
+      "start": "0x602b9e7e",
+      "end_exclusive": "0x602b9f0c",
+      "sha256": "8a1636486b12cf3445d0a7dfb4fd2aa0696a6b5556b902b146228391b87e6220",
+      "witness_count": 81
+    },
+    "match_range": {
+      "start": "0x602b9f0c",
+      "end_exclusive": "0x602b9f26",
+      "sha256": "c2d756fbcd16e7de3d139aac9b72fd2f94744e8fc5c24c6c87c4fb5f77a71034",
+      "witness_count": 13
+    },
+    "descriptor_type": {
+      "start": "0x602ba11a",
+      "end_exclusive": "0x602ba13d",
+      "sha256": "8ab6103e8d0c986c679dc6fc1c0d27652e21d9ce116d2e69aeedd7998dd65aca",
+      "witness_count": 15
+    },
+    "descriptor_lookup": {
+      "start": "0x602ba523",
+      "end_exclusive": "0x602ba54d",
+      "sha256": "04e8405c87a90b723e3bd03bd897a6aac3a10e921ef814642eefa510613c59fc",
+      "witness_count": 22
+    },
+    "byte_compare": {
+      "start": "0x60022f89",
+      "end_exclusive": "0x60022fab",
+      "sha256": "ca64476cd82a4c0db9b55c1baba6d98ad99101c78f1568e5ecd3d1a01470dd1b",
+      "witness_count": 22
+    },
+    "match_wrapper": {
+      "start": "0x602b9e34",
+      "end_exclusive": "0x602b9e4c",
+      "sha256": "7612ff6b4ca6f3e7775d1f2c8448d98b0dfac4c335cb72949dfcc937892d518e",
+      "witness_count": 2
+    }
+  },
+  "instruction_witness_count": 298,
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

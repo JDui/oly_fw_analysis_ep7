@@ -1,0 +1,182 @@
+{
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "stage_zero_init": {
+      "start": "0x6035384f",
+      "stop_exclusive": "0x6035388c",
+      "sha256": "b80e3c8c7769e595318639ae5fd237867267fdae632ab8b7ab0ebc9e21d1d469",
+      "witness_count": 6
+    },
+    "constructor_stage_calls": {
+      "start": "0x60353c6f",
+      "stop_exclusive": "0x60353c97",
+      "sha256": "66fd905edb7bdb21cbc5d7f5ba22c20f3d0653bab4a1bec263059355d44bf192",
+      "witness_count": 2
+    },
+    "family_selection": {
+      "start": "0x60354709",
+      "stop_exclusive": "0x6035479d",
+      "sha256": "8247cdbde24da20c08f0edb74f584c92f1bd3ea21ab5978efc2b86aa9ad2d862",
+      "witness_count": 17
+    },
+    "family_wrapper": {
+      "start": "0x603666c7",
+      "stop_exclusive": "0x603666d0",
+      "sha256": "012154e706e6ba2d51b10497d9edc6c94f612a7c528f76734ac769a2c66201e6",
+      "witness_count": 1
+    },
+    "dynamic_stage_table": {
+      "start": "0x60368e97",
+      "stop_exclusive": "0x60368f89",
+      "sha256": "6d7ff52029a64907554d6a4b28b7f4839d964a16c35d3d1f1781f6ec6fc64a54",
+      "witness_count": 42
+    },
+    "special_one_stage_predicate": {
+      "start": "0x6036a007",
+      "stop_exclusive": "0x6036a02a",
+      "sha256": "343e7dcb59a8e16f412b1b763457d5ef5ee41ec98871a866515ce898f0500715",
+      "witness_count": 8
+    },
+    "stage2_request_scope": {
+      "start": "0x60368886",
+      "stop_exclusive": "0x603688ed",
+      "sha256": "d7feffdc10a20907044b079eb7acd061e410a09c3cb43e8e2514a48d84cfc407",
+      "witness_count": 8
+    },
+    "stage2_wrapper_callback": {
+      "start": "0x60366f76",
+      "stop_exclusive": "0x60366f9a",
+      "sha256": "26445b2af14f4a2f99c141baaeb3ece98183374927f14404efc602d7f7452da5",
+      "witness_count": 5
+    },
+    "embedded_submit_a": {
+      "start": "0x60367638",
+      "stop_exclusive": "0x60367655",
+      "sha256": "08df8aed700d5dfb0370b604c0672b606ed6ff8d3023c44c3dedb65a96969cdb",
+      "witness_count": 4
+    },
+    "embedded_submit_b": {
+      "start": "0x6036770b",
+      "stop_exclusive": "0x6036772c",
+      "sha256": "c64f2e612723cbc958476e7720670c50929fcf37cdd69b20dd32234e187750c0",
+      "witness_count": 4
+    },
+    "external_submit_a": {
+      "start": "0x60367803",
+      "stop_exclusive": "0x6036781e",
+      "sha256": "a43f7ddc7c6d81ba5835552023a193e00e8475463b4b9bfe2ef8a7b62e11689f",
+      "witness_count": 3
+    },
+    "external_submit_b": {
+      "start": "0x60367933",
+      "stop_exclusive": "0x6036794d",
+      "sha256": "f6c40dde260477bf7bdb7ff79f442811acbdc33fb2302426bffc76ce80ef449e",
+      "witness_count": 3
+    },
+    "embedded_submit_c": {
+      "start": "0x60367f48",
+      "stop_exclusive": "0x60367f65",
+      "sha256": "25925067352c8e17b389188bbdaf6342fc96b8bebe385b7f467199f170e42058",
+      "witness_count": 4
+    },
+    "tail_operation_call": {
+      "start": "0x603680cf",
+      "stop_exclusive": "0x603680e3",
+      "sha256": "16c8678c25054de1e41f11b461d723cdaeed801f79ae3daa750c2cd661751e0a",
+      "witness_count": 1
+    },
+    "tail_request_rebuild": {
+      "start": "0x60366d52",
+      "stop_exclusive": "0x60366d66",
+      "sha256": "84ac6358f55a12ee9516c1c0debd9905fe74aa6e47a1bb4c060d87771af59060",
+      "witness_count": 1
+    },
+    "type3_wrapper": {
+      "start": "0x60355439",
+      "stop_exclusive": "0x60355449",
+      "sha256": "0d3ce4f58de592fe7fe7e82cbe2c372c83219b0e4fdedf0a56d9c5f8bd73690e",
+      "witness_count": 3
+    },
+    "type3_request_init": {
+      "start": "0x60355343",
+      "stop_exclusive": "0x60355367",
+      "sha256": "80ddbe7b2278862051d84efc1a462c055fb9483d9bf33f026a9b15168f5cba7e",
+      "witness_count": 4
+    },
+    "request17_override": {
+      "start": "0x60354bfe",
+      "stop_exclusive": "0x60354c2a",
+      "sha256": "40573767df6b652d5a692db8a4d94843c532a991436c090bd96d35661932df65",
+      "witness_count": 13
+    },
+    "header_special_mode_source": {
+      "start": "0x603ea997",
+      "stop_exclusive": "0x603ea9d7",
+      "sha256": "880871097a67be1ceadccafe87195d3deadb305abcdbddbb6c1ffae5660be117",
+      "witness_count": 3
+    },
+    "header_capture_flag_source": {
+      "start": "0x603ed862",
+      "stop_exclusive": "0x603ed87c",
+      "sha256": "e59bcef5d9810c055847793c1ac1eb42af314f2eb08142cf7a9ebbf2438dde76",
+      "witness_count": 6
+    },
+    "header_special_mode_calls": {
+      "start": "0x603e6190",
+      "stop_exclusive": "0x603e61b5",
+      "sha256": "93db3ce9dac3bfde6b34b84c6d936777f854dcbdc03115fda84205127cddc4fc",
+      "witness_count": 5
+    }
+  },
+  "instruction_witness_count": 143,
+  "core_stage_fixture": {
+    "stage_base": 10984,
+    "stride": 12,
+    "index": 2,
+    "callback": "0x6036884d",
+    "ordinary_core_callbacks": [
+      "0x603687d4",
+      "0x603687ed",
+      "0x6036884d"
+    ],
+    "final_stage_count_not_fixed": true
+  },
+  "family_guards": [
+    "job+26 in {0,4}",
+    "job+31 == 0",
+    "job+12 in {0,2}",
+    "job+16 & 0x80000 == 0"
+  ],
+  "ordinary_stage_guards": [
+    "job+29 == 0",
+    "not (job+11341 in {0,1,2,3,8} and job+30 == 1)",
+    "not (job+11341 in {0,1,2,3,8} and job+33 == 1)",
+    "job+25 != 2"
+  ],
+  "binder_sites": {
+    "explicit_embedded": [
+      "0x60367646",
+      "0x60367717",
+      "0x60367f56"
+    ],
+    "external_argument_candidates": [
+      "0x6036780f",
+      "0x6036793e"
+    ],
+    "tail_rebuild_type": 3
+  },
+  "request17_overwritten": true,
+  "limitations": [
+    "Every conclusion is conditional static source evidence, not observation of an actual capture fixture.",
+    "Stage identity alone does not establish request type/mode/owner or enlarged allocation provenance.",
+    "The ordinary stage family can append further stages and can rebuild requests multiple times.",
+    "No native scoped admission context or concurrency/reentrancy safety is established.",
+    "No firmware admission hook, trailer read/write, patch, camera execution or quiescence claim."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "admission_hook_implemented": false,
+  "flash_ready": false
+}
