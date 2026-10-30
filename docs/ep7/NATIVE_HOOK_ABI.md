@@ -5,7 +5,7 @@
 Exact stock 1420/1100 SHA256 `9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb`; prior SHA-guarded CPU-builder, stage-admission and task-identity probes establish the following locations. No seam has been installed.
 
 1. Capture population finishes sequential S reads at 602a86b7, capture pointer in d3. Native mode/profile/S are not proven atomically coherent. There is NO native H/L snapshot API or generation token established. Proposed `capture_snapshot_acquire` requires an earlier immutable, generation-bound attachment propagated through the audited clone; reading current UI at job construction is expressly not a substitute.
-2. Fresh-job call 603e6d3e invokes 603537eb with a0=32-byte input header, a1=stack+12 uint16 error output, d0=0. `call [d2,d3,a2,a3],44`; result d0 is stored to descriptor+36 at 603e6d45. The error halfword is checked. A changed allocation must be independently known to have requested/initialized the enlarged size; reading a trailer magic is not admission. Stock allocates 15488 and initializes its existing tail. No unused bytes are claimed.
+2. Historical kind16/0x100d fresh-job call 603e6d3e invokes 603537eb with a0=32-byte input header, a1=stack+12 uint16 error output, d0=0. `call [d2,d3,a2,a3],44`; result d0 is stored to descriptor+36 at 603e6d45. The error halfword is checked. A changed allocation must be independently known to have requested/initialized the enlarged size; reading a trailer magic is not admission. Stock allocates 15488 and initializes its existing tail. No unused bytes are claimed.
 3. Converter 603e62d1 runs only after constructor error==0. Conversion result is stored to the error slot; 603e6d7c..81 gates process on zero. Proposed immutable attachment can only be published after both capture identity and fresh allocation are qualified. Attachment failure must leave native path usable with stock S and no H/L admission.
 4. Process call 603e6d84: a0=descriptor, `call [d2,a2,a3],24`, returns d0 status. This identifies outer invocation ownership, not a valid time to decode an as-yet uninitialized embedded request. The direct lifecycle prototype registers only the fresh allocation here, calls stock processing even when admission fails, and preserves d0 status. Existing 603e6d89 stores the process result to error slot.
 5. Common cleanup 603e6d8d is reached from constructor/converter/process error paths. a0=descriptor, `call [a2,a3],24`. Proposed admission invalidation must precede this call, including partial-construction failure; any scoped alternative must leave exact-token/LIFO, while the direct path uses allocation revocation without a task scope. Task termination, exceptions/nonlocal exits are NOT covered merely by this normal CFG.
@@ -84,3 +84,19 @@ capture retirement. Generation-bound unsealed/sealed transfer and clone bracketi
 are therefore necessary; merely reading current settings at job construction or
 copying a sidecar after native memcpy is insufficient. The normal return from
 population is not a Boolean success status.
+
+## Kind19 capture route is a different constructor call site
+
+The [kind19/0x2001 route](KIND19_CAPTURE_ROUTE.md) now connects an allocated
+capture ID through selected node/associated record and metadata to a descriptor.
+Its wrapper is603f2800: constructor603f283e→603537eb, converter603e62d1,
+conditional process603e61b8, cleanup603e6c8d. It is not covered merely by a veneer
+at historical603e6d3e. Both invoke the same job family, but every CPU/type/rawmode/
+owner guard remains mandatory. The historical0x100d caller is explicitly labeled
+RecView/createAfFineTune and must not be presented as normal-capture proof.
+
+[Metadata lifetime](KIND19_METADATA_LIFETIME.md) pins a conditional ACK/free
+branch after job cleanup, not universal queued-copy quiescence. Captured H/L need
+not be invalidated by unrelated later metadata writes; the [bounded mutation
+classification](CAPTURE_LATE_MUTATIONS.md) keeps image/profile identity separate
+from whole-capture immutability.

@@ -1,0 +1,84 @@
+{
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "windows": [
+    {
+      "start": "0x6003057f",
+      "end_exclusive": "0x60030619",
+      "sha256": "a7dc37656e20fb582cc5a3c3acf9e21d0952cb652ca7600374062836979e2724"
+    },
+    {
+      "start": "0x60034f31",
+      "end_exclusive": "0x60035023",
+      "sha256": "0b65def104e34f126169be5f1df1ca34f8fc9ecbc83c3cbf1a4c8f1e2ef39b85"
+    },
+    {
+      "start": "0x60053c5e",
+      "end_exclusive": "0x60053cce",
+      "sha256": "89faaa6b25e8d5b3f39e21f5ecdffbf02e438d99b59c4cac6dba45a110b19bac"
+    },
+    {
+      "start": "0x60035b62",
+      "end_exclusive": "0x60035c3b",
+      "sha256": "fbc58e957be6975409849c3b3f3cdf395f258b43231f567906af07afb8e657e6"
+    },
+    {
+      "start": "0x600370af",
+      "end_exclusive": "0x60037201",
+      "sha256": "696009d46d823bad1042184f93c54e75ab1d0a427d563330fda34f3bef13324b"
+    },
+    {
+      "start": "0x60051619",
+      "end_exclusive": "0x600517c7",
+      "sha256": "e4a76c8779fd0bafbee52503c8966b73090cdb54d029d456e67d116da02a813f"
+    },
+    {
+      "start": "0x60051c62",
+      "end_exclusive": "0x60051d3a",
+      "sha256": "cad330a0df18d71aaf0b99d32d90dfb0b514d64718f86a7ee09a18fd988c782a"
+    },
+    {
+      "start": "0x6005378e",
+      "end_exclusive": "0x600537b2",
+      "sha256": "9b217535d65c361b3f6ca34739d8211226fe669fe7956cce5bb66da03f9c65bf"
+    },
+    {
+      "start": "0x6005393a",
+      "end_exclusive": "0x6005398a",
+      "sha256": "a74ae7395ef5622efaf65b39edc9a097d56b5b9670780c458e97eb6860cdcc33"
+    },
+    {
+      "start": "0x60c4fbb6",
+      "end_exclusive": "0x60c4fbdf",
+      "sha256": "dd65d66dcb2d729eaeda188718b26e1f2024fbc2a3e996008817d2b6299eb1ac"
+    }
+  ],
+  "witness_count": 120,
+  "raw_create_struct": {
+    "attribute_byte": 0,
+    "initial_u32": 4,
+    "maximum_u32": 8,
+    "size": 12
+  },
+  "binary_initial_maximum": [
+    1,
+    1
+  ],
+  "poll_timeout": 0,
+  "raw_empty_poll_status": -50,
+  "wrapper_empty_poll_status": -2,
+  "raw_overrelease_status": -43,
+  "creation_wrapper_has_postallocation_metadata_capacity": 64,
+  "encoded_handle_core_shift": 12,
+  "encoded_handle_index_mask": "0x0fff",
+  "wrapper_routing_mask": "0x3000",
+  "cpu_transport_null_record_status": 255,
+  "wrapper_nonnegative_false_success_branch": true,
+  "private_semaphore_created": false,
+  "adapter_implemented": false,
+  "timeout_units_proven": false,
+  "recursive_mutex_proven": false,
+  "priority_inheritance_proven": false,
+  "cross_domain_runtime_qualified": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

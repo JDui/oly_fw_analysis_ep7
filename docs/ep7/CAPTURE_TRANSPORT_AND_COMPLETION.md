@@ -259,3 +259,12 @@ Only the former automatically creates a new hardware-pointer lifetime to prove.
 The latter still requires allocation provenance before any trailer read, immutable
 capture binding, local CPU lifetime and no pointer escape; no actual H/L hook or
 expanded allocation has been qualified.
+
+## Later route classification
+
+The concrete0x100d producer above is now tied to a native
+`RecView/createAfFineTune` label; it is not demonstrated normal-capture routing.
+The [kind19/0x2001 capture route](KIND19_CAPTURE_ROUTE.md) reaches the same job
+family through a different constructor call site and relay chain. Its
+[conditional metadata ACK/free evidence](KIND19_METADATA_LIFETIME.md) must be
+kept separate from the earlier kind16 ACK-before-iteration behavior.

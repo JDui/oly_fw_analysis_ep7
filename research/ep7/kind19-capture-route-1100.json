@@ -1,0 +1,175 @@
+{
+  "scope": "Conditional selected capture ID to kind19/2001 fresh-job route; not native integration",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "associated_id_getter": {
+      "start": "0x602ac8d0",
+      "stop_exclusive": "0x602ac8e0",
+      "sha256": "8d8c136b715b45d494a3939e4350ab717eaa48b98ac5ffac57cec325747247d4",
+      "witness_count": 6
+    },
+    "associated_id_submit": {
+      "start": "0x602ac3c9",
+      "stop_exclusive": "0x602ac3e5",
+      "sha256": "a5736833efc7235cc9d5c5f86b65d3fdb1ce0b9d115b6269b72ae9247d35e98c",
+      "witness_count": 7
+    },
+    "callback_install": {
+      "start": "0x6029ad23",
+      "stop_exclusive": "0x6029ad33",
+      "sha256": "cf6e5404590f867f51bc0f297e6232a5468db801cddbc325e85014d2c6492ef7",
+      "witness_count": 10
+    },
+    "callback_register": {
+      "start": "0x602a2731",
+      "stop_exclusive": "0x602a2765",
+      "sha256": "a5fe9cc507b468002cfe5bf9ec28a8f3b9940f9bca9c9549ab748f7ae76d3994",
+      "witness_count": 13
+    },
+    "fresh_associated_id": {
+      "start": "0x602a3144",
+      "stop_exclusive": "0x602a31a9",
+      "sha256": "8607ca4b254f2d65e9355f32dead29f8a7afafd266dab66de81b3850758725d2",
+      "witness_count": 36
+    },
+    "heap_metadata": {
+      "start": "0x602ac748",
+      "stop_exclusive": "0x602ac75d",
+      "sha256": "fafae6f63281b192faa93a2b8ef1978973264e3e29f9b15493bb52b2d4b58b70",
+      "witness_count": 7
+    },
+    "kind19_job_wrapper": {
+      "start": "0x603f2800",
+      "stop_exclusive": "0x603f28da",
+      "sha256": "c750601fa5bace81c610b439429784d293f3167cf2bc45669b8344f825ddecda",
+      "witness_count": 74
+    },
+    "kind19_materializer": {
+      "start": "0x603e0466",
+      "stop_exclusive": "0x603e04b3",
+      "sha256": "2a82560545ee658141cb84927f40e3a6a7cdf3d44ae9d1f37bb1a2a7a6976539",
+      "witness_count": 34
+    },
+    "kind19_preprocess": {
+      "start": "0x603ef950",
+      "stop_exclusive": "0x603ef995",
+      "sha256": "a3681d226344de52b8e00954850127882b387db19250007ae05c7945ac142b36",
+      "witness_count": 22
+    },
+    "kind19_relay": {
+      "start": "0x603ef923",
+      "stop_exclusive": "0x603ef94a",
+      "sha256": "ed59034649e2fd68c15037362c34ce801c603d55849b5f60ed64b9c2c09f2735",
+      "witness_count": 13
+    },
+    "kind19_route_guard": {
+      "start": "0x603dfbcb",
+      "stop_exclusive": "0x603dfbd5",
+      "sha256": "457439fc9196a74f6f4d013428ac1b05c1a5fd002fed21e87592ecf0a47b4b87",
+      "witness_count": 4
+    },
+    "kind19_route_queue": {
+      "start": "0x603dfc25",
+      "stop_exclusive": "0x603dfc2e",
+      "sha256": "6b2a50886799e1032eed5b11eee6c6283d3896929d64d64fe084e91082c9593a",
+      "witness_count": 3
+    },
+    "kind19_worker_dispatch": {
+      "start": "0x603f26ac",
+      "stop_exclusive": "0x603f2727",
+      "sha256": "a739bfd1bb8f687aab11efba45c91d6fc863ab7eb27634025d8d38fb10b7c5ef",
+      "witness_count": 41
+    },
+    "metadata_command": {
+      "start": "0x602ac846",
+      "stop_exclusive": "0x602ac873",
+      "sha256": "7c539dc27d8726fc825e485003587016c33457c6bb8b47919ef20fe2309e0390",
+      "witness_count": 14
+    },
+    "native_process_guard": {
+      "start": "0x603ed4bd",
+      "stop_exclusive": "0x603ed4e6",
+      "sha256": "dd241b835fd3ec5577b9899ca8b5505bad764261baa2f50601d79a71c0faf1eb",
+      "witness_count": 14
+    },
+    "node_associated_backlink": {
+      "start": "0x602a2901",
+      "stop_exclusive": "0x602a2925",
+      "sha256": "c46ddeb934229232354396c97b1138ec8cd588b8527da672628bdf74266ef568",
+      "witness_count": 13
+    },
+    "normal_ack_after_cleanup": {
+      "start": "0x603f2735",
+      "stop_exclusive": "0x603f2770",
+      "sha256": "2ce9bc451db37d066d4447ed8123928736c283a155affa26ef281a02efef5157",
+      "witness_count": 17
+    },
+    "normal_ctor_parameters": {
+      "start": "0x603e611e",
+      "stop_exclusive": "0x603e61b8",
+      "sha256": "ce00d31d66c0f3ef9248f1b3d5b8a999516c21bc68bb2d001717113a0d02d2ef",
+      "witness_count": 61
+    },
+    "recview_call": {
+      "start": "0x6088ac59",
+      "stop_exclusive": "0x6088ac77",
+      "sha256": "fbdba9cc16b6fca4b7d47b10366750cf1b4aa090141a8e54e87409e968037e9d",
+      "witness_count": 9
+    },
+    "recview_handles": {
+      "start": "0x6088abf8",
+      "stop_exclusive": "0x6088ac1b",
+      "sha256": "d2b7a2fbdf626dded246c83a8a9785a922e2f228d4fc3666f3942cdf4e16d9a0",
+      "witness_count": 17
+    },
+    "selected_node_store": {
+      "start": "0x6029aeb2",
+      "stop_exclusive": "0x6029aebe",
+      "sha256": "f12c70750d1dfdfc683d84ff632980711570cc0fb8bccc6705a3033b843bf61a",
+      "witness_count": 4
+    }
+  },
+  "instruction_witness_count": 419,
+  "kind19_route_table": {
+    "address": "0x6053ae08",
+    "target": "0x603dfbcb"
+  },
+  "producer": {
+    "command_kind": 19,
+    "dispatch": "0x2001",
+    "metadata_bytes": 148,
+    "capture_id_source": "associatedrecord[0] via 0x602ac8d0",
+    "metadata_capture_id_offset": 8
+  },
+  "queues": [
+    "0x60040d72",
+    "0x60040d74",
+    "0x60040e32",
+    "0x60040d7a"
+  ],
+  "job": {
+    "wrapper": "0x603f2800",
+    "constructor_call": "0x603f283e",
+    "constructor": "0x603537eb",
+    "converter": "0x603e62d1",
+    "process": "0x603e61b8",
+    "cleanup": "0x603e6c8d"
+  },
+  "historical_kind16_100d": {
+    "label_address": "0x60b03e6e",
+    "label_sha256": "53d5bab3ca5dc7473b12dc705886bffd62cb6a97684d8a9d7f76e1cdf9022d64",
+    "labeled_context": "RecView/createAfFineTune",
+    "normal_capture_not_established": true
+  },
+  "limitations": [
+    "Native allocation and population capability transfer is not implemented.",
+    "Branch predicates, per-request CPU/color guards and native lifetime remain mandatory.",
+    "Kind19 is not the historical kind16/100d wrapper; constructor callsite differs.",
+    "No universal capture-mode coverage, pixel calibration or hardware execution."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

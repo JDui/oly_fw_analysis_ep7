@@ -1,0 +1,44 @@
+{
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "windows": [
+    {
+      "start": "0x60053e48",
+      "end_exclusive": "0x60053f4f",
+      "sha256": "42fb43556331da04700b65c8d1aab97128ac929d39d4ea1a83e3b7c39ab10a60"
+    },
+    {
+      "start": "0x60053fb2",
+      "end_exclusive": "0x600540c5",
+      "sha256": "becb76530076f9982786c0d269bf46b086010c8c5c9156a6dcd4c9b6252dbe5f"
+    },
+    {
+      "start": "0x60054197",
+      "end_exclusive": "0x600541d0",
+      "sha256": "a208bd562dbd4321abaf81619099bdfa50aa945460f39ae4629f7e91c0080560"
+    },
+    {
+      "start": "0x600544f0",
+      "end_exclusive": "0x60054566",
+      "sha256": "9c8e59f4f7d2c9686d554748399ca3b922f3cbf191b5116a538df82e8f034844"
+    },
+    {
+      "start": "0x60037261",
+      "end_exclusive": "0x60037397",
+      "sha256": "2e7c10eb260c081497f19d610da7e850d9dc9f67eb5c3dd01cba45a08d18edc4"
+    },
+    {
+      "start": "0x60053c5e",
+      "end_exclusive": "0x60053cce",
+      "sha256": "89faaa6b25e8d5b3f39e21f5ecdffbf02e438d99b59c4cac6dba45a110b19bac"
+    }
+  ],
+  "witness_count": 60,
+  "normal_remote_result_before_completion_signal": true,
+  "wait_error_does_not_gate_record_result_load": true,
+  "record_released_after_submitter_returns": true,
+  "rejecting_positive_255_alone_qualifies_lock": false,
+  "error_reachability_on_camera_proven": false,
+  "cross_core_visibility_qualified": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

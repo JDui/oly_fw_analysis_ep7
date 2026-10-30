@@ -25,6 +25,9 @@ Current work:
   Host integration tests run, and verified-source MN10300 GCC compiles the core,
   UI and bounded job decoder to unlinked objects. Native UI/lifetime adapters remain unbound,
   settings reset on boot, and **camera HSL has not been demonstrated**.
+- Follow the conditional **kind19/0x2001 capture route** to its distinct fresh-job
+  wrapper; the earlier concrete0x100d producer is labeled RecView/createAfFineTune,
+  not demonstrated normal capture. Keep metadata ACK/free and image identity explicit.
 - Establish E-P7-specific storage, capture, rendering and recovery evidence before
   enabling any patch builder. No E-P7 patch offsets or install image are supplied.
 
@@ -36,6 +39,7 @@ Start with the [research status, compatibility matrix and port plan](docs/ep7/RE
 [storage and inline-job design](docs/ep7/STORAGE_AND_INLINE_JOB_DESIGN.md),
 [capture admission](docs/ep7/CAPTURE_ADMISSION.md),
 [capture attachment lifetime](docs/ep7/CAPTURE_ATTACHMENT.md),
+[kind19 capture/job route](docs/ep7/KIND19_CAPTURE_ROUTE.md),
 [task-scoped design](docs/ep7/TASK_SCOPED_ADMISSION.md),
 [controls proposal](docs/ep7/CONTROLS.md),
 [logical wheel mapping](docs/ep7/UI_EVENT_MAPPING.md), and
@@ -46,7 +50,9 @@ components, COLOR table/builder linkage and four profile defaults/dispatch cases
 See the [actual audit result](research/ep7/stock-audit-1100.json) and
 [source record](research/ep7/stock-source-1100.json). The firmware itself is not
 included. Input-event mapping, persistence/capture integration and hardware
-testing remain open. The user reports installed camera firmware **1.1**; this
+testing remain open. Separate real-pthread integration passes strict, ASan/UBSan
+and TSan runs; this does not qualify the camera’s native semaphore/domain/atomic
+backend. The same-domain lock scaffold still has an unresolved target atomic helper. The user reports installed camera firmware **1.1**; this
 is not device testing or a readback of the installed image.
 
 Upstream history, notices and attribution are retained. There is **no

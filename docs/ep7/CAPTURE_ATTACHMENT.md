@@ -4,6 +4,17 @@ Read-only stock analysis; no native code execution or patch. Source stock SHA256
 9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb.
 This extends prior ownership/capture clone notes, not a complete lifetime proof.
 
+## Later refinement: do not require the entire capture to be immutable
+
+The whole-copy epoch discussion below is a conservative alternative, not a
+universal requirement for image-owned H/L. See [kind19 capture/job routing](KIND19_CAPTURE_ROUTE.md),
+[metadata ownership](KIND19_METADATA_LIFETIME.md) and [later write classification](CAPTURE_LATE_MUTATIONS.md).
+The minimal H/L contract binds allocation/image-population generation and captured
+profile; unrelated native metadata updates need not discard the snapshot. The
+reviewed later helper reads the profile and writes translated output, but this is
+not an exhaustive proof over every transitive write. Native source validity during
+copy remains required under either design.
+
 ## Allocation to actual populated capture
 
 - `6029b4e7` is a registry allocation wrapper: saves incoming mode d0 in d2,

@@ -183,3 +183,19 @@ No firmware packer, patch offsets to apply, linker image or camera installer is
 provided. Native calls must not be made by casting the normalized C callbacks
 or these headers onto firmware addresses. Host sanitizers do not close these
 native proof obligations.
+
+## Actual threaded host validation and unbound lock provider
+
+The [pthread integration](concurrency/) runs the real core/decoder with one
+settings writer and two job workers:12,000 edits and4,000 capture→read→revoke/free
+cycles per run. Strict, ASan/UBSan and TSan runs pass; complete output comparison
+preserves captured H/L and S. This is a separate host report, not native RTOS proof.
+
+The [same-domain provider scaffold](lock_provider/) supplies actual core lock/
+unlock callbacks with atomic admission/poison state and tests committed-mutation
+versus release-failure behavior. Target compilation exposes an unresolved
+`___atomic_compare_exchange_4` backend; native callbacks and atomics are unbound.
+The [native semaphore study](../../docs/ep7/PRIVATE_SEMAPHORE.md) and
+[transport completion study](../../docs/ep7/SEMAPHORE_TRANSPORT.md) explain why
+blindly accepting the named wrapper’s zero status is not a safe lock contract.
+No camera API, semaphore creation, target execution or firmware write is involved.

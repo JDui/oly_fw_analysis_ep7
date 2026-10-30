@@ -1,0 +1,83 @@
+{
+  "scope": "Bounded kind19 metadata ACK ownership and later captured-profile reads",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "ack_packet": {
+      "start": "0x603df97d",
+      "stop_exclusive": "0x603df9ca",
+      "sha256": "90f024d73bbd6660073216f5db9c2ceb4941a4fe3de30cf1d612b834c069ad99",
+      "witness_count": 27
+    },
+    "capture_id_select": {
+      "start": "0x602a9647",
+      "stop_exclusive": "0x602a9680",
+      "sha256": "d2a0425f5081321af80c272f3db222fc58a58dfe8c001cd65a9382575ab4cc99",
+      "witness_count": 25
+    },
+    "early_callback": {
+      "start": "0x603f2ad0",
+      "stop_exclusive": "0x603f2b0a",
+      "sha256": "5af718bd44b4d200fcf6a5ba26ba51e9bde2f2b541eb84496a3f5cb1db8b0562",
+      "witness_count": 22
+    },
+    "event44_handler": {
+      "start": "0x602a3b87",
+      "stop_exclusive": "0x602a3b92",
+      "sha256": "d4215471580fd6c1b3f37e455cda17cd77c8790cb60be0b057f340b7d19e1b49",
+      "witness_count": 3
+    },
+    "metadata_callback": {
+      "start": "0x602ac873",
+      "stop_exclusive": "0x602ac88a",
+      "sha256": "33ec96fe1d6bf61868f699d5787497f32163f9964efe2609c805225a9b354cb1",
+      "witness_count": 9
+    },
+    "metadata_send_return": {
+      "start": "0x602ac846",
+      "stop_exclusive": "0x602ac873",
+      "sha256": "7c539dc27d8726fc825e485003587016c33457c6bb8b47919ef20fe2309e0390",
+      "witness_count": 14
+    },
+    "normal_metadata_free": {
+      "start": "0x602ac46a",
+      "stop_exclusive": "0x602ac4d9",
+      "sha256": "ecb6207c006bd59383ec4116c12a2cc10379f8b38ae59643eca8938ac96be468",
+      "witness_count": 38
+    },
+    "profile_read_translate": {
+      "start": "0x603018d2",
+      "stop_exclusive": "0x603019c5",
+      "sha256": "205e11df12f604dcf7ce4707dcf709edf8ea3a0bd56fb9a2db8523f03505741c",
+      "witness_count": 116
+    }
+  },
+  "instruction_witness_count": 254,
+  "metadata": {
+    "send": "0x602ac869",
+    "local_send_failure_free_identified": false,
+    "ack": "0x603df97d",
+    "reply_metadata_pointer_offset": 8,
+    "event44_handler": "0x602a3b87",
+    "conditional_free": "0x602ac4d2",
+    "possible_early_callback": "0x603f2b08"
+  },
+  "captured_profile": {
+    "raw_mode_offset": 24053,
+    "selector_offset": 24083,
+    "translated_output_offset": 3180,
+    "observed_operations": "profile reads, translated output writes"
+  },
+  "limitations": [
+    "Normal ACK/free branch only, not universal ownership or duplicate queue exclusion.",
+    "Metadata address alone does not carry generation across queued descriptor copies.",
+    "Profile windows prove these reads/output stores, not an exhaustive transitive no-write theorem.",
+    "Unrelated native capture metadata writes need not invalidate immutable image H/L.",
+    "Native source validity during copy remains required; epochs do not pin freed memory.",
+    "No firmware hooks, execution, spare bytes or hardware qualification established."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

@@ -1,0 +1,39 @@
+{
+  "sources": {
+    "prototypes/ep7_volatile_hl/lock_provider/ep7_sem_provider.c": "1706fb8fa779b3a7db70ee72aa66be29a4d68abee3816cb314a997410b9c79bf",
+    "prototypes/ep7_volatile_hl/lock_provider/test_provider.c": "2189c156c8a8c70aa3156073f713e4ea6175046dfd5775d715678667a3c1616e",
+    "prototypes/ep7_volatile_hl/ep7p.c": "0e9f1274706c0e1631cb1ebda3d35055a48200ba5c9817760f600ab9c4f63402",
+    "prototypes/ep7_volatile_hl/ep7p_decode.c": "25f857efc0e07a333e931c50dc69fff1de9d10f40b117532de5f2e59eb6e2d95",
+    "prototypes/ep7_volatile_hl/lock_provider/ep7_sem_provider.h": "fdfdd57438431c15aa5cddbf8a81f6875f1cbe09c4ae1f04db47b8a751907f55",
+    "prototypes/ep7_volatile_hl/ep7p.h": "a46308465556703ee0d658f07ffb73b34cb89041377468e84c92f5f2d1663bcd"
+  },
+  "host_tests": [
+    {
+      "configuration": "strict",
+      "output": "provider: actual core callbacks, domain decline, contention, poison, reentry and void-unlock limitation passed",
+      "passed": true
+    },
+    {
+      "configuration": "asan_ubsan",
+      "output": "provider: actual core callbacks, domain decline, contention, poison, reentry and void-unlock limitation passed",
+      "passed": true
+    }
+  ],
+  "host_compiler_sha256": "a23ecab8ff08f09ad8c80602c2c5df7f49e09c25905cb8975902e101bf72635f",
+  "target_tool_hashes": {
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/xgcc": "15d81798f47b501bfbf43a9a97ef9318f8d54dd6739cfba1bf04bf10a42c44dd",
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/cc1": "a61e33cd394c7af451b9e8a108f9ad36a5e437985f08b2f4fc57f8f3e372edd5",
+    "toolchains/binutils-2.45-gas-build/gas/as-new": "5833fa140051525c4d432be6a931abc32e6b866f2a7152f16c1751a5f3122d6c",
+    "toolchains/binutils-2.45-build/binutils/objdump": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268"
+  },
+  "target_undefined_symbols": [
+    "___atomic_compare_exchange_4"
+  ],
+  "target_object_sha256": "7c616a712d8f9f1602b68286df14f3e073eeaff67409b741c90ae149c280662a",
+  "target_linked": false,
+  "target_executed": false,
+  "firmware_input_used": false,
+  "native_atomic_backend_qualified": false,
+  "native_veneer_bound": false,
+  "flash_ready": false
+}
