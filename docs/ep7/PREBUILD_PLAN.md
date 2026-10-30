@@ -123,3 +123,7 @@ G2尾端仍有worker claim/retire和drain/失败处理，snapshot来源与任务
 [worker allocation/process/cleanup桥](WORKER_JOB_BINDING.md)已按原厂seam实现，自有scope
 跨越原job函数；host与目标对象检查通过。实际等待/稳定context仍未绑定，不能将重试循环
 视为已验证RTOS策略。下一项为ACK/drain撤销与G3运行时供应，随后集中关闭未解析provider。
+
+[三处ACK/drain接合](ACK_DRAIN_BINDING.md)已实现并定向验证，保留原厂通知与返回行为。
+G2的主干代码已有producer/relay/worker/ACK，原生闭包和provider稳定性仍待审；下一批
+集中处理G3真实task stack/domain、runtime发布及poison/等待策略，不把未解析契约当完成。

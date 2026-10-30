@@ -44,6 +44,8 @@ if args.queue_pipeline_abi_only:
  files['decode']=core/'ep7p_decode.c'
  files.update({n:core/'snapshot_transport/native'/p for n,p in
      [('worker_bridge','worker_bridges.s'),('worker_layout','worker_layout.c'),('worker_binding','worker_binding.c'),('worker_caller','worker_caller.c')]})
+ files.update({n:core/'snapshot_transport/native'/p for n,p in
+     [('ack_bridge','ack_bridge.s'),('ack_layout','ack_layout.c'),('ack_binding','ack_binding.c')]})
  files['queue_send_binding']=core/'snapshot_transport/native/queue_send_binding.c'
  files.update({n:core/'snapshot_transport/native'/p for n,p in
      [('descriptor_send_bridge','descriptor_send_bridge.s'),('descriptor_send_layout','descriptor_send_layout.c'),('descriptor_send_binding','descriptor_send_binding.c'),
@@ -194,6 +196,17 @@ with tempfile.TemporaryDirectory() as temp:
     raise ValueError('worker bridge relocation targets changed')
    objects[name].update(checked_instructions=len(ins),owned_wrapper_bytes=80,additional_native_frame_bytes=56,
                         owned_scope_bytes=48,owned_scope_offset=32,pointer_result_register='a0')
+  if name=='ack_bridge':
+   dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   expected=[('add','-16,sp'),('mov','d0,(12,sp)'),('mov','d1,(16,sp)'),('mov','a0,(20,sp)'),
+             ('mov','a1,(24,sp)'),('mov','a0,d0'),('mov','sp,a0'),('add','16,a0'),('mov','a0,d1')]
+   after=[('mov','(12,sp),d0'),('mov','(16,sp),d1'),('mov','(20,sp),a0'),('mov','(24,sp),a1'),('add','16,sp')]
+   if len(ins)!=16 or ins[:9]!=expected or ins[10:15]!=after or ins[9][0]!='call' or not ins[9][1].endswith(',[],0') or ins[15][0]!='jmp':
+    raise ValueError('ACK native input/frame preservation changed')
+   if dis.count('R_MN10300_PCREL32')!=2 or any(s+'+0x1' not in dis for s in ['_ep7q_ack_entry','ep7_stock_ack_unresolved']):
+    raise ValueError('ACK bridge relocation changed')
+   objects[name].update(checked_instructions=len(ins),own_frame_bytes=16,native_tail_frame_bytes=32)
   if name=='worker_caller':
    dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
    if '_ep7_gcc_job_allocate+0x1' not in dis or not re.search(r'mov\s+a0,d0',dis):
@@ -210,12 +223,12 @@ if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descri
 if args.queue_pipeline_abi_only:expected|={'_ep7q_descriptor_send_context_unresolved','ep7_stock_send_wrapper_unresolved',
     '_ep7q_capture_snapshot_unresolved','_ep7q_producer_context_unresolved','ep7_stock_kind19_metadata_producer_unresolved','ep7_stock_command_send_unresolved',
     '_ep7q_worker_context_unresolved','ep7_stock_worker_job_unresolved','ep7_stock_job_allocate_unresolved',
-    'ep7_stock_worker_process_unresolved','ep7_stock_worker_cleanup_unresolved'}
+    'ep7_stock_worker_process_unresolved','ep7_stock_worker_cleanup_unresolved','_ep7q_ack_context_unresolved','ep7_stock_ack_unresolved'}
 if external!=expected:raise ValueError('unexpected external symbols '+repr(external))
 scope='Snapshot transport, wire codec, owned queue I/O and memory target objects only' if args.transport_only else 'Current seven-object controller sidecar target compile and symbol closure only'
 if args.queue_abi_only:scope='Raw queue and notification-preserving send callable ABI bridges; no native invocation'
 if args.materializer_abi_only:scope='Exact materializer receive bridge and bounded frame mapper; context provider/native addresses unresolved'
 if args.receive_abi_only:scope='Command and descriptor receive bridges with bounded stack mappers; native context providers/addresses unresolved'
-if args.queue_pipeline_abi_only:scope='Frozen producer scope, command publication and descriptor receive/send bridges; native capture/context providers/addresses unresolved'
+if args.queue_pipeline_abi_only:scope='Owned producer/relay/worker job/ACK pipeline objects and ABI checks; native capture/context/progress providers and addresses unresolved'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))

@@ -13,6 +13,7 @@
 #include "snapshot_transport/native/producer.h"
 #include "snapshot_transport/native/queue.h"
 #include "snapshot_transport/native/worker.h"
+#include "snapshot_transport/native/ack.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <limits.h>
@@ -301,6 +302,39 @@ static void worker_boundaries(void){
     allocation=ep7j_allocate(&scope,EP7P_STOCK,worker_allocate,&f);
     assert(allocation==f.host.job && f.requested==EP7P_STOCK);
     assert(!ep7j_register(&scope,&core,f.host.job));cleanup(&f.host,&f.host);
+}
+static void ack_boundaries(void){
+    static const uint32_t cases[][3]={
+        {0x603dfc6c,100,EP7Q_ACK_NORMAL},{0x603e05cb,44,EP7Q_ACK_DRAIN},{0x603f2770,36,EP7Q_ACK_WORKER}
+    };
+    unsigned char bytes[412]={0},prefix[300];uint32_t w=0x6000;unsigned i,notifications=0;
+    ep7q_stack stack={bytes,w,sizeof bytes,true};ep7q_ack_args args;
+    ep7t transport={0};ep7t_ticket ticket;ep7p_snapshot frozen={3,{0}},out;
+    assert(ep7t_init(&transport,(ep7p_ops){NULL,lock,unlock,current}));
+    for(i=0;i<3;i++){
+        unsigned char *d=bytes+cases[i][1];memset(bytes,0,sizeof bytes);
+        put32(bytes+32,cases[i][0]);if(!i)put32(bytes+80,0x603df8c0);
+        stack.extent=cases[i][1]+312;
+        assert(ep7q_ack_layout(&stack,w,w+cases[i][1],&args) && args.origin==cases[i][2]);
+        --stack.extent;assert(!ep7q_ack_layout(&stack,w,w+cases[i][1],&args));++stack.extent;
+        assert(!ep7q_ack_layout(&stack,w,w+cases[i][1]+4,&args));
+        put32(d+48,100);put32(d+52,19);put16(d+194,0x2001);
+        assert(ep7t_prepare(&transport,100,&frozen,&ticket) && ep7t_publish(&transport,ticket));
+        assert(ep7w_write_trailer(d+300,ticket));
+        if(i==2)assert(ep7q_claim_owned(&transport,d,312,&out));
+        if(i==1)put32(d+52,16); /* drain cleanup ignores the changed route */
+        memcpy(prefix,d,300);
+        fail_lock=true;
+        if(ep7q_retire_owned(&transport,d,312))++notifications;
+        assert(notifications==i); /* modeled original ACK must remain withheld */
+        fail_lock=false;
+        if(ep7q_retire_owned(&transport,d,312))++notifications;
+        assert(notifications==i+1 && !memcmp(prefix,d,300) && !d[300]);
+        assert(!ep7t_claim(&transport,ticket,&out));
+    }
+    put32(bytes+32,0x12345678);assert(!ep7q_ack_layout(&stack,w,w+36,&args));
+    stack.expanded_group_ready=false;stack.bytes=(const unsigned char *)(uintptr_t)1;
+    assert(!ep7q_ack_layout(&stack,w,w+36,&args));
 }
 static void materializer_boundaries(void){
     unsigned char bytes[864]={0};uint32_t w=0x1000;ep7q_materializer_args a;
@@ -631,7 +665,7 @@ int main(void){
     assert(send(0x9014,0)==1);assert(send(0x9032,-7)==1);text_is(frame(),"L ALL -7");
     setter_status=0;f=frame();assert(ep7_text_present(&widget_token,&f)==0);setter_status=1;
     n=text_calls;f.category=1;assert(ep7_text_present(&widget_token,&f)==0);assert(text_calls==n);
-    transport_boundaries();wire_boundaries();consumer_boundaries();worker_boundaries();materializer_boundaries();owned_io_boundaries();descriptor_receive_boundaries();descriptor_send_boundaries();producer_boundaries();capture_vertical_slice();
+    transport_boundaries();wire_boundaries();consumer_boundaries();worker_boundaries();ack_boundaries();materializer_boundaries();owned_io_boundaries();descriptor_receive_boundaries();descriptor_send_boundaries();producer_boundaries();capture_vertical_slice();
     assert(!held && current_queries==0);
     puts("router -> sidecar -> owned command receive -> three owned forward/receive relays -> ticket -> 16 job slots: PASS; native queue backend/ABI/materializer mocked");return 0;
 }

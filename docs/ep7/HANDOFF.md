@@ -63,6 +63,11 @@ cleanup前撤销及ACK/drain保持策略仍未绑定；下一个节点继续落�
 strict/ASan/UBSan通过。当前17外部符号未绑定；真实context稳定性、等待策略和ACK/drain
 仍未闭合，不能安装hook。接下来落实ACK/drain，以及G3的实际任务/运行时上下文。
 
+[ACK/drain桥](ACK_DRAIN_BINDING.md)已覆盖正常拒绝、command drain和worker完成三处，
+原厂ACK发送metadata身份前先撤销票据；失败保留descriptor与清理责任。38原厂指令、
+16桥指令及host strict/ASan/UBSan通过。19个原生/context符号仍未绑定；下面转入G3共享
+runtime、实际task stack/domain和等待/poison策略，避免仅继续增加未解析provider。
+
 ## 本轮恢复后的增量
 
 - 在既有 controller sidecar 中实现 `ep7c_resolve_live`，无需额外 token map。
