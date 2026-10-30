@@ -20,6 +20,8 @@ TABLE_SHA = 'a33d64bdb78ac41ba24ccbff820380f563211a095ac08a12a7c37a51b5c00531'
 SAT_IDS = (927, 939, 951, 1655)  # COLOR4 is NOT contiguous with COLOR1–3.
 SAT_DEFAULTS = ([0]*12, [1,1,0,0,0,0,1,1,0,0,1,1],
                 [4,4,4,4,4,3,4,4,4,4,4,4], [-4,0,0,0,-1,-1,-1,0,0,0,0,-4])
+PROFILE_CASES = (0x602b814e, 0x602b823c, 0x602b832a, 0x602b8418)
+PUBLIC_MODES = (54, 55, 56, 64)
 
 
 def require(condition, message):
@@ -67,13 +69,32 @@ def audit(raw):
     for profile, (first, expected) in enumerate(zip(SAT_IDS, SAT_DEFAULTS), 1):
         values = list(struct.unpack_from('<12i', main, 0x604a8774-BASE+first*4))
         require(values == expected, f'COLOR{profile} defaults mismatch')
+        dispatch = struct.unpack_from('<I', main, 0x60460458-BASE+PUBLIC_MODES[profile-1]*4)[0]
+        require(dispatch == PROFILE_CASES[profile-1], f'COLOR{profile} dispatch mismatch')
         profiles.append(dict(profile=profile, saturation_ids=list(range(first, first+12)),
-                             default_saturation_matches=True))
+                             default_saturation_matches=True,
+                             public_picture_mode=PUBLIC_MODES[profile-1],
+                             settings_case=hex(dispatch), dispatch_matches=True))
+    accessor = 0x602ba4bd-BASE
+    require(main[accessor:accessor+9] == b'\xfc\xdc'+struct.pack('<I', 0x604a8774)+b'\xde\x00\x00',
+            'default-table accessor mismatch')
+    windows = {'profile_dispatch': (0x602b7b71, 0x602b7bf2),
+               'default_accessors': (0x602ba4bd, 0x602ba4cc),
+               'cursor_four_profiles': (0x60de83b7, 0x60de857f),
+               'color_builder': (0x603b0068, 0x603b0247),
+               'color_selector': (0x603b0252, 0x603b0345),
+               'coefficient_writer': (0x6034667e, 0x6034677b)}
+    for i, start in enumerate(PROFILE_CASES):
+        windows[f'color{i+1}_settings'] = (start, (PROFILE_CASES+(0x602b850d,))[i+1])
+    window_report = {name: dict(start=hex(start), stop_exclusive=hex(stop),
+                               bytes=stop-start, sha256=sha256(main[start-BASE:stop-BASE]))
+                     for name, (start, stop) in windows.items()}
     return dict(scope='Offline stock integrity and static landmarks only; NOT HSL execution or patch qualification',
                 model='E-P7', public_version='1.1', build='1100', source_sha256=SOURCE_SHA,
                 source_bytes=len(raw), exact_roundtrip=True, components=component_report,
                 main_analysis_base=hex(BASE), color_table_sha256=TABLE_SHA,
                 entry_mapping_checked=True, selector_builder_call_checked=True, profiles=profiles,
+                default_accessor_checked=True, static_window_fingerprints=window_report,
                 firmware_output_created=False, camera_accessed=False, flash_ready=False)
 
 

@@ -31,6 +31,11 @@ class EP7StockAuditTests(unittest.TestCase):
         self.assertEqual(entry['bytes'], 111017984)
         self.assertEqual([x['model_bytes'] for x in entry['components']], ['1420']*5)
 
+    def test_public_dispatch_is_not_contiguous(self):
+        self.assertEqual(audit.PUBLIC_MODES, (54, 55, 56, 64))
+        self.assertEqual(len(audit.PROFILE_CASES), 4)
+        self.assertEqual(tuple(sorted(audit.PROFILE_CASES)), audit.PROFILE_CASES)
+
 
 if __name__ == '__main__':
     unittest.main()

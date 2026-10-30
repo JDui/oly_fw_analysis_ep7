@@ -11,14 +11,68 @@ only links PEN-F releases. No E-P7 HSL implementation was found in that tree.
 
 - **Reviewed source:** verified that the cited repository contains the contracts
   below. This does not mean its proprietary firmware probes were rerun here.
-- **Upstream exact-build finding:** independently revalidation-ready, but currently
-  inherited from upstream. Requires the matching stock file to confirm locally.
+- **Actual stock validation:** the exact official 1.1/1100 file was obtained and
+  the selected assertions below were checked against its bytes. This remains
+  static analysis, not execution of firmware or an ISP/pixel test.
+- **Upstream exact-build finding:** other mappings remain inherited unless named
+  in the local audit result or static-analysis report.
 - **Proposal / unknown:** not an address, hardware fact or working feature.
 
-The official stock URL listed in upstream provenance returned HTTP 403 during
-this session; no image was downloaded. We did not bypass it or substitute an
-unverified mirror. The exact current public firmware version is not independently
-established here; **1.1/1100 is the pinned research target, not a latest-version claim**.
+The bare URL in upstream provenance initially returned HTTP 403. Further review
+found that upstream deliberately strips temporary signature query parameters.
+The documented **public official catalog** returned a fresh download URL, which
+successfully supplied the exact stock file. No authentication was bypassed and
+no third-party mirror was needed. Only the unsigned source attribution and
+hashes are retained in [the source record](../../research/ep7/stock-source-1100.json);
+the signed response and firmware remain local. The catalog offered 1100 during
+this query; **1.1/1100 is our pinned research target**, not a statement about
+the user's installed version or every regional updater result.
+
+### Locally verified milestone
+
+[Actual stock audit](../../research/ep7/stock-audit-1100.json), 2026-10-30:
+111017984 bytes; exact full-file SHA, five decoded component hashes/checksums,
+full decode/encode round trip, main runtime mapping, unique 3028-byte COLOR table,
+selector-to-builder call, default accessor, and COLOR1–4 defaults and dispatch
+pointers all passed. Public profile modes are **54,55,56,64**, not four contiguous
+values. Address-window fingerprints are recorded without redistributing code.
+
+### Actual profile/cursor disassembly
+
+[Static path result](../../research/ep7/static-paths-1100.json) was reproduced with
+[GNU Binutils 2.45](https://lists.gnu.org/archive/html/info-gnu/2025-07/msg00009.html),
+built locally from official source whose SHA-256 matched the release announcement:
+`c50c0e7f9cb188980e2cc97e4537626b1672441815587f1eab69d2a1bfbef5d2`.
+This is source-checksum verification, not a claim of GPG signature verification.
+
+- All four profile cases read the expected contrast/sharpness/tone/shading and
+  twelve saturation property IDs through `0x602b2237`. The first three case
+  windows contain 17 direct calls and share their final getter in case 4; case 4
+  contains 18. These are settings **read** paths, not commit/persistence proof.
+- Cursor window `0x60de83b7..0x60de857f` checks property IDs
+  **1091,1096,1097,1686**, then reads related IDs **1098,1099,1100,1687**.
+  The fourth pair is noncontiguous again. The routine compares **255** and **12**,
+  calls virtual methods through helper `0x607f9062`, and writes a halfword at
+  child offset **+90**. This is a concrete starting point for the ALL/remembered
+  cursor model; the related IDs' full storage semantics and physical callers are
+  still not proven. Do not relabel them as GPIO/keycodes or free H/L storage.
+- The actual operand checks are pinned to instruction addresses, not substring
+  matches anywhere in a firmware blob. Complete disassembly stays local.
+
+Reproduce after building a trusted MN103 objdump using the existing
+[GNU build instructions](../../patches/hsl/pen-f/README.md):
+
+```sh
+python3 tools/ep7_static_paths.py --stock /local/path/OLY_E_142_1100_0000_0000.BIN \
+  --objdump /trusted/path/to/mn10300-elf-objdump > generated/ep7/static-paths.json
+python3 -m unittest discover -s tests -p 'test_ep7*.py'
+```
+
+The tool checks the stock identity before invoking the explicitly selected
+disassembler; it uses a deleted-on-exit temporary decoded input and emits no
+code listing. Never point `--objdump` at an untrusted executable. No firmware is
+executed by disassembly. Seven E-P7 synthetic/guard tests and nine container tests
+pass; the separate exact-stock and static-disassembly runs both pass.
 
 ## Why this is plausible, but not a simple button remap
 
@@ -116,13 +170,15 @@ python3 tools/ep7_stock_audit.py --stock /local/path/OLY_E_142_1100_0000_0000.BI
 The new E-P7-only audit does not require PEN-F/OM-3 images or GNU objdump. It
 checks exact identity **before parsing**, all component identities/checksums,
 decode/encode round trip, runtime-base witness, shared table uniqueness,
-selector-to-builder call and all four saturation defaults. It emits hashes and
+selector-to-builder call, default accessor and all four saturation defaults and
+dispatch pointers. It records static-window hashes. It emits hashes and
 non-payload metadata, no extracted firmware strings or disassembly. It produces no
 patched BIN and exposes no relaxed-hash/force option.
 
-Input-free guard tests and existing synthetic container tests can pass without
-firmware. They **do not** mean the real-stock audit passed. Native emulator/ISP,
-full camera boot, real input, capture and flashing checks have not been run.
+Seven E-P7 input-free tests and nine existing synthetic container tests pass.
+The real-stock audit also passed separately; these are different evidence levels.
+Native emulator/ISP, full camera boot, real input, capture and flashing checks
+have not been run.
 Keep all stock/decoded files and private captures local and ignored.
 
 ## Gated port plan and acceptance criteria
@@ -148,10 +204,10 @@ Keep all stock/decoded files and private captures local and ignored.
    update/recovery procedure, then neutral pixel comparison and bounded H/L image
    effects across sectors. A checksum or MN103 probe is not ISP qualification.
 
-Next needed input is the exact stock file (or a different file plus its identity
-for a separately scoped audit), and eventually the user's current camera version.
-Neither blocks continued static research. No camera writes are authorized by this
-research milestone.
+The exact-stock acquisition blocker is resolved. The user's current camera
+version is still needed before any device-specific compatibility claim; a different
+firmware must be scoped and audited separately. This does not block continued
+static research. No camera writes are authorized by this research milestone.
 
 ## Rights
 

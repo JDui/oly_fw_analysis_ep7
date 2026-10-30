@@ -1,0 +1,192 @@
+{
+  "scope": "Offline stock integrity and static landmarks only; NOT HSL execution or patch qualification",
+  "model": "E-P7",
+  "public_version": "1.1",
+  "build": "1100",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "source_bytes": 111017984,
+  "exact_roundtrip": true,
+  "components": [
+    {
+      "kind": "0x100",
+      "payload_bytes": 26214336,
+      "decoded_sha256": "5dd9af164b4590c7e82f6905c919b3cc450bb58f2d5742ab2a0e3a4eb2e26190"
+    },
+    {
+      "kind": "0x101",
+      "payload_bytes": 26214336,
+      "decoded_sha256": "8606cb90e06b67aee31a1b4319b585905b66e4e3ee29c903bd328aa33b362868"
+    },
+    {
+      "kind": "0x106",
+      "payload_bytes": 45219776,
+      "decoded_sha256": "d0c658cb00b32783e68bcba9e24b0e2a2d9077adf995126a3d7a70ebdca3ceba"
+    },
+    {
+      "kind": "0x10e",
+      "payload_bytes": 262080,
+      "decoded_sha256": "00f47b0990257a9719109b8d41a1910677615c6e1622b3ca43061d6fabc8805f"
+    },
+    {
+      "kind": "0x102",
+      "payload_bytes": 13107136,
+      "decoded_sha256": "c7f5ac1ddfafceeecd05607b6ebd512315bf1a3807b2660eef201f38b927f21f"
+    }
+  ],
+  "main_analysis_base": "0x60020020",
+  "color_table_sha256": "a33d64bdb78ac41ba24ccbff820380f563211a095ac08a12a7c37a51b5c00531",
+  "entry_mapping_checked": true,
+  "selector_builder_call_checked": true,
+  "profiles": [
+    {
+      "profile": 1,
+      "saturation_ids": [
+        927,
+        928,
+        929,
+        930,
+        931,
+        932,
+        933,
+        934,
+        935,
+        936,
+        937,
+        938
+      ],
+      "default_saturation_matches": true,
+      "public_picture_mode": 54,
+      "settings_case": "0x602b814e",
+      "dispatch_matches": true
+    },
+    {
+      "profile": 2,
+      "saturation_ids": [
+        939,
+        940,
+        941,
+        942,
+        943,
+        944,
+        945,
+        946,
+        947,
+        948,
+        949,
+        950
+      ],
+      "default_saturation_matches": true,
+      "public_picture_mode": 55,
+      "settings_case": "0x602b823c",
+      "dispatch_matches": true
+    },
+    {
+      "profile": 3,
+      "saturation_ids": [
+        951,
+        952,
+        953,
+        954,
+        955,
+        956,
+        957,
+        958,
+        959,
+        960,
+        961,
+        962
+      ],
+      "default_saturation_matches": true,
+      "public_picture_mode": 56,
+      "settings_case": "0x602b832a",
+      "dispatch_matches": true
+    },
+    {
+      "profile": 4,
+      "saturation_ids": [
+        1655,
+        1656,
+        1657,
+        1658,
+        1659,
+        1660,
+        1661,
+        1662,
+        1663,
+        1664,
+        1665,
+        1666
+      ],
+      "default_saturation_matches": true,
+      "public_picture_mode": 64,
+      "settings_case": "0x602b8418",
+      "dispatch_matches": true
+    }
+  ],
+  "default_accessor_checked": true,
+  "static_window_fingerprints": {
+    "profile_dispatch": {
+      "start": "0x602b7b71",
+      "stop_exclusive": "0x602b7bf2",
+      "bytes": 129,
+      "sha256": "98ca9ab05912a0efddb28bbaef2a3aa40055851b95a42606136539be79fa6db8"
+    },
+    "default_accessors": {
+      "start": "0x602ba4bd",
+      "stop_exclusive": "0x602ba4cc",
+      "bytes": 15,
+      "sha256": "c5d078ff44ed5a73026863899233dccd6736a54dbbb9024d579b42c9809e55e7"
+    },
+    "cursor_four_profiles": {
+      "start": "0x60de83b7",
+      "stop_exclusive": "0x60de857f",
+      "bytes": 456,
+      "sha256": "08baf3b55e1c6da6a8c6630a6db552f2d1131c97372656ba4cbd80f441f38c35"
+    },
+    "color_builder": {
+      "start": "0x603b0068",
+      "stop_exclusive": "0x603b0247",
+      "bytes": 479,
+      "sha256": "c03f6dd579857969e629044298d44dc8ffa82144f54950b2bf9c63aaf072dc75"
+    },
+    "color_selector": {
+      "start": "0x603b0252",
+      "stop_exclusive": "0x603b0345",
+      "bytes": 243,
+      "sha256": "c7ee04ecaeaf122068a7ee2f711f504d9e9609c5bbb5cce7d93bfc0f5a572274"
+    },
+    "coefficient_writer": {
+      "start": "0x6034667e",
+      "stop_exclusive": "0x6034677b",
+      "bytes": 253,
+      "sha256": "f06721ccfffbc1c3d7db0cb9c2bd311169b85cccbe87a83f0215c6a4b96b003d"
+    },
+    "color1_settings": {
+      "start": "0x602b814e",
+      "stop_exclusive": "0x602b823c",
+      "bytes": 238,
+      "sha256": "b853b2b774f18b28d2e5e1a64a4ce4f752daf37957d98890b37a6bec01e3d797"
+    },
+    "color2_settings": {
+      "start": "0x602b823c",
+      "stop_exclusive": "0x602b832a",
+      "bytes": 238,
+      "sha256": "04f58ded28b6a6e6c775f8af0dc7fbc022f96fdc984fe0aa00379d6bae6fbba0"
+    },
+    "color3_settings": {
+      "start": "0x602b832a",
+      "stop_exclusive": "0x602b8418",
+      "bytes": 238,
+      "sha256": "14c0ccbb4451a669abad5c602bf8513e59fc36f71eabe27184fb092763489d68"
+    },
+    "color4_settings": {
+      "start": "0x602b8418",
+      "stop_exclusive": "0x602b850d",
+      "bytes": 245,
+      "sha256": "0632fd9f80e1da17addc42d11804650cb990f45a1b324a450b1873e835f457c7"
+    }
+  },
+  "firmware_output_created": false,
+  "camera_accessed": false,
+  "flash_ready": false
+}

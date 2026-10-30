@@ -1,0 +1,15 @@
+{
+  "model_name": "E-P7",
+  "model_id": "1420",
+  "version": "1100",
+  "file_name": "OLY_E_142_1100_0000_0000.BIN",
+  "bytes": 111017984,
+  "sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "source": "https://dl01.om-digitalsolutions.net/OMDS/FIRMWARES/0001/1420/OLY_E_142_1100_0000_0000.BIN",
+  "access_date": "2026-10-30",
+  "expected_hash_match": true,
+  "catalog_endpoint": "https://fw01.om-digitalsolutions.net/ww_inform/fcache.do",
+  "method": "Public firmware catalog with placeholder identifiers; fresh catalog-issued download URL",
+  "temporary_signature_retained": false,
+  "firmware_redistributed": false
+}

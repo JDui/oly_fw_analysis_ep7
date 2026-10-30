@@ -21,8 +21,13 @@ Current work:
 Start with the [research status, compatibility matrix and port plan](docs/ep7/README.md),
 [controls proposal](docs/ep7/CONTROLS.md), and
 [read-only stock audit](tools/ep7_stock_audit.py).
-The audit emits JSON only and never contacts a camera. The exact stock input is
-not included; firmware acquisition/revalidation and hardware testing remain open.
+The audit emits JSON only and never contacts a camera. The official **1.1/1100
+stock input has now been acquired and byte-validated**, including all five
+components, COLOR table/builder linkage and four profile defaults/dispatch cases.
+See the [actual audit result](research/ep7/stock-audit-1100.json) and
+[source record](research/ep7/stock-source-1100.json). The firmware itself is not
+included. Input-event mapping, persistence/capture integration and hardware
+testing remain open; the user's installed camera version is still unknown.
 
 Upstream history, notices and attribution are retained. There is **no
 repository-wide license**; see [rights and provenance](RIGHTS-AND-PROVENANCE.md).
