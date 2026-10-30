@@ -7,6 +7,7 @@
 #include "snapshot_transport/wire.h"
 #include "snapshot_transport/owned_io.h"
 #include "snapshot_transport/native/materializer.h"
+#include "snapshot_transport/native/descriptor_receive.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <limits.h>
@@ -254,6 +255,42 @@ static void owned_io_boundaries(void){
     r=ep7q_descriptor_send(&ops,0x999,-1,descriptor,sizeof descriptor);
     assert(!r.called && q.sends==calls && r.ticket.serial==ticket.serial && descriptor[300]==0);
 }
+static void descriptor_receive_boundaries(void){
+    static const uint32_t cases[][5]={
+        {0x603ef8ba,0,0x4c,56,EP7Q_DUAL_RECEIVER},
+        {0x603ef902,0,0x4c,56,EP7Q_DUAL_RECEIVER},
+        {0x603ef8d7,0,0x4d,56,EP7Q_DUAL_RECEIVER},
+        {0x603ef91f,0,0x4d,56,EP7Q_DUAL_RECEIVER},
+        {0x603dfa0b,0x603ef962,0xab,64,EP7Q_KIND19_RELAY},
+        {0x603dfa0b,0x603f26bb,0x4f,64,EP7Q_KIND19_WORKER}
+    };
+    unsigned char bytes[376],prefix[300]={0};uint32_t w=0x2000;unsigned i;
+    ep7q_stack s={bytes,w,sizeof bytes,true};ep7q_receive_input in;
+    ep7q_receive_args args;queue_fixture q={0};ep7q_ops ops=queue_ops(&q);ep7q_result r;size_t n;
+    put32(prefix+48,100);put32(prefix+52,19);put16(prefix+194,0x2001);q.qualified=true;
+    for(i=0;i<sizeof cases/sizeof cases[0];i++){
+        memset(bytes,0xa5,sizeof bytes);put32(bytes+44,cases[i][0]);put32(bytes+60,cases[i][1]);
+        put32(bytes+48,0);s.extent=cases[i][3]+312;
+        in=(ep7q_receive_input){cases[i][2],300,w+cases[i][3],0};
+        assert(ep7q_descriptor_receive_layout(&s,w,&in,&args));
+        assert(args.origin==cases[i][4] && args.descriptor==in.descriptor && args.timeout==0);
+        assert(ep7w_encode(300,prefix,in.handle==0x4d?(ep7t_ticket){0}:(ep7t_ticket){100,17},q.bytes,sizeof q.bytes,&n));
+        q.length=(unsigned)n;q.raw=(int)n;
+        r=ep7q_descriptor_receive(&ops,in.handle,args.timeout,bytes+(args.descriptor-w),312);
+        assert(r.status==0 && r.ticket.serial==(in.handle==0x4d?0u:17u));
+        assert(bytes[cases[i][3]+300]==(in.handle==0x4d?0:'E'));
+        --s.extent;assert(!ep7q_descriptor_receive_layout(&s,w,&in,&args) && !args.descriptor);++s.extent;
+        ++in.descriptor;assert(!ep7q_descriptor_receive_layout(&s,w,&in,&args));--in.descriptor;
+        in.nominal_bytes=312;assert(!ep7q_descriptor_receive_layout(&s,w,&in,&args));in.nominal_bytes=300;
+        in.handle=0x50;assert(!ep7q_descriptor_receive_layout(&s,w,&in,&args));
+    }
+    in=(ep7q_receive_input){0x4f,300,w+64,0};put32(bytes+60,0x12345678);
+    assert(!ep7q_descriptor_receive_layout(&s,w,&in,&args));
+    s.expanded_group_ready=false;s.bytes=(const unsigned char *)(uintptr_t)1;
+    assert(!ep7q_descriptor_receive_layout(&s,w,&in,&args));
+    assert(ep7q_receive_rejection(0x4c)==-1 && ep7q_receive_rejection(0xab)==-1 && ep7q_receive_rejection(0x4f)==-1);
+    assert(ep7q_receive_rejection(0x4d)==256 && ep7q_receive_rejection(0x50)==256);
+}
 static ep7t_ticket wire_relay_fixture(ep7t_ticket ticket){
     unsigned char cmd[EP7W_COMMAND]={0},native[EP7W_MAX];
     queue_fixture q={0};ep7q_ops ops=queue_ops(&q);ep7q_result result;
@@ -379,7 +416,7 @@ int main(void){
     assert(send(0x9014,0)==1);assert(send(0x9032,-7)==1);text_is(frame(),"L ALL -7");
     setter_status=0;f=frame();assert(ep7_text_present(&widget_token,&f)==0);setter_status=1;
     n=text_calls;f.category=1;assert(ep7_text_present(&widget_token,&f)==0);assert(text_calls==n);
-    transport_boundaries();wire_boundaries();materializer_boundaries();owned_io_boundaries();capture_vertical_slice();
+    transport_boundaries();wire_boundaries();materializer_boundaries();owned_io_boundaries();descriptor_receive_boundaries();capture_vertical_slice();
     assert(!held && current_queries==0);
     puts("router -> sidecar -> owned command receive -> three owned queue relays -> ticket -> 16 job slots: PASS; native queue backend/ABI/materializer mocked");return 0;
 }

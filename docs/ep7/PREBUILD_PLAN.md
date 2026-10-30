@@ -103,3 +103,7 @@ descriptor要求真实312字节拥有权；发送先消费票据，失败/legacy
 [materializer接收桥](MATERIALIZER_RECEIVE_BINDING.md)已实现，包含三种调用链的有界
 栈映射和本地raw receive接合；strict/ASan/UBSan及目标对象检查通过。context provider
 仍作为未解析符号等待G3/G6，未绕过资格条件。其余relay/worker收发与claim/retire继续推进。
+
+[descriptor接收桥](DESCRIPTOR_RECEIVE_BINDING.md)已覆盖四处直接接收及两条共享helper
+调用链；共享范围检查复用于materializer。未知非扩展队列按原ABI恢复原厂接收；
+扩展队列未知消费者拒绝，等待完整闭包。下一项为发送桥及消费/清理接合。

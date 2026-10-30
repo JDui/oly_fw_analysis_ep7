@@ -56,3 +56,12 @@ The target checker adds `--materializer-abi-only`; it checks four bridge
 instructions, the exact native return frame, relocation, symbols and local sizes.
 The existing integration exercises the mapper and owned receiver on bounded host
 stack fixtures. Neither result claims native execution or installed frame edits.
+
+`descriptor_receive_*` extends this to four direct dual-queue receives and the
+kind19 relay/worker paths through the shared helper. It reuses `stack.c` with the
+materializer. An unknown nonexpanded queue restores all four original registers
+and tail-delegates at the unchanged native SP; unqualified4c/ab/4f never fall back
+to a potentially short stock buffer. [Evidence and fallback contract](../../../../docs/ep7/DESCRIPTOR_RECEIVE_BINDING.md).
+`--receive-abi-only` checks the combined receiver object set and18 instructions
+in the descriptor bridge, including the local branch relocation to RET44. Native
+context providers and stock addresses remain unresolved until installation review.

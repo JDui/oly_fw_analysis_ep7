@@ -1,14 +1,6 @@
 #ifndef EP7_MATERIALIZER_FRAME_H
 #define EP7_MATERIALIZER_FRAME_H
-#include "../owned_io.h"
-typedef struct {
-    const unsigned char *bytes; /* live contiguous current-task stack mapping */
-    uint32_t low;
-    size_t extent;
-    /* Trusted installer/task provider proves all five frame edits and queue/I/O
-     * publication group. Matching PCs, pointers or mapped capacity cannot set it. */
-    bool expanded_group_ready;
-} ep7q_stack;
+#include "stack.h"
 enum {EP7Q_NORMAL=1,EP7Q_DRAIN_FIRST=2,EP7Q_DRAIN_NEXT=3};
 typedef struct {
     uint32_t command,descriptor;

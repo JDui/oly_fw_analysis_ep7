@@ -34,6 +34,11 @@ materializer三调用链已实现[有界栈映射与接收桥](MATERIALIZER_RECE
 检查通过，四条桥指令/return frame/relocation已核对。context provider仍未绑定，
 不能用布局匹配替代安装/任务域证据。下一项为其余relay/worker收发seam和claim/retire。
 
+四处双队列receive及kind19 relay/worker的[接收桥](DESCRIPTOR_RECEIVE_BINDING.md)已实现。
+52指令/5数据、目标18指令桥检查通过。主机strict通过；一次ASan超时，带启动日志的
+诊断复跑通过，原因仍未定位。共享helper仅对非扩展未知队列恢复原厂路径；4c/ab/4f
+未知消费者拒绝接收，不能据此宣称全接收闭包。下一项为发送和最终claim/retire。
+
 ## 本轮恢复后的增量
 
 - 在既有 controller sidecar 中实现 `ep7c_resolve_live`，无需额外 token map。

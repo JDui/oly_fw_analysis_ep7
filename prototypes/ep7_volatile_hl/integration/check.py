@@ -20,6 +20,8 @@ def check(record_hashes=True):
     headers.append(CORE/'snapshot_transport/owned_io.h')
     sources.append(CORE/'snapshot_transport/native/materializer_layout.c')
     headers.append(CORE/'snapshot_transport/native/materializer.h')
+    sources.extend(CORE/'snapshot_transport/native'/n for n in ['stack.c','descriptor_receive_layout.c'])
+    headers.extend(CORE/'snapshot_transport/native'/n for n in ['stack.h','descriptor_receive.h'])
     results={}
     with tempfile.TemporaryDirectory(prefix='ep7-ui-actual-host-') as tmp:
         for name,extra in [('strict',[]),('asan_ubsan',['-fsanitize=address,undefined','-fno-sanitize-recover=all'])]:

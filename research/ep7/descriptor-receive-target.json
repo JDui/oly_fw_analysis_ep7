@@ -1,0 +1,254 @@
+{
+  "scope": "Command and descriptor receive bridges with bounded stack mappers; native context providers/addresses unresolved",
+  "versions": {
+    "gcc": "mn10300-elf-gcc (GCC) 13.4.0",
+    "as": "GNU assembler (GNU Binutils) 2.45",
+    "ld": "GNU ld (GNU Binutils) 2.45",
+    "objdump": "GNU objdump (GNU Binutils) 2.45"
+  },
+  "objects": {
+    "materializer_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_bridge.s",
+      "definitions": [
+        "ep7_native_materializer_receive_bridge"
+      ],
+      "undefined": [
+        "_ep7q_materializer_entry"
+      ],
+      "checked_instructions": 4,
+      "incoming_native_frame_bytes": 44,
+      "additional_bridge_frame_bytes": 0,
+      "size_output": [
+        "13",
+        "0",
+        "0",
+        "13"
+      ]
+    },
+    "materializer_layout": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_layout.c",
+      "definitions": [
+        "_ep7q_materializer_layout"
+      ],
+      "undefined": [
+        "_ep7q_stack_span",
+        "_ep7q_stack_word",
+        "_memcpy"
+      ],
+      "size_output": [
+        "383",
+        "0",
+        "0",
+        "383"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_layout.c:4:6:ep7q_materializer_layout\t60\tstatic"
+      ]
+    },
+    "materializer_binding": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_binding.c",
+      "definitions": [
+        "_ep7q_materializer_entry"
+      ],
+      "undefined": [
+        "_ep7_gcc_queue_receive_local",
+        "_ep7q_command_receive",
+        "_ep7q_materializer_context_unresolved",
+        "_ep7q_materializer_layout"
+      ],
+      "size_output": [
+        "155",
+        "0",
+        "0",
+        "155"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_binding.c:4:12:receive_local\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_binding.c:6:5:ep7q_materializer_entry\t136\tstatic"
+      ]
+    },
+    "queue_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/queue_bridges.s",
+      "definitions": [
+        "_ep7_gcc_queue_receive_local",
+        "_ep7_gcc_queue_send_local"
+      ],
+      "undefined": [
+        "ep7_stock_queue_receive_local_unresolved",
+        "ep7_stock_queue_send_local_unresolved"
+      ],
+      "size_output": [
+        "40",
+        "0",
+        "0",
+        "40"
+      ]
+    },
+    "stack": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/stack.c",
+      "definitions": [
+        "_ep7q_stack_span",
+        "_ep7q_stack_word"
+      ],
+      "undefined": [],
+      "size_output": [
+        "183",
+        "0",
+        "0",
+        "183"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/stack.c:2:22:ep7q_stack_span\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/stack.c:12:6:ep7q_stack_word\t12\tstatic"
+      ]
+    },
+    "owned_io": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c",
+      "definitions": [
+        "_ep7q_command_receive",
+        "_ep7q_descriptor_receive",
+        "_ep7q_descriptor_send"
+      ],
+      "undefined": [
+        "_ep7w_decode",
+        "_ep7w_encode",
+        "_ep7w_ticket",
+        "_ep7w_write_trailer",
+        "_memcpy",
+        "_memset"
+      ],
+      "size_output": [
+        "1161",
+        "0",
+        "0",
+        "1161"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c:13:13:qualify\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c:18:13:ep7q_command_receive\t220\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c:33:13:ep7q_descriptor_receive\t104\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c:48:13:ep7q_descriptor_send\t400\tstatic"
+      ]
+    },
+    "wire": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/wire.c",
+      "definitions": [
+        "_ep7w_decode",
+        "_ep7w_encode",
+        "_ep7w_ticket",
+        "_ep7w_write_trailer"
+      ],
+      "undefined": [
+        "_memcpy",
+        "_memset"
+      ],
+      "size_output": [
+        "783",
+        "0",
+        "0",
+        "783"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:12:13:route_ok\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:17:6:ep7w_write_trailer\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:25:6:ep7w_encode\t44\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:41:5:ep7w_ticket\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:54:5:ep7w_decode\t36\tstatic"
+      ]
+    },
+    "memory": {
+      "source": "prototypes/ep7_volatile_hl/target/memory.c",
+      "definitions": [
+        "_memcpy",
+        "_memset"
+      ],
+      "undefined": [],
+      "size_output": [
+        "49",
+        "0",
+        "0",
+        "49"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/target/memory.c:8:7:memcpy\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/target/memory.c:18:7:memset\t0\tstatic"
+      ]
+    },
+    "descriptor_receive_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_bridge.s",
+      "definitions": [
+        "ep7_native_descriptor_receive_bridge"
+      ],
+      "undefined": [
+        "_ep7q_descriptor_receive_entry",
+        "ep7_stock_receive_wrapper_unresolved"
+      ],
+      "checked_instructions": 18,
+      "incoming_native_frame_bytes": 44,
+      "additional_bridge_frame_bytes": 0,
+      "size_output": [
+        "45",
+        "0",
+        "0",
+        "45"
+      ]
+    },
+    "descriptor_receive_layout": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_layout.c",
+      "definitions": [
+        "_ep7q_descriptor_receive_layout",
+        "_ep7q_receive_rejection"
+      ],
+      "undefined": [
+        "_ep7q_stack_span",
+        "_ep7q_stack_word",
+        "_memcpy"
+      ],
+      "size_output": [
+        "376",
+        "0",
+        "0",
+        "376"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_layout.c:4:5:ep7q_receive_rejection\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_layout.c:6:6:ep7q_descriptor_receive_layout\t52\tstatic"
+      ]
+    },
+    "descriptor_receive_binding": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_binding.c",
+      "definitions": [
+        "_ep7q_descriptor_receive_entry"
+      ],
+      "undefined": [
+        "_ep7_gcc_queue_receive_local",
+        "_ep7q_descriptor_receive",
+        "_ep7q_descriptor_receive_context_unresolved",
+        "_ep7q_descriptor_receive_layout",
+        "_ep7q_receive_rejection"
+      ],
+      "size_output": [
+        "162",
+        "0",
+        "0",
+        "162"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_binding.c:4:12:receive_local\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_binding.c:6:5:ep7q_descriptor_receive_entry\t124\tstatic"
+      ]
+    }
+  },
+  "remaining_external_symbols": [
+    "_ep7q_descriptor_receive_context_unresolved",
+    "_ep7q_materializer_context_unresolved",
+    "ep7_stock_queue_receive_local_unresolved",
+    "ep7_stock_queue_send_local_unresolved",
+    "ep7_stock_receive_wrapper_unresolved"
+  ],
+  "hash_checks_performed": false,
+  "target_linked": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "native_adapter_installed": false
+}
