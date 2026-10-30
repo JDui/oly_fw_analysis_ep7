@@ -466,7 +466,7 @@
   "event_count": 112,
   "limitations": [
     "Reviewed normal task preprocessing only; alternate producers or alias/direct paths are not globally excluded.",
-    "No app FSM 0x5701/0x2006 association proven.",
+    "Profile producer selects APP 0x5704; simultaneous runtime GUI state remains unqualified (see GUI bridge report).",
     "Matrix stride opcode disassembles udf01; arithmetic interpretation still needs independent MN103 opcode confirmation.",
     "No physical Delete behavior or live routing qualification."
   ],

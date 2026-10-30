@@ -179,3 +179,74 @@ first/second selection gates, separate ID domains and conservative rejection of
 metadata access after ACK. Every selection explicitly remains unqualified for
 firmware use and requires generation qualification. Passing these tests does not
 create a memory lease, implement H/L transport or validate real capture behavior.
+
+
+## Timeout/cancel paths do not qualify extension reuse
+
+The wait wrapper `0x60350c1a` has distinct operation-ID paths:
+
+- Bit 31 clear: one wait uses the supplied timeout. Return -50 maps to `0x9ecb`;
+  other nonzero errors map to `0x9ec8`. This timeout edge does not directly request abort.
+- Bit 31 set: waits use operand 20, poll `0x60354ac9` after -50, and repeat up to
+  50 times while the predicate remains false. Exhaustion also returns `0x9ecb`.
+- If that predicate becomes true, the wrapper calls conditional abort requester
+  `0x60334d84`, then waits again using the original timeout. **The second wait's
+  return is not checked**: `0x60350c89` branches to the `0x9e01` return path.
+
+Therefore `0x9e01` does not encode success of that second wait. The predicate is
+an object query through command 13, not independently a timeout detector.
+`0x60350da1` invokes its post-wait helper only for 0 or `0x9e01`, but the higher
+operation cleanup continues for other result classes too. `0x60350b6f` clears an
+operation bit in a per-core bitmap; it is not itself event destruction or a
+hardware join.
+
+Abort `0x60345a59` has a subpath polling MMIO `0x9f000070` and another subpath
+without that particular poll. Register meanings and all outstanding readers
+remain unqualified. Later cleanup dispatches by matching operation ID through
+multiple hardware-slot helpers; neither “there is no later synchronization” nor
+“cleanup always guarantees quiescence” follows from this bounded inspection.
+
+A proposed H/L extension must stay unavailable for reuse after timeout or
+unqualified cancellation until a separate terminal/generation contract is
+established. This is a conservative design requirement, **not a stock bug or
+use-after-free diagnosis**. [Timeout report](../../research/ep7/timeout-cancel-1100.json)
+reproduces the branch and unchecked-return evidence.
+
+## A real event-10 producer, with status and slot qualification
+
+The reviewed producer `0x60354ce4` initializes request header+16 to zero.
+Dispatcher `0x60334ba8` indexes ROM `0x604e4cd8`; entry 0 calls `0x60334db4` and
+translator `0x60344975`. Operation ID allocation `0x6034ed4c` uses bitmap banks
+to construct `0x8000 | bank<<8 | index` (bank <8, index <32). The translator's
+reviewed bit-31 augmentation is conditional on request+16 ==11, not this type-0
+header. Generic bit-31 cancellation polling must not be indiscriminately applied
+to every COLOR request; other producers and later mutations remain separate.
+
+Driver setup `0x603450dd` chooses slot 0/1/2 from setup flags/values. Installer
+`0x60347378` stores operation ID and copies request callback/context into slot+4
+and slot+8. The request binder already connects that context to an operation
+record. A conditional **slot-0** path is now concrete:
+
+```text
+request callback/context → slot fields
+  → registered handler 0x6034ee6d (registration 0x6034f429)
+  → event 10 with argument 0, OR event 10 with slot+44 status
+  → router 0x6034442b → callback 0x60355fd4
+  → operation+32 result and operation+16 signal
+```
+
+The slot-0 handler reaches these branches under different MMIO status/flag gates;
+other paths emit different events or return without a callback. Abort code writes
+status `0x9e01` into slot+44, so **event 10 is not synonymous with success**.
+Even event 10/status 0 has not been established as an all-reader/DMA quiescence
+fence. A particular live `0x100d` or COLOR request is not assumed to select slot 0;
+setup flags and hardware semantics still matter.
+
+[Event-producer report](../../research/ep7/event10-producer-1100.json) includes
+request type, ROM dispatch, ID generation, callback installation, handler
+registration and status-path witnesses. These tools remain read-only:
+
+```sh
+python3 tools/ep7_timeout_cancel.py --stock /local/stock.BIN --objdump /trusted/mn103-objdump
+python3 tools/ep7_event10_producer.py --stock /local/stock.BIN --objdump /trusted/mn103-objdump
+```

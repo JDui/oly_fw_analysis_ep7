@@ -62,7 +62,7 @@ E-P7 原生 COLOR 提供 **12 色区饱和度 ±5、COLOR1–4**，另有暗角�
 
 ### 新的有依据备选：扩展原生类别，不强占 Delete
 
-已核实 selector/list ID 193 的四个原生类别值为 0..3，记忆索引在 RAM，不是已证明的持久化 property。可优先研究保留 0..3 后新增 COLOR-only H/L 类别：上下键仍是类别导航，INFO 仍是 ALL，拨轮保留选色/改值角色。必须同时扩展 parent switch、viewer/标签、独立轴状态与 H/L 存储，并处理切到 MONO 时禁用类别和焦点归一化；**不是改 list count 就能用**。
+已核实 selector/list ID 193 的四个原生类别值为 0..3，记忆索引在 RAM，不是已证明的持久化 property。可优先研究保留 0..3 后新增 COLOR-only H/L 类别：上下键仍是类别导航，INFO 保留原生编辑器内 ALL 行为（APP 0x5704 的条件 INFO 回调也须保留），拨轮保留选色/改值角色。必须同时扩展 parent switch、viewer/标签、独立轴状态与 H/L 存储，并处理切到 MONO 时禁用类别和焦点归一化；**不是改 list count 就能用**。
 
 [原生 selector 证据和纯主机设计测试](NATIVE_SELECTOR_DESIGN.md) 已落地；这些测试只验证提案，不是相机 UI 或 HSL 实现。没有找到可宣称可用的 H/L 触控命中区。
 

@@ -34,8 +34,8 @@ GUI machine 1's event `0x9715` selects handler `0x60e4b097` in the identified
 states. Argument 4 or 5 returns packed GUI state **`0x041d`** (machine 4/state 29),
 whose COLOR-selector construction was already traced. Argument 4 resets the
 remembered category to zero; argument 5 preserves it. GuiCaller enums `0xa1`
-and `0xb7` map to `0x9715`. The originating app action/argument producer is still
-being traced; this is not a physical-button guarantee.
+and `0xb7` map to `0x9715`. The concrete B7-producing app branches are now traced below; this is still not
+a physical-button guarantee.
 
 Reviewed forwarding tables map OLY UP/DOWN to GUI enums 8/11 and local
 `0x9004`/`0x9006`. The parent vtable binds their navigation wrappers. The initial
@@ -87,3 +87,48 @@ python3 -m unittest discover -s tests -p 'test_ep7*.py'
 
 Delete remains a separate routing-qualified candidate, not an assumed compatible
 PEN-F shortcut. Neither this design nor its host tests is permission to flash.
+
+
+## Concrete app profile-entry producers
+
+The bridge can now be narrowed from generic app-state examples to actual profile
+entry requests. A guarded branch in `0x60cd4830` writes next app state **`0x5704`**,
+outgoing enum **`0xb7`** and argument **4** at `0x60cd4a1d..0x60cd4a2c`.
+Another guarded branch in `0x60cf0713` writes the same app state and enum with
+argument **5** at `0x60cf08e6..0x60cf08f7`. The latter is referenced by native
+profile-launch touch event tables; this establishes a profile-entry route,
+**not H/L touch editing**. Its switch values are not assumed public picture modes,
+and a subsequent branch can replace the enum with `0xee`.
+
+The existing GuiCaller mapping `0xb7 → 0x9715` and GUI entry handler therefore
+connect these branches to reset-category argument 4 / retain-category argument 5.
+One return normalizer (`0x60cf665d`, guard `0x60cd52e1`) preserves B7 on the
+inspected path; its clearing condition targets enum `0xae`. Full transitive
+behavior of every external helper and asynchronous delivery remains unqualified.
+The alternate enum `0xa1` producer was not found and is not inferred from a
+coincidentally equal property-read argument.
+
+The selected app-state descriptor is `0x60f5e66c = (0x5704,0x60f5d06c,90)`.
+State resolution and commit code connect the requested state to the event table.
+Its reviewed rows include:
+
+| OLY event | Outgoing GUI enum | Row callback |
+| --- | --- | --- |
+| UP `0x0100000a` | `0x08` | none |
+| DOWN `0x0100000e` | `0x0b` | none |
+| OK `0x0100001a` | `0x14` | `0x60cd4238` |
+| Delete `0x01000026` | `0x27` | none |
+| INFO `0x0100002a` | `0x25` | `0x60ceb328` |
+
+Thus Delete's normal app forwarding leads toward the previously identified GUI
+`0x9016` admission gap. INFO is not unconditional: its callback can change the
+enum to `0x9d`, argument to 17 and app state to `0x5809` when its stock conditions
+hold. Preserving “INFO = ALL” means preserving the native qualified editor path,
+not overriding this legitimate app-level transition.
+
+A higher-priority secondary event table can take precedence, and GUI queue
+posting is not proof of observed simultaneous active states. These limitations
+remain explicit rather than claiming a universal physical key route.
+The [GUI bridge report](../../research/ep7/gui-bridge-1100.json) now includes the
+two producer branches, state-table rows/lookup, state/argument commit and the
+inspected conditional INFO override and B7-preserving normalizer.

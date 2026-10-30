@@ -63,6 +63,90 @@ ROWS=(
  ('GUI Delete enum',0x6113ea70,(0x27,0x9016)),
  ('GuiCaller vtable sendEvent',0x611401c4,(0x60dd4ba9,)),
 )
+
+# Additional bounded profile entry evidence.
+WINDOWS.update({
+ 'profile_entry_reset_producer': (0x60cd49b6, 0x60cd4a71),
+ 'profile_entry_remember_producer': (0x60cf0896, 0x60cf0907),
+ 'profile_entry_switch': (0x60cf0796, 0x60cf07c6),
+ 'app_state_commit': (0x60cf318c, 0x60cf31d4),
+ 'app_state_family_lookup': (0x60cf6824, 0x60cf6877),
+ 'app_profile_table_lookup': (0x60cf695e, 0x60cf6980),
+ 'app_state_event_dispatch': (0x60cf5c4e, 0x60cf5c7f),
+ 'normalizer_enum_guard': (0x60cd52e1, 0x60cd5313),
+ 'packet_normalizer': (0x60cf665d, 0x60cf6690),
+ 'profile_info_override': (0x60ceb328, 0x60ceb37e),
+})
+WITNESSES.update({
+ 0x60cd5305: ('mov', '(32,a2),d1'),
+ 0x60cd5308: ('cmp', '174,d1'),
+ 0x60cd530c: ('bne', '0x60cd530f'),
+ 0x60cf6661: ('call', '0x60cd52e1,[d2,a2],12'),
+ 0x60cf666a: ('bne', '0x60cf667e'),
+ 0x60cf6685: ('cmp', '1,d0'),
+ 0x60cf6687: ('bne', '0x60cf668d'),
+ 0x60cd4a1d: ('mov', '22276,d0'),
+ 0x60cd4a20: ('mov', 'd0,(192,a2)'),
+ 0x60cd4a24: ('add', '32,a2'),
+ 0x60cd4a26: ('mov', '183,d0'),
+ 0x60cd4a29: ('mov', 'd0,(a2)'),
+ 0x60cd4a2a: ('mov', '4,d0'),
+ 0x60cd4a2c: ('mov', 'd0,(4,a2)'),
+ 0x60cf08e6: ('mov', '22276,d0'),
+ 0x60cf08e9: ('mov', 'd0,(192,a2)'),
+ 0x60cf08ed: ('mov', '32,a0'),
+ 0x60cf08ef: ('add', 'a2,a0'),
+ 0x60cf08f1: ('mov', '183,d0'),
+ 0x60cf08f4: ('mov', 'd0,(a0)'),
+ 0x60cf08f5: ('mov', '5,d0'),
+ 0x60cf08f7: ('mov', 'd0,(4,a0)'),
+ 0x60cf08fa: ('cmp', '1,d2'),
+ 0x60cf08fe: ('mov', '238,d0'),
+ 0x60cf0901: ('mov', 'd0,(32,a2)'),
+ 0x60cf07a5: ('clr', 'd2'),
+ 0x60cf07a6: ('mov', '(76,a1),a1'),
+ 0x60cf07a9: ('calls', '(a1)'),
+ 0x60cf07b9: ('add', '-3,d0'),
+ 0x60cf07bc: ('mov', '1626668500,a0'),
+ 0x60cf318c: ('mov', '192,a0'),
+ 0x60cf3190: ('mov', '(a0),d0'),
+ 0x60cf3197: ('mov', '172,a3'),
+ 0x60cf319b: ('mov', 'd0,(a3)'),
+ 0x60cf31d4: ('mov', '32,a1'),
+ 0x60cf31de: ('mov', '(4,a1),d0'),
+ 0x60cf31e3: ('mov', 'd0,(4,a0)'),
+ 0x60cf682a: ('mov', '65280,d2'),
+ 0x60cf6830: ('and', 'd3,d2'),
+ 0x60cf6844: ('add', '-20479,d2'),
+ 0x60cf684f: ('mov', '1626782204,a1'),
+ 0x60cf6975: ('mov', '1626727996,a1'),
+ 0x60cf697b: ('mov', '11,d1'),
+ 0x60cf5c75: ('mov', '(24,sp),a1'),
+ 0x60cf5c77: ('mov', '(32,sp),d1'),
+ 0x60cf5c79: ('call', '0x60cf304c,[d2,d3,a2,a3],36'),
+ 0x60ceb344: ('mov', '280,d0'),
+ 0x60ceb350: ('bne', '0x60ceb37b'),
+ 0x60ceb363: ('cmp', '1,d0'),
+ 0x60ceb365: ('bne', '0x60ceb37b'),
+ 0x60ceb36b: ('mov', '157,d0'),
+ 0x60ceb36e: ('mov', 'd0,(a0)'),
+ 0x60ceb36f: ('mov', '17,d0'),
+ 0x60ceb371: ('mov', 'd0,(4,a0)'),
+ 0x60ceb374: ('mov', '22537,d0'),
+ 0x60ceb377: ('mov', 'd0,(192,a3)'),
+})
+ROWS += (
+ ('profile state descriptor', 0x60f5e66c, (0x5704, 0x60f5d06c, 90,)),
+ ('profile state hash', 0x60f6ba3c, (1793, 0x60cf695e,)),
+ ('profile UP', 0x60f5d0ac, (0x100000a, 8, 1, 0,)),
+ ('profile DOWN', 0x60f5d0dc, (0x100000e, 11, 1, 0,)),
+ ('profile OK', 0x60f5d16c, (0x100001a, 20, 1, 0x60cd4238,)),
+ ('profile Delete', 0x60f5d1dc, (0x1000026, 39, 1, 0,)),
+ ('profile INFO', 0x60f5d1fc, (0x100002a, 37, 1, 0x60ceb328,)),
+ ('profile touch entry callback', 0x60f578c8, (0x2000023, 1, 1, 0x60cf0713,)),
+ ('GUI profile enum', 0x6113eef0, (183, 0x9715,)),
+)
+
 def require_instruction(assembly,address,mnemonic,operands):
  lines=[line for line in assembly.splitlines() if line.startswith(f'{address:x}:')]
  require(len(lines)==1 and re.search(r'\b'+re.escape(mnemonic)+r'\s+'+re.escape(operands)+r'\s*$',lines[0]),f'instruction mismatch at {address:#x}')
@@ -82,7 +166,7 @@ def inspect(raw,objdump):
    witnesses=[a for a in WITNESSES if start<=a<stop]
    for address in witnesses:require_instruction(asm,address,*WITNESSES[address])
    reports[name]=dict(start=hex(start),stop_exclusive=hex(stop),sha256=sha256(main[start-BASE:stop-BASE]),witness_count=len(witnesses))
- return dict(scope='Exact stock static bridge, conditional on selected app FSM state; not live routing qualification',source_sha256=identity['source_sha256'],objdump_version=version,objdump_sha256=sha256(objdump.read_bytes()),tables=facts,windows=reports,instruction_witness_count=len(WITNESSES),limitations=['States 0x2006/0x5701 not proven active while COLOR editor is selected.','Non-null state callbacks may override packet enum.','GUI INFO maps to9014 under demonstrated forwarding table, not9012.','Event posting does not establish eventual delivery to selected GUI object.'],camera_accessed=False,firmware_executed=False,flash_ready=False)
+ return dict(scope='Exact stock static bridge, conditional on selected app FSM state; not live routing qualification',source_sha256=identity['source_sha256'],objdump_version=version,objdump_sha256=sha256(objdump.read_bytes()),tables=facts,windows=reports,instruction_witness_count=len(WITNESSES),limitations=['B7 producers request APP state 0x5704 and GUI 0x9715 argument 4/5; eventual simultaneous runtime state is not device-qualified. APP higher-priority table and normalization remain conditional.','Non-null state callbacks may override packet enum.','GUI INFO maps to9014 under demonstrated forwarding table, not9012.','Event posting does not establish eventual delivery to selected GUI object.'],camera_accessed=False,firmware_executed=False,flash_ready=False)
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--stock',required=True,type=Path);p.add_argument('--objdump',required=True,type=Path);a=p.parse_args()
  print(json.dumps(inspect(a.stock.read_bytes(),a.objdump.resolve()),indent=2))

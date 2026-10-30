@@ -24,4 +24,14 @@ class Tests(unittest.TestCase):
     def test_witnesses_covered_once(self):
         for a in probe.WITNESSES:
             self.assertEqual(sum(start <= a < end for start,end in probe.WINDOWS.values()),1)
+    def test_profile_state_rows(self):
+        rows={label:values for label,address,values in probe.ROWS}
+        self.assertEqual(rows['profile state descriptor'], (0x5704,0x60f5d06c,90))
+        self.assertEqual(rows['profile Delete'], (0x1000026,39,1,0))
+        self.assertNotEqual(rows['profile INFO'][-1],0)
+        self.assertEqual(rows['GUI profile enum'],(0xb7,0x9715))
+    def test_both_entry_arguments_witnessed(self):
+        self.assertEqual(probe.WITNESSES[0x60cd4a2a],('mov','4,d0'))
+        self.assertEqual(probe.WITNESSES[0x60cf08f5],('mov','5,d0'))
+        self.assertEqual(probe.WITNESSES[0x60cf08fe],('mov','238,d0'))
 if __name__ == '__main__': unittest.main()

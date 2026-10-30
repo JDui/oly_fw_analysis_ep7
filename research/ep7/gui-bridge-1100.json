@@ -106,6 +106,91 @@
       "words": [
         "0x60dd4ba9"
       ]
+    },
+    {
+      "label": "profile state descriptor",
+      "address": "0x60f5e66c",
+      "words": [
+        "0x5704",
+        "0x60f5d06c",
+        "0x5a"
+      ]
+    },
+    {
+      "label": "profile state hash",
+      "address": "0x60f6ba3c",
+      "words": [
+        "0x701",
+        "0x60cf695e"
+      ]
+    },
+    {
+      "label": "profile UP",
+      "address": "0x60f5d0ac",
+      "words": [
+        "0x100000a",
+        "0x8",
+        "0x1",
+        "0x0"
+      ]
+    },
+    {
+      "label": "profile DOWN",
+      "address": "0x60f5d0dc",
+      "words": [
+        "0x100000e",
+        "0xb",
+        "0x1",
+        "0x0"
+      ]
+    },
+    {
+      "label": "profile OK",
+      "address": "0x60f5d16c",
+      "words": [
+        "0x100001a",
+        "0x14",
+        "0x1",
+        "0x60cd4238"
+      ]
+    },
+    {
+      "label": "profile Delete",
+      "address": "0x60f5d1dc",
+      "words": [
+        "0x1000026",
+        "0x27",
+        "0x1",
+        "0x0"
+      ]
+    },
+    {
+      "label": "profile INFO",
+      "address": "0x60f5d1fc",
+      "words": [
+        "0x100002a",
+        "0x25",
+        "0x1",
+        "0x60ceb328"
+      ]
+    },
+    {
+      "label": "profile touch entry callback",
+      "address": "0x60f578c8",
+      "words": [
+        "0x2000023",
+        "0x1",
+        "0x1",
+        "0x60cf0713"
+      ]
+    },
+    {
+      "label": "GUI profile enum",
+      "address": "0x6113eef0",
+      "words": [
+        "0xb7",
+        "0x9715"
+      ]
     }
   ],
   "windows": {
@@ -131,7 +216,7 @@
       "start": "0x60cf31d4",
       "stop_exclusive": "0x60cf31fe",
       "sha256": "ef44b9c3f6be9f3afbceceac89448e396803d1f11a5875256f1504dca5c90a71",
-      "witness_count": 3
+      "witness_count": 5
     },
     "packet_getters": {
       "start": "0x60cf2f20",
@@ -174,11 +259,71 @@
       "stop_exclusive": "0x60dd505c",
       "sha256": "f595f9690ab82cb84931842d8797a47ebba32ab7f0e75f50bb3b23c351ac8d29",
       "witness_count": 3
+    },
+    "profile_entry_reset_producer": {
+      "start": "0x60cd49b6",
+      "stop_exclusive": "0x60cd4a71",
+      "sha256": "c1ebb002b1e8336f05f5a98b08830c27951a5a37ff18d5c2de0672407997232e",
+      "witness_count": 7
+    },
+    "profile_entry_remember_producer": {
+      "start": "0x60cf0896",
+      "stop_exclusive": "0x60cf0907",
+      "sha256": "c5896abb38018351cfb961fcf1eb8b2d303af5ca47bcc3f65941e56a816e5f1e",
+      "witness_count": 11
+    },
+    "profile_entry_switch": {
+      "start": "0x60cf0796",
+      "stop_exclusive": "0x60cf07c6",
+      "sha256": "95dca6a557ebca7596d2ce5d757974a15074e2286036f20f34fbdb0311197cda",
+      "witness_count": 5
+    },
+    "app_state_commit": {
+      "start": "0x60cf318c",
+      "stop_exclusive": "0x60cf31d4",
+      "sha256": "43872d03ddf1d93a9b3b49d0ccc5b39a6c2cbb6de7a89f41c56b609bd2e3c952",
+      "witness_count": 4
+    },
+    "app_state_family_lookup": {
+      "start": "0x60cf6824",
+      "stop_exclusive": "0x60cf6877",
+      "sha256": "c4899030f57e450d1205de35f86d1bd6ea39ce5944d53b7c3aaf4dfc6e054887",
+      "witness_count": 4
+    },
+    "app_profile_table_lookup": {
+      "start": "0x60cf695e",
+      "stop_exclusive": "0x60cf6980",
+      "sha256": "2f0cbb7dcda5652a6186a9964ef5b8c336e50d26ba14b61707b7af387fbfb127",
+      "witness_count": 2
+    },
+    "app_state_event_dispatch": {
+      "start": "0x60cf5c4e",
+      "stop_exclusive": "0x60cf5c7f",
+      "sha256": "35cc4b8e0c7bbccbb45cf94897bed934edc9977741c5cf064a5c1de4e5431852",
+      "witness_count": 3
+    },
+    "normalizer_enum_guard": {
+      "start": "0x60cd52e1",
+      "stop_exclusive": "0x60cd5313",
+      "sha256": "45862ec2e812061c11803cf99d6bd624d7831dda94591ae5931a259e9d27fd7c",
+      "witness_count": 3
+    },
+    "packet_normalizer": {
+      "start": "0x60cf665d",
+      "stop_exclusive": "0x60cf6690",
+      "sha256": "d53542308ad3d418d5b47202d083a6767bc6158bb7cbc642325a141493acf7eb",
+      "witness_count": 4
+    },
+    "profile_info_override": {
+      "start": "0x60ceb328",
+      "stop_exclusive": "0x60ceb37e",
+      "sha256": "107f70531bdd0dd76666971760f8035a805883511db00e940dd0fcd4166ba2cc",
+      "witness_count": 10
     }
   },
-  "instruction_witness_count": 25,
+  "instruction_witness_count": 80,
   "limitations": [
-    "States 0x2006/0x5701 not proven active while COLOR editor is selected.",
+    "B7 producers request APP state 0x5704 and GUI 0x9715 argument 4/5; eventual simultaneous runtime state is not device-qualified. APP higher-priority table and normalization remain conditional.",
     "Non-null state callbacks may override packet enum.",
     "GUI INFO maps to9014 under demonstrated forwarding table, not9012.",
     "Event posting does not establish eventual delivery to selected GUI object."

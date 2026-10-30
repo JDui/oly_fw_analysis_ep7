@@ -1,0 +1,107 @@
+{
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "request_type_zero": {
+      "start": "0x60354ce4",
+      "stop_exclusive": "0x60354d01",
+      "sha256": "51584574a327a63dafe5a1dc23e16458734cd05b7860a4975400f9bd3fa3fab5",
+      "witness_count": 2
+    },
+    "request_dispatch": {
+      "start": "0x60334ba8",
+      "stop_exclusive": "0x60334bba",
+      "sha256": "feace1ec6f16a750f27d4e013c975db1e5e7f75b6a325581de0e0919ca2499dd",
+      "witness_count": 4
+    },
+    "driver_entry": {
+      "start": "0x60334db4",
+      "stop_exclusive": "0x60334e63",
+      "sha256": "49a871bdec2b7fabf63301f8148569511187d97a4142ae36c5dccb5dc5463cd9",
+      "witness_count": 2
+    },
+    "driver_translate_and_id": {
+      "start": "0x60344975",
+      "stop_exclusive": "0x603449bd",
+      "sha256": "d76ea9ce7719f31928d9e32eefa98a2fca475e4e88714eac819b6dbe464aec04",
+      "witness_count": 7
+    },
+    "operation_id_allocator": {
+      "start": "0x6034ed4c",
+      "stop_exclusive": "0x6034ed9a",
+      "sha256": "0746fdb1b40a5164930dfc03fc8cbf2f2f848a3cfa8490b76c888ee94b56bc33",
+      "witness_count": 5
+    },
+    "slot_selector": {
+      "start": "0x60345194",
+      "stop_exclusive": "0x603451d3",
+      "sha256": "76bb24ceaf73cf18191472aa07eeacef003f6d1e5238982ba898c45a53639bd8",
+      "witness_count": 6
+    },
+    "slot_callback_install": {
+      "start": "0x60347378",
+      "stop_exclusive": "0x60347397",
+      "sha256": "28e6233287bc7a41bf804b9580973a1bb41369777c4925ac0f272674d403b4e6",
+      "witness_count": 7
+    },
+    "callback_router": {
+      "start": "0x6034442b",
+      "stop_exclusive": "0x60344442",
+      "sha256": "0f6113c7ee1d3875d5152da560b7effdc7791a0f46bd6bc879cff9dd0fc4a5ba",
+      "witness_count": 4
+    },
+    "slot0_event_handler": {
+      "start": "0x6034ee6d",
+      "stop_exclusive": "0x6034ef7b",
+      "sha256": "2a932ea64d1cb292a387b37302c111b820616adc195411fb4c6c8e28f61a034e",
+      "witness_count": 15
+    },
+    "handler_registration": {
+      "start": "0x6034f429",
+      "stop_exclusive": "0x6034f47f",
+      "sha256": "48af87aa6afd6ce97c44ccb8d4c446b3e48ecf539af6744ad12fa3f01d187460",
+      "witness_count": 5
+    },
+    "abort_status_writer": {
+      "start": "0x60345a59",
+      "stop_exclusive": "0x60345af8",
+      "sha256": "8589413382ef815d2e4d799ab1adefbfa584fb8d981c91f85a0f8d61cfd10342",
+      "witness_count": 3
+    }
+  },
+  "instruction_witness_count": 60,
+  "request_type_zero": {
+    "driver": "0x60334db4",
+    "id_base": 32768,
+    "id_bank_limit": 8,
+    "id_index_limit": 32,
+    "bit31_added_only_for_type11_in_reviewed_translator": true
+  },
+  "callback_transport": {
+    "slot_callback_offset": 4,
+    "slot_context_offset": 8,
+    "slot_id_offset": 0,
+    "router": "0x6034442b"
+  },
+  "event10": {
+    "handler": "0x6034ee6d",
+    "slot_index": 0,
+    "registration_selector": 148,
+    "zero_status_path": "0x6034ef5a",
+    "stored_status_path": "0x6034ef4b",
+    "stored_status_halfword_offset": 44,
+    "abort_writer": "0x60345a59",
+    "cancel_status": "0x9e01",
+    "event10_alone_is_not_success": true
+  },
+  "limitations": [
+    "Slot0 is a statically connected conditional path, not a measured slot selection for every kind16/0x100d operation.",
+    "Hardware status bits and absence of outstanding DMA/readers remain unqualified.",
+    "Error/cancel status may use event10 too; receipt is not a proven universal quiescence fence.",
+    "No generation-safe extension ownership or flash-ready patch established."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

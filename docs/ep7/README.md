@@ -71,7 +71,7 @@ python3 -m unittest discover -s tests -p 'test_ep7*.py'
 The tool checks the stock identity before invoking the explicitly selected
 disassembler; it uses a deleted-on-exit temporary decoded input and emits no
 code listing. Never point `--objdump` at an untrusted executable. No firmware is
-executed by disassembly. Ninety E-P7 synthetic/guard tests and nine container tests
+executed by disassembly. 104 E-P7 synthetic/guard tests and nine container tests
 pass; the separate exact-stock and static-disassembly runs both pass.
 
 ## Why this is plausible, but not a simple button remap
@@ -187,7 +187,7 @@ dispatch pointers. It records static-window hashes. It emits hashes and
 non-payload metadata, no extracted firmware strings or disassembly. It produces no
 patched BIN and exposes no relaxed-hash/force option.
 
-Ninety E-P7 input-free tests and nine existing synthetic container tests pass.
+104 E-P7 input-free tests and nine existing synthetic container tests pass.
 The real-stock audit also passed separately; these are different evidence levels.
 Native emulator/ISP, full camera boot, real input, capture and flashing checks
 have not been run.

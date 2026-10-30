@@ -1,0 +1,68 @@
+{
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "wait_branching": {
+      "start": "0x60350c1a",
+      "stop_exclusive": "0x60350ce4",
+      "sha256": "cd4429cc0f31eb6b779d95f020d80c31619e3f168c166a1d7642fa3b44def604",
+      "witness_count": 21
+    },
+    "postwait_gate": {
+      "start": "0x60350da1",
+      "stop_exclusive": "0x60350dbf",
+      "sha256": "867ee1fcb0cc6e3e5a3cba90c68de321717d07f1e4bc4082f6a7e9a4632221b8",
+      "witness_count": 5
+    },
+    "predicate": {
+      "start": "0x60354ac9",
+      "stop_exclusive": "0x60354aee",
+      "sha256": "c268b4acd855fddb527501a233c45eff1a40539404ae98e79ca4c457f2e80f30",
+      "witness_count": 4
+    },
+    "conditional_abort": {
+      "start": "0x60334d84",
+      "stop_exclusive": "0x60334daa",
+      "sha256": "218ee3834602799c1abb9aea7832e743c0aafb44656bda38cfc511faab15ac15",
+      "witness_count": 7
+    },
+    "abort_register_paths": {
+      "start": "0x60345a59",
+      "stop_exclusive": "0x60345af8",
+      "sha256": "8589413382ef815d2e4d799ab1adefbfa584fb8d981c91f85a0f8d61cfd10342",
+      "witness_count": 4
+    },
+    "bitmap_cleanup": {
+      "start": "0x60350b6f",
+      "stop_exclusive": "0x60350ba8",
+      "sha256": "9ee76f5b258c50ad17644142d7a3c7d3f7abc7f11c099932fa6d5bddff3adaf3",
+      "witness_count": 4
+    }
+  },
+  "instruction_witness_count": 45,
+  "waits": {
+    "poll_timeout_operand": 20,
+    "poll_limit": 50,
+    "lower_timeout_result": -50,
+    "timeout_return": "0x9ecb",
+    "generic_error_return": "0x9ec8",
+    "cancel_return": "0x9e01",
+    "second_wait_result_tested": false
+  },
+  "qualification": {
+    "cancel_return_does_not_prove_second_wait_success": true,
+    "abort_requires_matching_id_and_bit31": true,
+    "bitmap_clear_is_not_quiescence_proof": true,
+    "all_transitive_cleanup_not_mapped": true,
+    "permits_extension_reuse": false
+  },
+  "limitations": [
+    "MMIO status meanings and all cleanup targets are not qualified.",
+    "Some abort paths poll hardware state; absence of all synchronization is NOT asserted.",
+    "Do not treat cancellation/timeout return or bitmap cleanup as extension lifetime proof."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}
