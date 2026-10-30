@@ -225,3 +225,30 @@ The [viewer study](../../docs/ep7/VIEWER_DATA.md) explains why the existing S-on
 viewer and ±5 icon maps cannot render H/L unchanged. `renderer_ready` remains false
 until the native data source, category creation/disposal, resources and display
 lifetime are implemented and reviewed.
+
+## Executable vertical slice and remaining native bindings
+
+[Actual integration](integration/) joins the real router/raw adapter/UI/core,
+UTF16 formatter and capture/lifecycle/direct-reader code. It checks all16 embedded
+operation slots, frozen H/L despite later UI edits, unchanged S/output bytes and
+revocation before free. Native admission, text setter, allocator and processing
+callbacks are host fixtures; it is not native firmware end-to-end validation.
+
+[Text payload/ABI](text_viewer/) and [text ownership lifecycle](text_lifecycle/)
+are source-only candidates. The native setter deep-copies UTF16, but a qualified
+font/layout descriptor, initialization-success detector, unattached-child destroy
+provider and category binding are still missing. Factory nonnull is not proof of
+successful initialization; attachment transfers ownership even if rendering fails.
+
+[Startup bootstrap](poll_lock_provider/bootstrap/) initializes the actual selected
+provider/core under a private serialized contract, retaining full-width handles
+and quarantining ambiguous cleanup failures. It has no live-runtime teardown or
+camera startup hook. [Task-domain evidence](../../docs/ep7/TASK_DOMAINS.md) does not
+prove GUI, capture producer and reader share a domain. Separate runtimes/value
+snapshots are a possible alternative, not implemented transport.
+
+[Capture state guard](capture_state_guard/) compiles the exact two deferred-service
+call boundaries and a bytewise state observer. Its sidecar-invalidation callback
+is still unresolved and must guarantee synchronous fail-closed completion; merely
+calling it is not a working lifetime guard. Within-state free coverage and native
+controller serialization remain required.

@@ -1,0 +1,40 @@
+{
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "windows": [
+    {
+      "start": "0x6003057f",
+      "end_exclusive": "0x60030619",
+      "sha256": "a7dc37656e20fb582cc5a3c3acf9e21d0952cb652ca7600374062836979e2724"
+    },
+    {
+      "start": "0x60030b78",
+      "end_exclusive": "0x60030b9c",
+      "sha256": "84d020c0a17a28b93e59bf40238b9fb31df91f420f1c095c4d47c48d815228c8"
+    },
+    {
+      "start": "0x60031107",
+      "end_exclusive": "0x60031229",
+      "sha256": "2af753af6f5b1feaccf227afe54bdefc409922cd58e1361ef1aeb341fe868632"
+    },
+    {
+      "start": "0x60034f31",
+      "end_exclusive": "0x60035023",
+      "sha256": "0b65def104e34f126169be5f1df1ca34f8fc9ecbc83c3cbf1a4c8f1e2ef39b85"
+    }
+  ],
+  "witness_count": 48,
+  "create_returns_allocated_id_after_initializer": true,
+  "initializer_valid_maximum_sets_count_and_empty_queue": true,
+  "delete_negative_status_before_handle_clear": [
+    -18,
+    -25,
+    -42
+  ],
+  "delete_queue_wakeup_status": -51,
+  "admitted_delete_scope": "caller-private never-published new1/1 semaphore, no users/waiters",
+  "published_teardown_qualified": false,
+  "all_kernel_helpers_recursively_proven": false,
+  "native_api_invoked": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

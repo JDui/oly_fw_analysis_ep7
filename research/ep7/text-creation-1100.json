@@ -1,0 +1,134 @@
+{
+  "scope": "Dedicated text widget native creation and parent lifecycle, read-only",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "attach_list": {
+      "start": "0x60d02beb",
+      "stop_exclusive": "0x60d02bfe",
+      "sha256": "c8f9c152d46a2daaeb233ff759b9ae227784ebaa3e0c97a08e98a2a7090a1b3d",
+      "witness_count": 8
+    },
+    "base_container_destructor": {
+      "start": "0x60d0297c",
+      "stop_exclusive": "0x60d02995",
+      "sha256": "806e76cb514dbffb3a53ad6a2d04fd59578dbcb0a6fe6cd321c813b2c793e0e7",
+      "witness_count": 8
+    },
+    "base_resource": {
+      "start": "0x60cfdff1",
+      "stop_exclusive": "0x60cfe0cd",
+      "sha256": "9fa05180012feaced3a733b73a442f1053eb05d4e483bb690816d6218c2d5a09",
+      "witness_count": 91
+    },
+    "child_cleanup": {
+      "start": "0x60d02c64",
+      "stop_exclusive": "0x60d02cac",
+      "sha256": "47ace8bcb7c205870d919a81489c8742b70a09119206bd5f59b69a61c7cc03b6",
+      "witness_count": 30
+    },
+    "cleanup_dispatch": {
+      "start": "0x60d02bbd",
+      "stop_exclusive": "0x60d02be6",
+      "sha256": "3ebca1508f3d82d9b7f85c4e2ee33e5720eef5c0ca266ad1ebae1b9feaf61dc7",
+      "witness_count": 15
+    },
+    "container_bind_call": {
+      "start": "0x60d7acb5",
+      "stop_exclusive": "0x60d7acf0",
+      "sha256": "6321431d2689a24110443a6af5ffa81fe33c7dc4a852f1c156992e30a202a25a",
+      "witness_count": 26
+    },
+    "container_child_cleanup": {
+      "start": "0x60d42dc1",
+      "stop_exclusive": "0x60d42dcd",
+      "sha256": "fa3e53bb36c4c79788985536254c79a758aa48533bcf6f3bd11d5a967ed5fd5f",
+      "witness_count": 3
+    },
+    "container_destructor": {
+      "start": "0x60d7ab79",
+      "stop_exclusive": "0x60d7ab8c",
+      "sha256": "426eb7afc00684115799753c6d6dcd1deeee56dd19587789219088b0b7eccdcc",
+      "witness_count": 4
+    },
+    "container_lifecycle": {
+      "start": "0x60d43dc7",
+      "stop_exclusive": "0x60d43dd3",
+      "sha256": "7022760e5bb194111870b0427d930b8447b6b86d79dd30af8036865b4a821170",
+      "witness_count": 3
+    },
+    "factory_dispatch": {
+      "start": "0x60d337b2",
+      "stop_exclusive": "0x60d33818",
+      "sha256": "a96ff04e2891f52e7fe64d88ecc348d447753926f059fc690641b70573c42bc8",
+      "witness_count": 43
+    },
+    "list_allocate": {
+      "start": "0x60cfef7b",
+      "stop_exclusive": "0x60cfefa4",
+      "sha256": "488e65f1a2e1d53de95371c2e62a2e70b2be49ea07c7d47ca3f42d4eeae9c88b",
+      "witness_count": 19
+    },
+    "parent_bind": {
+      "start": "0x60cfe0f8",
+      "stop_exclusive": "0x60cfe104",
+      "sha256": "e615f990d85e8af2e5cb700f25416e56e9780891826a83f6f527f48247a6715e",
+      "witness_count": 5
+    },
+    "parent_pointer": {
+      "start": "0x60cfdfe0",
+      "stop_exclusive": "0x60cfdfe9",
+      "sha256": "180acf6870cf865f7da14f83ca4215e57c27fc63109619dfed0550690abc402d",
+      "witness_count": 3
+    },
+    "resource_tail_copy": {
+      "start": "0x60d3ca8a",
+      "stop_exclusive": "0x60d3ca95",
+      "sha256": "27d5d496b5929d90d5186095bd6cabc2c16ca99d6ee38d255e6a9f8a8b75e43a",
+      "witness_count": 5
+    },
+    "text_factory": {
+      "start": "0x60d33b02",
+      "stop_exclusive": "0x60d33b3b",
+      "sha256": "5645ee09c43dced131eabdb632f2cc1404f282137d2b07ec85e07831ebdc1bf2",
+      "witness_count": 18
+    },
+    "text_resource": {
+      "start": "0x60d4bfee",
+      "stop_exclusive": "0x60d4c097",
+      "sha256": "178416ee5cb0386a7959109b3b006ba64b74c4c9e9c395620fdd5a0dbb54fa0e",
+      "witness_count": 64
+    }
+  },
+  "instruction_witness_count": 345,
+  "table_entries": 7,
+  "factory": {
+    "type": "0x8010",
+    "object_bytes": 180,
+    "native_entry": "0x60d337b2",
+    "frame": "[d2,a2,a3],24",
+    "d0": "type",
+    "d1": "owner",
+    "a1": "qualified resource descriptor",
+    "result_a0": "allocated widget; initializer return NOT checked"
+  },
+  "ownership": {
+    "list_insertion_allocates_bytes": 12,
+    "attach_failure": 0,
+    "attach_success": 1,
+    "parent_pointer_offset": 20,
+    "descriptor_reviewed_read_extent": 94
+  },
+  "limitations": [
+    "Actual font/layout and opaque embedded-field lifetimes require caller qualification.",
+    "Nonnull factory result is not initialization-success proof; initializer failure handling remains required.",
+    "Container virtual+152 teardown, not destructor alone, destroys its registered children.",
+    "No standalone safe destroy wrapper for new unattached child established in this bounded pass.",
+    "RAM resource table61fb7070 writer not joined; no zero-filled descriptor assumed valid.",
+    "No native code executed; renderer readiness remains false without lifetime and resource qualification."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

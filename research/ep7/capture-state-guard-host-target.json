@@ -1,0 +1,45 @@
+{
+  "sources": {
+    "bridge.s": "16a45817c5e7018b4055c10d48507d72535a7e961b0e13849c4da31750959b4e",
+    "observer.c": "41f834d62a2fd57121ca5e629389a5308ddac8c7abaa0549f567070ff9330a20",
+    "check.py": "78219e639a44cb787e7828f7442833cf888b93c311eff04c51f629ac3e0e755d",
+    "test_check.py": "e2afc87fe6ef0a75b5764ea5286adc52bab17cc2e4051bd5a90795a3bcea3ee8",
+    "README.md": "3a844bc92078a0536a496ea22a9d5e4b6c1392e2863171adbdb06a6bcdd30331"
+  },
+  "tools": {
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/xgcc": "15d81798f47b501bfbf43a9a97ef9318f8d54dd6739cfba1bf04bf10a42c44dd",
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/cc1": "a61e33cd394c7af451b9e8a108f9ad36a5e437985f08b2f4fc57f8f3e372edd5",
+    "toolchains/binutils-2.45-gas-build/gas/as-new": "5833fa140051525c4d432be6a931abc32e6b866f2a7152f16c1751a5f3122d6c",
+    "toolchains/binutils-2.45-build/binutils/objdump": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268"
+  },
+  "undefined_symbols": {
+    "bridge": [
+      "_ep7_gcc_state_transition_observer",
+      "ep7_stock_state_service_unresolved"
+    ],
+    "observer": [
+      "_ep7_sidecar_transition_unresolved"
+    ]
+  },
+  "assembly_instructions": 17,
+  "text_bytes": 47,
+  "observer_static_frame_bytes": 20,
+  "observer_extra_callback_depth_unknown": true,
+  "stack_model_pass": true,
+  "model_not_emulation": true,
+  "native_call_sites": [
+    "0x60289c5e",
+    "0x60289d02"
+  ],
+  "original_native_service": "0x6028a882",
+  "current_state": "0x62234fc0",
+  "pending_state": "0x62234fc2",
+  "state_width": 16,
+  "pending_sentinel": 255,
+  "old33_self_transition_included": true,
+  "callback_failure_policy_bound": false,
+  "controller_exclusion_proven": false,
+  "target_linked": false,
+  "target_executed": false,
+  "installed": false
+}

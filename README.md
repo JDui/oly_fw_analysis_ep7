@@ -25,6 +25,11 @@ Current work:
   Host integration tests run, and verified-source MN10300 GCC compiles the core,
   UI and bounded job decoder to unlinked objects. Native UI/lifetime adapters remain unbound,
   settings reset on boot, and **camera HSL has not been demonstrated**.
+- Run an [actual software vertical slice](prototypes/ep7_volatile_hl/integration/):
+  logical edits → real H/L state → UTF16 text payload → captured snapshot →
+  all16 fresh-job operation slots → direct coefficients → revoke/free. Strict
+  host and ASan/UBSan tests pass; native admission, allocation/processing and text
+  setter callbacks remain fixtures, **not a camera demonstration**.
 - Follow the conditional **kind19/0x2001 capture route** to its distinct fresh-job
   wrapper; the earlier concrete0x100d producer is labeled RecView/createAfFineTune,
   not demonstrated normal capture. Keep metadata ACK/free and image identity explicit.
@@ -52,8 +57,22 @@ See the [actual audit result](research/ep7/stock-audit-1100.json) and
 included. Input-event mapping, persistence/capture integration and hardware
 testing remain open. Separate real-pthread integration passes strict, ASan/UBSan
 and TSan runs; this does not qualify the camera’s native semaphore/domain/atomic
-backend. A narrower [private poll-only provider](prototypes/ep7_volatile_hl/poll_lock_provider/) now compiles without an atomic helper and passes real threaded host stress; its native domain, initialization and lifetime assumptions remain unqualified. The [native UI bridge](prototypes/ep7_volatile_hl/ui_native/) is compile-only: stock [viewer data](docs/ep7/VIEWER_DATA.md) reads S and its icon maps cover only −5…+5, so it cannot yet display the proposed ±7 H/L values. The user reports installed camera firmware **1.1**; this
-is not device testing or a readback of the installed image.
+backend. The [private poll-only provider](prototypes/ep7_volatile_hl/poll_lock_provider/)
+compiles without an atomic helper. Its [bootstrap](prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/)
+now preserves native-handle ownership through startup failure, but native hook
+installation, publication and [task-domain qualification](docs/ep7/TASK_DOMAINS.md)
+remain open; published-runtime teardown is not implemented.
+
+The native [text widget path](docs/ep7/TEXT_WIDGET.md) can copy UTF16 text, offering
+a concrete alternative to the stock ±5 icon maps. Self-authored text formatting
+and a setter ABI bridge compile, but [resource/factory qualification](docs/ep7/TEXT_WIDGET_CREATION.md),
+unattached-child cleanup and H/L category binding remain unresolved. No native
+renderer is enabled. Additional [node disposal evidence](docs/ep7/NODE_DISPOSAL.md)
+and a [state-generation boundary](docs/ep7/NODE_STATE_GUARD.md) prevent treating the
+earlier five observed free sites as complete lifetime coverage.
+
+The user reports installed camera firmware **1.1**; this is not device testing
+or a readback of the installed image.
 
 Upstream history, notices and attribution are retained. There is **no
 repository-wide license**; see [rights and provenance](RIGHTS-AND-PROVENANCE.md).

@@ -1,0 +1,45 @@
+{
+  "scope": "Actual C router/raw/UI/core/text/capture/direct-lifecycle host integration; mocked native admission and renderer readiness, not native rendering",
+  "sources": {
+    "prototypes/ep7_volatile_hl/integration/test_integration.c": "4d9615794bb5bdf02b8730c4dff71cfcabc5a8018ae26e2046401192937a385c",
+    "prototypes/ep7_volatile_hl/ui_native/bridge.c": "012825b2b6be964982457bb0eecb06018eb8ca239fe1f2ed3559fdc3dc59e865",
+    "prototypes/ep7_volatile_hl/ep7p_ui_raw.c": "ffcbcc54f89d3edaca2f9060c525a20effaa668aa7688506f1d745c8a4518c25",
+    "prototypes/ep7_volatile_hl/ep7p_ui.c": "cadb1699069f35616bc69cf09062bbc6c227239d3c61e39c42ddf42faef61fe7",
+    "prototypes/ep7_volatile_hl/ep7p.c": "0e9f1274706c0e1631cb1ebda3d35055a48200ba5c9817760f600ab9c4f63402",
+    "prototypes/ep7_volatile_hl/ep7p_decode.c": "25f857efc0e07a333e931c50dc69fff1de9d10f40b117532de5f2e59eb6e2d95",
+    "prototypes/ep7_volatile_hl/ep7p_lifecycle.c": "e937eec1ad8c41e346813c2d2c1a3d687a5585e5376e8af6a58558ef2e495932",
+    "prototypes/ep7_volatile_hl/text_viewer/text.c": "872b4b0314182f241fd0495ed969b647d3a99d82d65e4ffe1f6ca7f717b6231e",
+    "prototypes/ep7_volatile_hl/ui_native/bridge.h": "ce5c7ec712c3757320da8c0d253db0f7fdc2fe500fac629ef000eaaca38342c7",
+    "prototypes/ep7_volatile_hl/ep7p_ui_raw.h": "656b1b18057538df11f614bda00ef3a0892abc3b1b5a84cf4a6ed74fda577e47",
+    "prototypes/ep7_volatile_hl/ep7p_ui.h": "13ceab4efbad8ec0f8383ada52781099eed71cecfd98c068ba48e6871d9bc9df",
+    "prototypes/ep7_volatile_hl/ep7p.h": "a46308465556703ee0d658f07ffb73b34cb89041377468e84c92f5f2d1663bcd",
+    "prototypes/ep7_volatile_hl/ep7p_decode.h": "f4d28bb62c4801083db4c5a594882c56af68fe2440c247e9a70368ffc4f1e45d",
+    "prototypes/ep7_volatile_hl/ep7p_lifecycle.h": "d91fce4ff469d9eaac0b2dad12736a0f61fbb56385a8a541db83091013eff8a1",
+    "prototypes/ep7_volatile_hl/ep7p_direct.h": "6f29cc432d126dded64714e01aeb01c8e94561d7ae791401202fd756ae9ced71",
+    "prototypes/ep7_volatile_hl/ep7_ui_adapter_contract.h": "1f3292d41e88abdc2cecbe6d4e46de3c633fad591cae1a3391828d5447992b8e",
+    "prototypes/ep7_volatile_hl/text_viewer/text.h": "139e260a37df09fc106f549d86eef25d67e37b234d1f87b4b3dafe65f69bb091",
+    "prototypes/ep7_volatile_hl/integration/check.py": "5bfe209bf043219eb2b8f243d872a04412036a33fb600ef724ae67fc4a953f88"
+  },
+  "runs": {
+    "strict": {
+      "passed": true,
+      "stdout": "real router -> raw adapter -> UI -> core -> text/capture/direct lifecycle: PASS; native admission mocked, no renderer/hardware"
+    },
+    "asan_ubsan": {
+      "passed": true,
+      "stdout": "real router -> raw adapter -> UI -> core -> text/capture/direct lifecycle: PASS; native admission mocked, no renderer/hardware"
+    }
+  },
+  "raw_dispatch_stubbed": false,
+  "text_setter_mocked": true,
+  "native_admission_mocked": true,
+  "lifecycle_native_callbacks_mocked": true,
+  "real_decoder_operation_slots_exercised": 16,
+  "renderer_implemented": false,
+  "ui_serialization": "single host thread",
+  "lsan_disabled_due_ptrace": true,
+  "current_task_queries": 0,
+  "target_executed": false,
+  "camera_accessed": false,
+  "flash_ready": false
+}

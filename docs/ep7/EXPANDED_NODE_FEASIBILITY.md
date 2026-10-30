@@ -36,3 +36,25 @@ The finite scan of direct references to queue6223e314 identified two more cleanu
 The additional consumer6029efe6 has no identified direct cd/dd call to its entry or inner body. Literal6029eee2 installs it into a callback list alongside f039;6029ef4c registers via6029ad23. efe6 peeks queue, may populate a zero nodeID and associatedrecord ID, then pops and returns node. Following this one concrete callback branch: f039 takesnode a1, emits event40; ROM6042c45c=(40,f50d). f50d packet+8→d2 retains the OLD selected node while separately allocating a NEW native56-byte replacement for queue. f617 passes oldnode d2 into common4d34 envelope. Event55 row6042c494→f69f: envelope+4→args, args+8→node a2; f6ba frees node, then f6c2 frees envelope, f6cb args. This supplies a fifth precise revoke-before-free callsite, NOT evidence to conflate envelope frees with node frees.
 
 The new candidate `tools/ep7_expanded_node.py` / `tests/test_ep7_expanded_node.py` / [actual report](../../research/ep7/expanded-node-1100.json) pins202 instructions in20windows and the two event rows plus stride table;8tests pass. These five visible node free calls are602a31b1,602a4461,6029f1c2,602a4220,6029f6ba. Coverage is local and conditional: no assertion every runtime callback reconfiguration, alias, cancellation or abort leads to these five. An unreviewed free/reuse invalidates an expanded-live registry. This is a genuine remaining native-installation gate, not fixed by reading a tag, nor justification to hook all heap frees globally.
+
+
+## Follow-on corrections and narrower design
+
+The five sites above are the historical bounded audit, **not a sufficient current
+revocation set**. [Selected-node disposal](NODE_DISPOSAL.md) proves two more normal
+completion frees (`2a00`, `2ab5`) and conditional sites; [state-table evidence](NODE_STATE_TABLES.md)
+adds drain/helper frees and state34 alternatives. Treating the original five as
+complete would leave stale registrations after native frees.
+
+A [state-generation guard](NODE_STATE_GUARD.md) can narrow future admission to a
+qualified controller state33 generation: revoke on every actual commit from33,
+including33→33, and never revive old nodes on reentry. Both deferred-service call
+boundaries must be observed. This does not replace within-state free coverage,
+secondary event paths or explicit serialized-controller/lifetime contracts.
+
+Node storage need not necessarily be enlarged: a controller-local sidecar could
+hold immutable H/L capabilities for proven fresh native56-byte nodes. That design
+still needs allocation provenance, membership before prefix reads, lifetime/free
+coverage and fresh generations; a pointer or tag is not ABA protection. It is not
+implemented here. Separately owned metadata snapshot transport remains required;
+this alternative does not authorize using unrequested native object tails.

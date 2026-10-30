@@ -1,0 +1,22 @@
+{
+  "scope": "Exact-stock static pointer witnesses, not execution or exhaustive disposal closure",
+  "decoded_sha256": "5dd9af164b4590c7e82f6905c919b3cc450bb58f2d5742ab2a0e3a4eb2e26190",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "checked_instructions": 73,
+  "checked_event_rows": 4,
+  "new_node_free_sites": [
+    "0x602a29ab",
+    "0x602a2a00",
+    "0x602a2a48",
+    "0x602a2ab5"
+  ],
+  "normal_associated_flag_zero_sites": [
+    "0x602a2a00",
+    "0x602a2ab5"
+  ],
+  "associated_flag_one_branch_site": "0x602a29ab",
+  "flag_one_guarded_event_emitter_site": "0x602a2a48",
+  "closure_established": false,
+  "firmware_execution": false
+}

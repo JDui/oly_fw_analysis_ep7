@@ -1,0 +1,62 @@
+{
+  "scope": "Direct literal references and local sequential state-commit ABI; NOT all alias writes, task exclusivity, or live registry proof",
+  "sha256": "5dd9af164b4590c7e82f6905c919b3cc450bb58f2d5742ab2a0e3a4eb2e26190",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "checked_instructions": 36,
+  "literal_hits": [
+    "0x602897d7",
+    "0x602898c8",
+    "0x60289908",
+    "0x6028994b",
+    "0x60289989",
+    "0x602899fb",
+    "0x60289a3b",
+    "0x60289a7f",
+    "0x60289abb",
+    "0x60289b33",
+    "0x60289b73",
+    "0x60289bb7",
+    "0x60289bf3",
+    "0x60289c2b",
+    "0x60289c55",
+    "0x60289c79",
+    "0x60289c8b",
+    "0x60289cb1",
+    "0x60289cd6",
+    "0x60289ce3",
+    "0x60289fae"
+  ],
+  "direct_absolute_stores": [
+    "0x602897d7",
+    "0x60289c8b"
+  ],
+  "enclosing_entry": "0x60289c5e",
+  "native_call_saved_registers": [
+    "d2",
+    "d3",
+    "a2"
+  ],
+  "native_frame_bytes": 16,
+  "deferred_service_frame_bytes": 32,
+  "deferred_service_local_stack_offsets": [
+    4,
+    8,
+    12
+  ],
+  "deferred_service_window_sha256": "7409cbcd491e0aa96dde8691293200d6821aec4c8ff1357708cf67d92f3772dd",
+  "direct_service_caller_stack_arguments_found": false,
+  "candidate_precommit_boundary": "0x60289c85",
+  "old_state_register": "d2",
+  "new_state_register": "d0",
+  "revoke_condition": "actual pending commit !=255 and old==33, including same-state reentry",
+  "service_wrapper_callsites": [
+    "0x60289c5e",
+    "0x60289d02"
+  ],
+  "incoming_flags_needed_at_precommit": false,
+  "incoming_mdr_explicit_consumer_found": false,
+  "initialization_must_clear": true,
+  "global_mutex_proven": false,
+  "no_indirect_alias_proven": false,
+  "firmware_execution": false
+}

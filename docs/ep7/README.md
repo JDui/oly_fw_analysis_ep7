@@ -1,5 +1,18 @@
 # E-P7 HSL port: research status
 
+## Latest source-only integration milestone
+
+- [Actual portable vertical slice](../../prototypes/ep7_volatile_hl/integration/):
+  real UI/H-L/capture/direct-reader code,16 operation slots; native boundaries mocked.
+- [UTF16 text path](TEXT_WIDGET.md), [widget creation ownership](TEXT_WIDGET_CREATION.md),
+  and [startup bootstrap](../../prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/)
+  now have executable host/compile-only candidates, not native installation.
+- [Node disposal counterexamples](NODE_DISPOSAL.md), [finite state tables](NODE_STATE_TABLES.md),
+  [state-commit boundary](NODE_STATE_GUARD.md) and [task domains](TASK_DOMAINS.md) keep
+  real native lifetime/resource/domain qualification separate from host success.
+- No flash-ready firmware, native execution or hardware HSL demonstration.
+
+
 Status: **incomplete; no E-P7 firmware patch, install image, device execution or
 claim of flash safety**. Initial source review: 2026-10-30. Baseline:
 [`539fcf1fa9eda5fdef8ede4deeab94a4691d94c3`](https://github.com/fishcu/oly_fw_analysis/commit/539fcf1fa9eda5fdef8ede4deeab94a4691d94c3).

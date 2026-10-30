@@ -1,0 +1,99 @@
+{
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "windows": [
+    {
+      "start": "0x60cfceba",
+      "end_exclusive": "0x60cfcf0a",
+      "sha256": "9ec776bece23206f6cd8c32d46ae198629e9157435b669802ccb91427b1b8b31"
+    },
+    {
+      "start": "0x60dd5067",
+      "end_exclusive": "0x60dd5083",
+      "sha256": "4f0799900873cbe5075690c39c9162675e211ca97cd27b4f615bfd917c723f10"
+    },
+    {
+      "start": "0x607a7968",
+      "end_exclusive": "0x607a799c",
+      "sha256": "b8ef91a2bb0b83fdd2217cf2e25fa75e08753d61b5885b0902d96dec5928e8fa"
+    },
+    {
+      "start": "0x60779102",
+      "end_exclusive": "0x60779167",
+      "sha256": "6b8c3354f63152d0cad2e6c03ecc48b981fdd7de069e08d72c0b6e6c158de611"
+    },
+    {
+      "start": "0x607791cd",
+      "end_exclusive": "0x6077920a",
+      "sha256": "2ff07d6047ee8ccd3eb6056ac0d03d31a78da8e88c05672588b7d4a3c8653890"
+    },
+    {
+      "start": "0x6077925e",
+      "end_exclusive": "0x60779263",
+      "sha256": "b8ad2870a771822c28d7192667e24079e22a3a2d808047312e4156b5051a22b5"
+    },
+    {
+      "start": "0x6077a4ab",
+      "end_exclusive": "0x6077a4e8",
+      "sha256": "b0732a97aaf4761b75eae01e03401e653599f6f65ccb56d46d14bb8a492e0f01"
+    },
+    {
+      "start": "0x6077a542",
+      "end_exclusive": "0x6077a648",
+      "sha256": "08a12d773bfb6b811bad2c4b9a65b1f72372ae5b302315cf87a4f28bcff22270"
+    },
+    {
+      "start": "0x60051d66",
+      "end_exclusive": "0x60051d82",
+      "sha256": "cf25bebf7fb5e9814f09365ece48535c44fea9c16ef27f4be17e408ab1cbf79c"
+    },
+    {
+      "start": "0x60051e3a",
+      "end_exclusive": "0x60051e6c",
+      "sha256": "ac08b47b3241bbfff0e94561221499de78731e437b3ec7d3df26260e06f75d8d"
+    },
+    {
+      "start": "0x60051f29",
+      "end_exclusive": "0x60051f67",
+      "sha256": "63b5034572aa85a56e87f29976ce0295d8fef66f4666210232bf42ff2a498891"
+    },
+    {
+      "start": "0x60030619",
+      "end_exclusive": "0x6003071e",
+      "sha256": "d4cfb4e39bb27e474583dd87ccd1a5c02a6f99540621b347e8d92adaef47e308"
+    },
+    {
+      "start": "0x60034e3f",
+      "end_exclusive": "0x60034f31",
+      "sha256": "b3250a3f238fbfcb3831f81c557edf314494caecef4d67677e89f18e1e3e2cf9"
+    },
+    {
+      "start": "0x6005b42d",
+      "end_exclusive": "0x6005b453",
+      "sha256": "583a6bf84089c9895f598ff0fbffd8c4e11cb3a5d714ef5557000ea86f9b6c75"
+    },
+    {
+      "start": "0x6005b52a",
+      "end_exclusive": "0x6005b543",
+      "sha256": "d7d22d20939af7b911f2f5b1686e3aa71e6da42548dda0bed064558ffeb1a0c7"
+    }
+  ],
+  "witness_count": 59,
+  "gui_task_entry": "0x60dd5067",
+  "gui_task_loop_entry": "0x60cfd311",
+  "gui_dynamic_task_domain_inherits_creator": true,
+  "gui_creator_domain_proven": false,
+  "worker_config": {
+    "address": "0x600395a0",
+    "configured_id": "0x006c",
+    "entry": "0x603f26a1",
+    "priority": 26,
+    "stack_bytes": 8192,
+    "row_sha256": "d3e6c2dd610189300501c9498a472116a3b89135bb0fd54c812128f51cf0a497"
+  },
+  "worker_loader_domain_binding_proven": false,
+  "gui_and_worker_same_domain_proven": false,
+  "capture_snapshot_producer_domain_proven": false,
+  "separate_domain_value_copy_design_possible_but_unimplemented": true,
+  "firmware_executed": false,
+  "flash_ready": false
+}

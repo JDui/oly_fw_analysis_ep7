@@ -94,3 +94,17 @@ E-P7 原生 COLOR 提供 **12 色区饱和度 ±5、COLOR1–4**，另有暗角�
 
 这些是 host 回调语义，不是 E-P7 物理拨轮事件已绑定的证据。原生 parent/child/
 viewer 安装与 raw event 转换仍见 [具体 UI 接口边界](NATIVE_UI_ADAPTER.md)。
+
+
+### 最小文字显示原型（尚未绑定相机）
+
+[原生 UTF16 text widget](TEXT_WIDGET.md) 提供了不依赖 stock ±5 图元表的具体
+显示路径。自写 formatter 可生成 `H 01 +3`、`L 12 -7`、`H ALL MIX`；ALL 值不一致
+时明确显示 MIX，不伪造统一数值。它不是新12色图表，也不证明相机字体/布局已配置。
+[真实 C 集成测试](../../prototypes/ep7_volatile_hl/integration/) 已连接逻辑编辑、
+文字载荷、每图快照与系数输出，native admission/widget setter 仍为 mock。
+
+[创建/生命周期研究](TEXT_WIDGET_CREATION.md) 表明 factory 返回非空仍可能初始化
+失败，成功挂入父容器后子对象归父容器清理。显示分配失败不能追溯撤销、重放或
+委派已提交的 H/L 编辑；编辑成功和显示成功必须分开处理。`renderer_ready` 在
+资源、父子生命周期与 category4/5 绑定完成前仍不得开启。易失、重启归零语义不变。

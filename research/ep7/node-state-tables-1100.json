@@ -1,0 +1,185 @@
+{
+  "scope": "Finite state33 table and explicit free/state escape witnesses; not transitive lifecycle closure",
+  "decoded_sha256": "5dd9af164b4590c7e82f6905c919b3cc450bb58f2d5742ab2a0e3a4eb2e26190",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "checked_instructions": 91,
+  "state33_table_start": "0x6042d28c",
+  "state33_table_stop_exclusive": "0x6042d324",
+  "state33_handlers": [
+    {
+      "event": "0x18",
+      "handler": "0x602a41b2"
+    },
+    {
+      "event": "0x21",
+      "handler": "0x602a42f9"
+    },
+    {
+      "event": "0x2d",
+      "handler": "0x602a4320"
+    },
+    {
+      "event": "0x37",
+      "handler": "0x602a42bc"
+    },
+    {
+      "event": "0x42",
+      "handler": "0x602a2937"
+    },
+    {
+      "event": "0x43",
+      "handler": "0x602a41df"
+    },
+    {
+      "event": "0x44",
+      "handler": "0x602a3b87"
+    },
+    {
+      "event": "0x47",
+      "handler": "0x602a3765"
+    },
+    {
+      "event": "0x49",
+      "handler": "0x602af2fc"
+    },
+    {
+      "event": "0x4a",
+      "handler": "0x602af333"
+    },
+    {
+      "event": "0x4b",
+      "handler": "0x602a281a"
+    },
+    {
+      "event": "0x4c",
+      "handler": "0x602a2a66"
+    },
+    {
+      "event": "0x4d",
+      "handler": "0x602a2a1a"
+    },
+    {
+      "event": "0x4e",
+      "handler": "0x602a433c"
+    },
+    {
+      "event": "0x55",
+      "handler": "0x602a2b56"
+    },
+    {
+      "event": "0x56",
+      "handler": "0x602a3781"
+    },
+    {
+      "event": "0x57",
+      "handler": "0x602a380c"
+    },
+    {
+      "event": "0x58",
+      "handler": "0x602a383b"
+    }
+  ],
+  "state34_handlers": [
+    {
+      "event": "0x18",
+      "handler": "0x602a41b2"
+    },
+    {
+      "event": "0x21",
+      "handler": "0x602a42f9"
+    },
+    {
+      "event": "0x23",
+      "handler": "0x602a450a"
+    },
+    {
+      "event": "0x26",
+      "handler": "0x602a38c6"
+    },
+    {
+      "event": "0x27",
+      "handler": "0x602a44e2"
+    },
+    {
+      "event": "0x28",
+      "handler": "0x602a39da"
+    },
+    {
+      "event": "0x2d",
+      "handler": "0x602a4320"
+    },
+    {
+      "event": "0x2e",
+      "handler": "0x602a45a0"
+    },
+    {
+      "event": "0x37",
+      "handler": "0x602a42bc"
+    },
+    {
+      "event": "0x3d",
+      "handler": "0x602a370f"
+    },
+    {
+      "event": "0x42",
+      "handler": "0x602a2c8c"
+    },
+    {
+      "event": "0x43",
+      "handler": "0x602a41df"
+    },
+    {
+      "event": "0x44",
+      "handler": "0x602a3b87"
+    },
+    {
+      "event": "0x47",
+      "handler": "0x602a3765"
+    },
+    {
+      "event": "0x49",
+      "handler": "0x602af2fc"
+    },
+    {
+      "event": "0x4a",
+      "handler": "0x602af333"
+    },
+    {
+      "event": "0x4b",
+      "handler": "0x602a281a"
+    },
+    {
+      "event": "0x4c",
+      "handler": "0x602a2cd2"
+    },
+    {
+      "event": "0x55",
+      "handler": "0x602a2b56"
+    },
+    {
+      "event": "0x56",
+      "handler": "0x602a3781"
+    },
+    {
+      "event": "0x57",
+      "handler": "0x602a380c"
+    },
+    {
+      "event": "0x58",
+      "handler": "0x602a383b"
+    }
+  ],
+  "state34_stop_exclusive": "0x6042d3fc",
+  "sentinel": "0xffff,0",
+  "new_node_frees": [
+    "0x602a427d",
+    "0x602a44d8",
+    "0x602a2cb9",
+    "0x602a2d0d"
+  ],
+  "not_node_free_wrapper_site": "0x602a4286",
+  "explicit_state_transition": "33 to34; event42/4c handlers differ; registered state34 completion callback requests19",
+  "lifecycle_closure": false,
+  "firmware_execution": false
+}

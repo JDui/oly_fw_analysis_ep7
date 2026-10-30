@@ -1,0 +1,85 @@
+{
+  "scope": "Existing native owned 16-bit text widget setter and paint path",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "constructor_owned_string": {
+      "start": "0x60d4be3c",
+      "stop_exclusive": "0x60d4be64",
+      "sha256": "b4678078d3dc51eac9bca4ff30e5909e8347a715e4a813b47a7b99da9da12388",
+      "witness_count": 13
+    },
+    "copy_setter": {
+      "start": "0x60d4c9df",
+      "stop_exclusive": "0x60d4ca77",
+      "sha256": "e31fe4b95e7169bbfb95eca3daa2a10a33c631da936548df8c0a843b3bb747dc",
+      "witness_count": 60
+    },
+    "copy_setter_call": {
+      "start": "0x60e85285",
+      "stop_exclusive": "0x60e85296",
+      "sha256": "437ed856bc4a4d4e298659b888b99632431d3129325f654016639556976f4ae7",
+      "witness_count": 6
+    },
+    "destructor_owned_string": {
+      "start": "0x60d4be64",
+      "stop_exclusive": "0x60d4be9a",
+      "sha256": "bf76a4cd13e4c4514b833b3e057b9ed1989b9573cdfbc8059050ed4953b8cbec",
+      "witness_count": 18
+    },
+    "paint_string_source": {
+      "start": "0x60d4c50e",
+      "stop_exclusive": "0x60d4c52c",
+      "sha256": "26bbde08349a7c912b4be3be6adf1cb1c71fbdf248db2bc2f813e6435e4e825c",
+      "witness_count": 11
+    },
+    "paint_text_call": {
+      "start": "0x60d4c608",
+      "stop_exclusive": "0x60d4c640",
+      "sha256": "7525ee61a2a820aaebac1dbb6b3964847bbc83ff6f9f64eaae387628a7cf5639",
+      "witness_count": 19
+    },
+    "string_length": {
+      "start": "0x60d178a8",
+      "stop_exclusive": "0x60d178c2",
+      "sha256": "591ac6bc0338373823378d8cb8bd51c841d13ff1ec6e4518d5366010440f0bce",
+      "witness_count": 16
+    },
+    "type5_inline_text": {
+      "start": "0x60e85186",
+      "stop_exclusive": "0x60e85191",
+      "sha256": "a0415c9cc5cab982470a7001096b59835746ad37043fc6263ecf7a6edc1c134e",
+      "witness_count": 5
+    }
+  },
+  "instruction_witness_count": 148,
+  "setter": {
+    "entry": "0x60d4c9df",
+    "native_frame": "CALL[d2,d3,a2,a3],24",
+    "a0": "valid text widget",
+    "a1": "NUL-terminated16-bit source",
+    "owned_string_offset": 156,
+    "copy_bytes": "2*length",
+    "allocation_bytes": "2*(length+1)",
+    "success_return": 1,
+    "failure_return": 0
+  },
+  "lifecycle": {
+    "constructor": "0x60d4be0e",
+    "destructor": "0x60d4be64",
+    "paint_vtable_slot": "0x238",
+    "paint": "0x60d4c434",
+    "text_draw_call": "0x60d4c61e"
+  },
+  "limitations": [
+    "Source lifetime need only span synchronous setter call; widget lifetime and serialization remain caller obligations.",
+    "Changing text frees prior string BEFORE allocation; failure is destructive, not transactional rollback.",
+    "Valid text widget, layout/font resources and H/L category/viewer binding remain unimplemented.",
+    "No glyph availability, bounds/clipping or successful camera rendering claimed.",
+    "Native text setter changes UI widget storage, not a stock S property setter; no native call executed."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

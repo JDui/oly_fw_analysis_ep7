@@ -1,0 +1,31 @@
+{
+  "scope": "Normalized lifecycle callbacks, not native bindings",
+  "host_mock_scenarios": 7,
+  "host_asan_ubsan_passed": true,
+  "leak_sanitizer_enabled": false,
+  "target_executed": false,
+  "target_flags": [
+    "-mno-setlb",
+    "-mno-liw",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-nostdinc"
+  ],
+  "undefined_symbols": [],
+  "sources": {
+    "lifecycle.h": "b2b73b8eebcf9fa45ddd66ac2291f909aa35c65546e9d8d7a1ec94c8cc772a9f",
+    "lifecycle.c": "8994513aa8674386cd5e6e045acef90a24440ad11db7326b6e5750c6ab1b2b65",
+    "test_lifecycle.c": "a6d1d5d163a81e4c4f3041fbd9760650dbf1f8df174c0a5b382c925dbceb75a7",
+    "CONTRACT.md": "b80ccf7c74e765d442f06a222c2686cdc624cb66c70b389034df71bdaf89617c",
+    "check.py": "dafb48d2f0827c1ac1818ad9e3b1b1adaeb2f4ca4e7dd4fb0adeec67c392bd49"
+  },
+  "tools": {
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/xgcc": "15d81798f47b501bfbf43a9a97ef9318f8d54dd6739cfba1bf04bf10a42c44dd",
+    "toolchains/binutils-2.45-gas-build/gas/as-new": "5833fa140051525c4d432be6a931abc32e6b866f2a7152f16c1751a5f3122d6c",
+    "toolchains/binutils-2.45-build/binutils/nm-new": "7412c6af58108b4ada81d4ffc811e49d057143f09d2f3b6c433c4cfaca7f88de"
+  },
+  "object_sha256": "a982ee3c6102bc3f804ebb348711171d493a3f482286a4a3b814b2376ec51ad0",
+  "native_resource_provider_qualified": false,
+  "native_unattached_destroy_binding_qualified": false,
+  "flash_ready": false
+}

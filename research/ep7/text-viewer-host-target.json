@@ -1,0 +1,48 @@
+{
+  "sources": {
+    "text.c": "872b4b0314182f241fd0495ed969b647d3a99d82d65e4ffe1f6ca7f717b6231e",
+    "text.h": "139e260a37df09fc106f549d86eef25d67e37b234d1f87b4b3dafe65f69bb091",
+    "set_text.s": "7d90f6db106476a1c364c3d1d93cb5225014b9753878aac64b797e42e8ffae9b",
+    "test_text.c": "54e0e05caef5b6a8cdf187c1e90df8fe91d3548d2e49476ff7f6020731f0d2c9",
+    "check.py": "4ad215a0daa7ea0d44ab68d8dbdbab784d5782306909f94196733380c652a961"
+  },
+  "dependency_sha256": "1f3292d41e88abdc2cecbe6d4e46de3c633fad591cae1a3391828d5447992b8e",
+  "tool_hashes": {
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/xgcc": "15d81798f47b501bfbf43a9a97ef9318f8d54dd6739cfba1bf04bf10a42c44dd",
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/cc1": "a61e33cd394c7af451b9e8a108f9ad36a5e437985f08b2f4fc57f8f3e372edd5",
+    "toolchains/binutils-2.45-gas-build/gas/as-new": "5833fa140051525c4d432be6a931abc32e6b866f2a7152f16c1751a5f3122d6c",
+    "toolchains/binutils-2.45-build/binutils/objdump": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268"
+  },
+  "objects": {
+    "bridge": "c1255b7293e639c946a506ce2a672ca228d467fd58bcad38465d078eb9579b3e",
+    "text": "7f0c68966680a915d7b92f2c1ab372b2b72be8182c6054cd7ab51c1ecd9afd61"
+  },
+  "undefined_symbols": {
+    "bridge": [
+      "ep7_stock_text_setter_unresolved"
+    ],
+    "text": [
+      "_ep7_gcc_set_text_unresolved_binding"
+    ]
+  },
+  "target_codegen_flags": [
+    "-O2",
+    "-mno-setlb",
+    "-mno-liw",
+    "-ffreestanding",
+    "-fno-builtin"
+  ],
+  "bridge_text_bytes": 17,
+  "bridge_instructions": 5,
+  "negative_mutations": 5,
+  "stack_arithmetic_passed": true,
+  "stack_model_not_emulation": true,
+  "host_strict_asan_ubsan": true,
+  "host_native_setter_is_stub_copy": true,
+  "lsan_disabled_ptrace_environment": true,
+  "target_linked": false,
+  "target_executed": false,
+  "native_widget_created": false,
+  "renderer_ready": false,
+  "flash_ready": false
+}
