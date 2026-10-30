@@ -1,0 +1,49 @@
+{
+  "sources": {
+    "bridge.h": "ce5c7ec712c3757320da8c0d253db0f7fdc2fe500fac629ef000eaaca38342c7",
+    "bridge.c": "012825b2b6be964982457bb0eecb06018eb8ca239fe1f2ed3559fdc3dc59e865",
+    "bridge.s": "4f69b8f0f4c03e56d64e107380058ea647749407839d59d0266587b697d48324",
+    "test_bridge.c": "251a2d9768ed5b0fa01434e2fd51cb9ab940209933e7f2065f6ee3ae3923140e",
+    "check.py": "753094a10297245d9c5132ca5827041aacaec3044bff9664d781f181700d0107"
+  },
+  "dependencies": {
+    "prototypes/ep7_volatile_hl/ep7p_ui_raw.h": "656b1b18057538df11f614bda00ef3a0892abc3b1b5a84cf4a6ed74fda577e47",
+    "prototypes/ep7_volatile_hl/ep7p_ui.h": "13ceab4efbad8ec0f8383ada52781099eed71cecfd98c068ba48e6871d9bc9df",
+    "prototypes/ep7_volatile_hl/ep7p.h": "a46308465556703ee0d658f07ffb73b34cb89041377468e84c92f5f2d1663bcd",
+    "prototypes/ep7_volatile_hl/ep7_ui_adapter_contract.h": "1f3292d41e88abdc2cecbe6d4e46de3c633fad591cae1a3391828d5447992b8e",
+    "prototypes/ep7_volatile_hl/ep7p_ui_raw.c": "ffcbcc54f89d3edaca2f9060c525a20effaa668aa7688506f1d745c8a4518c25"
+  },
+  "objects": {
+    "bridge": "6b5a2826b0cd24dd4e0d66d3f6e806fb82c1bc7ecd89fb9cf27447761b6cbf1c",
+    "router": "1a0d2d35b6baf8969afe15f63ae6a99b9017676d27f3137314839a5802d75dc5"
+  },
+  "tool_hashes": {
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/xgcc": "15d81798f47b501bfbf43a9a97ef9318f8d54dd6739cfba1bf04bf10a42c44dd",
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/cc1": "a61e33cd394c7af451b9e8a108f9ad36a5e437985f08b2f4fc57f8f3e372edd5",
+    "toolchains/binutils-2.45-gas-build/gas/as-new": "5833fa140051525c4d432be6a931abc32e6b866f2a7152f16c1751a5f3122d6c",
+    "toolchains/binutils-2.45-build/binutils/objdump": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268"
+  },
+  "undefined_symbols": {
+    "bridge": [
+      "_ep7_gcc_ui_route",
+      "ep7_stock_ui_event_unresolved"
+    ],
+    "route": [
+      "_ep7_ui_native_admit_unresolved",
+      "_ep7p_ui_raw_dispatch"
+    ]
+  },
+  "assembly_instructions": 17,
+  "bridge_text_bytes": 46,
+  "relocations_verified": true,
+  "stack_arithmetic_pass": true,
+  "stack_model_not_emulation": true,
+  "host_strict_and_asan_ubsan": true,
+  "host_test_scope": "Routing policy with stubbed admission and raw dispatcher; not raw/core end-to-end",
+  "lsan_disabled_due_ptrace_environment": true,
+  "target_linked": false,
+  "target_executed": false,
+  "native_provider_bound": false,
+  "viewer_bound": false,
+  "flash_ready": false
+}

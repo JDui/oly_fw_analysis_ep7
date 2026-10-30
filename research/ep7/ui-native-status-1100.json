@@ -1,0 +1,91 @@
+{
+  "scope": "Native COLOR parent virtual0 result consumers, not physical UI qualification",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "container_status": {
+      "start": "0x60e4d0ee",
+      "stop_exclusive": "0x60e4d144",
+      "sha256": "92433ab05febbf93b598fb697873ab9e8d767668ab4a4cf43a84d2fb45fffe94",
+      "witness_count": 43
+    },
+    "info_return": {
+      "start": "0x60e228ce",
+      "stop_exclusive": "0x60e228e9",
+      "sha256": "d028ee1426196629bff96ff242a50d7384af48bef73e9e3a4b9ed203ff27571d",
+      "witness_count": 9
+    },
+    "info_timer_wrapper": {
+      "start": "0x60e20d1b",
+      "stop_exclusive": "0x60e20d3a",
+      "sha256": "f1d2151e6385b93fe7dd9182228d31cf66c52de76a826c490d88304ebb816a75",
+      "witness_count": 12
+    },
+    "machine137": {
+      "start": "0x60e5da87",
+      "stop_exclusive": "0x60e5dae9",
+      "sha256": "bdd3d7baa68901e12d9c493d05f1f74c14ef91ed891b0243b9b22e30918aad33",
+      "witness_count": 37
+    },
+    "parent_info": {
+      "start": "0x60dd55c5",
+      "stop_exclusive": "0x60dd561b",
+      "sha256": "85c388e8c9d1b1f4e5934909fa3e9b94fb287f524e90ccdcf2a3fcd933d3b569",
+      "witness_count": 31
+    },
+    "parent_return": {
+      "start": "0x60dd5782",
+      "stop_exclusive": "0x60dd5787",
+      "sha256": "a9e7a47d1484adc07b91453c11655b0f91af42c4e7f74df03a996846d7b0a6fc",
+      "witness_count": 2
+    },
+    "parent_value_sector": {
+      "start": "0x60dd5452",
+      "stop_exclusive": "0x60dd5489",
+      "sha256": "f62e11a444300b968a6a28a043ab93f72151b4f13a42287fb0cfcc061005aa9a",
+      "witness_count": 24
+    },
+    "sector_return": {
+      "start": "0x60e21f43",
+      "stop_exclusive": "0x60e21f48",
+      "sha256": "c42e486feeda2e1b17b981dfed2dae2f5bb8d37d471d75340743320f9997bee9",
+      "witness_count": 2
+    },
+    "status4_effect": {
+      "start": "0x60dd5857",
+      "stop_exclusive": "0x60dd586b",
+      "sha256": "2446e09ed2ee6985d34717eff0e7d77716fe91bdad4b58d015a07d05039f999d",
+      "witness_count": 5
+    },
+    "value_return": {
+      "start": "0x60e21cfc",
+      "stop_exclusive": "0x60e21d01",
+      "sha256": "dbaab224e9cbd74d9348dbe7989eb4479f4623bc45ab404e7d3eeffaaa0a1124",
+      "witness_count": 2
+    }
+  },
+  "instruction_witness_count": 167,
+  "results": {
+    "parent_1": "viewer virtual0 on non-AF event if viewer exists; container returns0",
+    "parent_2": "container returns1; handler137 takes its result1 branch",
+    "parent_3": "container returns2",
+    "parent_4": "container returns3; wheel path additionally clears timer535"
+  },
+  "candidate_policy": {
+    "CHANGED": 1,
+    "UNCHANGED": 0,
+    "REJECTED": 0,
+    "DELEGATE": "invoke original parent; preserve returned native result"
+  },
+  "limitations": [
+    "Result mapping is specific to this parent virtual0/container seam.",
+    "Owned H/L viewer, UI lifetime, copied wheel-delta freshness and registration remain unresolved.",
+    "Return1 requests viewer callback, not proof that a native H/L rendering implementation exists.",
+    "Do not infer that native status4 means universally handled or that enum2 is safe delegation.",
+    "No native execution, firmware patch or flash-ready image."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

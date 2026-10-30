@@ -1,0 +1,175 @@
+{
+  "scope": "Explicit expanded-node feasibility and five visible revocation seams; no installation",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "alternate_native_node": {
+      "start": "0x6029ce67",
+      "stop_exclusive": "0x6029ce96",
+      "sha256": "da83d9fc9ff361489ff2441989047d056595fe9dc04066a39e82da49a77f3ff3",
+      "witness_count": 15
+    },
+    "alternate_node_return": {
+      "start": "0x6029f001",
+      "stop_exclusive": "0x6029f039",
+      "sha256": "7c0266a29112f269deadfdd7ddf9b61a263ed5bf8f5e43f6aa77f0026586445b",
+      "witness_count": 19
+    },
+    "event40_node_envelope": {
+      "start": "0x6029f605",
+      "stop_exclusive": "0x6029f620",
+      "sha256": "ba39da821095b853b65afbf0cb17eb4873b418ccd90a306dd79b7168e8ba0bd1",
+      "witness_count": 9
+    },
+    "event40_node_input": {
+      "start": "0x6029f50d",
+      "stop_exclusive": "0x6029f525",
+      "sha256": "86341d310173707d360da7cdfd87499c0d91d3db1e3c2871866ee5358d1e5937",
+      "witness_count": 7
+    },
+    "event55_node_free": {
+      "start": "0x6029f69f",
+      "stop_exclusive": "0x6029f6d6",
+      "sha256": "b4af230edfe8b25826ab5a54ac5df3b9d7bf3b87aa064af36f0b360a2f921c95",
+      "witness_count": 16
+    },
+    "free_drain_one": {
+      "start": "0x6029f1a4",
+      "stop_exclusive": "0x6029f1c9",
+      "sha256": "68c4e470b2dbde78dce4d3311217529dc7ef560679846cc9909fd1e0cd287028",
+      "witness_count": 8
+    },
+    "free_drain_two": {
+      "start": "0x602a41f8",
+      "stop_exclusive": "0x602a4227",
+      "sha256": "2037bd059e2f42ba313de64859f621ca23d018d0b2060c6f0b180f7dd11c5759",
+      "witness_count": 10
+    },
+    "free_helper": {
+      "start": "0x602a31a9",
+      "stop_exclusive": "0x602a31bb",
+      "sha256": "92860afd996d7f02d900bf19c221f8251d6f871d3f39184664083fbc5debc669",
+      "witness_count": 6
+    },
+    "free_selected": {
+      "start": "0x602a4451",
+      "stop_exclusive": "0x602a4468",
+      "sha256": "50debbe3f202d743291940f9c8e260770e067f75a91cc7a4301d6a97e584d28f",
+      "witness_count": 7
+    },
+    "fresh_node_allocate": {
+      "start": "0x602a3165",
+      "stop_exclusive": "0x602a3174",
+      "sha256": "ba9f011bb5e84ead533004c7e82fba4fe99fdcd1955bfa859b7fc856b3aa104b",
+      "witness_count": 6
+    },
+    "fresh_population": {
+      "start": "0x602a31c7",
+      "stop_exclusive": "0x602a31fc",
+      "sha256": "fd81e46c23a12ce12a51bdf6b1a7eec5a07e98501b8058af7e04ca52d8b91884",
+      "witness_count": 18
+    },
+    "metadata_second_caller": {
+      "start": "0x602ac5e2",
+      "stop_exclusive": "0x602ac613",
+      "sha256": "a839f15de9d080f3d770c57c3b2b6337eaafbb241aaa841d8accca05b3b9f223",
+      "witness_count": 13
+    },
+    "node_callback_list": {
+      "start": "0x6029eee0",
+      "stop_exclusive": "0x6029eef8",
+      "sha256": "6de9db5495aa389087d1ac2e134ac1494801835f9174f9a4218e6e8bbc72547f",
+      "witness_count": 6
+    },
+    "node_callback_register": {
+      "start": "0x6029ef46",
+      "stop_exclusive": "0x6029ef51",
+      "sha256": "26a847fd4c5b68b3d493c82bfbe21795e7d5634889c90941fd0b29cc18fa6b61",
+      "witness_count": 2
+    },
+    "node_event40": {
+      "start": "0x6029f039",
+      "stop_exclusive": "0x6029f04c",
+      "sha256": "a3f469ff0eda5bc7099774f6010cc43c3fb4e7fa1c932059754b1e84a3b79e04",
+      "witness_count": 9
+    },
+    "queue_initializer": {
+      "start": "0x6029c64e",
+      "stop_exclusive": "0x6029c66f",
+      "sha256": "61bb07421eb1b63be0b47418842175a8f269439db767643964a352e903a17174",
+      "witness_count": 8
+    },
+    "queue_item_copy": {
+      "start": "0x6020b9c9",
+      "stop_exclusive": "0x6020b9e3",
+      "sha256": "511fb62c17cf60f97d7f17c6842cede5186dc02aa9ab289a65431a0fadeab4ab",
+      "witness_count": 10
+    },
+    "queue_pointer_wrapper": {
+      "start": "0x6020b98b",
+      "stop_exclusive": "0x6020b998",
+      "sha256": "4e1557cdcf7453e96b2f63d25cafbf90a6663029f944bc557a34ac2ff2a20190",
+      "witness_count": 6
+    },
+    "queue_struct": {
+      "start": "0x6020b949",
+      "stop_exclusive": "0x6020b962",
+      "sha256": "bf97dcb42f602b826601ee41915aa6debcd8076e2e3f7d22840e694fafb4be5d",
+      "witness_count": 10
+    },
+    "size_classifier": {
+      "start": "0x60022700",
+      "stop_exclusive": "0x60022732",
+      "sha256": "143ceadd507c40d1038f0542a450d702196c992094bb183dc6dc1786c2cc1f8a",
+      "witness_count": 17
+    }
+  },
+  "instruction_witness_count": 202,
+  "allocator": {
+    "request_class_limits": [
+      128,
+      2048,
+      16384
+    ],
+    "strides": [
+      192,
+      2112,
+      16448
+    ],
+    "strides_not_payload_sizes": true
+  },
+  "node_queue": {
+    "item_bytes": 4,
+    "native_node_bytes": 56,
+    "expanded_allocation_not_implemented": true
+  },
+  "visible_node_free_calls": [
+    "0x602a31b1",
+    "0x602a4461",
+    "0x6029f1c2",
+    "0x602a4220",
+    "0x6029f6ba"
+  ],
+  "alternate_node_flow": [
+    "0x6029efe6",
+    "0x6029f039",
+    "event0x40",
+    "0x6029f50d",
+    "0x602a4d34",
+    "event0x55",
+    "0x6029f69f"
+  ],
+  "limitations": [
+    "Five visible free seams do not prove universal FSM cancel/abort or alias coverage.",
+    "Live expanded allocation qualification is required BEFORE any trailer access.",
+    "Missing revoke/free coverage can leave stale registry entries; tags cannot fix ABA.",
+    "Alternate 56-byte producers and the second c748 caller are not automatically qualified.",
+    "Pointer queues retain identity only under native live-object lifetime preconditions.",
+    "Allocator stride is not permission to occupy unrequested tail bytes.",
+    "No firmware patch, native execution, all-mode coverage or flash-ready image."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

@@ -1,0 +1,37 @@
+{
+  "sources": {
+    "prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c": "ad225122178c2af882c6797102585078285a15061f3b54889f350e7600e00f85",
+    "prototypes/ep7_volatile_hl/poll_lock_provider/test_provider.c": "2873039f1204a26376b4cf96c329e1838c8f5547690b4f5d2e5d505b478501e6",
+    "prototypes/ep7_volatile_hl/ep7p.c": "0e9f1274706c0e1631cb1ebda3d35055a48200ba5c9817760f600ab9c4f63402",
+    "prototypes/ep7_volatile_hl/ep7p_decode.c": "25f857efc0e07a333e931c50dc69fff1de9d10f40b117532de5f2e59eb6e2d95",
+    "prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.h": "bfd1568d0be58ee3d6d01a9b2f8af7b8f3e48241b2a9b7f9dfc5656bab1b947c",
+    "prototypes/ep7_volatile_hl/ep7p.h": "a46308465556703ee0d658f07ffb73b34cb89041377468e84c92f5f2d1663bcd"
+  },
+  "host_tests": [
+    {
+      "configuration": "strict",
+      "output": "poll provider: core integration, decline, contention, poison, preemption-before-return, poison recheck and void-unlock boundary passed",
+      "passed": true
+    },
+    {
+      "configuration": "asan_ubsan",
+      "output": "poll provider: core integration, decline, contention, poison, preemption-before-return, poison recheck and void-unlock boundary passed",
+      "passed": true
+    }
+  ],
+  "host_compiler_sha256": "a23ecab8ff08f09ad8c80602c2c5df7f49e09c25905cb8975902e101bf72635f",
+  "target_tool_hashes": {
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/xgcc": "15d81798f47b501bfbf43a9a97ef9318f8d54dd6739cfba1bf04bf10a42c44dd",
+    "toolchains/gcc-13.4.0-mn10300-build/gcc/cc1": "a61e33cd394c7af451b9e8a108f9ad36a5e437985f08b2f4fc57f8f3e372edd5",
+    "toolchains/binutils-2.45-gas-build/gas/as-new": "5833fa140051525c4d432be6a931abc32e6b866f2a7152f16c1751a5f3122d6c",
+    "toolchains/binutils-2.45-build/binutils/objdump": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268"
+  },
+  "target_undefined_symbols": [],
+  "target_object_sha256": "4d5b54e9a7b2b6e65a2291e55032abeaad5feaae9913d33bcb1e629df3538708",
+  "target_linked": false,
+  "target_executed": false,
+  "firmware_input_used": false,
+  "native_atomic_backend_qualified": false,
+  "native_veneer_bound": false,
+  "flash_ready": false
+}

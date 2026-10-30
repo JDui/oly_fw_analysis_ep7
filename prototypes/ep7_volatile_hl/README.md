@@ -199,3 +199,29 @@ The [native semaphore study](../../docs/ep7/PRIVATE_SEMAPHORE.md) and
 [transport completion study](../../docs/ep7/SEMAPHORE_TRANSPORT.md) explain why
 blindly accepting the named wrapper’s zero status is not a safe lock contract.
 No camera API, semaphore creation, target execution or firmware write is involved.
+
+## Narrow poll-only alternative and native UI seam
+
+The [poll-only provider](poll_lock_provider/) is a separate restricted alternative,
+not a replacement for every CAS use: private binary semaphore, same qualified
+domain, polling only, no outside wait/signal/delete/reuse. It has no target atomic
+helper dependency. Its [actual provider stress](poll_lock_provider/concurrency/)
+uses the real core/provider and pthread-backed native callbacks, including handoff
+before the old signal callback returns. Strict, ASan/UBSan and TSan passed; these
+are host scheduling experiments, not native RTOS validation.
+
+[Raw ABI bridges and dependency closure](poll_lock_provider/native/) connect the
+compile-only reader objects: nine objects, eight internal reference edges, five
+external native/runtime symbols. This is symbol-set closure, not target linking,
+runtime initialization, or a complete installation. Do not link both alternative
+providers together. [Expanded node evidence](../../docs/ep7/EXPANDED_NODE_FEASIBILITY.md)
+identifies allocation and disposal seams without claiming exhaustive ownership.
+
+The [native UI bridge](ui_native/) preserves stock delegation and maps portable
+CHANGED to native parent result 1, not enum 2. Its host tests are routing-policy
+fixtures with mocked admission and raw dispatch; the target C references the real
+raw adapter but still needs a qualified ownership/delta provider and new renderer.
+The [viewer study](../../docs/ep7/VIEWER_DATA.md) explains why the existing S-only
+viewer and ±5 icon maps cannot render H/L unchanged. `renderer_ready` remains false
+until the native data source, category creation/disposal, resources and display
+lifetime are implemented and reviewed.

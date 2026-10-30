@@ -1,0 +1,294 @@
+{
+  "scope": "One COLOR selected-value viewer/data route; not a general rendering library audit",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "color_type_and_mode": {
+      "start": "0x60e27289",
+      "stop_exclusive": "0x60e272d1",
+      "sha256": "47ee8ba86f376be5373a3e2239dde84656d9460c023493aafbfc92427d48f21f",
+      "witness_count": 28
+    },
+    "cursor_value_icons": {
+      "start": "0x60e2746b",
+      "stop_exclusive": "0x60e274b6",
+      "sha256": "b39489c4c682684f0831c70f415c12411610b68fe6dee116687f8e00b2b3f8bc",
+      "witness_count": 24
+    },
+    "descriptor_consumer": {
+      "start": "0x60d7adb3",
+      "stop_exclusive": "0x60d7add9",
+      "sha256": "fcbb62bbdd9caa74a6e41eed94cc5fb108c17cbdfa0e83eabeff7122d51a4ed9",
+      "witness_count": 12
+    },
+    "descriptor_copy": {
+      "start": "0x60ea4c1c",
+      "stop_exclusive": "0x60ea4c3e",
+      "sha256": "82573e7065ebfd96915f78096e504a0b8fb04d0604f1e2c2df86645404525ca4",
+      "witness_count": 20
+    },
+    "display_buffer_reset": {
+      "start": "0x60e26ac1",
+      "stop_exclusive": "0x60e26ae4",
+      "sha256": "831634448eba3d61df788ecfaf2e0d3a4be4fef00d2726b537420a95c53eab05",
+      "witness_count": 13
+    },
+    "lookup": {
+      "start": "0x60df24f1",
+      "stop_exclusive": "0x60df250b",
+      "sha256": "1d6ab528dad8d166397080364e67e562b99ad07fe738282eadf29fceb7f4c3f5",
+      "witness_count": 16
+    },
+    "profile1_cursor": {
+      "start": "0x60e272d1",
+      "stop_exclusive": "0x60e27324",
+      "sha256": "e41d0b9e041220e14f081f2b6344ba6968b8a925c75718483623091b4e2beecc",
+      "witness_count": 29
+    },
+    "publish_display": {
+      "start": "0x60e26bcd",
+      "stop_exclusive": "0x60e26c03",
+      "sha256": "8827c077a13ef4774c68e96902020342de1c3c943b77f8c8ceb8fb2be6ed3100",
+      "witness_count": 17
+    },
+    "selected_property_read": {
+      "start": "0x60e27405",
+      "stop_exclusive": "0x60e27425",
+      "sha256": "bc410d667ccb95ff0ddc17f51126cbf74ec950122c63ed62a7de5fad910857bb",
+      "witness_count": 12
+    }
+  },
+  "instruction_witness_count": 171,
+  "S_property_tables": {
+    "0x611899b8": [
+      927,
+      928,
+      929,
+      930,
+      931,
+      932,
+      933,
+      934,
+      935,
+      936,
+      937,
+      938
+    ],
+    "0x611899d0": [
+      939,
+      940,
+      941,
+      942,
+      943,
+      944,
+      945,
+      946,
+      947,
+      948,
+      949,
+      950
+    ],
+    "0x611899e8": [
+      951,
+      952,
+      953,
+      954,
+      955,
+      956,
+      957,
+      958,
+      959,
+      960,
+      961,
+      962
+    ],
+    "0x61189a00": [
+      1655,
+      1656,
+      1657,
+      1658,
+      1659,
+      1660,
+      1661,
+      1662,
+      1663,
+      1664,
+      1665,
+      1666
+    ]
+  },
+  "icon_lookup_tables": {
+    "0x61189a18": [
+      [
+        0,
+        7
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        5,
+        3
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        7,
+        4
+      ],
+      [
+        8,
+        4
+      ],
+      [
+        9,
+        5
+      ],
+      [
+        10,
+        5
+      ],
+      [
+        11,
+        6
+      ],
+      [
+        12,
+        6
+      ]
+    ],
+    "0x61189a80": [
+      [
+        -5,
+        3
+      ],
+      [
+        -4,
+        3
+      ],
+      [
+        -3,
+        3
+      ],
+      [
+        -2,
+        3
+      ],
+      [
+        -1,
+        3
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        5,
+        2
+      ]
+    ],
+    "0x61189ad8": [
+      [
+        -5,
+        6
+      ],
+      [
+        -4,
+        5
+      ],
+      [
+        -3,
+        4
+      ],
+      [
+        -2,
+        3
+      ],
+      [
+        -1,
+        2
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        5
+      ],
+      [
+        5,
+        6
+      ]
+    ]
+  },
+  "interface": {
+    "native_lookup": "0x60df24f1",
+    "lookup_row_bytes": 8,
+    "lookup_output_bytes": 1,
+    "no_match": "output unchanged",
+    "S_icon_key_range": [
+      -5,
+      5
+    ],
+    "display_flags_bytes": 334,
+    "descriptor_bytes": 44,
+    "descriptor_copy_destination": "0x62473fe8",
+    "COLOR_descriptor_type": 6
+  },
+  "limitations": [
+    "Lookup helper is not a drawing helper and does not accept 12 axis values.",
+    "Native selected-value producer reads S property IDs; it cannot render H/L unchanged.",
+    "No icon entries for -7,-6,+6,+7 were found in these two exact 11-entry tables.",
+    "Category4/5 require a new qualified viewer branch and independent H/L state/value source.",
+    "Descriptor/global display transport is not a caller-owned immutable 12-value array API.",
+    "No S setter, native drawing call, firmware write, or hardware validation performed."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

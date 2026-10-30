@@ -1,0 +1,48 @@
+{
+  "source_hashes": {
+    "prototypes/ep7_volatile_hl/poll_lock_provider/concurrency/stress.c": "223e28055fd20434a54cf961590c5b26e997c37c35010ddddb1e201cb2121b22",
+    "prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c": "ad225122178c2af882c6797102585078285a15061f3b54889f350e7600e00f85",
+    "prototypes/ep7_volatile_hl/ep7p.c": "0e9f1274706c0e1631cb1ebda3d35055a48200ba5c9817760f600ab9c4f63402",
+    "prototypes/ep7_volatile_hl/ep7p_decode.c": "25f857efc0e07a333e931c50dc69fff1de9d10f40b117532de5f2e59eb6e2d95",
+    "prototypes/ep7_volatile_hl/ep7p.h": "a46308465556703ee0d658f07ffb73b34cb89041377468e84c92f5f2d1663bcd",
+    "prototypes/ep7_volatile_hl/ep7p_direct.h": "6f29cc432d126dded64714e01aeb01c8e94561d7ae791401202fd756ae9ced71",
+    "prototypes/ep7_volatile_hl/ep7p_decode.h": "f4d28bb62c4801083db4c5a594882c56af68fe2440c247e9a70368ffc4f1e45d",
+    "prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.h": "bfd1568d0be58ee3d6d01a9b2f8af7b8f3e48241b2a9b7f9dfc5656bab1b947c"
+  },
+  "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+  "results": [
+    {
+      "configuration": "strict",
+      "compiled": true,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "poll-provider pthread: 12000 edits, 4000 jobs, handoffs-before-old-signal-return=20133, native-task-queries=89031",
+      "stderr": ""
+    },
+    {
+      "configuration": "asan_ubsan",
+      "compiled": true,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "poll-provider pthread: 12000 edits, 4000 jobs, handoffs-before-old-signal-return=4340, native-task-queries=60948",
+      "stderr": ""
+    },
+    {
+      "configuration": "tsan",
+      "compiled": true,
+      "passed": true,
+      "exit_code": 0,
+      "stdout": "poll-provider pthread: 12000 edits, 4000 jobs, handoffs-before-old-signal-return=1349, native-task-queries=156647",
+      "stderr": ""
+    }
+  ],
+  "host_multithread_stress_tested": true,
+  "host_pthread_adapter_only": true,
+  "real_poll_provider_exercised": true,
+  "mock_native_raw_callbacks": true,
+  "native_RTOS_qualified": false,
+  "leak_sanitizer_enabled": false,
+  "firmware_input_used": false,
+  "target_executed": false,
+  "camera_accessed": false
+}

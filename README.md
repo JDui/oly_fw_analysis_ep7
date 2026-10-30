@@ -52,7 +52,7 @@ See the [actual audit result](research/ep7/stock-audit-1100.json) and
 included. Input-event mapping, persistence/capture integration and hardware
 testing remain open. Separate real-pthread integration passes strict, ASan/UBSan
 and TSan runs; this does not qualify the camera’s native semaphore/domain/atomic
-backend. The same-domain lock scaffold still has an unresolved target atomic helper. The user reports installed camera firmware **1.1**; this
+backend. A narrower [private poll-only provider](prototypes/ep7_volatile_hl/poll_lock_provider/) now compiles without an atomic helper and passes real threaded host stress; its native domain, initialization and lifetime assumptions remain unqualified. The [native UI bridge](prototypes/ep7_volatile_hl/ui_native/) is compile-only: stock [viewer data](docs/ep7/VIEWER_DATA.md) reads S and its icon maps cover only −5…+5, so it cannot yet display the proposed ±7 H/L values. The user reports installed camera firmware **1.1**; this
 is not device testing or a readback of the installed image.
 
 Upstream history, notices and attribution are retained. There is **no

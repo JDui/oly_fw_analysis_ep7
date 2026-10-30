@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+"""Read-only pre-mutation error branches for restricted raw poll semaphore."""
+import argparse,json,sys
+from pathlib import Path
+import ep7_private_semaphore as base
+WINDOWS=[(0x600370af,0x60037201),(0x60035b62,0x60035c3b),(0x60031503,0x600315a6),(0x6003860b,0x60038657)]
+W={0x600370af:('mov','d1,(4,sp)'),0x60037107:('mov','-18,d0'),0x60037109:('ret','[d2,d3,a2,a3],24'),0x6003710c:('call','0x60031540,[d2],4'),0x60037115:('call','0x600315a3,[],0'),0x6003711a:('mov','-25,d0'),0x6003711c:('ret','[d2,d3,a2,a3],24'),0x60037126:('mov','-17,d0'),0x60037128:('ret','[d2,d3,a2,a3],24'),0x6003712e:('call','0x60038594,[],0'),0x6003715c:('mov','-42,d0'),0x6003715e:('ret','[d2,d3,a2,a3],24'),0x60037166:('cmp','1,d0'),0x60037168:('bcs','0x60037172'),0x6003716c:('sub','d1,d0'),0x6003716e:('mov','d0,(a0)'),0x6003716f:('jmp','0x600371f8'),0x60037183:('mov','(4,sp),d0'),0x60037185:('cmp','0,d0'),0x60037187:('bne','0x60037193'),0x6003718e:('mov','-50,d0'),0x60037190:('ret','[d2,d3,a2,a3],24'),0x600371f8:('call','0x6003860b,[],0'),0x600371fd:('clr','d0'),0x600371fe:('ret','[d2,d3,a2,a3],24'),
+0x60035bbe:('mov','-18,d0'),0x60035bc0:('ret','[d2,d3,a2],16'),0x60035bc3:('call','0x60031503,[d2],4'),0x60035bcc:('call','0x600315a3,[],0'),0x60035bd1:('mov','-25,d0'),0x60035bd3:('ret','[d2,d3,a2],16'),0x60035bd9:('call','0x60038594,[],0'),0x60035c06:('mov','-42,d0'),0x60035c08:('bra','0x60035c38'),0x60035c0a:('mov','a1,a0'),0x60035c0b:('inc4','a0'),0x60035c0c:('mov','(a0),d0'),0x60035c0d:('cmp','a0,d0'),0x60035c0f:('bne','0x60035c2a'),0x60035c11:('mov','(20,a1),d0'),0x60035c14:('mov','24,a0'),0x60035c18:('mov','(a0),d1'),0x60035c1a:('bcs','0x60035c25'),0x60035c21:('mov','-43,d0'),0x60035c23:('bra','0x60035c38'),0x60035c25:('mov','(a0),d0'),0x60035c26:('inc','d0'),0x60035c27:('mov','d0,(a0)'),0x60035c28:('bra','0x60035c32'),0x60035c2d:('call','0x6003442c,[a2,a3],12'),0x60035c32:('call','0x6003860b,[],0'),0x60035c37:('clr','d0'),0x60035c38:('ret','[d2,d3,a2],16'),
+0x60031507:('mov','28672,d1'),0x6003150c:('asr','12,d1'),0x60031510:('beq','0x6003153c'),0x60031538:('mov','-25,d0'),0x6003153c:('clr','d0'),0x6003153d:('retf','[d2],4'),0x60031544:('mov','28672,d1'),0x60031549:('asr','12,d1'),0x6003154d:('beq','0x60031577'),0x6003159b:('mov','-25,d0'),0x6003159f:('clr','d0'),0x600315a0:('retf','[d2],4'),0x600315a3:('retf','[],0'),0x6003863f:('call','0x6003436e,[d2,d3,a2,a3],36'),0x60038655:('rets','')}
+def inspect(raw,od):
+ oldw,oldwindows=base.W,base.WINDOWS
+ try:
+  base.W,base.WINDOWS=W,WINDOWS;r=base.inspect(raw,od)
+ finally:base.W,base.WINDOWS=oldw,oldwindows
+ return dict(source_sha256=r['source_sha256'],windows=r['windows'],witness_count=len(W),scope='exclusive new private1/1, same-domain, timeout0 only, no other wait/signal/delete users',poll_count_decrement='0x6003716e',poll_post_decrement_return=0,signal_empty_queue_increment='0x60035c27',signal_post_increment_return=0,signal_negative_branches_precede_local_count_mutation=[-18,-25,-42,-43],poll_negative_branches_precede_local_count_mutation=[-18,-25,-17,-42,-50],queued_wait_path_admitted=False,queued_signal_path_admitted=False,exit_helper_may_schedule=True,all_transitive_kernel_effects_proven=False,firmware_executed=False,flash_ready=False)
+if __name__=='__main__':
+ p=argparse.ArgumentParser();p.add_argument('--stock',type=Path,required=True);p.add_argument('--objdump',type=Path,required=True);a=p.parse_args();print(json.dumps(inspect(a.stock.read_bytes(),a.objdump.resolve()),indent=2))

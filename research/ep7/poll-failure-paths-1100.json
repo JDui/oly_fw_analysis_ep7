@@ -1,0 +1,50 @@
+{
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "windows": [
+    {
+      "start": "0x600370af",
+      "end_exclusive": "0x60037201",
+      "sha256": "696009d46d823bad1042184f93c54e75ab1d0a427d563330fda34f3bef13324b"
+    },
+    {
+      "start": "0x60035b62",
+      "end_exclusive": "0x60035c3b",
+      "sha256": "fbc58e957be6975409849c3b3f3cdf395f258b43231f567906af07afb8e657e6"
+    },
+    {
+      "start": "0x60031503",
+      "end_exclusive": "0x600315a6",
+      "sha256": "021e977ca7dda7828ae9c0c948b16d4a543d88b5bf1e638264b8bcbe82b1a1c5"
+    },
+    {
+      "start": "0x6003860b",
+      "end_exclusive": "0x60038657",
+      "sha256": "7eda95f4c15b55499a758477972f74856648f12af8c6f5cb01325c16e5c03ffe"
+    }
+  ],
+  "witness_count": 68,
+  "scope": "exclusive new private1/1, same-domain, timeout0 only, no other wait/signal/delete users",
+  "poll_count_decrement": "0x6003716e",
+  "poll_post_decrement_return": 0,
+  "signal_empty_queue_increment": "0x60035c27",
+  "signal_post_increment_return": 0,
+  "signal_negative_branches_precede_local_count_mutation": [
+    -18,
+    -25,
+    -42,
+    -43
+  ],
+  "poll_negative_branches_precede_local_count_mutation": [
+    -18,
+    -25,
+    -17,
+    -42,
+    -50
+  ],
+  "queued_wait_path_admitted": false,
+  "queued_signal_path_admitted": false,
+  "exit_helper_may_schedule": true,
+  "all_transitive_kernel_effects_proven": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}
