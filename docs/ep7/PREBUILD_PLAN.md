@@ -84,5 +84,7 @@ G6 放置/安装仍未闭合。可以持续推进离线研究和自写主机代�
 [异步调度生命周期](ASYNC_DISPATCH_LIFETIME.md)。G2已实现
 [一次消费快照票据](../../prototypes/ep7_volatile_hl/snapshot_transport/README.md)，
 并接入实际主机处理链。不在异步回调中重新查询controller sidecar。
-下一具体缺口是原生16-byte command/300-byte descriptor每次relay的票据承载；
-未选定存储前不修改stock布局，也不能以主机通过关闭G2。
+[承载路线](QUEUE_TICKET_CARRIAGE.md)已选定：独立缓冲区编码28/312字节消息，
+原生前缀保持16/300字节；三个队列的配置与所有接收适配须一起闭合。
+154条指令及9项配置数据已核对。下一项为wire编解码及精确seam的显式上下文绑定；
+原始receive不接受容量参数，不能直接让旧stock buffer接收扩展消息。

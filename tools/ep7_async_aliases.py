@@ -78,7 +78,7 @@ W = {
 }
 
 
-def inspect(stock, objdump, windows=WINDOWS, witnesses=W):
+def inspect(stock, objdump, windows=WINDOWS, witnesses=W, data_checks=()):
     version=subprocess.check_output([str(objdump),'--version'],text=True).splitlines()[0]
     checked=0
     unknown=[]
@@ -90,6 +90,9 @@ def inspect(stock, objdump, windows=WINDOWS, witnesses=W):
         table=0x601a9198+(39-7)*4
         if struct.unpack_from('<I',data,table-BASE)[0]!=0x6010b351:
             raise ValueError('type39 dispatch row mismatch')
+        for address,fmt,expected in data_checks:
+            if struct.unpack_from(fmt,data,address-BASE)!=expected:
+                raise ValueError(f'data row mismatch at {address:#x}')
         for start,stop in windows:
             asm=subprocess.check_output([str(objdump),'-b','binary','-m','mn10300','-D','-z',
                 '--insn-width=16',f'--adjust-vma={BASE:#x}',f'--start-address={start:#x}',
