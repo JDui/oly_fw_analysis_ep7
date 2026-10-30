@@ -1,0 +1,231 @@
+{
+  "scope": "Read-only descriptor stack ownership and equal-width expansion plan.",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "input_structure": {
+    "scope": "Prepare a local E-P7 research input using container structure, without SHA.\n\nThis does not establish byte identity with historical hash-pinned reports.\nIt decodes stock only, never modifies firmware or produces an install image.",
+    "bytes": 111017984,
+    "model": "E-P7",
+    "build": "1100",
+    "whole_container_checked": true,
+    "components": [
+      {
+        "offset": 0,
+        "payload_bytes": 26214336,
+        "kind": "0x100",
+        "header_build": "1100",
+        "model_bytes": "1420",
+        "container_address": "0x406a0000"
+      },
+      {
+        "offset": 26214400,
+        "payload_bytes": 26214336,
+        "kind": "0x101",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x421a0000"
+      },
+      {
+        "offset": 52428800,
+        "payload_bytes": 45219776,
+        "kind": "0x106",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x43aa0000"
+      },
+      {
+        "offset": 97648640,
+        "payload_bytes": 262080,
+        "kind": "0x10e",
+        "header_build": "0001",
+        "model_bytes": "1420",
+        "container_address": "0x0"
+      },
+      {
+        "offset": 97910784,
+        "payload_bytes": 13107136,
+        "kind": "0x102",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x467e0000"
+      }
+    ],
+    "component_sums_valid": true,
+    "unchanged_roundtrip_equal": true,
+    "runtime_base": "0x60020020",
+    "entry_witnesses_match": true,
+    "hash_checks_performed": false,
+    "historical_exact_byte_identity_proven": false,
+    "firmware_modified": false,
+    "firmware_executed": false,
+    "camera_accessed": false,
+    "flash_ready": false
+  },
+  "checked_instructions": 53,
+  "checked_task_rows": 4,
+  "owners": [
+    {
+      "name": "command_owner",
+      "entry": "0x603df803",
+      "old_local_bytes": 320,
+      "new_local_bytes": 332,
+      "descriptor_offset": 20,
+      "owned_descriptor_bytes": 312,
+      "trailer_offset_from_new_sp": 320,
+      "task_row": "0x60038d50",
+      "configured_task_id": 32,
+      "configured_stack_bytes": 4096,
+      "direct_sp_offsets": [
+        4,
+        8,
+        12,
+        16,
+        32,
+        48,
+        212
+      ],
+      "all_direct_sp_operands_within_old_locals": true
+    },
+    {
+      "name": "dual_queue_relay",
+      "entry": "0x603ef892",
+      "old_local_bytes": 312,
+      "new_local_bytes": 324,
+      "descriptor_offset": 12,
+      "owned_descriptor_bytes": 312,
+      "trailer_offset_from_new_sp": 312,
+      "task_row": "0x60038d6c",
+      "configured_task_id": 33,
+      "configured_stack_bytes": 4752,
+      "direct_sp_offsets": [
+        4,
+        8,
+        64
+      ],
+      "all_direct_sp_operands_within_old_locals": true
+    },
+    {
+      "name": "kind19_relay",
+      "entry": "0x603ef94a",
+      "old_local_bytes": 304,
+      "new_local_bytes": 316,
+      "descriptor_offset": 4,
+      "owned_descriptor_bytes": 312,
+      "trailer_offset_from_new_sp": 304,
+      "task_row": "0x60039354",
+      "configured_task_id": 87,
+      "configured_stack_bytes": 4096,
+      "direct_sp_offsets": [
+        198
+      ],
+      "all_direct_sp_operands_within_old_locals": true
+    },
+    {
+      "name": "kind19_worker",
+      "entry": "0x603f26a1",
+      "old_local_bytes": 304,
+      "new_local_bytes": 316,
+      "descriptor_offset": 4,
+      "owned_descriptor_bytes": 312,
+      "trailer_offset_from_new_sp": 304,
+      "task_row": "0x600395a0",
+      "configured_task_id": 108,
+      "configured_stack_bytes": 8192,
+      "direct_sp_offsets": [
+        196,
+        198,
+        208
+      ],
+      "all_direct_sp_operands_within_old_locals": true
+    },
+    {
+      "name": "command_drain",
+      "entry": "0x603e0546",
+      "old_local_bytes": 312,
+      "new_local_bytes": 324,
+      "descriptor_offset": 12,
+      "owned_descriptor_bytes": 312,
+      "trailer_offset_from_new_sp": 312,
+      "task_row": null,
+      "configured_task_id": null,
+      "configured_stack_bytes": null,
+      "direct_sp_offsets": [
+        4,
+        8,
+        64
+      ],
+      "all_direct_sp_operands_within_old_locals": true
+    }
+  ],
+  "equal_width_frame_edits": [
+    {
+      "address": "0x603df805",
+      "old_immediate": -320,
+      "new_immediate": -332,
+      "instruction_bytes": 4
+    },
+    {
+      "address": "0x603df933",
+      "old_immediate": 320,
+      "new_immediate": 332,
+      "instruction_bytes": 4
+    },
+    {
+      "address": "0x603ef894",
+      "old_immediate": -312,
+      "new_immediate": -324,
+      "instruction_bytes": 4
+    },
+    {
+      "address": "0x603ef94c",
+      "old_immediate": -304,
+      "new_immediate": -316,
+      "instruction_bytes": 4
+    },
+    {
+      "address": "0x603ef9b4",
+      "old_immediate": 304,
+      "new_immediate": 316,
+      "instruction_bytes": 4
+    },
+    {
+      "address": "0x603f26a3",
+      "old_immediate": -304,
+      "new_immediate": -316,
+      "instruction_bytes": 4
+    },
+    {
+      "address": "0x603f2792",
+      "old_immediate": 304,
+      "new_immediate": 316,
+      "instruction_bytes": 4
+    },
+    {
+      "address": "0x603e0546",
+      "old_immediate": -312,
+      "new_immediate": -324,
+      "instruction_bytes": 4
+    },
+    {
+      "address": "0x603e05e2",
+      "old_immediate": 312,
+      "new_immediate": 324,
+      "instruction_bytes": 4
+    }
+  ],
+  "materializer_callers": [
+    "0x603dfb78",
+    "0x603e058f",
+    "0x603e05cd"
+  ],
+  "materializer_command_buffer_offset": 152,
+  "materializer_descriptor_pointer_offset": 12,
+  "materializer_command_receive_needs_separate_scratch": true,
+  "existing_padding_reused": false,
+  "full_indirect_stack_access_audited": false,
+  "complete_call_chain_stack_budget_proven": false,
+  "all_receive_sites_qualified": false,
+  "hash_checks_performed": false,
+  "firmware_modified": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

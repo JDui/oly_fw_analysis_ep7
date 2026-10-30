@@ -78,7 +78,7 @@ W = {
 }
 
 
-def inspect(stock, objdump, windows=WINDOWS, witnesses=W, data_checks=()):
+def inspect(stock, objdump, windows=WINDOWS, witnesses=W, data_checks=(), observe=None):
     version=subprocess.check_output([str(objdump),'--version'],text=True).splitlines()[0]
     checked=0
     unknown=[]
@@ -101,6 +101,8 @@ def inspect(stock, objdump, windows=WINDOWS, witnesses=W, data_checks=()):
                 if start<=address<stop:
                     require_instruction(asm,address,mn,op)
                     checked+=1
+            if observe is not None:
+                observe(start,stop,asm)
             for line in asm.splitlines():
                 if '\tudf' in line:
                     unknown.append(line.split(':',1)[0].strip())

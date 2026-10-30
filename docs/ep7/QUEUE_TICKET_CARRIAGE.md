@@ -78,3 +78,7 @@ kind19两处退出通过603df93a→603eeb4d→60051372删除队列，不是额�
 已实现`ep7t_invalidate_all`供pipeline退出撤销实验记录，保留serial，host检查通过；
 这不是删除原厂metadata或停止生产者。下一步明确五个descriptor拥有者的栈扩展方案，
 以实际分配出的空间携带trailer，避免全局“当前descriptor”查找。
+
+[五个描述符栈对象](DESCRIPTOR_FRAME_PLAN.md)现已定位并核对：局部帧各显式增加12字节，
+9处栈调整保持原4字节编码宽度。包含command drain，materializer的三处直接调用已
+加入资格清单。command接收仍需独立148字节scratch；不把原SP+152的16字节对象扩读。

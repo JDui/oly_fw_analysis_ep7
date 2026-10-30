@@ -89,3 +89,7 @@ G6 放置/安装仍未闭合。可以持续推进离线研究和自写主机代�
 154条指令及9项配置数据已核对；wire编解码strict/ASan/UBSan和目标对象检查通过。
 下一项为raw receive实际长度ABI、所有受影响接收点及精确seam的显式上下文绑定；
 原始receive不接受容量参数，不能直接让旧stock buffer接收扩展消息。
+
+本地raw队列ABI及pipeline票据撤销已实现；[五个descriptor栈对象的扩展计划](DESCRIPTOR_FRAME_PLAN.md)
+核对通过（53指令、4任务行、9个同宽指令片段）。下一项为command独立scratch与
+owned descriptor receive适配，随后落实三个materializer调用链的寄存器/栈ABI。

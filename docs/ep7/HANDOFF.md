@@ -18,6 +18,10 @@ G2已实现controller侧冻结值之后的[一次消费票据接口](../../proto
 实验票据整批撤销已实现并通过host检查。原生hook/上下文尚未安装，下一步核对五个
 descriptor拥有者的显式栈扩展（包括command drain），整体固件构建未开始。
 
+五个拥有者已完成[只读栈扩展审查](DESCRIPTOR_FRAME_PLAN.md)：每个局部帧新增12字节，
+9处新栈调整与原指令同为4字节，53指令/4任务表行核对通过。没有写入固件。
+下一项是command独立scratch、owned receive适配及三处materializer调用链ABI。
+
 ## 本轮恢复后的增量
 
 - 在既有 controller sidecar 中实现 `ep7c_resolve_live`，无需额外 token map。
