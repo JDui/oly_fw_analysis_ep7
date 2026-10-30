@@ -180,7 +180,7 @@ GUI machine table 0x611317c4, slot 3 → descriptor 0x611a3bc8
   controller group 8, key 0x1cf → factory 0x60e4cea8
   descriptor 0x6119cb3c → whole-actuator type 0x34
   factory row 0x61140354 → creator 0x60e260c7
-  selector property 193 → COLOR child factory 7
+  selector/list ID 193 → COLOR child factory 7
 ```
 
 The initialized controller is stored at global `0x61fc436c`; exit callback
@@ -293,3 +293,8 @@ This completes the focused top-level-consumer question. Further input work shoul
 start from a specifically justified alternate producer or observed app-state
 selection, rather than blindly enumerating every machine getter. It remains
 unsafe to install only PEN-F's leaf Delete hook or to claim E-P7 HSL is working.
+
+
+Further research: [transport and completion](CAPTURE_TRANSPORT_AND_COMPLETION.md)
+and [native selector design](NATIVE_SELECTOR_DESIGN.md) resolve additional joins
+and correct the earlier “property 193” terminology.

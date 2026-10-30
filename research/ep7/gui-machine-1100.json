@@ -92,6 +92,67 @@
       "handler": "0x60e5da87"
     }
   ],
+  "selector": {
+    "list_id": 193,
+    "count": 4,
+    "values": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "list_descriptor": "0x6114efa0",
+    "viewer": {
+      "factory_id": 132,
+      "creator": "0x60e26a3d",
+      "draw": "0x60e26ab0",
+      "COLOR_category1_draw": "0x60e27289",
+      "hardcoded_categories": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "mask": {
+      "pointer_offset": 88,
+      "element_bytes": 2,
+      "initial_value": 0,
+      "nonzero_skipped_by_navigation": true
+    },
+    "remembered_index": {
+      "address": "0x61fc26ae",
+      "storage": "RAM halfword, not established persistent property",
+      "object_index_offset": 86
+    },
+    "GUI_entry": {
+      "event": "0x9715",
+      "source_machine": 1,
+      "source_states": [
+        2,
+        3,
+        4,
+        5,
+        8,
+        9,
+        11
+      ],
+      "handler": "0x60e4b097",
+      "arguments": [
+        4,
+        5
+      ],
+      "target_machine": 4,
+      "target_state": 29,
+      "argument4_clears_category": true,
+      "argument5_retains_category": true
+    },
+    "limits": [
+      "App FSM/physical origin of A1/B7 plus argument4/5 remains unproven.",
+      "ROM callback table6025bb34 to RAM61fc3874 initialization relationship not yet verified.",
+      "Four list categories are occupied; adding H/L requires parent switch/viewer support and separate state design."
+    ]
+  },
   "preprocessor": {
     "event": "0x9016",
     "key": "0x12",
@@ -231,6 +292,66 @@
     "limitation": "Not a whole-program exclusion of other producers/alias paths; local timer reset is unaffected."
   },
   "windows": {
+    "selector_mask_allocator": {
+      "start": "0x60dde7b3",
+      "stop_exclusive": "0x60dde7fd",
+      "sha256": "133897988c8fad7c11d3f2a3b969225fa561eb03d9a376bae1fed2e26fa08c0b",
+      "witness_count": 5
+    },
+    "selector_mask_navigation": {
+      "start": "0x60dde355",
+      "stop_exclusive": "0x60dde40a",
+      "sha256": "fda1efcf9e8dcef831f92e76cb9cc6ddf69fa417440b4b228c51e27d6ce27652",
+      "witness_count": 6
+    },
+    "selector_viewer_creator": {
+      "start": "0x60e26a3d",
+      "stop_exclusive": "0x60e26ab0",
+      "sha256": "fd48ab4ea58900662f563c0101292cfba4ce1ab72e9f92cddcefadd898c77ced",
+      "witness_count": 2
+    },
+    "selector_viewer_categories": {
+      "start": "0x60e26b64",
+      "stop_exclusive": "0x60e26bb8",
+      "sha256": "104a27ed09278aa2d83e8351d8ccc7e8af02668f6319a440c78eeb415c647bfb",
+      "witness_count": 6
+    },
+    "selector_list_handler_lookup": {
+      "start": "0x60dde690",
+      "stop_exclusive": "0x60dde710",
+      "sha256": "ba1adb9075671908d7a125b3ee0f99fcc2e03a932e0a1faa9a4462e360de4673",
+      "witness_count": 2
+    },
+    "selector_list_loader": {
+      "start": "0x60dde754",
+      "stop_exclusive": "0x60dde7b3",
+      "sha256": "99e59451496d2bbd01815eca8064814d7f32e3bd1557052af575572ea03fb54b",
+      "witness_count": 3
+    },
+    "selector_remembered_index": {
+      "start": "0x60de150c",
+      "stop_exclusive": "0x60de157e",
+      "sha256": "b7dec98fc6e1edb91fd78268ad524c40633f97a1018eb37502fce84a5d6c21a1",
+      "witness_count": 11
+    },
+    "selector_parent_init": {
+      "start": "0x60e26188",
+      "stop_exclusive": "0x60e261dc",
+      "sha256": "ef0bd6c7d8c7a7e02a75383f4195e7fe6c1c86c0241481ab252efb0afee43b56",
+      "witness_count": 4
+    },
+    "selector_parent_wrappers": {
+      "start": "0x60e261dc",
+      "stop_exclusive": "0x60e2622f",
+      "sha256": "2bcd078f1a6e6966d4ecbd3d580ae10b5495e38e40913723a0f817fec8be26c9",
+      "witness_count": 2
+    },
+    "GUI_041d_entry": {
+      "start": "0x60e4b097",
+      "stop_exclusive": "0x60e4b16a",
+      "sha256": "823d089c96b7625e23175e9908fa7a8bbd039f0a9e366a0b4e0a27b5d2ddf2c7",
+      "witness_count": 5
+    },
     "task_registration": {
       "start": "0x60cfd41c",
       "stop_exclusive": "0x60cfd438",
@@ -340,7 +461,7 @@
       "witness_count": 1
     }
   },
-  "instruction_witness_count": 72,
+  "instruction_witness_count": 118,
   "direct_Delete_event_present": false,
   "event_count": 112,
   "limitations": [

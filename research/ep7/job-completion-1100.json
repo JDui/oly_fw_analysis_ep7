@@ -1,0 +1,152 @@
+{
+  "scope": "Static job-stage runner, operation join and callback signaling; not all-path async safety",
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "operation_allocate_and_bind": {
+      "start": "0x60354b8c",
+      "stop_exclusive": "0x60354cb9",
+      "sha256": "24bcc1f3e8263f2464505887ea46b7e7e8344aa2bc857091ac24c07819a5a164",
+      "witness_count": 16
+    },
+    "operation_membership": {
+      "start": "0x60355f56",
+      "stop_exclusive": "0x60355f76",
+      "sha256": "437f40a321c7bc79b13e33550567f5e283e385b378f5786b901abe9bb45aa1a8",
+      "witness_count": 5
+    },
+    "iteration_gate": {
+      "start": "0x603e16f1",
+      "stop_exclusive": "0x603e176c",
+      "sha256": "ae0e67e8fd46f2facaf235cb7525574a27c2c015996422756633230337c98eb4",
+      "witness_count": 9
+    },
+    "descriptor_iteration_release": {
+      "start": "0x603e5f71",
+      "stop_exclusive": "0x603e5f94",
+      "sha256": "123347c9cf66c0a12d561c1635794ed14c4d0fc9604259d2ab4266098f43ddd4",
+      "witness_count": 4
+    },
+    "job_wrapper": {
+      "start": "0x603e6d04",
+      "stop_exclusive": "0x603e6d98",
+      "sha256": "b429446c809b43d4d3bd2fa8a41c30cd19cb75a43d83da00ada47749c09b3809",
+      "witness_count": 5
+    },
+    "processing_and_join": {
+      "start": "0x603e61b8",
+      "stop_exclusive": "0x603e62d1",
+      "sha256": "55c6fbd92c5d22c9b587dd7442fbe2e4bfa5158d94989c0d35396a805d8c4c6a",
+      "witness_count": 4
+    },
+    "stage_runner": {
+      "start": "0x60354214",
+      "stop_exclusive": "0x603542f3",
+      "sha256": "53a307e698751eedc49eead4780df8ea5cc4c5665c07f752c6a82e516b424aeb",
+      "witness_count": 6
+    },
+    "stage_join": {
+      "start": "0x603544a6",
+      "stop_exclusive": "0x6035452f",
+      "sha256": "c8652eafee71744822a20f35a24b81a6495e47e9cd85dc55574fd0ed820230e1",
+      "witness_count": 5
+    },
+    "previous_operation_join": {
+      "start": "0x60354930",
+      "stop_exclusive": "0x6035495d",
+      "sha256": "2be33467f4934fc23f8cfa8c05c52ca6bb840a1cad9a0923b8a9ad9a0e3e9865",
+      "witness_count": 6
+    },
+    "operation_wait_cleanup": {
+      "start": "0x6035486d",
+      "stop_exclusive": "0x6035490d",
+      "sha256": "5f11325f3c77ee17266b2188b0c90e2a474ee8a9c2e57ffa5debaea32eeea150",
+      "witness_count": 6
+    },
+    "wait_wrapper": {
+      "start": "0x60350c1a",
+      "stop_exclusive": "0x60350d0c",
+      "sha256": "62ebd1853bdfd8082540627ab3c87a41d7962c3e98e5486e4e57086b88ce57cd",
+      "witness_count": 8
+    },
+    "wait_and_clear": {
+      "start": "0x60350da1",
+      "stop_exclusive": "0x60350dbf",
+      "sha256": "867ee1fcb0cc6e3e5a3cba90c68de321717d07f1e4bc4082f6a7e9a4632221b8",
+      "witness_count": 2
+    },
+    "callback": {
+      "start": "0x60355fd4",
+      "stop_exclusive": "0x60356116",
+      "sha256": "f723cceac864ac75b79a076e1a5ef435244d9715ad42d864c5ddc9259230707d",
+      "witness_count": 4
+    },
+    "callback_signal": {
+      "start": "0x60350bfd",
+      "stop_exclusive": "0x60350c1a",
+      "sha256": "d349e9083a83d29976004328eca75400487a69fa4306a45506fb7c8f218ee21f",
+      "witness_count": 2
+    },
+    "descriptor_cleanup": {
+      "start": "0x603e6c8d",
+      "stop_exclusive": "0x603e6d04",
+      "sha256": "febd2fcc1a1430ec2bbdbfe5dfc0efc9b7f68543a24aeb869e3efa08bde38d5a",
+      "witness_count": 1
+    },
+    "job_free": {
+      "start": "0x60353cb7",
+      "stop_exclusive": "0x60353cf5",
+      "sha256": "1eb4bd9dcfd288d9077823ea21080dd60b49e108dbd79ce65a9da896422184a3",
+      "witness_count": 2
+    }
+  },
+  "instruction_witness_count": 85,
+  "iteration_gate": {
+    "function": "0x603e16f1",
+    "counter_halfword_offset": 4,
+    "limit_halfword_offset": 6,
+    "condition": "counter > limit",
+    "direct_async_wait_identified": false
+  },
+  "operation_shape": {
+    "records_job_offset": 14576,
+    "record_stride_operand": 56,
+    "record_count": 16,
+    "embedded_request_job_offset": 11364,
+    "occupied_job_tail_offset": 15472,
+    "occupied_job_tail_bytes": 16
+  },
+  "stage_table": {
+    "job_offset": 10984,
+    "row_stride_operand": 12,
+    "max_rows": 16,
+    "current_index_halfword_offset": 11312,
+    "operation_pointer_in_row": 8,
+    "status_halfword_offset": 11316
+  },
+  "operation_join": {
+    "function": "0x6035486d",
+    "event_token_offset": 16,
+    "result_halfword_offset": 32,
+    "wait_argument": 1000,
+    "timeout_units_qualified": false
+  },
+  "callback": {
+    "function": "0x60355fd4",
+    "numeric_event": 10,
+    "result_write_offset": 32,
+    "signal_wrapper": "0x60350bfd"
+  },
+  "limitations": [
+    "Iteration gate has a conditional indirect progress callback whose effects are not qualified.",
+    "The 1000 wait argument is not converted to wall-clock units.",
+    "Timeout/cancellation cleanup is not proof that all hardware readers are quiescent.",
+    "Current stage callbacks and every error/alternate processing path are not exhaustively mapped.",
+    "Descriptor completion flags and operation event tokens are separate contracts.",
+    "No safe H/L extension memory or firmware patch is established."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

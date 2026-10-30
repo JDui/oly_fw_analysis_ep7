@@ -7,6 +7,16 @@ sys.path.insert(0,str(ROOT/'tools'))
 from ep7_stock_audit import audit,BASE,require
 from oly_container import parse,sha256
 WINDOWS={
+ 'selector_mask_allocator':(0x60dde7b3,0x60dde7fd),
+ 'selector_mask_navigation':(0x60dde355,0x60dde40a),
+ 'selector_viewer_creator':(0x60e26a3d,0x60e26ab0),
+ 'selector_viewer_categories':(0x60e26b64,0x60e26bb8),
+ 'selector_list_handler_lookup':(0x60dde690,0x60dde710),
+ 'selector_list_loader':(0x60dde754,0x60dde7b3),
+ 'selector_remembered_index':(0x60de150c,0x60de157e),
+ 'selector_parent_init':(0x60e26188,0x60e261dc),
+ 'selector_parent_wrappers':(0x60e261dc,0x60e2622f),
+ 'GUI_041d_entry':(0x60e4b097,0x60e4b16a),
  'task_registration':(0x60cfd41c,0x60cfd438),
  'task_dequeue_and_engine':(0x60cfd4d9,0x60cfd55f),
  'preprocessor':(0x60e9fa88,0x60e9fdaa),
@@ -27,6 +37,52 @@ WINDOWS={
  'app_callback_global_clear':(0x60cd2330,0x60cd234d),
 }
 WITNESSES={
+ 0x60dde7d4:('movhu','(a0),d0'),
+ 0x60dde7d7:('add','d0,d0'),
+ 0x60dde7d8:('call','0x60a4ec0d,[],4'),
+ 0x60dde7f1:('clr','d0'),
+ 0x60dde7f2:('movhu','d0,(d2,a0)'),
+ 0x60dde38c:('mov','(88,a0),a1'),
+ 0x60dde394:('cmp','0,d1'),
+ 0x60dde396:('beq','0x60dde39e'),
+ 0x60dde3ec:('mov','(88,a0),a1'),
+ 0x60dde3f5:('cmp','0,d1'),
+ 0x60dde3f7:('beq','0x60dde3ff'),
+ 0x60e26a43:('mov','408,d0'),
+ 0x60e26a66:('mov','1629002664,d0'),
+ 0x60e26b68:('cmp','0,d0'),
+ 0x60e26b6c:('cmp','1,d0'),
+ 0x60e26b70:('cmp','2,d0'),
+ 0x60e26b74:('cmp','3,d0'),
+ 0x60e26b98:('call','0x60e27162,[d2,d3,a2,a3],36'),
+ 0x60e26ba1:('call','0x60e27289,[d2,d3,a2,a3],44'),
+ 0x60dde6dc:('add','1628762064,a0'),
+ 0x60dde6f3:('calls','(a1)'),
+ 0x60dde786:('add','1628759232,a0'),
+ 0x60dde794:('movhu','(4,a0),d0'),
+ 0x60dde79e:('mov','d0,(92,a1)'),
+ 0x60de1518:('call','0x60dde754,[d2,d3,a2,a3],52'),
+ 0x60de1520:('movhu','(0x61fc26ae),d1'),
+ 0x60de1526:('add','-1,d0'),
+ 0x60de152c:('movhu','d0,(0x61fc26ae)'),
+ 0x60de1538:('movhu','d0,(86,a2)'),
+ 0x60de153d:('mov','1625167184,d0'),
+ 0x60de1544:('mov','1625167207,d0'),
+ 0x60de1556:('call','0x60dde357,[d2,d3,a2,a3],16'),
+ 0x60de155e:('movhu','d1,(0x61fc26ae)'),
+ 0x60de156d:('call','0x60dde3aa,[d2,d3,a2,a3],20'),
+ 0x60de1575:('movhu','d1,(0x61fc26ae)'),
+ 0x60e26189:('mov','193,d0'),
+ 0x60e261c5:('mov','1,d0'),
+ 0x60e261c9:('call','0x60dd518e,[d2,d3,a2],16'),
+ 0x60e261d0:('mov','a0,(76,a2)'),
+ 0x60e261e8:('mov','(48,a0),a1'),
+ 0x60e2620d:('mov','(52,a0),a1'),
+ 0x60e4b09d:('cmp','4,a1'),
+ 0x60e4b0a1:('cmp','5,a1'),
+ 0x60e4b0a5:('mov','29,d2'),
+ 0x60e4b0af:('movhu','d0,(0x61fc26ae)'),
+ 0x60e4b161:('or','1024,d2'),
  0x60cfd41c:('mov','1648781388,a2'),
  0x60cfd423:('call','0x60dd4b19,[],8'),
  0x60cfd42a:('mov','a2,(0x61fb2564)'),
@@ -146,9 +202,34 @@ def inspect_preprocessor(main):
   normal_route_result='Reviewed task preprocessing has no Delete rewrite/direct-actuator branch; it may consume the event or pass unchanged to the GUI machine.',
   limitation='Not a whole-program exclusion of other producers/alias paths; local timer reset is unaffected.')
 
+def inspect_selector(main):
+ def w(address,n):return struct.unpack_from('<'+'I'*n,main,address-BASE)
+ require(w(0x6115cafc,2)==(0x84,0x60e26a3d),'selector viewer factory mismatch')
+ require(w(0x61189ba8,3)==(0x60e26ab0,0x60e26a7c,0x60df2641),'selector viewer vtable mismatch')
+ require(w(0x6114f330,2)==(193,0x60de150c),'selector special initializer mismatch')
+ require(w(0x6114efa0,4)==(193,4,0x6114e050,0),'selector list descriptor mismatch')
+ require(struct.unpack_from('<4H',main,0x6114e050-BASE)==(0,1,2,3),'selector values mismatch')
+ require(w(0x611895a8,2)==(0x60e261e5,0x60e2620a),'parent navigation vtable mismatch')
+ require(w(0x611992c4,8)==(0x59000e,0x590053,0x61198d74,0x61198c28,0x61198960,0x61199254,0x6119928c,0),'machine1 descriptor mismatch')
+ require(w(0x61198cb0,1)==(0x60e4b097,),'GUI entry handler mismatch')
+ events=[w(0x61198960+i*8,2) for i in range(89)]
+ require([index for event,index in events if event==0x9715]==[27],'entry event mapping mismatch')
+ states=[state+1 for state in range(14) if main[0x61198d74+27*14+state-BASE]==34]
+ require(states==[2,3,4,5,8,9,11],'GUI9715 entry states mismatch')
+ require(w(0x6113ee40,2)==(0xa1,0x9715) and w(0x6113eef0,2)==(0xb7,0x9715),'GuiCaller entry enums mismatch')
+ return dict(list_id=193,count=4,values=[0,1,2,3],list_descriptor='0x6114efa0',
+  viewer=dict(factory_id=132,creator='0x60e26a3d',draw='0x60e26ab0',COLOR_category1_draw='0x60e27289',hardcoded_categories=[0,1,2,3]),
+  mask=dict(pointer_offset=88,element_bytes=2,initial_value=0,nonzero_skipped_by_navigation=True),
+  remembered_index=dict(address='0x61fc26ae',storage='RAM halfword, not established persistent property',object_index_offset=86),
+  GUI_entry=dict(event='0x9715',source_machine=1,source_states=states,handler='0x60e4b097',arguments=[4,5],target_machine=4,target_state=29,argument4_clears_category=True,argument5_retains_category=True),
+  limits=['App FSM/physical origin of A1/B7 plus argument4/5 remains unproven.',
+   'ROM callback table6025bb34 to RAM61fc3874 initialization relationship not yet verified.',
+   'Four list categories are occupied; adding H/L requires parent switch/viewer support and separate state design.'])
+
 def inspect(raw,objdump):
  identity=audit(raw);main=parse(raw)[0].payload
  facts,paths=inspect_tables(main)
+ selector=inspect_selector(main)
  preprocessor=inspect_preprocessor(main)
  version=subprocess.check_output([str(objdump),'--version'],text=True).splitlines()[0]
  reports={}
@@ -159,7 +240,7 @@ def inspect(raw,objdump):
    witnesses=[a for a in WITNESSES if start<=a<stop]
    for address in witnesses:require_instruction(asm,address,*WITNESSES[address])
    reports[name]=dict(start=hex(start),stop_exclusive=hex(stop),sha256=sha256(main[start-BASE:stop-BASE]),witness_count=len(witnesses))
- return dict(scope='COLOR selector GUI machine4/state29 static table route only',source_sha256=identity['source_sha256'],objdump_version=version,objdump_sha256=sha256(objdump.read_bytes()),tables=facts,paths=paths,preprocessor=preprocessor,windows=reports,instruction_witness_count=len(WITNESSES),direct_Delete_event_present=False,event_count=112,limitations=['Reviewed normal task preprocessing only; alternate producers or alias/direct paths are not globally excluded.','No app FSM 0x5701/0x2006 association proven.','Matrix stride opcode disassembles udf01; arithmetic interpretation still needs independent MN103 opcode confirmation.','No physical Delete behavior or live routing qualification.'],camera_accessed=False,firmware_executed=False,flash_ready=False)
+ return dict(scope='COLOR selector GUI machine4/state29 static table route only',source_sha256=identity['source_sha256'],objdump_version=version,objdump_sha256=sha256(objdump.read_bytes()),tables=facts,paths=paths,selector=selector,preprocessor=preprocessor,windows=reports,instruction_witness_count=len(WITNESSES),direct_Delete_event_present=False,event_count=112,limitations=['Reviewed normal task preprocessing only; alternate producers or alias/direct paths are not globally excluded.','No app FSM 0x5701/0x2006 association proven.','Matrix stride opcode disassembles udf01; arithmetic interpretation still needs independent MN103 opcode confirmation.','No physical Delete behavior or live routing qualification.'],camera_accessed=False,firmware_executed=False,flash_ready=False)
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--stock',required=True,type=Path);p.add_argument('--objdump',required=True,type=Path);a=p.parse_args()
  print(json.dumps(inspect(a.stock.read_bytes(),a.objdump.resolve()),indent=2))

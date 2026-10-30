@@ -1,0 +1,136 @@
+{
+  "source_sha256": "9d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "objdump_sha256": "d6b4b56a93d7efa1eb62f6e6f4a3fbd2fc2eba0d2518ad45e52d287658994268",
+  "windows": {
+    "command_submit_wrapper": {
+      "start": "0x602c9cf1",
+      "stop_exclusive": "0x602c9d8c",
+      "sha256": "6068ca8933df983cecd5bf576fe7b6469c21a6c8905996af3522c2267e2c62ec",
+      "witness_count": 5
+    },
+    "ordinary_command_envelope": {
+      "start": "0x60054b33",
+      "stop_exclusive": "0x60054bed",
+      "sha256": "7de247ce0b28c014090c5420a9db046a12798a25aebb811f9ed7be873b589643",
+      "witness_count": 14
+    },
+    "command_materializer": {
+      "start": "0x603dfc7a",
+      "stop_exclusive": "0x603e052d",
+      "sha256": "5a4a8d435323b34a1fa0a29318a6b7fd3d9febe96e69022155868a922a04f7ca",
+      "witness_count": 59
+    },
+    "descriptor_route": {
+      "start": "0x603dfb10",
+      "stop_exclusive": "0x603dfc7a",
+      "sha256": "c85037f8fc0ca418fb9146d38238bb7be4273d4e15fda46f54df6f3cd09df729",
+      "witness_count": 4
+    },
+    "relay_to_e34": {
+      "start": "0x603ef892",
+      "stop_exclusive": "0x603ef94a",
+      "sha256": "be1871a2820938cbbd7b485cec0f5328b8eb0723b2ae6c46012d3417d278b70f",
+      "witness_count": 12
+    },
+    "relay_to_d70": {
+      "start": "0x603ef9bb",
+      "stop_exclusive": "0x603efaa2",
+      "sha256": "240dec6bd98f587d5bda5aac6ad2623ba4ad7adb73670a8b591fe0a5228fe5e5",
+      "witness_count": 6
+    },
+    "identity_entry_lookup": {
+      "start": "0x603e0681",
+      "stop_exclusive": "0x603e06d5",
+      "sha256": "703a1928a782fae8045f7de5f62a1bcc8a0d17e31975c5bf0901806417fe6228",
+      "witness_count": 5
+    },
+    "concrete_stack_metadata": {
+      "start": "0x602eea84",
+      "stop_exclusive": "0x602eeb2c",
+      "sha256": "dc12ec87966ebdb700d9437505714969b4a79a420688360547eac7dae6193ea1",
+      "witness_count": 17
+    },
+    "descriptor_ack": {
+      "start": "0x603df97d",
+      "stop_exclusive": "0x603df9f1",
+      "sha256": "6b9b1a1c8cc982b337606a2b6468a25ec82c398c80f98600569b4a9f034e2f9e",
+      "witness_count": 9
+    },
+    "postdispatch_ack_then_loop": {
+      "start": "0x603e5f1c",
+      "stop_exclusive": "0x603e5fa0",
+      "sha256": "437703e5db51dffa4ea609712764e3e15827ca7cb12ef18ab5d1c551a88b5292",
+      "witness_count": 10
+    }
+  },
+  "instruction_witness_count": 141,
+  "transport": {
+    "command_bytes": 16,
+    "descriptor_bytes": 300,
+    "command_handle_location": "0x60040d72",
+    "relay_handle_locations": [
+      "0x60040d74",
+      "0x60040d76",
+      "0x60040e34",
+      "0x60040d70"
+    ]
+  },
+  "concrete_producer": {
+    "entry": "0x602eea84",
+    "metadata_stack_offset": 28,
+    "metadata_zeroed_bytes": 148,
+    "first_capture_id_from_input_d1": true,
+    "dispatch": "0x100d",
+    "command_kind": 16
+  },
+  "acknowledgement": {
+    "entry": "0x603df97d",
+    "reply_handle_descriptor_offset": 32,
+    "reply_bytes": 12,
+    "reply_metadata_pointer_offset": 8,
+    "ack_before_iteration_predicate": true,
+    "ack_before_conditional_clone_release": true,
+    "metadata_lifetime_after_ack_not_guaranteed": true
+  },
+  "ordinary_envelope": {
+    "kind_offset": 8,
+    "metadata_pointer_offset": 12,
+    "send_size": 16,
+    "receive_after_send": true,
+    "high_bit_set_path_not_qualified": true,
+    "not_deep_copy": true
+  },
+  "materializer": {
+    "command_kind_offset": 8,
+    "command_metadata_pointer_offset": 12,
+    "metadata_capture_id_array_offset": 8,
+    "descriptor_capture_id_array_offset": 56,
+    "array_words": 15,
+    "descriptor_selected_id_offset": 116,
+    "descriptor_capture_pointer_offset": 28,
+    "cleared_clone_selector_halfword_offset": 260,
+    "metadata_dispatch_halfword_offset": 72,
+    "descriptor_dispatch_halfword_offset": 194
+  },
+  "identity_entry": {
+    "base": "0xa26a080c",
+    "class_stride_operand": 216,
+    "id_stride_bytes": 8,
+    "id_first": 1,
+    "id_last": 27,
+    "descriptor_entry_pointer_offset": 4,
+    "descriptor_entry_plus4_pointer_offset": 0,
+    "descriptor_marker_offset": 296
+  },
+  "limitations": [
+    "Transport forwarding calls helpers that may mutate the descriptor; no immutability claim.",
+    "Command metadata source ownership/generation and all completion/release semantics remain unqualified.",
+    "Identity table address uses an unqualified multiply-like instruction; it is not a generation-safe lease.",
+    "Acknowledgement precedes the iteration predicate and conditional clone release; caller metadata must not be assumed live across acknowledgement.",
+    "No firmware execution, H/L implementation or flash-ready patch established."
+  ],
+  "camera_accessed": false,
+  "firmware_executed": false,
+  "flash_ready": false
+}

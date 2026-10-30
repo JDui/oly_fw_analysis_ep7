@@ -77,4 +77,27 @@ class PreprocessorTests(unittest.TestCase):
         data=self.fixture()
         struct.pack_into('<H',data,0x611ec38c-probe.BASE,0x9016)
         with self.assertRaises(ValueError):probe.inspect_preprocessor(data)
+class SelectorTests(unittest.TestCase):
+    def fixture(self):
+        data=bytearray(0x611992e4-probe.BASE)
+        rows=[(0x6115cafc,(0x84,0x60e26a3d)),(0x61189ba8,(0x60e26ab0,0x60e26a7c,0x60df2641)),(0x6114f330,(193,0x60de150c)),(0x6114efa0,(193,4,0x6114e050,0)),
+          (0x611895a8,(0x60e261e5,0x60e2620a)),
+          (0x611992c4,(0x59000e,0x590053,0x61198d74,0x61198c28,0x61198960,0x61199254,0x6119928c,0)),
+          (0x61198cb0,(0x60e4b097,)),(0x6113ee40,(0xa1,0x9715)),(0x6113eef0,(0xb7,0x9715))]
+        for address,values in rows:struct.pack_into('<'+'I'*len(values),data,address-probe.BASE,*values)
+        struct.pack_into('<4H',data,0x6114e050-probe.BASE,0,1,2,3)
+        for i in range(89):struct.pack_into('<II',data,0x61198960+i*8-probe.BASE,0x9715 if i==27 else 0xa000+i,i)
+        for state in [2,3,4,5,8,9,11]:data[0x61198d74+27*14+state-1-probe.BASE]=34
+        return data
+    def test_selector_fixture(self):
+        self.assertEqual(probe.inspect_selector(self.fixture())['values'],[0,1,2,3])
+    def test_extra_category_rejected(self):
+        data=self.fixture();struct.pack_into('<I',data,0x6114efa4-probe.BASE,5)
+        with self.assertRaises(ValueError):probe.inspect_selector(data)
+    def test_wrong_state_rejected(self):
+        data=self.fixture();data[0x61198d74+27*14-probe.BASE]=34
+        with self.assertRaises(ValueError):probe.inspect_selector(data)
+    def test_duplicate_entry_event_rejected(self):
+        data=self.fixture();struct.pack_into('<I',data,0x61198960-probe.BASE,0x9715)
+        with self.assertRaises(ValueError):probe.inspect_selector(data)
 if __name__ == '__main__': unittest.main()

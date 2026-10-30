@@ -23,6 +23,8 @@ Current work:
 Start with the [research status, compatibility matrix and port plan](docs/ep7/README.md),
 [bounded input/editor and processing trace](docs/ep7/INPUT_AND_PROCESSING_TRACE.md),
 [GUI bridge and request ownership](docs/ep7/GUI_AND_REQUEST_OWNERSHIP.md),
+[capture transport/completion](docs/ep7/CAPTURE_TRANSPORT_AND_COMPLETION.md),
+[native selector design](docs/ep7/NATIVE_SELECTOR_DESIGN.md),
 [controls proposal](docs/ep7/CONTROLS.md), and
 [read-only stock audit](tools/ep7_stock_audit.py).
 The audit emits JSON only and never contacts a camera. The official **1.1/1100
