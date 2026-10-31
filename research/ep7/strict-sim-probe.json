@@ -1,0 +1,121 @@
+{
+  "scope": "Focused strict-engine acceptance and two original E-P7 kernel routines.\n\nReuses the existing GNU runner/protocol and existing MAC extension. Synthetic\ndata/stack only; no peripherals, full boot, firmware modification or SHA check.\n",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103",
+  "engine_bytes": 8845992,
+  "strict_stops": {
+    "unmapped_execute": {
+      "status": "memory_fault",
+      "completed": 0,
+      "fault": {
+        "kind": 1,
+        "pc": 419430400,
+        "map": 2,
+        "address": 419430400,
+        "size": 1,
+        "access": "execute"
+      },
+      "final_pc": "0x19000000",
+      "final_sp": "0x19010100"
+    },
+    "host_syscall": {
+      "status": "instruction_fault",
+      "completed": 0,
+      "fault": {
+        "kind": 2,
+        "pc": 419430400,
+        "map": 0,
+        "address": 0,
+        "size": 0,
+        "access": null
+      },
+      "final_pc": "0x19000000",
+      "final_sp": "0x19010100"
+    }
+  },
+  "original_instruction_witnesses": 39,
+  "mac_helper_cases": [
+    {
+      "mcvf": 0,
+      "save": {
+        "status": "returned",
+        "completed": 10,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190100f0"
+      },
+      "restore": {
+        "status": "returned",
+        "completed": 13,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x19010100"
+      },
+      "saved_frame_bytes": 16,
+      "mac_registers_restored": true,
+      "irq_mask_preserved": true,
+      "no_extra_stack_writes": true
+    },
+    {
+      "mcvf": 1,
+      "save": {
+        "status": "returned",
+        "completed": 10,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190100f0"
+      },
+      "restore": {
+        "status": "returned",
+        "completed": 13,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x19010100"
+      },
+      "saved_frame_bytes": 16,
+      "mac_registers_restored": true,
+      "irq_mask_preserved": true,
+      "no_extra_stack_writes": true
+    }
+  ],
+  "task_exception_query_cases": [
+    {
+      "flag": 1,
+      "pending_before": "0xa5a50001",
+      "pending_after": "0xa5a50001",
+      "result": {
+        "status": "returned",
+        "completed": 13,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x19010100"
+      },
+      "returned_d0": "0x0"
+    },
+    {
+      "flag": 0,
+      "pending_before": "0xa5a50001",
+      "pending_after": "0x0",
+      "result": {
+        "status": "returned",
+        "completed": 15,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x19010100"
+      },
+      "returned_d0": "0xa5a50001"
+    }
+  ],
+  "all_assertions_passed": true,
+  "input_provenance": "Current decoded length and exact instruction/ROM-field checks; explicit engine mode without hashes.",
+  "stock_instructions_executed_in_gnu_model": true,
+  "hardware_executed": false,
+  "firmware_modified": false,
+  "firmware_built": false,
+  "hash_checks_performed": false,
+  "limits": [
+    "The CPU core, MAC extension and undefined flags are the existing GNU/repository models. No new instruction implementation was introduced.",
+    "The current-task cell, TCB, CPU-ID register and stack are synthetic. This does not execute task creation, IRQ entry, scheduling or the full bootstrap.",
+    "MAC roundtrip under the model does not validate E-P7 silicon, flag pipeline timing, physical cache or interrupts.",
+    "No boot-prefix loader, executable placement or lifetime gate is closed by these focused calls."
+  ]
+}

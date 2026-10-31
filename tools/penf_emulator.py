@@ -87,10 +87,18 @@ def image_region(name, start, end, permissions='rx'):
     return Region(name, start, data[start-BASE:end-BASE], permissions)
 
 
-def execute(regions, registers, stop_pc, *, limit=10000, trace_limit=0, timeout=30, breakpoints=(), trace_tail=False, changed_captures=False):
-    """Run one fresh simulator process. Return registers, fault, trace and captures."""
-    if not ENGINE.is_file():
-        raise RuntimeError('Build tools/build_mn103_emulator.py before executing firmware')
+def execute(regions, registers, stop_pc, *, limit=10000, trace_limit=0, timeout=30, breakpoints=(), trace_tail=False, changed_captures=False, engine=None, record_hashes=True):
+    """Run one fresh simulator process. Return registers, fault, trace and captures.
+
+    Legacy callers retain their engine/input hashes. An explicit engine paired
+    with record_hashes=False supports separately documented research inputs;
+    it does not call firmware() or relax that function's PEN-F identity gate.
+    """
+    if (engine is None) != bool(record_hashes):
+        raise ValueError('Use the legacy default engine with hashes, or an explicit engine with record_hashes=False')
+    executable=ENGINE if engine is None else Path(engine)
+    if not executable.is_file():
+        raise RuntimeError('Build the strict instruction engine first: '+str(executable))
     if not 0 < limit <= 100_000_000 or not 0 <= trace_limit <= 100_000:
         raise ValueError('Invalid instruction/trace limit')
     if not 0 <= stop_pc <= 0xffffffff or len(regions) > 1024:
@@ -132,7 +140,7 @@ def execute(regions, registers, stop_pc, *, limit=10000, trace_limit=0, timeout=
         names[r.name] = index
     if sum(len(r.data) for r in regions) > 256*1024*1024:
         raise ValueError('Memory allocation exceeds harness limit')
-    proc = subprocess.run([str(ENGINE)], input=payload, capture_output=True, timeout=timeout)
+    proc = subprocess.run([str(executable)], input=payload, capture_output=True, timeout=timeout)
     if proc.returncode:
         raise RuntimeError(f'Engine failed ({proc.returncode}): {proc.stderr.decode(errors="replace")}')
     try:
@@ -147,10 +155,18 @@ def execute(regions, registers, stop_pc, *, limit=10000, trace_limit=0, timeout=
     if result['fault']:
         result['fault']['access'] = {0: 'read', 1: 'write', 2: 'execute'}.get(result['fault']['map'], 'unknown') if result['fault']['kind'] == 1 else None
     result['diagnostics'] = proc.stderr.decode(errors='replace')
-    result['engine_sha256'] = _engine_digest()
+    if record_hashes:
+        result['engine_sha256'] = _engine_digest()
+        region_records = _region_inputs(regions)
+    else:
+        result['engine_identity'] = dict(path=str(executable),bytes=executable.stat().st_size,
+            mode='explicit local engine; no hash identity claim')
+        result['hash_checks_performed'] = False
+        region_records = [dict(name=r.name,address=r.address,size=len(r.data),
+            alias_of=r.alias_of,permissions=r.permissions) for r in regions]
     result['inputs'] = {'registers': registers, 'stop_pc': stop_pc, 'limit': limit,
                         'breakpoints': breakpoints, 'trace_tail': trace_tail, 'changed_captures': changed_captures,
-                        'regions': _region_inputs(regions)}
+                        'regions': region_records}
     return result
 
 

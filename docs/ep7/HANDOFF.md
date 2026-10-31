@@ -1,9 +1,18 @@
 # E-P7 研究检查点 / 恢复研究
 
 恢复日期：2026-10-30（Asia/Shanghai）。用户已要求继续推进研究测试。
-**本轮推进IRQ扩展指令和退出屏蔽条件；未进行刷机或相机操作。**
+**本轮落实严格指令引擎及E-P7原厂片段回放；未进行刷机或相机操作。**
 
 ## 2026-10-31 当前节点
+
+最新：[严格引擎](STRICT_SIM_ENGINE.md)已在现有volume构建，最终路径
+`/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103`。复用GNU strict patch和runner，
+新增显式无SHA构建/执行入口；旧默认hash入口保留。39条witness、六个定向场景通过：
+未知取指/syscall停止，原厂MAC helper两种MCVF回转、任务异常query的flag1/0分支。
+八次短调用的原厂代码运行在GNU模型，TCB/CPU ID等为fixture；没有完整boot或相机执行。
+下一步优先复用此引擎及上游load/execute/reload方法，审查E-P7启动加载与代码/RAM
+所有权；遇到未知外设/回调必须停下记录，不能套用PEN-F地址或假造成功。
+生产对象仍text46,800/BSS8,084；完整栈、放置、生命周期及G8未通过，未整体编译固件。
 
 最新：[IRQ退出条件](IRQ_STACK_TRANSFER.md)将五个UDF对应到松下手册中的寄存器传送，
 完整23条save/restore helper匹配。0800含IE=1但LM=0，仍屏蔽普通IRQ；恢复原PSW的

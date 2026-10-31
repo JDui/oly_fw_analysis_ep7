@@ -6,6 +6,11 @@
 
 ## 设计后的实施更新
 
+2026-10-31：[严格指令环境](STRICT_SIM_ENGINE.md)也已在现有Docker中落实，沿用GNU
+strict patch/runner，新增显式本地输入、字节比较和无SHA记录方式。原有hash-pinned
+入口未删除；六个定向场景通过，尚无完整E-P7启动、硬件外设或相机模型。
+因此下文指令模拟“尚无可用无SHA入口”的设计时限制已由此节点推进，完整VM仍未创建。
+
 主聊天已完成[本地Docker工具链](CURRENT_TOOLCHAIN.md)：binutils2.45/GCC13.4与
 当前sidecar七对象检查通过，未链接固件。使用显式来源/结构/指令证据与不记录SHA
 的新入口，旧hash-pinned工具保留。这更新下文“目标工具尚未准备”的设计时状态，

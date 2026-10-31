@@ -1,0 +1,49 @@
+{
+  "scope": "Build the existing strict GNU runner from explicit local inputs, without SHA checks.\n\nRun in the research Linux container with a private writable work directory.\nThis is a separate provenance mode; the original pinned PEN-F builders and\ntheir hash gates are not called or modified. No network or firmware input.\n",
+  "source": {
+    "revision": "87ffb882e0f4d73401a0746177ffabb8e8bbe4ac",
+    "archive_name": "binutils-gdb-87ffb882-selected.tar.gz",
+    "archive_bytes": 22244450,
+    "archive_members": 6898,
+    "reference_byte_comparisons": [
+      "interp.c",
+      "mn10300.igen"
+    ],
+    "hash_checks_performed": false,
+    "subset_completion_files": [
+      "gdb/version.in"
+    ]
+  },
+  "configure": [
+    "--target=mn10300-elf",
+    "--disable-gdb",
+    "--disable-gdbserver",
+    "--disable-binutils",
+    "--disable-gas",
+    "--disable-ld",
+    "--disable-gprof",
+    "--disable-gprofng",
+    "--disable-nls",
+    "--disable-werror",
+    "--without-debuginfod",
+    "--enable-sim",
+    "--disable-sim-hardware",
+    "--with-mpfr-include=/work/src/mpfr-4.1.0/src",
+    "--with-mpfr-lib=/work/gcc-build/mpfr/src/.libs"
+  ],
+  "strict_patch": "tools/mn103_strict.patch",
+  "wrapper": "tools/mn103_runner.c",
+  "executable": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103",
+  "executable_bytes": 8845992,
+  "compiler": "cc (Debian 12.2.0-14+deb12u1) 12.2.0",
+  "hash_checks_performed": false,
+  "old_hash_gates_modified": false,
+  "firmware_built": false,
+  "firmware_executed": false,
+  "camera_accessed": false,
+  "limits": [
+    "Archive identity is recorded by HTTPS source/revision and two complete file comparisons, not a cryptographic archive identity claim.",
+    "The existing MAC extension is a manufacturer-based model with deterministic undefined flags, not E-P7 silicon validation.",
+    "Building the strict engine is not firmware construction or a boot/placement acceptance test."
+  ]
+}

@@ -1,5 +1,9 @@
 # 当前本地 MN10300 研究工具链
 
+2026-10-31补充：[严格指令引擎](STRICT_SIM_ENGINE.md)已实际构建，复用现有GNU核心、
+strict patch与runner，新增显式无SHA入口。六个定向场景通过，包括原厂MAC helper和
+任务异常查询；不是完整启动或相机执行。下文编译器/对象记录保留其当时范围。
+
 2026-10-30；binutils2.45、GCC13.4.0已实际构建完成，不是仅下载源码。
 GNU镜像列表包含中科大镜像：[官方列表](https://www.gnu.org/prep/ftp.en.html)。
 源码从该HTTPS镜像获取；与已从GNU主站取得的部分直接逐字节比较一致，MPFR/MPC
