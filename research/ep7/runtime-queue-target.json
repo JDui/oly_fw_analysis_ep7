@@ -1,0 +1,135 @@
+{
+  "scope": "Read-only current-task stack and actual local queue views with existing get_tid/delay veneers; no lifetime lease, installation flag or native execution",
+  "versions": {
+    "gcc": "mn10300-elf-gcc (GCC) 13.4.0",
+    "as": "GNU assembler (GNU Binutils) 2.45",
+    "ld": "GNU ld (GNU Binutils) 2.45",
+    "objdump": "GNU objdump (GNU Binutils) 2.45"
+  },
+  "objects": {
+    "task_context": {
+      "source": "prototypes/ep7_volatile_hl/runtime/task_context.c",
+      "definitions": [
+        "_ep7n_query_task"
+      ],
+      "undefined": [],
+      "size_output": [
+        "535",
+        "0",
+        "0",
+        "535"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context.c:6:13:current_tcb\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context.c:14:6:ep7n_query_task\t60\tstatic"
+      ]
+    },
+    "task_native": {
+      "source": "prototypes/ep7_volatile_hl/runtime/task_context_native.c",
+      "definitions": [
+        "_ep7n_native_current_task",
+        "_ep7n_native_queue"
+      ],
+      "undefined": [
+        "_ep7_gcc_get_tid",
+        "_ep7n_query_queue",
+        "_ep7n_query_task"
+      ],
+      "size_output": [
+        "98",
+        "0",
+        "0",
+        "98"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:7:13:read_word\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:9:13:read_half\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:5:12:query\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:12:6:ep7n_native_current_task\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:16:6:ep7n_native_queue\t16\tstatic"
+      ]
+    },
+    "queue_context": {
+      "source": "prototypes/ep7_volatile_hl/runtime/queue_context.c",
+      "definitions": [
+        "_ep7n_query_queue",
+        "_ep7n_same_queue"
+      ],
+      "undefined": [
+        "_memcpy"
+      ],
+      "size_output": [
+        "853",
+        "0",
+        "0",
+        "853"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/queue_context.c:6:13:read_view\t44\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/queue_context.c:26:6:ep7n_same_queue\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/queue_context.c:32:6:ep7n_query_queue\t104\tstatic"
+      ]
+    },
+    "get_tid": {
+      "source": "prototypes/ep7_volatile_hl/target/get_tid_bridge.s",
+      "definitions": [
+        "_ep7_gcc_get_tid"
+      ],
+      "undefined": [
+        "ep7_stock_get_tid_unresolved"
+      ],
+      "checked_instructions": 5,
+      "size_output": [
+        "17",
+        "0",
+        "0",
+        "17"
+      ]
+    },
+    "task_delay": {
+      "source": "prototypes/ep7_volatile_hl/runtime/delay_bridge.s",
+      "definitions": [
+        "_ep7_gcc_task_delay_one"
+      ],
+      "undefined": [
+        "ep7_stock_task_delay_unresolved"
+      ],
+      "checked_instructions": 5,
+      "fixed_input_units": 1,
+      "status_preserved": true,
+      "size_output": [
+        "17",
+        "0",
+        "0",
+        "17"
+      ]
+    },
+    "memory": {
+      "source": "prototypes/ep7_volatile_hl/target/memory.c",
+      "definitions": [
+        "_memcpy",
+        "_memset"
+      ],
+      "undefined": [],
+      "size_output": [
+        "49",
+        "0",
+        "0",
+        "49"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/target/memory.c:8:7:memcpy\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/target/memory.c:18:7:memset\t0\tstatic"
+      ]
+    }
+  },
+  "remaining_external_symbols": [
+    "ep7_stock_get_tid_unresolved",
+    "ep7_stock_task_delay_unresolved"
+  ],
+  "hash_checks_performed": false,
+  "target_linked": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "native_adapter_installed": false
+}

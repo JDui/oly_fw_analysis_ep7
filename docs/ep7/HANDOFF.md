@@ -78,6 +78,11 @@ TCB+76 entry/+84 size/+88实际base及anchor范围。59原厂指令、复用get_
 已检查，尚未装入等待callback。下一步共享runtime分离永久发布与新准入健康状态，并
 落实poison/意外delay错误时的保留策略；当前没有固件整体编译或原生执行。
 
+[实际队列视图](RUNTIME_QUEUE_CONTEXT.md)已补齐root/limits/object/backing查询，复用get_tid
+与kernel读接口。75条原厂指令、定向strict/ASan/UBSan和目标对象检查通过；没有SHA。
+双读一致不等于queue generation/lifetime lease，禁止删除/重建仍须安装退出闭包保证。
+下一项共享runtime将保留已发布context，健康状态仅影响新准入，避免poison后跳过旧job清理。
+
 ## 本轮恢复后的增量
 
 - 在既有 controller sidecar 中实现 `ep7c_resolve_live`，无需额外 token map。

@@ -135,3 +135,7 @@ G3已取得并实现[原厂当前TCB栈边界](CURRENT_TASK_STACK.md)，复用ge
 G3的[定时delay与清理进度约束](CLEANUP_PROGRESS.md)已核对并提供可调用ABI桥，排除会消费
 既有唤醒计数的tslp_tsk。共享provider实现须分离永久发布/停止新准入，保留poison后旧工作
 的context；等待/隔离策略未绑定前，worker和ACK中的待清理循环仍不可安装。
+
+[实际队列视图](RUNTIME_QUEUE_CONTEXT.md)已实现并通过最小定向检查，查询实际对象与backing，
+不再将ROM配置值等同于运行时容量。下一项共享runtime发布/清理策略；queue删除重建的
+排他期依然必须由安装与退出闭包提供，不能用两次相同读取替代。

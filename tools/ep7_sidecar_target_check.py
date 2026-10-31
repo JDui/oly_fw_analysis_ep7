@@ -26,6 +26,7 @@ if args.queue_abi_only:
  files={'queue_bridge':core/'snapshot_transport/native/queue_bridges.s','caller':core/'snapshot_transport/native/bridge_caller.c'}
 if args.task_context_only:
  files={'task_context':core/'runtime/task_context.c','task_native':core/'runtime/task_context_native.c',
+        'queue_context':core/'runtime/queue_context.c',
         'get_tid':core/'target/get_tid_bridge.s','task_delay':core/'runtime/delay_bridge.s','memory':core/'target/memory.c'}
  flags.append('-fstack-usage')
 if materializer_mode:
@@ -250,6 +251,6 @@ if args.queue_abi_only:scope='Raw queue and notification-preserving send callabl
 if args.materializer_abi_only:scope='Exact materializer receive bridge and bounded frame mapper; context provider/native addresses unresolved'
 if args.receive_abi_only:scope='Command and descriptor receive bridges with bounded stack mappers; native context providers/addresses unresolved'
 if args.queue_pipeline_abi_only:scope='Owned producer/relay/worker job/ACK pipeline objects and ABI checks; native capture/context/progress providers and addresses unresolved'
-if args.task_context_only:scope='Read-only current-task TCB stack bounds with existing get_tid veneer; no task lease, installation flag or native execution'
+if args.task_context_only:scope='Read-only current-task stack and actual local queue views with existing get_tid/delay veneers; no lifetime lease, installation flag or native execution'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))
