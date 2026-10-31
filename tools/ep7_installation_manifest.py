@@ -2,6 +2,7 @@
 """Enumerate the declared build1100 installation and object dependencies; never patch or link."""
 import argparse
 from collections import Counter
+from contextlib import nullcontext
 import importlib
 import json
 import re
@@ -212,7 +213,7 @@ def implementation_sources():
     return rows
 
 
-def inspect_objects(prefix, patches, source_selection=None, prior_objects=None):
+def inspect_objects(prefix, patches, source_selection=None, prior_objects=None, *, object_directory=None):
     # A caller using prior metadata must separately prove the unchanged source
     # and header set. The normal CLI always rebuilds the complete inventory.
     sources = implementation_sources()
@@ -227,7 +228,12 @@ def inspect_objects(prefix, patches, source_selection=None, prior_objects=None):
              '-mno-setlb','-mno-liw','-nostdinc','-I'+str(CORE/'target/include'),
              '-I'+include,'-I'+str(CORE),'-I'+str(CORE/'poll_lock_provider'),'-fstack-usage']
     definitions = {}; references = {}
-    with tempfile.TemporaryDirectory(prefix='ep7-installation-objects-') as temp:
+    # The offline candidate reuses this exact compiler/source inventory and
+    # retains its objects for the whole link. Existing probes remain temporary.
+    workspace = (tempfile.TemporaryDirectory(prefix='ep7-installation-objects-')
+                 if object_directory is None else nullcontext(object_directory))
+    with workspace as temp:
+        Path(temp).mkdir(parents=True, exist_ok=True)
         for i, relative in enumerate(selected):
             src = CORE/relative; obj = Path(temp)/(str(i)+'.o')
             if src.suffix == '.c':
