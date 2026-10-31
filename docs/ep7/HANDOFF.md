@@ -83,6 +83,12 @@ TCB+76 entry/+84 size/+88实际base及anchor范围。59原厂指令、复用get_
 双读一致不等于queue generation/lifetime lease，禁止删除/重建仍须安装退出闭包保证。
 下一项共享runtime将保留已发布context，健康状态仅影响新准入，避免poison后跳过旧job清理。
 
+[共享runtime](SHARED_RUNTIME.md)已实现并关闭六个context provider外部接口，复用bootstrap和
+私有poll锁，固定五个实际queue实例；stop/poison不撤销旧context。清理竞争定时delay，
+永久错误/丢失布局转入保留路径。定向strict/ASan/UBSan与完整pipeline对象检查通过。
+安装器/lifetime、捕获源、CPU reader与共享slot接合仍未关闭；下一个节点先处理reader，
+再集中推进退出闭包、UI及G6放置，整体固件编译未开始。
+
 ## 本轮恢复后的增量
 
 - 在既有 controller sidecar 中实现 `ep7c_resolve_live`，无需额外 token map。

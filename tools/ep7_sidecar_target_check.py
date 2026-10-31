@@ -41,6 +41,16 @@ if receiver_mode:
  files.update({n:core/'snapshot_transport/native'/p for n,p in
      [('descriptor_receive_bridge','descriptor_receive_bridge.s'),('descriptor_receive_layout','descriptor_receive_layout.c'),('descriptor_receive_binding','descriptor_receive_binding.c')]})
 if args.queue_pipeline_abi_only:
+ flags.append('-I'+str(core/'poll_lock_provider'))
+ files.update({n:core/'runtime'/p for n,p in [
+     ('runtime','runtime.c'),('contexts','contexts.c'),('runtime_native','native_context.c'),
+     ('task_context','task_context.c'),('task_native','task_context_native.c'),('queue_context','queue_context.c'),
+     ('task_delay','delay_bridge.s'),('quarantine','quarantine.s')]})
+ files['get_tid']=core/'target/get_tid_bridge.s'
+ files.update({n:core/'poll_lock_provider'/p for n,p in [
+     ('poll_provider','ep7_sem_provider.c'),('bootstrap','bootstrap/bootstrap.c'),
+     ('raw_callbacks','native/raw_callbacks.c'),('sem_bridge','native/sem_bridges.s'),
+     ('bootstrap_native','bootstrap/native_callbacks.c'),('bootstrap_bridge','bootstrap/create_delete_bridges.s')]})
  files['forward']=core/'snapshot_transport/forward.c'
  files['transport']=core/'snapshot_transport/transport.c'
  files['producer']=core/'snapshot_transport/producer.c'
@@ -225,6 +235,15 @@ with tempfile.TemporaryDirectory() as temp:
     raise ValueError('task delay frame/input changed')
    if dis.count('R_MN10300_PCREL32')!=1 or 'ep7_stock_task_delay_unresolved+0x1' not in dis:raise ValueError('task delay relocation changed')
    objects[name].update(checked_instructions=5,fixed_input_units=1,status_preserved=True)
+  if name=='quarantine':
+   dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
+   ins=re.findall(r'^\s*([0-9a-f]+):[ \t]+(?:[0-9a-f]{2}[ \t]+)+([a-z][a-z0-9]*)(?:[ \t]+([^\n]*))?$',dis,re.M)
+   rows={line.split()[-1]:int(line.split()[0],16) for line in syms.splitlines() if len(line.split())>=5 and '*UND*' not in line and re.fullmatch('[0-9a-f]+',line.split()[0])}
+   if len(ins)!=2 or [i[1] for i in ins]!=['break','bra'] or rows.get('.Lquarantined')!=int(ins[0][0],16):
+    raise ValueError('quarantine must trap and branch back without return/free/reset')
+   if dis.count('R_MN10300_PCREL8')!=1 or '.Lquarantined+0x1' not in dis:
+    raise ValueError('quarantine loop relocation changed')
+   objects[name].update(checked_instructions=2,owned_terminal_loop=True,native_exception_behavior_executed=False)
   if name=='get_tid':
    dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
    ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
@@ -245,12 +264,19 @@ if args.queue_pipeline_abi_only:expected|={'_ep7q_descriptor_send_context_unreso
     '_ep7q_capture_snapshot_unresolved','_ep7q_producer_context_unresolved','ep7_stock_kind19_metadata_producer_unresolved','ep7_stock_command_send_unresolved',
     '_ep7q_worker_context_unresolved','ep7_stock_worker_job_unresolved','ep7_stock_job_allocate_unresolved',
     'ep7_stock_worker_process_unresolved','ep7_stock_worker_cleanup_unresolved','_ep7q_ack_context_unresolved','ep7_stock_ack_unresolved'}
+if args.queue_pipeline_abi_only:
+ expected-={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved',
+     '_ep7q_descriptor_send_context_unresolved','_ep7q_producer_context_unresolved',
+     '_ep7q_worker_context_unresolved','_ep7q_ack_context_unresolved'}
+ expected|={'ep7_stock_get_tid_unresolved','ep7_stock_task_delay_unresolved',
+     'ep7_stock_raw_sem_wait_unresolved','ep7_stock_raw_sem_signal_unresolved',
+     'ep7_stock_raw_sem_create_unresolved','ep7_stock_raw_sem_delete_unresolved'}
 if external!=expected:raise ValueError('unexpected external symbols '+repr(external))
 scope='Snapshot transport, wire codec, owned queue I/O and memory target objects only' if args.transport_only else 'Current seven-object controller sidecar target compile and symbol closure only'
 if args.queue_abi_only:scope='Raw queue and notification-preserving send callable ABI bridges; no native invocation'
 if args.materializer_abi_only:scope='Exact materializer receive bridge and bounded frame mapper; context provider/native addresses unresolved'
 if args.receive_abi_only:scope='Command and descriptor receive bridges with bounded stack mappers; native context providers/addresses unresolved'
-if args.queue_pipeline_abi_only:scope='Owned producer/relay/worker job/ACK pipeline objects and ABI checks; native capture/context/progress providers and addresses unresolved'
+if args.queue_pipeline_abi_only:scope='Owned pipeline with six concrete runtime providers, bootstrap/poll lock, actual task/queue views and cleanup progress; capture source, installer/lifetimes and native addresses remain unbound'
 if args.task_context_only:scope='Read-only current-task stack and actual local queue views with existing get_tid/delay veneers; no lifetime lease, installation flag or native execution'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))

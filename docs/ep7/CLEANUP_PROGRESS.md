@@ -1,5 +1,10 @@
 # Cleanup progress and runtime publication constraints
 
+Update 2026-10-31: [shared runtime](SHARED_RUNTIME.md) now supplies permanent
+publication, all six pipeline contexts, timed progress and owned terminal hold.
+The sections below record the earlier primitive qualification. Actual installation,
+native lifetime/exclusion and exception behavior remain unqualified.
+
 The next runtime provider must keep installation/lifetime availability separate
 from accepting new experimental work. Published storage, private semaphore and
 frame/queue installation remain stable until reboot; there is currently no live

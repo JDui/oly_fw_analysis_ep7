@@ -16,7 +16,8 @@ typedef struct {
 /* Provider must remain available for every owned tagged descriptor until ACK or
  * explicit retirement. The full installer/task group proves owned storage and
  * original metadata identity at+48. It must not downgrade lost owned context to
- * unknown stock. Actual RTOS progress/fatal policy is still unbound. */
+ * unknown stock. runtime/contexts.c binds timed progress and terminal retention;
+ * native exception behavior and installation remain unqualified. */
 bool ep7q_ack_context_unresolved(uint32_t,ep7q_ack_context *);
 void ep7q_ack_entry(uint32_t descriptor,uint32_t wrapper_sp);
 #endif

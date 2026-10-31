@@ -22,7 +22,8 @@ typedef struct {
  * local synchronous worker domain and immutable runtime bindings throughout the
  * entire wrapper. Once registered it must stay available through cleanup; losing
  * qualification cannot turn a registered job into an unknown stock invocation.
- * This stability/failure policy is still a G3/G6 obligation, not supplied here. */
+ * runtime/contexts.c supplies permanent publication/progress/fault handling;
+ * actual G6 placement, installation and native lifetimes remain prerequisites. */
 bool ep7q_worker_context_unresolved(unsigned,uint32_t,ep7q_worker_context *);
 void ep7q_worker_scope_entry(ep7j_scope *,uint32_t);
 void *ep7q_worker_allocate_entry(unsigned,uint32_t);

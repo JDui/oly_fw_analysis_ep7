@@ -139,3 +139,8 @@ G3的[定时delay与清理进度约束](CLEANUP_PROGRESS.md)已核对并提供�
 [实际队列视图](RUNTIME_QUEUE_CONTEXT.md)已实现并通过最小定向检查，查询实际对象与backing，
 不再将ROM配置值等同于运行时容量。下一项共享runtime发布/清理策略；queue删除重建的
 排他期依然必须由安装与退出闭包提供，不能用两次相同读取替代。
+
+[共享runtime](SHARED_RUNTIME.md)已接入六条context provider：单次发布、五个queue实例
+固定、停止新准入但保留旧context、清理等待/poison保持均有具体实现与定向检查。
+这关闭了接口空缺，没有关闭安装资格；下一项CPU reader共用该runtime，随后退出闭包、
+捕获源/UI和安全放置必须继续完成。不能因符号数变化把G3/G6整体标记通过。

@@ -1,6 +1,6 @@
 #ifndef EP7_BOOTSTRAP_H
 #define EP7_BOOTSTRAP_H
-#include "ep7_sem_provider.h"
+#include "../ep7_sem_provider.h"
 /* Normalized callbacks, NOT native ABI. All return normally. Caller serializes
  * startup/retry/publish, no hooks/users until publication, no object moves. */
 typedef struct {uint32_t attributes,initial,maximum;} ep7b_sem_spec;

@@ -12,4 +12,7 @@ typedef struct {
 } ep7q_stack;
 const unsigned char *ep7q_stack_span(const ep7q_stack *,uint32_t,unsigned,unsigned);
 bool ep7q_stack_word(const ep7q_stack *,uint32_t,unsigned,uint32_t *);
+/* Once runtime is published, a lost owned cleanup layout must not delegate into
+ * stock ACK/free. Unpublished hooks have no experimental ownership to retain. */
+void ep7q_owned_context_lost(void);
 #endif

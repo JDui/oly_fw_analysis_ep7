@@ -23,7 +23,8 @@ typedef struct {
  * local queue domain and a stable publication lifetime before any frame read.
  * On target stack.bytes==(const unsigned char *)(uintptr_t)stack.low.
  * The queue qualifier checks actual maximum and remains valid through raw I/O.
- * The provider is deliberately unresolved until G3/G6 install bindings exist. */
+ * runtime/contexts.c now implements this historical symbol. Safe G6 installation
+ * and stable native queue/task lifetimes are still required before publication. */
 bool ep7q_materializer_context_unresolved(unsigned,uint32_t,ep7q_materializer_context *);
 int ep7q_materializer_entry(unsigned,uint32_t);
 #endif

@@ -42,7 +42,9 @@ void ep7q_worker_process_entry(uint32_t descriptor,uint32_t w)
 void ep7q_worker_cleanup_entry(uint32_t descriptor,uint32_t w)
 {
     ep7q_worker_context context={0};ep7q_worker_args args;
-    if(!admit(EP7Q_WORKER_CLEANUP,w,descriptor,&context,&args))return;
+    if(!admit(EP7Q_WORKER_CLEANUP,w,descriptor,&context,&args)){
+        ep7q_owned_context_lost();return;
+    }
     while(!ep7j_revoke((ep7j_scope *)(uintptr_t)args.scope,context.core)){
         /* Registration required a stable wait callback. If that contract is
          * violated, do not free a still-registered job; retain this frame. */
