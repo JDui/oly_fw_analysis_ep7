@@ -94,6 +94,11 @@ worker同一core。host验证stop后在途job仍生效、撤销/poison后保持�
 49对象ABI/loop-state检查通过。20个外部符号为捕获源和19个native地址；没有整体固件
 编译。下一重点回到退出/queue删除闭包与捕获源身份，再处理UI和G6放置/完整栈预算。
 
+[队列自动重用](QUEUE_RECREATION.md)的实际风险已查明：limits为0/255，真实create以ID0
+进入自动allocator，可在删除清ID后重新选择所有pipeline编号并换maximum/backing。
+66条原厂指令、两配置项核对通过；没有重复C测试。下一项必须审明实际删除/退出路线，
+落实保留实例或有静止证明的退出协议；不能把ROM配置ID称为不会被重用的静态ID。
+
 ## 本轮恢复后的增量
 
 - 在既有 controller sidecar 中实现 `ep7c_resolve_live`，无需额外 token map。

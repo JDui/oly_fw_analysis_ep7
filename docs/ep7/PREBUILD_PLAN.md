@@ -148,3 +148,7 @@ G3的[定时delay与清理进度约束](CLEANUP_PROGRESS.md)已核对并提供�
 [CPU reader](RUNTIME_READER.md)现经同一发布slot使用worker core；定向host与49对象检查
 通过。下一步不再新增context接口，集中审查退出/queue删除和捕获源身份/排他，再推进
 G4资源与G6完整stack/放置/启动，直到满足G8后开始整体固件编译。
+
+[queue重建审查](QUEUE_RECREATION.md)确认当前自动ID池1–255包含全部pipeline编号。
+删除清ID后可用新spec重新分配；双读queue view仍不构成I/O存活锁。下一步明确删除调用者
+和正常/失败退出，落实不可重建的实例保留或完整静止协议，然后才能放行G6发布。

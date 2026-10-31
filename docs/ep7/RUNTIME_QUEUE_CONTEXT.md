@@ -24,6 +24,9 @@ native backend 复用原有 volatile 读和 get_tid 桥，没有新增内核 API
 返回期间禁止删除、重建和改配置；退出/关闭流程仍是编译前未决项。
 不能凭查询成功设置 expanded_group_ready。
 
+后续[重建审查](QUEUE_RECREATION.md)确认本机自动ID池覆盖1–255，包含五个pipeline
+编号；该限制是实际可达的分配机制风险，不能以“这些ID来自启动配置”排除。
+
 定向证据：
 
 - [原厂 75 条指令核对](../../research/ep7/runtime-queue-current.json)：复用已有
