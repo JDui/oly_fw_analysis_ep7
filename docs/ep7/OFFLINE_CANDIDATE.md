@@ -1,9 +1,11 @@
 # E-P7 HSL 首个离线候选
 
 2026-11-01 后续：[当前可刷机包目标](FLASH_READINESS_PLAN.md)正在推进。
-当前候选为 **offline-candidate-003**：修复[原生发送gate返回地址](CANDIDATE_QUEUE_GATE_SIM.md)
-漏检，重编译1个对象、复用106个，重新整体链接/合成通过。与002仅有2字节差异，
-全部符号和布局不变；[增量报告](../../research/ep7/offline-candidate-003.json)记录结果。
+当前候选为 **offline-candidate-004**：修复[原生接收入口绑定](CANDIDATE_MESSAGE_SIM.md)，
+复用全部107个对象重新链接/合成，通过实际消息发送、通知、接收及空轮询。相对003
+仅两个CALL重定位字节改变，布局不变；[增量报告](../../research/ep7/offline-candidate-004.json)
+记录结果。003此前已修复[原生发送gate返回地址](CANDIDATE_QUEUE_GATE_SIM.md)漏检，
+重编译1个对象、复用106个，相对002两个立即数字节改变。
 仍不可安装。下文保留首个002候选的构建结果和原有边界。
 
 2026-10-31。用户已明确选择先编译不可安装的离线候选，检查整体链接与布局，

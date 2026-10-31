@@ -30,7 +30,20 @@ flag203/bit1。事件 flag 对象依据 ROM 指针与 spec 建立为空等待链
 不能把“复现断言通过”算成接收成功。
 
 地址绑定现改为 `60036c8e`，证据指向含函数入口/原厂 caller 的 `ep7_queue_transport`。
-接下来仅重链接候选004，复用107个未变对象，执行同一场景确认原生返回28和票据回传。
+候选004已重链接，复用107个未变对象，[构建报告](../../research/ep7/offline-candidate-004.json)
+记录源码 `0b874fa`，相对003仅 `600cb0a3:0d→ec`、`600cb0a4:bc→bb` 两个重定位
+字节变化。全局符号仅原厂接收入口绝对值变化，布局与所有自有符号地址不变。
+
+[修复后报告](../../research/ep7/candidate-message-after.json)通过同一消息链：原生
+receive 返回28，候选返回0；16字节 command 和12字节票据逐字节相同，descriptor
+前300字节保持5A，队列为空且恢复4864字节容量。原生两条参数保存指令实际执行。
+在成功现场的 clone 中再次以 timeout0 接收：原生返回−50、候选返回−2，清除旧票据，
+command、descriptor 前300字节和 queue header 不变，没有调度切换。
+
+本节点6段共16,931条指令，上游冻结/FIFO另119,948条；queue初始化34、通知初始化
+2,129、注册30、发送6,841、接收4,337、空轮询3,560。最大观测调用深度640字节，
+不是外层调用链/IRQ完整栈界。两个接收路径和发送均正常返回，原生锁退出、私有锁
+count1/owner0/not-poisoned 已检查。
 
 ## 边界与后续
 
@@ -43,10 +56,9 @@ caller ancestor 返回字、外层栈及 idle flag 均为 fixture。metadata 只
 
 ```sh
 python3 /repo/tools/ep7_candidate_message_sim.py \
-  --candidate /repo/generated/ep7/offline-candidate-003 \
+  --candidate /repo/generated/ep7/offline-candidate-004 \
   --tool-prefix /work/install/bin/mn10300-elf- \
-  --engine /work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103 \
-  --expect-legacy-entry
+  --engine /work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103
 ```
 
-修复后执行004时去掉 `--expect-legacy-entry`；不覆盖历史失败报告。
+复现旧003时改候选路径并追加 `--expect-legacy-entry`；不覆盖历史失败报告。

@@ -7,7 +7,28 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[named-send gate修复](CANDIDATE_QUEUE_GATE_SIM.md)已进入候选003，源码296e721。
+最新：[queue4b 消息/通知/接收](CANDIDATE_MESSAGE_SIM.md)已进入候选004，源码0b874fa。
+原厂接收函数真实入口60036c8e；旧绑定60036caf跳过destination/timeout保存与dispatch
+检查，导致native−17/candidate−1并留队。004复用107对象，仅两个CALL重定位字节
+600cb0a3/a4变化，布局及自有符号不变。修复后真实native返回28，command+票据完整
+进入descriptor；空轮询native−50/candidate−2清除旧票据，其他输出/queue不变。
+本节点6段16,931指令，上游冻结/FIFO119,948。最大观测调用深度640，非完整栈界。
+后续用004；旧报告保留对应历史来源。没有重复编译或广泛测试，产物仍不可安装。
+
+`ep7_candidate_message_sim.py`复用S2和capture helpers；prepare_kernel在冷清零/发布前
+运行60030c4c初始化queue4b60B header及4864B独立backing。原厂6005134a初始化通知
+表，603df7c9..7e0注册4b→flag203/bit1；实际named/raw send/60051078通知/60035a5e
+flag-set各执行一次。flag对象6219e710依据ROM table/spec显式置为空等待链fixture，
+不是任务唤醒证明。METADATA19410000仍未映射；materializer TCB切换和ancestor栈字为
+fixture。下一步实际descriptor填充、下游queue和worker；不要把前300字节保持5A的
+票据接收算成stock descriptor已构造。参考现有descriptor/worker frame研究与桥接。
+
+用户补充：最后参考fishcu原项目方式封装；已写入FLASH_READINESS_PLAN。优先复用
+`patches/hsl/pen-f/build.py`的parse→replace_payload→reconstruct和`oly_container`，
+不用其SHA入口，不照搬PEN-F两组件输出/E122文件名/设备操作，保留E-P7自身型号与
+未修改组件；封装检查不替代加载/所有权/恢复资格。
+
+此前：[named-send gate修复](CANDIDATE_QUEUE_GATE_SIM.md)已进入候选003，源码296e721。
 旧gate误用600514f1/60051555；实际两处DD CALL32返回600514f3/60051557。旧002在
 maximum改变或I/O关闭时两分支共四次错误放行，003均原生返回−42且退出临界区/释放锁，
 两次正常场景到复制前续接。仅重编译runtime/kernel_gate.c，106对象复用；整包链接

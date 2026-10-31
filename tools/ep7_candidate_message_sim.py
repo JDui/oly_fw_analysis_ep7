@@ -182,6 +182,28 @@ def inspect(directory,prefix,engine,expect_legacy_entry=False):
                 'receive did not preserve its input timeout and destination in the native frame')
         observation.update(native_input_timeout=entry['d1'],native_input_destination=hex(entry['a0']),
                            both_native_parameter_save_instructions_executed=True)
+        # The same timeout=0 must also reach the native empty-poll path. Reuse
+        # a clone so later stages can retain the successfully received ticket.
+        empty = machine.clone()
+        empty.mutate('stack',command_out-STACK,b'\xcc'*16)
+        header = empty.read(empty.regions['queue_4b'].address,60)
+        polled = empty.run(0x603dfc9b,0x603dfca2,overrides=dict(sp=RECEIVE_SP,d0=QUEUE),
+            full_trace=True,limit=20000,breakpoints=[syms['_ep7_gcc_quarantine']])
+        result_ok(empty,polled,0x603dfca2,RECEIVE_SP)
+        raw_returns = [signed(r['d0']) for r in polled['trace']
+                       if r['pc']==syms['_ep7_queue_receive_native_return']]
+        require(signed(polled['registers']['d0'])==-2 and raw_returns==[-50] and
+                empty.read(command_out,16)==b'\xcc'*16 and empty.read(descriptor,300)==b'\x5a'*300 and
+                empty.read(descriptor+300,12)==bytes(12) and
+                empty.read(empty.regions['queue_4b'].address,60)==header,
+                'empty native poll did not reject cleanly and clear the stale ticket')
+        ready_lock(empty,provider)
+        poll_summary = summarize_message('patched_materializer_empty_poll',polled,RECEIVE_SP)
+        require(poll_summary['native_raw_receive_entries']==1 and poll_summary['context_switch_entries']==0,
+                'empty poll skipped native receive or tried switching tasks')
+        poll_summary.update(native_return_values=raw_returns,stale_ticket_cleared=True,
+                            command_descriptor_prefix_and_queue_header_unchanged=True)
+        cases.append(poll_summary)
     ready_lock(machine,provider)
     return dict(scope=__doc__,candidate_build_revision=build['source_revision'],
         actual_elf_code_equals_decoded_candidate=True,all_assertions_passed=True,

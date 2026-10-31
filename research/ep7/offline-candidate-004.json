@@ -1,0 +1,959 @@
+{
+  "scope": "Build a NON-INSTALLABLE E-P7 build1100 decoded candidate; no updater container or hashes.",
+  "status": "passed",
+  "installable": false,
+  "installation_authorized": false,
+  "whole_candidate_compiled": true,
+  "whole_candidate_linked": true,
+  "decoded_candidate_synthesized": true,
+  "hardware_executed": false,
+  "updater_container_generated": false,
+  "hash_checks_performed": false,
+  "source_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "stock_length_expected": 26214336,
+  "limits": [
+    "Both executable regions are unqualified placement assumptions, not proven free space.",
+    "Private RAM uses the proposed pool payload; ownership and cold reservation timing remain unqualified.",
+    "Three boot-prefix edits have no qualified upstream load path.",
+    "Early copy failure, secondary CPU ordering and cache visibility remain unresolved.",
+    "Full capture/alias retirement, queue/task lifetime, cancellation and GUI exclusion remain unresolved.",
+    "Complete task/IRQ stack bounds remain unknown; .su data are local function measurements only.",
+    "H/L persistence is excluded; this is the existing volatile implementation.",
+    "No updater acceptance, recovery, camera execution, image-quality or display acceptance is established."
+  ],
+  "ram_binding_override": {
+    "symbol": "__ep7_private_uncached_start",
+    "official_address": null,
+    "offline_assumption": "0xa1dd4d00",
+    "production_binding_table_unchanged": true
+  },
+  "evidence": "docs/ep7/OFFLINE_CANDIDATE.md",
+  "objects_reused": 107,
+  "object_source_revision": "296e721a9e832c5cce3b6c75eea6cf9fc32e292a",
+  "reused_source_and_header_diff_empty": true,
+  "source_count": 107,
+  "global_implementation_definitions": 345,
+  "native_binding_count": 109,
+  "unresolved_symbols": [],
+  "unlinked_text_data_bss": [
+    46800,
+    0,
+    8084
+  ],
+  "layout": [
+    {
+      "section": ".ep7_code0",
+      "start": "0x60048040",
+      "end": "0x6004da7c",
+      "bytes": 23100,
+      "capacity": 32640,
+      "remaining": 9540,
+      "ownership_proven": false
+    },
+    {
+      "section": ".ep7_code1",
+      "start": "0x600c8040",
+      "end": "0x600cdce3",
+      "bytes": 23715,
+      "capacity": 32640,
+      "remaining": 8925,
+      "ownership_proven": false
+    },
+    {
+      "section": ".bss",
+      "start": "0xa1dd4d00",
+      "end": "0xa1dd6c94",
+      "bytes": 8084,
+      "capacity": 16384,
+      "remaining": 8300,
+      "noload": true,
+      "ownership_proven": false
+    }
+  ],
+  "entry_symbol": "ep7_native_cold_clear",
+  "entry_address": "0x6004bb92",
+  "entry_is_not_a_boot_proof": true,
+  "patch_count": 101,
+  "patches": [
+    {
+      "site": "0x600201fe",
+      "bytes": 6,
+      "kind": "inline_jump",
+      "target": "0x6004bb92",
+      "load_stage": "boot-prefix-unqualified",
+      "upstream_load_path_qualified": false
+    },
+    {
+      "site": "0x600229b9",
+      "bytes": 2,
+      "kind": "pool_bound",
+      "target": null,
+      "load_stage": "boot-prefix-unqualified",
+      "upstream_load_path_qualified": false
+    },
+    {
+      "site": "0x60022c28",
+      "bytes": 2,
+      "kind": "pool_bound",
+      "target": null,
+      "load_stage": "boot-prefix-unqualified",
+      "upstream_load_path_qualified": false
+    },
+    {
+      "site": "0x60031072",
+      "bytes": 6,
+      "kind": "inline_jump",
+      "target": "0x600ca2f7",
+      "load_stage": "early-kernel-copy",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60036d3c",
+      "bytes": 10,
+      "kind": "inline_jump",
+      "target": "0x600ca245",
+      "load_stage": "early-kernel-copy",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60036f93",
+      "bytes": 6,
+      "kind": "inline_jump",
+      "target": "0x600ca2a0",
+      "load_stage": "early-kernel-copy",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x6003b424",
+      "bytes": 4,
+      "kind": "queue_capacity",
+      "target": null,
+      "load_stage": "early-kernel-copy",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x6003b428",
+      "bytes": 4,
+      "kind": "queue_capacity",
+      "target": null,
+      "load_stage": "early-kernel-copy",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x6003b460",
+      "bytes": 4,
+      "kind": "queue_capacity",
+      "target": null,
+      "load_stage": "early-kernel-copy",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x6003b464",
+      "bytes": 4,
+      "kind": "queue_capacity",
+      "target": null,
+      "load_stage": "early-kernel-copy",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x6003bb90",
+      "bytes": 4,
+      "kind": "queue_capacity",
+      "target": null,
+      "load_stage": "early-kernel-copy",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x6003bb94",
+      "bytes": 4,
+      "kind": "queue_capacity",
+      "target": null,
+      "load_stage": "early-kernel-copy",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60191371",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600c9ee4",
+      "load_stage": "section1",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602897d7",
+      "bytes": 6,
+      "kind": "inline_jump",
+      "target": "0x60048308",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60289c5e",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c82b8",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60289d02",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c82d6",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602973bc",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600484ab",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x6029be5d",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x6004840e",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x6029c692",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c818c",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x6029ce9d",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c8114",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x6029ef4c",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c80d8",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x6029f1c2",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600483de",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x6029f6ba",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600483de",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a27e4",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c80f6",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a29ab",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600483de",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a2a00",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600483de",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a2a48",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600483de",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a2ab5",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600483de",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a2cb9",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600483de",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a2d0d",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600483de",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a31b1",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600483de",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a31c7",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c81aa",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a31ea",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c8204",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a31f7",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c825e",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a4220",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600483de",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a427d",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600483de",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a440a",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c81c8",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a442c",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c8222",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a443e",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c827c",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a4461",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600483de",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a4480",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c81e6",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a44a3",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c8240",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a44b5",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c829a",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a44d8",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600483de",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a7ea0",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x6004843e",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602a8dca",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x60048474",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602abe96",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600490f0",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602ac3de",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600cadda",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602ac3f6",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x6004908a",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602ac4fd",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c8132",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602ac5a6",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c8150",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602ac5e8",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600490bb",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602ac66c",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600c816e",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602ac869",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600cb06c",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x602ac8f8",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600490bb",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603537f3",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600cb412",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603b02d9",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x6004bd79",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603df805",
+      "bytes": 4,
+      "kind": "stack_frame",
+      "target": null,
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603df933",
+      "bytes": 4,
+      "kind": "stack_frame",
+      "target": null,
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603dfa04",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x6004abc9",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603dfaa1",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x6004ad6e",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603dfc67",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600cae8e",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603dfc9b",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x6004aed9",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603e0546",
+      "bytes": 4,
+      "kind": "stack_frame",
+      "target": null,
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603e05c6",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600caeac",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603e05e2",
+      "bytes": 4,
+      "kind": "stack_frame",
+      "target": null,
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603ef894",
+      "bytes": 4,
+      "kind": "stack_frame",
+      "target": null,
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603ef8b5",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600cadf8",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603ef8d2",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600cae16",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603ef8fd",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600cae34",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603ef91a",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600cae52",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603ef94c",
+      "bytes": 4,
+      "kind": "stack_frame",
+      "target": null,
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603ef9b4",
+      "bytes": 4,
+      "kind": "stack_frame",
+      "target": null,
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603f26a3",
+      "bytes": 4,
+      "kind": "stack_frame",
+      "target": null,
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603f2722",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600cae70",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603f2769",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x6004aa40",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603f2792",
+      "bytes": 4,
+      "kind": "stack_frame",
+      "target": null,
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603f2890",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600cb434",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x603f28c0",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600cb45d",
+      "load_stage": "section2",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60cfd53a",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600cd1d1",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60cfd558",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600cd214",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60e261d4",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600cc954",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60e26201",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600cc972",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60e26226",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600cc990",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60e269f0",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600cc9ae",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60ea0070",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x6004cc66",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60ea00f7",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x6004cc84",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60ea0d70",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x6004cca2",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60ea0deb",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x6004ccc0",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60ea0e66",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x6004ccde",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60faadc4",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x600cd2af",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x61032f10",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x600cd34a",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x61032fa8",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x600cd2f6",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x610330c0",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x600cd320",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x6114f334",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x6004d81c",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x6118957c",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x6004ca9c",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x611895a4",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x600cc904",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x61189ba8",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x6004d47a",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x61189bac",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x600cc92c",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x611a3b50",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x600cc89d",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x611a3bc4",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x600cc8dc",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    }
+  ],
+  "original_patch_span_bytes": 546,
+  "patch_count_by_kind": {
+    "short_call_via_veneer": 36,
+    "wide_call": 32,
+    "function_pointer_word": 11,
+    "stack_frame": 9,
+    "queue_capacity": 6,
+    "inline_jump": 5,
+    "pool_bound": 2
+  },
+  "patch_count_by_stage": {
+    "boot-prefix-unqualified": 3,
+    "early-kernel-copy": 9,
+    "section1": 1,
+    "section2": 66,
+    "section6": 22
+  },
+  "patch_targets_checked": 84,
+  "linked_veneers_checked": 36,
+  "gnu_decoded_branches_checked": 73,
+  "candidate_length": 26214336,
+  "changed_bytes": 46279,
+  "write_span_count": 103,
+  "undeclared_bytes_unchanged": true,
+  "candidate_readback_equal": true,
+  "stock_input_unchanged": true,
+  "toolchain": {
+    "compiler": "mn10300-elf-gcc (GCC) 13.4.0",
+    "linker": "GNU ld (GNU Binutils) 2.45"
+  },
+  "artifacts": {
+    "elf": "EP7HSL-NONINSTALLABLE.elf",
+    "map": "EP7HSL-NONINSTALLABLE.map",
+    "image": "EP7HSL-NONINSTALLABLE.decoded-main.bin",
+    "linker_script": "offline-layout.ld",
+    "symbols": "symbols.json",
+    "objects": "objects/",
+    "input_sections": "section-placement.json",
+    "object_inventory": "object-inventory.json"
+  },
+  "incremental_comparison": {
+    "previous_candidate": "generated\\ep7\\offline-candidate-003",
+    "length_unchanged": true,
+    "changed_bytes": 2,
+    "differences": [
+      {
+        "address": "0x600cb0a3",
+        "before": 13,
+        "after": 236
+      },
+      {
+        "address": "0x600cb0a4",
+        "before": 188,
+        "after": 187
+      }
+    ],
+    "layout_unchanged": true,
+    "symbol_changes": {
+      "ep7_stock_queue_receive_local_unresolved": {
+        "before": {
+          "address": "0x60036caf",
+          "kind": "A"
+        },
+        "after": {
+          "address": "0x60036c8e",
+          "kind": "A"
+        }
+      }
+    },
+    "objects_recompiled": [],
+    "hash_checks_performed": false
+  }
+}

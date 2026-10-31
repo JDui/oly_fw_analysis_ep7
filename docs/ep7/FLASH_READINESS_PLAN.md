@@ -11,9 +11,10 @@
 
 ## 当前基础
 
-当前候选 `generated/ep7/offline-candidate-003/` 在首个002基础上修复named-send gate
-返回地址漏检：1个对象增量更新、106个复用，重新整体链接和101项修改合成通过，
-仅2字节变化、布局不变，仍标记不可安装。后续直接测试其实际机器码，复用现有 GNU 严格引擎、
+当前候选 `generated/ep7/offline-candidate-004/` 在003基础上修复raw receive入口：
+107个对象全部复用，重新整体链接和101项修改合成通过，仅两个重定位字节变化。
+此前003修复named-send gate返回地址漏检。布局不变，仍标记不可安装。
+后续直接测试其实际机器码，复用现有 GNU 严格引擎、
 原生片段和容器实现；不重复建立 VM、重写 CPU 模拟器或重跑无关主机测试。
 原厂输入保持只读，不做 SHA 校验，不连接或刷写相机。
 
@@ -56,3 +57,9 @@ S3 的[状态与参数子节点](CANDIDATE_STATE_SIM.md)已通过：原生 poll/
 原厂CALL为7字节，返回PC由旧f1/55改为f3/57；旧候选四次错误放行，新候选四次
 原生拒绝−42并释放锁、两次正常续接。当前继续完整消息/通知/worker，不重复已完成
 对象编译和无关主机测试。
+
+[queue4b 消息子节点](CANDIDATE_MESSAGE_SIM.md)已通过实际发送/通知/接收和空轮询。
+发现并修正raw receive误绑定函数中段caf为真实入口c8e；修复前−17留队，修复后
+返回28、票据完整进入descriptor，空轮询−50清除旧票据。原生通知表初始化/注册和
+flag-set均执行，flag等待任务和队列backing分配仍为边界。下一步实际descriptor
+materialization、下游queue和worker/CPU/撤销链；S3尚未整体完成。
