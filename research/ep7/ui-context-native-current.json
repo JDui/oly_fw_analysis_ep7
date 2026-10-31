@@ -1,0 +1,99 @@
+{
+  "scope": "Actual GUI service allocator selection and its two leaf ABIs; no hashes.",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "input_structure": {
+    "scope": "Prepare a local E-P7 research input using container structure, without SHA.\n\nThis does not establish byte identity with historical hash-pinned reports.\nIt decodes stock only, never modifies firmware or produces an install image.",
+    "bytes": 111017984,
+    "model": "E-P7",
+    "build": "1100",
+    "whole_container_checked": true,
+    "components": [
+      {
+        "offset": 0,
+        "payload_bytes": 26214336,
+        "kind": "0x100",
+        "header_build": "1100",
+        "model_bytes": "1420",
+        "container_address": "0x406a0000"
+      },
+      {
+        "offset": 26214400,
+        "payload_bytes": 26214336,
+        "kind": "0x101",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x421a0000"
+      },
+      {
+        "offset": 52428800,
+        "payload_bytes": 45219776,
+        "kind": "0x106",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x43aa0000"
+      },
+      {
+        "offset": 97648640,
+        "payload_bytes": 262080,
+        "kind": "0x10e",
+        "header_build": "0001",
+        "model_bytes": "1420",
+        "container_address": "0x0"
+      },
+      {
+        "offset": 97910784,
+        "payload_bytes": 13107136,
+        "kind": "0x102",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x467e0000"
+      }
+    ],
+    "component_sums_valid": true,
+    "unchanged_roundtrip_equal": true,
+    "runtime_base": "0x60020020",
+    "entry_witnesses_match": true,
+    "hash_checks_performed": false,
+    "historical_exact_byte_identity_proven": false,
+    "firmware_modified": false,
+    "firmware_executed": false,
+    "camera_accessed": false,
+    "flash_ready": false
+  },
+  "checked_instructions": 59,
+  "checked_context_vtable_pairs": 3,
+  "service_slot": "0x61fb3138",
+  "service_vtable": "0x60faaab4",
+  "service_type": "0x0101",
+  "service_allocation_bytes": 2880,
+  "getter": "0x60d3379b",
+  "selection_get": "0x60cfe58f",
+  "selection_set": "0x60cfe586",
+  "context_bytes": [
+    28,
+    29
+  ],
+  "get_output_registers": [
+    "a1",
+    "d0"
+  ],
+  "set_input_registers": [
+    "d0",
+    "d1"
+  ],
+  "object_register": "a0",
+  "get_owns_self_frame_bytes": 4,
+  "select_owns_self_frame_bytes": 0,
+  "gui_entry": "0x60dd5067",
+  "gui_configured_stack_bytes": 16384,
+  "gui_domain_static_proved": false,
+  "base_constructor_publishes_before_final_vtable": true,
+  "readiness_requires_admitted_live_gui_service": true,
+  "native_context_is_global": true,
+  "native_context_mutex_or_lifetime_lease_proved": false,
+  "hash_checks_performed": false,
+  "firmware_modified": false,
+  "target_executed": false,
+  "renderer_ready": false,
+  "flash_ready": false
+}

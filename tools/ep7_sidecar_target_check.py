@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compile current sidecar sources with explicitly selected installed MN103 tools."""
 from pathlib import Path
-import argparse,json,re,subprocess,tempfile
+import argparse,json,re,runpy,subprocess,tempfile
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--tool-prefix',required=True,help='trusted installed tool path prefix ending mn10300-elf-')
 mode=parser.add_mutually_exclusive_group()
@@ -11,6 +11,7 @@ mode.add_argument('--materializer-abi-only',action='store_true',help='compile ex
 mode.add_argument('--receive-abi-only',action='store_true',help='compile command and descriptor receiver bridges and bounded stack mappers')
 mode.add_argument('--queue-pipeline-abi-only',action='store_true',help='compile command/descriptor receive and descriptor forward bridges')
 mode.add_argument('--task-context-only',action='store_true',help='compile read-only actual current-TCB stack view and reuse get_tid veneer')
+mode.add_argument('--ui-context-only',action='store_true',help='compile native text rollback context callbacks and audited native selection leaves')
 args=parser.parse_args()
 receiver_mode=args.receive_abi_only or args.queue_pipeline_abi_only
 materializer_mode=args.materializer_abi_only or receiver_mode
@@ -28,6 +29,14 @@ if args.task_context_only:
  files={'task_context':core/'runtime/task_context.c','task_native':core/'runtime/task_context_native.c',
         'queue_context':core/'runtime/queue_context.c',
         'get_tid':core/'target/get_tid_bridge.s','task_delay':core/'runtime/delay_bridge.s','memory':core/'target/memory.c'}
+ flags.append('-fstack-usage')
+if args.ui_context_only:
+ files={n:core/'text_rollback'/p for n,p in [('text_rollback','rollback.c'),
+     ('ui_context','native_context.c'),('ui_context_bridges','context_bridges.s'),
+     ('text_cleanup_bridge','cleanup_destroy.s')]}
+ files.update({n:core/'runtime'/p for n,p in [('task_context','task_context.c'),
+     ('task_native','task_context_native.c'),('queue_context','queue_context.c')]})
+ files.update({'get_tid':core/'target/get_tid_bridge.s','memory':core/'target/memory.c'})
  flags.append('-fstack-usage')
 if materializer_mode:
  files={'materializer_bridge':core/'snapshot_transport/native/materializer_bridge.s',
@@ -90,7 +99,7 @@ with tempfile.TemporaryDirectory() as temp:
    definitions[symbol]=name
   undefined|=und
   objects[name]=dict(source=str(src.relative_to(root)),definitions=sorted(defs),undefined=sorted(und))
-  if args.queue_pipeline_abi_only:
+  if args.queue_pipeline_abi_only or args.ui_context_only:
    dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
    audit=re.findall(r'^\s*[0-9a-f]+:[ \t]+(?:[0-9a-f]{2}[ \t]+)+([a-z][a-z0-9]*)(?:[ \t]+([^\n]*))?$',dis,re.M)
    forbidden={'setlb','leq','lne','lgt','lge','lle','llt','lhi','lcc','lls','lcs','lra'}
@@ -101,6 +110,30 @@ with tempfile.TemporaryDirectory() as temp:
        re.sub(r'\b[0-9a-f]+\s+<[^>]+>','',operands))]
    if suspicious:raise ValueError('unqualified loop/extended register state in '+name+': '+repr(suspicious))
    objects[name]['loop_extended_state_audited']=True
+  if name=='text_cleanup_bridge':
+   # Reuse the existing exact sequence/relocation validator only. Its legacy
+   # main/tool SHA guard is not invoked in this explicitly selected tool mode.
+   legacy=runpy.run_path(str(core/'text_rollback/check.py'))
+   legacy['validate'](dis,subprocess.check_output([prefix+'objdump','-h',str(obj)],text=True))
+   objects[name].update(checked_instructions=13,own_frame_bytes=32)
+  if name=='ui_context_bridges':
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   expected=[('add','-4,sp'),('call',None),('mov','a0,d0'),('ret','[],4'),
+       ('movm','[a2],(sp)'),('add','-16,sp'),('mov','d0,a2'),('mov','d1,(12,sp)'),
+       ('mov','a2,a0'),('mov','sp,a1'),('add','8,a1'),('mov','a1,d0'),('add','1,d0'),('call',None),
+       ('mov','a2,a0'),('mov','(12,sp),d0'),('mov','d0,d1'),('lsr','8,d1'),('call',None),
+       ('movbu','(8,sp),d0'),('movbu','(9,sp),d1'),('asl','8,d1'),('or','d1,d0'),('ret','[a2],20'),
+       ('add','-4,sp'),('mov','d0,a0'),('mov','d1,d0'),('lsr','8,d1'),('call',None),('ret','[],4')]
+   if len(ins)!=len(expected) or any(a[0]!=b[0] or (b[1] is not None and a[1]!=b[1]) for a,b in zip(ins,expected)):
+    raise ValueError('UI context argument/return/save-slot routing changed: '+repr(ins))
+   if any(not op.endswith(',[],0') for mn,op in ins if mn=='call'):raise ValueError('UI leaf call frame changed')
+   relocs=re.findall(r'R_MN10300_(\w+)\s+([^\n]+)',dis)
+   targets=['ep7_stock_ui_service_unresolved','ep7_stock_ui_context_get_unresolved',
+       'ep7_stock_ui_context_set_unresolved','ep7_stock_ui_context_set_unresolved']
+   if relocs!=[('PCREL32',target+'+0x1') for target in targets]:raise ValueError('UI leaf relocations changed')
+   objects[name].update(checked_instructions=len(ins),own_frame_bytes=[4,20,4],
+       exchange_saved_selection_offsets=[8,9],exchange_requested_selection_offset=12,
+       exchange_saved_a2_offset=16,native_getter_self_frame_bytes=4)
   if name=='postbuilder_bridge':
    ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
    expected=[('call',None),('mov','d0,(12,sp)'),('mov','d1,(16,sp)'),('mov','a0,(20,sp)'),('mov','a1,(24,sp)'),
@@ -380,12 +413,15 @@ with tempfile.TemporaryDirectory() as temp:
     raise ValueError('existing get_tid veneer frame/argument routing changed')
    if dis.count('R_MN10300_PCREL32')!=1 or 'ep7_stock_get_tid_unresolved+0x1' not in dis:raise ValueError('get_tid relocation changed')
    objects[name]['checked_instructions']=5
-  if args.transport_only or materializer_mode or args.task_context_only:
+  if args.transport_only or materializer_mode or args.task_context_only or args.ui_context_only:
    objects[name]['size_output']=subprocess.check_output([prefix+'size',str(obj)],text=True).splitlines()[1].split()[:4]
    if src.suffix=='.c':objects[name]['stack_usage']=obj.with_suffix('.su').read_text().splitlines()
 external=undefined-set(definitions)
 expected=set() if args.transport_only else {'_ep7_controller_sidecar_unresolved','ep7_stock_state_service_unresolved'}
 if args.task_context_only:expected={'ep7_stock_get_tid_unresolved','ep7_stock_task_delay_unresolved'}
+if args.ui_context_only:expected={'ep7_stock_get_tid_unresolved','ep7_stock_ui_service_unresolved',
+    'ep7_stock_ui_context_get_unresolved','ep7_stock_ui_context_set_unresolved',
+    'ep7_stock_text_cleanup_unresolved','ep7_stock_text_destructor_unresolved'}
 if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved','ep7_stock_receive_wrapper_unresolved'}
@@ -414,5 +450,6 @@ if args.materializer_abi_only:scope='Exact materializer receive bridge and bound
 if args.receive_abi_only:scope='Command and descriptor receive bridges with bounded stack mappers; native context providers/addresses unresolved'
 if args.queue_pipeline_abi_only:scope='Owned pipeline, shared runtime, native capture source and kernel-critical queue gate candidates; installation, full lifetime closure and native addresses remain unbound'
 if args.task_context_only:scope='Read-only current-task stack and actual local queue views with existing get_tid/delay veneers; no lifetime lease, installation flag or native execution'
+if args.ui_context_only:scope='Fresh text rollback with actual native context callbacks; qualified object/service lifetime and serialized GUI ownership remain caller obligations'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))

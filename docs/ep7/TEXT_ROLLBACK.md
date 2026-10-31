@@ -77,3 +77,9 @@ from native factory nonnull. No renderer_ready or flash-ready assertion follows.
 Read-only probe `tools/ep7_text_rollback.py`, tests `tests/test_ep7_text_rollback.py`, and report `research/ep7/text-rollback-1100.json`.
 Compile-only adapter and callback qualification contract: `prototypes/ep7_volatile_hl/text_rollback/`; run `check.py`. Report: `research/ep7/text-rollback-host-target.json`.
 The independent ops table/context/saved-token lifetimes, nonmutation/nonreentrancy, and serialized prior-context restoration are mandatory assumptions detailed in its CONTRACT.md. Native context provider remains unbound in this checkpoint.
+
+Current continuation: [native UI context binding](UI_CONTEXT_BINDING.md) implements
+the real service/read/select callbacks and restores a saved two-byte value after
+destruction. Use `check_native.py` for current no-hash host validation. Fresh-object
+provenance, admitted live GUI service and serialized ownership remain required;
+this update does not enable rendering or qualify generic widget rollback.

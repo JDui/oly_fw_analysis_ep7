@@ -167,3 +167,9 @@ G4资源与G6完整stack/放置/启动，直到满足G8后开始整体固件编�
 population/free/pool-release桥。56对象中自写provider符号已闭合，32个剩余外部符号均为
 原厂地址；118指令、123条新桥指令及定向host通过。代码绑定不替代controller排他和
 全部retirement/repopulation闭包；G4资源、G6放置/短CALL重定位/启动/总栈仍为准入门槛。
+
+[UI 分配器上下文](UI_CONTEXT_BINDING.md)已绑定实际 service getter 和两字节选择方法，
+复用原有 fresh-text rollback，销毁后可恢复先前选择而不读取已释放对象。
+59 条原厂指令、9 个目标对象及定向 strict/ASan/UBSan 检查通过；仅关闭上下文回调的
+实现空缺。GUI 串行所有权、文本资源/初始化、category4/5 创建/挂接仍须完成，
+`renderer_ready` 保持 false，整体固件编译准入仍未通过。

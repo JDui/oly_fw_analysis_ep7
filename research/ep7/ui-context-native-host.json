@@ -1,0 +1,29 @@
+{
+  "scope": "Existing rollback plus actual context adapter; native leaves/task facts mocked.",
+  "runs": {
+    "rollback": {
+      "strict": {
+        "passed": true
+      },
+      "asan_ubsan": {
+        "passed": true
+      }
+    },
+    "native_context": {
+      "strict": {
+        "passed": true
+      },
+      "asan_ubsan": {
+        "passed": true
+      }
+    }
+  },
+  "rollback_cases": 9,
+  "native_context_cases": 12,
+  "native_context_callbacks_implemented": true,
+  "exclusive_ui_ownership_proved": false,
+  "hash_checks_performed": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "renderer_ready": false
+}

@@ -58,3 +58,16 @@ before calling this provider gap closed; all current publication files untouched
 ## Callback storage lifetime
 
 The ops table, its context and the saved-context representation must be independent of the child and every child-owned allocation, stable and alive through restoration. They must not alias freed object/layout/string storage. The saved token cannot borrow such storage. Qualification and context-entry callbacks cannot mutate the admitted object, change ownership, publish it, reenter this operation or invalidate earlier checks. These are mandatory provider assumptions, not properties proved by the host mocks. Enter failure leaves global context unchanged. All callbacks return normally.
+
+## Current native context implementation
+
+`native_context.c` and `context_bridges.s` now supply those context callbacks via
+the actual service getter and inherited selection leaves. The earlier unbound
+status above describes the original checkpoint. `ep7_text_rollback_native` still
+requires the exact allocation qualifier and admitted live/exclusive GUI scope;
+its current-task and service identity checks establish neither a lock nor a lease.
+No later task/service admission occurs after destructive cleanup starts. A pinned
+service and a copied 16-bit old selection suffice for restoration under that scope.
+Details and current reports: [UI_CONTEXT_BINDING](../../../docs/ep7/UI_CONTEXT_BINDING.md).
+Run `check_native.py` and the target checker's `--ui-context-only` mode; neither
+invokes the original SHA-guarded main. No firmware is linked or executed.
