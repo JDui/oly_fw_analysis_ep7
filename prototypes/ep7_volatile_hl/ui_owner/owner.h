@@ -40,4 +40,8 @@ void ep7u_screen_leave(struct ep7u_screen_call *);
  * before native destruction, using the existing terminal hold implementation. */
 enum { EP7U_CLEANUP=1,EP7U_BULK=2,EP7U_DESTRUCTOR=3 };
 void ep7u_before_retire(void *owner,unsigned stage);
+/* Update only the captured, still-member native text child in the pinned GUI
+ * scope. Failure invalidates display readiness for this owner; no fresh retry.
+ * Success optionally returns the current owner generation, not an input lease. */
+int ep7u_present(const uint16_t *text,uint32_t *generation);
 #endif

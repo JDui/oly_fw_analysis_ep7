@@ -11,6 +11,7 @@ extern struct ep7c_content ep7_native_content;
 extern const unsigned char ep7_content_vtable[] __asm__("ep7_native_content_vtable");
 void ep7c_rebuild(void *parent);
 void ep7c_before_destroy(void *child);
+void ep7c_require_owned(const struct ep7m_lifetime *);
 /* These assembly veneers implement the native allocation/base/destructor ABI. */
 void *ep7_gcc_mvc_scalar_new(uint32_t bytes);
 void ep7_gcc_mvc_base_init(void *child);

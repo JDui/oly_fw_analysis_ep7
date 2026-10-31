@@ -9,12 +9,13 @@ const unsigned char ep7_content_vtable[72]={0};
 static struct ep7c_child allocation;
 static uint8_t stock_content[48];
 static unsigned allocations,initializations,stock_calls,stock_frees,private_frees,fail_alloc,reenter;
+static unsigned free_count_at_allocate;
 static void *getpointer(const uint8_t *p)
 { uint32_t n=0;for (unsigned i=0;i<4;i++) n|=(uint32_t)p[i]<<(8*i);return (void *)(uintptr_t)n; }
 void *ep7_gcc_mvc_scalar_new(uint32_t bytes)
 {
-    assert(bytes==sizeof allocation&&ep7_native_mvc.busy);allocations++;
-    assert(getpointer(parent+80)==stock_content&&stock_frees==0);
+    assert(bytes==sizeof allocation&&ep7_native_mvc.busy);allocations++;free_count_at_allocate=stock_frees;
+    assert(getpointer(parent+80)==stock_content);
     if (reenter==1) ep7m_before_parent_destroy(parent);
     if (reenter==2) ep7m_before_viewer_destroy(viewer);
     if (reenter==3) ep7c_rebuild(parent);
@@ -22,7 +23,7 @@ void *ep7_gcc_mvc_scalar_new(uint32_t bytes)
 }
 void ep7_gcc_mvc_base_init(void *p)
 {
-    assert(p==&allocation&&ep7_native_mvc.busy&&stock_frees==0);initializations++;
+    assert(p==&allocation&&ep7_native_mvc.busy&&stock_frees==free_count_at_allocate);initializations++;
     for (unsigned i=0;i<sizeof allocation;i++) assert(((uint8_t *)p)[i]==0);
     /* Native leaf itself is checked against stock, not executed here. */
 }
@@ -59,7 +60,10 @@ static void enable_fixture_hl(void)
      * masks; host scenarios do not prove native COLOR/render/input admission. */
     put16(masks+8,0);put16(masks+10,0);
 }
-int main(void)
+#ifndef EP7_CONTENT_TEST_MAIN
+#define EP7_CONTENT_TEST_MAIN main
+#endif
+int EP7_CONTENT_TEST_MAIN(void)
 {
     assert(!mvc_lifetime_regressions());
     /*1 Disabled category and malloc failure preserve exact old object+indices. */

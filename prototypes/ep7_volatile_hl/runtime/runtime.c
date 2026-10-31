@@ -1,5 +1,6 @@
 #include "runtime.h"
 #include "../ep7p_direct.h"
+ep7r_slot ep7_native_runtime_slot={ATOMIC_VAR_INIT(NULL)};
 static const unsigned handles[EP7R_QUEUES]={0x4b,0x4c,0x4d,0xab,0x4f};
 static const unsigned maximums[EP7R_QUEUES]={148,312,300,312,312};
 static const unsigned rings[EP7R_QUEUES]={4864,10112,9728,10112,10112};

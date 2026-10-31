@@ -1,4 +1,5 @@
 #include "content.h"
+#include "../ui_model/model.h"
 #include <stddef.h>
 #include <string.h>
 _Static_assert(sizeof(struct ep7c_child)==56,"owned MVC child extent");
@@ -17,7 +18,7 @@ static void restore_category(struct ep7m_lifetime *m)
     put16((uint8_t *)m->selector+86,m->category);
     ep7_stock_selector_remembered_unresolved=(uint16_t)m->category;
 }
-static void require_owned(const struct ep7m_lifetime *m)
+void ep7c_require_owned(const struct ep7m_lifetime *m)
 {
     struct ep7c_content *s=&ep7_native_content;
     if (!s->child||m->content!=s->child||s->generation!=m->generation||
@@ -30,7 +31,7 @@ void ep7c_rebuild(void *parent)
     if (!m) { ep7_gcc_mvc_stock_rebuild(parent);return; }
     struct ep7c_content *s=&ep7_native_content;
     unsigned category=half((const uint8_t *)m->selector+86);
-    if (m->category>=4) require_owned(m);
+    if (m->category>=4) ep7c_require_owned(m);
     else if (s->child) inconsistent(2);
     if (category<4) {
         /* Original factories and semantics for stock categories, including the
@@ -67,5 +68,5 @@ void ep7c_before_destroy(void *child)
     if (ep7_native_mvc.container&&!ep7_native_mvc.busy) inconsistent(5);
     /* Parent retirement has already forgotten the graph, or original rebuild
      * is under the hold. Revoke before base destruction and native deallocation. */
-    s->child=NULL;s->generation=0;
+    ep7cm_revoke();s->child=NULL;s->generation=0;
 }

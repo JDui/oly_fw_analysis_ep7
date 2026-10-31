@@ -2,8 +2,9 @@
 
 `ui_owner` 已把完整 screen manager 的调用前/后，以及显示 owner 的 cleanup、bulk
 cleanup、析构接入已有 native text lifecycle。现在有具体的来源限定回调，创建时使用
-自有112字节资源、实际 child-ID 查询和原厂 allocator selection。初始文本为空；这还
-没有接入 MVC 的 H/L viewer、输入和更新，也没有启用 `renderer_ready` 或安装 hook。
+自有112字节资源、实际 child-ID 查询和原厂 allocator selection。该初始节点只写空文本；
+[显示接合](UI_VIEWER_JOIN.md)现已增加MVC frame更新和原生setter
+保护。真实输入和gating尚未绑定，也没有启用完整 `renderer_ready` 或安装hook。
 
 ## 登记与保留责任
 
@@ -58,7 +59,9 @@ A0/D0/D1/A1，以及原返回的四个 scratch 寄存器；retire 桥恢复原�
 直接调用/内部入口的旁路闭包或 service/pool 存活。G6 必须在冷启动安装这些表项和
 独立存储，并完成这些证明；当前没有写表、修改原厂方法或给表项指定新地址。
 
-## 本批验证
+## 初始 owner 节点验证
+
+以下保留初始范围与尺寸，当前组合代码/检查见[显示接合](UI_VIEWER_JOIN.md)。
 
 - [原厂证据](../../research/ep7/ui-owner-binding-current.json)：30条精确指令、4项
   vtable 数据；新增检查 header 的 descriptor→object type/ID 写入、list vtable 与
@@ -74,4 +77,4 @@ A0/D0/D1/A1，以及原返回的四个 scratch 寄存器；retire 桥恢复原�
 
 复现入口：`ui_owner/check.py`、`tools/ep7_ui_owner_binding.py`、目标检查器
 `--ui-owner-only`。没有 SHA 校验、原生链接/执行、整体固件编译、安装或相机试验。
-下一项为 MVC parent/session、category4/5 和原生 input/provider 接合，再汇合 G1/G6。
+MVC/session与viewer接合已推进；下一项为原生input/provider与gating，再汇合G1/G6。

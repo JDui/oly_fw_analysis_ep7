@@ -1,0 +1,100 @@
+{
+  "scope": "Viewer completion, queued request278, actual property111 and native text refresh witnesses.",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "input_structure": {
+    "scope": "Prepare a local E-P7 research input using container structure, without SHA.\n\nThis does not establish byte identity with historical hash-pinned reports.\nIt decodes stock only, never modifies firmware or produces an install image.",
+    "bytes": 111017984,
+    "model": "E-P7",
+    "build": "1100",
+    "whole_container_checked": true,
+    "components": [
+      {
+        "offset": 0,
+        "payload_bytes": 26214336,
+        "kind": "0x100",
+        "header_build": "1100",
+        "model_bytes": "1420",
+        "container_address": "0x406a0000"
+      },
+      {
+        "offset": 26214400,
+        "payload_bytes": 26214336,
+        "kind": "0x101",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x421a0000"
+      },
+      {
+        "offset": 52428800,
+        "payload_bytes": 45219776,
+        "kind": "0x106",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x43aa0000"
+      },
+      {
+        "offset": 97648640,
+        "payload_bytes": 262080,
+        "kind": "0x10e",
+        "header_build": "0001",
+        "model_bytes": "1420",
+        "container_address": "0x0"
+      },
+      {
+        "offset": 97910784,
+        "payload_bytes": 13107136,
+        "kind": "0x102",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x467e0000"
+      }
+    ],
+    "component_sums_valid": true,
+    "unchanged_roundtrip_equal": true,
+    "runtime_base": "0x60020020",
+    "entry_witnesses_match": true,
+    "hash_checks_performed": false,
+    "historical_exact_byte_identity_proven": false,
+    "firmware_modified": false,
+    "firmware_executed": false,
+    "camera_accessed": false,
+    "flash_ready": false
+  },
+  "checked_instructions": 115,
+  "checked_data_rows": 1,
+  "viewer_original": "0x60e26ab0",
+  "viewer_self_frame": 36,
+  "viewer_fields": {
+    "selector": 388,
+    "content": 392,
+    "category": 396,
+    "public_mode": 400
+  },
+  "public_mode_getter": "0x607f9062",
+  "getter_caller_frame": 4,
+  "property_method_offset": 8,
+  "property_id": 111,
+  "screen_request": 278,
+  "screen_event": 4352,
+  "screen_packet_builder": "0x60d0ffb4",
+  "screen_enqueue": "0x60d0ffe0",
+  "enqueue_copies_bytes": 28,
+  "event_ring_slot_bytes": 32,
+  "event_write_cursor": "0x6246a6f2",
+  "viewer_return_does_not_prove_screen_manager_completion": true,
+  "enqueue_success_not_delivery_guarantee": true,
+  "setter_same_text_returns": 1,
+  "setter_allocation_failure_returns": 0,
+  "setter_failure_can_erase_previous_string": true,
+  "setter_reuses_native_refresh": "0x60d04feb",
+  "setter_clears_cached_buffers_via": "0x60cfea9d",
+  "stock_categories_still_use_full_original_draw": true,
+  "hl_default_skips_stock_category_specific_draw": true,
+  "native_general_chrome_hl_visual_acceptance": false,
+  "hl_masks_enabled": false,
+  "installed": false,
+  "target_executed": false,
+  "lcd_acceptance": false,
+  "firmware_built": false,
+  "hash_checks_performed": false
+}

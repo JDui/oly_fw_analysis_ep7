@@ -9,6 +9,14 @@ volatile uint32_t ep7_stock_color_container_unresolved;
 volatile uint32_t ep7_stock_mvc_parent_vtable_unresolved[11],ep7_stock_mvc_viewer_vtable_unresolved[2];
 const unsigned char ep7_native_mvc_gui_entry_bridge[1]={1},ep7_native_mvc_gui_exit_bridge[1]={2};
 const unsigned char ep7_native_mvc_parent_destroy_bridge[1]={3},ep7_native_mvc_viewer_destroy_bridge[1]={4};
+const unsigned char ep7_native_ui_viewer_bridge[1]={6};
+#ifndef EP7_UI_RENDER_INTEGRATION
+/* Viewer/model callbacks are boundary mocks in the earlier lifetime-only test. */
+void ep7v_refresh(void) {}
+void ep7v_clear(void) {}
+void ep7v_invalidate(void) {}
+void ep7cm_revoke(void) {}
+#endif
 /* Address-only native bridge marker: keep it in the same writable fixture area
  * as CALL bytes, including with sanitizer redzones; no host code runs here. */
 volatile unsigned char ep7_fixture_rebuild_target[1];
@@ -34,7 +42,9 @@ bool ep7n_native_current_task(uint32_t anchor,ep7n_task *task)
     return true;
 }
 _Noreturn void ep7_gcc_quarantine(unsigned reason)
-{ assert((reason>=0x801&&reason<=0x80b)||(reason>=0x901&&reason<=0x905));quarantines++;longjmp(fatal,1); }
+{ assert((reason>=0x701&&reason<=0x70c)||(reason>=0x801&&reason<=0x80b)||
+    (reason>=0x901&&reason<=0x905)||(reason>=0xa01&&reason<=0xa02)||(reason>=0xb01&&reason<=0xb02));
+  quarantines++;longjmp(fatal,1); }
 static void call_patch(volatile unsigned char *p)
 {
     intptr_t delta=(intptr_t)ep7_native_content_rebuild_bridge-(intptr_t)p;
@@ -50,6 +60,7 @@ static void reset(void)
     ep7_stock_gui_color_exit_unresolved=(uint32_t)(uintptr_t)ep7_native_mvc_gui_exit_bridge;
     ep7_stock_mvc_parent_vtable_unresolved[10]=(uint32_t)(uintptr_t)ep7_native_mvc_parent_destroy_bridge;
     ep7_stock_mvc_viewer_vtable_unresolved[1]=(uint32_t)(uintptr_t)ep7_native_mvc_viewer_destroy_bridge;
+    ep7_stock_mvc_viewer_vtable_unresolved[0]=(uint32_t)(uintptr_t)ep7_native_ui_viewer_bridge;
     call_patch(ep7_stock_mvc_rebuild_initial_call_unresolved);
     call_patch(ep7_stock_mvc_rebuild_previous_call_unresolved);
     call_patch(ep7_stock_mvc_rebuild_next_call_unresolved);

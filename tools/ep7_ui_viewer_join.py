@@ -1,0 +1,87 @@
+#!/usr/bin/env python3
+"""Viewer completion, queued request278, actual property111 and native text refresh witnesses."""
+import argparse,json
+from pathlib import Path
+from ep7_async_aliases import inspect as inspect_windows
+WINDOWS=[(0x60e26ab0,0x60e26b49),(0x60e26b64,0x60e26c03),
+    (0x60ea12ca,0x60ea12d1),(0x60ea138c,0x60ea13b5),(0x60d0ffb4,0x60d0ffe0),(0x60d100e0,0x60d10133),
+    (0x60d4c9df,0x60d4ca77),(0x60cfe28d,0x60cfe2bb),
+    (0x60cfe3c6,0x60cfe3d8),(0x60cfea9d,0x60cfeacd),(0x60d04feb,0x60d04ff4)]
+W={
+    0x60e26ab0:('movm','[d2,d3,a2,a3],(sp)'),0x60e26ab2:('add','-20,sp'),
+    0x60e26ab5:('mov','a0,a3'),0x60e26ab6:('mov','384,d2'),
+    0x60e26aed:('mov','(a0),a1'),0x60e26aef:('mov','(28,a1),a1'),
+    0x60e26af2:('calls','(a1)'),0x60e26af6:('mov','a0,(a2)'),
+    0x60e26b00:('mov','1,d0'),0x60e26b04:('mov','(28,a1),a1'),
+    0x60e26b07:('calls','(a1)'),0x60e26b09:('mov','a0,(4,a2)'),
+    0x60e26b13:('mov','(4,a1),a1'),0x60e26b16:('calls','(a1)'),
+    0x60e26b1a:('movhu','d0,(a0)'),0x60e26b1c:('call','0x607f9062,[],4'),
+    0x60e26b23:('mov','(a0),a2'),0x60e26b25:('mov','400,d2'),
+    0x60e26b28:('mov','(8,a2),a2'),0x60e26b2b:('add','a3,d2'),
+    0x60e26b2d:('mov','d2,a1'),0x60e26b2f:('mov','111,d0'),0x60e26b31:('calls','(a2)'),
+    0x60e26b68:('cmp','0,d0'),0x60e26b6a:('beq','0x60e26b7a'),
+    0x60e26b6c:('cmp','1,d0'),0x60e26b6e:('beq','0x60e26b83'),
+    0x60e26b70:('cmp','2,d0'),0x60e26b72:('beq','0x60e26ba8'),
+    0x60e26b74:('cmp','3,d0'),0x60e26b76:('beq','0x60e26bb1'),
+    0x60e26b78:('bra','0x60e26bb8'),0x60e26bbe:('mov','278,d1'),
+    0x60e26bc4:('mov','d1,(0x61fc28c8)'),0x60e26bcf:('call','0x60ea4c1c,[],0'),
+    0x60e26bdd:('mov','229,d0'),0x60e26be0:('mov','334,d1'),
+    0x60e26be3:('call','0x60cfeca9,[d2,a2],16'),
+    0x60e26bee:('bne','0x60e26c00'),0x60e26bf0:('mov','(0x61fc28c8),d0'),
+    0x60e26bf6:('mov','1,d1'),0x60e26bf9:('call','0x60ea12ca,[d2,d3,a2,a3],100'),
+    0x60e26c00:('ret','[d2,d3,a2,a3],36'),
+    0x60ea12ca:('mov','d1,d2'),0x60ea12cb:('mov','d0,d3'),
+    0x60ea138e:('mov','a3,(4,sp)'),0x60ea1390:('mov','d3,d1'),
+    0x60ea1393:('mov','4352,d0'),0x60ea1396:('mov','0,a0'),0x60ea1398:('mov','a0,a1'),
+    0x60ea1399:('call','0x60d0ffb4,[d2,d3,a2,a3],44'),
+    0x60ea13a7:('mov','(a1),d0'),0x60ea13a9:('mov','d0,(a0)'),
+    0x60ea13ad:('mov','d1,d0'),0x60ea13ae:('call','0x60d0ffe0,[d2,d3,a2,a3],24'),
+    0x60d0ffc4:('mov','d0,(sp)'),0x60d0ffcb:('mov','a0,(8,sp)'),
+    0x60d0ffcd:('mov','d1,(12,sp)'),0x60d0ffcf:('mov','a1,(16,sp)'),
+    0x60d0ffd2:('mov','(48,sp),a0'),0x60d0ffd7:('mov','(a1),d0'),
+    0x60d0ffd9:('mov','d0,(a0)'),0x60d0ffdd:('retf','[d2,d3,a2,a3],44'),
+    0x60d100e0:('movhu','(0x6246a6f2),d1'),0x60d100e9:('asl','5,d0'),
+    0x60d100ec:('add','d0,a2'),0x60d100ee:('add','28,a1'),
+    0x60d100f0:('mov','a2,a0'),0x60d100f1:('inc4','a0'),
+    0x60d100f2:('mov','-7,d2'),0x60d100f5:('mov','(a1),d0'),0x60d100f7:('mov','d0,(a0)'),
+    0x60d100f9:('inc','d2'),0x60d100fa:('lne',''),
+    0x60d100fb:('inc','d1'),0x60d100fc:('mov','1,d0'),
+    0x60d100fe:('movbu','d0,(a2)'),0x60d10100:('movhu','d1,(0x6246a6f2)'),
+    0x60d10129:('call','0x60d14c94,[],4'),0x60d1012e:('mov','1,d0'),
+    0x60d10130:('ret','[d2,d3,a2,a3],24'),
+    0x60d4c9f3:('call','0x60d17849,[d2,d3,a2],12'),0x60d4c9fa:('cmp','0,d0'),
+    0x60d4c9fc:('bne','0x60d4ca00'),0x60d4c9fe:('bra','0x60d4ca72'),
+    0x60d4ca0d:('call','0x60d109db,[],4'),0x60d4ca29:('call','0x60d109d1,[],4'),
+    0x60d4ca30:('mov','a0,(a2)'),0x60d4ca36:('clr','d0'),0x60d4ca37:('bra','0x60d4ca74'),
+    0x60d4ca4c:('call','0x47001052,[d2,d3,a2,a3],28'),
+    0x60d4ca61:('mov','0,a1'),0x60d4ca63:('call','0x60d04feb,[],4'),
+    0x60d4ca6b:('call','0x60cfea9d,[a2,a3],12'),0x60d4ca72:('mov','1,d0'),
+    0x60d4ca74:('ret','[d2,d3,a2,a3],24'),
+    0x60cfe28f:('mov','4096,d0'),0x60cfe292:('mov','1,d1'),
+    0x60cfe296:('mov','(116,a1),a1'),0x60cfe299:('calls','(a1)'),
+    0x60cfe29d:('mov','8192,d0'),0x60cfe2a4:('mov','(116,a1),a1'),0x60cfe2a7:('calls','(a1)'),
+    0x60cfe3c8:('mov','(12,sp),a1'),0x60cfe3ca:('movhu','(16,sp),d0'),
+    0x60cfe3d0:('mov','(276,a2),a2'),0x60cfe3d4:('calls','(a2)'),
+    0x60cfeaa9:('mov','8,d0'),0x60cfeaac:('call','0x60d109db,[],4'),
+    0x60cfeab4:('mov','d0,(a3)'),0x60cfeac1:('call','0x60d109db,[],4'),
+    0x60cfeac9:('mov','d0,(a2)'),0x60d04feb:('exth','d0'),
+    0x60d04fec:('call','0x60cfe26b,[d2,d3,a2,a3],64'),0x60d04ff1:('ret','[],4')}
+CHECKS=[(0x61189ba8,'<I',(0x60e26ab0,))]
+def inspect(stock,objdump):
+    e=inspect_windows(stock,objdump,WINDOWS,W,CHECKS)
+    return dict(scope=__doc__,objdump_version=e['objdump_version'],input_structure=e['input_structure'],
+        checked_instructions=e['checked_instructions'],checked_data_rows=len(CHECKS),
+        viewer_original='0x60e26ab0',viewer_self_frame=36,viewer_fields=dict(selector=388,content=392,category=396,public_mode=400),
+        public_mode_getter='0x607f9062',getter_caller_frame=4,property_method_offset=8,property_id=111,
+        screen_request=278,screen_event=4352,screen_packet_builder='0x60d0ffb4',screen_enqueue='0x60d0ffe0',
+        enqueue_copies_bytes=28,event_ring_slot_bytes=32,event_write_cursor='0x6246a6f2',
+        viewer_return_does_not_prove_screen_manager_completion=True,enqueue_success_not_delivery_guarantee=True,
+        setter_same_text_returns=1,setter_allocation_failure_returns=0,setter_failure_can_erase_previous_string=True,
+        setter_reuses_native_refresh='0x60d04feb',setter_clears_cached_buffers_via='0x60cfea9d',
+        stock_categories_still_use_full_original_draw=True,hl_default_skips_stock_category_specific_draw=True,
+        native_general_chrome_hl_visual_acceptance=False,hl_masks_enabled=False,
+        installed=False,target_executed=False,lcd_acceptance=False,firmware_built=False,hash_checks_performed=False)
+if __name__=='__main__':
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--stock',type=Path,required=True);p.add_argument('--objdump',type=Path,required=True)
+    a=p.parse_args();print(json.dumps(inspect(a.stock,a.objdump),indent=2))

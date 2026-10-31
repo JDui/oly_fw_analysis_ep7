@@ -1,8 +1,9 @@
 # G4：独立 H/L 内容对象与原生类别重建
 
 `ui_content` 已实现独立56字节内容对象、18槽专用 vtable、四处重建调用的桥，以及
-分配失败回退和原生销毁接合。它填补 parent+80 的对象所有权层；UI session、frame、
-真实输入资格和 COLOR gating 尚未接合，H/L mask 仍由现有 initializer 设为禁用。
+分配失败回退和原生销毁接合。它填补 parent+80 的对象所有权层；后续
+[UI session与viewer接合](UI_VIEWER_JOIN.md)已连接共享core及文本更新，真实输入资格
+和 COLOR gating 尚未接合，H/L mask 仍由现有 initializer 设为禁用。
 没有开启 renderer_ready、安装 hook、生成修改固件或执行相机代码。
 
 ## 修复的具体路径
@@ -61,8 +62,8 @@ handler。+40是完整析构桥：先核对已登记的唯一私有 child 并撤
 
 析构桥自身32字节，C调用的0–11出参区与12处保存的对象参数分离。GCC dispose
 veneer 按原厂协议先执行 virtual+40，再调用返回的可选 deallocator；A0=0时调用
-`60a4ec17`。它没有把析构槽当成无副作用的“查询”。UI session close 将在下一节点
-接入此撤销点；本批尚未打开 session。
+`60a4ec17`。它没有把析构槽当成无副作用的“查询”。UI session close 已在后续
+[显示节点](UI_VIEWER_JOIN.md)接入此撤销点。
 
 ## 原生符号和安装组
 
@@ -86,7 +87,9 @@ CALL 要求 opcode CD、保存组f0、帧28，符号扩展 displacement 后的�
 其余符号沿用 [MVC 生命周期](UI_MVC_LIFETIME.md)、[selector 存储](UI_SELECTOR_STORAGE.md)
 和当前任务桥。所有这些地址仍等待 G6 的来源、放置、重定位及安装绑定。
 
-## 定向验证
+## 初始内容节点的定向验证
+
+以下保留该节点的范围和尺寸；当前接合后的组合检查见[显示节点](UI_VIEWER_JOIN.md)。
 
 - [原厂报告](../../research/ep7/ui-content-rebuild-current.json)：96条精确指令、
   一张18词 vtable、全 main 直接 CALL 候选扫描通过；没有 SHA 校验。
@@ -104,5 +107,5 @@ CALL 要求 opcode CD、保存组f0、帧28，符号扩展 displacement 后的�
 
 入口是 `ui_content/check.py`、`tools/ep7_ui_content_rebuild.py` 和目标检查器
 `--ui-content-only`。`--ui-mvc-only` 也包括当前必需的 content/cohort 符号闭合。
-下一项在这些真实对象内接 UI session、同一 runtime core、viewer/显示owner和实际
-输入资格，再完成 COLOR gating/禁用时焦点归一。G4、G6、G8仍未整体通过。
+UI session、同一runtime core和viewer/owner已在后续显示节点接合；下一项为真实
+输入资格和 COLOR gating/禁用时焦点归一。G4、G6、G8仍未整体通过。

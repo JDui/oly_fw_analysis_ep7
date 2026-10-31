@@ -3,7 +3,8 @@
 `ui_mvc` 已实现 GUI 完整入口之后的 container/parent/viewer/selector 登记，以及
 GUI exit、parent destructor、viewer destructor 之前的匹配撤销。后续
 [H/L 内容重建](UI_CONTENT_REBUILD.md)已在该来源内加入 content/index 登记和 busy
-保护；尚未开放 H/L mask、呈现 H/L frame 或替换输入资格 provider。
+保护；[显示节点](UI_VIEWER_JOIN.md)已接入共享core的frame及native text更新。
+尚未开放 H/L mask、替换输入资格provider或验证相机显示。
 
 ## 在完整入口返回后登记
 
@@ -60,14 +61,15 @@ portable close 函数地址、却漏掉该层应完成的析构责任。旧接�
 |61189ba8+4，viewer destructor|60e26a7c|8|48|
 
 桥保留原输入与需要的返回寄存器，以 CALL `[],0` 调完整自建帧入口。cohort 读取
-这四个实际词；当前还要求[四处重建 CALL](UI_CONTENT_REBUILD.md)匹配。没有写表、
+这四个实际词；当前还要求[四处重建 CALL](UI_CONTENT_REBUILD.md)以及
+[viewer virtual0](UI_VIEWER_JOIN.md)匹配。没有写表、
 放置新地址或把表项相等当作全局安装证明。其他构造/直接
 销毁/selector reload 路径、GUI 排他和 heap 存活仍由 G6 关闭，当前不可安装。
 
 ## 初始 MVC 节点证据
 
 以下报告保留初始实现的范围和尺寸；当前内容接合后的 C/目标尺寸及回归结果见
-[内容重建报告](UI_CONTENT_REBUILD.md#定向验证)，不能把旧尺寸当成当前构建结果。
+[显示节点报告](UI_VIEWER_JOIN.md)，不能把旧尺寸当成当前构建结果。
 
 - [原厂检查](../../research/ep7/ui-mvc-lifetime-current.json)：98条精确指令、8项
   表数据，确认构造/首次draw/发布和 parent-before-viewer 退出；selector 分配证据
@@ -84,4 +86,4 @@ portable close 函数地址、却漏掉该层应完成的析构责任。旧接�
 
 入口：`ui_mvc/check.py`、`tools/ep7_ui_mvc_lifetime.py` 和目标检查器
 `--ui-mvc-only`。没有整体固件编译或相机运行。H/L content/rebuild候选已接入；
-下一项是 viewer 和 UI session，随后完成实际输入资格与 COLOR gating。
+viewer和UI session已接合；下一项是实际输入资格与COLOR gating。

@@ -1,6 +1,7 @@
 #include "owner.h"
 #include "../text_rollback/native_context.h"
 #include "../text_viewer/text.h"
+#include "../ui_render/viewer.h"
 #include <stddef.h>
 
 struct ep7u_owner ep7_native_ui_owner;
@@ -35,6 +36,7 @@ static void require_live_call(struct ep7u_owner *s)
 }
 static void suspend(struct ep7u_owner *s)
 {
+    ep7v_invalidate();
     s->active=0;
     if (s->generation==UINT32_MAX) s->stopped=1;
     else s->generation++;
@@ -101,7 +103,7 @@ void ep7u_screen_leave(struct ep7u_screen_call *call)
         /* Native failed before replacement: retain the parent-owned text; only
          * this new generation can become eligible again. No fresh pointer bind. */
         if (!s->stopped&&s->display_ready&&call->result==0&&s->owner&&current_owner(service)==s->owner&&
-            s->text.attached.child&&s->text.attached.bound) s->active=1;
+            s->text.attached.child&&s->text.attached.bound) { s->active=1;ep7v_refresh(); }
         return;
     }
     if (s->text.fresh.child&&!s->owner) (void)ep7_text_native_retry_rollback(&s->text);
@@ -121,6 +123,7 @@ void ep7u_screen_leave(struct ep7u_screen_call *call)
     int result=ep7_text_native_open(&s->text,owner,s->resource.descriptor,empty,qualify,s);
     s->opening=0;
     s->display_ready=s->active=result==EP7_TEXT_ATTACHED_READY;
+    ep7v_refresh(); /* Request278 may complete after the MVC draw/entry returned. */
     /* Failed and retained creation stays associated until native retirement.
      * No retry allocates a duplicate child under the same owner. */
 }
@@ -145,4 +148,41 @@ void ep7u_before_retire(void *owner,unsigned stage)
     /* A rejected fresh rollback has no parent membership. Keep its full record
      * and permanent resource storage even when this native owner is freed. */
     s->owner=NULL;
+}
+int ep7u_present(const uint16_t *text,uint32_t *generation)
+{
+    struct ep7u_owner *s=&ep7_native_ui_owner;size_t n;
+    if (!atomic_load_explicit(&s->started,memory_order_acquire)) return 0;
+    require_live_call(s);
+    if (!text||s->stopped||s->depth||s->opening||s->text.busy||!s->active||!s->display_ready||
+        !s->owner||!s->text.attached.child||!s->text.attached.bound) return 0;
+    for (n=0;n<EP7_TEXT_UNITS&&text[n];n++) {}
+    if (n==EP7_TEXT_UNITS) return 0;
+    const uint8_t *service=s->service,*owner=s->owner;
+    if (!service_shape(service)||service[2032]||current_owner(service)!=owner) {
+        s->active=s->display_ready=0;return 0; /* No substituted owner dereference. */
+    }
+    if (word(owner)!=UINT32_C(0x61032f10)||half(owner+4)!=0x6111||half(owner+6)!=0x0112||
+        word(owner+20)!=(uint32_t)(uintptr_t)service||owner[28]!=6||owner[29]>1||
+        service[1378+owner[29]]!=1||word(owner+92)!=UINT32_C(0x60f94aa0)||
+        s->text.owner!=owner||s->text.attached.owner!=owner) {
+        s->active=s->display_ready=0;return 0;
+    }
+    s->text.busy=1;
+    const uint8_t *child=s->text.attached.child;
+    int result=0;
+    if (ep7_gcc_ui_find_child((void *)owner,EP7_HL_TEXT_WIDGET_ID)==child&&
+        word(child)==UINT32_C(0x60faec7c)&&half(child+4)==0x8010&&
+        half(child+6)==EP7_HL_TEXT_WIDGET_ID&&word(child+20)==(uint32_t)(uintptr_t)owner&&
+        half(child+28)==half(owner+28)) {
+        uint16_t prior=ep7_gcc_ui_context_exchange((void *)service,half(owner+28));
+        result=ep7_gcc_set_text_unresolved_binding((void *)child,text);
+        ep7_gcc_ui_context_select((void *)service,prior);
+        require_live_call(s);
+        if (current_owner(service)!=owner) inconsistent(12);
+    }
+    s->text.busy=0;
+    if (result!=1) { s->active=s->display_ready=0;return 0; }
+    if (generation) *generation=s->generation;
+    return 1;
 }

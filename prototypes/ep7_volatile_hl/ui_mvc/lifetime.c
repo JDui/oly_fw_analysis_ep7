@@ -1,5 +1,7 @@
 #include "lifetime.h"
 #include "../ui_selector/selector.h"
+#include "../ui_model/model.h"
+#include "../ui_render/viewer.h"
 #include <stddef.h>
 
 struct ep7m_lifetime ep7_native_mvc;
@@ -29,9 +31,12 @@ static void require_live(struct ep7m_lifetime *s)
 }
 static void forget(struct ep7m_lifetime *s)
 {
+    /* Keep old graph identity and block matching reentry through text callbacks
+     * until its label is cleared; then drop the graph before original free. */
+    s->busy=1;ep7cm_revoke();ep7v_clear();
     s->container=NULL;s->parent=NULL;s->viewer=NULL;s->selector=NULL;s->masks=NULL;
     s->selector_count=0;s->invalidated=0;
-    s->content=NULL;s->category=0;
+    s->content=NULL;s->category=0;s->busy=0;
     /* generation and pinned task never reset; address reuse is a new capture. */
 }
 static int selector_shape(const uint8_t *p)
@@ -80,6 +85,7 @@ void ep7m_gui_complete(void *original_result)
     ++s->generation;s->container=container;s->parent=parent;s->viewer=viewer;
     s->selector=selector;s->masks=pointer(selector+88);s->selector_count=half(selector+84);
     s->content=pointer(parent+80);s->category=half(selector+86);
+    ep7v_refresh();
 }
 void ep7m_before_gui_exit(void)
 {
@@ -138,7 +144,7 @@ struct ep7m_lifetime *ep7m_hold_content(void *parent)
         return NULL;
     }
     if (s->busy) inconsistent(10);
-    s->busy=1;return s;
+    s->busy=1;ep7v_invalidate();return s;
 }
 void ep7m_release_content(struct ep7m_lifetime *s)
 {

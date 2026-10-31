@@ -6,7 +6,6 @@
 #include "../snapshot_transport/native/ack.h"
 /* These providers construct target address views. Host fixtures may inspect
  * those values, but must never dereference their synthetic stack pointers. */
-ep7r_slot ep7_native_runtime_slot={ATOMIC_VAR_INIT(NULL)};
 static ep7q_stack mapped(const ep7n_task *t)
 {
     ep7q_stack s={(const unsigned char *)(uintptr_t)t->stack_low,t->stack_low,t->stack_bytes,true};

@@ -4,6 +4,8 @@
 #include <assert.h>
 #include <setjmp.h>
 #include <string.h>
+void ep7v_refresh(void) {} /* This owner-only fixture does not join a native MVC. */
+void ep7v_invalidate(void) {}
 
 volatile uint32_t ep7_stock_ui_service_vtable_unresolved[197];
 volatile uint32_t ep7_stock_ui_display_vtable_unresolved[109];

@@ -227,3 +227,10 @@ cleanup/bulk/析构撤销、实际四表项cohort及真实来源qualifier，复�
 96条原厂指令、6组新增+6组复用host场景和13对象通过。H/L mask仍禁用，没有
 开启renderer_ready。下一项将UI session/同一runtime core接入这些对象，再汇入
 viewer/显示owner和真实输入资格；G4/G6/G8仍未整体通过。
+
+[共享core与显示接合](UI_VIEWER_JOIN.md)现复用已发布runtime的同一core和portable UI，
+使用独立session serial，连接完整viewer返回及request278 owner完成两个时点。
+文本更新在MVC/text双重busy保护内，失败锁存owner不可显示，撤销不清图像快照。
+115条原厂指令、7组新增+12组复用host和41目标对象通过。H/L mask仍禁用；下一项
+落实实际事件域/完整拨轮delta、input provider和COLOR gating/禁用归一，再关闭
+G1/G2/G3退出及G6放置/安装/总栈。整体固件编译仍等待G8准入。

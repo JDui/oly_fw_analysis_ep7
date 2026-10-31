@@ -18,13 +18,15 @@ mode.add_argument('--ui-owner-only',action='store_true',help='compile request278
 mode.add_argument('--ui-selector-only',action='store_true',help='compile guarded six-entry selector storage upgrade after original ID193 initialization')
 mode.add_argument('--ui-mvc-only',action='store_true',help='compile GUI041d container/parent/viewer lifetime capture and pre-destruction revocation')
 mode.add_argument('--ui-content-only',action='store_true',help='compile owned H/L content rebuild with native destruction and MVC/cohort closure')
+mode.add_argument('--ui-viewer-only',action='store_true',help='compile joined MVC/content/model/owner/viewer and shared runtime core closure')
 args=parser.parse_args()
 receiver_mode=args.receive_abi_only or args.queue_pipeline_abi_only
 materializer_mode=args.materializer_abi_only or receiver_mode
-ui_lifecycle_mode=args.ui_lifecycle_only or args.ui_owner_only
+graph_mode=args.ui_owner_only or args.ui_mvc_only or args.ui_content_only or args.ui_viewer_only
+ui_lifecycle_mode=args.ui_lifecycle_only or graph_mode
 ui_create_mode=args.ui_create_only or ui_lifecycle_mode
 ui_mode=args.ui_context_only or ui_create_mode
-mvc_mode=args.ui_mvc_only or args.ui_content_only
+mvc_mode=graph_mode
 selector_mode=args.ui_selector_only or mvc_mode
 root=Path(__file__).resolve().parents[1];core=root/'prototypes/ep7_volatile_hl';prefix=args.tool_prefix
 versions={n:subprocess.check_output([prefix+n,'--version'],text=True).splitlines()[0] for n in ['gcc','as','ld','objdump']}
@@ -57,12 +59,13 @@ if ui_mode:
       'text_attach_bind':core/'text_lifecycle/attach_bind.s','text_setter':core/'text_viewer/set_text.s',
       'text_find_child':core/'text_lifecycle/find_child.s',
       'text_native_resource':core/'text_lifecycle/native_resource.c'})
- if args.ui_owner_only:
+ if graph_mode:
   files.update({n:core/'ui_owner'/p for n,p in [('ui_owner','owner.c'),
       ('ui_owner_cohort','cohort.c'),('ui_owner_bridges','bridges.s')]})
   files['quarantine']=core/'runtime/quarantine.s'
 if selector_mode:
- files={n:core/'ui_selector'/p for n,p in [('ui_selector','selector.c'),('ui_selector_bridges','bridges.s')]}
+ if not ui_mode:files={}
+ files.update({n:core/'ui_selector'/p for n,p in [('ui_selector','selector.c'),('ui_selector_bridges','bridges.s')]})
  files.update({n:core/'runtime'/p for n,p in [('task_context','task_context.c'),
      ('task_native','task_context_native.c'),('queue_context','queue_context.c')]})
  files.update({'get_tid':core/'target/get_tid_bridge.s','memory':core/'target/memory.c'})
@@ -72,6 +75,13 @@ if selector_mode:
       ('mvc_cohort','cohort.c'),('mvc_bridges','bridges.s')]})
   files['quarantine']=core/'runtime/quarantine.s'
   files.update({n:core/'ui_content'/p for n,p in [('ui_content','content.c'),('ui_content_bridges','bridges.s')]})
+  files.update({'ui_model':core/'ui_model/model.c','ui_public_mode':core/'ui_model/public_mode.s',
+      'ui_viewer':core/'ui_render/viewer.c','ui_viewer_bridge':core/'ui_render/bridge.s',
+      'ui_portable':core/'ep7p_ui.c','ui_formatter':core/'text_viewer/text.c',
+      'runtime':core/'runtime/runtime.c','core':core/'ep7p.c','decode':core/'ep7p_decode.c',
+      'poll_provider':core/'poll_lock_provider/ep7_sem_provider.c',
+      'bootstrap':core/'poll_lock_provider/bootstrap/bootstrap.c',
+      'transport':core/'snapshot_transport/transport.c','wire':core/'snapshot_transport/wire.c'})
 if materializer_mode:
  files={'materializer_bridge':core/'snapshot_transport/native/materializer_bridge.s',
         'materializer_layout':core/'snapshot_transport/native/materializer_layout.c',
@@ -285,6 +295,35 @@ with tempfile.TemporaryDirectory() as temp:
        rebuild_inherited_frame_bytes=28,rebuild_own_frame_bytes=0,destructor_own_frame_bytes=32,
        near_call_target_range=['0x60e1e9f0','0x60e2e1d3'],stock_rebuild_entry_remains_unpatched=True,
        destructor_returns_original_base_a0=True,pointer_return_a0_preserved=True)
+  if name=='ui_viewer_bridge':
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   save=[('mov','a0,(12,sp)'),('mov','d0,(16,sp)'),('mov','d1,(20,sp)'),('mov','a1,(24,sp)')]
+   restore=[('mov','(12,sp),a0'),('mov','(16,sp),d0'),('mov','(20,sp),d1'),('mov','(24,sp),a1')]
+   expected=[('movm','[d2,d3,a2,a3],(sp)'),('add','-40,sp')]+save+[
+       ('mov','a0,(32,sp)'),('mov','a0,d0'),('call',None),('mov','d0,(28,sp)')]+restore+[
+       ('call',None)]+save+[('mov','(32,sp),d0'),('mov','(28,sp),d1'),('call',None)]+restore+[
+       ('ret','[d2,d3,a2,a3],56')]
+   if len(ins)!=len(expected) or any(a[0]!=b[0] or (b[1] is not None and a[1]!=b[1]) for a,b in zip(ins,expected)):
+    raise ValueError('viewer full-method ABI changed')
+   if any(not op.endswith(',[],0') for mn,op in ins if mn=='call'):raise ValueError('viewer CALL frame changed')
+   targets=['_ep7v_draw_begin','ep7_stock_mvc_viewer_draw_unresolved','_ep7v_draw_end']
+   if re.findall(r'R_MN10300_(\w+)\s+([^\n]+)',dis)!=[('PCREL32',s+'+0x1') for s in targets]:
+    raise ValueError('viewer call targets changed')
+   objects[name].update(checked_instructions=27,own_frame_bytes=56,original_self_frame_bytes=36,
+       original_arguments_and_scratch_results_preserved=True,held_token_offset=28,viewer_offset=32)
+  if name=='ui_public_mode':
+   dis=subprocess.check_output([prefix+'objdump','-dr','-z','--insn-width=16',str(obj)],text=True)
+   ins=re.findall(r'^\s*[0-9a-f]+:[ \t]+(?:[0-9a-f]{2}[ \t]+)+([a-z][a-z0-9]*)(?:[ \t]+([^\n]*))?$',dis,re.M)
+   expected=[('movm','[a2],(sp)'),('add','-16,sp'),('clr','d0'),('mov','d0,(12,sp)'),
+       ('call',None),('cmp','0,a0'),('beq',None),('mov','(a0),a2'),('mov','(8,a2),a2'),
+       ('mov','sp,a1'),('add','12,a1'),('mov','111,d0'),('calls','(a2)'),('mov','(12,sp),d0'),('ret','[a2],20')]
+   if len(ins)!=len(expected) or any(a[0]!=b[0] or (b[1] is not None and a[1]!=b[1]) for a,b in zip(ins,expected)):
+    raise ValueError('actual public-mode getter ABI changed')
+   if not ins[4][1].endswith(',[],4') or re.findall(r'R_MN10300_(\w+)\s+([^\n]+)',dis)!=[
+       ('PCREL32','ep7_stock_property_service_unresolved+0x1'),('PCREL8','.Lmode_done+0x1')]:
+    raise ValueError('property getter frame/relocation changed')
+   objects[name].update(checked_instructions=15,own_frame_bytes=20,property_id=111,
+       output_offset=12,output_initialized_zero=True,null_service_rejects=True)
   if name=='ui_selector_bridges':
    ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
    expected=[('movm','[d2,d3,a2,a3],(sp)'),('add','-40,sp'),('mov','a0,(12,sp)'),
@@ -644,13 +683,15 @@ if ui_create_mode:expected.add('ep7_stock_widget_factory_unresolved')
 if ui_lifecycle_mode:expected|={'ep7_stock_ui_attach_unresolved','ep7_stock_text_bind_unresolved',
     'ep7_stock_text_setter_unresolved','ep7_stock_ui_find_child_unresolved',
     '_ep7_stock_hl_text_descriptor_unresolved','_ep7_stock_hl_text_layouts_unresolved'}
-if args.ui_owner_only:expected|={'ep7_stock_screen_manager_unresolved',
+if graph_mode:expected|={'ep7_stock_screen_manager_unresolved',
     'ep7_stock_ui_owner_cleanup_unresolved','ep7_stock_ui_owner_bulk_unresolved',
     'ep7_stock_ui_owner_destructor_unresolved','_ep7_stock_ui_service_vtable_unresolved',
     '_ep7_stock_ui_display_vtable_unresolved'}
-if selector_mode:expected={'ep7_stock_get_tid_unresolved','ep7_stock_selector_init_unresolved',
-    '_ep7_stock_selector_initializer_unresolved','ep7_stock_mvc_array_new_unresolved',
-    'ep7_stock_mvc_array_delete_unresolved'}
+if selector_mode:
+ if not ui_mode:expected=set()
+ expected|={'ep7_stock_get_tid_unresolved','ep7_stock_selector_init_unresolved',
+     '_ep7_stock_selector_initializer_unresolved','ep7_stock_mvc_array_new_unresolved',
+     'ep7_stock_mvc_array_delete_unresolved'}
 if mvc_mode:expected|={'_ep7_stock_gui_color_entry_unresolved','_ep7_stock_gui_color_exit_unresolved',
     '_ep7_stock_mvc_parent_vtable_unresolved','_ep7_stock_mvc_viewer_vtable_unresolved',
     '_ep7_stock_color_container_unresolved','ep7_stock_mvc_gui_entry_unresolved',
@@ -661,6 +702,7 @@ if mvc_mode:expected|={'_ep7_stock_gui_color_entry_unresolved','_ep7_stock_gui_c
     '_ep7_stock_selector_remembered_unresolved','ep7_stock_mvc_rebuild_unresolved',
     'ep7_stock_mvc_scalar_new_unresolved','ep7_stock_mvc_scalar_delete_unresolved',
     'ep7_stock_mvc_base_init_unresolved','ep7_stock_mvc_base_destroy_unresolved'}
+if graph_mode:expected|={'ep7_stock_property_service_unresolved','ep7_stock_mvc_viewer_draw_unresolved'}
 if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved','ep7_stock_receive_wrapper_unresolved'}
@@ -694,6 +736,6 @@ if ui_create_mode:scope='Existing text factory result/context bridge and native 
 if ui_lifecycle_mode:scope='Actual text create/attach/bind/set/rollback C and native ABI closure; concrete live owner/GUI entry, resource semantics and teardown hooks remain unqualified'
 if args.ui_owner_only:scope='Request278 owner capture and matching retirement with native table cohort and text lifecycle; cold installation, bypass closure, GUI exclusion, MVC/renderer and placement remain unqualified'
 if args.ui_selector_only:scope='Native ID193 post-initializer six-entry storage upgrade with H/L disabled and allocation-failure stock fallback; no MVC/viewer/input admission or installation'
-if mvc_mode:scope='GUI041d lifetime and owned H/L content rebuild with actual table/CALL cohort; UI session, drawing/input, bypass closure and native installation/placement still pending'
+if graph_mode:scope='Joined GUI041d graph/content, shared published core UI session and actual owner text update at viewer/owner completion; input/gating, native bypass closure, installation/placement and LCD acceptance still pending'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))

@@ -1,0 +1,26 @@
+{
+  "scope": "Joined MVC/content/model, published runtime/core and owner text lifecycle; native calls mocked.",
+  "runs": {
+    "strict": {
+      "passed": true
+    },
+    "asan_ubsan": {
+      "passed": true
+    }
+  },
+  "join_scenario_groups": 7,
+  "reused_mvc_and_content_groups": 12,
+  "real_portable_core_bootstrap_runtime_session_and_native_lifecycle_C_used": true,
+  "independent_ui_serial_checked": true,
+  "captured_snapshot_unchanged_after_ui_edit": true,
+  "async_owner_ordering_modeled_at_boundaries": true,
+  "native_task_allocator_property_queue_calls_mocked": true,
+  "quarantine_modeled_with_longjmp": true,
+  "hl_mask_enable_fixture_only": true,
+  "native_input_provider_bound": false,
+  "target_executed": false,
+  "installed": false,
+  "lcd_acceptance": false,
+  "firmware_built": false,
+  "hash_checks_performed": false
+}
