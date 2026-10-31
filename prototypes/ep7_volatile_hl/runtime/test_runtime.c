@@ -10,9 +10,9 @@
 #include <string.h>
 typedef struct {
     uint16_t tid;uint32_t entry;
-    bool installed,task_valid,old_maximum,changed_instance,held;
+    bool installed,task_valid,old_maximum,changed_instance,held,delete_during_query;
     int poll_status,signal_status,delay_status;
-    unsigned creates,deletes,delays,quarantines,last_reason;
+    unsigned creates,deletes,delays,quarantines,last_reason,queue_queries;
     jmp_buf escape;
 } fixture;
 /* Static test storage remains defined across longjmp; the production runtime
@@ -51,11 +51,13 @@ static bool task(void *ctx,uint32_t anchor,ep7n_task *out)
 static bool queue(void *ctx,unsigned handle,ep7n_queue *out)
 {
     fixture *m=ctx;
+    m->queue_queries++;
     unsigned maximum=handle==0x4b?148:(handle==0x4d?300:312);
     unsigned ring=handle==0x4b?4864:(handle==0x4d?9728:10112);
     *out=(ep7n_queue){(uint16_t)handle,0,0x1000,0x2000,0x3000+64*handle,128,maximum,ring,0x100000+0x4000*handle};
     if(m->old_maximum && handle==0x4c)out->maximum=300;
     if(m->changed_instance)out->backing+=4;
+    if(m->delete_during_query){ep7r_note_queue_delete(&runtime,out->object);return false;}
     return true;
 }
 static int delay(void *ctx)
@@ -119,6 +121,32 @@ static void exercise_contexts(void)
     assert(ep7q_worker_context_unresolved(EP7Q_WORKER_CLEANUP,0x100100,&worker));
     assert(worker.core==&core && worker.transport==&runtime.transport && worker.wait_cleanup==ep7r_progress);
 }
+static void exercise_queue_delete(void)
+{
+    const ep7n_queue *q=&runtime.queues[1];
+    ep7r_queue_object view={q->object,q->handle,0,q->attributes,q->maximum,q->ring_bytes,q->backing};
+    ep7q_worker_context worker;ep7q_ack_context ack;
+    unsigned queries=f.queue_queries,delays=f.delays,quarantines=f.quarantines;
+    assert(ep7r_guard_queue(&runtime,&view));
+    ep7r_note_queue_delete(&runtime,q->object+1);assert(ep7r_guard_queue(&runtime,&view));
+    view.maximum=300;assert(!ep7r_guard_queue(&runtime,&view));view.maximum=q->maximum;
+    view.backing+=4;assert(!ep7r_guard_queue(&runtime,&view));view.backing=q->backing;
+    /* A matching unlocked precheck is not admission: deletion can intervene. */
+    assert(ep7r_qualify_queue(&runtime,0x4c,312));assert(f.queue_queries==queries+1);
+    f.delete_during_query=true;
+    assert(!ep7r_qualify_queue(&runtime,0x4c,312));f.delete_during_query=false;
+    assert(f.queue_queries==queries+2 && f.quarantines==quarantines);
+    assert(!ep7r_io_open(&runtime) && !ep7r_accepting(&runtime));
+    /* Even a byte-identical recreated object stays closed until reboot. */
+    assert(!ep7r_guard_queue(&runtime,&view));ep7r_note_queue_delete(&runtime,q->object);
+    assert(!ep7r_qualify_queue(&runtime,0x4c,312));
+    assert(f.queue_queries==queries+2 && f.delays==delays && f.quarantines==quarantines);
+    f.task_valid=true;f.entry=0x603f26a1;
+    assert(ep7q_worker_context_unresolved(EP7Q_WORKER_CLEANUP,0x100100,&worker));
+    assert(ep7q_ack_context_unresolved(0x100100,&ack));
+    assert(worker.core==&core && ack.transport==&runtime.transport);
+    assert(ep7r_get(&ep7_native_runtime_slot)==&runtime && job.job && retained() && !f.deletes);
+}
 int main(void)
 {
     ep7b_native n={&f,create,drop,{&f,get_tid,poll,signal_sem}};
@@ -172,6 +200,7 @@ int main(void)
     f.task_valid=false;
     if(!setjmp(f.escape)){(void)ep7q_ack_context_unresolved(0x100100,&ack);assert(!"lost task context returned");}
     assert(f.last_reason==EP7R_FAULT_CONTEXT && job.job && retained() && !f.deletes);
-    puts("runtime: permanent publication, shared postbuilder/worker core, six providers, contention progress and retained poison/delay/context/queue failures passed; native environment mocked");
+    exercise_queue_delete();
+    puts("runtime: permanent publication, shared reader/worker core, six providers, retained failures and monotonic queue-delete I/O closure passed; native environment mocked");
     return 0;
 }

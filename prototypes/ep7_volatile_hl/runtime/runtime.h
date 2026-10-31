@@ -27,6 +27,7 @@ typedef struct {
     ep7r_environment env;
     ep7n_queue queues[EP7R_QUEUES];
     atomic_bool stopped;
+    atomic_bool io_closed; /* Monotonic: any selected queue delete closes candidate I/O. */
     atomic_uint fault;
 } ep7r;
 typedef struct { _Atomic(ep7r *) published; } ep7r_slot;
@@ -48,6 +49,17 @@ bool ep7r_accepting(const ep7r *);
 void ep7r_stop(ep7r *);
 bool ep7r_task(ep7r *,uint32_t anchor,ep7n_task *);
 bool ep7r_qualify_queue(void *,unsigned handle,unsigned maximum);
+typedef struct {
+    uint32_t object;
+    uint16_t handle,reserved;
+    uint32_t attributes,maximum,ring_bytes,backing;
+} ep7r_queue_object;
+bool ep7r_io_open(const ep7r *);
+/* The following two are ONLY inside the original queue kernel critical section, after successful
+ * native lookup and before copies/wait registration. No private lock, task query,
+ * allocation, wait, callback or quarantine is allowed in these helpers. */
+bool ep7r_guard_queue(const ep7r *,const ep7r_queue_object *);
+void ep7r_note_queue_delete(ep7r *,uint32_t object);
 void ep7r_retire(void *,ep7t_ticket); /* Synchronous by-value cleanup owner. */
 void ep7r_progress(void *); /* No lock held, one native timed-delay unit. */
 _Noreturn void ep7r_fault(ep7r *,unsigned reason);

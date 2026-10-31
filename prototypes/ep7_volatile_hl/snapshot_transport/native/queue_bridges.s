@@ -13,6 +13,8 @@ _ep7_gcc_queue_receive_local:
  mov d1,a0
  mov (28,sp),d1
  call ep7_stock_queue_receive_local_unresolved,[d2,d3,a2,a3],32
+.global _ep7_queue_receive_native_return
+_ep7_queue_receive_native_return:
  ret [a2],16
 .size _ep7_gcc_queue_receive_local,.-_ep7_gcc_queue_receive_local
 .global _ep7_gcc_queue_send_local
@@ -24,6 +26,8 @@ _ep7_gcc_queue_send_local:
  mov (28,sp),d1
  mov (32,sp),a1
  call ep7_stock_queue_send_local_unresolved,[d2,d3,a2,a3],40
+.global _ep7_queue_raw_send_native_return
+_ep7_queue_raw_send_native_return:
  ret [a2],16
 .size _ep7_gcc_queue_send_local,.-_ep7_gcc_queue_send_local
 
@@ -43,5 +47,7 @@ _ep7_gcc_queue_send_preserving_hooks:
  add 12,a0
  mov (40,sp),d1
  call ep7_stock_queue_send_preserving_unresolved,[d2,d3,a2,a3],48
+.global _ep7_queue_named_send_native_return
+_ep7_queue_named_send_native_return:
  ret [a2],24
 .size _ep7_gcc_queue_send_preserving_hooks,.-_ep7_gcc_queue_send_preserving_hooks

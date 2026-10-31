@@ -1,0 +1,1317 @@
+{
+  "scope": "Owned pipeline with shared runtime, kernel-critical queue gate candidates and cleanup progress; capture source, installer/lifetimes and native addresses remain unbound",
+  "versions": {
+    "gcc": "mn10300-elf-gcc (GCC) 13.4.0",
+    "as": "GNU assembler (GNU Binutils) 2.45",
+    "ld": "GNU ld (GNU Binutils) 2.45",
+    "objdump": "GNU objdump (GNU Binutils) 2.45"
+  },
+  "objects": {
+    "materializer_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_bridge.s",
+      "definitions": [
+        "ep7_native_materializer_receive_bridge"
+      ],
+      "undefined": [
+        "_ep7q_materializer_entry"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 4,
+      "incoming_native_frame_bytes": 44,
+      "additional_bridge_frame_bytes": 0,
+      "size_output": [
+        "13",
+        "0",
+        "0",
+        "13"
+      ]
+    },
+    "materializer_layout": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_layout.c",
+      "definitions": [
+        "_ep7q_materializer_layout"
+      ],
+      "undefined": [
+        "_ep7q_stack_span",
+        "_ep7q_stack_word",
+        "_memcpy"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "383",
+        "0",
+        "0",
+        "383"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_layout.c:4:6:ep7q_materializer_layout\t60\tstatic"
+      ]
+    },
+    "materializer_binding": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_binding.c",
+      "definitions": [
+        "_ep7q_materializer_entry"
+      ],
+      "undefined": [
+        "_ep7_gcc_queue_receive_local",
+        "_ep7q_command_receive",
+        "_ep7q_materializer_context_unresolved",
+        "_ep7q_materializer_layout"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "155",
+        "0",
+        "0",
+        "155"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_binding.c:4:12:receive_local\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_binding.c:6:5:ep7q_materializer_entry\t136\tstatic"
+      ]
+    },
+    "queue_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/queue_bridges.s",
+      "definitions": [
+        "_ep7_gcc_queue_receive_local",
+        "_ep7_gcc_queue_send_local",
+        "_ep7_gcc_queue_send_preserving_hooks",
+        "_ep7_queue_named_send_native_return",
+        "_ep7_queue_raw_send_native_return",
+        "_ep7_queue_receive_native_return"
+      ],
+      "undefined": [
+        "ep7_stock_queue_receive_local_unresolved",
+        "ep7_stock_queue_send_local_unresolved",
+        "ep7_stock_queue_send_preserving_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 23,
+      "own_frame_bytes": [
+        16,
+        16,
+        24
+      ],
+      "native_nested_frames": [
+        32,
+        40,
+        48
+      ],
+      "checked_native_return_labels": 3,
+      "size_output": [
+        "66",
+        "0",
+        "0",
+        "66"
+      ]
+    },
+    "stack": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/stack.c",
+      "definitions": [
+        "_ep7q_stack_span",
+        "_ep7q_stack_word"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "183",
+        "0",
+        "0",
+        "183"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/stack.c:2:22:ep7q_stack_span\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/stack.c:12:6:ep7q_stack_word\t12\tstatic"
+      ]
+    },
+    "owned_io": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c",
+      "definitions": [
+        "_ep7q_command_receive",
+        "_ep7q_descriptor_receive",
+        "_ep7q_descriptor_send"
+      ],
+      "undefined": [
+        "_ep7w_decode",
+        "_ep7w_encode",
+        "_ep7w_retirement_ticket",
+        "_ep7w_ticket",
+        "_ep7w_write_trailer",
+        "_memcpy",
+        "_memset"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "1114",
+        "0",
+        "0",
+        "1114"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c:13:13:qualify\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c:18:13:ep7q_command_receive\t220\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c:33:13:ep7q_descriptor_receive\t104\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c:48:13:ep7q_descriptor_send\t400\tstatic"
+      ]
+    },
+    "wire": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/wire.c",
+      "definitions": [
+        "_ep7w_decode",
+        "_ep7w_encode",
+        "_ep7w_mark_consumed",
+        "_ep7w_retirement_ticket",
+        "_ep7w_ticket",
+        "_ep7w_write_trailer"
+      ],
+      "undefined": [
+        "_memcpy",
+        "_memset"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "1062",
+        "0",
+        "0",
+        "1062"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:13:13:route_ok\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:18:6:ep7w_write_trailer\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:26:6:ep7w_encode\t44\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:42:5:ep7w_ticket\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:55:5:ep7w_decode\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:66:6:ep7w_retirement_ticket\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:79:6:ep7w_mark_consumed\t0\tstatic"
+      ]
+    },
+    "memory": {
+      "source": "prototypes/ep7_volatile_hl/target/memory.c",
+      "definitions": [
+        "_memcpy",
+        "_memset"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "49",
+        "0",
+        "0",
+        "49"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/target/memory.c:8:7:memcpy\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/target/memory.c:18:7:memset\t0\tstatic"
+      ]
+    },
+    "descriptor_receive_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_bridge.s",
+      "definitions": [
+        "ep7_native_descriptor_receive_bridge"
+      ],
+      "undefined": [
+        "_ep7q_descriptor_receive_entry",
+        "ep7_stock_receive_wrapper_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 18,
+      "incoming_native_frame_bytes": 44,
+      "additional_bridge_frame_bytes": 0,
+      "size_output": [
+        "45",
+        "0",
+        "0",
+        "45"
+      ]
+    },
+    "descriptor_receive_layout": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_layout.c",
+      "definitions": [
+        "_ep7q_descriptor_receive_layout",
+        "_ep7q_receive_rejection"
+      ],
+      "undefined": [
+        "_ep7q_stack_span",
+        "_ep7q_stack_word",
+        "_memcpy"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "376",
+        "0",
+        "0",
+        "376"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_layout.c:4:5:ep7q_receive_rejection\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_layout.c:6:6:ep7q_descriptor_receive_layout\t52\tstatic"
+      ]
+    },
+    "descriptor_receive_binding": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_binding.c",
+      "definitions": [
+        "_ep7q_descriptor_receive_entry"
+      ],
+      "undefined": [
+        "_ep7_gcc_queue_receive_local",
+        "_ep7q_descriptor_receive",
+        "_ep7q_descriptor_receive_context_unresolved",
+        "_ep7q_descriptor_receive_layout",
+        "_ep7q_receive_rejection"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "162",
+        "0",
+        "0",
+        "162"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_binding.c:4:12:receive_local\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_binding.c:6:5:ep7q_descriptor_receive_entry\t124\tstatic"
+      ]
+    },
+    "postbuilder_bridge": {
+      "source": "prototypes/ep7_volatile_hl/target/postbuilder/postbuilder_bridge.s",
+      "definitions": [
+        "ep7_native_postbuilder_bridge"
+      ],
+      "undefined": [
+        "_ep7_gcc_postbuilder_observer",
+        "ep7_stock_color_builder_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 16,
+      "additional_native_frame_bytes": 96,
+      "size_output": [
+        "43",
+        "0",
+        "0",
+        "43"
+      ]
+    },
+    "postbuilder_observer": {
+      "source": "prototypes/ep7_volatile_hl/target/postbuilder/native_observer.c",
+      "definitions": [
+        "_ep7_gcc_postbuilder_observer"
+      ],
+      "undefined": [
+        "_ep7_native_runtime_slot",
+        "_ep7r_apply"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_setup_byte_reads": 8,
+      "shared_runtime_reader_bound": true,
+      "output_extent": 976,
+      "size_output": [
+        "88",
+        "0",
+        "0",
+        "88"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/target/postbuilder/native_observer.c:19:6:ep7_gcc_postbuilder_observer\t28\tstatic"
+      ]
+    },
+    "runtime": {
+      "source": "prototypes/ep7_volatile_hl/runtime/runtime.c",
+      "definitions": [
+        "_ep7r_accepting",
+        "_ep7r_apply",
+        "_ep7r_fault",
+        "_ep7r_get",
+        "_ep7r_guard_queue",
+        "_ep7r_io_open",
+        "_ep7r_note_queue_delete",
+        "_ep7r_prepare",
+        "_ep7r_progress",
+        "_ep7r_publish",
+        "_ep7r_qualify_queue",
+        "_ep7r_retire",
+        "_ep7r_stop",
+        "_ep7r_task"
+      ],
+      "undefined": [
+        "_ep7b_mark_published",
+        "_ep7n_same_queue",
+        "_ep7p_direct_apply",
+        "_ep7s_ops",
+        "_ep7s_poisoned",
+        "_ep7t_init",
+        "_ep7t_retire_owned"
+      ],
+      "loop_extended_state_audited": true,
+      "kernel_critical_helpers_without_calls_or_external_dependencies": [
+        "_ep7r_get",
+        "_ep7r_stop",
+        "_ep7r_io_open",
+        "_ep7r_guard_queue",
+        "_ep7r_note_queue_delete"
+      ],
+      "size_output": [
+        "1448",
+        "0",
+        "0",
+        "1448"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:6:6:ep7r_prepare\t64\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:15:7:ep7r_get\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:17:6:ep7r_apply\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:22:6:ep7r_publish\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:37:6:ep7r_accepting\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:42:6:ep7r_stop\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:44:6:ep7r_task\t48\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:56:16:ep7r_fault\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:63:6:ep7r_qualify_queue\t64\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:77:6:ep7r_io_open\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:79:6:ep7r_guard_queue\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:90:6:ep7r_note_queue_delete\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:99:6:ep7r_progress\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:109:6:ep7r_retire\t44\tstatic"
+      ]
+    },
+    "contexts": {
+      "source": "prototypes/ep7_volatile_hl/runtime/contexts.c",
+      "definitions": [
+        "_ep7_native_runtime_slot",
+        "_ep7q_ack_context_unresolved",
+        "_ep7q_descriptor_receive_context_unresolved",
+        "_ep7q_descriptor_send_context_unresolved",
+        "_ep7q_materializer_context_unresolved",
+        "_ep7q_owned_context_lost",
+        "_ep7q_producer_context_unresolved",
+        "_ep7q_worker_context_unresolved"
+      ],
+      "undefined": [
+        "_ep7r_accepting",
+        "_ep7r_fault",
+        "_ep7r_get",
+        "_ep7r_progress",
+        "_ep7r_qualify_queue",
+        "_ep7r_retire",
+        "_ep7r_task"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "910",
+        "0",
+        "4",
+        "914"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/contexts.c:25:6:ep7q_materializer_context_unresolved\t52\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/contexts.c:32:6:ep7q_descriptor_receive_context_unresolved\t56\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/contexts.c:42:6:ep7q_descriptor_send_context_unresolved\t52\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/contexts.c:51:6:ep7q_producer_context_unresolved\t56\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/contexts.c:59:6:ep7q_worker_context_unresolved\t52\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/contexts.c:68:6:ep7q_ack_context_unresolved\t52\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/contexts.c:76:6:ep7q_owned_context_lost\t12\tstatic"
+      ]
+    },
+    "runtime_native": {
+      "source": "prototypes/ep7_volatile_hl/runtime/native_context.c",
+      "definitions": [
+        "_ep7r_native_environment"
+      ],
+      "undefined": [
+        "_ep7_gcc_quarantine",
+        "_ep7_gcc_task_delay_one",
+        "_ep7n_native_current_task",
+        "_ep7n_native_queue"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "103",
+        "0",
+        "0",
+        "103"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/native_context.c:11:13:quarantine\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/native_context.c:9:12:delay_one\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/native_context.c:7:13:queue\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/native_context.c:5:13:task\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/native_context.c:13:18:ep7r_native_environment\t0\tstatic"
+      ]
+    },
+    "task_context": {
+      "source": "prototypes/ep7_volatile_hl/runtime/task_context.c",
+      "definitions": [
+        "_ep7n_query_task"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "535",
+        "0",
+        "0",
+        "535"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context.c:6:13:current_tcb\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context.c:14:6:ep7n_query_task\t60\tstatic"
+      ]
+    },
+    "task_native": {
+      "source": "prototypes/ep7_volatile_hl/runtime/task_context_native.c",
+      "definitions": [
+        "_ep7n_native_current_task",
+        "_ep7n_native_queue"
+      ],
+      "undefined": [
+        "_ep7_gcc_get_tid",
+        "_ep7n_query_queue",
+        "_ep7n_query_task"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "98",
+        "0",
+        "0",
+        "98"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:7:13:read_word\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:9:13:read_half\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:5:12:query\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:12:6:ep7n_native_current_task\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:16:6:ep7n_native_queue\t16\tstatic"
+      ]
+    },
+    "queue_context": {
+      "source": "prototypes/ep7_volatile_hl/runtime/queue_context.c",
+      "definitions": [
+        "_ep7n_query_queue",
+        "_ep7n_same_queue"
+      ],
+      "undefined": [
+        "_memcpy"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "853",
+        "0",
+        "0",
+        "853"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/queue_context.c:6:13:read_view\t44\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/queue_context.c:26:6:ep7n_same_queue\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/queue_context.c:32:6:ep7n_query_queue\t104\tstatic"
+      ]
+    },
+    "task_delay": {
+      "source": "prototypes/ep7_volatile_hl/runtime/delay_bridge.s",
+      "definitions": [
+        "_ep7_gcc_task_delay_one"
+      ],
+      "undefined": [
+        "ep7_stock_task_delay_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 5,
+      "fixed_input_units": 1,
+      "status_preserved": true,
+      "size_output": [
+        "17",
+        "0",
+        "0",
+        "17"
+      ]
+    },
+    "quarantine": {
+      "source": "prototypes/ep7_volatile_hl/runtime/quarantine.s",
+      "definitions": [
+        "_ep7_gcc_quarantine"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 2,
+      "owned_terminal_loop": true,
+      "native_exception_behavior_executed": false,
+      "size_output": [
+        "3",
+        "0",
+        "0",
+        "3"
+      ]
+    },
+    "kernel_gate": {
+      "source": "prototypes/ep7_volatile_hl/runtime/kernel_gate.c",
+      "definitions": [
+        "_ep7r_native_delete_observer",
+        "_ep7r_native_receive_gate",
+        "_ep7r_native_send_gate"
+      ],
+      "undefined": [
+        "_ep7_native_runtime_slot",
+        "_ep7_queue_named_send_native_return",
+        "_ep7_queue_raw_send_native_return",
+        "_ep7_queue_receive_native_return",
+        "_ep7r_get",
+        "_ep7r_guard_queue",
+        "_ep7r_io_open",
+        "_ep7r_note_queue_delete"
+      ],
+      "loop_extended_state_audited": true,
+      "native_api_calls": false,
+      "private_lock_calls": false,
+      "caller_return_offsets": [
+        32,
+        40,
+        88
+      ],
+      "size_output": [
+        "208",
+        "0",
+        "0",
+        "208"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/kernel_gate.c:12:13:admitted\t44\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/kernel_gate.c:21:6:ep7r_native_receive_gate\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/kernel_gate.c:28:6:ep7r_native_send_gate\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/kernel_gate.c:37:6:ep7r_native_delete_observer\t16\tstatic"
+      ]
+    },
+    "kernel_gate_bridges": {
+      "source": "prototypes/ep7_volatile_hl/runtime/kernel_gate_bridges.s",
+      "definitions": [
+        "ep7_native_queue_delete_observer",
+        "ep7_native_queue_receive_gate",
+        "ep7_native_queue_send_gate"
+      ],
+      "undefined": [
+        "_ep7r_native_delete_observer",
+        "_ep7r_native_receive_gate",
+        "_ep7r_native_send_gate",
+        "ep7_stock_delete_gate_continue_unresolved",
+        "ep7_stock_receive_gate_continue_unresolved",
+        "ep7_stock_receive_gate_error_unresolved",
+        "ep7_stock_send_gate_continue_unresolved",
+        "ep7_stock_send_gate_error_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 96,
+      "own_frame_bytes": 40,
+      "inline_entry": true,
+      "register_and_mdr_preserved": true,
+      "size_output": [
+        "232",
+        "0",
+        "0",
+        "232"
+      ]
+    },
+    "get_tid": {
+      "source": "prototypes/ep7_volatile_hl/target/get_tid_bridge.s",
+      "definitions": [
+        "_ep7_gcc_get_tid"
+      ],
+      "undefined": [
+        "ep7_stock_get_tid_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 5,
+      "size_output": [
+        "17",
+        "0",
+        "0",
+        "17"
+      ]
+    },
+    "poll_provider": {
+      "source": "prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c",
+      "definitions": [
+        "_ep7s_init",
+        "_ep7s_ops",
+        "_ep7s_poisoned"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "378",
+        "0",
+        "0",
+        "378"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c:37:12:no_lease\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c:5:13:domain.constprop\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c:12:13:take\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c:26:13:give\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c:38:6:ep7s_init\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c:42:10:ep7s_ops\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c:43:6:ep7s_poisoned\t0\tstatic"
+      ]
+    },
+    "bootstrap": {
+      "source": "prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/bootstrap.c",
+      "definitions": [
+        "_ep7b_abort_unpublished",
+        "_ep7b_mark_published",
+        "_ep7b_prepare"
+      ],
+      "undefined": [
+        "_ep7p_init",
+        "_ep7s_init",
+        "_ep7s_ops",
+        "_memcpy"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "560",
+        "0",
+        "0",
+        "560"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/bootstrap.c:8:13:same_domain.constprop\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/bootstrap.c:9:6:ep7b_abort_unpublished\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/bootstrap.c:22:6:ep7b_prepare\t112\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/bootstrap.c:35:6:ep7b_mark_published\t0\tstatic"
+      ]
+    },
+    "raw_callbacks": {
+      "source": "prototypes/ep7_volatile_hl/poll_lock_provider/native/raw_callbacks.c",
+      "definitions": [
+        "_ep7s_unresolved_raw_callbacks"
+      ],
+      "undefined": [
+        "_ep7_gcc_get_tid",
+        "_ep7_gcc_raw_sem_poll",
+        "_ep7_gcc_raw_sem_signal"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "78",
+        "0",
+        "0",
+        "78"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/native/raw_callbacks.c:13:12:signal\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/native/raw_callbacks.c:12:12:poll\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/native/raw_callbacks.c:11:12:current\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/native/raw_callbacks.c:14:13:ep7s_unresolved_raw_callbacks\t0\tstatic"
+      ]
+    },
+    "sem_bridge": {
+      "source": "prototypes/ep7_volatile_hl/poll_lock_provider/native/sem_bridges.s",
+      "definitions": [
+        "_ep7_gcc_raw_sem_poll",
+        "_ep7_gcc_raw_sem_signal"
+      ],
+      "undefined": [
+        "ep7_stock_raw_sem_signal_unresolved",
+        "ep7_stock_raw_sem_wait_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "31",
+        "0",
+        "0",
+        "31"
+      ]
+    },
+    "bootstrap_native": {
+      "source": "prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/native_callbacks.c",
+      "definitions": [
+        "_ep7b_unresolved_native"
+      ],
+      "undefined": [
+        "_ep7_gcc_raw_sem_create",
+        "_ep7_gcc_raw_sem_delete_unpublished",
+        "_ep7s_unresolved_raw_callbacks"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "70",
+        "0",
+        "0",
+        "70"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/native_callbacks.c:8:12:drop\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/native_callbacks.c:7:12:create\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/native_callbacks.c:9:13:ep7b_unresolved_native\t16\tstatic"
+      ]
+    },
+    "bootstrap_bridge": {
+      "source": "prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/create_delete_bridges.s",
+      "definitions": [
+        "_ep7_gcc_raw_sem_create",
+        "_ep7_gcc_raw_sem_delete_unpublished"
+      ],
+      "undefined": [
+        "ep7_stock_raw_sem_create_unresolved",
+        "ep7_stock_raw_sem_delete_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "32",
+        "0",
+        "0",
+        "32"
+      ]
+    },
+    "forward": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/forward.c",
+      "definitions": [
+        "_ep7q_forward_send"
+      ],
+      "undefined": [
+        "_ep7q_descriptor_send"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "114",
+        "0",
+        "0",
+        "114"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/forward.c:2:5:ep7q_forward_send\t72\tstatic"
+      ]
+    },
+    "transport": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/transport.c",
+      "definitions": [
+        "_ep7t_claim",
+        "_ep7t_init",
+        "_ep7t_invalidate_all",
+        "_ep7t_prepare",
+        "_ep7t_publish",
+        "_ep7t_retire",
+        "_ep7t_retire_owned"
+      ],
+      "undefined": [
+        "_memcpy",
+        "_memset"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "1029",
+        "0",
+        "0",
+        "1029"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:15:6:ep7t_init\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:21:6:ep7t_prepare\t52\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:37:6:ep7t_publish\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:45:6:ep7t_claim\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:56:6:ep7t_retire\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:64:6:ep7t_invalidate_all\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:70:6:ep7t_retire_owned\t36\tstatic"
+      ]
+    },
+    "producer": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/producer.c",
+      "definitions": [
+        "_ep7q_capture_scope_init",
+        "_ep7q_producer_send"
+      ],
+      "undefined": [
+        "_ep7t_prepare",
+        "_ep7t_publish",
+        "_ep7w_encode",
+        "_memcpy",
+        "_memset"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "399",
+        "0",
+        "0",
+        "399"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/producer.c:5:6:ep7q_capture_scope_init\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/producer.c:11:5:ep7q_producer_send\t80\tstatic"
+      ]
+    },
+    "consumer": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/consumer.c",
+      "definitions": [
+        "_ep7q_claim_owned",
+        "_ep7q_retire_owned"
+      ],
+      "undefined": [
+        "_ep7t_claim",
+        "_ep7t_retire_owned",
+        "_ep7w_mark_consumed",
+        "_ep7w_retirement_ticket",
+        "_ep7w_ticket",
+        "_memset"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "180",
+        "0",
+        "0",
+        "180"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/consumer.c:3:6:ep7q_claim_owned\t48\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/consumer.c:11:6:ep7q_retire_owned\t40\tstatic"
+      ]
+    },
+    "job": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/job.c",
+      "definitions": [
+        "_ep7j_allocate",
+        "_ep7j_begin",
+        "_ep7j_register",
+        "_ep7j_revoke"
+      ],
+      "undefined": [
+        "_ep7p_register_job",
+        "_ep7p_release_job",
+        "_ep7q_claim_owned",
+        "_memset"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "288",
+        "0",
+        "0",
+        "288"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/job.c:3:6:ep7j_begin\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/job.c:9:7:ep7j_allocate\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/job.c:23:6:ep7j_register\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/job.c:31:6:ep7j_revoke\t28\tstatic"
+      ]
+    },
+    "core": {
+      "source": "prototypes/ep7_volatile_hl/ep7p.c",
+      "definitions": [
+        "_ep7p_apply",
+        "_ep7p_axis_adjust",
+        "_ep7p_axis_adjust_result",
+        "_ep7p_axis_read",
+        "_ep7p_capture",
+        "_ep7p_direct_apply",
+        "_ep7p_edit",
+        "_ep7p_enter",
+        "_ep7p_init",
+        "_ep7p_register_job",
+        "_ep7p_register_task",
+        "_ep7p_release_job",
+        "_ep7p_release_task",
+        "_ep7p_unwind"
+      ],
+      "undefined": [
+        "_ep7p_decode",
+        "_memcpy",
+        "_memset"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "3552",
+        "0",
+        "0",
+        "3552"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:24:24:current\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:30:13:shape\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:145:13:apply_local\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:41:6:ep7p_init\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:45:6:ep7p_edit\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:50:6:ep7p_axis_read\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:55:6:ep7p_axis_adjust_result\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:75:6:ep7p_axis_adjust\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:79:6:ep7p_capture\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:85:6:ep7p_register_job\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:101:6:ep7p_release_job\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:109:6:ep7p_register_task\t48\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:120:6:ep7p_release_task\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:127:6:ep7p_enter\t68\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:135:6:ep7p_unwind\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:159:6:ep7p_apply\t84\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:179:6:ep7p_direct_apply\t132\tstatic"
+      ]
+    },
+    "decode": {
+      "source": "prototypes/ep7_volatile_hl/ep7p_decode.c",
+      "definitions": [
+        "_ep7p_decode"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "720",
+        "0",
+        "0",
+        "720"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ep7p_decode.c:6:6:ep7p_decode\t16\tstatic"
+      ]
+    },
+    "worker_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_bridges.s",
+      "definitions": [
+        "_ep7_gcc_job_allocate",
+        "_ep7_worker_native_return",
+        "ep7_native_worker_allocate_bridge",
+        "ep7_native_worker_cleanup_bridge",
+        "ep7_native_worker_process_bridge",
+        "ep7_native_worker_scope_bridge"
+      ],
+      "undefined": [
+        "_ep7q_worker_allocate_entry",
+        "_ep7q_worker_cleanup_entry",
+        "_ep7q_worker_process_entry",
+        "_ep7q_worker_scope_entry",
+        "ep7_stock_job_allocate_unresolved",
+        "ep7_stock_worker_cleanup_unresolved",
+        "ep7_stock_worker_job_unresolved",
+        "ep7_stock_worker_process_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 59,
+      "owned_wrapper_bytes": 80,
+      "additional_native_frame_bytes": 56,
+      "owned_scope_bytes": 48,
+      "owned_scope_offset": 32,
+      "pointer_result_register": "a0",
+      "size_output": [
+        "162",
+        "0",
+        "0",
+        "162"
+      ]
+    },
+    "worker_layout": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_layout.c",
+      "definitions": [
+        "_ep7q_worker_layout"
+      ],
+      "undefined": [
+        "_ep7q_stack_span",
+        "_ep7q_stack_word"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "419",
+        "0",
+        "0",
+        "419"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/worker_layout.c:2:6:ep7q_worker_layout\t56\tstatic"
+      ]
+    },
+    "worker_binding": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_binding.c",
+      "definitions": [
+        "_ep7q_worker_allocate_entry",
+        "_ep7q_worker_cleanup_entry",
+        "_ep7q_worker_process_entry",
+        "_ep7q_worker_scope_entry"
+      ],
+      "undefined": [
+        "_ep7_gcc_job_allocate",
+        "_ep7_worker_native_return",
+        "_ep7j_allocate",
+        "_ep7j_begin",
+        "_ep7j_register",
+        "_ep7j_revoke",
+        "_ep7q_owned_context_lost",
+        "_ep7q_stack_word",
+        "_ep7q_worker_context_unresolved",
+        "_ep7q_worker_layout",
+        "_memset"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "561",
+        "0",
+        "0",
+        "561"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/worker_binding.c:27:14:native_allocate\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/worker_binding.c:15:6:ep7q_worker_scope_entry\t88\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/worker_binding.c:29:7:ep7q_worker_allocate_entry\t84\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/worker_binding.c:35:6:ep7q_worker_process_entry\t84\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/worker_binding.c:42:6:ep7q_worker_cleanup_entry\t80\tstatic"
+      ]
+    },
+    "worker_caller": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_caller.c",
+      "definitions": [
+        "_ep7_probe_worker_allocation"
+      ],
+      "undefined": [
+        "_ep7_gcc_job_allocate"
+      ],
+      "loop_extended_state_audited": true,
+      "gcc_pointer_result_a0_confirmed": true,
+      "size_output": [
+        "15",
+        "0",
+        "0",
+        "15"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/worker_caller.c:3:11:ep7_probe_worker_allocation\t12\tstatic"
+      ]
+    },
+    "ack_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/ack_bridge.s",
+      "definitions": [
+        "ep7_native_ack_bridge"
+      ],
+      "undefined": [
+        "_ep7q_ack_entry",
+        "ep7_stock_ack_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 16,
+      "own_frame_bytes": 16,
+      "native_tail_frame_bytes": 32,
+      "size_output": [
+        "41",
+        "0",
+        "0",
+        "41"
+      ]
+    },
+    "ack_layout": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/ack_layout.c",
+      "definitions": [
+        "_ep7q_ack_layout"
+      ],
+      "undefined": [
+        "_ep7q_stack_span",
+        "_ep7q_stack_word"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "190",
+        "0",
+        "0",
+        "190"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/ack_layout.c:2:6:ep7q_ack_layout\t48\tstatic"
+      ]
+    },
+    "ack_binding": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/ack_binding.c",
+      "definitions": [
+        "_ep7q_ack_entry"
+      ],
+      "undefined": [
+        "_ep7q_ack_context_unresolved",
+        "_ep7q_ack_layout",
+        "_ep7q_owned_context_lost",
+        "_ep7q_retire_owned"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "116",
+        "0",
+        "0",
+        "116"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/ack_binding.c:3:6:ep7q_ack_entry\t64\tstatic"
+      ]
+    },
+    "queue_send_binding": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/queue_send_binding.c",
+      "definitions": [
+        "_ep7q_send_local_preserving"
+      ],
+      "undefined": [
+        "_ep7_gcc_queue_send_preserving_hooks"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "33",
+        "0",
+        "0",
+        "33"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/queue_send_binding.c:2:5:ep7q_send_local_preserving\t20\tstatic"
+      ]
+    },
+    "descriptor_send_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_bridge.s",
+      "definitions": [
+        "ep7_native_descriptor_send_bridge"
+      ],
+      "undefined": [
+        "_ep7q_descriptor_send_entry",
+        "ep7_stock_send_wrapper_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 17,
+      "incoming_native_frame_bytes": 36,
+      "additional_bridge_frame_bytes": 0,
+      "size_output": [
+        "44",
+        "0",
+        "0",
+        "44"
+      ]
+    },
+    "descriptor_send_layout": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_layout.c",
+      "definitions": [
+        "_ep7q_descriptor_send_layout"
+      ],
+      "undefined": [
+        "_ep7q_stack_span",
+        "_ep7q_stack_word",
+        "_memcpy"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "319",
+        "0",
+        "0",
+        "319"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_layout.c:4:6:ep7q_descriptor_send_layout\t56\tstatic"
+      ]
+    },
+    "descriptor_send_binding": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_binding.c",
+      "definitions": [
+        "_ep7q_descriptor_send_entry"
+      ],
+      "undefined": [
+        "_ep7q_descriptor_send_context_unresolved",
+        "_ep7q_descriptor_send_layout",
+        "_ep7q_forward_send",
+        "_ep7q_owned_context_lost",
+        "_ep7q_send_local_preserving"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "130",
+        "0",
+        "0",
+        "130"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_binding.c:4:5:ep7q_descriptor_send_entry\t92\tstatic"
+      ]
+    },
+    "producer_bridge": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_bridge.s",
+      "definitions": [
+        "_ep7_capture_scope_native_return",
+        "ep7_native_capture_scope_bridge",
+        "ep7_native_producer_send_bridge"
+      ],
+      "undefined": [
+        "_ep7q_capture_scope_entry",
+        "_ep7q_producer_entry",
+        "ep7_stock_command_send_unresolved",
+        "ep7_stock_kind19_metadata_producer_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 30,
+      "owned_scope_frame_bytes": 64,
+      "additional_native_frame_bytes": 32,
+      "owned_scope_offset": 24,
+      "size_output": [
+        "81",
+        "0",
+        "0",
+        "81"
+      ]
+    },
+    "producer_layout": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_layout.c",
+      "definitions": [
+        "_ep7q_producer_layout"
+      ],
+      "undefined": [
+        "_ep7q_stack_span",
+        "_ep7q_stack_word",
+        "_memcpy"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "386",
+        "0",
+        "0",
+        "386"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/producer_layout.c:4:6:ep7q_producer_layout\t52\tstatic"
+      ]
+    },
+    "producer_binding": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_binding.c",
+      "definitions": [
+        "_ep7q_capture_scope_entry",
+        "_ep7q_producer_entry"
+      ],
+      "undefined": [
+        "_ep7_capture_scope_native_return",
+        "_ep7q_capture_scope_init",
+        "_ep7q_capture_snapshot_unresolved",
+        "_ep7q_producer_context_unresolved",
+        "_ep7q_producer_layout",
+        "_ep7q_producer_send",
+        "_ep7q_send_local_preserving"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "197",
+        "0",
+        "0",
+        "197"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/producer_binding.c:5:6:ep7q_capture_scope_entry\t52\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/producer_binding.c:12:5:ep7q_producer_entry\t100\tstatic"
+      ]
+    }
+  },
+  "remaining_external_symbols": [
+    "_ep7q_capture_snapshot_unresolved",
+    "ep7_stock_ack_unresolved",
+    "ep7_stock_color_builder_unresolved",
+    "ep7_stock_command_send_unresolved",
+    "ep7_stock_delete_gate_continue_unresolved",
+    "ep7_stock_get_tid_unresolved",
+    "ep7_stock_job_allocate_unresolved",
+    "ep7_stock_kind19_metadata_producer_unresolved",
+    "ep7_stock_queue_receive_local_unresolved",
+    "ep7_stock_queue_send_local_unresolved",
+    "ep7_stock_queue_send_preserving_unresolved",
+    "ep7_stock_raw_sem_create_unresolved",
+    "ep7_stock_raw_sem_delete_unresolved",
+    "ep7_stock_raw_sem_signal_unresolved",
+    "ep7_stock_raw_sem_wait_unresolved",
+    "ep7_stock_receive_gate_continue_unresolved",
+    "ep7_stock_receive_gate_error_unresolved",
+    "ep7_stock_receive_wrapper_unresolved",
+    "ep7_stock_send_gate_continue_unresolved",
+    "ep7_stock_send_gate_error_unresolved",
+    "ep7_stock_send_wrapper_unresolved",
+    "ep7_stock_task_delay_unresolved",
+    "ep7_stock_worker_cleanup_unresolved",
+    "ep7_stock_worker_job_unresolved",
+    "ep7_stock_worker_process_unresolved"
+  ],
+  "hash_checks_performed": false,
+  "target_linked": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "native_adapter_installed": false
+}

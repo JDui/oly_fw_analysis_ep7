@@ -47,7 +47,8 @@ if args.queue_pipeline_abi_only:
  files.update({n:core/'runtime'/p for n,p in [
      ('runtime','runtime.c'),('contexts','contexts.c'),('runtime_native','native_context.c'),
      ('task_context','task_context.c'),('task_native','task_context_native.c'),('queue_context','queue_context.c'),
-     ('task_delay','delay_bridge.s'),('quarantine','quarantine.s')]})
+     ('task_delay','delay_bridge.s'),('quarantine','quarantine.s'),
+     ('kernel_gate','kernel_gate.c'),('kernel_gate_bridges','kernel_gate_bridges.s')]})
  files['get_tid']=core/'target/get_tid_bridge.s'
  files.update({n:core/'poll_lock_provider'/p for n,p in [
      ('poll_provider','ep7_sem_provider.c'),('bootstrap','bootstrap/bootstrap.c'),
@@ -135,6 +136,11 @@ with tempfile.TemporaryDirectory() as temp:
     objects[name]['checked_instructions']=len(ins)
     objects[name]['own_frame_bytes']=[16,16,24]
     objects[name]['native_nested_frames']=[32,40,48]
+    addresses=re.findall(r'^\s*([0-9a-f]+):\s+(?:[0-9a-f]{2}\s+)+[a-z]',dis,re.M)
+    rows={line.split()[-1]:int(line.split()[0],16) for line in syms.splitlines() if len(line.split())>=5 and '*UND*' not in line and re.fullmatch('[0-9a-f]+',line.split()[0])}
+    for symbol,index in [('_ep7_queue_receive_native_return',5),('_ep7_queue_raw_send_native_return',12),('_ep7_queue_named_send_native_return',22)]:
+     if rows.get(symbol)!=int(addresses[index],16):raise ValueError('queue ownership return label changed: '+symbol)
+    objects[name]['checked_native_return_labels']=3
    else:
     assembly=Path(temp)/'caller.s'
     subprocess.run([prefix+'gcc',*flags,'-S',str(src),'-o',str(assembly)],check=True)
@@ -263,6 +269,47 @@ with tempfile.TemporaryDirectory() as temp:
    if '_ep7_gcc_job_allocate+0x1' not in dis or not re.search(r'mov\s+a0,d0',dis):
     raise ValueError('GCC pointer result no longer consumed from a0')
    objects[name]['gcc_pointer_result_a0_confirmed']=True
+  if name=='kernel_gate':
+   wanted={'_ep7_native_runtime_slot','_ep7r_get','_ep7r_io_open','_ep7r_guard_queue','_ep7r_note_queue_delete',
+       '_ep7_queue_receive_native_return','_ep7_queue_raw_send_native_return','_ep7_queue_named_send_native_return'}
+   if und!=wanted:raise ValueError('kernel gate acquired an unqualified dependency: '+repr(und))
+   objects[name].update(native_api_calls=False,private_lock_calls=False,caller_return_offsets=[32,40,88])
+  if args.queue_pipeline_abi_only and name=='runtime':
+   pure=['_ep7r_get','_ep7r_stop','_ep7r_io_open','_ep7r_guard_queue','_ep7r_note_queue_delete']
+   bodies=dict(re.findall(r'(?ms)^[0-9a-f]+ <([^>]+)>:\n(.*?)(?=^[0-9a-f]+ <|\Z)',dis))
+   for symbol in pure:
+    body=bodies.get(symbol)
+    if body is None or re.search(r'\b(?:call|calls)\s',body):raise ValueError('kernel-critical runtime helper gained a call: '+symbol)
+    refs=re.findall(r'R_MN10300_[A-Z0-9]+\s+([^\s+]+)',body)
+    if any(not ref.startswith('.L') for ref in refs):raise ValueError('kernel-critical runtime helper gained a dependency: '+symbol+' '+repr(refs))
+   objects[name]['kernel_critical_helpers_without_calls_or_external_dependencies']=pure
+  if name=='kernel_gate_bridges':
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   # Relocatable objects annotate absolute memory operands with a nearby symbol.
+   ins=[(mn,re.sub(r'\(([0-9a-f]+) <[^>]+>\)',lambda m:'(0x'+m[1]+')',op)) for mn,op in ins]
+   save=[('add','-40,sp'),('mov','d0,(12,sp)'),('mov','d1,(16,sp)'),('mov','a0,(20,sp)'),
+       ('mov','a1,(24,sp)'),('mov','d2,(32,sp)'),('mov','mdr,d2'),('mov','d2,(28,sp)')]
+   restore=[('mov','(28,sp),d2'),('mov','d2,mdr'),('mov','(32,sp),d2'),('mov','(12,sp),d0'),
+       ('mov','(16,sp),d1'),('mov','(20,sp),a0'),('mov','(24,sp),a1'),('add','40,sp')]
+   route=[('mov','sp,a0'),('add','40,a0'),('mov','a0,d0'),('mov','a2,d1'),('call',None),('cmp','0,d0'),('beq',None)]
+   receive=save+route+restore+[('mov','(0x8050),d0'),('asl2','d0'),('mov','-1880096764,a0'),('jmp',None)]+restore+[('mov','-42,d0'),('jmp',None)]
+   send=save+route+restore+[('mov','(20,sp),d0'),('mov','20,d3'),('add','a2,d3'),('jmp',None)]+restore+[('mov','-42,d0'),('jmp',None)]
+   delete=save+[('mov','a3,d0'),('call',None)]+restore+[('mov','20,a0'),('add','a3,a0'),('movbu','(a0),d0'),('jmp',None)]
+   expected=receive+send+delete
+   if len(ins)!=len(expected) or any(a[0]!=b[0] or (b[1] is not None and a[1]!=b[1]) for a,b in zip(ins,expected)):
+    differences=[(i,a,b) for i,(a,b) in enumerate(zip(ins,expected)) if a[0]!=b[0] or (b[1] is not None and a[1]!=b[1])]
+    raise ValueError('kernel gate sequence changed: lengths '+repr((len(ins),len(expected)))+' '+repr(differences[:5]))
+   if any(not op.endswith(',[],0') for mn,op in ins if mn=='call'):raise ValueError('kernel gate GCC call frame changed')
+   addresses=re.findall(r'^\s*([0-9a-f]+):\s+(?:[0-9a-f]{2}\s+)+[a-z]',dis,re.M)
+   rows={line.split()[-1]:int(line.split()[0],16) for line in syms.splitlines() if len(line.split())>=5 and '*UND*' not in line and re.fullmatch('[0-9a-f]+',line.split()[0])}
+   for symbol,index in [('.Lreceive_rejected',27),('.Lsend_rejected',len(receive)+27)]:
+    if rows.get(symbol)!=int(addresses[index],16) or symbol+'+0x1' not in dis:raise ValueError('kernel gate reject branch changed')
+   targets=['_ep7r_native_receive_gate','_ep7r_native_send_gate','_ep7r_native_delete_observer',
+       'ep7_stock_receive_gate_continue_unresolved','ep7_stock_receive_gate_error_unresolved',
+       'ep7_stock_send_gate_continue_unresolved','ep7_stock_send_gate_error_unresolved','ep7_stock_delete_gate_continue_unresolved']
+   if dis.count('R_MN10300_PCREL32')!=len(targets) or dis.count('R_MN10300_PCREL8')!=2 or any(s+'+0x1' not in dis for s in targets):
+    raise ValueError('kernel gate relocation targets changed')
+   objects[name].update(checked_instructions=len(ins),own_frame_bytes=40,inline_entry=True,register_and_mdr_preserved=True)
   if name=='task_delay':
    dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
    ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
@@ -305,6 +352,8 @@ if args.queue_pipeline_abi_only:
      '_ep7q_worker_context_unresolved','_ep7q_ack_context_unresolved'}
  expected|={'ep7_stock_get_tid_unresolved','ep7_stock_task_delay_unresolved',
      'ep7_stock_color_builder_unresolved',
+     'ep7_stock_receive_gate_continue_unresolved','ep7_stock_receive_gate_error_unresolved',
+     'ep7_stock_send_gate_continue_unresolved','ep7_stock_send_gate_error_unresolved','ep7_stock_delete_gate_continue_unresolved',
      'ep7_stock_raw_sem_wait_unresolved','ep7_stock_raw_sem_signal_unresolved',
      'ep7_stock_raw_sem_create_unresolved','ep7_stock_raw_sem_delete_unresolved'}
 if external!=expected:raise ValueError('unexpected external symbols '+repr(external))
@@ -312,7 +361,7 @@ scope='Snapshot transport, wire codec, owned queue I/O and memory target objects
 if args.queue_abi_only:scope='Raw queue and notification-preserving send callable ABI bridges; no native invocation'
 if args.materializer_abi_only:scope='Exact materializer receive bridge and bounded frame mapper; context provider/native addresses unresolved'
 if args.receive_abi_only:scope='Command and descriptor receive bridges with bounded stack mappers; native context providers/addresses unresolved'
-if args.queue_pipeline_abi_only:scope='Owned pipeline with six concrete runtime providers, bootstrap/poll lock, actual task/queue views and cleanup progress; capture source, installer/lifetimes and native addresses remain unbound'
+if args.queue_pipeline_abi_only:scope='Owned pipeline with shared runtime, kernel-critical queue gate candidates and cleanup progress; capture source, installer/lifetimes and native addresses remain unbound'
 if args.task_context_only:scope='Read-only current-task stack and actual local queue views with existing get_tid/delay veneers; no lifetime lease, installation flag or native execution'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))
