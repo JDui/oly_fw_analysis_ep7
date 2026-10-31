@@ -5,10 +5,36 @@ import json
 import struct
 from pathlib import Path
 
-from ep7_native_stack import BASE, NativeGraph, register_bytes, compose
+from ep7_native_stack import BASE, BRANCHES, LOOPS, NativeGraph, register_bytes, compose
 from ep7_far_call_check import ROOT, REFERENCE
 
 CPU_REFERENCE='https://gnu.googlesource.com/binutils-gdb/+/cbe950e9fe8a56f788bcf985cc51733f18abb45b/sim/mn10300/dv-mn103cpu.c'
+EXTENSION_REFERENCE='https://www.manualshelf.com/manual/panasonic/personal-computer-mn103001g-f01k/user-manual-english.html'
+MASK_REFERENCE='https://www.manualslib.com/manual/119167/Panasonic-Mn103001g-F01k.html?page=50'
+
+# Manufacturer instruction names, not new implementations of these opcodes.
+# The documented operations touch D registers, MAC state and condition flags;
+# they have no memory operand, SP update, call or trap in their defined operation.
+EXTENSIONS={
+    0x6003010a:('udf13','d0,d0','GETCLX','MCRL to D0; MCVF to V',65),
+    0x60030112:('udf12','d0,d0','GETCHX','MCRH to D0; MCVF to V',64),
+    0x60030116:('udf15','d0,d0','GETX','MDRQ to D0',63),
+    0x6003012c:('udf21','d0,d1','PUTCX','D0 to MCRH; D1 to MCRL; V to MCVF',62),
+    0x60030130:('udf20','d0,d0','PUTX','D0 to MDRQ',61),
+}
+
+HELPER_W={
+    0x60030107:('add','-16,sp'),0x6003010c:('mov','psw,d1'),
+    0x6003010e:('mov','d1,(sp)'),0x60030110:('mov','d0,(4,sp)'),
+    0x60030114:('mov','d0,(8,sp)'),0x60030118:('mov','d0,(12,sp)'),
+    0x6003011a:('jmp','(a3)'),0x6003011c:('mov','(sp),d0'),
+    0x6003011e:('and','8,d0'),0x60030121:('nop',''),
+    0x60030122:('mov','psw,d1'),0x60030124:('or','d0,d1'),
+    0x60030126:('mov','d1,psw'),0x60030128:('mov','(4,sp),d1'),
+    0x6003012a:('mov','(8,sp),d0'),0x6003012e:('mov','(12,sp),d0'),
+    0x60030132:('add','16,sp'),0x60030135:('jmp','(a3)'),
+    **{pc:row[:2] for pc,row in EXTENSIONS.items()},
+}
 
 W={
     0x60030008:('jmp','0x60055250'),
@@ -39,6 +65,10 @@ W={
     0x60038791:('jmp','0x60038827'),
     0x600387df:('clr','d0'),0x600387e0:('mov','(28,a2),a0'),
     0x600387e3:('movbu','d0,(a0)'),
+    0x600387b1:('mov','d0,psw'),0x600387b3:('call','0x600360f5,[d2,d3,a2,a3],32'),
+    0x600387b8:('and','63487,psw'),0x600387bd:('mov','(348,a2),d0'),
+    0x600387c1:('mov','d0,psw'),0x600387c3:('bra','0x60038794'),
+    0x600387d2:('calls','(a0)'),
     0x600387f9:('mov','(4,sp),a0'),0x600387fb:('mov','a0,sp'),
     0x600387fd:('call','0x60031a76,[d2,d3,a2,a3],20'),
     0x60038802:('call','0x6003593f,[d2,a2,a3],16'),
@@ -50,6 +80,9 @@ W={
     0x60038827:('add','4,sp'),0x6003882a:('mov','1610844213,a3'),
     0x60038830:('jmp','0x6003011c'),0x60038835:('add','-4,sp'),
     0x60038838:('movm','(sp),[a2,a3,other]'),0x6003883a:('rti',''),
+    0x6003435c:('movhu','(48,a0),d0'),0x6003435f:('cmp','1,d0'),
+    0x60034361:('bne','0x60034366'),0x60034363:('clr','d0'),
+    0x60034364:('bra','0x6003436b'),0x6003436b:('retf','[],0'),
 }
 
 
@@ -61,10 +94,97 @@ def span(graph,start,end):
     return result
 
 
+def conditional_exit_contract(graph,fields,software_bytes,udf):
+    """Reuse the exact CFG, retaining transfers/faults as unresolved boundaries."""
+    helper=span(graph,0x60030107,0x60030137)
+    if {pc:(mn,ops) for pc,_,mn,ops in helper}!=HELPER_W:
+        raise ValueError('extension save/restore helper changed')
+    if {int(row['pc'],16):(row['mnemonic'],row['operands']) for row in udf}!={
+            pc:row[:2] for pc,row in EXTENSIONS.items()}:
+        raise ValueError('unexpected extension opcode on IRQ task-stack path')
+
+    # These four calls happen after the original task SP is restored and before
+    # the optional task-exception dispatcher. Traverse their already-decoded
+    # direct callees, not the unrelated dispatcher or an interval linear sweep.
+    sites=[0x600387fd,0x60038802,0x6003880d,0x60038812]
+    roots={};frames={}
+    for site in sites:
+        _,_,mn,ops=graph.instruction(site)
+        if mn!='call':raise ValueError('post-restore native call changed')
+        roots[hex(site)]=int(ops.split(',',1)[0],16)
+        frames[hex(site)]=int(ops.rsplit(',',1)[-1])
+    calls=compose(graph,roots);reachable=set();pending=list(roots.values())
+    while pending:
+        entry=pending.pop()
+        if entry in reachable:continue
+        reachable.add(entry)
+        pending.extend(int(row['target'],16) for row in graph.functions[entry]['calls'])
+    pcs=set().union(*(graph.function_instruction_addresses[entry] for entry in reachable))
+    writes=[hex(pc) for pc in sorted(pcs) if graph.instruction(pc)[3].endswith(',psw')]
+    custom=[hex(pc) for pc in sorted(pcs) if graph.instruction(pc)[2].startswith('udf')]
+    if writes or custom:raise ValueError('new PSW writer/custom opcode before task-exception decision')
+    known=max(frames[name]+row['known_stack_effect_envelope_bytes'] for name,row in calls.items())
+    if known!=32:raise ValueError('conditional native post-restore stack changed')
+
+    # Both exits from deferred processing reapply root+348 while still on the
+    # IRQ stack. The only remaining explicit pre-RTI write on the skipped-tex
+    # tail is (current PSW | saved V), which cannot enable a masked IRQ.
+    before_restore=span(graph,0x60038771,0x600387fd)
+    controls={pc:(mn,ops) for pc,_,mn,ops in before_restore
+        if mn in BRANCHES|LOOPS|{'bra','jmp','call','calls','ret','retf','rets','rti','break','syscall'}}
+    if controls!={0x6003877e:('beq','0x60038794'),0x60038789:('beq','0x60038791'),
+            0x6003878f:('calls','(a0)'),0x60038791:('jmp','0x60038827'),
+            0x6003879b:('bne','0x600387c5'),0x600387a4:('bcc','0x600387c5'),
+            0x600387b3:('call','0x600360f5,[d2,d3,a2,a3],32'),
+            0x600387c3:('bra','0x60038794'),0x600387cc:('beq','0x600387df'),
+            0x600387d2:('calls','(a0)')}:
+        raise ValueError('IRQ-stack exit control flow changed')
+    mask_writes={pc:(mn,ops) for pc,_,mn,ops in before_restore if ops.endswith(',psw')}
+    if mask_writes!={0x60038775:('mov','d0,psw'),0x600387a8:('and','63487,psw'),
+            0x600387b1:('mov','d0,psw'),0x600387b8:('and','63487,psw'),
+            0x600387c1:('mov','d0,psw')}:
+        raise ValueError('IRQ-stack exit PSW sequence changed')
+    return dict(
+        extension_register_transfers=[dict(pc=hex(pc),mnemonic=row[0],operands=row[1],
+            manufacturer_macro=row[2],documented_register_transfer=row[3],manual_page=row[4],
+            documented_extra_stack_bytes=0) for pc,row in EXTENSIONS.items()],
+        extension_helper_instruction_count=len(helper),
+        extension_stack_model='Documented MN103001G/F01K register-transfer behavior; exact stock helper matched. No custom CPU emulation or E-P7 silicon execution.',
+        extension_psw_pipeline_and_register_roundtrip_tested=False,
+        exit_mask=dict(value=hex(fields[348]),ie_bit=1,mask_level=0,
+            ordinary_interrupt_acceptance='IE && pending_level < mask_level; no ordinary level is below zero.',
+            initial_write='0x60038775',deferred_return_write='0x600387c1',
+            checked_irq_stack_exit_control_edges=len(controls),
+            irq_stack_reenable_window='0x600387b1..0x600387b8',
+            optional_task_stack_reenable='0x6003881e, only when 6003434b returns nonzero',
+            skipped_exception_tail_psw='0x60030126 ORs only saved V (bit 3) into current PSW; IE/LM are retained.'),
+        conditional_no_task_exception_pass=dict(
+            condition='Current TCB halfword+48 equals 1 when 6003434b reads it; stock root/callback bindings and normal return contracts remain valid.',
+            query_returns_zero=True,skipped_sites=['0x6003881e','0x60038822'],
+            direct_native_function_count=len(reachable),direct_native_instruction_count=len(pcs),
+            direct_native_psw_writes=writes,direct_native_custom_opcodes=custom,
+            native_calls={name:dict(entry=hex(roots[name]),incoming_frame=frames[name],
+                own_and_callee_known_bytes=row['known_stack_effect_envelope_bytes'],
+                unresolved_frontier=row['frontier']) for name,row in calls.items()},
+            post_restore_known_stack_effects_bytes=known,
+            known_stack_effects_below_interrupted_sp_bytes=8+software_bytes+known,
+            complete_stack_bound_bytes=None,condition_lifetime_proven=False,
+            context_transfer_psw_preservation_proven=False,
+            ordinary_reentry_excluded_for_continuous_reviewed_return_path=True),
+        references=dict(extension_manual=EXTENSION_REFERENCE,interrupt_priority_manual=MASK_REFERENCE,
+            gnu_interrupt_acceptance=CPU_REFERENCE),
+        limits=[
+            'The manufacturer manual describes MN103001G/F01K, not the E-P7 SoC. Matching opcodes and the stock save/restore pattern support this static model; silicon identity, pipeline flags and actual IRQ timing are not established.',
+            'The task-exception flag is observed at bootstrap admission, but its lifetime through other tasks/IRQs is not proven. This conditional path must not replace the unpruned 104-byte result.',
+            'A scheduler transfer, restart, BREAK or changed callback is not a continuously returning path; its existing frontier remains explicit.',
+            'The deferred-service reenable window is before the task-SP restore, on the IRQ stack. Its handlers and IRQ-stack capacity are not bounded here.',
+            'NMI/reset/fault paths and arbitrary foreign writes are not excluded by IE/LM masking.'])
+
+
 def inspect(decoded,objdump):
     g=NativeGraph(decoded,objdump)
     try:
-        witnesses=dict(W)
+        witnesses={**W,**HELPER_W}
         vector_entries=[0x60030020]+list(range(0x60030058,0x60030081,8))
         for i,target in enumerate(vector_entries):
             witnesses[0x6002008c+9*i]=('mov',f'{target},d3')
@@ -75,11 +195,11 @@ def inspect(decoded,objdump):
                 raise ValueError('IRQ witness changed '+hex(pc))
         root=0x600411a4
         fields={28:0x621a631c,88:0x621a6410,112:0x6218f200,116:8192,
-                276:0x60073218,280:0x6007321b,348:0x800}
+                272:0x60073215,276:0x60073218,280:0x6007321b,348:0x800}
         for offset,value in fields.items():
             if struct.unpack_from('<I',g.data,root+offset-BASE)[0]!=value:
                 raise ValueError('IRQ root field changed '+str(offset))
-        for offset in [276,280]:
+        for offset in [272,276,280]:
             if g.instruction(fields[offset])[2:]!=('retf','[],0'):
                 raise ValueError('IRQ hook no longer stock zero-stack leaf')
 
@@ -124,6 +244,7 @@ def inspect(decoded,objdump):
             if before!=remaining:restore.append(dict(pc=hex(pc),mnemonic=mn,operands=ops,before=before,after=remaining))
             if mn.startswith('udf'):udf.append(dict(pc=hex(pc),mnemonic=mn,operands=ops))
         if remaining!=0:raise ValueError('IRQ explicit software frame does not unwind')
+        exit_contract=conditional_exit_contract(g,fields,depth,udf)
         if g.instruction(0x60030020)[2:]!=('mov','d0,(-4,sp)') or g.instruction(0x60030026)[2:]!=('mov','a0,(-8,sp)'):
             raise ValueError('level0 diagnostic scratch changed')
         irq_top=fields[112]+fields[116]
@@ -147,6 +268,7 @@ def inspect(decoded,objdump):
             native_post_restore_stack=post,
             exit_explicit_restore_operations=restore,software_frame_unwound_bytes=depth,
             unexecuted_udf_helpers=udf,
+            conditional_exit_contract=exit_contract,
             single_irq_pass=dict(gnu_cpu_model_entry_bytes=8,software_saved_task_bytes=depth,
                 post_restore_known_stack_effects_bytes=post['known_stack_effect_envelope_bytes'],
                 known_stack_effects_below_interrupted_sp_bytes=8+depth+post['known_stack_effect_envelope_bytes'],
@@ -160,7 +282,7 @@ def inspect(decoded,objdump):
                 'The 8-byte hardware frame is the referenced GNU MN10300 model and matches the stock PSW+PC/RTI layout; E-P7 interrupt hardware is not executed or independently qualified.',
                 'Vector writes store only low halfwords. The hardware vector base and upstream loading remain prerequisites, not proven by matching these software instructions.',
                 'The fixed IRQ hook pointers and domain0 root must retain their reviewed values.',
-                '56 bytes counts explicit save operations. UDF12/13/15/20/21 custom-register behavior is not executed or independently qualified here.',
+                '56 bytes counts explicit save operations. A manufacturer-documented zero-extra-stack UDF model and conditional masked exit are recorded separately; neither is real E-P7 CPU execution.',
                 'Post-restore callbacks, native BREAK and nested entry near task-exception PSW restoration still prevent a complete task-stack bound.',
                 'The independent IRQ stack handler graph, its 8 KiB capacity, NMI/debug/BREAK vectors and arbitrary fault nesting remain outside this check.',
                 'No new C object compilation, firmware link/patch, CPU run, host application test suite or hardware operation.'],

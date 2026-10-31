@@ -74,6 +74,7 @@ class NativeGraph:
             raise ValueError('unsupported decoded main length')
         self.decoded_instructions = {}
         self.functions = {}
+        self.function_instruction_addresses = {}
         self.temp = tempfile.TemporaryDirectory(prefix='ep7-native-instruction-')
         self.window = Path(self.temp.name)/'instruction.bin'
 
@@ -204,6 +205,7 @@ class NativeGraph:
             stack_operations=list(stack_ops.values()),calls=list(calls.values()),returns=list(returns.values()),
             boundaries=list(boundaries.values()),hardware_loop_edges=[dict(site=hex(p),target=hex(t)) for p,t in loop_sites.items()])
         self.functions[entry] = result
+        self.function_instruction_addresses[entry] = frozenset(reached)
         return result
 
     def collect(self, roots):

@@ -1,7 +1,7 @@
 {
   "scope": "Locate stock IRQ stack transfers and count one pass of its explicit task-stack effects.",
-  "instruction_witness_count": 85,
-  "decoded_instruction_count": 451,
+  "instruction_witness_count": 117,
+  "decoded_instruction_count": 493,
   "vector_setup": [
     {
       "register": "0x8000",
@@ -254,6 +254,182 @@
       "operands": "d0,d0"
     }
   ],
+  "conditional_exit_contract": {
+    "extension_register_transfers": [
+      {
+        "pc": "0x6003010a",
+        "mnemonic": "udf13",
+        "operands": "d0,d0",
+        "manufacturer_macro": "GETCLX",
+        "documented_register_transfer": "MCRL to D0; MCVF to V",
+        "manual_page": 65,
+        "documented_extra_stack_bytes": 0
+      },
+      {
+        "pc": "0x60030112",
+        "mnemonic": "udf12",
+        "operands": "d0,d0",
+        "manufacturer_macro": "GETCHX",
+        "documented_register_transfer": "MCRH to D0; MCVF to V",
+        "manual_page": 64,
+        "documented_extra_stack_bytes": 0
+      },
+      {
+        "pc": "0x60030116",
+        "mnemonic": "udf15",
+        "operands": "d0,d0",
+        "manufacturer_macro": "GETX",
+        "documented_register_transfer": "MDRQ to D0",
+        "manual_page": 63,
+        "documented_extra_stack_bytes": 0
+      },
+      {
+        "pc": "0x6003012c",
+        "mnemonic": "udf21",
+        "operands": "d0,d1",
+        "manufacturer_macro": "PUTCX",
+        "documented_register_transfer": "D0 to MCRH; D1 to MCRL; V to MCVF",
+        "manual_page": 62,
+        "documented_extra_stack_bytes": 0
+      },
+      {
+        "pc": "0x60030130",
+        "mnemonic": "udf20",
+        "operands": "d0,d0",
+        "manufacturer_macro": "PUTX",
+        "documented_register_transfer": "D0 to MDRQ",
+        "manual_page": 61,
+        "documented_extra_stack_bytes": 0
+      }
+    ],
+    "extension_helper_instruction_count": 23,
+    "extension_stack_model": "Documented MN103001G/F01K register-transfer behavior; exact stock helper matched. No custom CPU emulation or E-P7 silicon execution.",
+    "extension_psw_pipeline_and_register_roundtrip_tested": false,
+    "exit_mask": {
+      "value": "0x800",
+      "ie_bit": 1,
+      "mask_level": 0,
+      "ordinary_interrupt_acceptance": "IE && pending_level < mask_level; no ordinary level is below zero.",
+      "initial_write": "0x60038775",
+      "deferred_return_write": "0x600387c1",
+      "checked_irq_stack_exit_control_edges": 10,
+      "irq_stack_reenable_window": "0x600387b1..0x600387b8",
+      "optional_task_stack_reenable": "0x6003881e, only when 6003434b returns nonzero",
+      "skipped_exception_tail_psw": "0x60030126 ORs only saved V (bit 3) into current PSW; IE/LM are retained."
+    },
+    "conditional_no_task_exception_pass": {
+      "condition": "Current TCB halfword+48 equals 1 when 6003434b reads it; stock root/callback bindings and normal return contracts remain valid.",
+      "query_returns_zero": true,
+      "skipped_sites": [
+        "0x6003881e",
+        "0x60038822"
+      ],
+      "direct_native_function_count": 10,
+      "direct_native_instruction_count": 257,
+      "direct_native_psw_writes": [],
+      "direct_native_custom_opcodes": [],
+      "native_calls": {
+        "0x600387fd": {
+          "entry": "0x60031a76",
+          "incoming_frame": 20,
+          "own_and_callee_known_bytes": 4,
+          "unresolved_frontier": []
+        },
+        "0x60038802": {
+          "entry": "0x6003593f",
+          "incoming_frame": 16,
+          "own_and_callee_known_bytes": 16,
+          "unresolved_frontier": [
+            {
+              "function": "0x6003593f",
+              "site": "0x60035a01",
+              "kind": "indirect_call",
+              "depth": 0,
+              "mnemonic": "calls",
+              "operands": "(a1)",
+              "known_stack_effect_bytes": 0,
+              "path": [
+                "0x6003593f"
+              ],
+              "conditional_classification": "stock_domain0_scheduler_callback"
+            },
+            {
+              "function": "0x6003853d",
+              "site": "0x6003853d",
+              "kind": "exception_or_interrupt_control",
+              "depth": 0,
+              "mnemonic": "break",
+              "operands": "",
+              "known_stack_effect_bytes": 0,
+              "path": [
+                "0x6003593f",
+                "0x6003853d"
+              ],
+              "conditional_classification": null
+            },
+            {
+              "function": "0x60038547",
+              "site": "0x60038547",
+              "kind": "sp_replaced_from_register_or_memory",
+              "depth": 0,
+              "mnemonic": "mov",
+              "operands": "a1,sp",
+              "known_stack_effect_bytes": 0,
+              "path": [
+                "0x6003593f",
+                "0x60038547"
+              ],
+              "conditional_classification": "outgoing_stack_discarded_at_restart"
+            },
+            {
+              "function": "0x6003853e",
+              "site": "0x60038541",
+              "kind": "sp_replaced_from_register_or_memory",
+              "depth": 0,
+              "mnemonic": "mov",
+              "operands": "(0,a0),sp",
+              "known_stack_effect_bytes": 16,
+              "path": [
+                "0x6003593f",
+                "0x6003853e"
+              ],
+              "conditional_classification": "outgoing_stack_saved_before_context_transfer"
+            }
+          ]
+        },
+        "0x6003880d": {
+          "entry": "0x60036884",
+          "incoming_frame": 4,
+          "own_and_callee_known_bytes": 0,
+          "unresolved_frontier": []
+        },
+        "0x60038812": {
+          "entry": "0x6003434b",
+          "incoming_frame": 0,
+          "own_and_callee_known_bytes": 0,
+          "unresolved_frontier": []
+        }
+      },
+      "post_restore_known_stack_effects_bytes": 32,
+      "known_stack_effects_below_interrupted_sp_bytes": 96,
+      "complete_stack_bound_bytes": null,
+      "condition_lifetime_proven": false,
+      "context_transfer_psw_preservation_proven": false,
+      "ordinary_reentry_excluded_for_continuous_reviewed_return_path": true
+    },
+    "references": {
+      "extension_manual": "https://www.manualshelf.com/manual/panasonic/personal-computer-mn103001g-f01k/user-manual-english.html",
+      "interrupt_priority_manual": "https://www.manualslib.com/manual/119167/Panasonic-Mn103001g-F01k.html?page=50",
+      "gnu_interrupt_acceptance": "https://gnu.googlesource.com/binutils-gdb/+/cbe950e9fe8a56f788bcf985cc51733f18abb45b/sim/mn10300/dv-mn103cpu.c"
+    },
+    "limits": [
+      "The manufacturer manual describes MN103001G/F01K, not the E-P7 SoC. Matching opcodes and the stock save/restore pattern support this static model; silicon identity, pipeline flags and actual IRQ timing are not established.",
+      "The task-exception flag is observed at bootstrap admission, but its lifetime through other tasks/IRQs is not proven. This conditional path must not replace the unpruned 104-byte result.",
+      "A scheduler transfer, restart, BREAK or changed callback is not a continuously returning path; its existing frontier remains explicit.",
+      "The deferred-service reenable window is before the task-SP restore, on the IRQ stack. Its handlers and IRQ-stack capacity are not bounded here.",
+      "NMI/reset/fault paths and arbitrary foreign writes are not excluded by IE/LM masking."
+    ]
+  },
   "single_irq_pass": {
     "gnu_cpu_model_entry_bytes": 8,
     "software_saved_task_bytes": 56,
@@ -278,7 +454,7 @@
     "The 8-byte hardware frame is the referenced GNU MN10300 model and matches the stock PSW+PC/RTI layout; E-P7 interrupt hardware is not executed or independently qualified.",
     "Vector writes store only low halfwords. The hardware vector base and upstream loading remain prerequisites, not proven by matching these software instructions.",
     "The fixed IRQ hook pointers and domain0 root must retain their reviewed values.",
-    "56 bytes counts explicit save operations. UDF12/13/15/20/21 custom-register behavior is not executed or independently qualified here.",
+    "56 bytes counts explicit save operations. A manufacturer-documented zero-extra-stack UDF model and conditional masked exit are recorded separately; neither is real E-P7 CPU execution.",
     "Post-restore callbacks, native BREAK and nested entry near task-exception PSW restoration still prevent a complete task-stack bound.",
     "The independent IRQ stack handler graph, its 8 KiB capacity, NMI/debug/BREAK vectors and arbitrary fault nesting remain outside this check.",
     "No new C object compilation, firmware link/patch, CPU run, host application test suite or hardware operation."
