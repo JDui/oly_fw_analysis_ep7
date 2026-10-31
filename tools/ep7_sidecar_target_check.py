@@ -15,6 +15,7 @@ mode.add_argument('--ui-context-only',action='store_true',help='compile native t
 mode.add_argument('--ui-create-only',action='store_true',help='compile context-preserving text factory result bridge with existing rollback bindings')
 mode.add_argument('--ui-lifecycle-only',action='store_true',help='compile actual text creation/attach/bind/set/rollback callback composition')
 mode.add_argument('--ui-owner-only',action='store_true',help='compile request278 owner capture/revoke, actual table cohort and native method bridges')
+mode.add_argument('--ui-selector-only',action='store_true',help='compile guarded six-entry selector storage upgrade after original ID193 initialization')
 args=parser.parse_args()
 receiver_mode=args.receive_abi_only or args.queue_pipeline_abi_only
 materializer_mode=args.materializer_abi_only or receiver_mode
@@ -56,6 +57,12 @@ if ui_mode:
   files.update({n:core/'ui_owner'/p for n,p in [('ui_owner','owner.c'),
       ('ui_owner_cohort','cohort.c'),('ui_owner_bridges','bridges.s')]})
   files['quarantine']=core/'runtime/quarantine.s'
+if args.ui_selector_only:
+ files={n:core/'ui_selector'/p for n,p in [('ui_selector','selector.c'),('ui_selector_bridges','bridges.s')]}
+ files.update({n:core/'runtime'/p for n,p in [('task_context','task_context.c'),
+     ('task_native','task_context_native.c'),('queue_context','queue_context.c')]})
+ files.update({'get_tid':core/'target/get_tid_bridge.s','memory':core/'target/memory.c'})
+ flags.append('-fstack-usage')
 if materializer_mode:
  files={'materializer_bridge':core/'snapshot_transport/native/materializer_bridge.s',
         'materializer_layout':core/'snapshot_transport/native/materializer_layout.c',
@@ -117,7 +124,7 @@ with tempfile.TemporaryDirectory() as temp:
    definitions[symbol]=name
   undefined|=und
   objects[name]=dict(source=str(src.relative_to(root)),definitions=sorted(defs),undefined=sorted(und))
-  if args.queue_pipeline_abi_only or ui_mode:
+  if args.queue_pipeline_abi_only or ui_mode or args.ui_selector_only:
    dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
    audit=re.findall(r'^\s*[0-9a-f]+:[ \t]+(?:[0-9a-f]{2}[ \t]+)+([a-z][a-z0-9]*)(?:[ \t]+([^\n]*))?$',dis,re.M)
    forbidden={'setlb','leq','lne','lgt','lge','lle','llt','lhi','lcc','lls','lcs','lra'}
@@ -202,6 +209,26 @@ with tempfile.TemporaryDirectory() as temp:
     raise ValueError('child lookup native target/frame changed')
    objects[name].update(checked_instructions=12,own_frame_bytes=12,native_self_frame_bytes=24,
        owner_list_offset=92,preserved_iterator_offset=108,pointer_result_register='a0')
+  if name=='ui_selector_bridges':
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   expected=[('movm','[d2,d3,a2,a3],(sp)'),('add','-40,sp'),('mov','a0,(12,sp)'),
+       ('mov','d0,(16,sp)'),('call',None),('mov','a0,(20,sp)'),('mov','d0,(24,sp)'),
+       ('mov','d1,(28,sp)'),('mov','a1,(32,sp)'),('mov','(12,sp),d0'),('mov','(16,sp),d1'),
+       ('call',None),('mov','(20,sp),a0'),('mov','(24,sp),d0'),('mov','(28,sp),d1'),
+       ('mov','(32,sp),a1'),('ret','[d2,d3,a2,a3],56'),
+       ('add','-4,sp'),('call',None),('mov','a0,d0'),('ret','[],4'),
+       ('add','-4,sp'),('mov','d0,a0'),('call',None),('ret','[],4')]
+   if len(ins)!=len(expected) or any(a[0]!=b[0] or (b[1] is not None and a[1]!=b[1]) for a,b in zip(ins,expected)):
+    raise ValueError('selector initializer or array ABI changed')
+   if [op.split(',')[-1] for m,op in ins if m=='call']!=['0','0','4','4']:
+    raise ValueError('selector initializer/array native frame changed')
+   targets=['ep7_stock_selector_init_unresolved','_ep7s_expand_after_init',
+       'ep7_stock_mvc_array_new_unresolved','ep7_stock_mvc_array_delete_unresolved']
+   if re.findall(r'R_MN10300_(\w+)\s+([^\n]+)',dis)!=[('PCREL32',s+'+0x1') for s in targets]:
+    raise ValueError('selector initializer/array targets changed')
+   objects[name].update(checked_instructions=25,own_frame_bytes=[56,4,4],
+       original_initializer_self_frame=12,original_array_caller_frames=[4,4],
+       original_initializer_scratch_results_preserved=True)
   if name=='ui_owner_bridges':
    ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
    screen=[('movm','[d2,d3,a2,a3],(sp)'),('add','-48,sp'),('mov','a0,(12,sp)'),
@@ -528,7 +555,7 @@ with tempfile.TemporaryDirectory() as temp:
     raise ValueError('existing get_tid veneer frame/argument routing changed')
    if dis.count('R_MN10300_PCREL32')!=1 or 'ep7_stock_get_tid_unresolved+0x1' not in dis:raise ValueError('get_tid relocation changed')
    objects[name]['checked_instructions']=5
-  if args.transport_only or materializer_mode or args.task_context_only or ui_mode:
+  if args.transport_only or materializer_mode or args.task_context_only or ui_mode or args.ui_selector_only:
    objects[name]['size_output']=subprocess.check_output([prefix+'size',str(obj)],text=True).splitlines()[1].split()[:4]
    if src.suffix=='.c':objects[name]['stack_usage']=obj.with_suffix('.su').read_text().splitlines()
 external=undefined-set(definitions)
@@ -545,6 +572,9 @@ if args.ui_owner_only:expected|={'ep7_stock_screen_manager_unresolved',
     'ep7_stock_ui_owner_cleanup_unresolved','ep7_stock_ui_owner_bulk_unresolved',
     'ep7_stock_ui_owner_destructor_unresolved','_ep7_stock_ui_service_vtable_unresolved',
     '_ep7_stock_ui_display_vtable_unresolved'}
+if args.ui_selector_only:expected={'ep7_stock_get_tid_unresolved','ep7_stock_selector_init_unresolved',
+    '_ep7_stock_selector_initializer_unresolved','ep7_stock_mvc_array_new_unresolved',
+    'ep7_stock_mvc_array_delete_unresolved'}
 if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved','ep7_stock_receive_wrapper_unresolved'}
@@ -577,5 +607,6 @@ if ui_mode:scope='Fresh text rollback with actual native context callbacks; qual
 if ui_create_mode:scope='Existing text factory result/context bridge and native rollback closure; resource/UI ownership and actual lifecycle attachment remain unqualified'
 if ui_lifecycle_mode:scope='Actual text create/attach/bind/set/rollback C and native ABI closure; concrete live owner/GUI entry, resource semantics and teardown hooks remain unqualified'
 if args.ui_owner_only:scope='Request278 owner capture and matching retirement with native table cohort and text lifecycle; cold installation, bypass closure, GUI exclusion, MVC/renderer and placement remain unqualified'
+if args.ui_selector_only:scope='Native ID193 post-initializer six-entry storage upgrade with H/L disabled and allocation-failure stock fallback; no MVC/viewer/input admission or installation'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))

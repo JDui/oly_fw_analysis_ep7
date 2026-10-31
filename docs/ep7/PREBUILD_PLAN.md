@@ -208,3 +208,9 @@ cleanup/bulk/析构撤销、实际四表项cohort及真实来源qualifier，复�
 重入销毁不会静默丢掉child。fresh保留仍要求原生allocator存活证明，四表项匹配也
 不代表安装/排他/旁路闭包。下一项MVC parent/session、category4/5与实际输入资格，
 `renderer_ready`继续关闭，G4/G6/G8尚未整体通过。
+
+[selector 六项存储](UI_SELECTOR_STORAGE.md)现复用原厂 ID193 initializer 与数组分配/
+释放方法，在成功初始化后建立真实6值/12字节mask；新增分配失败保持完整原4项。
+81条原厂指令、5数据项、4组strict/ASan/UBSan及7对象通过。H/L两项默认禁用，
+原厂自身的mask分配失败缺口未在本批修复。下一项MVC内容对象与viewer生命周期，
+随后绑定COLOR gating/输入/显示再开放新类别，不把存储扩展当作H/L界面完成。

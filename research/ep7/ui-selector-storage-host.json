@@ -1,0 +1,23 @@
+{
+  "scope": "Targeted selector storage/failure tests; native initializer, allocator and task mocked.",
+  "runs": {
+    "strict": {
+      "passed": true
+    },
+    "asan_ubsan": {
+      "passed": true
+    }
+  },
+  "scenarios": 4,
+  "actual_storage_upgrade_C_used": true,
+  "new_allocation_failure_preserves_entire_stock_object": true,
+  "stock_masks_preserved": true,
+  "additional_categories_disabled": true,
+  "native_navigation_executed": false,
+  "native_original_allocation_failure_handled": false,
+  "renderer_ready": false,
+  "installed": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "hash_checks_performed": false
+}
