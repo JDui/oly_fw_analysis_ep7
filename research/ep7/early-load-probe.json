@@ -1,0 +1,292 @@
+{
+  "scope": "Replay E-P7 early load control with explicit successful/failed storage models.\n\nReuses the repository's load/execute/reload method and strict GNU runner.\nOnly RAM fixtures contain sentinels; no patched firmware or hash is produced.\n",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103",
+  "engine_bytes": 8845992,
+  "instruction_witnesses": 34,
+  "different_executed_stock_addresses": 99,
+  "first_load": {
+    "reads": [
+      {
+        "entry": "0x60020ba7",
+        "operation": "page_read",
+        "source": "0x406b0000",
+        "destination": "0xa0030000",
+        "bytes": 65536,
+        "model": "exact logical-source transfer",
+        "modeled_d0": "0x0",
+        "original_return_instruction": "0x60020cdb"
+      },
+      {
+        "entry": "0x60020dc0",
+        "operation": "block_read",
+        "source": "0x406c0000",
+        "destination": "0xa0040000",
+        "bytes": 524288,
+        "model": "exact logical-source transfer",
+        "modeled_d0": "0x0",
+        "original_return_instruction": "0x60020efb"
+      },
+      {
+        "entry": "0x60020ba7",
+        "operation": "page_read",
+        "source": "0x40740000",
+        "destination": "0xa00c0000",
+        "bytes": 67584,
+        "model": "exact logical-source transfer",
+        "modeled_d0": "0x0",
+        "original_return_instruction": "0x60020cdb"
+      }
+    ],
+    "engine_chunks": [
+      {
+        "status": "breakpoint",
+        "completed": 50,
+        "fault": null,
+        "final_pc": "0x60020ba7",
+        "final_sp": "0x190100b4"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 16,
+        "fault": null,
+        "final_pc": "0x60020dc0",
+        "final_sp": "0x190100b4"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 14,
+        "fault": null,
+        "final_pc": "0x60020ba7",
+        "final_sp": "0x190100b4"
+      },
+      {
+        "status": "returned",
+        "completed": 32,
+        "fault": null,
+        "final_pc": "0x600201fe",
+        "final_sp": "0x19010100"
+      }
+    ],
+    "returned_d0": 0,
+    "exact_expected_destination": true,
+    "stack_and_callee_registers_restored": true,
+    "destination_bytes": 657408,
+    "readiness_fixture": [
+      0,
+      0,
+      0
+    ],
+    "log_count_fixture": 100,
+    "timer_fixture": "stationary",
+    "destination_unchanged": false
+  },
+  "sentinel_executions": [
+    {
+      "start": "0x60048040",
+      "end_exclusive": "0x6004ffc0",
+      "tag": "0x12340001",
+      "result": {
+        "status": "returned",
+        "completed": 3,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x19010100"
+      },
+      "returned_tag": "0x12340001"
+    },
+    {
+      "start": "0x600c8040",
+      "end_exclusive": "0x600cffc0",
+      "tag": "0x12340002",
+      "result": {
+        "status": "returned",
+        "completed": 3,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x19010100"
+      },
+      "returned_tag": "0x12340002"
+    }
+  ],
+  "reload": {
+    "reads": [
+      {
+        "entry": "0x60020ba7",
+        "operation": "page_read",
+        "source": "0x406b0000",
+        "destination": "0xa0030000",
+        "bytes": 65536,
+        "model": "exact logical-source transfer",
+        "modeled_d0": "0x0",
+        "original_return_instruction": "0x60020cdb"
+      },
+      {
+        "entry": "0x60020dc0",
+        "operation": "block_read",
+        "source": "0x406c0000",
+        "destination": "0xa0040000",
+        "bytes": 524288,
+        "model": "exact logical-source transfer",
+        "modeled_d0": "0x0",
+        "original_return_instruction": "0x60020efb"
+      },
+      {
+        "entry": "0x60020ba7",
+        "operation": "page_read",
+        "source": "0x40740000",
+        "destination": "0xa00c0000",
+        "bytes": 67584,
+        "model": "exact logical-source transfer",
+        "modeled_d0": "0x0",
+        "original_return_instruction": "0x60020cdb"
+      }
+    ],
+    "engine_chunks": [
+      {
+        "status": "breakpoint",
+        "completed": 50,
+        "fault": null,
+        "final_pc": "0x60020ba7",
+        "final_sp": "0x190100b4"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 16,
+        "fault": null,
+        "final_pc": "0x60020dc0",
+        "final_sp": "0x190100b4"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 14,
+        "fault": null,
+        "final_pc": "0x60020ba7",
+        "final_sp": "0x190100b4"
+      },
+      {
+        "status": "returned",
+        "completed": 32,
+        "fault": null,
+        "final_pc": "0x600201fe",
+        "final_sp": "0x19010100"
+      }
+    ],
+    "returned_d0": 0,
+    "exact_expected_destination": true,
+    "stack_and_callee_registers_restored": true,
+    "destination_bytes": 657408,
+    "readiness_fixture": [
+      0,
+      0,
+      0
+    ],
+    "log_count_fixture": 100,
+    "timer_fixture": "stationary",
+    "destination_unchanged": false
+  },
+  "injected_read_failure": {
+    "reads": [
+      {
+        "entry": "0x60020ba7",
+        "operation": "page_read",
+        "source": "0x406b0000",
+        "destination": "0xa0030000",
+        "bytes": 65536,
+        "model": "failure without transfer",
+        "modeled_d0": "0xffffffff",
+        "original_return_instruction": "0x60020cdb"
+      },
+      {
+        "entry": "0x60020dc0",
+        "operation": "block_read",
+        "source": "0x406c0000",
+        "destination": "0xa0040000",
+        "bytes": 524288,
+        "model": "failure without transfer",
+        "modeled_d0": "0xffffffff",
+        "original_return_instruction": "0x60020efb"
+      },
+      {
+        "entry": "0x60020ba7",
+        "operation": "page_read",
+        "source": "0x40740000",
+        "destination": "0xa00c0000",
+        "bytes": 67584,
+        "model": "failure without transfer",
+        "modeled_d0": "0xffffffff",
+        "original_return_instruction": "0x60020cdb"
+      }
+    ],
+    "engine_chunks": [
+      {
+        "status": "breakpoint",
+        "completed": 50,
+        "fault": null,
+        "final_pc": "0x60020ba7",
+        "final_sp": "0x190100b4"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 16,
+        "fault": null,
+        "final_pc": "0x60020dc0",
+        "final_sp": "0x190100b4"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 14,
+        "fault": null,
+        "final_pc": "0x60020ba7",
+        "final_sp": "0x190100b4"
+      },
+      {
+        "status": "returned",
+        "completed": 32,
+        "fault": null,
+        "final_pc": "0x600201fe",
+        "final_sp": "0x19010100"
+      }
+    ],
+    "returned_d0": 0,
+    "exact_expected_destination": true,
+    "stack_and_callee_registers_restored": true,
+    "destination_bytes": 657408,
+    "readiness_fixture": [
+      0,
+      0,
+      0
+    ],
+    "log_count_fixture": 100,
+    "timer_fixture": "stationary",
+    "destination_unchanged": true
+  },
+  "all_assertions_passed": true,
+  "diagnostic_switch_source": "0x6002e3e4",
+  "early_copy": {
+    "start": "0x60030000",
+    "end_exclusive": "0x600d0800",
+    "bytes": 657408,
+    "flash": "0x406b0000",
+    "destination": "0xa0030000",
+    "exact_native_three_way_split": true
+  },
+  "conclusion": {
+    "conditional_logical_load_and_reload": true,
+    "zero_return_proves_data_transfer": false,
+    "boot_prefix_residency_proven": false,
+    "approved_for_placement": false
+  },
+  "hash_checks_performed": false,
+  "firmware_file_modified": false,
+  "firmware_built": false,
+  "in_memory_sentinels_only": true,
+  "hardware_executed": false,
+  "limits": [
+    "The prefix caller and its native wrapper were supplied as already resident. Reset-ROM selection and loading of the prefix remain unproved.",
+    "Only the lower page/block-read bodies are modeled. The reported source bytes are copied by the harness, not by emulated NAND/DMA.",
+    "Readiness flags, stationary timer, saturated log counter and stack are explicit fixtures. Logging, semaphore-active paths and other cores were not executed.",
+    "Cached/uncached aliases and execute permissions are supplied runner mappings, not physical cache or MPU evidence.",
+    "Failure injection proves the wrapper ignores returned errors; it does not establish which hardware failures return or whether a lower diagnostic is nonreturning.",
+    "Candidate padding markers survive this conditional load/reload only. Other references, later writes and ownership remain outside this execution."
+  ]
+}
