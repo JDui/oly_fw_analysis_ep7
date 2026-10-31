@@ -89,8 +89,9 @@ payload 并保留64字节守卫，不要求为了本方案改动该检查表。�
 复用已有 pipeline/UI 对象尺寸报告，按源文件去重并剔除两个 ABI caller probe。
 本批最初得到95个实现源文件、text43,587字节；后续[完整远跳接合](REMAINING_FAR_CALLS.md)
 重新检查pipeline/UI对象后，曾为101个实现源、未链接text44,793字节。随后计入清零桥和
-[流水线安装组](PIPELINE_INSTALLATION_COHORT.md)，现为104个实现源、text45,733字节、data为0、
-BSS总量仍为2,376字节。预算工具本身不重编这些实现；它们不含完整installer，
+[流水线安装组](PIPELINE_INSTALLATION_COHORT.md)，当时为104个实现源、text45,733字节、data为0、
+BSS2,376字节。最新加入[一次性bootstrap](COLD_BOOTSTRAP.md)后为107实现源、text46,543、
+data0、BSS8,084；实际core/boot/runtime5704和once状态4均已包含。预算工具本身不重编这些实现；它们不含完整installer，
 也没有作最终节对齐和全栈计算。
 
 只额外编译了一个 `sizeof` 探针，使用当前头文件和既有 MN103 GCC13.4：
@@ -101,11 +102,12 @@ BSS总量仍为2,376字节。预算工具本身不重编这些实现；它们不
 |ep7b bootstrap|72|
 |ep7r runtime|580|
 |三者组成的 cold storage|5,704，alignment4|
-|历史 BSS + cold storage 粗计|8,080|
-|16 KiB候选区剩余粗计|8,304|
+|当前全部生产 BSS 粗计|8,084，包含cold storage和once状态|
+|16 KiB候选区剩余粗计|8,300|
 
-这里补上了“只统计全局 BSS、漏掉尚未实例化 core/runtime”会少算的5,704字节。
-本批不把8,304字节当可任意分配余量：链接对齐、安装器状态、队列配置增加的
+此前用5,704字节类型探针补足尚未实例化core/runtime的预算；现在它们已在生产BSS中，
+不能再重复相加。预算工具核对实际实例尺寸与当前类型一致。
+不把8,300字节当可任意分配余量：链接对齐、安装器状态、队列配置增加的
 原厂 backing、完整嵌套栈与预留都要单独计入。
 
 ## 检查和下一步

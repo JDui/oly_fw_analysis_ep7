@@ -14,6 +14,10 @@ semaphore，同一把锁保护新增 transport registry。`contexts.c` 已实现
 串行执行，hook 用户在发布前不能运行。重复初始化、覆盖已有发布和发布后删除私有锁
 均被拒绝；没有清空 slot、移动 runtime、复位计数或 live uninstall API。
 
+2026-10-31更新：[具体cold bootstrap](COLD_BOOTSTRAP.md)现已调用prepare/publish，
+在Usr3启动接收任务之前检查早期resident安装组，使用永久core/boot/runtime；后续UI
+在其驻留入口检查，不能在Usr3中等待尚未启动的Usr4/Usr5。本页下文仍保留早期研究记录。
+
 安装资格 callback 不是用户 enable 开关。G6 调用方必须先证明所有 frame/hook/queue
 改动、代码数据放置、缓存可见性、任务和私有锁存活，并排除后续 I/O 期间的队列删除、
 重建与改配置。当前没有提供这一安装器，也没有调用 publish 于设备。

@@ -5,6 +5,13 @@
 
 ## 2026-10-31 当前节点
 
+最新：[一次性原生bootstrap](COLD_BOOTSTRAP.md)已接合候选60191371，早期inline安装组、
+实际Usr3任务资格、私有锁/core/runtime永久存储和发布已实现。15个新增host场景、48项
+cohort负检查及54字节桥的局部GNU语义通过；失败不继续启动依赖runtime的接收任务。
+107实现源text46,543、BSS8,084，runtime5704已计入，不能再重复追加。完整聚合对象检查
+本批未重跑；下一项完整安装清单/符号分区与全栈，再推进放置/生命周期准入。
+selector已有真实initializer检查，后续复用，不再另造一套开关。G8仍未通过。
+
 最新：[runtime启动接续](BOOTSTRAP_ENTRY.md)核对85指令/10任务行，选定候选60191371：
 domain0的Usr3、2048字节配置栈，早于四个接收任务和capture controller的启动。
 第9段之后的候选太晚，domain2加载任务也不适合；UI第6段必须在后续驻留入口做资格检查，

@@ -126,6 +126,10 @@ if args.queue_pipeline_abi_only:
      ('task_context','task_context.c'),('task_native','task_context_native.c'),('queue_context','queue_context.c'),
      ('task_delay','delay_bridge.s'),('quarantine','quarantine.s'),
      ('kernel_gate','kernel_gate.c'),('kernel_gate_bridges','kernel_gate_bridges.s')]})
+ files.update({n:core/'runtime'/p for n,p in [
+     ('cold_bootstrap','cold_bootstrap.c'),('cold_cohort','cold_cohort.c'),
+     ('cold_bootstrap_bridge','cold_bootstrap_bridge.s')]})
+ files['cold_clear']=core/'target/cold_clear.s'
  files['get_tid']=core/'target/get_tid_bridge.s'
  files.update({n:core/'poll_lock_provider'/p for n,p in [
      ('poll_provider','ep7_sem_provider.c'),('bootstrap','bootstrap/bootstrap.c'),
@@ -823,6 +827,8 @@ if args.queue_pipeline_abi_only:
      '_ep7q_descriptor_send_context_unresolved','_ep7q_producer_context_unresolved',
      '_ep7q_worker_context_unresolved','_ep7q_ack_context_unresolved','_ep7q_capture_snapshot_unresolved'}
  expected|={'ep7_stock_get_tid_unresolved','ep7_stock_task_delay_unresolved',
+     '__ep7_private_uncached_start','ep7_stock_boot_next_copy_end_unresolved',
+     'ep7_stock_boot_after_clear_unresolved','ep7_stock_bootstrap_original_unresolved',
      'ep7_stock_color_builder_unresolved',
      'ep7_stock_state_service_unresolved','ep7_stock_capture_init_continue_unresolved',
      'ep7_stock_capture_fresh_unresolved','ep7_stock_capture_population_unresolved',
@@ -840,7 +846,7 @@ scope='Snapshot transport, wire codec, owned queue I/O and memory target objects
 if args.queue_abi_only:scope='Raw queue and notification-preserving send callable ABI bridges; no native invocation'
 if args.materializer_abi_only:scope='Exact materializer receive bridge and bounded frame mapper; context provider/native addresses unresolved'
 if args.receive_abi_only:scope='Command and descriptor receive bridges with bounded stack mappers; native context providers/addresses unresolved'
-if args.queue_pipeline_abi_only:scope='Owned pipeline, shared runtime, native capture source and kernel-critical queue gate candidates; installation, full lifetime closure and native addresses remain unbound'
+if args.queue_pipeline_abi_only:scope='Owned pipeline, one-shot cold bootstrap, shared runtime, native capture and kernel queue gates; cold placement, full lifetime closure and native address bindings remain unqualified'
 if args.task_context_only:scope='Read-only current-task stack and actual local queue views with existing get_tid/delay veneers; no lifetime lease, installation flag or native execution'
 if ui_mode:scope='Fresh text rollback with actual native context callbacks; qualified object/service lifetime and serialized GUI ownership remain caller obligations'
 if ui_create_mode:scope='Existing text factory result/context bridge and native rollback closure; resource/UI ownership and actual lifecycle attachment remain unqualified'

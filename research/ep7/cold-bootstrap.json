@@ -1,0 +1,270 @@
+{
+  "scope": "Check the one-shot startup integration, early byte cohort and exact native bridge.",
+  "objects": {
+    "cold_bootstrap": {
+      "source": "prototypes/ep7_volatile_hl/runtime/cold_bootstrap.c",
+      "size_output": [
+        "399",
+        "0",
+        "5708"
+      ],
+      "definitions": [
+        "_ep7r_bootstrap_initialize"
+      ],
+      "undefined": [
+        "_ep7_controller_sidecar_unresolved",
+        "_ep7_gcc_quarantine",
+        "_ep7_native_runtime_slot",
+        "_ep7b_abort_unpublished",
+        "_ep7b_prepare",
+        "_ep7b_unresolved_native",
+        "_ep7cn_native_cohort_present",
+        "_ep7n_native_current_task",
+        "_ep7n_postbuilder_cohort_present",
+        "_ep7q_native_cohort_present",
+        "_ep7r_get",
+        "_ep7r_native_early_cohort_present",
+        "_ep7r_native_environment",
+        "_ep7r_prepare",
+        "_ep7r_publish"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/cold_bootstrap.c:13:13:installed\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/cold_bootstrap.c:24:6:ep7r_bootstrap_initialize\t96\tstatic"
+      ]
+    },
+    "cold_cohort": {
+      "source": "prototypes/ep7_volatile_hl/runtime/cold_cohort.c",
+      "size_output": [
+        "357",
+        "0",
+        "0"
+      ],
+      "definitions": [
+        "_ep7r_native_early_cohort_present"
+      ],
+      "undefined": [
+        "ep7_native_capture_initialize",
+        "ep7_native_cold_bootstrap_bridge",
+        "ep7_native_cold_clear",
+        "ep7_native_queue_delete_observer",
+        "ep7_native_queue_receive_gate",
+        "ep7_native_queue_send_gate"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/cold_cohort.c:21:6:ep7r_native_early_cohort_present\t12\tstatic"
+      ]
+    },
+    "cold_bootstrap_bridge": {
+      "source": "prototypes/ep7_volatile_hl/runtime/cold_bootstrap_bridge.s",
+      "size_output": [
+        "54",
+        "0",
+        "0"
+      ],
+      "definitions": [
+        "ep7_native_cold_bootstrap_bridge"
+      ],
+      "undefined": [
+        "_ep7r_bootstrap_initialize",
+        "ep7_stock_bootstrap_original_unresolved"
+      ],
+      "stack_usage": []
+    }
+  },
+  "inline_spans": [
+    {
+      "address": "0x600201fe",
+      "bytes": 6,
+      "original": "fca484d91862",
+      "replacement": "JMP32 and 1 NOP bytes"
+    },
+    {
+      "address": "0x60036d3c",
+      "bytes": 10,
+      "original": "30508054fcdc0400f08f",
+      "replacement": "JMP32 and 5 NOP bytes"
+    },
+    {
+      "address": "0x60036f93",
+      "bytes": 6,
+      "original": "58148f14f15b",
+      "replacement": "JMP32 and 1 NOP bytes"
+    },
+    {
+      "address": "0x60031072",
+      "bytes": 6,
+      "original": "9014f17cf040",
+      "replacement": "JMP32 and 1 NOP bytes"
+    },
+    {
+      "address": "0x602897d7",
+      "bytes": 6,
+      "original": "fc83c04f2362",
+      "replacement": "JMP32 and 1 NOP bytes"
+    }
+  ],
+  "changed_pool_bounds": [
+    {
+      "site": "0x600229b9",
+      "original": "8020",
+      "proposed": "801f"
+    },
+    {
+      "site": "0x60022c28",
+      "original": "8f20",
+      "proposed": "8f1f"
+    }
+  ],
+  "cohort_host_checks": {
+    "negative_checks": 48,
+    "later_ui_pages_mapped": false,
+    "synthetic_pages_executable": false
+  },
+  "startup_host_scenarios": [
+    {
+      "scenario": 0,
+      "creates": 1,
+      "deletes": 0,
+      "terminal_reason": 3841
+    },
+    {
+      "scenario": 1,
+      "creates": 0,
+      "deletes": 0,
+      "terminal_reason": 3842
+    },
+    {
+      "scenario": 2,
+      "creates": 0,
+      "deletes": 0,
+      "terminal_reason": 3842
+    },
+    {
+      "scenario": 3,
+      "creates": 0,
+      "deletes": 0,
+      "terminal_reason": 3842
+    },
+    {
+      "scenario": 4,
+      "creates": 0,
+      "deletes": 0,
+      "terminal_reason": 3842
+    },
+    {
+      "scenario": 5,
+      "creates": 0,
+      "deletes": 0,
+      "terminal_reason": 3843
+    },
+    {
+      "scenario": 6,
+      "creates": 1,
+      "deletes": 0,
+      "terminal_reason": 3844
+    },
+    {
+      "scenario": 7,
+      "creates": 1,
+      "deletes": 1,
+      "terminal_reason": 3845
+    },
+    {
+      "scenario": 8,
+      "creates": 1,
+      "deletes": 1,
+      "terminal_reason": 3845
+    },
+    {
+      "scenario": 9,
+      "creates": 1,
+      "deletes": 1,
+      "terminal_reason": 3845
+    },
+    {
+      "scenario": 10,
+      "creates": 0,
+      "deletes": 0,
+      "terminal_reason": 3842
+    },
+    {
+      "scenario": 11,
+      "creates": 0,
+      "deletes": 0,
+      "terminal_reason": 3843
+    },
+    {
+      "scenario": 12,
+      "creates": 0,
+      "deletes": 0,
+      "terminal_reason": 3843
+    },
+    {
+      "scenario": 13,
+      "creates": 0,
+      "deletes": 0,
+      "terminal_reason": 3843
+    },
+    {
+      "scenario": 14,
+      "creates": 0,
+      "deletes": 0,
+      "terminal_reason": 3843
+    }
+  ],
+  "bridge_semantics": {
+    "positive_state_checks": 2,
+    "negative_controls": 3,
+    "extra_bridge_stack_bytes": 40
+  },
+  "gnu_reference": "https://gnu.googlesource.com/binutils-gdb/+/cbe950e9fe8a56f788bcf985cc51733f18abb45b/sim/mn10300/mn10300.igen",
+  "reused_gnu_instruction_bodies": [
+    "OP_F8FE00",
+    "OP_4200",
+    "OP_4300",
+    "OP_F2E0",
+    "OP_F2E4",
+    "OP_F2F3",
+    "OP_F2F2",
+    "OP_5800",
+    "OP_5C00",
+    "OP_DD000000",
+    "OP_DC000000"
+  ],
+  "new_external_native_bindings": {
+    "ep7_stock_bootstrap_original_unresolved": "0x6011f620"
+  },
+  "production_runtime_storage_bytes": 5704,
+  "production_once_flag_bytes": 4,
+  "bootstrap_local_stack_bytes": 96,
+  "bridge_extra_stack_bytes": 40,
+  "complete_stack_bound_proven": false,
+  "existing_definition_reports_reused": [
+    "research/ep7/pipeline-far-call-target.json",
+    "research/ep7/ui-far-call-target.json"
+  ],
+  "whole_implementation_recompiled": false,
+  "early_publication_reads_later_ui_tables": false,
+  "bootstrap_failure_returns_to_stock": false,
+  "local_usr3_prefix_has_no_hardware_loop_instructions": true,
+  "development_harness_build_issues_resolved": [
+    "Added the existing queue_context.c to the host link for ep7n_same_queue.",
+    "Braced the generated semantic decoder else to satisfy strict misleading-indentation warning."
+  ],
+  "synthetic_bridge_linked": true,
+  "production_image_linked": false,
+  "native_apis_mocked_in_host_tests": true,
+  "gnu_libsim_full_engine_run": false,
+  "firmware_modified": false,
+  "firmware_built": false,
+  "camera_executed": false,
+  "hash_checks_performed": false,
+  "limits": [
+    "Current task and native semaphore/queue operations are mocked only in the startup host fixture.",
+    "GNU body harness executes the bridge with a modeled returning GCC callback, not target bootstrap C.",
+    "Installation bytes and flags are observations, not proof of initial loading, exclusivity or cache visibility.",
+    "Private BSS placement, full native stack, all startup/task/callee paths and later UI closure remain open.",
+    "No production link or firmware rewrite; three new objects and a synthetic assembly fixture only."
+  ]
+}

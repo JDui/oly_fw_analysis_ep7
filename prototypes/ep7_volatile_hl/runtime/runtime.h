@@ -12,7 +12,10 @@ typedef struct {
     void *ctx;
     /* G6 installer evidence, not a configurable enable switch: all frame/hook
      * edits, stable task/queue/private-lock lifetimes and native ordering must
-     * already be established, before any hooked caller can execute. */
+     * already be established before the corresponding hooked users execute.
+     * Early publication checks resident kernel/pipeline groups. Later UI groups
+     * have their own resident-entry checks; never wait here for a startup task
+     * that this publisher has not yet started. See BOOTSTRAP_ENTRY.md. */
     bool (*installation_ready)(void *);
     bool (*task)(void *,uint32_t anchor,ep7n_task *);
     bool (*queue)(void *,unsigned handle,ep7n_queue *);

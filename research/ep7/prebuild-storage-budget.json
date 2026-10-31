@@ -1,22 +1,23 @@
 {
-  "scope": "Reuse existing object sizes and measure only the missing target runtime storage sizes.",
+  "scope": "Reuse object sizes and check target type sizes against the actual cold runtime storage.",
   "compiler": "mn10300-elf-gcc (GCC) 13.4.0",
   "prior_object_reports": [
     "research/ep7/pipeline-far-call-target.json",
     "research/ep7/ui-far-call-target.json",
     "research/ep7/pipeline-installation-cohort.json",
+    "research/ep7/cold-bootstrap.json",
     "research/ep7/cold-clear-semantics.json"
   ],
   "prior_measurements_recompiled": false,
-  "implementation_sources": 104,
+  "implementation_sources": 107,
   "excluded_abi_probe_sources": [
     "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_caller.c",
     "prototypes/ep7_volatile_hl/text_lifecycle/factory_caller.c"
   ],
   "prior_unlinked_text_data_bss": [
-    45733,
+    46543,
     0,
-    2376
+    8084
   ],
   "prior_object_sizes": {
     "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_bridge.s": {
@@ -1063,6 +1064,36 @@
         "research/ep7/pipeline-installation-cohort.json"
       ]
     },
+    "prototypes/ep7_volatile_hl/runtime/cold_bootstrap.c": {
+      "text_data_bss": [
+        399,
+        0,
+        5708
+      ],
+      "reports": [
+        "research/ep7/cold-bootstrap.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/runtime/cold_cohort.c": {
+      "text_data_bss": [
+        357,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/cold-bootstrap.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/runtime/cold_bootstrap_bridge.s": {
+      "text_data_bss": [
+        54,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/cold-bootstrap.json"
+      ]
+    },
     "prototypes/ep7_volatile_hl/target/cold_clear.s": {
       "text_data_bss": [
         53,
@@ -1082,15 +1113,17 @@
     "size_runtime": 580
   },
   "new_objects_compiled": 1,
-  "rough_static_storage_bytes": 8080,
+  "production_runtime_storage_already_in_bss": true,
+  "additional_forecast_runtime_storage_bytes": 0,
+  "rough_static_storage_bytes": 8084,
   "reservation_payload_bytes": 16384,
-  "rough_remaining_storage_bytes": 8304,
+  "rough_remaining_storage_bytes": 8300,
   "storage_budget_fits_before_link_alignment": true,
   "limits": [
     "Historical object sizes are reused, not revalidated against every current source.",
     "Only the current header type sizes are freshly compiled; no target code is executed.",
     "No linker layout, alignment, installer storage, native queue growth or full stack is included.",
-    "The size probe creates no production runtime instance or memory reservation."
+    "Production cold storage is included once via its object; this probe reserves no target memory."
   ],
   "target_linked": false,
   "target_executed": false,

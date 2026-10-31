@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reuse existing object sizes and measure only the missing target runtime storage sizes."""
+"""Reuse object sizes and check target type sizes against the actual cold runtime storage."""
 import argparse
 import json
 import subprocess
@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 CORE=ROOT/'prototypes/ep7_volatile_hl'
 REPORTS=['research/ep7/pipeline-far-call-target.json','research/ep7/ui-far-call-target.json',
-         'research/ep7/pipeline-installation-cohort.json']
+         'research/ep7/pipeline-installation-cohort.json','research/ep7/cold-bootstrap.json']
 COLD_REPORT='research/ep7/cold-clear-semantics.json'
 # These compiler-call probes verify ABI; they are not runtime implementation.
 PROBES={'prototypes/ep7_volatile_hl/snapshot_transport/native/worker_caller.c',
@@ -62,19 +62,25 @@ def inspect(prefix):
     if set(sizes)!=expected:
         raise ValueError('incomplete target type size measurements')
     totals=[sum(row['text_data_bss'][i] for row in objects.values()) for i in range(3)]
-    required=totals[1]+totals[2]+sizes['size_cold_storage']
+    startup=json.loads((ROOT/'research/ep7/cold-bootstrap.json').read_text(encoding='utf-8-sig'))
+    if startup['production_runtime_storage_bytes']!=sizes['size_cold_storage']:
+        raise ValueError('production cold storage differs from current header types')
+    # The runtime instance now exists in cold_bootstrap.c BSS. Do not add its
+    # former forecast5704 bytes a second time on top of the measured object.
+    required=totals[1]+totals[2]
     return dict(scope=__doc__,compiler=version,
         prior_object_reports=REPORTS+[COLD_REPORT],prior_measurements_recompiled=False,
         implementation_sources=len(objects),excluded_abi_probe_sources=sorted(PROBES),
         prior_unlinked_text_data_bss=totals,prior_object_sizes=objects,
         current_target_type_sizes=sizes,new_objects_compiled=1,
+        production_runtime_storage_already_in_bss=True,additional_forecast_runtime_storage_bytes=0,
         rough_static_storage_bytes=required,reservation_payload_bytes=16384,
         rough_remaining_storage_bytes=16384-required,
         storage_budget_fits_before_link_alignment=required<=16384,
         limits=['Historical object sizes are reused, not revalidated against every current source.',
                 'Only the current header type sizes are freshly compiled; no target code is executed.',
                 'No linker layout, alignment, installer storage, native queue growth or full stack is included.',
-                'The size probe creates no production runtime instance or memory reservation.'],
+                'Production cold storage is included once via its object; this probe reserves no target memory.'],
         target_linked=False,target_executed=False,firmware_built=False,hash_checks_performed=False)
 
 

@@ -16,7 +16,8 @@
 bootstrap 应先验证实际当前TCB的 domain0、entry601912fb、ID002d和栈边界；
 表中的2048不能代替实际栈查询或完整峰值预算。原CALL可以同宽重定向到一个保存输入状态、
 调用初始化函数、恢复状态后tail-JMP6011f620的桥；原4字节调用帧及返回地址保持原位。
-本批只记录该契约，尚未实现桥或生成固件补丁。
+随后[一次性bootstrap实现](COLD_BOOTSTRAP.md)已按此契约提供54字节桥、永久存储和早期
+安装组检查；未生成固件补丁，放置与完整栈资格仍未通过。
 
 ## 为何排除更晚的发布点
 
@@ -63,12 +64,13 @@ pipeline及CPU COLOR的完整安装组；相关代码位于早期kernel和第2�
 
 UI owner、MVC/content、selector和input表/代码位于第6段，Usr4还在后续启动链中。
 **早期发布不得读取尚未驻留的UI表，更不能等待Usr4/Usr5完成而堵住启动它们的Usr3。**
-UI资格需在自身已经驻留的入口检查，复用现有owner/MVC/input cohort，并补齐selector
-和完整安装依赖。所有UI字节仍必须由离线完整安装清单覆盖；分阶段检查不免除该要求。
+UI资格需在自身已经驻留的入口检查，复用现有owner/MVC/input cohort；selector.c和
+ui_gate/gate.c已经检查实际initializer表项，直接复用该实现。所有UI字节仍必须由离线
+完整安装清单覆盖；分阶段检查不免除该要求。
 runtime发布本身不授予renderer_ready，初始H/L值仍为零。
 
-下一步：实现早期inline/启动组检查与一次性bootstrap，明确失败时不继续启动已改造
-的接收任务；完成桥的输入状态保存和实际栈预算，再回到代码/RAM、cache及生命周期准入。
+下一步：在已实现早期inline/启动组与一次性bootstrap的基础上，完成实际栈预算，
+再回到代码/RAM、cache及生命周期准入；完整UI安装清单和阶段依赖仍须核对。
 不得把当前候选入口标作完整CFG、全部任务启动者或所有转移路径已经闭合。
 
 [静态脚本](../../tools/ep7_bootstrap_entry.py)与[报告](../../research/ep7/bootstrap-entry.json)：
