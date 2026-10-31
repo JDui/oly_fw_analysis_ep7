@@ -1,0 +1,599 @@
+{
+  "scope": "Bind producer event42 to controller queue0x67, separately from mailbox1.\n\nExact static witnesses and bounded function CFGs; returning-callee control flow\nis not a scheduler, queue-lifetime, notification-delivery or exclusion proof.\n",
+  "checked_witnesses": 121,
+  "checked_data_rows": 8,
+  "producer": {
+    "entry": "0x602ac1e1",
+    "event42_send": "0x602ac2e8",
+    "immediate_freeze": "0x602ac3de",
+    "deferred_freeze": "0x602ac3f6",
+    "direct_event42_handler_call_at_send": false,
+    "callee_effects_are_frontiers": true
+  },
+  "event_queue": {
+    "handle": "0x67",
+    "constant": "0x60040daa",
+    "boot_row": "0x6003b638",
+    "maximum_bytes": 12,
+    "ring_bytes": 256,
+    "packet": [
+      "status16",
+      "event32",
+      "associated32"
+    ],
+    "send": "0x60036ede",
+    "receive": "0x60036c8e",
+    "notification_event_flag": 74,
+    "notification_mask": 4,
+    "receive_call": "0x60289b1f",
+    "handler_call": "0x60289b97"
+  },
+  "mailbox": {
+    "handle": 1,
+    "notification_mask": 1,
+    "receive_call": "0x602898ad",
+    "handler_call": "0x6028992b",
+    "known_events": [
+      "0x4b",
+      "0x4c"
+    ]
+  },
+  "single_fifo_for_both_channels": false,
+  "normal_handler_call_must_return_before_loop_receive": true,
+  "event42_node_free": "0x602a2a00",
+  "event42_associated_return": "0x602a2a0f",
+  "functions": [
+    {
+      "entry": "0x60289852",
+      "instruction_count": 323,
+      "reached_extent": [
+        "0x60289852",
+        "0x60289c18"
+      ],
+      "maximum_own_sp_depth": 104,
+      "maximum_direct_stack_address_depth": 120,
+      "stack_operations": [
+        {
+          "site": "0x60289852",
+          "mnemonic": "movm",
+          "operands": "[d2,d3,a2,a3],(sp)",
+          "before": 0,
+          "after": 16
+        },
+        {
+          "site": "0x60289854",
+          "mnemonic": "add",
+          "operands": "-88,sp",
+          "before": 16,
+          "after": 104
+        }
+      ],
+      "calls": [],
+      "returns": [],
+      "boundaries": [
+        {
+          "site": "0x60289886",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x60051143,[d2,d3,a2,a3],52"
+        },
+        {
+          "site": "0x602898ad",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6020c101,[a2],28"
+        },
+        {
+          "site": "0x602899b6",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6020bfe7,[d2,d3],44"
+        },
+        {
+          "site": "0x60289aee",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6020bfe7,[d2,d3],44"
+        },
+        {
+          "site": "0x60289901",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6020bbbf,[d2],4"
+        },
+        {
+          "site": "0x602898d8",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6002247c,[a2,a3],28"
+        },
+        {
+          "site": "0x602899e7",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6020bf7a,[d2,d3],48"
+        },
+        {
+          "site": "0x602898ed",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x600d9ded,[],12"
+        },
+        {
+          "site": "0x60289b1f",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6020bf7a,[d2,d3],48"
+        },
+        {
+          "site": "0x602898f6",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6002247c,[a2,a3],28"
+        },
+        {
+          "site": "0x60289a34",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6020bbbf,[d2],4"
+        },
+        {
+          "site": "0x6028992b",
+          "kind": "indirect_call",
+          "depth": 104,
+          "mnemonic": "calls",
+          "operands": "(a1)"
+        },
+        {
+          "site": "0x6028996f",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x60289c5e,[d2,d3,a2],16"
+        },
+        {
+          "site": "0x60289a0b",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6002247c,[a2,a3],28"
+        },
+        {
+          "site": "0x60289b6c",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6020bbbf,[d2],4"
+        },
+        {
+          "site": "0x60289b43",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6002247c,[a2,a3],28"
+        },
+        {
+          "site": "0x60289a20",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x600d9ded,[],12"
+        },
+        {
+          "site": "0x60289a29",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6002247c,[a2,a3],28"
+        },
+        {
+          "site": "0x60289b58",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x600d9ded,[],12"
+        },
+        {
+          "site": "0x60289957",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x60061808,[d2,d3,a2,a3],112"
+        },
+        {
+          "site": "0x60289a5f",
+          "kind": "indirect_call",
+          "depth": 104,
+          "mnemonic": "calls",
+          "operands": "(a1)"
+        },
+        {
+          "site": "0x60289aa4",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x60289c5e,[d2,d3,a2],16"
+        },
+        {
+          "site": "0x60289b61",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6002247c,[a2,a3],28"
+        },
+        {
+          "site": "0x60289961",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6020bd11,[d2,d3,a2,a3],80"
+        },
+        {
+          "site": "0x6028999b",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x60061808,[d2,d3,a2,a3],112"
+        },
+        {
+          "site": "0x60289968",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6020bc5d,[d2,d3,a2,a3],52"
+        },
+        {
+          "site": "0x60289b97",
+          "kind": "indirect_call",
+          "depth": 104,
+          "mnemonic": "calls",
+          "operands": "(a1)"
+        },
+        {
+          "site": "0x60289bdc",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x60289c5e,[d2,d3,a2],16"
+        },
+        {
+          "site": "0x60289a8b",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x60061808,[d2,d3,a2,a3],112"
+        },
+        {
+          "site": "0x60289a96",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6020bd11,[d2,d3,a2,a3],80"
+        },
+        {
+          "site": "0x60289acd",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x60061808,[d2,d3,a2,a3],112"
+        },
+        {
+          "site": "0x60289a9d",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6020bc5d,[d2,d3,a2,a3],52"
+        },
+        {
+          "site": "0x60289bc3",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x60061808,[d2,d3,a2,a3],112"
+        },
+        {
+          "site": "0x60289bce",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6020bd11,[d2,d3,a2,a3],80"
+        },
+        {
+          "site": "0x60289c05",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x60061808,[d2,d3,a2,a3],112"
+        },
+        {
+          "site": "0x60289bd5",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 104,
+          "mnemonic": "call",
+          "operands": "0x6020bc5d,[d2,d3,a2,a3],52"
+        }
+      ],
+      "hardware_loop_edges": [
+        {
+          "site": "0x60289932",
+          "target": "0x60289919"
+        },
+        {
+          "site": "0x60289a66",
+          "target": "0x60289a4b"
+        },
+        {
+          "site": "0x60289b9e",
+          "target": "0x60289b83"
+        }
+      ]
+    },
+    {
+      "entry": "0x602ac1e1",
+      "instruction_count": 166,
+      "reached_extent": [
+        "0x602ac1e1",
+        "0x602ac411"
+      ],
+      "maximum_own_sp_depth": 20,
+      "maximum_direct_stack_address_depth": 16,
+      "stack_operations": [],
+      "calls": [
+        {
+          "site": "0x602ac2e8",
+          "target": "0x602ad656",
+          "frame": 20,
+          "register_save_bytes": 4,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x602ad656,[d2],20"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x602ac40e",
+          "mnemonic": "ret",
+          "operands": "[d2,d3,a2],36",
+          "local_depth": 0,
+          "inferred_incoming_frame": 36
+        }
+      ],
+      "boundaries": [
+        {
+          "site": "0x602ac264",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6020b962,[],0"
+        },
+        {
+          "site": "0x602ac278",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6020b962,[],0"
+        },
+        {
+          "site": "0x602ac2f7",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6020b98b,[],8"
+        },
+        {
+          "site": "0x602ac21c",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x602ad599,[d2,d3,a2,a3],24"
+        },
+        {
+          "site": "0x602ac28a",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6020b9ff,[],24"
+        },
+        {
+          "site": "0x602ac314",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x602ac8d0,[],0"
+        },
+        {
+          "site": "0x602ac298",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6020b9ff,[],24"
+        },
+        {
+          "site": "0x602ac319",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6029bd60,[],0"
+        },
+        {
+          "site": "0x602ac239",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60061808,[d2,d3,a2,a3],112"
+        },
+        {
+          "site": "0x602ac3f6",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6020b98b,[],8"
+        },
+        {
+          "site": "0x602ac3e7",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x602ac93a,[d2,d3,a2],36"
+        },
+        {
+          "site": "0x602ac38b",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x602ac88a,[d2],4"
+        },
+        {
+          "site": "0x602ac2bb",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60061808,[d2,d3,a2,a3],112"
+        },
+        {
+          "site": "0x602ac409",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x602ac9df,[d2,d3,a2],36"
+        },
+        {
+          "site": "0x602ac2dd",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60061808,[d2,d3,a2,a3],112"
+        },
+        {
+          "site": "0x602ac362",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x602ac8d0,[],0"
+        },
+        {
+          "site": "0x602ac367",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x602ad53b,[d2],24"
+        },
+        {
+          "site": "0x602ac3d9",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x602ac8d0,[],0"
+        },
+        {
+          "site": "0x602ac3de",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x602ac748,[d2,a2,a3],32"
+        },
+        {
+          "site": "0x602ac3bb",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x602acf12,[],0"
+        },
+        {
+          "site": "0x602ac3b3",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x602acf12,[],0"
+        },
+        {
+          "site": "0x602ac3c2",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60175c01,[d2,d3,a2],24"
+        }
+      ],
+      "hardware_loop_edges": []
+    },
+    {
+      "entry": "0x602ad656",
+      "instruction_count": 13,
+      "reached_extent": [
+        "0x602ad656",
+        "0x602ad67a"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 8,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [
+        {
+          "site": "0x602ad677",
+          "mnemonic": "ret",
+          "operands": "[d2],20",
+          "local_depth": 0,
+          "inferred_incoming_frame": 20
+        }
+      ],
+      "boundaries": [
+        {
+          "site": "0x602ad670",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6020beb4,[d2,d3],48"
+        }
+      ],
+      "hardware_loop_edges": []
+    },
+    {
+      "entry": "0x600515de",
+      "instruction_count": 24,
+      "reached_extent": [
+        "0x600515de",
+        "0x60051615"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [
+        {
+          "site": "0x60051612",
+          "mnemonic": "retf",
+          "operands": "[d2,d3,a2],12",
+          "local_depth": 0,
+          "inferred_incoming_frame": 12
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    }
+  ],
+  "native_executions": 0,
+  "all_assertions_passed": true,
+  "source_lifetime_or_global_exclusion_proven": false,
+  "hash_checks_performed": false,
+  "firmware_modified": false,
+  "firmware_built": false,
+  "hardware_executed": false,
+  "limits": [
+    "The normal controller call stack must return before its loop executes another receive; RTOS switches, exception callbacks and foreign direct calls are not simulated.",
+    "No global ordering is inferred between mailbox1 and queue0x67, and boot configuration does not establish an immortal queue instance.",
+    "Named send contains status normalization and notification. Neither notification nor a return value is treated as inline execution of event42.",
+    "Finite CFGs expose external calls and UDF index instructions without emulating them. This is not an exhaustive alias or callback census.",
+    "Already hooked destructive observers still have to revoke or quarantine before native release; unhooked writers and source ownership remain G1 obligations."
+  ]
+}

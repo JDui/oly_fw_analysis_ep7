@@ -48,6 +48,11 @@ state和engine重建都有候选接合。**这份入口清单仍不是所有别�
 排除不覆盖其消息接收后的释放：source上游602ac1e1存在先发送event42、后立即copy
 或等待入队的路线，仍要审查该区间及backlink身份。
 
-下一段优先审查这些消息边，以及13个node free是否覆盖对应图像的所有已识别释放边。
+后续[event42通道审查](CONTROLLER_EVENT_QUEUE.md)已确认自投event42走独立queue0x67，
+正常controller调用栈须先返回当前handler，才能由主循环接收并执行该释放handler。
+它与mailbox1不能共用FIFO保证；外来直接调用、异常重入和queue生命周期仍未由此关闭。
+
+下一段优先审查13个node free是否覆盖对应图像的所有已识别释放边，以及固定associated
+池的回收/重用能否完整支配这些新增读取。
 只在新增结论涉及的原生窗口做验证；本表没有生产代码变化，不重跑主机或107对象编译。
 放置、启动、cache和全栈仍另属G6。

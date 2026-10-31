@@ -26,6 +26,10 @@ controller task60289852在602898ad接收，正常返回后按事件表执行6028
 这不能排除并发产生两份0x4c，也不能保证0x4b已经成功投递。
 发送失败走诊断并返回-1；只有成功分支到6020c0e8通知controller事件bit1。
 
+后续[event42通道审查](CONTROLLER_EVENT_QUEUE.md)确认producer自投event42走独立的
+message queue0x67，经bit4唤醒同一controller，再由60289b97分派；不走本节mailbox1。
+上面的FIFO结论不能用于跨通道排序event42与engine的event4b/4c。
+
 non-task send 同样调用600314e6检查 handle 域。handle1没有0x8000跨域许可位，
 其成功路径要求8050选择域0。这是API限制，不是所有engine回调实际都在域0的证明。
 

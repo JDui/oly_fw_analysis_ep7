@@ -81,6 +81,11 @@ G6 依赖 E 的工具链设计和 G1–G4 的候选接口；G8 汇合全部结�
 
 ## 当前编译准入结论
 
+[event42独立队列](CONTROLLER_EVENT_QUEUE.md)已确认queue0x67、12字节消息、flag74/bit4
+通知和controller的60289b97分派点，与engine的mailbox1/bit1输入分开。121条指令、
+8项数据及有限CFG核对通过；当前handler正常返回后，循环才再次接收event42。此结论
+不覆盖外来直接调用/异常重入，也不把两通道当作同一FIFO；G1完整释放闭包仍待完成。
+
 [两个回调写入范围](CAPTURE_WRITE_WINDOWS.md)已用完整原生callback/坐标helper执行
 137+41条指令，所选路径只改node坐标和完成标志，ID+0与associated指针+8保持原值。
 这排除了两个具体直接写入与新增身份读取的重叠；没有证明事件驱动的释放或冻结区间
