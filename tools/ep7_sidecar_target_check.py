@@ -44,6 +44,11 @@ if args.queue_pipeline_abi_only:
  flags.append('-I'+str(core/'poll_lock_provider'))
  files['postbuilder_bridge']=core/'target/postbuilder/postbuilder_bridge.s'
  files['postbuilder_observer']=core/'target/postbuilder/native_observer.c'
+ files['capture_sidecar']=core/'controller_sidecar/sidecar.c'
+ files['capture_native']=core/'controller_sidecar/native_binding.c'
+ files['capture_bridges']=core/'controller_sidecar/native_bridges.s'
+ files['capture_state_observer']=core/'capture_state_guard/observer.c'
+ files['capture_state_bridge']=core/'capture_state_guard/bridge.s'
  files.update({n:core/'runtime'/p for n,p in [
      ('runtime','runtime.c'),('contexts','contexts.c'),('runtime_native','native_context.c'),
      ('task_context','task_context.c'),('task_native','task_context_native.c'),('queue_context','queue_context.c'),
@@ -269,6 +274,48 @@ with tempfile.TemporaryDirectory() as temp:
    if '_ep7_gcc_job_allocate+0x1' not in dis or not re.search(r'mov\s+a0,d0',dis):
     raise ValueError('GCC pointer result no longer consumed from a0')
    objects[name]['gcc_pointer_result_a0_confirmed']=True
+  if name=='capture_bridges':
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   ins=[(mn,re.sub(r'\(([0-9a-f]+) <[^>]+>\)',lambda m:'(0x'+m[1]+')',op)) for mn,op in ins]
+   save=[('add','-40,sp'),('mov','d0,(12,sp)'),('mov','d1,(16,sp)'),('mov','a0,(20,sp)'),
+       ('mov','a1,(24,sp)'),('mov','d2,(32,sp)'),('mov','mdr,d2'),('mov','d2,(28,sp)')]
+   restore=[('mov','(28,sp),d2'),('mov','d2,mdr'),('mov','(32,sp),d2'),('mov','(12,sp),d0'),
+       ('mov','(16,sp),d1'),('mov','(20,sp),a0'),('mov','(24,sp),a1'),('add','40,sp')]
+   expected=save+[('call',None)]+restore+[('movhu','d0,(0x62234fc0)'),('jmp',None)]
+   expected+=[('call',None)]+save+[('mov','a0,d0'),('call',None)]+restore+[('ret','[d2,a2],28')]
+   expected+=[('call',None)]+save+[('mov','a2,d0'),('clr','d1'),('call',None)]+restore+[('ret','[d2,d3,a2,a3],20')]
+   expected+=[('call',None)]+save+[('mov','a2,d0'),('mov','1,d1'),('call',None)]+restore+[('ret','[d2,d3,a2,a3],48')]
+   expected+=save+[('mov','a0,d0'),('call',None)]+restore+[('jmp',None)]
+   expected+=save+[('mov','a2,d0'),('call',None)]+restore+[('jmp',None)]
+   expected+=[('movm','[a2],(sp)'),('add','-12,sp'),('call',None),('ret','[a2],16')]
+   if len(ins)!=len(expected) or any(a[0]!=b[0] or (b[1] is not None and a[1]!=b[1]) for a,b in zip(ins,expected)):
+    raise ValueError('capture bridge input/result/MDR preservation changed')
+   calls=[op for mn,op in ins if mn=='call']
+   masks=[',[],0',',[d2,a2],28',',[],0',',[d2,d3,a2,a3],20',',[],0',',[d2,d3,a2,a3],48',',[],0',',[],0',',[],0',',[],24']
+   if len(calls)!=len(masks) or any(not op.endswith(mask) for op,mask in zip(calls,masks)):
+    raise ValueError('capture native/GCC call masks changed')
+   expected_refs=['_ep7cn_initialize','ep7_stock_capture_init_continue_unresolved','ep7_stock_capture_fresh_unresolved',
+       '_ep7cn_fresh','ep7_stock_capture_population_unresolved','_ep7cn_population','ep7_stock_capture_postpopulation_unresolved',
+       '_ep7cn_population','_ep7cn_free','ep7_stock_capture_node_free_unresolved','_ep7cn_release_capture',
+       'ep7_stock_capture_pool_release_unresolved','ep7_stock_capture_lookup_unresolved']
+   refs=re.findall(r'R_MN10300_PCREL32\s+([^\s+]+)\+0x1',dis)
+   if refs!=expected_refs:raise ValueError('capture relocation ordering changed')
+   objects[name].update(checked_instructions=len(ins),observer_frame_bytes=40,lookup_own_frame_bytes=16,
+       added_nested_native_frames=[28,20,48],pointer_result_register='a0',free_and_release_tail_calls=True)
+  if name=='capture_state_bridge':
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   expected=[('call',None),('add','-32,sp'),('mov','d0,(12,sp)'),('mov','d1,(16,sp)'),
+       ('mov','a0,(20,sp)'),('mov','a1,(24,sp)'),('mov','mdr,d2'),('mov','d2,(28,sp)'),('call',None),
+       ('mov','(12,sp),d0'),('mov','(16,sp),d1'),('mov','(20,sp),a0'),('mov','(24,sp),a1'),
+       ('mov','(28,sp),d2'),('mov','d2,mdr'),('add','32,sp'),('ret','[d2,d3,a2,a3],32')]
+   if len(ins)!=len(expected) or any(a[0]!=b[0] or (b[1] is not None and a[1]!=b[1]) for a,b in zip(ins,expected)):
+    raise ValueError('reused state bridge ABI changed')
+   if not ins[0][1].endswith(',[d2,d3,a2,a3],32') or not ins[8][1].endswith(',[],0'):
+    raise ValueError('reused state bridge call frame changed')
+   refs=re.findall(r'R_MN10300_PCREL32\s+([^\s+]+)\+0x1',dis)
+   if refs!=['ep7_stock_state_service_unresolved','_ep7_gcc_state_transition_observer']:
+    raise ValueError('reused state bridge relocation changed')
+   objects[name].update(checked_instructions=17,own_frame_bytes=32,additional_nested_native_frame=32)
   if name=='kernel_gate':
    wanted={'_ep7_native_runtime_slot','_ep7r_get','_ep7r_io_open','_ep7r_guard_queue','_ep7r_note_queue_delete',
        '_ep7_queue_receive_native_return','_ep7_queue_raw_send_native_return','_ep7_queue_named_send_native_return'}
@@ -349,9 +396,13 @@ if args.queue_pipeline_abi_only:expected|={'_ep7q_descriptor_send_context_unreso
 if args.queue_pipeline_abi_only:
  expected-={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved',
      '_ep7q_descriptor_send_context_unresolved','_ep7q_producer_context_unresolved',
-     '_ep7q_worker_context_unresolved','_ep7q_ack_context_unresolved'}
+     '_ep7q_worker_context_unresolved','_ep7q_ack_context_unresolved','_ep7q_capture_snapshot_unresolved'}
  expected|={'ep7_stock_get_tid_unresolved','ep7_stock_task_delay_unresolved',
      'ep7_stock_color_builder_unresolved',
+     'ep7_stock_state_service_unresolved','ep7_stock_capture_init_continue_unresolved',
+     'ep7_stock_capture_fresh_unresolved','ep7_stock_capture_population_unresolved',
+     'ep7_stock_capture_postpopulation_unresolved','ep7_stock_capture_node_free_unresolved',
+     'ep7_stock_capture_pool_release_unresolved','ep7_stock_capture_lookup_unresolved',
      'ep7_stock_receive_gate_continue_unresolved','ep7_stock_receive_gate_error_unresolved',
      'ep7_stock_send_gate_continue_unresolved','ep7_stock_send_gate_error_unresolved','ep7_stock_delete_gate_continue_unresolved',
      'ep7_stock_raw_sem_wait_unresolved','ep7_stock_raw_sem_signal_unresolved',
@@ -361,7 +412,7 @@ scope='Snapshot transport, wire codec, owned queue I/O and memory target objects
 if args.queue_abi_only:scope='Raw queue and notification-preserving send callable ABI bridges; no native invocation'
 if args.materializer_abi_only:scope='Exact materializer receive bridge and bounded frame mapper; context provider/native addresses unresolved'
 if args.receive_abi_only:scope='Command and descriptor receive bridges with bounded stack mappers; native context providers/addresses unresolved'
-if args.queue_pipeline_abi_only:scope='Owned pipeline with shared runtime, kernel-critical queue gate candidates and cleanup progress; capture source, installer/lifetimes and native addresses remain unbound'
+if args.queue_pipeline_abi_only:scope='Owned pipeline, shared runtime, native capture source and kernel-critical queue gate candidates; installation, full lifetime closure and native addresses remain unbound'
 if args.task_context_only:scope='Read-only current-task stack and actual local queue views with existing get_tid/delay veneers; no lifetime lease, installation flag or native execution'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))

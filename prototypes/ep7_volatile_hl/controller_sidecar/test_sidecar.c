@@ -96,6 +96,31 @@ static void test_split_population(ep7p *settings)
  assert(ep7c_sample_population(&p,33,1,reused,&v,true,settings));
  ep7c_transition(&p,33,33);assert(!ep7c_finish_population(&p,33,1,reused,&v,true));
 }
+static void test_capture_retirement(ep7p *settings)
+{
+ ep7c p={0};ep7c_prefix v={2,30,3,11,4},wrong;ep7p_snapshot frozen,out;
+ uint64_t unsampled,sampled,sealed,reused;
+ fresh(&p);
+ assert(!ep7c_register_fresh_capture(&p,33,1,2,0,10,&unsampled));
+ assert(!ep7c_register_fresh_capture(&p,33,1,2,1,0,&unsampled));
+ assert(ep7c_register_fresh_capture(&p,33,1,2,1,10,&unsampled));
+ assert(ep7c_register_fresh_capture(&p,33,2,2,2,20,&sampled));
+ assert(ep7c_register_fresh_capture(&p,33,3,2,3,30,&sealed));
+ assert(ep7c_seal(&p,33,3,sealed,&v,true,settings));
+ assert(ep7c_copyout(&p,33,3,sealed,&v,&frozen));
+ v.capture=20;v.capture_id=2;assert(ep7c_sample_population(&p,33,2,sampled,&v,true,settings));
+ ep7c_retire_capture(&p,33,20);ep7c_retire_capture(&p,33,20);
+ assert(!ep7c_authorize(&p,33,2,sampled) && !ep7c_finish_population(&p,33,2,sampled,&v,true));
+ assert(ep7c_authorize(&p,33,1,unsampled) && ep7c_authorize(&p,33,3,sealed));
+ ep7c_retire_capture(&p,33,10);assert(!ep7c_authorize(&p,33,1,unsampled));
+ ep7c_retire_capture(&p,33,30);assert(!ep7c_authorize(&p,33,3,sealed));
+ assert(ep7c_register_fresh_capture(&p,33,3,2,3,30,&reused) && reused!=sealed);
+ v.capture=30;v.capture_id=3;assert(!ep7c_copyout(&p,33,3,sealed,&v,&out));
+ /* A changed capture must fail before it can overwrite the reservation. */
+ wrong=v;wrong.capture=31;assert(!ep7c_sample_population(&p,33,3,reused,&wrong,true,settings));
+ assert(!ep7c_sample_population(&p,33,3,reused,&v,true,settings));
+ assert(frozen.profile==3); /* Independently copied value survives pool release. */
+}
 int main(void)
 {
  ep7c p={0};ep7p settings={0};ep7p_ops ops={NULL,lock,unlock,current};
@@ -103,6 +128,7 @@ int main(void)
  assert(ep7p_init(&settings,ops));hl[0]=4;assert(ep7p_edit(&settings,0,hl));
  test_live_join(&settings);
  test_split_population(&settings);
+ test_capture_retirement(&settings);
  fresh(&p);assert(ep7c_register_fresh(&p,33,1,2,&t));assert(ep7c_authorize(&p,33,1,t));
  assert(!ep7c_authorize(&p,33,1,t+1));assert(!ep7c_authorize(&p,33,9,t));
  assert(ep7c_seal(&p,33,1,t,&v,true,&settings));

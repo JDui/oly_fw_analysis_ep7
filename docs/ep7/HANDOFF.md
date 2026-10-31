@@ -5,6 +5,10 @@
 
 ## 2026-10-31 当前节点
 
+最新：[原生capture source](CAPTURE_NATIVE_BINDING.md)已定义具体provider，接合初始化、
+fresh登记、两次population、13个node free以及capture pool release。目标56对象通过，
+剩余32个符号全部为原厂地址；原生排他/完整闭包、G4、G6仍未完成，固件整体编译未开始。
+
 捕获侧新增[两阶段冻结](CAPTURE_POPULATION_ENVELOPE.md)：第一段population返回时sample，
 第二段确认后才可copyout；期间UI变化不改变已冻结值，提前消费不事后补填。
 producer provider现限定实际controller entry60289852；13个已列node free call完成本次

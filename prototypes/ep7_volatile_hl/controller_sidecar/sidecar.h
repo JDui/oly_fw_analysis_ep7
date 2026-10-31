@@ -28,6 +28,11 @@ typedef struct {
 bool ep7c_init(ep7c *,unsigned observed_state);
 void ep7c_transition(ep7c *,unsigned old_state,unsigned pending);
 bool ep7c_register_fresh(ep7c *,unsigned state,uintptr_t node,uintptr_t associated,uint64_t *token);
+/* Native fresh allocation additionally supplies its reserved ID and capture. This
+ * lets the proven pool-release boundary revoke even an unsampled node. */
+bool ep7c_register_fresh_capture(ep7c *,unsigned state,uintptr_t node,uintptr_t associated,
+ unsigned capture_id,uintptr_t capture,uint64_t *token);
+void ep7c_retire_capture(ep7c *,unsigned state,uintptr_t capture);
 /* MUST succeed immediately BEFORE any native prefix read; remain in same
  * serialized controller interval through seal/copy. Does not pin native memory. */
 bool ep7c_authorize(ep7c *,unsigned state,uintptr_t node,uint64_t token);

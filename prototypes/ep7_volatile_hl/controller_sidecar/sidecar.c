@@ -37,7 +37,7 @@ static ep7c_entry *lookup(ep7c *p,uintptr_t node,uint64_t token)
  for(i=0;i<EP7C_CAP;i++)if(p->entries[i].token==token && p->entries[i].node==node && p->entries[i].generation==p->generation)return &p->entries[i];
  return NULL;
 }
-bool ep7c_register_fresh(ep7c *p,unsigned state,uintptr_t node,uintptr_t associated,uint64_t *token)
+static bool register_fresh(ep7c *p,unsigned state,uintptr_t node,uintptr_t associated,unsigned capture_id,uintptr_t capture,uint64_t *token)
 {
  unsigned i;ep7c_entry *slot=NULL;
  if(!state_ok(p,state))return false;
@@ -49,7 +49,22 @@ bool ep7c_register_fresh(ep7c *p,unsigned state,uintptr_t node,uintptr_t associa
  if(p->serial==UINT64_MAX)return die(p);
  if(!slot)return false;
  memset(slot,0,sizeof *slot);slot->node=node;slot->associated=associated;
+ slot->prefix.capture_id=capture_id;slot->prefix.capture=capture;
  slot->generation=p->generation;slot->token=++p->serial;*token=slot->token;return true;
+}
+bool ep7c_register_fresh(ep7c *p,unsigned state,uintptr_t node,uintptr_t associated,uint64_t *token)
+{ return register_fresh(p,state,node,associated,0,0,token); }
+bool ep7c_register_fresh_capture(ep7c *p,unsigned state,uintptr_t node,uintptr_t associated,unsigned capture_id,uintptr_t capture,uint64_t *token)
+{
+ if(capture_id<1 || capture_id>25 || !capture)return false;
+ return register_fresh(p,state,node,associated,capture_id,capture,token);
+}
+void ep7c_retire_capture(ep7c *p,unsigned state,uintptr_t capture)
+{
+ unsigned i;
+ if(!capture || !state_ok(p,state))return;
+ for(i=0;i<EP7C_CAP;i++)if(p->entries[i].token && p->entries[i].prefix.capture==capture)
+  memset(&p->entries[i],0,sizeof p->entries[i]);
 }
 bool ep7c_authorize(ep7c *p,unsigned state,uintptr_t node,uint64_t token)
 { return state_ok(p,state) && lookup(p,node,token)!=NULL; }
@@ -66,7 +81,9 @@ bool ep7c_resolve_live(ep7c *p,unsigned state,uintptr_t node,uint64_t *token)
  return false;
 }
 static bool prefix_ok(const ep7c_entry *e,const ep7c_prefix *v)
-{ return v && v->associated==e->associated && v->capture && v->capture_id>=1u && v->capture_id<=25u && v->raw_mode==11u && v->selector>=1u && v->selector<=4u; }
+{ return v && v->associated==e->associated && v->capture && v->capture_id>=1u && v->capture_id<=25u &&
+ (!e->prefix.capture_id || v->capture_id==e->prefix.capture_id) &&
+ (!e->prefix.capture || v->capture==e->prefix.capture) && v->raw_mode==11u && v->selector>=1u && v->selector<=4u; }
 static bool prefix_same(const ep7c_prefix *a,const ep7c_prefix *b)
 {
  return a && b && a->associated==b->associated && a->capture==b->capture &&

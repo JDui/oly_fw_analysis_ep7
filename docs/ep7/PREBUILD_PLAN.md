@@ -162,3 +162,8 @@ G4资源与G6完整stack/放置/启动，直到满足G8后开始整体固件编�
 第二段finish才允许输送；早期copyout永久中性。实际16-job软件链验证两阶段间UI修改
 不改变原快照，producer任务限定到实际controller entry60289852。83指令/任务行核对
 包含13个已列node free；下一项将真实node/prefix/token接入这些原生边界及初始化/释放。
+
+[原生capture source候选](CAPTURE_NATIVE_BINDING.md)已提供实际provider和初始化/登记/
+population/free/pool-release桥。56对象中自写provider符号已闭合，32个剩余外部符号均为
+原厂地址；118指令、123条新桥指令及定向host通过。代码绑定不替代controller排他和
+全部retirement/repopulation闭包；G4资源、G6放置/短CALL重定位/启动/总栈仍为准入门槛。

@@ -3,6 +3,10 @@
 Actual C backend for the existing compiled state observer, not native metadata
 modification. `transition_binding.c` defines its exact previously unresolved
 callback and invokes the bounded backend on a still-unresolved private runtime.
+The newer pipeline selects `native_binding.c` instead of that legacy thin binding;
+it defines the real source/observers and storage. See
+[native capture binding](../../../docs/ep7/CAPTURE_NATIVE_BINDING.md). Its actual
+installation, serialized lifetime and safe-placement gates remain open.
 The selected seven-object MN103 symbol-set closure leaves only that runtime and
 original native state service unresolved. Objects remain unlinked/unexecuted.
 No56-byte native node is expanded. Capacity8 is a prototype choice, not nativepool.
