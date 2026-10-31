@@ -96,9 +96,10 @@
   },
   "named_send_frame_bytes": 48,
   "named_send_raw_return_sites": [
-    "0x600514f1",
-    "0x60051555"
+    "0x600514f3",
+    "0x60051557"
   ],
+  "named_returns_derived_from_call32_bytes": true,
   "candidate_caller_return_offsets": {
     "receive": 32,
     "raw_send": 40,

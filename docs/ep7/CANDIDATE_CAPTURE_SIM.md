@@ -53,7 +53,7 @@ pop 的原生 CALL 实际建立自身 24 字节 frame；外围两层 ancestor re
 
 ```sh
 python3 /repo/tools/ep7_candidate_capture_sim.py \
-  --candidate /repo/generated/ep7/offline-candidate-002 \
+  --candidate /repo/generated/ep7/offline-candidate-003 \
   --tool-prefix /work/install/bin/mn10300-elf- \
   --engine /work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103
 ```

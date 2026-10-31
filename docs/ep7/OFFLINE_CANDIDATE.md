@@ -1,8 +1,10 @@
 # E-P7 HSL 首个离线候选
 
-2026-11-01 后续：[当前可刷机包目标](FLASH_READINESS_PLAN.md)已开始推进；
-[实际链接机器码的启动前缀模拟](CANDIDATE_STARTUP_SIM.md)已通过。首个候选仍不可安装，
-下文记录它的构建结果和原有边界。
+2026-11-01 后续：[当前可刷机包目标](FLASH_READINESS_PLAN.md)正在推进。
+当前候选为 **offline-candidate-003**：修复[原生发送gate返回地址](CANDIDATE_QUEUE_GATE_SIM.md)
+漏检，重编译1个对象、复用106个，重新整体链接/合成通过。与002仅有2字节差异，
+全部符号和布局不变；[增量报告](../../research/ep7/offline-candidate-003.json)记录结果。
+仍不可安装。下文保留首个002候选的构建结果和原有边界。
 
 2026-10-31。用户已明确选择先编译不可安装的离线候选，检查整体链接与布局，
 保留全部未通过项。此选择修改 PREBUILD_PLAN 的离线 G8；不批准安装或实机执行。
@@ -104,5 +106,7 @@ python3 /repo/tools/ep7_offline_candidate.py \
 ```
 
 需要复用本次对象时追加 `--reuse-objects-from /repo/generated/ep7/offline-candidate-001`；
-工具自动核对记录的实现源版本与当前编译器，差异会拒绝。输出目录非空也会拒绝，
+工具自动核对记录的实现源版本与当前编译器。仅实现C/ASM变化时复用现有partial-object
+编译器刷新对应对象；header/宏/编译配方、编译器或源顺序变化会拒绝复用。
+输出目录非空也会拒绝，
 不覆盖前一次结果。后续安装研究直接使用上述实际布局，仍需逐项关闭保留的未通过项。

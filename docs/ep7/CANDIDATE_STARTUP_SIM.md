@@ -55,7 +55,7 @@ bootstrap 的 3 次 get_tid 分别来自 `ep7n_query_task` 的两次身份观察
 
 ```sh
 python3 /repo/tools/ep7_candidate_startup_sim.py \
-  --candidate /repo/generated/ep7/offline-candidate-002 \
+  --candidate /repo/generated/ep7/offline-candidate-003 \
   --tool-prefix /work/install/bin/mn10300-elf- \
   --engine /work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103
 ```

@@ -70,7 +70,7 @@ loop-register 依赖；本次没有添加虚假的 LIR/LAR 保留断言，其他
 
 ```sh
 python3 /repo/tools/ep7_candidate_publish_sim.py \
-  --candidate /repo/generated/ep7/offline-candidate-002 \
+  --candidate /repo/generated/ep7/offline-candidate-003 \
   --tool-prefix /work/install/bin/mn10300-elf- \
   --engine /work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103
 ```

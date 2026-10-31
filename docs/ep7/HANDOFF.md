@@ -7,7 +7,19 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[controller 与延迟 FIFO](CANDIDATE_CAPTURE_SIM.md)完成 S3 的第二个子节点。
+最新：[named-send gate修复](CANDIDATE_QUEUE_GATE_SIM.md)已进入候选003，源码296e721。
+旧gate误用600514f1/60051555；实际两处DD CALL32返回600514f3/60051557。旧002在
+maximum改变或I/O关闭时两分支共四次错误放行，003均原生返回−42且退出临界区/释放锁，
+两次正常场景到复制前续接。仅重编译runtime/kernel_gate.c，106对象复用；整包链接
+合成通过，26,214,336字节与002仅在600ca1fc/600ca204两个立即数字节不同，全符号
+和布局不变。后续必须使用003；当前源码检查会拒绝旧002。旧S1/S2/S3报告保留历史来源，
+本次没有重跑无关测试。下一步queue4b完整发送/通知/接收以及materializer/worker。
+可在S2 bootstrap_context后、publish_runtime前用原厂60030c4c初始化queue4b已有
+backing，补齐60字节header和环缓冲；避免把发布后的queue重建伪装成正常启动。
+复用capture脚本已执行的冻结/FIFO输出。named包装600514b6必须保留60051078通知，
+遇到未映射的通知表/root应按原厂初始化证据补齐，不能用零值跳过。
+
+此前：[controller 与延迟 FIFO](CANDIDATE_CAPTURE_SIM.md)完成 S3 的第二个子节点。
 23 段/208,056 指令：真实启动 helper copy 把6143ca00 经显式 resident alias
 a143ca00 搬到47000800；实际 lookup6029b9d1、FIFO initializer/enqueue/pop 与
 47001052 copy helper均执行。patched population prewrite、sample/finish冻结正确；

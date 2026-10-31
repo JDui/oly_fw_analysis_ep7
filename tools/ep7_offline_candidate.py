@@ -393,7 +393,7 @@ def main():
     parser.add_argument('--source-revision',required=True,help='Git revision recorded by the invoking build job')
     parser.add_argument('--output',type=Path,required=True,help='new or empty dedicated output directory')
     parser.add_argument('--reuse-objects-from',type=Path,
-                        help='reuse a completed object set after checking its recorded source revision')
+                        help='reuse checked unchanged objects; refresh changed C/ASM with the existing compiler')
     args = parser.parse_args()
     out, decoded = args.output.resolve(), args.decoded.resolve()
     if out == decoded.parent or decoded.is_relative_to(out):

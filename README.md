@@ -7,6 +7,8 @@
 
 最新：[离线候选结果与未通过项](docs/ep7/OFFLINE_CANDIDATE.md)。107 个实现源、101 处
 修改、完整 ELF 与链接图已生成；产物仅用于离线研究，没有可刷升级包，不连接相机。
+当前候选003已修复[发送gate漏检](docs/ep7/CANDIDATE_QUEUE_GATE_SIM.md)，1个对象增量
+更新、106个复用；两处机器码字节修正后，异常发送路径实际返回−42并释放锁。
 
 2026-11-01：[实际候选启动模拟](docs/ep7/CANDIDATE_STARTUP_SIM.md)已通过冷清零、
 初始化、七组安装检查及定向拒绝；后续[原生创建/发布/回收](docs/ep7/CANDIDATE_PUBLISH_SIM.md)

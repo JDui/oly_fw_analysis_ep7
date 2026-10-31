@@ -48,7 +48,7 @@ ABI 和最终反汇编修正调用 fixture 后通过。没有为此修改生产�
 
 ```sh
 python3 /repo/tools/ep7_candidate_state_sim.py \
-  --candidate /repo/generated/ep7/offline-candidate-002 \
+  --candidate /repo/generated/ep7/offline-candidate-003 \
   --tool-prefix /work/install/bin/mn10300-elf- \
   --engine /work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103
 ```
