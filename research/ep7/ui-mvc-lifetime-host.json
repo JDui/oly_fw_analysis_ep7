@@ -1,0 +1,21 @@
+{
+  "scope": "GUI041d graph lifetime C and actual cohort checks; native boundaries/task are mocked.",
+  "runs": {
+    "strict": {
+      "passed": true
+    },
+    "asan_ubsan": {
+      "passed": true
+    }
+  },
+  "scenario_groups": 6,
+  "actual_cohort_C_used": true,
+  "original_constructor_draw_and_free_modeled_at_boundaries": true,
+  "quarantine_modeled_with_longjmp": true,
+  "hl_content_and_renderer_implemented": false,
+  "input_provider_implemented": false,
+  "target_executed": false,
+  "installed": false,
+  "firmware_built": false,
+  "hash_checks_performed": false
+}

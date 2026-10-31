@@ -17,7 +17,7 @@ Exact E-P7 1.1/1100 static analysis; no firmware modification or native executio
 | Viewer |factory0x84→60e26a3d alloc408bytes; viewer vtable61189ba8 draw60e26ab0/dtor60e26a7c | Do not append viewer fields. Newlabels/grid must use explicitly owned storage and a qualified draw adapter. |
 | Viewer observations |creator stores parent atviewer+384; draw calls parent virtual+28 withd0=0/1 to obtain selector/content, stores+388/+392; selector virtual+4 stored halfwordviewer+396; public111 via servicevirtual+8 toviewer+400 | A viewer veneer can pass category/publicmode to `frame`, render copied scalar values/selection, and avoid direct core pointer persistence. Native categories0..3 retain original draw. |
 | Draw switch |60e26b68..b76 only0..3;category1 COLORdraw60e27289,MONOdraw60e27162 | NewH/L requires new4/5draw arms; stockCOLORdraw reads stock data and is not automatically an H/Lrenderer. No touch hitbox proven. |
-| Child teardown |rebuild60e266bb..dc invokes child virtual+40, then returned destructor ifnonnull, otherwise60a4ec17; clearsparent+80 | Extension child must conform to this *two-step destructor query* convention. Returning portable `close` directly as an arbitrary native function is invalid. |
+| Child teardown |rebuild60e266bb..dc invokes child virtual+40 to perform destruction, then calls its returned deallocator if nonnull, otherwise60a4ec17; clearsparent+80 | This slot performs destruction now; it is not a side-effect-free destructor query. Preserve the native destructor/deallocator ABI and close the owned UI session before object free. |
 | Parent teardown |60e26130 iterates two pointers parent+76/+80 with same destructor/free pattern then calls base60dd50d8 | Idempotent revoke of associatedUItoken; preserve stock selector/content cleanup and allocator pairing. |
 | GUI exit |60e5db01 reads61fc436c; calls containerdestructor60e4ce26, thenfree60a4ec17; zeroesglobal | Exit/exception rollback revokes onlyUIownership. VolatileH/L may survive UIclose until boot/reset, but image-owned snapshots must remain independently owned. |
 | Viewer teardown |60e26a7c calls60e9ec14 thenbase60df2474 and returnsa0=0 | Newdraw state must be revoked before owned storage freed; do not reorder unknown stock renderer cleanup. |
@@ -42,3 +42,9 @@ Current continuation: [UI resource origin](UI_RESOURCE_ORIGIN.md) now connects
 6025bb34 to61fc3874 through the actual startup copy recipe, conditional on successful
 loading and the established RAM alias interpretation. Installer still needs current
 table/lifetime qualification; this finding alone does not authorize callback writes.
+
+[MVC lifetime binding](UI_MVC_LIFETIME.md) now captures the constructed graph only
+after the complete GUI041d entry has published its container, and revokes it before
+GUI exit or matching parent/viewer destruction. It also corrects the +40 terminology:
+the method performs destruction and returns an optional deallocator. H/L content,
+viewer rendering and actual input admission remain the next integration work.

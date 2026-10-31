@@ -214,3 +214,9 @@ cleanup/bulk/析构撤销、实际四表项cohort及真实来源qualifier，复�
 81条原厂指令、5数据项、4组strict/ASan/UBSan及7对象通过。H/L两项默认禁用，
 原厂自身的mask分配失败缺口未在本批修复。下一项MVC内容对象与viewer生命周期，
 随后绑定COLOR gating/输入/显示再开放新类别，不把存储扩展当作H/L界面完成。
+
+[MVC 生命周期](UI_MVC_LIFETIME.md)已把完整GUI041d创建/发布与exit、parent/viewer
+析构接入实际登记。确认首次draw早于全局发布、退出时parent先于viewer；关系变化
+锁存失效，同址恢复不能复活旧代。98条指令、8数据项、6组host和11对象通过。
+下一项在此来源内接H/L内容对象/重建、viewer和UI session，再关闭实际输入provider；
+当前没有把登记成功等同于renderer_ready或原生安装闭包。
