@@ -82,8 +82,10 @@ class NativeGraph:
 
     def instruction(self, pc):
         if pc not in self.decoded_instructions:
-            if not (KERNEL[0] <= pc < KERNEL[1] or pc == 0x60073215):
-                raise ValueError('outside reviewed kernel search interval '+hex(pc))
+            # Explicit evidence witnesses may live outside the CFG search range.
+            # function()/push() still restrict graph exploration to KERNEL.
+            if not BASE <= pc <= BASE+len(self.data)-16:
+                raise ValueError('instruction outside decoded input '+hex(pc))
             # Objdump only needs the reached instruction and its longest possible
             # suffix, not a new read of the entire 25 MiB input for every PC.
             self.window.write_bytes(self.data[pc-BASE:pc-BASE+16])
@@ -100,6 +102,8 @@ class NativeGraph:
     def function(self, entry):
         if entry in self.functions:
             return self.functions[entry]
+        if not KERNEL[0] <= entry < KERNEL[1]:
+            raise ValueError('function outside reviewed kernel search interval '+hex(entry))
         seen = {}; work = deque([(entry,0,None)]); calls = {}; returns = {}; boundaries = {}; stack_ops = {}
         high = 0; reached = set(); loop_sites = {}; direct_memory_low = 0
         while work:

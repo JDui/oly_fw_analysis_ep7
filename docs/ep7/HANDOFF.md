@@ -1,15 +1,23 @@
 # E-P7 研究检查点 / 恢复研究
 
 恢复日期：2026-10-30（Asia/Shanghai）。用户已要求继续推进研究测试。
-**本轮推进电脑端捕获身份接合；未进行刷机或相机操作。**
+**本轮推进bootstrap原厂栈及IRQ责任；未进行刷机或相机操作。**
 
 ## 2026-10-31 当前节点
 
-最新：[bootstrap调用栈](BOOTSTRAP_STACK.md)按GCC调用图收敛到42函数和29条具体callback，
+最新：[原厂bootstrap栈](NATIVE_BOOTSTRAP_STACK.md)核对27函数/997指令，正常返回帧
+无冲突；明确固定回调、context切换和任务入口top−4。合并此前C图的已知部分为栈顶
+以下416字节，完整上界仍null。[IRQ节点](IRQ_STACK_TRANSFER.md)定位独立8 KiB栈和
+进出SP：85条witness、451指令、14函数；单次已知部分8+56+40=104，不是全栈通过。
+下一项应集中核对bootstrap现场TCB+48任务异常资格、自有quarantine的BREAK依赖，
+以及UDF/故障嵌套；不要重新展开整条IRQ handler链后全部累加到Usr3。quarantine当前
+仍是原有BREAK循环，未实施“关中断终止”或其他替代行为。生产C/ASM均未改动。
+
+此前：[bootstrap调用栈](BOOTSTRAP_STACK.md)按GCC调用图收敛到42函数和29条具体callback，
 只生成18个可达C对象元数据，尺寸/`.su`与统一清单一致。最深已知C路径312字节，
 加Usr3/原CALL/桥为400；完整上界仍为null，原厂create/delete及异常/IRQ栈不能按零处理。
-下一项应沿6003057f/60031107及critical/scheduler边界补齐原生栈责任，复用当前图避免
-重跑整套测试。此前启动前缀加载者和guard writer有限调查没有取得新资格，继续保留未决。
+原厂create/delete责任已推进到上述新节点，复用当前图避免重跑整套测试。
+此前启动前缀加载者和guard writer有限调查没有取得新资格，继续保留未决。
 
 最新：[统一安装清单与目标符号](INSTALLATION_MANIFEST.md)汇合101项、546字节，原厂字节
 匹配且互不重叠；107生产对象一次统一编译，无重复定义，84个安装目标存在。109外部

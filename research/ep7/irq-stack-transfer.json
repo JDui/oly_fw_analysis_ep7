@@ -1,0 +1,291 @@
+{
+  "scope": "Locate stock IRQ stack transfers and count one pass of its explicit task-stack effects.",
+  "instruction_witness_count": 85,
+  "decoded_instruction_count": 451,
+  "vector_setup": [
+    {
+      "register": "0x8000",
+      "written_low_halfword": "0x20",
+      "intended_stock_entry": "0x60030020"
+    },
+    {
+      "register": "0x8004",
+      "written_low_halfword": "0x58",
+      "intended_stock_entry": "0x60030058"
+    },
+    {
+      "register": "0x8008",
+      "written_low_halfword": "0x60",
+      "intended_stock_entry": "0x60030060"
+    },
+    {
+      "register": "0x800c",
+      "written_low_halfword": "0x68",
+      "intended_stock_entry": "0x60030068"
+    },
+    {
+      "register": "0x8010",
+      "written_low_halfword": "0x70",
+      "intended_stock_entry": "0x60030070"
+    },
+    {
+      "register": "0x8014",
+      "written_low_halfword": "0x78",
+      "intended_stock_entry": "0x60030078"
+    },
+    {
+      "register": "0x8018",
+      "written_low_halfword": "0x80",
+      "intended_stock_entry": "0x60030080"
+    }
+  ],
+  "vector_hardware_base_and_boot_loader_proven": false,
+  "domain0_irq_stack": {
+    "base": "0x6218f200",
+    "bytes": 8192,
+    "end_exclusive": "0x62191200",
+    "initial_working_sp": "0x621911f8",
+    "saved_task_sp_word": "0x621911fc",
+    "entry_store": "0x60038743",
+    "entry_switch": "0x60038746",
+    "restore_load": "0x600387f9",
+    "restore_switch": "0x600387fb",
+    "capacity_proven": false
+  },
+  "outermost_condition": "Byte at *(domain0_root+28) equals 0 at 60038735; nonzero means use the already-active IRQ stack.",
+  "entry_explicit_stack_operations": [
+    {
+      "pc": "0x600386f8",
+      "mnemonic": "movm",
+      "operands": "[a2,a3,other],(sp)",
+      "before": 0,
+      "after": 40
+    },
+    {
+      "pc": "0x600386fa",
+      "mnemonic": "add",
+      "operands": "4,sp",
+      "before": 40,
+      "after": 36
+    },
+    {
+      "pc": "0x60030107",
+      "mnemonic": "add",
+      "operands": "-16,sp",
+      "before": 36,
+      "after": 52
+    },
+    {
+      "pc": "0x60038708",
+      "mnemonic": "add",
+      "operands": "-4,sp",
+      "before": 52,
+      "after": 56
+    }
+  ],
+  "entry_explicit_stack_bytes": 56,
+  "level0_pre_entry_scratch_bytes": 8,
+  "entry_optional_callback": {
+    "site": "0x6003872e",
+    "root_offset": 276,
+    "target": "0x60073218",
+    "own_stack_bytes": 0,
+    "requires_stock_binding": true
+  },
+  "exit_optional_callback": {
+    "root_offset": 280,
+    "target": "0x6007321b",
+    "own_stack_bytes": 0,
+    "requires_stock_binding": true
+  },
+  "native_post_restore_function_count": 14,
+  "native_post_restore_stack": {
+    "known_stack_effect_envelope_bytes": 40,
+    "path": [
+      "0x600387fd",
+      "0x6003436e",
+      "0x60038657"
+    ],
+    "frontier": [
+      {
+        "function": "0x600387fd",
+        "site": "0x60030135",
+        "kind": "indirect_jump",
+        "depth": -20,
+        "mnemonic": "jmp",
+        "operands": "(a3)",
+        "known_stack_effect_bytes": -20,
+        "path": [
+          "0x600387fd"
+        ],
+        "conditional_classification": null
+      },
+      {
+        "function": "0x6003593f",
+        "site": "0x60035a01",
+        "kind": "indirect_call",
+        "depth": 0,
+        "mnemonic": "calls",
+        "operands": "(a1)",
+        "known_stack_effect_bytes": 16,
+        "path": [
+          "0x600387fd",
+          "0x6003593f"
+        ],
+        "conditional_classification": "stock_domain0_scheduler_callback"
+      },
+      {
+        "function": "0x6003853d",
+        "site": "0x6003853d",
+        "kind": "exception_or_interrupt_control",
+        "depth": 0,
+        "mnemonic": "break",
+        "operands": "",
+        "known_stack_effect_bytes": 16,
+        "path": [
+          "0x600387fd",
+          "0x6003593f",
+          "0x6003853d"
+        ],
+        "conditional_classification": null
+      },
+      {
+        "function": "0x60038547",
+        "site": "0x60038547",
+        "kind": "sp_replaced_from_register_or_memory",
+        "depth": 0,
+        "mnemonic": "mov",
+        "operands": "a1,sp",
+        "known_stack_effect_bytes": 16,
+        "path": [
+          "0x600387fd",
+          "0x6003593f",
+          "0x60038547"
+        ],
+        "conditional_classification": "outgoing_stack_discarded_at_restart"
+      },
+      {
+        "function": "0x6003853e",
+        "site": "0x60038541",
+        "kind": "sp_replaced_from_register_or_memory",
+        "depth": 0,
+        "mnemonic": "mov",
+        "operands": "(0,a0),sp",
+        "known_stack_effect_bytes": 32,
+        "path": [
+          "0x600387fd",
+          "0x6003593f",
+          "0x6003853e"
+        ],
+        "conditional_classification": "outgoing_stack_saved_before_context_transfer"
+      },
+      {
+        "function": "0x6003436e",
+        "site": "0x600343b1",
+        "kind": "indirect_call",
+        "depth": 0,
+        "mnemonic": "calls",
+        "operands": "(a2)",
+        "known_stack_effect_bytes": 36,
+        "path": [
+          "0x600387fd",
+          "0x6003436e"
+        ],
+        "conditional_classification": null
+      }
+    ],
+    "complete_stack_bound_bytes": null
+  },
+  "exit_explicit_restore_operations": [
+    {
+      "pc": "0x60038827",
+      "mnemonic": "add",
+      "operands": "4,sp",
+      "before": 56,
+      "after": 52
+    },
+    {
+      "pc": "0x60030132",
+      "mnemonic": "add",
+      "operands": "16,sp",
+      "before": 52,
+      "after": 36
+    },
+    {
+      "pc": "0x60038835",
+      "mnemonic": "add",
+      "operands": "-4,sp",
+      "before": 36,
+      "after": 40
+    },
+    {
+      "pc": "0x60038838",
+      "mnemonic": "movm",
+      "operands": "(sp),[a2,a3,other]",
+      "before": 40,
+      "after": 0
+    }
+  ],
+  "software_frame_unwound_bytes": 56,
+  "unexecuted_udf_helpers": [
+    {
+      "pc": "0x6003010a",
+      "mnemonic": "udf13",
+      "operands": "d0,d0"
+    },
+    {
+      "pc": "0x60030112",
+      "mnemonic": "udf12",
+      "operands": "d0,d0"
+    },
+    {
+      "pc": "0x60030116",
+      "mnemonic": "udf15",
+      "operands": "d0,d0"
+    },
+    {
+      "pc": "0x6003012c",
+      "mnemonic": "udf21",
+      "operands": "d0,d1"
+    },
+    {
+      "pc": "0x60030130",
+      "mnemonic": "udf20",
+      "operands": "d0,d0"
+    }
+  ],
+  "single_irq_pass": {
+    "gnu_cpu_model_entry_bytes": 8,
+    "software_saved_task_bytes": 56,
+    "post_restore_known_stack_effects_bytes": 40,
+    "known_stack_effects_below_interrupted_sp_bytes": 104,
+    "complete_stack_bound_bytes": null
+  },
+  "separate_diagnostic_path": {
+    "vector_branch": "0x60030008",
+    "entry": "0x60055250",
+    "called_diagnostic_function": "0x60059a9d",
+    "observed_prologue_bytes": 16,
+    "observed_format_call_frame_bytes": 28,
+    "complete_stack_bound_bytes": null,
+    "hardware_break_or_nmi_vector_mapping_proven": false
+  },
+  "references": {
+    "gnu_interrupt_entry": "https://gnu.googlesource.com/binutils-gdb/+/cbe950e9fe8a56f788bcf985cc51733f18abb45b/sim/mn10300/dv-mn103cpu.c",
+    "gnu_rti_and_movm": "https://gnu.googlesource.com/binutils-gdb/+/cbe950e9fe8a56f788bcf985cc51733f18abb45b/sim/mn10300/mn10300.igen"
+  },
+  "limits": [
+    "The 8-byte hardware frame is the referenced GNU MN10300 model and matches the stock PSW+PC/RTI layout; E-P7 interrupt hardware is not executed or independently qualified.",
+    "Vector writes store only low halfwords. The hardware vector base and upstream loading remain prerequisites, not proven by matching these software instructions.",
+    "The fixed IRQ hook pointers and domain0 root must retain their reviewed values.",
+    "56 bytes counts explicit save operations. UDF12/13/15/20/21 custom-register behavior is not executed or independently qualified here.",
+    "Post-restore callbacks, native BREAK and nested entry near task-exception PSW restoration still prevent a complete task-stack bound.",
+    "The independent IRQ stack handler graph, its 8 KiB capacity, NMI/debug/BREAK vectors and arbitrary fault nesting remain outside this check.",
+    "No new C object compilation, firmware link/patch, CPU run, host application test suite or hardware operation."
+  ],
+  "returning_call_frame_mismatches": [],
+  "firmware_modified": false,
+  "firmware_built": false,
+  "target_executed": false,
+  "hash_checks_performed": false
+}
