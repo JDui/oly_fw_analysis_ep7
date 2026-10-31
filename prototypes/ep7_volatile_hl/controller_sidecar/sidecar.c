@@ -66,6 +66,13 @@ void ep7c_retire_capture(ep7c *p,unsigned state,uintptr_t capture)
  for(i=0;i<EP7C_CAP;i++)if(p->entries[i].token && p->entries[i].prefix.capture==capture)
   memset(&p->entries[i],0,sizeof p->entries[i]);
 }
+void ep7c_retire_associated(ep7c *p,unsigned state,uintptr_t associated)
+{
+ unsigned i;
+ if(!associated || !state_ok(p,state))return;
+ for(i=0;i<EP7C_CAP;i++)if(p->entries[i].token && p->entries[i].associated==associated)
+  memset(&p->entries[i],0,sizeof p->entries[i]);
+}
 bool ep7c_authorize(ep7c *p,unsigned state,uintptr_t node,uint64_t token)
 { return state_ok(p,state) && lookup(p,node,token)!=NULL; }
 bool ep7c_resolve_live(ep7c *p,unsigned state,uintptr_t node,uint64_t *token)

@@ -19,6 +19,21 @@ static bool busy; /* Only the pinned controller reads/writes this, after task qu
 static uint32_t word(uint32_t p){return *(const volatile uint32_t *)(uintptr_t)p;}
 static unsigned state(void){return *(const volatile uint16_t *)(uintptr_t)0x62234fc0u;}
 static bool span(uint32_t p,uint32_t bytes){return p && !(p&3u) && p<=UINT32_MAX-bytes;}
+/* Exact initialized25-slot pool: each16-byte slot has a4-byte refcount and
+ * a12-byte associated payload. No heap/tail size inferred from a node pointer. */
+enum { ASSOCIATED_POOL=0x6223e0dcu,ASSOCIATED_BACKING=0x6223e160u,ASSOCIATED_COUNT=25u };
+static bool associated_slot(uint32_t p)
+{ return p>=ASSOCIATED_BACKING+4u && p<ASSOCIATED_BACKING+16u*ASSOCIATED_COUNT && !((p-4u-ASSOCIATED_BACKING)&15u); }
+static bool associated_live(uint32_t p)
+{
+    if(!associated_slot(p))return false;
+    return word(0x6223e0d8u)==ASSOCIATED_POOL &&
+        *(const volatile uint16_t *)(uintptr_t)(ASSOCIATED_POOL+8u)==ASSOCIATED_COUNT &&
+        *(const volatile uint16_t *)(uintptr_t)(ASSOCIATED_POOL+10u)==4u &&
+        word(ASSOCIATED_POOL+12u)==0x6223e0fcu &&
+        *(const volatile uint16_t *)(uintptr_t)(ASSOCIATED_POOL+24u)==16u &&
+        word(ASSOCIATED_POOL+28u)==ASSOCIATED_BACKING && word(p-4u)!=0;
+}
 static void close_capture(void){atomic_store_explicit(&closed,true,memory_order_release);}
 static _Noreturn void fault(unsigned reason) { ep7_gcc_quarantine(0xe00u+reason); }
 static ep7r *enter(uint32_t anchor,bool admitting)
@@ -72,7 +87,7 @@ void ep7cn_fresh(uint32_t node)
     /* Original fresh allocator returned this fully initialized, still-owned
      * prefix; registration is BEFORE its caller can publish the node pointer. */
     id=word(node);associated=word(node+8);
-    if(id<1 || id>25 || !span(associated,12))goto done;
+    if(id<1 || id>25 || !associated_live(associated))goto done;
     capture=(uint32_t)(uintptr_t)ep7_gcc_capture_lookup(id);
     if(!span(capture,24084))goto done;
     (void)ep7c_register_fresh_capture(&ep7_controller_sidecar_unresolved,state(),node,associated,id,capture,&token);
@@ -83,7 +98,7 @@ static bool prefix(unsigned observed_state,uint32_t node,uint64_t token,ep7c_pre
     uint32_t id,associated,capture;
     if(!span(node,56) || !ep7c_authorize(&ep7_controller_sidecar_unresolved,observed_state,node,token))return false;
     id=word(node);associated=word(node+8);
-    if(id<1 || id>25 || !span(associated,12))return false;
+    if(id<1 || id>25 || !associated_live(associated))return false;
     capture=(uint32_t)(uintptr_t)ep7_gcc_capture_lookup(id);
     if(!span(capture,24084))return false;
     *out=(ep7c_prefix){associated,capture,id,
@@ -132,14 +147,39 @@ void ep7cn_release_capture(uint32_t registry)
     ep7c_retire_capture(&ep7_controller_sidecar_unresolved,state(),capture);
     leave();
 }
+void ep7cn_associated_recycle(uint32_t pool,uint32_t header)
+{
+    uint32_t anchor;
+    /* Generic native allocator also serves four unrelated pools. Do not query
+     * their task/runtime, nor dereference their header, at this shared seam. */
+    if(pool!=ASSOCIATED_POOL)return;
+    if(!enter((uint32_t)(uintptr_t)&anchor,false))return;
+    if(header>UINT32_MAX-4u || !associated_slot(header+4u) || word(header)!=0)fault(8);
+    ep7c_retire_associated(&ep7_controller_sidecar_unresolved,state(),header+4u);
+    leave();
+}
+void ep7cn_associated_reset(void)
+{
+    uint32_t anchor;
+    if(!enter((uint32_t)(uintptr_t)&anchor,false))return;
+    /* Fixed pool's initializer CALL only. Revoke before resetting counts/list,
+     * preserving token serials even if old node objects have not been freed. */
+    for(unsigned i=0;i<ASSOCIATED_COUNT;i++)
+        ep7c_retire_associated(&ep7_controller_sidecar_unresolved,state(),ASSOCIATED_BACKING+4u+16u*i);
+    leave();
+}
 bool ep7q_capture_snapshot_unresolved(uint32_t id,uint32_t associated,ep7p_snapshot *out)
 {
     uint32_t anchor,node;uint64_t token;unsigned s;ep7c_prefix v;bool read,result=false;
-    if(!out || id<1 || id>25 || !span(associated,12) ||
+    if(!out || id<1 || id>25 || !associated_slot(associated) ||
        !enter((uint32_t)(uintptr_t)&anchor,true))return false;
     /* Associated is live in the reviewed c3de producer invocation. Its node
      * backlink is not read on fresh-node registration, where it is not set yet. */
-    node=word(associated+8);s=state();
+    s=state();
+    if(!associated_live(associated)) {
+        ep7c_retire_associated(&ep7_controller_sidecar_unresolved,s,associated);goto done;
+    }
+    node=word(associated+8);
     if(!ep7c_resolve_live(&ep7_controller_sidecar_unresolved,s,node,&token))goto done;
     read=prefix(s,node,token,&v);
     if(read && (v.associated!=associated || v.capture_id!=id || word(associated)!=id))read=false;

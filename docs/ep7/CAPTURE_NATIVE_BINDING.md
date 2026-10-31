@@ -6,6 +6,10 @@
 新增C访问期间的busy保护和非返回的销毁失败处理；下文初次56对象结果保留为历史证据，
 当前结果为57对象。其他原生别名/释放闭包依然须单独证明。
 
+最新[associated对象池接合](ASSOCIATED_POOL_LIFETIME.md)将实际CALL组扩为29处，
+并在读取backlink前核对固定slot来源/计数；原厂外部绑定现为34个。下方56对象数字
+仍是初次实现的历史范围。
+
 `controller_sidecar/native_binding.c` 定义实际 source provider
 `ep7q_capture_snapshot_unresolved`，以及共享 sidecar 存储、初始化、state观察、fresh登记、
 两阶段population、node free、capture pool release observer。历史名字中的`unresolved`
@@ -21,6 +25,9 @@
 |finish|602a31f7、602a443e、602a44b5|602a8dbd，[d2,d3,a2,a3],48；相同node完成确认|
 |node free|既有清单13处|observer后尾转60022732，原A0和[],4帧不变|
 |capture pool release|6029be5d|observer后尾转603db89e，原pool handle和[],4帧不变|
+|共同prewrite|602a7ea0、602a8dca|lookup返回实际capture后、首次写入前通知|
+|associated归零入池|602973bc|匹配固定pool后撤销，尾转6020b98b，[],8|
+|associated pool reset|6029c692|撤销旧登记后尾转602972aa，保留原incoming栈参数|
 
 ## 真实对象与取值
 
@@ -47,7 +54,7 @@ observer在释放+16前按+12撤销reservations，覆盖未sample、已sample和
 首次有效调用保留其TCB、ID和stack视图；变化或未知非销毁上下文永久关闭新的capture接合。
 外部非销毁上下文只设置atomic关闭标志，不并发清理controller-owned sidecar；销毁或
 state observer上下文失配则隔离，不能返回原厂继续释放。新增C访问有busy保护，并核对
-25处实际CALL。初始化只允许第一次native state=0；重复初始化隔离，不重置旧sidecar或token。
+29处实际CALL。初始化只允许第一次native state=0；重复初始化隔离，不重置旧sidecar或token。
 settings采样复用同一个worker/reader core，原state service callback改用这个具体绑定。
 
 这些检查不证明task generation、不禁止中断，也不能补救未接合路径的并发free。

@@ -265,3 +265,11 @@ capture写入前接入撤销，覆盖这两个函数的全部正常入口调用�
 目标对象通过；整链fixture同步到当前UI transaction mock接口，没有SHA。其余图像
 重用/写入入口、异步别名和完整释放闭包仍待审，下一项继续G1对象责任追踪，然后
 G2/G3退出与G6合法放置/安装/总栈；尚未达到整体固件编译准入。
+
+[associated对象池生命周期](ASSOCIATED_POOL_LIFETIME.md)已证明并绑定固定25槽布局，
+补上“关联记录已归还、node尚未free”的独立撤销路径。归零入池前与pool初始化前
+均撤销旧sidecar；source先验证真实槽位/计数再读回链，通用allocator的其他pool保持
+原路径。CALL组扩为29处，117条指令、31个native C host场景及57目标对象通过；
+新增两座桥保留原frame/参数，initializer采用尾转。没有SHA，未重跑无关测试。
+下一项继续engine workrecord及event/异步别名顺序，G1仍须完成全部节点责任闭包；
+随后G2/G3退出、G6放置/安装/总栈，再审G8并开始整体固件编译。

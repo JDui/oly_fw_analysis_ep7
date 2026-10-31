@@ -9,4 +9,6 @@ void ep7cn_prewrite(uint32_t capture,unsigned postpopulation);
 void ep7cn_population(uint32_t node,unsigned finish);
 void ep7cn_free(uint32_t node);
 void ep7cn_release_capture(uint32_t registry);
+void ep7cn_associated_recycle(uint32_t pool,uint32_t header);
+void ep7cn_associated_reset(void);
 #endif

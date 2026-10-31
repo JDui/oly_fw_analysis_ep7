@@ -10,8 +10,11 @@ extern const unsigned char release_capture[] __asm__("ep7_native_capture_pool_re
 extern const unsigned char transition[] __asm__("ep7_native_state_service_bridge");
 extern const unsigned char prewrite[] __asm__("ep7_native_capture_prewrite");
 extern const unsigned char postwrite[] __asm__("ep7_native_capture_postwrite");
+extern const unsigned char associated_recycle[] __asm__("ep7_native_associated_recycle");
+extern const unsigned char associated_reset[] __asm__("ep7_native_associated_reset");
 struct site { uint32_t address;const unsigned char *target;uint8_t width,mask,frame; };
 static const struct site sites[]={
+    {0x602973bc,associated_recycle,4,0,8},{0x6029c692,associated_reset,2,0xf0,28},
     {0x602a7ea0,prewrite,4,0,24},{0x602a8dca,postwrite,4,0,24},
     {0x602a31c7,fresh,2,0xa0,28},{0x602a440a,fresh,2,0xa0,28},{0x602a4480,fresh,2,0xa0,28},
     {0x602a31ea,sample,2,0xf0,20},{0x602a442c,sample,2,0xf0,20},{0x602a44a3,sample,2,0xf0,20},

@@ -598,23 +598,28 @@ with tempfile.TemporaryDirectory() as temp:
    expected+=save+[('mov','a2,d0'),('call',None)]+restore+[('jmp',None)]
    for phase in [('clr','d1'),('mov','1,d1')]:
     expected+=[('call',None)]+save+[('mov','a0,d0'),phase,('call',None)]+restore+[('ret','[],24')]
+   expected+=save+[('mov','a3,d0'),('mov','a2,d1'),('call',None)]+restore+[('jmp',None)]
+   expected+=save+[('call',None)]+restore+[('jmp',None)]
    expected+=[('movm','[a2],(sp)'),('add','-12,sp'),('call',None),('ret','[a2],16')]
    if len(ins)!=len(expected) or any(a[0]!=b[0] or (b[1] is not None and a[1]!=b[1]) for a,b in zip(ins,expected)):
     raise ValueError('capture bridge input/result/MDR preservation changed')
    calls=[op for mn,op in ins if mn=='call']
-   masks=[',[],0',',[d2,a2],28',',[],0',',[d2,d3,a2,a3],20',',[],0',',[d2,d3,a2,a3],48',',[],0',',[],0',',[],0',',[],24',',[],0',',[],24',',[],0',',[],24']
+   masks=[',[],0',',[d2,a2],28',',[],0',',[d2,d3,a2,a3],20',',[],0',',[d2,d3,a2,a3],48',',[],0',',[],0',',[],0',',[],24',',[],0',',[],24',',[],0',',[],0',',[],0',',[],24']
    if len(calls)!=len(masks) or any(not op.endswith(mask) for op,mask in zip(calls,masks)):
     raise ValueError('capture native/GCC call masks changed')
    expected_refs=['_ep7cn_initialize','ep7_stock_capture_init_continue_unresolved','ep7_stock_capture_fresh_unresolved',
        '_ep7cn_fresh','ep7_stock_capture_population_unresolved','_ep7cn_population','ep7_stock_capture_postpopulation_unresolved',
        '_ep7cn_population','_ep7cn_free','ep7_stock_capture_node_free_unresolved','_ep7cn_release_capture',
        'ep7_stock_capture_pool_release_unresolved','ep7_stock_capture_lookup_unresolved','_ep7cn_prewrite',
-       'ep7_stock_capture_lookup_unresolved','_ep7cn_prewrite','ep7_stock_capture_lookup_unresolved']
+       'ep7_stock_capture_lookup_unresolved','_ep7cn_prewrite','_ep7cn_associated_recycle',
+       'ep7_stock_associated_enqueue_unresolved','_ep7cn_associated_reset',
+       'ep7_stock_associated_initialize_unresolved','ep7_stock_capture_lookup_unresolved']
    refs=re.findall(r'R_MN10300_PCREL32\s+([^\s+]+)\+0x1',dis)
    if refs!=expected_refs:raise ValueError('capture relocation ordering changed')
    objects[name].update(checked_instructions=len(ins),observer_frame_bytes=40,lookup_own_frame_bytes=16,
        added_nested_native_frames=[28,20,48,24],pointer_result_register='a0',free_and_release_tail_calls=True,
-       common_prewrite_lookup_result_and_mdr_preserved=True)
+       common_prewrite_lookup_result_and_mdr_preserved=True,
+       associated_recycle_and_initializer_tail_transfer=True,initializer_incoming_stack_arguments_preserved=True)
   if name=='capture_state_bridge':
    ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
    expected=[('call',None),('add','-32,sp'),('mov','d0,(12,sp)'),('mov','d1,(16,sp)'),
@@ -753,6 +758,7 @@ if args.queue_pipeline_abi_only:
      'ep7_stock_capture_fresh_unresolved','ep7_stock_capture_population_unresolved',
      'ep7_stock_capture_postpopulation_unresolved','ep7_stock_capture_node_free_unresolved',
      'ep7_stock_capture_pool_release_unresolved','ep7_stock_capture_lookup_unresolved',
+     'ep7_stock_associated_enqueue_unresolved','ep7_stock_associated_initialize_unresolved',
      'ep7_stock_receive_gate_continue_unresolved','ep7_stock_receive_gate_error_unresolved',
      'ep7_stock_send_gate_continue_unresolved','ep7_stock_send_gate_error_unresolved','ep7_stock_delete_gate_continue_unresolved',
      'ep7_stock_raw_sem_wait_unresolved','ep7_stock_raw_sem_signal_unresolved',

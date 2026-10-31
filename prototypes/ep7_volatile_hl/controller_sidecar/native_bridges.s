@@ -105,6 +105,26 @@ ep7_native_capture_postwrite:
  restore_capture
  ret [],24
 .size ep7_native_capture_postwrite,.-ep7_native_capture_postwrite
+.global ep7_native_associated_recycle
+.type ep7_native_associated_recycle,@function
+ep7_native_associated_recycle:
+ save_capture
+ mov a3,d0
+ mov a2,d1
+ call _ep7cn_associated_recycle,[],0
+ restore_capture
+ jmp ep7_stock_associated_enqueue_unresolved
+.size ep7_native_associated_recycle,.-ep7_native_associated_recycle
+.global ep7_native_associated_reset
+.type ep7_native_associated_reset,@function
+ep7_native_associated_reset:
+ save_capture
+ call _ep7cn_associated_reset,[],0
+ restore_capture
+ /* Original initializer reads incoming stack+32/+36. Tail transfer keeps its
+  * original frame and caller arguments at their exact addresses. */
+ jmp ep7_stock_associated_initialize_unresolved
+.size ep7_native_associated_reset,.-ep7_native_associated_reset
 .global _ep7_gcc_capture_lookup
 .type _ep7_gcc_capture_lookup,@function
 _ep7_gcc_capture_lookup:

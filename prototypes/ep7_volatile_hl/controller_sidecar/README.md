@@ -7,6 +7,11 @@ The newer pipeline selects `native_binding.c` instead of that legacy thin bindin
 it defines the real source/observers and storage. See
 [native capture binding](../../../docs/ep7/CAPTURE_NATIVE_BINDING.md). Its actual
 installation, serialized lifetime and safe-placement gates remain open.
+The current native binding also qualifies the fixed25-slot associated pool and
+revokes at zero-reference return and before its initializer. See
+[associated pool lifetime](../../../docs/ep7/ASSOCIATED_POOL_LIFETIME.md). Node
+free is not a substitute for associated retirement; neither check pins a pointer
+carried in an arbitrary stale event.
 The selected seven-object MN103 symbol-set closure leaves only that runtime and
 original native state service unresolved. Objects remain unlinked/unexecuted.
 No56-byte native node is expanded. Capacity8 is a prototype choice, not nativepool.

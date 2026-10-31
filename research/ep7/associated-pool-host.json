@@ -1,0 +1,27 @@
+{
+  "scope": "Actual native capture C and cohort against owned low-address memory and mocked native calls.",
+  "runs": {
+    "strict": {
+      "passed": true
+    },
+    "asan_ubsan": {
+      "passed": true
+    }
+  },
+  "isolated_boot_scenarios": 31,
+  "actual_native_binding_C_executed": true,
+  "actual_29_call_cohort_decoder_executed": true,
+  "actual_native_state_and_prefix_layout_reads": true,
+  "actual_associated_pool_layout_and_slot_checks": true,
+  "zero_reference_return_and_pool_reset_revoke_before_reuse": true,
+  "repeated_and_out_of_order_population_revoked_before_writes": true,
+  "missing_prewrite_observers_cannot_seal": true,
+  "native_lookup_task_semaphore_queue_calls_mocked": true,
+  "firmware_code_not_mapped_or_executed": true,
+  "host_pointer_width_exception_only_for_fixture": true,
+  "full_native_alias_closure_proven": false,
+  "installed": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "hash_checks_performed": false
+}
