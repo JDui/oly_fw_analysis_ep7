@@ -189,3 +189,9 @@ population/free/pool-release桥。56对象中自写provider符号已闭合，32�
 归一，attach 成功后不再独立 free，cleanup 拒绝则保留待清理对象。96 指令/7 vtable、
 定向 strict/ASan/UBSan 和 15 个目标对象通过。真实 owner 入口/退出、descriptor+12
 及独立 ID/资源副本、H/L viewer 仍待接合，未安装或启用 renderer_ready。
+
+[显示 owner 生命周期](UI_OWNER_LIFECYCLE.md)已确认 descriptor+12 的空导航表分支、
+bind 时填充子控件、bulk cleanup 与析构的不同责任；纯析构只清列表节点。文本创建
+现查询实际 child ID 冲突，桥保存/恢复 owner+108 共享遍历游标。124条原厂指令、
+12项数据、16个定向host场景和16个对象通过。下一项具体 owner 捕获/撤销 hook、
+独立资源副本及 H/L viewer；没有将已知调用位置等同于已安装的生命周期闭包。

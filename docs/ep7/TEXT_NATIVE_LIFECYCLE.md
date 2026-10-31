@@ -29,7 +29,9 @@ parent/text 类和保护字段，不能推广为其他原生 UI 方法的返回�
 `ep7_text_native_open` 在任何 owner/resource 字节读取前先核对实际 GUI TCB
 domain0/entry60dd5067，再调用具体入口提供的生命周期资格回调。该回调必须证明
 live1360 owner、已初始化 child list、稳定 live service、descriptor94 及嵌入引用、
-独立 widget ID、font/layout 和完整串行范围。vtable 比较不能替代这些事实。
+font/layout 和完整串行范围。vtable 比较不能替代这些事实。ID 的实际冲突查询已随后
+接入，见 [owner 生命周期与查询](UI_OWNER_LIFECYCLE.md)；查询至 attach 期间的列表
+存活与成员稳定仍由具体入口保障。
 
 之后核对精确 owner/service 类型、descriptor8010、两条 rollback guard、service
 layout count=2/index=0或1。整个调用保持 owner 的 allocator selection，最后恢复
@@ -78,3 +80,7 @@ CALL[a2],8；bind 使用 CALL[],0，由原生方法自己的 MOVM/add 创建 12 
 下一项落实真实 owner 的入口/结束位置及资源 descriptor+12 的语义，然后用独立
 H/L 资源副本和具体 qualifier 驱动上述流程。当前 `qualify` 是必须完成的入口契约，
 没有拿 constant-true provider 或假锁代替它；G4/G6 尚未整体通过。
+
+后续节点已定位空导航表消费和 owner 的 bind/cleanup/destructor 关系，并接入实际
+ID 冲突查询与共享游标恢复。上述96指令/15场景/15对象记录为本页初始节点的验证；
+当前124指令、16场景、16对象和代码尺寸见 [后续报告](UI_OWNER_LIFECYCLE.md)。

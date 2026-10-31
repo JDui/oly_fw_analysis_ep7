@@ -17,7 +17,9 @@ enum { EP7_TEXT_NATIVE_RETAINED=-2 };
 /* Before ANY owner/resource byte read, qualify must establish the live fully
  * initialized exact1360 display container, its initialized child list, stable
  * live GUI service, exclusive/non-reentrant UI ownership, readable94 descriptor
- * plus embedded-reference lifetimes, independent widget ID and valid font/layout.
+ * plus embedded-reference lifetimes and valid font/layout. After qualification,
+ * open checks the immediate child list for the descriptor's ID before allocating,
+ * preserving the stock iterator. Stable membership through attachment is required.
  * This is the concrete UI entry/installer's obligation, not a boolean substitute
  * for it. Text is a separately qualified readable EP7_TEXT_UNITS UTF16 buffer.
  * The admitted scope lasts through every callback and final context restoration.
@@ -35,4 +37,9 @@ int ep7_text_native_retry_rollback(struct ep7_text_native *);
 int ep7_text_native_revoke(struct ep7_text_native *);
 int ep7_gcc_ui_attach(void *owner,void *child);
 int ep7_gcc_text_bind(void *child,void *owner);
+/* Qualified live initialized exact display owner, serialized GUI scope and
+ * stable list membership are prerequisites. Returns the immediate child by
+ * 16-bit ID, or NULL; preserves owner+108's shared iterator. Does not acquire
+ * a lease, recurse into nested containers or reserve an absent ID. */
+void *ep7_gcc_ui_find_child(void *owner,uint16_t widget_id);
 #endif

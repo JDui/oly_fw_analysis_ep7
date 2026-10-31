@@ -71,7 +71,11 @@ int ep7_text_native_open(struct ep7_text_native *s,void *owner,const void *resou
         half(service+80)!=2||half(service+82)>1||word(o)!=UINT32_C(0x61032f10)||
         half(r)!=0x8010||r[68]!=0||r[84]!=0) return EP7_TEXT_CREATE_REJECTED;
     const struct ep7_text_lifecycle_ops ops={s,create,initialized,destroy,attach,bind,set};
-    s->busy=1;s->owner=owner;
+    s->busy=1;
+    if (ep7_gcc_ui_find_child(owner,half(r+2))) {
+        s->busy=0;return EP7_TEXT_CREATE_REJECTED;
+    }
+    s->owner=owner;
     prior=ep7_gcc_ui_context_exchange((void *)service,half(o+28));
     result=ep7_text_create_attach(&s->attached,&ops,owner,resource,text,1);
     ep7_gcc_ui_context_select((void *)service,prior);

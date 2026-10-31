@@ -47,7 +47,8 @@ if ui_mode:
       ('text_factory_caller','factory_caller.c'),('text_lifecycle','lifecycle.c')]})
  if args.ui_lifecycle_only:
   files.update({'text_native_lifecycle':core/'text_lifecycle/native_lifecycle.c',
-      'text_attach_bind':core/'text_lifecycle/attach_bind.s','text_setter':core/'text_viewer/set_text.s'})
+      'text_attach_bind':core/'text_lifecycle/attach_bind.s','text_setter':core/'text_viewer/set_text.s',
+      'text_find_child':core/'text_lifecycle/find_child.s'})
 if materializer_mode:
  files={'materializer_bridge':core/'snapshot_transport/native/materializer_bridge.s',
         'materializer_layout':core/'snapshot_transport/native/materializer_layout.c',
@@ -181,6 +182,19 @@ with tempfile.TemporaryDirectory() as temp:
     raise ValueError('attach/bind native targets changed')
    objects[name].update(checked_instructions=10,own_frame_bytes=[4,4],native_frames=[8,12],
        bind_native_frame_is_self_prologue=True)
+  if name=='text_find_child':
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   expected=[('add','-12,sp'),('mov','d0,a0'),('mov','a0,(4,sp)'),
+       ('mov','(108,a0),d0'),('mov','d0,(8,sp)'),('mov','d1,d0'),('call',None),
+       ('mov','(4,sp),a1'),('mov','(8,sp),d0'),('mov','d0,(108,a1)'),
+       ('mov','a0,d0'),('ret','[],12')]
+   if len(ins)!=len(expected) or any(a[0]!=b[0] or (b[1] is not None and a[1]!=b[1]) for a,b in zip(ins,expected)):
+    raise ValueError('child lookup argument/iterator/frame routing changed')
+   if not ins[6][1].endswith(',[],0') or re.findall(r'R_MN10300_(\w+)\s+([^\n]+)',dis)!=[
+       ('PCREL32','ep7_stock_ui_find_child_unresolved+0x1')]:
+    raise ValueError('child lookup native target/frame changed')
+   objects[name].update(checked_instructions=12,own_frame_bytes=12,native_self_frame_bytes=24,
+       owner_list_offset=92,preserved_iterator_offset=108,pointer_result_register='a0')
   if name=='ui_context_bridges':
    ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
    expected=[('add','-4,sp'),('call',None),('mov','a0,d0'),('ret','[],4'),
@@ -488,7 +502,8 @@ if ui_mode:expected={'ep7_stock_get_tid_unresolved','ep7_stock_ui_service_unreso
     'ep7_stock_ui_context_get_unresolved','ep7_stock_ui_context_set_unresolved',
     'ep7_stock_text_cleanup_unresolved','ep7_stock_text_destructor_unresolved'}
 if ui_create_mode:expected.add('ep7_stock_widget_factory_unresolved')
-if args.ui_lifecycle_only:expected|={'ep7_stock_ui_attach_unresolved','ep7_stock_text_bind_unresolved','ep7_stock_text_setter_unresolved'}
+if args.ui_lifecycle_only:expected|={'ep7_stock_ui_attach_unresolved','ep7_stock_text_bind_unresolved',
+    'ep7_stock_text_setter_unresolved','ep7_stock_ui_find_child_unresolved'}
 if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved','ep7_stock_receive_wrapper_unresolved'}

@@ -7,7 +7,7 @@
 
 static uint8_t owner[1360],service[2880],child[180],resource[94];
 static uint16_t text[EP7_TEXT_UNITS];
-static struct {int mode,queries,qualifies,creates,attaches,binds,sets,destroys,member;} f;
+static struct {int mode,queries,qualifies,lookups,creates,attaches,binds,sets,destroys,member;} f;
 static void put32(uint8_t *p,uint32_t n)
 { for (unsigned i=0;i<4;i++) p[i]=(uint8_t)(n>>(8*i)); }
 bool ep7n_native_current_task(uint32_t anchor,ep7n_task *t)
@@ -30,6 +30,11 @@ static int qualify(void *ctx,const void *o,size_t on,const void *r,size_t rn)
     assert(ctx==&f&&on==1360&&rn==94);f.qualifies++;
     if (f.mode==6) return 0; /* o/r deliberately invalid; never inspect them. */
     assert(o==owner&&r==resource);return 1;
+}
+void *ep7_gcc_ui_find_child(void *o,uint16_t id)
+{
+    assert(o==owner&&id==0x7e10&&f.qualifies==1);f.lookups++;
+    return f.mode==15?(void *)(uintptr_t)1:NULL;
 }
 void ep7_gcc_text_factory(void *o,const void *r,struct ep7_text_factory_result *out)
 {
@@ -60,13 +65,14 @@ int ep7_gcc_set_text_unresolved_binding(void *p,const uint16_t *t)
 }
 int main(void)
 {
-    for (int mode=0;mode<15;mode++) {
+    for (int mode=0;mode<16;mode++) {
         memset(&f,0,sizeof f);memset(owner,0,sizeof owner);memset(service,0,sizeof service);
         memset(child,0,sizeof child);memset(resource,0,sizeof resource);memset(text,0,sizeof text);
         struct ep7_text_native state={0};f.mode=mode;text[0]='H';
         put32(owner,0x61032f10);put32(service,0x60faaab4);put32(child,0x60faec7c);
         service[4]=service[5]=1;service[80]=2;service[28]=0x81;service[29]=0xfe;
         owner[28]=child[28]=3;owner[29]=child[29]=4;resource[0]=child[4]=0x10;resource[1]=child[5]=0x80;
+        resource[2]=0x10;resource[3]=0x7e;
         if (mode==8) service[82]=2;
         if (mode==9) owner[0]++;
         if (mode==11) for (unsigned i=0;i<EP7_TEXT_UNITS;i++) text[i]='X';
@@ -88,7 +94,9 @@ int main(void)
             assert(!state.fresh.child&&!state.owner&&service[28]==0x81&&service[29]==0xfe);
         } else assert(result==-1&&!state.attached.child&&!state.fresh.child);
         if (mode==2||mode==3) assert(f.destroys==1&&!f.member);
-        if (mode==6||mode==7||mode==8||mode==9||mode==11||mode==13||mode==14) assert(!f.creates);
+        if (mode==6||mode==7||mode==8||mode==9||mode==11||mode==13||mode==14)
+            assert(!f.lookups&&!f.creates);
+        if (mode==15) assert(f.lookups==1&&!f.creates&&!state.busy&&!state.owner);
         if (mode==7) assert(!f.qualifies);
         if (state.attached.child) {
             assert(!ep7_text_native_retry_rollback(&state));

@@ -14,7 +14,8 @@ def check():
                 '-I'+str(CORE),*[str(p) for p in sources],'-o',str(exe)],check=True,timeout=60)
             subprocess.run([str(exe)],check=True,timeout=30,env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0'))
             runs[name]=dict(passed=True)
-    return dict(scope=__doc__,runs=runs,scenarios=15,actual_native_context_and_rollback_C_used=True,
+    return dict(scope=__doc__,runs=runs,scenarios=16,actual_native_context_and_rollback_C_used=True,
+        live_id_collision_rejected_before_allocation=True,child_lookup_native_leaf_mocked=True,
         retained_cleanup_rejection_exercised=True,normal_bind_event_minus_one_exercised=True,
         target_executed=False,concrete_gui_owner_entry_qualified=False,resource_semantics_fully_qualified=False,
         hash_checks_performed=False,firmware_built=False,renderer_ready=False)
