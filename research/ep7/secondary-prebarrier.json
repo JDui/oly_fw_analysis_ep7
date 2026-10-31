@@ -1,0 +1,202 @@
+{
+  "scope": "Bound peer-core startup to its release wait and classify its printing calls.\n\nExplicit local-register/UART-ready fixtures; no allocator, heap, NAND, IRQ or\ncoherence model. The original code executes in the existing strict GNU engine.\n",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103",
+  "engine_bytes": 8845992,
+  "exact_decoded_instruction_addresses": 157,
+  "helper_functions": [
+    {
+      "entry": "0x60054a7a",
+      "instruction_count": 16,
+      "reached_extent": [
+        "0x60054a7a",
+        "0x60054aa3"
+      ],
+      "maximum_own_sp_depth": 8,
+      "maximum_direct_stack_address_depth": 4,
+      "stack_operations": [],
+      "calls": [
+        {
+          "site": "0x60054a92",
+          "target": "0x60020429",
+          "frame": 8,
+          "register_save_bytes": 4,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60020429,[d2],8"
+        },
+        {
+          "site": "0x60054a89",
+          "target": "0x60020429",
+          "frame": 8,
+          "register_save_bytes": 4,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60020429,[d2],8"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x60054aa0",
+          "mnemonic": "ret",
+          "operands": "[a2],8",
+          "local_depth": 0,
+          "inferred_incoming_frame": 8
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    {
+      "entry": "0x60020429",
+      "instruction_count": 23,
+      "reached_extent": [
+        "0x60020429",
+        "0x60020461"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [
+        {
+          "site": "0x60020459",
+          "target": "0x60023637",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60023637,[],0"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x6002045e",
+          "mnemonic": "ret",
+          "operands": "[d2],8",
+          "local_depth": 0,
+          "inferred_incoming_frame": 8
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    {
+      "entry": "0x60023637",
+      "instruction_count": 11,
+      "reached_extent": [
+        "0x60023637",
+        "0x60023663"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [
+        {
+          "site": "0x60023660",
+          "mnemonic": "retf",
+          "operands": "[],0",
+          "local_depth": 0,
+          "inferred_incoming_frame": 0
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    }
+  ],
+  "helper_call_frame_mismatches": [],
+  "cases": [
+    {
+      "peer": 1,
+      "entry": "0x60027117",
+      "wait": "0x60027219",
+      "after_wait": "0x60027223",
+      "startup": {
+        "status": "returned",
+        "completed": 81,
+        "fault": null,
+        "final_pc": "0x60027219",
+        "final_sp": "0x470007f8"
+      },
+      "uart_output": "1",
+      "zero_release": {
+        "status": "instruction_limit",
+        "completed": 3,
+        "fault": null,
+        "final_pc": "0x60027219",
+        "final_sp": "0x470007f8"
+      },
+      "nonzero_release": {
+        "status": "returned",
+        "completed": 3,
+        "fault": null,
+        "final_pc": "0x60027223",
+        "final_sp": "0x470007f8"
+      },
+      "minimum_established_sp": "0x470007e8",
+      "known_pre_wait_stack_depth": 20,
+      "helper_stack_or_uart_only_with_logger_disabled": true,
+      "heap_and_private_payload_unmapped": true,
+      "interrupt_enable_and_level_zero": true
+    },
+    {
+      "peer": 2,
+      "entry": "0x60027575",
+      "wait": "0x60027624",
+      "after_wait": "0x6002762e",
+      "startup": {
+        "status": "returned",
+        "completed": 81,
+        "fault": null,
+        "final_pc": "0x60027624",
+        "final_sp": "0x470007f8"
+      },
+      "uart_output": "2",
+      "zero_release": {
+        "status": "instruction_limit",
+        "completed": 3,
+        "fault": null,
+        "final_pc": "0x60027624",
+        "final_sp": "0x470007f8"
+      },
+      "nonzero_release": {
+        "status": "returned",
+        "completed": 3,
+        "fault": null,
+        "final_pc": "0x6002762e",
+        "final_sp": "0x470007f8"
+      },
+      "minimum_established_sp": "0x470007e8",
+      "known_pre_wait_stack_depth": 20,
+      "helper_stack_or_uart_only_with_logger_disabled": true,
+      "heap_and_private_payload_unmapped": true,
+      "interrupt_enable_and_level_zero": true
+    }
+  ],
+  "all_assertions_passed": true,
+  "logger": {
+    "enable": "0xa26a4a58",
+    "buffer_pointer": "0xa26a4b40",
+    "index": "0xa26a4b44",
+    "ring_mask": 8191,
+    "flag_in_reviewed_startup_clear_span": true,
+    "enabled_branch_has_computed_buffer_write": true,
+    "enabled_branch_executed": false
+  },
+  "concluded": {
+    "print_call_closure_has_no_allocator_call": true,
+    "explicit_cold_peer_prefix_accesses_no_heap": true,
+    "global_cross_core_quiescence_proven": false,
+    "boot_prefix_residency_proven": false,
+    "approved_for_placement": false
+  },
+  "hash_checks_performed": false,
+  "firmware_modified": false,
+  "firmware_built": false,
+  "hardware_executed": false,
+  "limits": [
+    "Native peripheral stores, UART readiness and release inputs use explicit local memory fixtures. Physical reset/release/coherence are not modeled.",
+    "The logger-disabled value lies in a known startup clear interval but actual DMA completion and absence of other writers have not been proved here.",
+    "The enabled logger branch writes through a stored pointer. It is retained as a conditional memory-ownership frontier, not hidden by an absence of allocator calls.",
+    "Execution stops before the post-release helper copy. IRQ/NMI, kernel startup, pool initialization and whole-boot ownership are outside this probe."
+  ]
+}

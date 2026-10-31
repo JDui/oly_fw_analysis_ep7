@@ -66,12 +66,19 @@ def register_bytes(operands):
 
 
 class NativeGraph:
-    def __init__(self, decoded, objdump):
+    def __init__(self, decoded, objdump, *, code_ranges=None):
         self.decoded = decoded
         self.objdump = objdump
         self.data = decoded.read_bytes()
         if len(self.data) != 26214336:
             raise ValueError('unsupported decoded main length')
+        # Keep the established kernel-only default. Other bounded reviews must
+        # explicitly supply their exact code windows; never search all of main.
+        self.code_ranges = (KERNEL,) if code_ranges is None else tuple(code_ranges)
+        if not self.code_ranges or any(not BASE <= lo < hi <= BASE+len(self.data)
+                                       for lo,hi in self.code_ranges):
+            raise ValueError('invalid native CFG review ranges')
+        self.range_kind = 'kernel' if code_ranges is None else 'native'
         self.decoded_instructions = {}
         self.functions = {}
         self.function_instruction_addresses = {}
@@ -81,10 +88,13 @@ class NativeGraph:
     def close(self):
         self.temp.cleanup()
 
+    def in_reviewed_code(self, pc):
+        return any(lo <= pc < hi for lo,hi in self.code_ranges)
+
     def instruction(self, pc):
         if pc not in self.decoded_instructions:
             # Explicit evidence witnesses may live outside the CFG search range.
-            # function()/push() still restrict graph exploration to KERNEL.
+            # function()/push() still restrict exploration to explicit ranges.
             if not BASE <= pc <= BASE+len(self.data)-16:
                 raise ValueError('instruction outside decoded input '+hex(pc))
             # Objdump only needs the reached instruction and its longest possible
@@ -103,8 +113,8 @@ class NativeGraph:
     def function(self, entry):
         if entry in self.functions:
             return self.functions[entry]
-        if not KERNEL[0] <= entry < KERNEL[1]:
-            raise ValueError('function outside reviewed kernel search interval '+hex(entry))
+        if not self.in_reviewed_code(entry):
+            raise ValueError('function outside reviewed '+self.range_kind+' search interval '+hex(entry))
         seen = {}; work = deque([(entry,0,None)]); calls = {}; returns = {}; boundaries = {}; stack_ops = {}
         high = 0; reached = set(); loop_sites = {}; direct_memory_low = 0
         while work:
@@ -124,8 +134,8 @@ class NativeGraph:
                 boundaries[(pc,kind)] = dict(site=hex(pc),kind=kind,depth=depth,mnemonic=mn,operands=ops)
 
             def push(address, new_depth=depth, lar=loop):
-                if not KERNEL[0] <= address < KERNEL[1]:
-                    boundary('control_leaves_reviewed_kernel_range')
+                if not self.in_reviewed_code(address):
+                    boundary('control_leaves_reviewed_'+self.range_kind+'_range')
                 else:
                     work.append((address,new_depth,lar))
 
@@ -144,8 +154,8 @@ class NativeGraph:
                     target = int(match[1],16); frame = int(match[3]) if mn == 'call' else 0
                     save_bytes=register_bytes(ops) if mn == 'call' else 0
                     direct_memory_low=max(direct_memory_low,depth+save_bytes)
-                    if not KERNEL[0] <= target < KERNEL[1]:
-                        boundary('call_leaves_reviewed_kernel_range')
+                    if not self.in_reviewed_code(target):
+                        boundary('call_leaves_reviewed_'+self.range_kind+'_range')
                     else:
                         calls[(pc,target,depth)] = dict(site=hex(pc),target=hex(target),
                             frame=frame,register_save_bytes=save_bytes,
