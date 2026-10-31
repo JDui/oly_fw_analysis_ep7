@@ -84,12 +84,13 @@ receipt只表示setter接受，不是独立input lease或完整renderer_ready。
   H/L/profile切换、同MVC重新进入、未发布/停止/非法mode/poll争用、owner失效、setter
   失败、重入及serial耗尽。native任务/分配/property/队列/绘制是mock，mask仅fixture开启。
 - [目标对象报告](../../research/ep7/ui-viewer-join-target.json)：41对象、44个实际原厂
-  外部符号，当前显示组合软件符号闭合；不包括未完成的input provider。viewer桥71字节/
+  外部符号，该批显示组合软件符号闭合；不包括后续接合的input provider。viewer桥71字节/
   27指令，mode桥36字节/15指令；model512字节+BSS68，viewer C577字节+BSS32，
   owner C2275字节+BSS196。refresh/frame/present局部帧104/52/44；原厂被调链及中断
   总栈仍待G6。没有link、目标执行或整体固件编译。
 
 入口：`ui_render/check.py`、`tools/ep7_ui_viewer_join.py`、目标检查器`--ui-viewer-only`。
 当前owner/MVC/content目标模式也包括已接合依赖；早期独立host fixture在范围外mock
-新回调。下一项是实际事件域/完整拨轮delta、input provider、COLOR gating和禁用归一，
-随后与G1/G2/G3/G6汇合。G4/G6/G8仍未整体通过。
+新回调。[实际输入接合](UI_INPUT_BINDING.md)现已提供完整事件scope和持有事务，复用
+此显示链；owner present拆出同一组hold/release检查，供输入全过程持有。下一项是
+COLOR gating和禁用归一，随后与G1/G2/G3/G6汇合。G4/G6/G8仍未整体通过。

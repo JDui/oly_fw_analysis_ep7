@@ -19,10 +19,11 @@ mode.add_argument('--ui-selector-only',action='store_true',help='compile guarded
 mode.add_argument('--ui-mvc-only',action='store_true',help='compile GUI041d container/parent/viewer lifetime capture and pre-destruction revocation')
 mode.add_argument('--ui-content-only',action='store_true',help='compile owned H/L content rebuild with native destruction and MVC/cohort closure')
 mode.add_argument('--ui-viewer-only',action='store_true',help='compile joined MVC/content/model/owner/viewer and shared runtime core closure')
+mode.add_argument('--ui-input-only',action='store_true',help='compile event-scoped full wheel samples and native input transaction with the joined UI graph')
 args=parser.parse_args()
 receiver_mode=args.receive_abi_only or args.queue_pipeline_abi_only
 materializer_mode=args.materializer_abi_only or receiver_mode
-graph_mode=args.ui_owner_only or args.ui_mvc_only or args.ui_content_only or args.ui_viewer_only
+graph_mode=args.ui_owner_only or args.ui_mvc_only or args.ui_content_only or args.ui_viewer_only or args.ui_input_only
 ui_lifecycle_mode=args.ui_lifecycle_only or graph_mode
 ui_create_mode=args.ui_create_only or ui_lifecycle_mode
 ui_mode=args.ui_context_only or ui_create_mode
@@ -82,6 +83,10 @@ if selector_mode:
       'poll_provider':core/'poll_lock_provider/ep7_sem_provider.c',
       'bootstrap':core/'poll_lock_provider/bootstrap/bootstrap.c',
       'transport':core/'snapshot_transport/transport.c','wire':core/'snapshot_transport/wire.c'})
+if args.ui_input_only:
+ files.update({n:core/'ui_native'/p for n,p in [('ui_input','input.c'),('ui_input_cohort','cohort.c'),
+     ('ui_input_bridges','input_bridges.s'),('ui_input_route','bridge.c'),('ui_event_bridge','bridge.s')]})
+ files['ui_raw']=core/'ep7p_ui_raw.c'
 if materializer_mode:
  files={'materializer_bridge':core/'snapshot_transport/native/materializer_bridge.s',
         'materializer_layout':core/'snapshot_transport/native/materializer_layout.c',
@@ -154,6 +159,13 @@ with tempfile.TemporaryDirectory() as temp:
        re.sub(r'\b[0-9a-f]+\s+<[^>]+>','',operands))]
    if suspicious:raise ValueError('unqualified loop/extended register state in '+name+': '+repr(suspicious))
    objects[name]['loop_extended_state_audited']=True
+  if name=='ui_input_bridges':
+   validator=runpy.run_path(str(core/'ui_native/validate_input.py'))
+   objects[name].update(validator['validate'](dis))
+  if name=='ui_event_bridge':
+   legacy=runpy.run_path(str(core/'ui_native/check.py'))
+   count=legacy['validate_assembly'](dis,subprocess.check_output([prefix+'objdump','-h',str(obj)],text=True))
+   objects[name].update(checked_instructions=count,own_frame_bytes=48,stock_delegate_original_preserved=True)
   if name=='text_factory_bridge':
    # CLR D0 is opcode00. At a local-symbol boundary objdump's default zero
    # suppression can hide this real instruction, so decode zero bytes too.
@@ -703,6 +715,13 @@ if mvc_mode:expected|={'_ep7_stock_gui_color_entry_unresolved','_ep7_stock_gui_c
     'ep7_stock_mvc_scalar_new_unresolved','ep7_stock_mvc_scalar_delete_unresolved',
     'ep7_stock_mvc_base_init_unresolved','ep7_stock_mvc_base_destroy_unresolved'}
 if graph_mode:expected|={'ep7_stock_property_service_unresolved','ep7_stock_mvc_viewer_draw_unresolved'}
+if args.ui_input_only:expected|={'_ep7_stock_gui_machine_unresolved','_ep7_stock_ui_input_gate_unresolved',
+    '_ep7_stock_ui_repeat_context_unresolved','ep7_stock_ui_preprocess_unresolved','ep7_stock_ui_dispatch_unresolved',
+    'ep7_stock_ui_wheel_set_unresolved','ep7_stock_ui_event_unresolved','ep7_stock_ui_drop_event_unresolved',
+    '_ep7_stock_ui_preprocess_call_unresolved','_ep7_stock_ui_dispatch_call_unresolved',
+    '_ep7_stock_ui_wheel_1_call_unresolved','_ep7_stock_ui_wheel_0_call_unresolved',
+    '_ep7_stock_ui_wheel_2_call_unresolved','_ep7_stock_ui_wheel_4_call_unresolved',
+    '_ep7_stock_ui_wheel_3_call_unresolved'}
 if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved','ep7_stock_receive_wrapper_unresolved'}
@@ -737,5 +756,6 @@ if ui_lifecycle_mode:scope='Actual text create/attach/bind/set/rollback C and na
 if args.ui_owner_only:scope='Request278 owner capture and matching retirement with native table cohort and text lifecycle; cold installation, bypass closure, GUI exclusion, MVC/renderer and placement remain unqualified'
 if args.ui_selector_only:scope='Native ID193 post-initializer six-entry storage upgrade with H/L disabled and allocation-failure stock fallback; no MVC/viewer/input admission or installation'
 if graph_mode:scope='Joined GUI041d graph/content, shared published core UI session and actual owner text update at viewer/owner completion; input/gating, native bypass closure, installation/placement and LCD acceptance still pending'
+if args.ui_input_only:scope='Complete preprocess/sample/engine scope and held H/L input transaction joined to actual UI graph/core; COLOR gating, cold placement/installation, hardware and LCD acceptance pending'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))

@@ -2,7 +2,8 @@
  * Entry is native CALLS with d0=event,d1=parameter,a0=parent. Not a midfunction
  * patch. The original full parent implementation has its own prologue.
  * Stack at entry S: RA[S]; MOVM saves four registers in S-16..S-4;
- * reserve32 gives S-48. GCC outgoing0..8; input12..23; savedregs32..47.
+ * reserve32 gives S-48. GCC outgoing0..11; input12..31; savedregs32..47.
+ * Container dispatch CALLS60e4d0ff supplies RA60e4d101 and A3=container.
  */
 .text
 .global ep7_native_ui_event_bridge
@@ -13,6 +14,9 @@ ep7_native_ui_event_bridge:
  mov d0,(12,sp)
  mov d1,(16,sp)
  mov a0,(20,sp)
+ mov (48,sp),d0
+ mov d0,(24,sp)
+ mov a3,(28,sp)
  mov sp,a0
  add 12,a0
  mov a0,d0

@@ -149,15 +149,13 @@ void ep7u_before_retire(void *owner,unsigned stage)
      * and permanent resource storage even when this native owner is freed. */
     s->owner=NULL;
 }
-int ep7u_present(const uint16_t *text,uint32_t *generation)
+int ep7u_hold_ready(uint32_t generation)
 {
-    struct ep7u_owner *s=&ep7_native_ui_owner;size_t n;
+    struct ep7u_owner *s=&ep7_native_ui_owner;
     if (!atomic_load_explicit(&s->started,memory_order_acquire)) return 0;
     require_live_call(s);
-    if (!text||s->stopped||s->depth||s->opening||s->text.busy||!s->active||!s->display_ready||
+    if (!generation||s->generation!=generation||s->stopped||s->depth||s->opening||s->text.busy||!s->active||!s->display_ready||
         !s->owner||!s->text.attached.child||!s->text.attached.bound) return 0;
-    for (n=0;n<EP7_TEXT_UNITS&&text[n];n++) {}
-    if (n==EP7_TEXT_UNITS) return 0;
     const uint8_t *service=s->service,*owner=s->owner;
     if (!service_shape(service)||service[2032]||current_owner(service)!=owner) {
         s->active=s->display_ready=0;return 0; /* No substituted owner dereference. */
@@ -170,18 +168,30 @@ int ep7u_present(const uint16_t *text,uint32_t *generation)
     }
     s->text.busy=1;
     const uint8_t *child=s->text.attached.child;
-    int result=0;
     if (ep7_gcc_ui_find_child((void *)owner,EP7_HL_TEXT_WIDGET_ID)==child&&
         word(child)==UINT32_C(0x60faec7c)&&half(child+4)==0x8010&&
         half(child+6)==EP7_HL_TEXT_WIDGET_ID&&word(child+20)==(uint32_t)(uintptr_t)owner&&
-        half(child+28)==half(owner+28)) {
-        uint16_t prior=ep7_gcc_ui_context_exchange((void *)service,half(owner+28));
-        result=ep7_gcc_set_text_unresolved_binding((void *)child,text);
-        ep7_gcc_ui_context_select((void *)service,prior);
-        require_live_call(s);
-        if (current_owner(service)!=owner) inconsistent(12);
-    }
+        half(child+28)==half(owner+28)) return 1;
+    s->text.busy=0;s->active=s->display_ready=0;return 0;
+}
+void ep7u_release_ready(uint32_t generation)
+{
+    struct ep7u_owner *s=&ep7_native_ui_owner;
+    require_live_call(s);
+    if (!s->text.busy||s->generation!=generation||current_owner(s->service)!=s->owner) inconsistent(12);
     s->text.busy=0;
+}
+int ep7u_present(const uint16_t *text,uint32_t *generation)
+{
+    struct ep7u_owner *s=&ep7_native_ui_owner;size_t n;
+    if (!text) return 0;
+    for (n=0;n<EP7_TEXT_UNITS&&text[n];n++) {}
+    if (n==EP7_TEXT_UNITS||!ep7u_hold_ready(s->generation)) return 0;
+    uint32_t held=s->generation;
+    uint16_t prior=ep7_gcc_ui_context_exchange(s->service,half((const uint8_t *)s->owner+28));
+    int result=ep7_gcc_set_text_unresolved_binding(s->text.attached.child,text);
+    ep7_gcc_ui_context_select(s->service,prior);
+    ep7u_release_ready(held);
     if (result!=1) { s->active=s->display_ready=0;return 0; }
     if (generation) *generation=s->generation;
     return 1;

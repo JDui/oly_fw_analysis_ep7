@@ -1,0 +1,27 @@
+{
+  "scope": "Actual input scope/router joined to existing MVC, owner, runtime and portable core C.",
+  "runs": {
+    "strict": {
+      "passed": true
+    },
+    "asan_ubsan": {
+      "passed": true
+    }
+  },
+  "new_input_scenario_groups": 8,
+  "reused_viewer_mvc_content_groups": 19,
+  "five_actual_sample_origins_modeled": true,
+  "packet_parameter_not_used_as_delta": true,
+  "complete_prepare_and_engine_scope": true,
+  "event_consumed_once": true,
+  "owner_and_mvc_held_through_dispatch": true,
+  "real_runtime_core_session_renderer_lifecycle_C_used": true,
+  "native_calls_task_and_stack_extent_mocked": true,
+  "input_provider_implemented": true,
+  "hl_mask_enable_fixture_only": true,
+  "installed": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "lcd_acceptance": false,
+  "hash_checks_performed": false
+}

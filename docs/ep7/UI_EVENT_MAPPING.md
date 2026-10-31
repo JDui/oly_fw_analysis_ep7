@@ -88,3 +88,12 @@ No GPIO identity, touch, firmware installer, or H/L camera execution is claimed.
 callback/vtable/dispatch/machine tables and instruction witnesses in bounded
 windows. Report publishes metadata/hashes, not firmware bytes or bulk disassembly.
 Scratch listings stay ignored. Tests reject wrong stock and altered operands.
+
+## Current implementation continuation
+
+[Input binding](UI_INPUT_BINDING.md) now captures the full local count at all five
+setter CALL sites, inside a complete preprocessor/engine scope. It also qualifies
+the real container return PC and holds MVC/owner across the actual raw dispatch.
+The current no-SHA check adds original9031/service1 and9032/service0 to the three
+recoding routes described above. INFO has its own zero-only modal gate. H/L masks
+remain disabled pending COLOR gating/normalization; no hardware route is claimed.

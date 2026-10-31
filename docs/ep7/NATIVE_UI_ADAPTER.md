@@ -36,7 +36,7 @@ Native factory creation returns object in a0; parent constructor60e26108 receive
 
 ## Exact unresolved installation boundaries
 
-The callback loader join is documented below; real installation still requires current table/lifetime qualification. Every parent event arm must be mapped to its physical/logical wheel semantics; static forwarding/guards alone do not establish all wheel delta signs/repeat units. Six-entry allocation, MVC ownership and private H/L child destruction now have concrete candidates and targeted checks. Session/frame and native text update are joined below; input admission, COLOR gating, visual acceptance and installation/unwind remain incomplete. Native installation still depends on those seams and qualified G6 placement.
+The callback loader join is documented below; real installation still requires current table/lifetime qualification. Every parent event arm must be mapped to its physical/logical wheel semantics; static forwarding/guards alone do not establish all wheel delta signs/repeat units. Six-entry allocation, MVC ownership and private H/L child destruction now have concrete candidates and targeted checks. Session/frame and native text update are joined below; actual input is joined below; COLOR gating, visual acceptance and installation/unwind remain incomplete. Native installation still depends on those seams and qualified G6 placement.
 
 Current continuation: [UI resource origin](UI_RESOURCE_ORIGIN.md) now connects
 6025bb34 to61fc3874 through the actual startup copy recipe, conditional on successful
@@ -53,5 +53,7 @@ sites, including60e269f0, with an independently allocated56-byte child. Failed H
 allocation retains the prior object and restores both selector and remembered
 indices. [Viewer/owner joining](UI_VIEWER_JOIN.md) now binds an independent UI
 session to the same published core and updates the owned native text child at
-both completion points. H/L masks stay disabled; actual input admission and
-COLOR gating remain incomplete.
+both completion points. [Input binding](UI_INPUT_BINDING.md) now copies the full
+count inside a complete preprocessor/engine scope and holds both lifetimes
+through actual dispatch. H/L masks stay disabled pending COLOR gating and
+normalization; installation and native acceptance remain separate gates.

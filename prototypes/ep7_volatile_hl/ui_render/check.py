@@ -3,13 +3,14 @@
 import json,os,subprocess,tempfile
 from pathlib import Path
 HERE=Path(__file__).resolve().parent;CORE=HERE.parent
-def check():
-    sources=['ui_render/viewer.c','ui_render/test_viewer.c','ui_model/model.c',
+SOURCES=['ui_render/viewer.c','ui_render/test_viewer.c','ui_model/model.c',
         'ui_mvc/lifetime.c','ui_mvc/cohort.c','ui_content/content.c','ui_owner/owner.c','ui_owner/cohort.c',
         'text_lifecycle/native_lifecycle.c','text_lifecycle/lifecycle.c','text_rollback/native_context.c',
         'text_rollback/rollback.c','text_viewer/text.c','ep7p_ui.c','ep7p.c','ep7p_decode.c',
         'runtime/runtime.c','runtime/queue_context.c','poll_lock_provider/ep7_sem_provider.c',
         'poll_lock_provider/bootstrap/bootstrap.c','snapshot_transport/transport.c','snapshot_transport/wire.c']
+def check():
+    sources=SOURCES
     runs={}
     with tempfile.TemporaryDirectory(prefix='ep7-ui-viewer-') as temp:
         for name,extra in [('strict',[]),('asan_ubsan',['-fsanitize=address,undefined','-fno-sanitize-recover=all'])]:

@@ -234,3 +234,10 @@ viewer/显示owner和真实输入资格；G4/G6/G8仍未整体通过。
 115条原厂指令、7组新增+12组复用host和41目标对象通过。H/L mask仍禁用；下一项
 落实实际事件域/完整拨轮delta、input provider和COLOR gating/禁用归一，再关闭
 G1/G2/G3退出及G6放置/安装/总栈。整体固件编译仍等待G8准入。
+
+[实际输入接合](UI_INPUT_BINDING.md)已实现完整preprocess/engine scope、五处完整拨轮
+计数来源、container返回PC资格和一次消费；MVC与显示owner持有覆盖整个raw dispatch。
+INFO独立分支也要求实际input gate为0，并复用原厂队列去重。178条原厂指令、8组新增
+与19组复用host和47目标对象通过，admission软件接口空缺已关闭。H/L仍默认禁用；
+下一项COLOR gating、失效归一和相关计时/重建状态，然后继续G1/G2/G3/G6关卡。
+这些对象检查不是整体固件编译，尚未达到G8。

@@ -38,12 +38,19 @@ static void pointer(uint8_t *p,const void *v)
 { assert((uintptr_t)v<=UINT32_MAX);put32(p,(uint32_t)(uintptr_t)v); }
 bool ep7n_native_current_task(uint32_t anchor,ep7n_task *task)
 {
-    (void)anchor;queries++;*task=(ep7n_task){0x101,0,0x1000+wrong_task,0x60dd5067,0x2000,16384};
+    (void)anchor;queries++;*task=(ep7n_task){0x101,0,0x1000+wrong_task,0x60dd5067,0x2000,
+#ifdef EP7_UI_INPUT_INTEGRATION
+        0x1000000 /* Static native packet surrogate resides inside this fixture extent. */
+#else
+        16384
+#endif
+    };
     return true;
 }
 _Noreturn void ep7_gcc_quarantine(unsigned reason)
 { assert((reason>=0x701&&reason<=0x70c)||(reason>=0x801&&reason<=0x80b)||
-    (reason>=0x901&&reason<=0x905)||(reason>=0xa01&&reason<=0xa02)||(reason>=0xb01&&reason<=0xb02));
+    (reason>=0x901&&reason<=0x905)||(reason>=0xa01&&reason<=0xa02)||(reason>=0xb01&&reason<=0xb02)||
+    (reason>=0xc01&&reason<=0xc0a));
   quarantines++;longjmp(fatal,1); }
 static void call_patch(volatile unsigned char *p)
 {

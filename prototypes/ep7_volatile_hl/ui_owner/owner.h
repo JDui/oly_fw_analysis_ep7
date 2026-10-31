@@ -44,4 +44,8 @@ void ep7u_before_retire(void *owner,unsigned stage);
  * scope. Failure invalidates display readiness for this owner; no fresh retry.
  * Success optionally returns the current owner generation, not an input lease. */
 int ep7u_present(const uint16_t *text,uint32_t *generation);
+/* GUI-only text/owner hold used by input across property/core callbacks. Exact
+ * receipt generation and live membership required; release performs no redraw. */
+int ep7u_hold_ready(uint32_t generation);
+void ep7u_release_ready(uint32_t generation);
 #endif

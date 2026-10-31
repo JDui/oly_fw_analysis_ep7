@@ -17,6 +17,9 @@ static uint32_t public_mode;
 static ep7p shared_core;
 static ep7b shared_boot;
 static ep7r shared_runtime;
+#ifdef EP7_UI_INPUT_INTEGRATION
+static void (*input_poll_callback)(void);
+#endif
 uint32_t ep7_gcc_ui_public_mode(void) { assert(ep7_native_mvc.busy);return public_mode; }
 void *ep7_gcc_ui_service(void) { return ui_service; }
 uint16_t ep7_gcc_ui_context_exchange(void *p,uint16_t value)
@@ -62,7 +65,14 @@ static int sem_create(void *ctx,const ep7b_sem_spec *spec)
 { (void)ctx;assert(!spec->attributes&&spec->initial==1&&spec->maximum==1);return 1; }
 static int sem_delete(void *ctx,unsigned id) { (void)ctx;assert(id==1);return 0; }
 static int sem_poll(void *ctx,uint16_t id)
-{ (void)ctx;assert(id==1&&!poll_held);if (poll_fail) return -50;poll_held=1;return 0; }
+{
+    (void)ctx;assert(id==1&&!poll_held);
+#ifdef EP7_UI_INPUT_INTEGRATION
+    if (input_poll_callback) input_poll_callback();
+#endif
+    if (poll_fail) return -50;
+    poll_held=1;return 0;
+}
 static int sem_signal(void *ctx,uint16_t id) { (void)ctx;assert(id==1&&poll_held);poll_held=0;return 0; }
 static bool installed_fixture(void *ctx) { (void)ctx;return true; }
 static bool env_task(void *ctx,uint32_t anchor,ep7n_task *out)
@@ -117,7 +127,10 @@ static void enter_hl(unsigned category)
 { enable_fixture_hl();select_category(category);ep7c_rebuild(parent);native_draw(); }
 static void expect_text(const char *text)
 { unsigned i;for (i=0;text[i];i++) assert(rendered[i]==(unsigned char)text[i]);assert(!rendered[i]); }
-int main(void)
+#ifndef EP7_VIEWER_TEST_MAIN
+#define EP7_VIEWER_TEST_MAIN main
+#endif
+int EP7_VIEWER_TEST_MAIN(void)
 {
     assert(!content_regressions()); /* Six MVC + six content groups, now joined to actual renderer C. */
     /*1 Both asynchronous ordering cases converge without a guessed ready flag. */
