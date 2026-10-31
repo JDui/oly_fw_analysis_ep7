@@ -108,6 +108,8 @@ if args.queue_pipeline_abi_only:
  files['capture_sidecar']=core/'controller_sidecar/sidecar.c'
  files['capture_native']=core/'controller_sidecar/native_binding.c'
  files['capture_cohort']=core/'controller_sidecar/cohort.c'
+ files['capture_far_calls']=core/'controller_sidecar/far_calls.s'
+ files['native_far_call']=core/'target/far_call.c'
  files['capture_bridges']=core/'controller_sidecar/native_bridges.s'
  files['wait_bridges']=core/'controller_sidecar/wait_bridges.s'
  files['engine_bridges']=core/'controller_sidecar/engine_bridges.s'
@@ -143,7 +145,7 @@ with tempfile.TemporaryDirectory() as temp:
  for name,src in files.items():
   obj=Path(temp)/(name+'.o')
   if src.suffix=='.c':subprocess.run([prefix+'gcc',*flags,'-c',str(src),'-o',str(obj)],check=True)
-  else:subprocess.run([prefix+'as','-o',str(obj),str(src)],check=True)
+  else:subprocess.run([prefix+'as','-I'+str(core/'target'),'-o',str(obj),str(src)],check=True)
   syms=subprocess.check_output([prefix+'objdump','-t',str(obj)],text=True);defs=set();und=set()
   for line in syms.splitlines():
    bits=line.split()
@@ -165,6 +167,9 @@ with tempfile.TemporaryDirectory() as temp:
        re.sub(r'\b[0-9a-f]+\s+<[^>]+>','',operands))]
    if suspicious:raise ValueError('unqualified loop/extended register state in '+name+': '+repr(suspicious))
    objects[name]['loop_extended_state_audited']=True
+  if name=='capture_far_calls':
+   validator=runpy.run_path(str(root/'tools/ep7_far_call_check.py'))
+   objects[name].update(validator['validate_capture_object'](obj,prefix))
   if name=='ui_input_bridges':
    validator=runpy.run_path(str(core/'ui_native/validate_input.py'))
    objects[name].update(validator['validate'](dis))

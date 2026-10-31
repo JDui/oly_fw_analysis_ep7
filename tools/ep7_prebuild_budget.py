@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 CORE=ROOT/'prototypes/ep7_volatile_hl'
-REPORTS=['research/ep7/engine-epoch-target.json','research/ep7/ui-color-gate-target.json']
+REPORTS=['research/ep7/capture-far-call-target.json','research/ep7/ui-color-gate-target.json']
 # These compiler-call probes verify ABI; they are not runtime implementation.
 PROBES={'prototypes/ep7_volatile_hl/snapshot_transport/native/worker_caller.c',
         'prototypes/ep7_volatile_hl/text_lifecycle/factory_caller.c'}

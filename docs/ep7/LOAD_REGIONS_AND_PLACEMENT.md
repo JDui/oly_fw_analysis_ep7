@@ -77,6 +77,10 @@ RAM的a0/a1别名按原厂调用记录，缓存行为没有在硬件上验证。
 
 ## 当前短CALL约束已从实现提取
 
+后续更新：[远跳桥](FAR_CALL_VENEERS.md)已为捕获侧18处选定五字节JMP32加独立建帧桥。
+下面区间是保留原CD CALL时的约束，仍是原始测量结果；新方案无需在这些区间内寻找
+adapter落点。代码驻留、最终重定位与完整安装仍须资格化。
+
 [探针](../../tools/ep7_load_regions.py)读取实际controller_sidecar/cohort.c的39项，
 核对本输入每个CALL的宽度、register mask和frame，再按16位有符号位移取每组交集。
 宽CALL保持原7字节，短CALL保持原5字节，未覆盖邻接指令。

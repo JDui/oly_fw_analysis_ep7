@@ -1,0 +1,27 @@
+/* Same short-site order as cohort.c. Checkers derive and compare that order.
+ * Each immutable resident veneer is exactly30 bytes, with no inter-row padding.
+ * These symbols are not firmware placement addresses or an installer. */
+.include "far_call.inc"
+.section .text.ep7_capture_far_calls,"ax"
+.global ep7_capture_far_calls
+ep7_capture_far_calls:
+EP7_FAR_CALL ep7_capture_far_6029ef4c,ep7_native_engine_configure,0x6029ef51,0x20,8
+EP7_FAR_CALL ep7_capture_far_602a27e4,ep7_native_engine_configure,0x602a27e9,0x20,8
+EP7_FAR_CALL ep7_capture_far_6029ce9d,ep7_native_engine_pool,0x6029cea2,0xc0,16
+EP7_FAR_CALL ep7_capture_far_602ac4fd,ep7_native_wait_scope,0x602ac502,0x80,8
+EP7_FAR_CALL ep7_capture_far_602ac5a6,ep7_native_wait_scope,0x602ac5ab,0x80,8
+EP7_FAR_CALL ep7_capture_far_602ac66c,ep7_native_wait_scope,0x602ac671,0x80,8
+EP7_FAR_CALL ep7_capture_far_6029c692,ep7_native_associated_reset,0x6029c697,0xf0,28
+EP7_FAR_CALL ep7_capture_far_602a31c7,ep7_native_capture_fresh,0x602a31cc,0xa0,28
+EP7_FAR_CALL ep7_capture_far_602a440a,ep7_native_capture_fresh,0x602a440f,0xa0,28
+EP7_FAR_CALL ep7_capture_far_602a4480,ep7_native_capture_fresh,0x602a4485,0xa0,28
+EP7_FAR_CALL ep7_capture_far_602a31ea,ep7_native_capture_sample,0x602a31ef,0xf0,20
+EP7_FAR_CALL ep7_capture_far_602a442c,ep7_native_capture_sample,0x602a4431,0xf0,20
+EP7_FAR_CALL ep7_capture_far_602a44a3,ep7_native_capture_sample,0x602a44a8,0xf0,20
+EP7_FAR_CALL ep7_capture_far_602a31f7,ep7_native_capture_finish,0x602a31fc,0xf0,48
+EP7_FAR_CALL ep7_capture_far_602a443e,ep7_native_capture_finish,0x602a4443,0xf0,48
+EP7_FAR_CALL ep7_capture_far_602a44b5,ep7_native_capture_finish,0x602a44ba,0xf0,48
+EP7_FAR_CALL ep7_capture_far_60289c5e,ep7_native_state_service_bridge,0x60289c63,0xf0,32
+EP7_FAR_CALL ep7_capture_far_60289d02,ep7_native_state_service_bridge,0x60289d07,0xf0,32
+.global ep7_capture_far_calls_end
+ep7_capture_far_calls_end:

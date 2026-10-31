@@ -1,7 +1,10 @@
-/* Actual reviewed CALL bytes, not an installer-provided enable flag.
+/* Actual reviewed call-site and veneer bytes, not an installer enable flag.
  * All sites are fixed E-P7 build1100 code addresses; G6 must still establish cold
  * installation, code visibility, init ordering and complete native alias closure. */
 #include "native.h"
+#include "../target/far_call.h"
+extern const unsigned char far_calls[] __asm__("ep7_capture_far_calls");
+extern const unsigned char far_calls_end[] __asm__("ep7_capture_far_calls_end");
 extern const unsigned char fresh[] __asm__("ep7_native_capture_fresh");
 extern const unsigned char sample[] __asm__("ep7_native_capture_sample");
 extern const unsigned char finish[] __asm__("ep7_native_capture_finish");
@@ -41,14 +44,23 @@ static const struct site sites[]={
     {0x602a2d0d,release_node,4,0,4}};
 bool ep7cn_native_cohort_present(void)
 {
+    unsigned short_index=0;
+    if ((uintptr_t)far_calls_end-(uintptr_t)far_calls!=18u*EP7_FAR_CALL_BYTES)return false;
     for (unsigned i=0;i<sizeof sites/sizeof sites[0];i++) {
         const struct site *s=&sites[i];
         const volatile uint8_t *p=(const volatile uint8_t *)(uintptr_t)s->address;
+        if (s->width==2) {
+            if (short_index>=18u)return false;
+            const uint8_t *veneer=far_calls+EP7_FAR_CALL_BYTES*short_index++;
+            if (!ep7n_far_call_present(s->address,p,(uint32_t)(uintptr_t)veneer,veneer,
+                                      (uint32_t)(uintptr_t)s->target,s->mask,s->frame))return false;
+            continue;
+        }
         uint32_t displacement=0;
         if (p[0]!=(s->width==2?0xcd:0xdd)||p[1+s->width]!=s->mask||p[2+s->width]!=s->frame) return false;
         for (unsigned j=0;j<s->width;j++) displacement|=(uint32_t)p[1+j]<<(8*j);
         if (s->width==2&&(displacement&0x8000u)) displacement|=UINT32_C(0xffff0000);
         if (s->address+displacement!=(uint32_t)(uintptr_t)s->target) return false;
     }
-    return true;
+    return short_index==18u;
 }

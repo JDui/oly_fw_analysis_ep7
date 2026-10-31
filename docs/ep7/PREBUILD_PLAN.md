@@ -81,8 +81,9 @@ G6 依赖 E 的工具链设计和 G1–G4 的候选接口；G8 汇合全部结�
 
 ## 当前编译准入结论
 
-**未就绪**：G1 原生捕获/释放闭包、G2/G3 退出与queue/task存活、G4 原生资源、
-G6 放置/安装仍未闭合。generation-bearing handoff、共享runtime发布和CPU reader已有
+**未就绪**：G1 原生捕获/释放闭包、G2/G3 退出与queue/task存活、G4 GUI串行所有权/旁路、
+G6 放置/安装仍未闭合。G4的资源、内容对象、输入与COLOR gating已有软件接合；
+generation-bearing handoff、共享runtime发布和CPU reader已有
 实现；具体证据见本页末尾更新。继续离线研究，没有可承诺的安全试刷时间。
 
 最新实际进展：[当前工具链](CURRENT_TOOLCHAIN.md)、[异步别名接合](ASYNC_NODE_ALIASES.md)、
@@ -312,3 +313,9 @@ engine type7实际走6011f863，不能套用通用callback queue。邮箱删除�
 134条指令/13项数据通过；复用95个实现源的历史尺寸，仅新编1个sizeof探针，补齐
 5,704字节core/bootstrap/runtime，私有存储粗计8,080字节。下一项早期代码承载、
 近跳和清零/发布顺序，再完成链接对齐及全栈；没有重跑无关测试或开始整体固件编译。
+
+[五字节远跳桥](FAR_CALL_VENEERS.md)已取代捕获侧18处短CALL的近距放置要求：JMP32进入
+30字节桥，真实CALL按原tuple建帧，同时修复栈返回槽/MDR，再进入原adapter；额外暂用
+4字节栈。实际cohort核对每个已知桥的完整形状和目标。复用GNU指令函数体的9种tuple、
+RET/RETF共18路径及负控制通过，61个目标对象自有符号闭合；新增text1,011字节、无新BSS。
+没有改写镜像。下一项UI等剩余短调用及早期代码承载/冷安装，再做全栈与G8汇合审查。

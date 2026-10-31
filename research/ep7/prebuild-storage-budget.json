@@ -2,17 +2,17 @@
   "scope": "Reuse existing object sizes and measure only the missing target runtime storage sizes.",
   "compiler": "mn10300-elf-gcc (GCC) 13.4.0",
   "prior_object_reports": [
-    "research/ep7/engine-epoch-target.json",
+    "research/ep7/capture-far-call-target.json",
     "research/ep7/ui-color-gate-target.json"
   ],
   "prior_measurements_recompiled": false,
-  "implementation_sources": 95,
+  "implementation_sources": 97,
   "excluded_abi_probe_sources": [
     "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_caller.c",
     "prototypes/ep7_volatile_hl/text_lifecycle/factory_caller.c"
   ],
   "prior_unlinked_text_data_bss": [
-    43587,
+    44598,
     0,
     2376
   ],
@@ -24,7 +24,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_layout.c": {
@@ -34,7 +34,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_binding.c": {
@@ -44,7 +44,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/queue_bridges.s": {
@@ -54,7 +54,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/stack.c": {
@@ -64,7 +64,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c": {
@@ -74,7 +74,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/wire.c": {
@@ -84,7 +84,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json",
+        "research/ep7/capture-far-call-target.json",
         "research/ep7/ui-color-gate-target.json"
       ]
     },
@@ -95,7 +95,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json",
+        "research/ep7/capture-far-call-target.json",
         "research/ep7/ui-color-gate-target.json"
       ]
     },
@@ -106,7 +106,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_layout.c": {
@@ -116,7 +116,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_binding.c": {
@@ -126,7 +126,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/target/postbuilder/postbuilder_bridge.s": {
@@ -136,7 +136,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/target/postbuilder/native_observer.c": {
@@ -146,7 +146,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/controller_sidecar/sidecar.c": {
@@ -156,7 +156,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/controller_sidecar/native_binding.c": {
@@ -166,17 +166,37 @@
         1912
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/controller_sidecar/cohort.c": {
       "text_data_bss": [
-        625,
+        662,
         0,
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/controller_sidecar/far_calls.s": {
+      "text_data_bss": [
+        540,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/capture-far-call-target.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/target/far_call.c": {
+      "text_data_bss": [
+        434,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/controller_sidecar/native_bridges.s": {
@@ -186,7 +206,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/controller_sidecar/wait_bridges.s": {
@@ -196,7 +216,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/controller_sidecar/engine_bridges.s": {
@@ -206,7 +226,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/capture_state_guard/observer.c": {
@@ -216,7 +236,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/capture_state_guard/bridge.s": {
@@ -226,7 +246,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/runtime/runtime.c": {
@@ -236,7 +256,7 @@
         4
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json",
+        "research/ep7/capture-far-call-target.json",
         "research/ep7/ui-color-gate-target.json"
       ]
     },
@@ -247,7 +267,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/runtime/native_context.c": {
@@ -257,7 +277,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/runtime/task_context.c": {
@@ -267,7 +287,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json",
+        "research/ep7/capture-far-call-target.json",
         "research/ep7/ui-color-gate-target.json"
       ]
     },
@@ -278,7 +298,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json",
+        "research/ep7/capture-far-call-target.json",
         "research/ep7/ui-color-gate-target.json"
       ]
     },
@@ -289,7 +309,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json",
+        "research/ep7/capture-far-call-target.json",
         "research/ep7/ui-color-gate-target.json"
       ]
     },
@@ -300,7 +320,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/runtime/quarantine.s": {
@@ -310,7 +330,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json",
+        "research/ep7/capture-far-call-target.json",
         "research/ep7/ui-color-gate-target.json"
       ]
     },
@@ -321,7 +341,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/runtime/kernel_gate_bridges.s": {
@@ -331,7 +351,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/target/get_tid_bridge.s": {
@@ -341,7 +361,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json",
+        "research/ep7/capture-far-call-target.json",
         "research/ep7/ui-color-gate-target.json"
       ]
     },
@@ -352,7 +372,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json",
+        "research/ep7/capture-far-call-target.json",
         "research/ep7/ui-color-gate-target.json"
       ]
     },
@@ -363,7 +383,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json",
+        "research/ep7/capture-far-call-target.json",
         "research/ep7/ui-color-gate-target.json"
       ]
     },
@@ -374,7 +394,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/poll_lock_provider/native/sem_bridges.s": {
@@ -384,7 +404,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/native_callbacks.c": {
@@ -394,7 +414,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/create_delete_bridges.s": {
@@ -404,7 +424,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/forward.c": {
@@ -414,7 +434,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/transport.c": {
@@ -424,7 +444,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json",
+        "research/ep7/capture-far-call-target.json",
         "research/ep7/ui-color-gate-target.json"
       ]
     },
@@ -435,7 +455,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/consumer.c": {
@@ -445,7 +465,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/job.c": {
@@ -455,7 +475,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/ep7p.c": {
@@ -465,7 +485,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json",
+        "research/ep7/capture-far-call-target.json",
         "research/ep7/ui-color-gate-target.json"
       ]
     },
@@ -476,7 +496,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json",
+        "research/ep7/capture-far-call-target.json",
         "research/ep7/ui-color-gate-target.json"
       ]
     },
@@ -487,7 +507,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_layout.c": {
@@ -497,7 +517,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_binding.c": {
@@ -507,7 +527,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/ack_bridge.s": {
@@ -517,7 +537,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/ack_layout.c": {
@@ -527,7 +547,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/ack_binding.c": {
@@ -537,7 +557,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/queue_send_binding.c": {
@@ -547,7 +567,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_bridge.s": {
@@ -557,7 +577,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_layout.c": {
@@ -567,7 +587,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_binding.c": {
@@ -577,7 +597,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_bridge.s": {
@@ -587,7 +607,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_layout.c": {
@@ -597,7 +617,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_binding.c": {
@@ -607,7 +627,7 @@
         0
       ],
       "reports": [
-        "research/ep7/engine-epoch-target.json"
+        "research/ep7/capture-far-call-target.json"
       ]
     },
     "prototypes/ep7_volatile_hl/text_rollback/rollback.c": {
