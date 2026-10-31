@@ -1,0 +1,64 @@
+{
+  "scope": "Locate the real capture-template initializer's unresolved property dependency.\n\nRun original6030002c/60301170 in a cloned published-runtime fixture. A poisoned,\nbounded template is writable; missing property state stays unmapped. This report\nrecords a native execution frontier, not a successful template initialization.\n",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu",
+  "frontier_identified": true,
+  "template_initialization_passed": false,
+  "case": {
+    "symbol": "native_capture_template_initializer_frontier",
+    "status": "memory_fault",
+    "completed": 2367,
+    "fault": {
+      "kind": 1,
+      "pc": 1610996004,
+      "map": 0,
+      "address": 2725247620,
+      "size": 2,
+      "access": "read"
+    },
+    "final_pc": "0x6005d924",
+    "final_sp": "0x190105e4",
+    "d0_at_stop": 11073,
+    "stack_depth_from_call_sp": 460,
+    "native_lock_calls": [],
+    "native_get_tid_entries": 0,
+    "context_switch_entries": 0,
+    "native_lookup_entries": 0,
+    "native_enqueue_entries": 0,
+    "native_pop_entries": 0,
+    "native_copy_entries": 0,
+    "native_raw_send_entries": 0,
+    "native_raw_receive_entries": 0,
+    "native_receive_index_block_entries": 0,
+    "named_send_entries": 0,
+    "notification_entries": 0,
+    "native_flag_set_entries": 0
+  },
+  "template": {
+    "address": "0x6225882c",
+    "bytes": 27332,
+    "initial_fill": "a5",
+    "bytes_different_from_initial_fill": 43,
+    "first_difference": 1480,
+    "last_difference": 2052
+  },
+  "native_property_dispatch": {
+    "entry": "0x6005d924",
+    "property_key": "0x2b41",
+    "native_return_pc": "0x6005e94d"
+  },
+  "missing_property_state": "0xa26ffa84",
+  "source_capture_unchanged": true,
+  "partial_template_copied_to_capture": false,
+  "hash_checks_performed": false,
+  "native_api_success_stubs": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "Upstream conditional runtime/capture/message fixtures remain. The template call runs on a cloned machine with a fresh stack, not a proven boot-order continuation.",
+    "The 27332-byte template bound follows the actual 6833-word copy at60300055, not a claim that the entire41984-byte capture allocation is initialized.",
+    "The original initializer executes until the native property dispatcher reads unmappeda26ffa84. No zero or successful getter value is supplied to advance it.",
+    "Partially initialized template is never copied to the capture. Later capture population, relay preprocessing and worker job construction remain unresolved."
+  ]
+}

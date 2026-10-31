@@ -75,3 +75,9 @@ imm8/imm16乘法的符号扩展错误，按松下手册修正模型后通过6条
 重放后第二次scope保持全零。4c/4d真实注册flag58并执行通知；ab/4f走原厂无hook分支。
 尚未执行中间两段预处理、worker preflight及body；任务交接、空等待flag和独立queue
 backing仍是fixture。下一步关闭这些间隔及原生分配/处理/撤销/ACK，S3仍未整体完成。
+
+继续定位capture真实模板：60300055复制6225882c的27332字节，6030002c/60301170
+初始化会查询原生属性。定向执行2367条指令后在property2b41的分发表状态a26ffa84
+读取处停止；[报告](../../research/ep7/candidate-capture-template-frontier.json)明确
+初始化未通过。保留未知属性内存未映射，未把半成品用于capture；下一步是原生属性
+注册及数据来源，不以全零模板替代该依赖。

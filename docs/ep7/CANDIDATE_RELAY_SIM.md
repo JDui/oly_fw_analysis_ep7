@@ -68,3 +68,27 @@ python3 /repo/tools/ep7_candidate_relay_sim.py \
 ```
 
 沿用现有离线Docker只读挂载；无SHA校验、API成功stub、固件文件改写或相机操作。
+
+## 后续已定位：原厂 capture 模板与属性服务
+
+为关闭预处理的capture字段来源间隔，继续复用既有capture allocation/clone研究：
+原厂池槽41984字节，复制的结构前缀27332字节。实际population在602a7ea9调用
+60300055，后者从6225882c复制6833个word；它不是可直接从固件ROM取出的常量模板。
+模板初始化入口6030002c调用60301170，最后设置模板中的三个32位常量。完整
+initializer在运行中还需要原生属性服务，不能把这些动态字段当作固定零默认值。
+
+[定向执行脚本](../../tools/ep7_candidate_capture_template_sim.py)在克隆现场使用新栈，
+只映射带guard的27332字节A5模板，真实执行6030002c/60301170。原来的capture仍
+只读且逐字节不变。[停止报告](../../research/ep7/candidate-capture-template-frontier.json)
+记录2367条指令、最大新增深度460后，在6005d924读取未映射a26ffa84半字时停止。
+该时刻属性key为2b41，原生返回标签6005e94d；模板仅43字节与A5初值不同。
+`template_initialization_passed=false`，半成品没有复制给capture，也没有改变固件。
+
+6005d924首先根据a26ffa84决定是否查override表a2707a88，再查base表a26ffa88；
+行号来自property ID >> 4、每行8字节、+4为descriptor指针。6005d8e3是override
+初始化，6005d914清override标记/根；它们的存在不代表base记录已就绪。后续要复用
+原生属性注册/数据来源，才能推进模板和真实预处理。此处是明确的模拟现场依赖，
+不是已复现的固件生产缺陷，也不影响上面的限定传输/领取结果。
+
+复现使用同一Docker/候选/引擎参数，将脚本替换为
+`tools/ep7_candidate_capture_template_sim.py`。没有执行包含SHA的旧静态审计入口。

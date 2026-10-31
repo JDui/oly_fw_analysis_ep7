@@ -20,6 +20,16 @@ message_context支持额外发布前回调；旧CLI兼容，上游saved report�
 下一步关闭这些间隔并推进原厂job分配/构造/CPU/撤销/ACK。capture目前只读24084B，
 较高偏移写入需真实布局依据，不得自动扩展补零。固件未重建/无SHA，S3未整体完成。
 
+随后为capture预处理找到真实模板来源：population602a7ea9→60300055从6225882c
+复制6833word/27332B，原始capture池槽41984B。模板由6030002c→60301170初始化，
+不是静态ROM块。新`ep7_candidate_capture_template_sim.py`在克隆现场/新栈、A5有界
+模板上执行2367指令后停6005d924，读取未映射a26ffa84半字；property key2b41、
+native return6005e94d。report `candidate-capture-template-frontier.json`明确
+template_initialization_passed=false，原capture逐字节不变，半成品未复制。最大深度
+460，仅43字节偏离A5。下一步原生属性服务初始化/来源：6005d924按flag查override
+a2707a88，再base a26ffa88，每行8B、key>>4、+4descriptor；6005d8e3初始化override，
+6005d914清override状态，不能用零flag/零表跳过base数据。无固件bug或完成声明。
+
 此前：[原厂descriptor填充与MULQIU修正](CANDIDATE_DESCRIPTOR_SIM.md)通过，候选仍004。
 GNU旧模型udfu01 imm8/imm16误符号扩展；class1乘216变−40，7397指令后在603e050b
 向未映射a26a07e8写入，未补错误映射。松下手册page70及GNU自身注释要求零扩展。
