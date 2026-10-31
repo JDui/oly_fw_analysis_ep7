@@ -7,7 +7,16 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[下游queue与worker领取](CANDIDATE_RELAY_SIM.md)通过，候选仍004；新探针
+最新：[原生属性与capture模板](CANDIDATE_PROPERTY_SIM.md)通过有条件初始化，候选仍004。
+四组原厂ROM/default经真实清表、复制、按类型打包和注册，共1209条不同索引记录；
+12段297381指令，6030002c模板初始化7908指令正常返回，16次getter查询与三个常量
+正确。缺c082/8f11的两个中间报告和A5诊断报告独立保留。A5揭示initializer只写部分
+字段；正常输入显式依赖原厂第二组BSS范围621caf00..62796888已清零，DMA本身未执行。
+无NVM导入/校准声明，无自动补未知属性。native_call支持真实100000条trace分段resume，
+完整保留153300条打包调用。当前capture仍只读/未改变；下一步60300055真实模板复制、
+population/relay预处理，再推进worker分配/处理/撤销/ACK，S3未整体完成。
+
+此前：[下游queue与worker领取](CANDIDATE_RELAY_SIM.md)通过，候选仍004；新探针
 `ep7_candidate_relay_sim.py`12段50,621指令。4c/ab/4f在S2发布前原生初始化，
 603ef864真实注册4c/4d→flag58；4c发送执行通知/flag-set，ab/4f在600515c2真实
 读到未注册hook0并跳过通知。三次raw receive各返回312，descriptor全字节不变，

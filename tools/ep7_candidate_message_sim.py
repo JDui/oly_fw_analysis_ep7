@@ -31,12 +31,25 @@ def result_ok(machine,result,stop,sp):
     released(machine)
 
 
-def native_call(machine,syms,target,mask,frame,overrides=None):
+def native_call(machine,syms,target,mask,frame,overrides=None,*,limit=20000):
     machine.regions['caller'] = Region('caller',CALLER,
         b'\xdd'+struct.pack('<i',target-CALLER)+bytes([mask,frame]),'rx')
+    breakpoints=[syms['_ep7_gcc_quarantine']]
     result = machine.run(CALLER,CALLER+7,overrides=dict(sp=CALL_SP,**(overrides or {})),
-        full_trace=True,limit=20000,breakpoints=[syms['_ep7_gcc_quarantine']])
+        full_trace=True,limit=min(limit,100000),breakpoints=breakpoints)
+    trace,completed,inputs=list(result['trace']),result['completed'],result['inputs']
+    segments=[dict(status=result['status'],completed=result['completed'],pc=hex(result['registers']['pc']))]
+    # The runner caps each trace at100000 entries. Resume only a verified
+    # instruction-budget stop, retaining all architectural state and captures.
+    while result['status']=='instruction_limit' and completed<limit:
+        result=machine.resume(result['registers'],CALLER+7,full_trace=True,
+            limit=min(limit-completed,100000),breakpoints=breakpoints)
+        trace.extend(result['trace'])
+        completed+=result['completed']
+        segments.append(dict(status=result['status'],completed=result['completed'],pc=hex(result['registers']['pc'])))
+    result.update(trace=trace,completed=completed,inputs=dict(inputs,limit=limit),execution_segments=segments)
     result_ok(machine,result,CALLER+7,CALL_SP)
+    require(len(trace)==completed,'native call trace was truncated across an instruction-budget resume')
     return result
 
 

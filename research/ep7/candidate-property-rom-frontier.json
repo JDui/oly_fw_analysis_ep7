@@ -1,0 +1,135 @@
+{
+  "scope": "Execute native ROM-property registration before capture-template initialization.\n\nOnly the fixed ROM record bank is admitted here. NVM/other RAM-backed property\nbanks and the complete native service startup remain separate dependencies.\n",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu",
+  "native_property_registration_passed": true,
+  "registered_records": 449,
+  "ROM_bank": {
+    "start": "0x60078e2c",
+    "terminator": "0x6008e9cc"
+  },
+  "cases": [
+    {
+      "symbol": "native_property_base_index_clear",
+      "status": "returned",
+      "completed": 36868,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 0,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0
+    },
+    {
+      "symbol": "native_property_override_reset",
+      "status": "returned",
+      "completed": 5,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 0,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0
+    },
+    {
+      "symbol": "native_ROM_property_registration",
+      "status": "returned",
+      "completed": 24897,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 48,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0
+    },
+    {
+      "symbol": "capture_template_after_native_ROM_registration",
+      "status": "breakpoint",
+      "completed": 3250,
+      "fault": null,
+      "final_pc": "0x60061808",
+      "final_sp": "0x19010580",
+      "stack_depth_from_call_sp": 560,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "d0_at_stop": 469782530,
+      "native_property_lookups": [
+        {
+          "key": "0x2b41",
+          "return_pc": "0x6005e94d"
+        },
+        {
+          "key": "0x2b41",
+          "return_pc": "0x6005e964"
+        },
+        {
+          "key": "0x62f1",
+          "return_pc": "0x6005e94d"
+        },
+        {
+          "key": "0x62f1",
+          "return_pc": "0x6005e964"
+        },
+        {
+          "key": "0xc082",
+          "return_pc": "0x6005e97d"
+        }
+      ]
+    }
+  ],
+  "template_initialization_passed": false,
+  "partial_template_copied_to_capture": false,
+  "source_capture_unchanged": true,
+  "hash_checks_performed": false,
+  "native_api_success_stubs": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "installable": false
+}
