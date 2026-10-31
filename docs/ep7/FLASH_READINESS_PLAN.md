@@ -40,6 +40,8 @@ create/delete，正常路径 52,820 条指令后发布 runtime 并回到原厂�
 
 S3 的[状态与参数子节点](CANDIDATE_STATE_SIM.md)已通过：原生 poll/signal 下修改与
 冻结、busy −50 无修改、最终 observer 的 20 个系数写入，以及撤销后 unmapped job
-不读/输出不变。下一步接实际 controller adapter 和消息/worker 边界；原生分配与
-时序尚未因独立 job fixture 自动取得资格。不将子节点通过描述为 S3 整体完成、
+不读/输出不变。[controller 与延迟 FIFO 子节点](CANDIDATE_CAPTURE_SIM.md)随后执行了
+真实 lookup、启动 helper 搬运、FIFO 初始化/入队/出队，冻结 scope 交接与三个撤销
+边界通过。下一步 queue4b 消息及 materializer/worker；原生分配与
+时序尚未因独立对象 fixture 自动取得资格。不将子节点通过描述为 S3 整体完成、
 整机启动通过或当前目标完成。

@@ -12,7 +12,8 @@
 初始化、七组安装检查及定向拒绝；后续[原生创建/发布/回收](docs/ep7/CANDIDATE_PUBLISH_SIM.md)
 已在明确内核 fixture 下通过正常路径及两条关键失败路径，未替换原厂 create/delete。
 [H/L 状态与参数观察器](docs/ep7/CANDIDATE_STATE_SIM.md)已通过原生锁下冻结、busy 回退、
-20 个 CPU 系数写入及撤销后中性回退；controller/消息/worker 连接仍继续验证。
+20 个 CPU 系数写入及撤销后中性回退；[controller/延迟 FIFO](docs/ep7/CANDIDATE_CAPTURE_SIM.md)
+的原生 lookup、入出队和冻结/撤销已通过，消息/worker 连接仍继续验证。
 继续按[刷机资格计划](docs/ep7/FLASH_READINESS_PLAN.md)推进，完整启动与安装资格尚未通过。
 
 This branch investigates full per-color **Hue / Saturation / Lightness** controls

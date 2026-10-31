@@ -7,7 +7,17 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[H/L 状态与参数模拟](CANDIDATE_STATE_SIM.md)完成 S3 的首个子节点。复用 S2
+最新：[controller 与延迟 FIFO](CANDIDATE_CAPTURE_SIM.md)完成 S3 的第二个子节点。
+23 段/208,056 指令：真实启动 helper copy 把6143ca00 经显式 resident alias
+a143ca00 搬到47000800；实际 lookup6029b9d1、FIFO initializer/enqueue/pop 与
+47001052 copy helper均执行。patched population prewrite、sample/finish冻结正确；
+原生 pop 将32字节冻结 scope交给caller，重填后保持原FIFO顺序但scope全零；过早
+copyout永不中途重采样，free后取消node映射仍不读旧node。TCB显式切到ID73/4096栈，
+owner/state/pool/registry/capture与两层ancestor返回字是fixture，原厂完整population
+和外层controller service未执行。最大观测深度368。下一步queue4b消息/通知及
+materializer/worker；复用helper搬运和S2发布，不能跳过真实post-send通知。
+
+此前：[H/L 状态与参数模拟](CANDIDATE_STATE_SIM.md)完成 S3 的首个子节点。复用 S2
 实际发布的 runtime，13 次候选调用/13,672 指令：COLOR3 修改/冻结与 COLOR2 隔离、
 后续编辑不影响旧快照、原生 poll busy −50 无修改/不 poison，最终 observer 的
 20 个系数写入正确；真实撤销后将 job 取消映射，再调用不读旧 job且输出不变。
