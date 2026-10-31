@@ -1,0 +1,60 @@
+{
+  "scope": "Execute native TOP queue enqueue/pop and bind type7's three-word carrier.\n\nExplicit preallocated queue/record fixtures, no allocator, RTOS, hardware or\nengine object mapping. The real stock queue functions and CALL frames execute.\n",
+  "checked_witnesses": 52,
+  "checked_data_rows": 4,
+  "queue_pointer_cell": "0x621f31ec",
+  "queue_name": "TOP",
+  "carrier_words": [
+    "engine_pointer",
+    "helper6011fb76_result",
+    "operation_mode"
+  ],
+  "copied_bytes": 12,
+  "normal_mode": 2,
+  "alternate_mode": 5,
+  "enqueue": {
+    "status": "returned",
+    "completed": 87,
+    "fault": null,
+    "final_pc": "0x6011faae",
+    "final_sp": "0x19010200"
+  },
+  "dequeue": {
+    "status": "returned",
+    "completed": 80,
+    "fault": null,
+    "final_pc": "0x601200e2",
+    "final_sp": "0x19010200"
+  },
+  "source_overwritten_before_pop": true,
+  "packet_copy_survived": true,
+  "engine_object_unmapped": true,
+  "allocator_and_rtos_unmapped": true,
+  "engine_deep_copy": false,
+  "queue_entry_generation_carried": false,
+  "type7_normal_submit_preserves_enqueue_status": false,
+  "consumers": [
+    {
+      "type": 135,
+      "entry": "0x601200aa"
+    },
+    {
+      "type": 149,
+      "entry": "0x6012059a"
+    }
+  ],
+  "completion_dispatch": "0x601215a8",
+  "completion_field": 64,
+  "callback_domain_or_cancellation_proven": false,
+  "all_assertions_passed": true,
+  "hash_checks_performed": false,
+  "firmware_modified": false,
+  "firmware_built": false,
+  "hardware_executed": false,
+  "limits": [
+    "One existing free node, an empty queue and a stable explicit manager form the fixture; constructor, growth, exhaustion and concurrent access are not executed.",
+    "The original enqueue/dequeue CALL instructions and callees run; surrounding submit/consumer branches are statically checked only.",
+    "A copied pointer does not extend the engine/workrecord/node lifetime. No generation is added by this native twelve-byte carrier.",
+    "The type135/type149 callers and processing completion domains, alternate type7 branches, reentry and cancellation remain to qualify."
+  ]
+}

@@ -81,6 +81,11 @@ G6 依赖 E 的工具链设计和 G1–G4 的候选接口；G8 汇合全部结�
 
 ## 当前编译准入结论
 
+[type7 TOP工作队列](TYPE7_WORK_QUEUE.md)已接通普通提交的三字载体、type135/type149
+消费者和engine+64完成分派。两次原生入队/出队执行共167条指令，发送缓冲覆盖后仍
+保持原值；engine指针目标全程未映射，不能解释为深复制或生命周期租约。普通submit
+丢弃入队状态；继续审查消费者调用域、60120d73及取消，未以零返回推定完成或放行G8。
+
 [type39首阶段IRQ入口](ASYNC_IRQ_DOMAIN.md)已接通domain0的初始化注册、ROM类表、
 kernel分派与队列consumer，确认class5/source29路径。92条指令、3项配置和一次
 18指令原生片段执行通过；handler在consumer之前重开IE，不能假定回调都在controller
