@@ -81,6 +81,12 @@ G6 依赖 E 的工具链设计和 G1–G4 的候选接口；G8 汇合全部结�
 
 ## 当前编译准入结论
 
+[mailbox管理槽来源](MAILBOX_REGISTRY_LIFETIME.md)已确认正常+4句柄来自内核create，
+外部注册表ID不是原始mailbox ID。原生片段执行同时证实reserve提前设置active、
+release保留旧句柄，delete前缀可读取该旧值。71条witness及四次短执行通过；这是局部
+发布窗口，不是已观测的并发事故。全别名与mailbox1永久存活仍未证明；下一项回到
+type7/type39实际完成域和取消汇合，不能用管理槽active代替生命周期资格。
+
 [次核等待前调用闭包](SECONDARY_PREBARRIER.md)已确认60054a7a仅调用UART输出和可选诊断
 ring写入，无allocator调用。两条实际入口在明确冷现场下各执行81条指令到等待点，
 release的零/非零分支通过；未访问堆。诊断启用时仍有指针写入，实际清零/硬件启动与

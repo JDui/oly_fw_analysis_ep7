@@ -49,6 +49,11 @@ non-task send 同样调用600314e6检查 handle 域。handle1没有0x8000跨域�
 delete包装器从受管理对象+4取handle。**尚未证明该对象池只能持有动态创建的邮箱，
 所以没有宣称mailbox1删除不可达。** 有限CALL扫描也不能排除计算地址或其他镜像入口。
 
+后续[管理槽来源审计](MAILBOX_REGISTRY_LIFETIME.md)已追到独立的32个28字节槽：正常
+创建只把内核create正返回值写入+4，输出给调用者的是注册表ID。但reserve提前设置
+active，release保留旧+4，原生片段执行确认delete前缀会接受这种已active的旧值。
+已缩小正常句柄来源疑问，尚未排除所有别名与并发调用，永久存活结论仍未成立。
+
 ## engine type7 不走通用回调分支
 
 6029d351把engine6223d8a0的type设为7。601e77d8分派将type减4，
@@ -61,7 +66,7 @@ delete包装器从受管理对象+4取handle。**尚未证明该对象池只能�
 的证明**。engine提交中的保护区也不能自动延长到异步完成。
 
 下一步应沿6011f863的实际图像处理完成回调和type39完成汇合审查域/优先级，
-以及6077973a对象池的handle来源；不再沿不适用的通用callback case推导串行性。
+管理槽正常handle来源见上方后续审计；不再沿不适用的通用callback case推导串行性。
 
 ## 本次验证
 

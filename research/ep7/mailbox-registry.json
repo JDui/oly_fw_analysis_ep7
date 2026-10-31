@@ -1,0 +1,604 @@
+{
+  "scope": "Trace managed mailbox handles and execute the early-active slot window.\n\nReuses the existing strict GNU engine. Starts after the registry lock call and\nafter lookup; no lock implementation, scheduling, allocator or raw delete runs.\n",
+  "checked_witnesses": 71,
+  "exact_decoded_instruction_addresses": 156,
+  "registry_cell": "0x61fa8f98",
+  "registry_capacity": 32,
+  "slot_bytes": 28,
+  "literal_references": [
+    "0x60779584",
+    "0x607795af",
+    "0x607795f9",
+    "0x60779610",
+    "0x6077967a",
+    "0x607796c7",
+    "0x6077971c",
+    "0x60779757",
+    "0x607797b6",
+    "0x607797e7",
+    "0x607798a0"
+  ],
+  "vtable": [
+    "0x607795b7",
+    "0x6077973a",
+    "0x607797c8",
+    "0x6077988a"
+  ],
+  "mutation_bodies": {
+    "reserve": [
+      {
+        "pc": "0x6076ddab",
+        "mnemonic": "mov",
+        "operands": "a1,(8,sp)"
+      },
+      {
+        "pc": "0x6076ddad",
+        "mnemonic": "mov",
+        "operands": "a0,(4,sp)"
+      },
+      {
+        "pc": "0x6076ddaf",
+        "mnemonic": "mov",
+        "operands": "d0,d3"
+      },
+      {
+        "pc": "0x6076ddb0",
+        "mnemonic": "mov",
+        "operands": "0,a3"
+      },
+      {
+        "pc": "0x6076ddb2",
+        "mnemonic": "mov",
+        "operands": "3,d0"
+      },
+      {
+        "pc": "0x6076ddb4",
+        "mnemonic": "call",
+        "operands": "0x60768516,[d2,a2],12"
+      },
+      {
+        "pc": "0x6076ddb9",
+        "mnemonic": "call",
+        "operands": "0x607684f9,[],4"
+      },
+      {
+        "pc": "0x6076ddc0",
+        "mnemonic": "cmp",
+        "operands": "0,d3"
+      },
+      {
+        "pc": "0x6076ddc2",
+        "mnemonic": "bne",
+        "operands": "0x6076dded"
+      },
+      {
+        "pc": "0x6076ddc4",
+        "mnemonic": "mov",
+        "operands": "(4,sp),a1"
+      },
+      {
+        "pc": "0x6076ddc6",
+        "mnemonic": "clr",
+        "operands": "d2"
+      },
+      {
+        "pc": "0x6076ddc7",
+        "mnemonic": "add",
+        "operands": "8,a1"
+      },
+      {
+        "pc": "0x6076ddc9",
+        "mnemonic": "mov",
+        "operands": "(a1),d0"
+      },
+      {
+        "pc": "0x6076ddca",
+        "mnemonic": "cmp",
+        "operands": "d2,d0"
+      },
+      {
+        "pc": "0x6076ddcb",
+        "mnemonic": "ble",
+        "operands": "0x6076de0f"
+      },
+      {
+        "pc": "0x6076ddcd",
+        "mnemonic": "mov",
+        "operands": "(4,sp),a2"
+      },
+      {
+        "pc": "0x6076ddcf",
+        "mnemonic": "mov",
+        "operands": "d2,d1"
+      },
+      {
+        "pc": "0x6076ddd0",
+        "mnemonic": "inc4",
+        "operands": "a2"
+      },
+      {
+        "pc": "0x6076ddd1",
+        "mnemonic": "mov",
+        "operands": "(a2),a0"
+      },
+      {
+        "pc": "0x6076ddd3",
+        "mnemonic": "setlb",
+        "operands": ""
+      },
+      {
+        "pc": "0x6076ddd4",
+        "mnemonic": "movbu",
+        "operands": "(d1,a0),d0"
+      },
+      {
+        "pc": "0x6076ddd6",
+        "mnemonic": "cmp",
+        "operands": "0,d0"
+      },
+      {
+        "pc": "0x6076ddd8",
+        "mnemonic": "bne",
+        "operands": "0x6076dde5"
+      },
+      {
+        "pc": "0x6076ddda",
+        "mnemonic": "mov",
+        "operands": "(a2),a0"
+      },
+      {
+        "pc": "0x6076dddc",
+        "mnemonic": "mov",
+        "operands": "1,d0"
+      },
+      {
+        "pc": "0x6076ddde",
+        "mnemonic": "movbu",
+        "operands": "d0,(d1,a0)"
+      },
+      {
+        "pc": "0x6076dde0",
+        "mnemonic": "inc",
+        "operands": "d2"
+      },
+      {
+        "pc": "0x6076dde1",
+        "mnemonic": "mov",
+        "operands": "d2,a3"
+      },
+      {
+        "pc": "0x6076dde3",
+        "mnemonic": "bra",
+        "operands": "0x6076de0f"
+      },
+      {
+        "pc": "0x6076dde5",
+        "mnemonic": "mov",
+        "operands": "(a1),d0"
+      },
+      {
+        "pc": "0x6076dde6",
+        "mnemonic": "inc",
+        "operands": "d2"
+      },
+      {
+        "pc": "0x6076dde7",
+        "mnemonic": "add",
+        "operands": "28,d1"
+      },
+      {
+        "pc": "0x6076dde9",
+        "mnemonic": "cmp",
+        "operands": "d0,d2"
+      },
+      {
+        "pc": "0x6076ddea",
+        "mnemonic": "llt",
+        "operands": ""
+      },
+      {
+        "pc": "0x6076ddeb",
+        "mnemonic": "bra",
+        "operands": "0x6076de0f"
+      },
+      {
+        "pc": "0x6076dded",
+        "mnemonic": "mov",
+        "operands": "(4,sp),a0"
+      },
+      {
+        "pc": "0x6076ddef",
+        "mnemonic": "mov",
+        "operands": "(8,a0),a0"
+      },
+      {
+        "pc": "0x6076ddf2",
+        "mnemonic": "cmp",
+        "operands": "a0,d3"
+      },
+      {
+        "pc": "0x6076ddf4",
+        "mnemonic": "bhi",
+        "operands": "0x6076de0f"
+      },
+      {
+        "pc": "0x6076ddf6",
+        "mnemonic": "mov",
+        "operands": "(4,sp),a1"
+      },
+      {
+        "pc": "0x6076ddf8",
+        "mnemonic": "mov",
+        "operands": "d3,d1"
+      },
+      {
+        "pc": "0x6076ddf9",
+        "mnemonic": "inc4",
+        "operands": "a1"
+      },
+      {
+        "pc": "0x6076ddfa",
+        "mnemonic": "mov",
+        "operands": "(a1),a0"
+      },
+      {
+        "pc": "0x6076ddfc",
+        "mnemonic": "mov",
+        "operands": "1,d0"
+      },
+      {
+        "pc": "0x6076ddfe",
+        "mnemonic": "sub",
+        "operands": "d0,d1"
+      },
+      {
+        "pc": "0x6076de00",
+        "mnemonic": "udfu01",
+        "operands": "28,d1"
+      },
+      {
+        "pc": "0x6076de03",
+        "mnemonic": "movbu",
+        "operands": "(d1,a0),d0"
+      },
+      {
+        "pc": "0x6076de05",
+        "mnemonic": "cmp",
+        "operands": "0,d0"
+      },
+      {
+        "pc": "0x6076de07",
+        "mnemonic": "bne",
+        "operands": "0x6076de0f"
+      },
+      {
+        "pc": "0x6076de09",
+        "mnemonic": "mov",
+        "operands": "1,d0"
+      },
+      {
+        "pc": "0x6076de0b",
+        "mnemonic": "movbu",
+        "operands": "d0,(d1,a0)"
+      },
+      {
+        "pc": "0x6076de0d",
+        "mnemonic": "mov",
+        "operands": "d3,a3"
+      },
+      {
+        "pc": "0x6076de0f",
+        "mnemonic": "cmp",
+        "operands": "0,a3"
+      },
+      {
+        "pc": "0x6076de11",
+        "mnemonic": "bls",
+        "operands": "0x6076de35"
+      },
+      {
+        "pc": "0x6076de13",
+        "mnemonic": "mov",
+        "operands": "(8,sp),d0"
+      },
+      {
+        "pc": "0x6076de15",
+        "mnemonic": "cmp",
+        "operands": "0,d0"
+      },
+      {
+        "pc": "0x6076de17",
+        "mnemonic": "beq",
+        "operands": "0x6076de35"
+      },
+      {
+        "pc": "0x6076de19",
+        "mnemonic": "mov",
+        "operands": "(4,sp),a0"
+      },
+      {
+        "pc": "0x6076de1b",
+        "mnemonic": "mov",
+        "operands": "a3,d1"
+      },
+      {
+        "pc": "0x6076de1d",
+        "mnemonic": "mov",
+        "operands": "(4,a0),d2"
+      },
+      {
+        "pc": "0x6076de20",
+        "mnemonic": "add",
+        "operands": "-1,d1"
+      },
+      {
+        "pc": "0x6076de22",
+        "mnemonic": "udfu01",
+        "operands": "28,d1"
+      },
+      {
+        "pc": "0x6076de25",
+        "mnemonic": "add",
+        "operands": "d1,d2"
+      },
+      {
+        "pc": "0x6076de26",
+        "mnemonic": "mov",
+        "operands": "d0,a1"
+      },
+      {
+        "pc": "0x6076de28",
+        "mnemonic": "mov",
+        "operands": "8,a0"
+      },
+      {
+        "pc": "0x6076de2a",
+        "mnemonic": "add",
+        "operands": "d2,a0"
+      },
+      {
+        "pc": "0x6076de2c",
+        "mnemonic": "mov",
+        "operands": "15,d0"
+      },
+      {
+        "pc": "0x6076de2e",
+        "mnemonic": "call",
+        "operands": "0x47001052,[d2,d3,a2,a3],28"
+      },
+      {
+        "pc": "0x6076de35",
+        "mnemonic": "mov",
+        "operands": "3,d0"
+      },
+      {
+        "pc": "0x6076de37",
+        "mnemonic": "call",
+        "operands": "0x60768516,[d2,a2],12"
+      },
+      {
+        "pc": "0x6076de3c",
+        "mnemonic": "call",
+        "operands": "0x60768509,[],4"
+      },
+      {
+        "pc": "0x6076de43",
+        "mnemonic": "mov",
+        "operands": "a3,d0"
+      },
+      {
+        "pc": "0x6076de45",
+        "mnemonic": "ret",
+        "operands": "[d2,d3,a2,a3],28"
+      }
+    ],
+    "release": [
+      {
+        "pc": "0x6076dd48",
+        "mnemonic": "mov",
+        "operands": "a0,a2"
+      },
+      {
+        "pc": "0x6076dd49",
+        "mnemonic": "mov",
+        "operands": "d0,d2"
+      },
+      {
+        "pc": "0x6076dd4a",
+        "mnemonic": "mov",
+        "operands": "3,d0"
+      },
+      {
+        "pc": "0x6076dd4c",
+        "mnemonic": "call",
+        "operands": "0x60768516,[d2,a2],12"
+      },
+      {
+        "pc": "0x6076dd51",
+        "mnemonic": "call",
+        "operands": "0x607684f9,[],4"
+      },
+      {
+        "pc": "0x6076dd58",
+        "mnemonic": "cmp",
+        "operands": "0,d2"
+      },
+      {
+        "pc": "0x6076dd5a",
+        "mnemonic": "bls",
+        "operands": "0x6076dd7d"
+      },
+      {
+        "pc": "0x6076dd5c",
+        "mnemonic": "mov",
+        "operands": "(8,a2),d1"
+      },
+      {
+        "pc": "0x6076dd5f",
+        "mnemonic": "cmp",
+        "operands": "d1,d2"
+      },
+      {
+        "pc": "0x6076dd60",
+        "mnemonic": "bhi",
+        "operands": "0x6076dd7d"
+      },
+      {
+        "pc": "0x6076dd62",
+        "mnemonic": "inc4",
+        "operands": "a2"
+      },
+      {
+        "pc": "0x6076dd63",
+        "mnemonic": "mov",
+        "operands": "(a2),a0"
+      },
+      {
+        "pc": "0x6076dd65",
+        "mnemonic": "mov",
+        "operands": "1,d0"
+      },
+      {
+        "pc": "0x6076dd67",
+        "mnemonic": "sub",
+        "operands": "d0,d2"
+      },
+      {
+        "pc": "0x6076dd69",
+        "mnemonic": "udfu01",
+        "operands": "28,d2"
+      },
+      {
+        "pc": "0x6076dd6c",
+        "mnemonic": "add",
+        "operands": "d2,a0"
+      },
+      {
+        "pc": "0x6076dd6e",
+        "mnemonic": "clr",
+        "operands": "d0"
+      },
+      {
+        "pc": "0x6076dd6f",
+        "mnemonic": "movbu",
+        "operands": "d0,(8,a0)"
+      },
+      {
+        "pc": "0x6076dd72",
+        "mnemonic": "mov",
+        "operands": "(a2),d1"
+      },
+      {
+        "pc": "0x6076dd73",
+        "mnemonic": "add",
+        "operands": "d2,d1"
+      },
+      {
+        "pc": "0x6076dd74",
+        "mnemonic": "mov",
+        "operands": "d1,a0"
+      },
+      {
+        "pc": "0x6076dd76",
+        "mnemonic": "mov",
+        "operands": "d0,(24,a0)"
+      },
+      {
+        "pc": "0x6076dd79",
+        "mnemonic": "mov",
+        "operands": "(a2),a0"
+      },
+      {
+        "pc": "0x6076dd7b",
+        "mnemonic": "movbu",
+        "operands": "d0,(d2,a0)"
+      },
+      {
+        "pc": "0x6076dd7d",
+        "mnemonic": "mov",
+        "operands": "3,d0"
+      },
+      {
+        "pc": "0x6076dd7f",
+        "mnemonic": "call",
+        "operands": "0x60768516,[d2,a2],12"
+      },
+      {
+        "pc": "0x6076dd84",
+        "mnemonic": "call",
+        "operands": "0x60768509,[],4"
+      },
+      {
+        "pc": "0x6076dd8b",
+        "mnemonic": "ret",
+        "operands": "[d2,a2],12"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "previous_raw_handle": 0,
+      "selected_registry_id": 2,
+      "reserve": {
+        "status": "returned",
+        "completed": 35,
+        "fault": null,
+        "final_pc": "0x6076de35",
+        "final_sp": "0x19010080"
+      },
+      "active_before_raw_handle_publication": true,
+      "only_changed_byte": "slot[1]+0",
+      "delete_prefix": {
+        "status": "returned",
+        "completed": 8,
+        "fault": null,
+        "final_pc": "0x60779774",
+        "final_sp": "0x19010080"
+      },
+      "raw_delete_argument": 0,
+      "raw_delete_executed": false
+    },
+    {
+      "previous_raw_handle": 2,
+      "selected_registry_id": 2,
+      "reserve": {
+        "status": "returned",
+        "completed": 35,
+        "fault": null,
+        "final_pc": "0x6076de35",
+        "final_sp": "0x19010080"
+      },
+      "active_before_raw_handle_publication": true,
+      "only_changed_byte": "slot[1]+0",
+      "delete_prefix": {
+        "status": "returned",
+        "completed": 8,
+        "fault": null,
+        "final_pc": "0x60779774",
+        "final_sp": "0x19010080"
+      },
+      "raw_delete_argument": 2,
+      "raw_delete_executed": false
+    }
+  ],
+  "normal_raw_handle_source": "positive unchanged return of native mailbox creation",
+  "output_public_id_is_registry_id": true,
+  "active_is_completed_publication": false,
+  "release_clears_raw_handle": false,
+  "observed_concurrent_race": false,
+  "full_handle_alias_closure": false,
+  "mailbox1_delete_unreachable_proven": false,
+  "callback_serialization_proven": false,
+  "all_assertions_passed": true,
+  "hash_checks_performed": false,
+  "firmware_modified": false,
+  "firmware_built": false,
+  "hardware_executed": false,
+  "limits": [
+    "The literal scan covers decoded main only; derived/escaped aliases and other components are not excluded.",
+    "Native reserve execution starts after lock acquisition and stops before unlock; lock calls, name copy, allocation and initialization are not simulated.",
+    "Native delete execution starts after lookup with the selected slot address and stops before raw kernel deletion.",
+    "Early active plus stale handle is a demonstrated local publication gap, not a demonstrated live scheduling race.",
+    "Mailbox1 exclusion is only conditional on initialization, all +4 writers following the reviewed creation path, occupied kernel slot1, and no other deleting/alias-writing route."
+  ]
+}
