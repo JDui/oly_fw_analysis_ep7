@@ -1,0 +1,82 @@
+{
+  "scope": "Execute the original capture population from its patched prewrite boundary.\n\nThe owned capture prefix and controller handover are explicit fixtures. Template\nand property values come from the preceding original initialization; unprovided\nproperty or hardware state must stop native execution rather than become zero.\n",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu",
+  "template_copy_passed": true,
+  "population_passed": false,
+  "cases": [
+    {
+      "symbol": "native_prewrite_and_template_copy",
+      "status": "returned",
+      "completed": 49697,
+      "fault": null,
+      "final_pc": "0x602a7eb0",
+      "final_sp": "0x1901079c",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 344,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 1,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0
+    },
+    {
+      "symbol": "native_capture_population_after_template_copy",
+      "status": "breakpoint",
+      "completed": 35,
+      "fault": null,
+      "final_pc": "0x60061808",
+      "final_sp": "0x1901070c",
+      "stack_depth_from_call_sp": 164,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "d0_at_stop": 469782530,
+      "native_property_lookups": [
+        {
+          "key": "0x810a",
+          "return_pc": "0x6005e97d"
+        }
+      ]
+    }
+  ],
+  "capture": {
+    "address": "0x19700000",
+    "mapped_prefix_bytes": 27332,
+    "allocation_executed": false,
+    "initial_fill": "a5",
+    "template_words_copied": 6833
+  },
+  "upstream_registered_properties": 1209,
+  "template_BSS_DMA_executed": false,
+  "hash_checks_performed": false,
+  "native_api_success_stubs": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "Original population executes in a cloned post-materializer context after an explicit controller TCB handover; it is not a complete boot or first-capture schedule.",
+    "The capture/node/registry remain owned fixtures. Only the original template prefix is writable; no pool allocation or unknown extension initialization is claimed.",
+    "Native prewrite executes before the original template copy. Existing capture state may be revoked, and no completion/seal observer is forged at a frontier.",
+    "Conditional BSS initialization and original ROM/default properties are inherited; camera NVM, calibration and actual shot geometry remain unverified.",
+    "Full second population, relay preprocessing, worker allocation/processing/cleanup and ACK remain separate stages."
+  ]
+}

@@ -96,12 +96,20 @@ def initialize_default_properties(machine,syms):
         ('native_default_bank_registration',registered))],records
 
 
-def initialize_configuration_defaults(machine,syms):
-    source,end,destination,capacity=0x600921dc,0x60096f00,0x624da400,65536
-    # Original6005dbab..dc18 binds this ROM header+8, destination and capacity.
-    require(machine.read(0x6005dbec,6)==bytes.fromhex('fcddd4210960') and
-            machine.read(0x6005dbfd,6)==bytes.fromhex('fcdd00a44d62') and
-            machine.read(0x6005dc0e,6)==bytes.fromhex('fccc00000100'),
+def initialize_configuration_defaults(machine,syms,*,capture_defaults=False):
+    if capture_defaults:
+        source,end,destination,capacity=0x60096f98,0x600be008,0x624ea400,262144
+        bindings=(0x6005dc5a,0x6005dc6b,0x6005dc7c)
+        expected_count,extent,endpoint,name,limit=1084,153008,0xa2715ab8,'capture',750000
+    else:
+        source,end,destination,capacity=0x600921dc,0x60096f00,0x624da400,65536
+        bindings=(0x6005dbec,0x6005dbfd,0x6005dc0e)
+        expected_count,extent,endpoint,name,limit=125,19145,0xa2715abc,'configuration',250000
+    # Both banks use the same original typed packer, with independently observed
+    # object bindings. Only the required bank is initialized for each scenario.
+    require(machine.read(bindings[0],6)==b'\xfc\xdd'+struct.pack('<I',source-8) and
+            machine.read(bindings[1],6)==b'\xfc\xdd'+struct.pack('<I',destination) and
+            machine.read(bindings[2],6)==b'\xfc\xcc'+struct.pack('<I',capacity),
             'configuration default bank binding changed')
     pc,expected,records=source,bytearray(b'\xa5'*8),[]
     while pc<end:
@@ -114,23 +122,27 @@ def initialize_configuration_defaults(machine,syms):
         expected.extend(machine.read(pc+4,width*count))
         records.append(dict(key=key,count=count,width=width,header=pc,data=pointer))
         pc=(pc+4+width*count+3)&~3
-    require(pc==end and len(records)==125 and len(expected)==19145 and
+    require(pc==end and len(records)==expected_count and len(expected)==extent and
             machine.read(end,4)==bytes(4),'configuration record extent or terminator changed')
-    guarded(machine,'property_configuration_defaults',destination,b'\xa5'*len(expected))
-    guarded(machine,'property_configuration_ends',0xa2715ab4,b'\xa5'*16)
+    guarded(machine,'property_'+name+'_defaults',destination,b'\xa5'*len(expected))
+    if 'property_configuration_ends' not in machine.regions:
+        guarded(machine,'property_configuration_ends',0xa2715ab4,b'\xa5'*16)
+    previous_ends=machine.read(0xa2715ab4,16)
     initialized=native_call(machine,syms,0x6005e309,0xf0,52,
-        dict(a0=destination,a1=source,d0=capacity),limit=250000)
+        dict(a0=destination,a1=source,d0=capacity),limit=limit)
+    expected_ends=bytearray(previous_ends)
+    struct.pack_into('<I',expected_ends,endpoint-0xa2715ab4,destination+len(expected))
     require(machine.read(destination,len(expected))==bytes(expected) and
-            u32(machine,0xa2715abc)==destination+len(expected),
+            machine.read(0xa2715ab4,16)==bytes(expected_ends),
             'original configuration packing differs from ROM defaults or recorded extent')
     registered=native_call(machine,syms,0x6005d987,0xf0,48,
-        dict(a0=source,a1=destination+8,d0=BASE_INDEX),limit=20000)
+        dict(a0=source,a1=destination+8,d0=BASE_INDEX),limit=100000 if capture_defaults else 20000)
     for r in records:
         require(machine.read(BASE_INDEX+8*(r['key']>>4),8)==struct.pack('<HHI',r['key'],r['count'],r['data']),
                 'original packed configuration property registration changed')
-    rows=[summarize_message(name,result,CALL_SP) for name,result in (
-        ('native_configuration_default_packing',initialized),
-        ('native_configuration_default_registration',registered))]
+    rows=[summarize_message(label,result,CALL_SP) for label,result in (
+        ('native_'+name+'_default_packing',initialized),
+        ('native_'+name+'_default_registration',registered))]
     rows[0]['execution_segments']=initialized['execution_segments']
     return rows,records
 

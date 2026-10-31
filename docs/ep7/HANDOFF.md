@@ -7,7 +7,18 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[原生属性与capture模板](CANDIDATE_PROPERTY_SIM.md)通过有条件初始化，候选仍004。
+最新：[原厂模板复制与population](CANDIDATE_POPULATION_SIM.md)已通过copy并定位动态状态
+停止点，候选仍004。新增capture配置ROM60096f98..600be008共1084条，经同一原厂
+packer581230指令打包到624ea400/153008字节，再64545指令注册；总2293条不同索引。
+真实CALL602a7ea0[f0],20执行prewrite一次及6833word复制，49697指令到602a7eb0，
+27332B与模板一致。真实resume2429指令/40次getter后，604288d5读未映射622a064a
+半字停止，MDR602a8315，目标capture+24178/+24180；最后property c36a。
+原厂reset6042133f..364和动态setter6042844e..481已定位，后者读配置A2+48/+50。
+不要用猜测拍摄值/零值越过。当前capture填充未通过，无sample/seal/worker后续运行；
+下一步追溯配置对象和状态更新，再继续population/relay。新探针返回明确frontier，
+不是完整成功；先前缺810a的35指令诊断报告独立保留。无重编译/SHA/相机操作。
+
+此前：[原生属性与capture模板](CANDIDATE_PROPERTY_SIM.md)通过有条件初始化，候选仍004。
 四组原厂ROM/default经真实清表、复制、按类型打包和注册，共1209条不同索引记录；
 12段297381指令，6030002c模板初始化7908指令正常返回，16次getter查询与三个常量
 正确。缺c082/8f11的两个中间报告和A5诊断报告独立保留。A5揭示initializer只写部分

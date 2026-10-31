@@ -1,0 +1,355 @@
+{
+  "scope": "Execute the original capture population from its patched prewrite boundary.\n\nThe owned capture prefix and controller handover are explicit fixtures. Template\nand property values come from the preceding original initialization; unprovided\nproperty or hardware state must stop native execution rather than become zero.\n",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu",
+  "template_copy_passed": true,
+  "population_passed": false,
+  "frontier": {
+    "kind": "unmapped_dynamic_geometry_state",
+    "getter": "0x604288d5",
+    "getter_native_return_pc": "0x602a8315",
+    "global_halfwords": [
+      "0x622a064a",
+      "0x622a0648"
+    ],
+    "capture_destination_offsets": [
+      24178,
+      24180
+    ],
+    "original_reset_slice": [
+      "0x6042133f",
+      "0x60421364"
+    ],
+    "original_dynamic_setter_slice": [
+      "0x6042844e",
+      "0x60428481"
+    ],
+    "state_default_or_shot_values_supplied": false
+  },
+  "cases": [
+    {
+      "symbol": "native_capture_default_packing",
+      "status": "returned",
+      "completed": 581230,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 52,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "execution_segments": [
+        {
+          "status": "instruction_limit",
+          "completed": 100000,
+          "pc": "0x6005e3e5"
+        },
+        {
+          "status": "instruction_limit",
+          "completed": 100000,
+          "pc": "0x6005e3d6"
+        },
+        {
+          "status": "instruction_limit",
+          "completed": 100000,
+          "pc": "0x6005e3dc"
+        },
+        {
+          "status": "instruction_limit",
+          "completed": 100000,
+          "pc": "0x6005e3e3"
+        },
+        {
+          "status": "instruction_limit",
+          "completed": 100000,
+          "pc": "0x6005e3d3"
+        },
+        {
+          "status": "returned",
+          "completed": 81230,
+          "pc": "0x19000007"
+        }
+      ]
+    },
+    {
+      "symbol": "native_capture_default_registration",
+      "status": "returned",
+      "completed": 64545,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 48,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0
+    },
+    {
+      "symbol": "native_prewrite_and_template_copy",
+      "status": "returned",
+      "completed": 49697,
+      "fault": null,
+      "final_pc": "0x602a7eb0",
+      "final_sp": "0x1901079c",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 344,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 1,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "candidate_prewrite_entries": 1
+    },
+    {
+      "symbol": "native_capture_population_after_template_copy",
+      "status": "memory_fault",
+      "completed": 2429,
+      "fault": {
+        "kind": 1,
+        "pc": 1614973141,
+        "map": 0,
+        "address": 1646921290,
+        "size": 2,
+        "access": "read"
+      },
+      "final_pc": "0x604288d5",
+      "final_sp": "0x1901079c",
+      "stack_depth_from_call_sp": 52,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "d0_at_stop": 0,
+      "native_property_lookups": [
+        {
+          "key": "0x810a",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x8119",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x8141",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x8161",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x8151",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x8231",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x52b1",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x82a9",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x8eb9",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x9961",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x83c1",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x9719",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x8871",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x8889",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x8c01",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x9761",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x8991",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x9751",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x9771",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x9781",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x9dd1",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x9dea",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x8bf1",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x9651",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x9661",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0xe8f1",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0xe909",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0xee11",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x8e41",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x8a61",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x76b1",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0x6749",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0xd712",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0xd721",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0xa07a",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0xc2da",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0xc2ca",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0xc0d1",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0xc10a",
+          "return_pc": "0x6005e97d"
+        },
+        {
+          "key": "0xc36a",
+          "return_pc": "0x6005e97d"
+        }
+      ]
+    }
+  ],
+  "capture": {
+    "address": "0x19700000",
+    "mapped_prefix_bytes": 27332,
+    "allocation_executed": false,
+    "initial_fill": "a5",
+    "template_words_copied": 6833
+  },
+  "upstream_registered_properties": 1209,
+  "additional_capture_defaults": 1084,
+  "capture_default_bank": {
+    "ROM": "0x60096f98",
+    "terminator": "0x600be008",
+    "RAM": "0x624ea400",
+    "packed_extent": 153008,
+    "native_endpoint_cell": "0xa2715ab8",
+    "imported_camera_NVM": false
+  },
+  "template_BSS_DMA_executed": false,
+  "hash_checks_performed": false,
+  "native_api_success_stubs": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "Original population executes in a cloned post-materializer context after an explicit controller TCB handover; it is not a complete boot or first-capture schedule.",
+    "The capture/node/registry remain owned fixtures. Only the original template prefix is writable; no pool allocation or unknown extension initialization is claimed.",
+    "Native prewrite executes before the original template copy. Existing capture state may be revoked, and no completion/seal observer is forged at a frontier.",
+    "Conditional BSS initialization and original ROM/default properties are inherited; camera NVM, calibration and actual shot geometry remain unverified.",
+    "Full second population, relay preprocessing, worker allocation/processing/cleanup and ACK remain separate stages."
+  ]
+}

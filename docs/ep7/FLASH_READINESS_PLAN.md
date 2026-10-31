@@ -86,3 +86,10 @@ backing仍是fixture。下一步关闭这些间隔及原生分配/处理/撤销/
 初始化只写部分字段，当前正常模板显式依赖已定位的原厂BSS清零范围，DMA未执行；
 未导入相机NVM或自动补未知属性。capture尚未复制/改变。下一步接通原厂模板复制与
 动态population、两段relay预处理，继续worker分配/处理/撤销/ACK；S3仍未整体完成。
+
+[模板复制与population前缀](CANDIDATE_POPULATION_SIM.md)随后实际执行patched prewrite
+和6833word复制，全27332字节一致。追加1084条原厂capture配置默认记录后，总2293条
+属性已注册；population经过40次getter，停在604288d5读取未映射622a064a，目标
+capture+24178/+24180。其原厂reset和动态setter已定位，配置对象来源/更新尚未接通。
+当前保持未知状态未映射，完整population未通过，也未进入relay预处理或worker。
+下一步沿配置来源关闭这个真实停止点，不以原厂初值零代替实际拍摄状态。
