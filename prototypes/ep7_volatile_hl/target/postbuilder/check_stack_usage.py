@@ -9,7 +9,7 @@ def check():
  for p,h in manifest['tools'].items():
   if sha(ROOT/p)!=h:raise ValueError('tool hash mismatch')
  gcc=ROOT/'toolchains/gcc-13.4.0-mn10300-build/gcc/xgcc'
- sources=[HERE/'native_observer.c',ROOT/'prototypes/ep7_volatile_hl/ep7p.c',ROOT/'prototypes/ep7_volatile_hl/ep7p_decode.c',ROOT/'prototypes/ep7_volatile_hl/target/memory.c'];functions={};inputs={}
+ sources=[HERE/'native_observer.c',ROOT/'prototypes/ep7_volatile_hl/runtime/runtime.c',ROOT/'prototypes/ep7_volatile_hl/ep7p.c',ROOT/'prototypes/ep7_volatile_hl/ep7p_decode.c',ROOT/'prototypes/ep7_volatile_hl/target/memory.c'];functions={};inputs={}
  with tempfile.TemporaryDirectory(prefix='ep7-stack-estimate-') as tmp:
   for p in sources:
    asm=Path(tmp)/(p.stem+'.s')

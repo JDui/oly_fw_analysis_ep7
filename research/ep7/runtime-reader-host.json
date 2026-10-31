@@ -1,0 +1,31 @@
+{
+  "scope": "Focused runtime host checks with mocked native facts; no hashes or target execution.",
+  "runs": {
+    "queue_view": {
+      "strict": {
+        "passed": true,
+        "stdout": "actual queue view: bounds/domain/deletion/overflow/changing-config cases passed; kernel reads mocked"
+      },
+      "asan_ubsan": {
+        "passed": true,
+        "stdout": "actual queue view: bounds/domain/deletion/overflow/changing-config cases passed; kernel reads mocked"
+      }
+    },
+    "runtime": {
+      "strict": {
+        "passed": true,
+        "stdout": "runtime: permanent publication, shared postbuilder/worker core, six providers, contention progress and retained poison/delay/context/queue failures passed; native environment mocked"
+      },
+      "asan_ubsan": {
+        "passed": true,
+        "stdout": "runtime: permanent publication, shared postbuilder/worker core, six providers, contention progress and retained poison/delay/context/queue failures passed; native environment mocked"
+      }
+    }
+  },
+  "kernel_reads_mocked": true,
+  "queue_lifetime_lease_proved": false,
+  "hash_checks_performed": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "camera_accessed": false
+}

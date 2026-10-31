@@ -16,11 +16,11 @@ def check():
   subprocess.run([str(gas),'-o',str(obj),str(asm)],check=True)
   symbols=subprocess.check_output([str(od),'-t',str(obj)],text=True)
   undefined={line.split()[-1] for line in symbols.splitlines() if '*UND*' in line}
-  if undefined!={'_ep7_native_runtime_unresolved','_ep7p_direct_apply'}:raise ValueError('unexpected undefined symbols')
+  if undefined!={'_ep7_native_runtime_slot','_ep7r_apply'}:raise ValueError('unexpected undefined symbols')
   text=asm.read_text()
   for offset in [4,5,6,7,12,13,14,15]:
    if not re.search(r'\bmovbu \('+str(offset)+r',a0\),d[0-3]',text):raise ValueError('missing setup byte read')
-  for witness in ['mov _ep7_native_runtime_unresolved,d0','call _ep7p_direct_apply,[],0','mov 976,a1','mov a1,(16,sp)','mov d2,(12,sp)','ret [d2,d3],28']:
+  for witness in ['mov _ep7_native_runtime_slot,d0','call _ep7r_apply,[],0','mov 976,a1','mov a1,(16,sp)','mov d2,(12,sp)','ret [d2,d3],28']:
    if witness not in text:raise ValueError('observer boundary mismatch')
   if re.search(r'\b(?:setlb|lir|lar|llt|lne)\b',text):raise ValueError('loop register operation')
   # Negative host syntax check only: the pointer adapter must not silently compile

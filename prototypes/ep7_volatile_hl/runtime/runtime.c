@@ -1,4 +1,5 @@
 #include "runtime.h"
+#include "../ep7p_direct.h"
 static const unsigned handles[EP7R_QUEUES]={0x4b,0x4c,0x4d,0xab,0x4f};
 static const unsigned maximums[EP7R_QUEUES]={148,312,300,312,312};
 static const unsigned rings[EP7R_QUEUES]={4864,10112,9728,10112,10112};
@@ -13,6 +14,11 @@ bool ep7r_prepare(ep7r *r,ep7b *b,ep7r_environment env)
 }
 ep7r *ep7r_get(const ep7r_slot *slot)
 { return slot?atomic_load_explicit(&slot->published,memory_order_acquire):NULL; }
+bool ep7r_apply(const ep7r_slot *slot,uintptr_t request,unsigned char *out,size_t length)
+{
+    ep7r *r=ep7r_get(slot);
+    return r && ep7p_direct_apply(r->boot->core,request,out,length);
+}
 bool ep7r_publish(ep7r_slot *slot,ep7r *r)
 {
     unsigned i;

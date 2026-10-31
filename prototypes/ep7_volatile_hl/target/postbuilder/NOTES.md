@@ -1,5 +1,12 @@
 # Native COLOR post-builder → GCC observer seam
 
+2026-10-31 update: [shared runtime reader](../../../../docs/ep7/RUNTIME_READER.md)
+replaces the historical `ep7_native_runtime_unresolved` object with the same
+published core used by worker admission. The 16-instruction bridge is unchanged;
+observer remains28 bytes of local stack and the runtime adapter adds20. Historical
+hash-pinned observations below are retained as history, not current reruns or a
+complete stack budget. Current checks use no SHA and still perform no native execution.
+
 Exact E-P7 1100 stock, SHA2569d1610124ad98f6edae4540182205f06c9c703d9033ef0c4f19847193f95eaeb. Self-authored, compile-only ABI candidate, no installation/linking/target execution. `seam_probe.py` verifies33 exact instruction/operand witnesses in6windows and hashes the windows. `check_bridge.py` compiles/assembles self-authored code and checks all16 bridge instructions and2 unresolved relocations; host arithmetic stack model is NOT instruction emulation. Nine tests pass, including target-only actual observer and current compiled-object loop-state checks.
 
 ## Proven native seam

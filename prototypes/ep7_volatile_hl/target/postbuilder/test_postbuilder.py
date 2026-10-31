@@ -7,7 +7,7 @@ import check_loopstate as loop
 import check_native_observer as observer
 class Postbuilder(unittest.TestCase):
  def test_actual_native_observer_compile_only(self):
-  r=observer.check();self.assertFalse(r['target_executed']);self.assertTrue(r['host_64bit_compile_rejected']);self.assertEqual(r['undefined_symbols'],['_ep7_native_runtime_unresolved','_ep7p_direct_apply'])
+  r=observer.check();self.assertFalse(r['target_executed']);self.assertTrue(r['host_64bit_compile_rejected']);self.assertEqual(r['undefined_symbols'],['_ep7_native_runtime_slot','_ep7r_apply'])
  def test_observer_tool_mismatch(self):
   with patch.object(observer,'sha',return_value='bad'),patch.object(observer.subprocess,'run') as run:
    with self.assertRaises(ValueError):observer.check()

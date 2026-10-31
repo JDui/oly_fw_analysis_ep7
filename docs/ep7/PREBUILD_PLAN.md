@@ -76,9 +76,9 @@ G6 依赖 E 的工具链设计和 G1–G4 的候选接口；G8 汇合全部结�
 
 ## 当前编译准入结论
 
-**未就绪**：G1 原生闭包、G2 generation-bearing handoff、G3 域/发布、G4 原生资源、
-G6 放置/安装仍未闭合。可以持续推进离线研究和自写主机代码，不存在可承诺的安全
-试刷时间。下一步是审明 G1 的具体别名/事件释放义务，再决定 G2 的传递方案。
+**未就绪**：G1 原生捕获/释放闭包、G2/G3 退出与queue/task存活、G4 原生资源、
+G6 放置/安装仍未闭合。generation-bearing handoff、共享runtime发布和CPU reader已有
+实现；具体证据见本页末尾更新。继续离线研究，没有可承诺的安全试刷时间。
 
 最新实际进展：[当前工具链](CURRENT_TOOLCHAIN.md)、[异步别名接合](ASYNC_NODE_ALIASES.md)、
 [异步调度生命周期](ASYNC_DISPATCH_LIFETIME.md)。G2已实现
@@ -144,3 +144,7 @@ G3的[定时delay与清理进度约束](CLEANUP_PROGRESS.md)已核对并提供�
 固定、停止新准入但保留旧context、清理等待/poison保持均有具体实现与定向检查。
 这关闭了接口空缺，没有关闭安装资格；下一项CPU reader共用该runtime，随后退出闭包、
 捕获源/UI和安全放置必须继续完成。不能因符号数变化把G3/G6整体标记通过。
+
+[CPU reader](RUNTIME_READER.md)现经同一发布slot使用worker core；定向host与49对象检查
+通过。下一步不再新增context接口，集中审查退出/queue删除和捕获源身份/排他，再推进
+G4资源与G6完整stack/放置/启动，直到满足G8后开始整体固件编译。

@@ -74,6 +74,30 @@ static bool retained(void)
     for(i=0;i<EP7T_CAP;i++)if(runtime.transport.entries[i].ticket.serial==pending.serial)return true;
     return false;
 }
+static void put16(unsigned char *p,unsigned value)
+{ p[0]=(unsigned char)value;p[1]=(unsigned char)(value>>8); }
+static void put32(unsigned char *p,uint32_t value)
+{ unsigned i;for(i=0;i<4;i++)p[i]=(unsigned char)(value>>(8*i)); }
+static void prepare_reader(void)
+{
+    unsigned char *b=(unsigned char *)allocation,*request=b+11364,*operation=b+14576;
+    uint32_t base=(uint32_t)(uintptr_t)b;ep7p_snapshot snapshot={0};snapshot.hl[0]=4;
+    assert(base && base<=UINT32_MAX-EP7P_EXTENT);memset(b,0,sizeof allocation);
+    /* Same native schema as integration/test_integration.c's owned converter. */
+    put16(b+11312,2);put16(b+11314,3);put32(b+10984+24,0x6036884d);
+    put32(request,0x60355fd4);put32(request+4,base+14576);put16(request+10,11);put16(request+28,0x100);
+    put32(operation,base);put32(operation+8,base+11364);
+    assert(ep7p_register_job(&core,b,sizeof allocation,&snapshot,&job.job));job.state=EP7J_REGISTERED;
+}
+static void expect_reader(const ep7r_slot *slot,bool expected)
+{
+    unsigned char output[EP7P_OUTPUT];unsigned i;memset(output,0x5a,sizeof output);
+    assert(ep7r_apply(slot,(uintptr_t)allocation+11364,output,sizeof output)==expected);
+    for(i=0;i<sizeof output;i++){
+        unsigned char value=expected && i==706?0x60:(expected && i==707?0xf0:0x5a);
+        assert(output[i]==value); /* Registered H=4 changes only its reviewed lane. */
+    }
+}
 static void exercise_contexts(void)
 {
     ep7q_materializer_context recv;ep7q_send_context send;ep7q_producer_context prod;
@@ -102,6 +126,7 @@ int main(void)
     ep7q_worker_context worker;ep7q_ack_context ack;ep7q_producer_context prod;ep7p_snapshot s={0};
     f.tid=0x6c;f.entry=0x603f26a1;f.task_valid=true;
     assert(!ep7r_get(&ep7_native_runtime_slot));ep7q_owned_context_lost();
+    expect_reader(&ep7_native_runtime_slot,false);
     assert(ep7b_prepare(&boot,&core,n));assert(ep7r_prepare(&runtime,&boot,env));
     assert(!ep7r_publish(&ep7_native_runtime_slot,&runtime));assert(!ep7r_accepting(&runtime));
     f.installed=true;f.old_maximum=true;assert(!ep7r_publish(&ep7_native_runtime_slot,&runtime));
@@ -110,9 +135,12 @@ int main(void)
     assert(ep7r_accepting(&runtime) && !ep7r_publish(&ep7_native_runtime_slot,&runtime));
     assert(!ep7b_abort_unpublished(&boot) && !f.deletes && f.creates==1);
     exercise_contexts();
+    prepare_reader();expect_reader(&ep7_native_runtime_slot,true);
     ticket();f.poll_status=-50;ep7r_retire(&runtime,pending);
     assert(f.delays==1 && !retained() && !f.quarantines);
     ticket();ep7r_stop(&runtime);
+    expect_reader(&ep7_native_runtime_slot,true); /* Stop retains this in-flight frozen job. */
+    assert(ep7j_revoke(&job,&core));expect_reader(&ep7_native_runtime_slot,false);
     assert(!ep7q_producer_context_unresolved(0x4b,0x100100,&prod));
     assert(ep7q_worker_context_unresolved(EP7Q_WORKER_CLEANUP,0x100100,&worker));
     assert(ep7q_ack_context_unresolved(0x100100,&ack));
@@ -138,11 +166,12 @@ int main(void)
     assert(ep7q_worker_context_unresolved(EP7Q_WORKER_CLEANUP,0x100100,&worker));
     assert(ep7q_ack_context_unresolved(0x100100,&ack));
     assert(!ep7j_revoke(&job,worker.core) && job.job && core.jobs[0].token==job.job);
+    expect_reader(&ep7_native_runtime_slot,false); /* Poison rejects before native job reads. */
     if(!setjmp(f.escape)){ep7q_owned_context_lost();assert(!"lost owned layout returned");}
     assert(f.last_reason==EP7R_FAULT_OWNED_LAYOUT && job.job && retained());
     f.task_valid=false;
     if(!setjmp(f.escape)){(void)ep7q_ack_context_unresolved(0x100100,&ack);assert(!"lost task context returned");}
     assert(f.last_reason==EP7R_FAULT_CONTEXT && job.job && retained() && !f.deletes);
-    puts("runtime: permanent publication, real bootstrap/core/transport, six providers, contention progress and retained poison/delay/context/queue failures passed; native environment mocked");
+    puts("runtime: permanent publication, shared postbuilder/worker core, six providers, contention progress and retained poison/delay/context/queue failures passed; native environment mocked");
     return 0;
 }

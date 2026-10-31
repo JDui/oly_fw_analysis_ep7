@@ -89,6 +89,11 @@ TCB+76 entry/+84 size/+88实际base及anchor范围。59原厂指令、复用get_
 安装器/lifetime、捕获源、CPU reader与共享slot接合仍未关闭；下一个节点先处理reader，
 再集中推进退出闭包、UI及G6放置，整体固件编译未开始。
 
+[CPU reader接入](RUNTIME_READER.md)已完成：原postbuilder桥不变，observer经发布slot使用
+worker同一core。host验证stop后在途job仍生效、撤销/poison后保持原输出；33条原厂指令、
+49对象ABI/loop-state检查通过。20个外部符号为捕获源和19个native地址；没有整体固件
+编译。下一重点回到退出/queue删除闭包与捕获源身份，再处理UI和G6放置/完整栈预算。
+
 ## 本轮恢复后的增量
 
 - 在既有 controller sidecar 中实现 `ep7c_resolve_live`，无需额外 token map。

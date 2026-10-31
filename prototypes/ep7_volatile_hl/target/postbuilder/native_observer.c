@@ -6,12 +6,11 @@
  * code concurrently. Direct registry revoke-before-free uses the same corelock.
  * This translation does not establish those native preconditions or install hooks.
  */
-#include "ep7p_direct.h"
+#include "runtime/runtime.h"
 _Static_assert(sizeof(uintptr_t)==4, "adapter requires 32-bit target pointers");
 _Static_assert(sizeof(void *)==4, "adapter is not a host pointer decoder");
-/* Initialized private core state, NOT a last-job pointer or task-ID shortcut.
- * Lifecycle/admission adapter must populate it before this observer is enabled. */
-extern ep7p ep7_native_runtime_unresolved;
+/* Published runtime slot shares worker core/lock/registry. This is never a
+ * last-job pointer or task-ID shortcut. Installation still owns native lifetime. */
 static uint32_t load_le32(const unsigned char *p)
 {
     return (uint32_t)p[0] | (uint32_t)p[1]<<8 |
@@ -24,5 +23,5 @@ void ep7_gcc_postbuilder_observer(const unsigned char *setup)
     if (!setup) return; /* Null guard only, not a readable-extent proof. */
     request=(uintptr_t)load_le32(setup+4);
     output=(unsigned char *)(uintptr_t)load_le32(setup+12);
-    (void)ep7p_direct_apply(&ep7_native_runtime_unresolved,request,output,EP7P_OUTPUT);
+    (void)ep7r_apply(&ep7_native_runtime_slot,request,output,EP7P_OUTPUT);
 }

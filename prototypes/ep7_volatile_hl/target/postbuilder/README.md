@@ -1,5 +1,12 @@
 # Native post-builder → actual target C observer
 
+Current implementation update (2026-10-31): the observer now calls `ep7r_apply`
+through the permanently published runtime slot, sharing the worker's actual core
+and lock. See [current binding and no-hash checks](../../../../docs/ep7/RUNTIME_READER.md).
+The legacy commands/reports below retain their tool guards; their historical
+external-core symbol and stack totals are superseded by the current pipeline
+report. No native startup or hook installation has been performed.
+
 Compile-only integration: native-frame bridge → 32-bit setup decoder adapter →
 `ep7p_direct_apply`. The latter performs locked live-allocation lookup and bounded
 request decoding before CPU coefficient writes. Neither an initialized native

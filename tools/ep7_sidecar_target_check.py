@@ -42,6 +42,8 @@ if receiver_mode:
      [('descriptor_receive_bridge','descriptor_receive_bridge.s'),('descriptor_receive_layout','descriptor_receive_layout.c'),('descriptor_receive_binding','descriptor_receive_binding.c')]})
 if args.queue_pipeline_abi_only:
  flags.append('-I'+str(core/'poll_lock_provider'))
+ files['postbuilder_bridge']=core/'target/postbuilder/postbuilder_bridge.s'
+ files['postbuilder_observer']=core/'target/postbuilder/native_observer.c'
  files.update({n:core/'runtime'/p for n,p in [
      ('runtime','runtime.c'),('contexts','contexts.c'),('runtime_native','native_context.c'),
      ('task_context','task_context.c'),('task_native','task_context_native.c'),('queue_context','queue_context.c'),
@@ -82,6 +84,39 @@ with tempfile.TemporaryDirectory() as temp:
    definitions[symbol]=name
   undefined|=und
   objects[name]=dict(source=str(src.relative_to(root)),definitions=sorted(defs),undefined=sorted(und))
+  if args.queue_pipeline_abi_only:
+   dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
+   audit=re.findall(r'^\s*[0-9a-f]+:[ \t]+(?:[0-9a-f]{2}[ \t]+)+([a-z][a-z0-9]*)(?:[ \t]+([^\n]*))?$',dis,re.M)
+   forbidden={'setlb','leq','lne','lgt','lge','lle','llt','lhi','lcc','lls','lcs','lra'}
+   # Objdump's numeric branch address e0 is not the extended register e0.
+   # Strip only its explicit address<label> annotation, retaining real operands.
+   suspicious=[(mn,operands) for mn,operands in audit if mn in forbidden or re.search(
+       r'\b(?:lir|lar|epsw|mdrq|mcrh|mcrl|mcvf|e[0-7]|fs[0-9]+)\b',
+       re.sub(r'\b[0-9a-f]+\s+<[^>]+>','',operands))]
+   if suspicious:raise ValueError('unqualified loop/extended register state in '+name+': '+repr(suspicious))
+   objects[name]['loop_extended_state_audited']=True
+  if name=='postbuilder_bridge':
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   expected=[('call',None),('mov','d0,(12,sp)'),('mov','d1,(16,sp)'),('mov','a0,(20,sp)'),('mov','a1,(24,sp)'),
+       ('mov','mdr,d2'),('mov','d2,(28,sp)'),('mov','a2,d0'),('call',None),('mov','(12,sp),d0'),('mov','(16,sp),d1'),
+       ('mov','(20,sp),a0'),('mov','(24,sp),a1'),('mov','(28,sp),d2'),('mov','d2,mdr'),('ret','[d2,d3,a2,a3],96')]
+   if len(ins)!=len(expected) or any(actual[0]!=want[0] or (want[1] is not None and actual[1]!=want[1]) for actual,want in zip(ins,expected)):
+    raise ValueError('postbuilder register/MDR/frame preservation changed')
+   if not ins[0][1].endswith(',[d2,d3,a2,a3],96') or not ins[8][1].endswith(',[],0'):
+    raise ValueError('postbuilder native/GCC call frame changed')
+   if dis.count('R_MN10300_PCREL32')!=2 or any(s+'+0x1' not in dis for s in ['ep7_stock_color_builder_unresolved','_ep7_gcc_postbuilder_observer']):
+    raise ValueError('postbuilder relocation changed')
+   objects[name].update(checked_instructions=16,additional_native_frame_bytes=96)
+  if name=='postbuilder_observer':
+   assembly=Path(temp)/'postbuilder_observer.s'
+   subprocess.run([prefix+'gcc',*flags,'-S',str(src),'-o',str(assembly)],check=True)
+   caller=assembly.read_text()
+   if und!={'_ep7_native_runtime_slot','_ep7r_apply'}:raise ValueError('postbuilder must use shared runtime reader')
+   for offset in [4,5,6,7,12,13,14,15]:
+    if not re.search(r'\bmovbu \('+str(offset)+r',a0\),d[0-3]',caller):raise ValueError('missing native setup byte read')
+   for witness in ['mov _ep7_native_runtime_slot,d0','call _ep7r_apply,[],0','mov 976,a1','mov a1,(16,sp)','mov d2,(12,sp)','ret [d2,d3],28']:
+    if witness not in caller:raise ValueError('shared reader argument/frame mismatch')
+   objects[name].update(checked_setup_byte_reads=8,shared_runtime_reader_bound=True,output_extent=976)
   if (args.queue_abi_only or args.queue_pipeline_abi_only) and name in {'queue_bridge','caller'}:
    if name=='queue_bridge':
     dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
@@ -269,6 +304,7 @@ if args.queue_pipeline_abi_only:
      '_ep7q_descriptor_send_context_unresolved','_ep7q_producer_context_unresolved',
      '_ep7q_worker_context_unresolved','_ep7q_ack_context_unresolved'}
  expected|={'ep7_stock_get_tid_unresolved','ep7_stock_task_delay_unresolved',
+     'ep7_stock_color_builder_unresolved',
      'ep7_stock_raw_sem_wait_unresolved','ep7_stock_raw_sem_signal_unresolved',
      'ep7_stock_raw_sem_create_unresolved','ep7_stock_raw_sem_delete_unresolved'}
 if external!=expected:raise ValueError('unexpected external symbols '+repr(external))

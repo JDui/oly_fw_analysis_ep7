@@ -1,5 +1,12 @@
 # Compile-only raw-semaphore ABI closure
 
+2026-10-31 update: the historical nine-object dependency checker is now explicitly
+a partial set, leaving the shared runtime slot/reader external. The selected
+current pipeline, including bootstrap, six context providers and CPU reader, is
+checked by `tools/ep7_sidecar_target_check.py --queue-pipeline-abi-only`; see
+[runtime reader](../../../../docs/ep7/RUNTIME_READER.md). No SHA guard was removed
+from the legacy tools, and their historical reports are not presented as reruns.
+
 Self-authored, unresolved GCC-callable bridges plus actual normalized C provider
 callbacks. No semaphore creation, native API invocation, target linking or
 firmware modification. This extends the independently reviewed restricted

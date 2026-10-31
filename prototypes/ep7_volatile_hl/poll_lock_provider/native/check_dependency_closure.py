@@ -4,7 +4,7 @@ import hashlib,json,re,subprocess,tempfile
 from pathlib import Path
 HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[3]
 CORE=ROOT/'prototypes/ep7_volatile_hl';TARGET=CORE/'target'
-EXPECTED_EXTERNAL={'_ep7_native_runtime_unresolved','ep7_stock_color_builder_unresolved','ep7_stock_get_tid_unresolved','ep7_stock_raw_sem_wait_unresolved','ep7_stock_raw_sem_signal_unresolved'}
+EXPECTED_EXTERNAL={'_ep7_native_runtime_slot','_ep7r_apply','ep7_stock_color_builder_unresolved','ep7_stock_get_tid_unresolved','ep7_stock_raw_sem_wait_unresolved','ep7_stock_raw_sem_signal_unresolved'}
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def symbols(text):
  defs=set();undef=set()
@@ -48,5 +48,5 @@ def check():
    objects[name]=dict(source=str(source.relative_to(ROOT)),source_sha256=sha(source),object_sha256=sha(obj),global_definitions=sorted(defs),undefined_symbols=sorted(undef))
  external,edges=resolve(objects)
  headers=[CORE/'ep7p.h',CORE/'ep7p_direct.h',CORE/'ep7p_decode.h',CORE/'poll_lock_provider/ep7_sem_provider.h',TARGET/'include/string.h']
- return dict(scope='Selected CPU reader/provider object-symbol closure, not camera end-to-end execution',objects=objects,header_sha256={str(p.relative_to(ROOT)):sha(p) for p in headers},internal_reference_edges=edges,remaining_external_symbols=external,tool_hashes=manifest['tools'],selected_object_count=len(objects),all_self_authored_undefined_references_have_selected_definitions=True,cas_provider_selected=False,gui_installation_selected=False,private_semaphore_initialization_bound=False,native_context_qualified=False,runtime_initialized=False,relocation_ranges_validated=False,target_linked=False,target_executed=False,firmware_input_used=False,flash_ready=False)
+ return dict(scope='Legacy partial CPU reader/provider object set; shared runtime is checked by tools/ep7_sidecar_target_check.py --queue-pipeline-abi-only',objects=objects,header_sha256={str(p.relative_to(ROOT)):sha(p) for p in headers},internal_reference_edges=edges,remaining_external_symbols=external,tool_hashes=manifest['tools'],selected_object_count=len(objects),all_self_authored_undefined_references_have_selected_definitions=False,shared_runtime_provider_selected=False,cas_provider_selected=False,gui_installation_selected=False,private_semaphore_initialization_bound=False,native_context_qualified=False,runtime_initialized=False,relocation_ranges_validated=False,target_linked=False,target_executed=False,firmware_input_used=False,flash_ready=False)
 if __name__=='__main__':print(json.dumps(check(),indent=2))

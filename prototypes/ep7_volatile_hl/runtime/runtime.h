@@ -38,6 +38,10 @@ typedef struct { _Atomic(ep7r *) published; } ep7r_slot;
 bool ep7r_prepare(ep7r *,ep7b *,ep7r_environment);
 bool ep7r_publish(ep7r_slot *,ep7r *);
 ep7r *ep7r_get(const ep7r_slot *);
+/* Synchronous post-builder reader using the SAME core as worker registration.
+ * Direct-reader native lifetime/output contract still applies. Stop does not
+ * discard an in-flight frozen job; unpublished/unknown/revoked remains neutral. */
+bool ep7r_apply(const ep7r_slot *,uintptr_t request,unsigned char *output,size_t length);
 bool ep7r_accepting(const ep7r *);
 /* Rejects subsequent admission checks. Already-admitted producers can finish;
  * this is NOT quiescence, queue teardown permission or revocation of old work. */
