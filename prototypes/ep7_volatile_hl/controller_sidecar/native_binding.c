@@ -5,6 +5,7 @@
 #include "native.h"
 #include "../runtime/runtime.h"
 #include "../snapshot_transport/native/producer.h"
+#include <string.h>
 #ifndef EP7CN_HOST_FIXTURE
 _Static_assert(sizeof(uintptr_t)==4,"target-only capture source");
 #endif
@@ -16,6 +17,27 @@ static atomic_bool owner_chosen=ATOMIC_VAR_INIT(false);
 static ep7n_task owner;
 static ep7r *pinned_runtime;
 static bool busy; /* Only the pinned controller reads/writes this, after task qualification. */
+enum { WAIT_QUEUE=0x6223e7e0u,WAIT_BACKING=0x6223e7f4u,WAIT_CAP=25u };
+typedef struct {
+    uint32_t associated,capture;
+    uint64_t generation;
+    ep7q_capture_scope scope;
+} wait_entry;
+static struct {
+    bool tracked;
+    unsigned count,head,tail;
+    wait_entry entries[WAIT_CAP];
+} waiting;
+/* Queue position, not a latest-value lookup by associated address, owns each
+ * frozen value. Retirement neutralizes it without changing native FIFO order. */
+static void wait_revoke(uint32_t associated,uint32_t capture)
+{
+    for(unsigned i=0;i<WAIT_CAP;i++) {
+        wait_entry *e=&waiting.entries[i];
+        if((!associated&&!capture) || (associated&&e->associated==associated) ||
+           (capture&&e->capture==capture))ep7q_capture_scope_init(&e->scope,0,NULL);
+    }
+}
 static uint32_t word(uint32_t p){return *(const volatile uint32_t *)(uintptr_t)p;}
 static unsigned state(void){return *(const volatile uint16_t *)(uintptr_t)0x62234fc0u;}
 static bool span(uint32_t p,uint32_t bytes){return p && !(p&3u) && p<=UINT32_MAX-bytes;}
@@ -76,6 +98,7 @@ void ep7_sidecar_transition_unresolved(unsigned old_state,unsigned pending)
     uint32_t anchor;
     if(enter((uint32_t)(uintptr_t)&anchor,false)) {
         ep7c_transition(&ep7_controller_sidecar_unresolved,old_state,pending);
+        if(pending!=255u || ep7_controller_sidecar_unresolved.poison)wait_revoke(0,0);
         leave();
     }
 }
@@ -114,6 +137,7 @@ void ep7cn_prewrite(uint32_t capture,unsigned postpopulation)
     if(!enter((uint32_t)(uintptr_t)&anchor,false))return;
     if(!span(capture,24084) || postpopulation>1u)fault(7);
     ep7c_prewrite_capture(&ep7_controller_sidecar_unresolved,state(),capture,postpopulation!=0);
+    wait_revoke(0,capture);
     leave();
 }
 void ep7cn_population(uint32_t node,unsigned finish)
@@ -145,6 +169,7 @@ void ep7cn_release_capture(uint32_t registry)
     capture=word(registry+12);
     if(!capture)fault(6);
     ep7c_retire_capture(&ep7_controller_sidecar_unresolved,state(),capture);
+    wait_revoke(0,capture);
     leave();
 }
 void ep7cn_associated_recycle(uint32_t pool,uint32_t header)
@@ -156,6 +181,7 @@ void ep7cn_associated_recycle(uint32_t pool,uint32_t header)
     if(!enter((uint32_t)(uintptr_t)&anchor,false))return;
     if(header>UINT32_MAX-4u || !associated_slot(header+4u) || word(header)!=0)fault(8);
     ep7c_retire_associated(&ep7_controller_sidecar_unresolved,state(),header+4u);
+    wait_revoke(header+4u,0);
     leave();
 }
 void ep7cn_associated_reset(void)
@@ -166,18 +192,19 @@ void ep7cn_associated_reset(void)
      * preserving token serials even if old node objects have not been freed. */
     for(unsigned i=0;i<ASSOCIATED_COUNT;i++)
         ep7c_retire_associated(&ep7_controller_sidecar_unresolved,state(),ASSOCIATED_BACKING+4u+16u*i);
+    wait_revoke(0,0);
     leave();
 }
-bool ep7q_capture_snapshot_unresolved(uint32_t id,uint32_t associated,ep7p_snapshot *out)
+static bool capture_snapshot_locked(uint32_t id,uint32_t associated,ep7p_snapshot *out,uint32_t *capture)
 {
-    uint32_t anchor,node;uint64_t token;unsigned s;ep7c_prefix v;bool read,result=false;
-    if(!out || id<1 || id>25 || !associated_slot(associated) ||
-       !enter((uint32_t)(uintptr_t)&anchor,true))return false;
-    /* Associated is live in the reviewed c3de producer invocation. Its node
+    uint32_t node;uint64_t token;unsigned s;ep7c_prefix v;bool read,result=false;
+    if(!out || id<1 || id>25 || !associated_slot(associated))return false;
+    /* Associated is live in the reviewed c3de/c3f6 producer invocation. Its node
      * backlink is not read on fresh-node registration, where it is not set yet. */
     s=state();
     if(!associated_live(associated)) {
-        ep7c_retire_associated(&ep7_controller_sidecar_unresolved,s,associated);goto done;
+        ep7c_retire_associated(&ep7_controller_sidecar_unresolved,s,associated);
+        wait_revoke(associated,0);goto done;
     }
     node=word(associated+8);
     if(!ep7c_resolve_live(&ep7_controller_sidecar_unresolved,s,node,&token))goto done;
@@ -185,5 +212,89 @@ bool ep7q_capture_snapshot_unresolved(uint32_t id,uint32_t associated,ep7p_snaps
     if(read && (v.associated!=associated || v.capture_id!=id || word(associated)!=id))read=false;
     /* Even failed prefix validation burns an early/unsealed sampling chance. */
     result=ep7c_copyout(&ep7_controller_sidecar_unresolved,s,node,token,read?&v:NULL,out);
-done:leave();return result;
+    if(result&&capture)*capture=v.capture;
+done:return result;
+}
+bool ep7q_capture_snapshot_unresolved(uint32_t id,uint32_t associated,ep7p_snapshot *out)
+{
+    uint32_t anchor;bool result;
+    if(!out || id<1 || id>25 || !associated_slot(associated) ||
+       !enter((uint32_t)(uintptr_t)&anchor,true))return false;
+    result=capture_snapshot_locked(id,associated,out,NULL);leave();return result;
+}
+static unsigned half(uint32_t p) { return *(const volatile uint16_t *)(uintptr_t)p; }
+static void wait_sync(uint32_t queue)
+{
+    if(queue!=WAIT_QUEUE || word(0x6223e7dcu)!=WAIT_QUEUE || word(queue)!=182u ||
+       half(queue+4u)!=WAIT_CAP || half(queue+6u)!=4u || word(queue+8u)!=WAIT_BACKING)fault(9);
+    unsigned count=half(queue+12u),tail=half(queue+14u),head=half(queue+16u);
+    if(count>WAIT_CAP || tail>=WAIT_CAP || head>=WAIT_CAP || tail!=(head+count)%WAIT_CAP)fault(9);
+    if(!waiting.tracked) {
+        /* Values already present at publication remain neutral forever. */
+        memset(&waiting,0,sizeof waiting);waiting.tracked=true;
+        waiting.count=count;waiting.tail=tail;waiting.head=head;
+    }else if(waiting.count!=count || waiting.tail!=tail || waiting.head!=head)fault(9);
+}
+extern uint32_t ep7_gcc_wait_enqueue(uint32_t queue,uint32_t associated);
+extern uint32_t ep7_gcc_wait_pop(uint32_t queue);
+extern const unsigned char ep7_wait_scope_native_return[];
+uint32_t ep7cn_wait_enqueue(uint32_t queue,uint32_t associated)
+{
+    uint32_t anchor,result;ep7r *r=enter((uint32_t)(uintptr_t)&anchor,false);
+    if(!r)return ep7_gcc_wait_enqueue(queue,associated);
+    wait_sync(queue);unsigned tail=waiting.tail;bool room=waiting.count<WAIT_CAP;
+    if(room) {
+        wait_entry *e=&waiting.entries[tail];memset(e,0,sizeof *e);e->associated=associated;
+        if(ep7r_accepting(r) && associated_live(associated)) {
+            ep7p_snapshot snapshot;uint32_t id=word(associated),capture=0;
+            if(capture_snapshot_locked(id,associated,&snapshot,&capture)) {
+                e->capture=capture;e->generation=ep7_controller_sidecar_unresolved.generation;
+                ep7q_capture_scope_init(&e->scope,id,&snapshot);
+            }
+        }
+    }
+    /* Keep busy across the real operation, including its native error handler.
+     * A hooked reentrant mutator cannot resume and invalidate our input. */
+    result=ep7_gcc_wait_enqueue(queue,associated);
+    if(result!=(room?4u:0u))fault(9);
+    if(room) {
+        if(word(WAIT_BACKING+4u*tail)!=associated)fault(9);
+        waiting.count++;waiting.tail=(tail+1u)%WAIT_CAP;
+    }
+    wait_sync(queue);leave();return result;
+}
+uint32_t ep7cn_wait_pop(uint32_t queue,uint32_t wrapper_sp)
+{
+    uint32_t result,scope_address=0;ep7q_capture_scope *scope=NULL;
+    ep7r *r=enter(wrapper_sp,false);
+    if(atomic_load_explicit(&owner_chosen,memory_order_acquire)) {
+        /* enter has revalidated this pinned task even on closed/poisoned paths.
+         * Clear a previous rejected pop before attempting ANY next native pop. */
+        ep7q_stack s={(const unsigned char *)(uintptr_t)owner.stack_low,owner.stack_low,owner.stack_bytes,true};
+        if(!ep7q_wait_pop_layout(&s,wrapper_sp,(uint32_t)(uintptr_t)ep7_wait_scope_native_return,&scope_address))fault(10);
+        scope=(ep7q_capture_scope *)(uintptr_t)scope_address;
+        if(scope)ep7q_capture_scope_init(scope,0,NULL);
+    }
+    if(!r)return ep7_gcc_wait_pop(queue);
+    wait_sync(queue);unsigned head=waiting.head;bool present=waiting.count!=0;
+    uint32_t expected=present?word(WAIT_BACKING+4u*head):0;
+    wait_entry *e=&waiting.entries[head];
+    if(present && e->associated && e->associated!=expected)fault(9);
+    result=ep7_gcc_wait_pop(queue);
+    if(result!=expected)fault(9);
+    if(present) {
+        waiting.count--;waiting.head=(head+1u)%WAIT_CAP;wait_sync(queue);
+        if(scope && ep7r_accepting(r) && !ep7_controller_sidecar_unresolved.poison && state()==33u &&
+           ep7_controller_sidecar_unresolved.state==33u && e->associated==result &&
+           e->generation==ep7_controller_sidecar_unresolved.generation && e->scope.state==EP7Q_SCOPE_AVAILABLE)
+            *scope=e->scope;
+        memset(e,0,sizeof *e);
+    }else wait_sync(queue);
+    leave();return result;
+}
+void ep7cn_wait_reset(void)
+{
+    uint32_t anchor;
+    if(!enter((uint32_t)(uintptr_t)&anchor,false))return;
+    memset(&waiting,0,sizeof waiting);leave();
 }

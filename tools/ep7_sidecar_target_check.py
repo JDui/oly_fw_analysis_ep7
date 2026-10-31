@@ -109,6 +109,7 @@ if args.queue_pipeline_abi_only:
  files['capture_native']=core/'controller_sidecar/native_binding.c'
  files['capture_cohort']=core/'controller_sidecar/cohort.c'
  files['capture_bridges']=core/'controller_sidecar/native_bridges.s'
+ files['wait_bridges']=core/'controller_sidecar/wait_bridges.s'
  files['capture_state_observer']=core/'capture_state_guard/observer.c'
  files['capture_state_bridge']=core/'capture_state_guard/bridge.s'
  files.update({n:core/'runtime'/p for n,p in [
@@ -540,6 +541,37 @@ with tempfile.TemporaryDirectory() as temp:
    objects[name]['owned_scope_frame_bytes']=64
    objects[name]['additional_native_frame_bytes']=32
    objects[name]['owned_scope_offset']=24
+  if args.queue_pipeline_abi_only and name=='wait_bridges':
+   dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   save=[('add','-40,sp'),('mov','d0,(12,sp)'),('mov','d1,(16,sp)'),('mov','a0,(20,sp)'),
+         ('mov','a1,(24,sp)'),('mov','d2,(32,sp)'),('mov','mdr,d2'),('mov','d2,(28,sp)')]
+   restore=[('mov','(28,sp),d2'),('mov','d2,mdr'),('mov','(32,sp),d2'),('mov','(12,sp),d0'),
+            ('mov','(16,sp),d1'),('mov','(20,sp),a0'),('mov','(24,sp),a1'),('add','40,sp')]
+   wanted=save+[('mov','d0,d1'),('mov','a0,d0'),('call',None),('mov','d0,(12,sp)')]+restore+[('ret','[],8')]
+   wanted+=save+[('mov','a0,d0'),('mov','sp,a0'),('add','40,a0'),('mov','a0,d1'),('call',None),('mov','d0,(12,sp)')]+restore+[('ret','[],24')]
+   wanted+=save+[('call',None)]+restore+[('jmp',None)]
+   scope_begin=len(wanted)
+   wanted+=[('add','-64,sp'),('mov','sp,a0'),('add','24,a0'),('mov','a0,d0'),('clr','d1'),
+            ('mov','d1,(12,sp)'),('call',None),('call',None),('add','64,sp'),('ret','[d2],8')]
+   wanted+=[('movm','[a2],(sp)'),('add','-12,sp'),('mov','d0,a0'),('mov','d1,d0'),('call',None),('ret','[a2],16'),
+            ('movm','[a2],(sp)'),('add','-12,sp'),('mov','d0,a0'),('call',None),('ret','[a2],16')]
+   if len(ins)!=len(wanted):raise ValueError('waiting-list bridge instruction count changed')
+   for actual,want in zip(ins,wanted):
+    if actual[0]!=want[0] or (want[1] is not None and actual[1].strip()!=want[1]):raise ValueError('waiting-list bridge operand changed')
+   frames=[x[1].split(',',1)[1].strip() for x in ins if x[0]=='call']
+   if frames!=['[],0','[],0','[],0','[],0','[d2],8','[],8','[],24']:
+    raise ValueError('waiting-list native/GCC call frames changed')
+   addresses=re.findall(r'^\s*([0-9a-f]+):\s+(?:[0-9a-f]{2}\s+)+[a-z]',dis,re.M)
+   rows=[line.split() for line in syms.splitlines() if line.split() and line.split()[-1]=='_ep7_wait_scope_native_return']
+   if len(rows)!=1 or int(rows[0][0],16)!=int(addresses[scope_begin+8],16):raise ValueError('deferred owned scope return label changed')
+   relocations=['_ep7cn_wait_enqueue','_ep7cn_wait_pop','_ep7cn_wait_reset','ep7_stock_wait_initialize_unresolved',
+                '_ep7q_capture_scope_init','ep7_stock_wait_service_unresolved','ep7_stock_associated_enqueue_unresolved','ep7_stock_wait_pop_unresolved']
+   if dis.count('R_MN10300_PCREL32')!=len(relocations):raise ValueError('waiting-list relocation count changed')
+   if any(symbol+'+0x1' not in dis for symbol in relocations):raise ValueError('waiting-list relocation target changed')
+   objects[name].update(checked_instructions=len(ins),transaction_bridge_frame_bytes=40,
+       owned_scope_frame_bytes=64,owned_scope_offset=24,pop_scope_offset=56,send_scope_offset=112,
+       initializer_tail_preserves_incoming_tag=True)
   if name=='worker_bridge':
    dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
    ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
@@ -759,6 +791,7 @@ if args.queue_pipeline_abi_only:
      'ep7_stock_capture_postpopulation_unresolved','ep7_stock_capture_node_free_unresolved',
      'ep7_stock_capture_pool_release_unresolved','ep7_stock_capture_lookup_unresolved',
      'ep7_stock_associated_enqueue_unresolved','ep7_stock_associated_initialize_unresolved',
+     'ep7_stock_wait_pop_unresolved','ep7_stock_wait_initialize_unresolved','ep7_stock_wait_service_unresolved',
      'ep7_stock_receive_gate_continue_unresolved','ep7_stock_receive_gate_error_unresolved',
      'ep7_stock_send_gate_continue_unresolved','ep7_stock_send_gate_error_unresolved','ep7_stock_delete_gate_continue_unresolved',
      'ep7_stock_raw_sem_wait_unresolved','ep7_stock_raw_sem_signal_unresolved',

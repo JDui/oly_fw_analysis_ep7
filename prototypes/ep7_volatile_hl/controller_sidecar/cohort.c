@@ -12,8 +12,15 @@ extern const unsigned char prewrite[] __asm__("ep7_native_capture_prewrite");
 extern const unsigned char postwrite[] __asm__("ep7_native_capture_postwrite");
 extern const unsigned char associated_recycle[] __asm__("ep7_native_associated_recycle");
 extern const unsigned char associated_reset[] __asm__("ep7_native_associated_reset");
+extern const unsigned char wait_enqueue[] __asm__("ep7_native_wait_enqueue");
+extern const unsigned char wait_pop[] __asm__("ep7_native_wait_pop");
+extern const unsigned char wait_reset[] __asm__("ep7_native_wait_reset");
+extern const unsigned char wait_scope[] __asm__("ep7_native_wait_scope");
 struct site { uint32_t address;const unsigned char *target;uint8_t width,mask,frame; };
 static const struct site sites[]={
+    {0x602ac3f6,wait_enqueue,4,0,8},{0x602ac5e8,wait_pop,4,0,24},
+    {0x602ac8f8,wait_pop,4,0,24},{0x602abe96,wait_reset,4,0x80,4},
+    {0x602ac4fd,wait_scope,2,0x80,8},{0x602ac5a6,wait_scope,2,0x80,8},{0x602ac66c,wait_scope,2,0x80,8},
     {0x602973bc,associated_recycle,4,0,8},{0x6029c692,associated_reset,2,0xf0,28},
     {0x602a7ea0,prewrite,4,0,24},{0x602a8dca,postwrite,4,0,24},
     {0x602a31c7,fresh,2,0xa0,28},{0x602a440a,fresh,2,0xa0,28},{0x602a4480,fresh,2,0xa0,28},

@@ -1,7 +1,10 @@
 # 捕获冻结值的栈作用域与命令发布
 
 2026-10-31。首端producer复用sidecar冻结值、ticket注册表、wire codec和清理责任方。
-metadata仍分配148字节，不使用其尾部或裸地址回查。原生provider未绑定，没有安装固件。
+metadata仍分配148字节，不使用其尾部或裸地址回查。原生provider后续已在
+[capture source](CAPTURE_NATIVE_BINDING.md)接合，忙碌等待路径已在
+[deferred carriage](DEFERRED_PRODUCER_CARRIAGE.md)补齐；以下验证数字保留原批次范围。
+没有安装固件。
 
 ## 具体栈承载
 
@@ -11,7 +14,7 @@ captureID、25字节已冻结snapshot和单次消费状态。GCC helper第三参
 原captureID/associated值在S+16/+20。
 
 helper须先证明controller排他性、live associated↔node身份与sidecar资格，再复制
-已经冻结的值；不得重新采样UI。provider仍是未解析符号。缺失资格时scope中性，
+已经冻结的值；不得重新采样UI。缺失资格时scope中性，
 原厂metadata函数照常执行。桥以独立32字节native帧调用原602ac748，返回到自写
 链接标签后回收64字节，以原mask/frame返回。嵌套期间额外栈成本为96字节，另加
 GCC辅助函数/更深原生调用；这不是完整任务栈预算。
@@ -29,7 +32,8 @@ GCC辅助函数/更深原生调用；这不是完整任务栈预算。
 |176|原producer返回PC必须为602ac3e3|
 
 栈范围与安装组资格先行。旧直接调用在W+80不会匹配新标签，因而不读取更远的
-scope/上层帧。另一路602ac60e不承认a2为associated，继续原16字节发送。
+scope/上层帧。另一路602ac60e不承认a2为associated；它现在使用等待队列预先保存、
+由有界 service 栈拥有的独立 scope，详见上述 deferred carriage。
 发送桥保留`[d2,d3],48`；未获准时恢复四个参数，在原W跳回6020beb4。
 
 `producer.c`先将AVAILABLE改为CONSUMED，再检查资格和准备ticket。失败不晚补填。

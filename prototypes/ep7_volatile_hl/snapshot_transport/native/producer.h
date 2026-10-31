@@ -8,6 +8,10 @@ typedef struct {ep7q_stack stack;ep7q_producer_ops producer;} ep7q_producer_cont
 /* expected_scope_return is the linked address of the self-authored wrapper's
  * native return label, not an arbitrary PC accepted as allocation provenance. */
 bool ep7q_producer_layout(const ep7q_stack *,uint32_t,const ep7q_producer_input *,uint32_t,ep7q_producer_args *);
+/* The deferred producer owns its scope in the wrapper around602ac5d0.
+ * Pop and send independently validate the complete live ancestor chain. */
+bool ep7q_wait_pop_layout(const ep7q_stack *,uint32_t,uint32_t,uint32_t *);
+bool ep7q_wait_producer_layout(const ep7q_stack *,uint32_t,const ep7q_producer_input *,uint32_t,ep7q_producer_args *);
 /* Exact producer602ac3de entry owns associated in a2 and captureID in d0.
  * The provider must prove live associated/node reciprocal identity and exclusive
  * controller sidecar lifetime, then copy ALREADY frozen state. No late UI sample. */

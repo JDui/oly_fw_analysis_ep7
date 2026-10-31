@@ -20,8 +20,16 @@ __asm__(".globl ep7_native_capture_fresh\n.set ep7_native_capture_fresh,0x602a60
         ".globl ep7_native_capture_postwrite\n.set ep7_native_capture_postwrite,0x602a60c0\n"
         ".globl ep7_native_associated_recycle\n.set ep7_native_associated_recycle,0x602a60e0\n"
         ".globl ep7_native_associated_reset\n.set ep7_native_associated_reset,0x6029e000\n"
+        ".globl ep7_native_wait_enqueue\n.set ep7_native_wait_enqueue,0x602aca00\n"
+        ".globl ep7_native_wait_pop\n.set ep7_native_wait_pop,0x602aca20\n"
+        ".globl ep7_native_wait_reset\n.set ep7_native_wait_reset,0x602aca40\n"
+        ".globl ep7_native_wait_scope\n.set ep7_native_wait_scope,0x602aca60\n"
+        ".globl ep7_wait_scope_native_return\n.set ep7_wait_scope_native_return,0x602aca80\n"
         ".globl ep7_native_state_service_bridge\n.set ep7_native_state_service_bridge,0x6028b000\n");
 static const uint32_t calls[][5]={
+    {0x602ac3f6,0x602aca00,4,0,8},{0x602ac5e8,0x602aca20,4,0,24},
+    {0x602ac8f8,0x602aca20,4,0,24},{0x602abe96,0x602aca40,4,0x80,4},
+    {0x602ac4fd,0x602aca60,2,0x80,8},{0x602ac5a6,0x602aca60,2,0x80,8},{0x602ac66c,0x602aca60,2,0x80,8},
     {0x602973bc,0x602a60e0,4,0,8},{0x6029c692,0x6029e000,2,0xf0,28},
     {0x602a7ea0,0x602a60a0,4,0,24},{0x602a8dca,0x602a60c0,4,0,24},
     {0x602a31c7,0x602a6000,2,0xa0,28},{0x602a440a,0x602a6000,2,0xa0,28},{0x602a4480,0x602a6000,2,0xa0,28},
@@ -44,9 +52,48 @@ static ep7b boot;
 static ep7r runtime;
 static unsigned wrong_task,native_resumed,quarantine_reason,sem_held;
 static void (*lookup_callback)(void),(*poll_callback)(void);
+static void (*list_callback)(void);
+static _Alignas(4) unsigned char wait_stack[164];
+static unsigned list_bad_result;
 static jmp_buf fatal;
 static uint32_t addr(const void *p) { assert((uintptr_t)p<=UINT32_MAX);return (uint32_t)(uintptr_t)p; }
 static void put32(uint8_t *p,uint32_t v) { for (unsigned i=0;i<4;i++) p[i]=(uint8_t)(v>>(8*i)); }
+static uint16_t *list_half(unsigned offset) { return (uint16_t *)(uintptr_t)(0x6223e7e0u+offset); }
+static uint32_t *list_slot(unsigned index) { assert(index<25);return (uint32_t *)(uintptr_t)(0x6223e7f4u+4u*index); }
+static void list_before(void)
+{ if(list_callback) { void (*cb)(void)=list_callback;list_callback=NULL;cb(); } }
+uint32_t ep7_gcc_wait_enqueue(uint32_t queue,uint32_t associated_value)
+{
+    assert(queue==0x6223e7e0u);list_before();
+    if(*list_half(12)==25)return 0;
+    unsigned tail=*list_half(14);*list_slot(tail)=associated_value;
+    ++*list_half(12);*list_half(14)=(uint16_t)((tail+1u)%25u);
+    return list_bad_result?0u:4u;
+}
+uint32_t ep7_gcc_wait_pop(uint32_t queue)
+{
+    assert(queue==0x6223e7e0u);list_before();
+    if(!*list_half(12))return 0;
+    unsigned head=*list_half(16);uint32_t result=*list_slot(head);
+    --*list_half(12);*list_half(16)=(uint16_t)((head+1u)%25u);
+    return list_bad_result?0u:result;
+}
+static void list_initialize(void)
+{
+    put32((uint8_t *)(uintptr_t)0x6223e7dc,0x6223e7e0);
+    put32((uint8_t *)(uintptr_t)0x6223e7e0,182);
+    *list_half(4)=25;*list_half(6)=4;
+    put32((uint8_t *)(uintptr_t)0x6223e7e8,0x6223e7f4);
+    *list_half(12)=*list_half(14)=*list_half(16)=0;
+}
+static void wait_layout(void)
+{
+    memset(wait_stack,0,sizeof wait_stack);
+    put32(wait_stack+80,0x602ac5ef);put32(wait_stack+88,0x602aca80);put32(wait_stack+160,0x602ac502);
+}
+static ep7q_capture_scope *wait_output(void) { return (ep7q_capture_scope *)(void *)(wait_stack+112); }
+static void enqueue(unsigned i) { assert(ep7cn_wait_enqueue(0x6223e7e0,addr(associated[i]))==4); }
+static void pop_one(unsigned i) { assert(ep7cn_wait_pop(0x6223e7e0,addr(wait_stack+56))==addr(associated[i])); }
 _Noreturn void ep7_gcc_quarantine(unsigned reason) { quarantine_reason=reason;longjmp(fatal,1); }
 void *ep7_gcc_capture_lookup(unsigned id)
 {
@@ -81,7 +128,7 @@ static int delay(void *ctx) { (void)ctx;assert(!"capture must not delay");return
 static void runtime_fault(void *ctx,unsigned reason) { (void)ctx;ep7_gcc_quarantine(reason); }
 static void setup(void)
 {
-    void *p=mmap((void *)(uintptr_t)0x60289000,0x20000,PROT_READ|PROT_WRITE,
+    void *p=mmap((void *)(uintptr_t)0x60289000,0x25000,PROT_READ|PROT_WRITE,
         MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED_NOREPLACE,-1,0);assert(p==(void *)(uintptr_t)0x60289000);
     p=mmap((void *)(uintptr_t)0x62234000,4096,PROT_READ|PROT_WRITE,
         MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED_NOREPLACE,-1,0);assert(p==(void *)(uintptr_t)0x62234000);
@@ -92,6 +139,7 @@ static void setup(void)
     put32((uint8_t *)(uintptr_t)0x6223e0e8,0x6223e0fc);
     put32((uint8_t *)(uintptr_t)0x6223e0f4,16);
     put32((uint8_t *)(uintptr_t)0x6223e0f8,0x6223e160);
+    list_initialize();wait_layout();
     for (unsigned i=0;i<sizeof calls/sizeof calls[0];i++) {
         const uint32_t *c=calls[i];uint8_t *site=(uint8_t *)(uintptr_t)c[0];uint32_t delta=c[1]-c[0];
         if(c[2]==2) assert((int32_t)delta>=INT16_MIN&&(int32_t)delta<=INT16_MAX);
@@ -132,6 +180,8 @@ static void live_recycle(void)
 static void bad_recycle(void) { ep7cn_associated_recycle(0x6223e0dc,4);native_resumed=1; }
 static void try_reset(void) { ep7cn_associated_reset();native_resumed=1; }
 static void bad_prefix(void) { ep7cn_fresh(4);native_resumed=1; }
+static void try_enqueue(void) { (void)ep7cn_wait_enqueue(0x6223e7e0,addr(associated[0]));native_resumed=1; }
+static void try_pop(void) { (void)ep7cn_wait_pop(0x6223e7e0,addr(wait_stack+56));native_resumed=1; }
 static void population(void) { run_population(0,0); }
 static void expect_fault(void (*fn)(void),unsigned reason)
 {
@@ -264,13 +314,82 @@ static void scenario(unsigned which)
     case 30:
         seal(0);ep7r_stop(&runtime);try_recycle();
         assert(!ep7c_resolve_live(&ep7_controller_sidecar_unresolved,33,addr(nodes[0]),&token));break;
+    case 31: { /* Actual C enqueue owns a value before node retirement/UI edits. */
+        edit(5);seal(0);enqueue(0);edit(-6);seal(1);enqueue(1);
+        ep7cn_free(addr(nodes[0]));ep7cn_free(addr(nodes[1]));edit(2);
+        pop_one(0);assert(wait_output()->state==EP7Q_SCOPE_AVAILABLE&&wait_output()->snapshot.hl[0]==5);
+        ep7q_capture_scope frozen=*wait_output();pop_one(1);
+        assert(wait_output()->state==EP7Q_SCOPE_AVAILABLE&&wait_output()->snapshot.hl[0]==-6&&frozen.snapshot.hl[0]==5);
+        assert(!copy(0,&out)&&!copy(1,&out));break;
+    }
+    case 32: /* Reused associated address cannot replace an older queued value. */
+        edit(3);seal(0);enqueue(0);try_recycle();put32(associated[0]-4,1);
+        edit(-4);seal(0);enqueue(0);pop_one(0);assert(wait_output()->state==EP7Q_SCOPE_EMPTY);
+        pop_one(0);assert(wait_output()->state==EP7Q_SCOPE_AVAILABLE&&wait_output()->snapshot.hl[0]==-4);break;
+    case 33:
+        seal(0);seal(1);enqueue(0);enqueue(1);ep7cn_prewrite(addr(captures[0]),0);
+        ep7cn_release_capture(addr(registry[1]));pop_one(0);assert(wait_output()->state==EP7Q_SCOPE_EMPTY);
+        pop_one(1);assert(wait_output()->state==EP7Q_SCOPE_EMPTY);break;
+    case 34:
+        seal(0);enqueue(0);ep7_sidecar_transition_unresolved(33,255);pop_one(0);
+        assert(wait_output()->state==EP7Q_SCOPE_AVAILABLE);enqueue(0);
+        ep7_sidecar_transition_unresolved(33,33);pop_one(0);assert(wait_output()->state==EP7Q_SCOPE_EMPTY);break;
+    case 35: /* List reset and entries predating tracking never recover a value. */
+        seal(0);enqueue(0);ep7cn_wait_reset();list_initialize();
+        assert(ep7_gcc_wait_enqueue(0x6223e7e0,addr(associated[0]))==4);
+        pop_one(0);assert(wait_output()->state==EP7Q_SCOPE_EMPTY);enqueue(0);pop_one(0);
+        assert(wait_output()->state==EP7Q_SCOPE_AVAILABLE);break;
+    case 36:
+        seal(0);enqueue(0);ep7cn_associated_reset();pop_one(0);assert(wait_output()->state==EP7Q_SCOPE_EMPTY);
+        seal(0);enqueue(0);put32(associated[0]-4,0);assert(!copy(0,&out));put32(associated[0]-4,1);
+        pop_one(0);assert(wait_output()->state==EP7Q_SCOPE_EMPTY);break;
+    case 37: /* Native full/empty results, FIFO wrap, and stopped cleanup. */
+        seal(0);for(unsigned i=0;i<25;i++)enqueue(0);
+        assert(ep7cn_wait_enqueue(0x6223e7e0,addr(associated[1]))==0);
+        for(unsigned i=0;i<25;i++) { pop_one(0);assert(wait_output()->state==EP7Q_SCOPE_AVAILABLE); }
+        assert(ep7cn_wait_pop(0x6223e7e0,addr(wait_stack+56))==0&&wait_output()->state==EP7Q_SCOPE_EMPTY);
+        enqueue(0);ep7r_stop(&runtime);pop_one(0);assert(wait_output()->state==EP7Q_SCOPE_EMPTY);break;
+    case 38: /* Cancellation consumes its ledger slot without writing a scope. */
+        seal(0);enqueue(0);put32(wait_stack+80,0x602ac8ff);pop_one(0);
+        assert(wait_output()->state==EP7Q_SCOPE_EMPTY);wait_layout();enqueue(0);pop_one(0);
+        assert(wait_output()->state==EP7Q_SCOPE_AVAILABLE);break;
+    case 39:
+        seal(0);enqueue(0);wrong_task=4;expect_fault(try_pop,0xe03);break;
+    case 40: /* Capture guard covers the native list call, not just helper entry. */
+        seal(0);list_callback=try_recycle;expect_fault(try_enqueue,0xe05);break;
+    case 41:
+        seal(0);list_bad_result=1;expect_fault(try_enqueue,0xe09);break;
+    case 42: /* A changed head slot cannot silently bind another image. */
+        seal(0);enqueue(0);*list_slot(0)=addr(associated[1]);expect_fault(try_pop,0xe09);break;
+    case 43: {
+        uint32_t scoped;ep7q_producer_args args;
+        ep7q_stack s={wait_stack,0x1000,sizeof wait_stack,true};
+        ep7q_producer_input in={0x4b,16,0x1034,UINT32_MAX};
+        const uint32_t returns[]={0x602ac502,0x602ac5ab,0x602ac671};
+        for(unsigned i=0;i<3;i++) {
+            put32(wait_stack+160,returns[i]);put32(wait_stack+80,0x602ac5ef);
+            assert(ep7q_wait_pop_layout(&s,0x1038,0x602aca80,&scoped)&&scoped==0x1070);
+            put32(wait_stack+80,0x602ac613);put32(wait_stack+48,0x602ac870);
+            put32(wait_stack+44,1);put32(wait_stack+112,1);
+            assert(ep7q_wait_producer_layout(&s,0x1000,&in,0x602aca80,&args)&&args.scope==0x1070&&args.timeout==-1);
+        }
+        --s.extent;assert(!ep7q_wait_producer_layout(&s,0x1000,&in,0x602aca80,&args));++s.extent;
+        put32(wait_stack+112,2);assert(!ep7q_wait_producer_layout(&s,0x1000,&in,0x602aca80,&args));
+        put32(wait_stack+80,0x602ac5ef);put32(wait_stack+88,0x602aca81);
+        assert(!ep7q_wait_pop_layout(&s,0x1038,0x602aca80,&scoped));
+        expect_fault(try_pop,0xe0a);break;
+    }
+    case 44: /* Permanent closure clears a previous rejected pop's owned scope. */
+        seal(0);enqueue(0);enqueue(0);pop_one(0);assert(wait_output()->state==EP7Q_SCOPE_AVAILABLE);
+        wrong_task=4;assert(!copy(0,&out));wrong_task=0;pop_one(0);
+        assert(wait_output()->state==EP7Q_SCOPE_EMPTY);break;
     default:assert(!"unknown case");
     }
 }
 int main(void)
 {
     /* Each fork is a fresh simulated boot; production state exposes no reset. */
-    for (unsigned i=0;i<31;i++) {
+    for (unsigned i=0;i<45;i++) {
         pid_t child=fork();assert(child>=0);
         if (!child) { scenario(i);_exit(0); }
         int status;assert(waitpid(child,&status,0)==child);

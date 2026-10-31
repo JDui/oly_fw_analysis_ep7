@@ -52,6 +52,11 @@ G6 依赖 E 的工具链设计和 G1–G4 的候选接口；G8 汇合全部结�
 
 ## G2 需要定案的路线
 
+当前两条正常 metadata 路径均已有候选接合：立即 `602ac3de` 使用本次 scope，
+忙碌入队 `602ac3f6` →出队 `602ac5e8` →`602ac60e` 使用按 ring 位置保存并移交
+的冻结值。见[等待队列承载](DEFERRED_PRODUCER_CARRIAGE.md)。这关闭了正常 deferred
+路径的代码缺口，没有关闭 controller 排他、间接别名、放置与安装准入。
+
 优先复用已实现 controller sidecar、按值 snapshot、direct reader 和 fresh-job 生命周期。
 元数据是否扩展必须以分配 provenance、存活和传递能力决定；148→192 只是曾审查的
 分配候选，不是默认已获批准的布局。拒绝两个捷径：裸指针重新绑定当前 generation；
@@ -273,3 +278,12 @@ G2/G3退出与G6合法放置/安装/总栈；尚未达到整体固件编译准�
 新增两座桥保留原frame/参数，initializer采用尾转。没有SHA，未重跑无关测试。
 下一项继续engine workrecord及event/异步别名顺序，G1仍须完成全部节点责任闭包；
 随后G2/G3退出、G6放置/安装/总栈，再审G8并开始整体固件编译。
+
+[忙碌等待队列承载](DEFERRED_PRODUCER_CARRIAGE.md)现补齐第二条正常metadata路径：
+入队时保存已冻结值，按25槽FIFO位置追踪，正常出队复制至service独立栈scope，
+取消/重置/associated回收/capture重写和状态提交均撤销对应等待值。复用原票据发送，
+不在延迟入口晚查node。新增7个实际CALL检查，总组36处；113条原厂指令、45个native
+C host场景（14个新增）、58目标对象通过。新增桥214字节/83指令，没有SHA。
+下一项回到engine workrecord：核对b387选中回调、aef8全完成回调及异步bit4的串行
+事件顺序，再覆盖取消/重复完成和任务排他；不能用正常顺序代替全部别名存活闭包。
+G1/G2/G3总体退出审查与G6放置/冷安装/总栈仍待完成，G8尚未准入。

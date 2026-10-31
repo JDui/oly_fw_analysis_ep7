@@ -1,0 +1,31 @@
+{
+  "scope": "Actual native capture C and cohort against owned low-address memory and mocked native calls.",
+  "runs": {
+    "strict": {
+      "passed": true
+    },
+    "asan_ubsan": {
+      "passed": true
+    }
+  },
+  "isolated_boot_scenarios": 45,
+  "actual_native_binding_C_executed": true,
+  "actual_36_call_cohort_decoder_executed": true,
+  "actual_native_state_and_prefix_layout_reads": true,
+  "deferred_snapshot_fifo_and_owned_stack_transfer_executed": true,
+  "actual_associated_pool_layout_and_slot_checks": true,
+  "zero_reference_return_and_pool_reset_revoke_before_reuse": true,
+  "repeated_and_out_of_order_population_revoked_before_writes": true,
+  "missing_prewrite_observers_cannot_seal": true,
+  "native_lookup_task_semaphore_queue_calls_mocked": true,
+  "firmware_code_not_mapped_or_executed": true,
+  "native_waiting_list_operations_mocked": true,
+  "host_pointer_width_exception_only_for_fixture": true,
+  "full_native_alias_closure_proven": false,
+  "installed": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "hash_checks_performed": false,
+  "new_deferred_scenarios": 14,
+  "initial_fixture_failure": "The new CALL witnesses extended past the prior fixture code-address mapping. Scenario0 segfaulted before execution; extending only that owned mapping from0x20000 to0x25000 fixed it. Both final runs passed."
+}
