@@ -54,14 +54,16 @@ create/delete各自的已知原厂栈效应为48字节；它们之前的ASM适�
 
 1. **任务异常callback600343b1**：来自当前TCB+52。TCB半字+48为1时，6003434b
    返回0，critical leave跳过该callback。任务初建确实写1，但Usr3在bootstrap前调用
-   了多个initializer，当前实现尚未核对或保证这时的值；不能只用初始值排除分支。
-2. **原厂BREAK6003853d与自有quarantine**：仍需确定实际异常保存位置/容量和返回
-   契约。原厂单字节BREAK后紧邻另一context-switch函数，不能当作零栈leaf。
+   了多个initializer。后续[现场准入](COLD_CONTEXT.md)已要求实际值为1，仍需审查该
+   条件的有效期；不能只用初始值或一次观察排除所有异步变化。
+2. **原厂BREAK6003853d**：仍需确定实际异常保存位置/容量和返回契约。原厂单字节
+   BREAK后紧邻另一context-switch函数，不能当作零栈leaf。自有quarantine已在后续
+   节点改为无显式trap、body栈0的终止循环，其变化不改写原厂故障入口。
 3. **异步IRQ与context资格**：需要确定保存栈与嵌套范围；两个固定callback依赖实际
    domain0 root仍保持原厂绑定，调度保存/恢复依赖有效TCB生命周期。
 
-下一步先处理冷启动现场的任务异常资格以及异常/IRQ入口，避免继续无差别扩展所有
-RTOS服务。没有为方便计算而加入新的运行时限制、改写quarantine或增加Usr3栈配置。
+冷启动现场检查和自有终止体已在后续节点实现。接下来审查现场资格的有效期及异常/
+IRQ余项，避免无差别扩展所有RTOS服务。Usr3栈配置仍为原厂2048字节。
 
 ## 本次执行范围
 

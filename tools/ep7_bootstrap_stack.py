@@ -28,6 +28,7 @@ CALLBACKS = {
 }
 COMPOSITION = {
     'runtime/cold_bootstrap.c': [
+        'if(!ep7r_native_cold_context(task.tcb))ep7_gcc_quarantine(0xf06u);',
         'ep7b_prepare(&storage.boot,&storage.core,ep7b_unresolved_native())',
         'ep7r_prepare(&storage.runtime,&storage.boot,ep7r_native_environment(NULL,installed))'],
     'poll_lock_provider/bootstrap/native_callbacks.c': [
@@ -45,8 +46,9 @@ ASSEMBLY = {
     'ep7_gcc_get_tid': (20, 'native_get_tid_leaf', 'target/get_tid_bridge.s'),
     'ep7_gcc_raw_sem_create': (32, 'native_sem_create_body_unknown', 'poll_lock_provider/bootstrap/create_delete_bridges.s'),
     'ep7_gcc_raw_sem_delete_unpublished': (36, 'native_sem_delete_body_unknown', 'poll_lock_provider/bootstrap/create_delete_bridges.s'),
-    'ep7_gcc_quarantine': (0, 'exception_entry_stack_unknown', 'runtime/quarantine.s'),
+    'ep7_gcc_quarantine': (0, 'owned_terminal_no_call', 'runtime/quarantine.s'),
 }
+KNOWN_BOUNDARIES={None,'native_get_tid_leaf','owned_terminal_no_call'}
 
 
 def normalize(text):
@@ -80,8 +82,23 @@ def graph(text):
     return nodes, edges
 
 
-def inspect(prefix, decoded):
+def inspect(prefix, decoded, reuse_graph=None):
     prior = json.loads((ROOT/'research/ep7/installation-manifest.json').read_text(encoding='utf-8-sig'))['object_inventory']
+    cache=None;refresh=set();reused=set()
+    if reuse_graph is not None:
+        # The cold-context check already restricts header consumers and source
+        # changes. Revalidate that same set before reusing compiler graphs.
+        from ep7_cold_context_check import verify_source_reuse, REFRESH
+        _,validation=verify_source_reuse()
+        if prior.get('reuse_validation')!=validation or set(prior.get('recompiled_sources',[]))!=set(REFRESH):
+            raise ValueError('graph reuse requires the verified cold-context object refresh')
+        cache=json.loads(reuse_graph.read_text(encoding='utf-8-sig'));refresh=set(REFRESH)
+    terminal=re.sub(r'/\*.*?\*/','',(CORE/'runtime/quarantine.s').read_text(),flags=re.S)
+    terminal=[line.strip() for line in terminal.splitlines() if line.strip()]
+    if terminal!=['.text','.global _ep7_gcc_quarantine','.type _ep7_gcc_quarantine,@function',
+        '_ep7_gcc_quarantine:','and 0xf7ff,psw','.Lquarantined:','bra .Lquarantined',
+        '.size _ep7_gcc_quarantine,.-_ep7_gcc_quarantine'] or prior['objects']['runtime/quarantine.s']['text_data_bss']!=[6,0,0]:
+        raise ValueError('owned terminal body changed; requalify its stack/control effects')
     owners = {name:source for source,row in prior['objects'].items() for name in row['definitions']}
     sources = set(implementation_sources())
     if set(prior['objects']) != sources:
@@ -101,6 +118,17 @@ def inspect(prefix, decoded):
                 return
             if relative not in sources or not relative.endswith('.c'):
                 raise ValueError('not a current implementation C source: '+relative)
+            if cache is not None and relative not in refresh and relative in cache['compiled_sources']:
+                old=cache['compiled_sources'][relative]
+                if old['text_data_bss']!=prior['objects'][relative]['text_data_bss']:
+                    raise ValueError('cached graph object differs from current inventory '+relative)
+                local={name:row for name,row in cache['reachable_nodes'].items()
+                       if row['source']==relative and row['kind']=='gcc_static_frame'}
+                if set(local)&set(nodes):raise ValueError('duplicate cached graph definition')
+                nodes.update(local)
+                edges.update({name:cache['reachable_edges'][name] for name in local})
+                compiled[relative]=dict(old,reused_prior_graph=True);reused.add(relative)
+                return
             obj = Path(temp)/(str(len(compiled))+'.o')
             extra = ['-fno-tree-loop-distribute-patterns'] if relative == 'target/memory.c' else []
             subprocess.run([prefix+'gcc',*flags,*extra,'-c',str(CORE/relative),'-o',str(obj)],check=True,timeout=60)
@@ -120,7 +148,7 @@ def inspect(prefix, decoded):
                     raise ValueError('callgraph and current object .su differ: '+name)
                 row.update(source=relative, kind='gcc_static_frame')
             nodes.update(local_nodes); edges.update(local_edges)
-            compiled[relative] = dict(text_data_bss=current_size, all_reported_frames_match_prior_su=True)
+            compiled[relative] = dict(text_data_bss=current_size, all_reported_frames_match_prior_su=True,reused_prior_graph=False)
 
         while pending:
             name = pending.pop()
@@ -150,6 +178,10 @@ def inspect(prefix, decoded):
                     target = CALLBACKS[expression]
                     resolved.append(dict(caller=name, location=edge['location'], expression=expression, target=target))
                     edge.update(target=target, indirect=True, expression=expression)
+                elif edge.get('indirect'):
+                    if CALLBACKS.get(edge['expression'])!=edge['target']:
+                        raise ValueError('cached callback composition changed')
+                    resolved.append(dict(caller=name,location=edge['location'],expression=edge['expression'],target=edge['target']))
                 pending.append(edge['target'])
 
     reachable_nodes = {name:nodes[name] for name in sorted(seen)}
@@ -165,7 +197,7 @@ def inspect(prefix, decoded):
             return memo[name]
         active.add(name); row=nodes[name]; children=[visit(e['target']) for e in edges.get(name,[])]
         boundary = row.get('boundary')
-        complete = boundary in (None,'native_get_tid_leaf') and all(c['complete'] for c in children)
+        complete = boundary in KNOWN_BOUNDARIES and all(c['complete'] for c in children)
         child = max(children,key=lambda c:c['prefix_bytes'],default=dict(prefix_bytes=0,path=[]))
         value = dict(prefix_bytes=row['frame_bytes']+child['prefix_bytes'], path=[name]+child['path'], complete=complete)
         memo[name] = value; active.remove(name); return value
@@ -175,7 +207,7 @@ def inspect(prefix, decoded):
 
     def walk(name, total, path):
         row = nodes[name]; total += row['frame_bytes']; path = path+[name]
-        if row.get('boundary') not in (None,'native_get_tid_leaf'):
+        if row.get('boundary') not in KNOWN_BOUNDARIES:
             boundaries.append(dict(boundary=row['boundary'],known_prefix_bytes=total,path=path))
         for target in sorted({edge['target'] for edge in edges.get(name,[])}):
             walk(target,total,path)
@@ -200,10 +232,13 @@ def inspect(prefix, decoded):
     full = dict(root)
     full['complete_stack_bound_bytes'] = root['prefix_bytes'] if root['complete'] else None
     return dict(scope=__doc__,compiler_reference=REFERENCE,root=ENTRY,compiled_sources=compiled,
-        compiled_c_source_count=len(compiled),reachable_function_count=len(seen),
+        compiled_c_source_count=len(compiled)-len(reused),reused_c_source_count=len(reused),
+        total_c_source_count=len(compiled),reachable_function_count=len(seen),
         reachable_nodes=reachable_nodes,reachable_edges=reachable_edges,
         resolved_cold_callbacks=resolved,unresolved_cold_callbacks=[],recursive_reachable_edges=False,
         native_get_tid_instructions_checked=len(insns),native_get_tid_body_extra_stack_bytes=0,
+        owned_quarantine_body_stack_bytes=0,owned_quarantine_explicit_trap=False,
+        quarantine_evidence='research/ep7/cold-context.json; exact current assembly source and 6-byte inventory shape rechecked',
         root_stack=full,unknown_native_boundaries=boundaries,
         usr3_own_prologue_bytes=44,original_call_frame_bytes=4,cold_bridge_bytes=40,
         known_prefix_below_usr3_entry_bytes=44+4+40+root['prefix_bytes'],
@@ -211,7 +246,8 @@ def inspect(prefix, decoded):
         capacity_remaining_bytes=None,
         limits=['Graph and callback mapping are only for this fixed one-shot bootstrap composition.',
                 'Per-function static frames and all child edges are summed conservatively; mutually exclusive paths are not summed together.',
-                'Native semaphore create/delete bodies, exception/IRQ stack, task initial context and other Usr3 paths remain outside the bound.',
+                'Native semaphore create/delete bodies, exception/IRQ stack and other Usr3 paths remain outside this C graph; separate native reports include the 4-byte initial task entry overhead.',
+                'Unchanged C graphs may be reused only after the cold-context source/header diff check; changed sources are recompiled and compared to the updated object inventory.',
                 'The known prefix is not an upper bound on the complete native/task stack and is not subtracted from 2048 as available headroom.',
                 'Existing assembly frame and Usr3 prologue witnesses are reused; only native get_tid is newly disassembled here.',
                 'No hardware, target code, full firmware linker or application test suite is executed.'],
@@ -222,5 +258,6 @@ if __name__ == '__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--decoded',type=Path,required=True)
     parser.add_argument('--tool-prefix',required=True)
+    parser.add_argument('--reuse-unchanged-graph',type=Path)
     args=parser.parse_args()
-    print(json.dumps(inspect(args.tool_prefix,args.decoded),indent=2))
+    print(json.dumps(inspect(args.tool_prefix,args.decoded,args.reuse_unchanged_graph),indent=2))

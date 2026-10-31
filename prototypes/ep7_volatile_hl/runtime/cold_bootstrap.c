@@ -29,6 +29,7 @@ void ep7r_bootstrap_initialize(void)
     if(!ep7n_native_current_task((uint32_t)(uintptr_t)&task,&task) ||
        task.tid!=0x2du || task.domain || task.entry!=0x601912fbu ||
        task.stack_bytes!=2048u)ep7_gcc_quarantine(0xf02u);
+    if(!ep7r_native_cold_context(task.tcb))ep7_gcc_quarantine(0xf06u);
     if(!installed(NULL))ep7_gcc_quarantine(0xf03u);
     if(!ep7b_prepare(&storage.boot,&storage.core,ep7b_unresolved_native()))
         ep7_gcc_quarantine(0xf04u); /* ep7b already owns its failure/abort policy. */

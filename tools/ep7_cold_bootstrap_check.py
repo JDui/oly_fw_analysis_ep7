@@ -178,7 +178,7 @@ def inspect(decoded, reference, prefix):
                         'ep7p.c', 'ep7p_decode.c', 'snapshot_transport/transport.c']
         subprocess.run([*host_flags, '-pedantic', '-I'+str(CORE), *[str(CORE/p) for p in host_sources],
                         '-o', str(out/'startup')], check=True)
-        startup = [json.loads(subprocess.check_output([str(out/'startup'), str(i)], text=True)) for i in range(15)]
+        startup = [json.loads(subprocess.check_output([str(out/'startup'), str(i)], text=True)) for i in range(16)]
         subprocess.run([*host_flags, '-pedantic', str(NATIVE/'test_cold_cohort.c'), '-o', str(out/'cohort')], check=True)
         cohort = json.loads(subprocess.check_output([str(out/'cohort')], text=True))
         nm = subprocess.check_output([prefix+'nm', '-S', str(out/'cold_bootstrap.o')], text=True)

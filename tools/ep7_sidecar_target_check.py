@@ -760,11 +760,12 @@ with tempfile.TemporaryDirectory() as temp:
    dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
    ins=re.findall(r'^\s*([0-9a-f]+):[ \t]+(?:[0-9a-f]{2}[ \t]+)+([a-z][a-z0-9]*)(?:[ \t]+([^\n]*))?$',dis,re.M)
    rows={line.split()[-1]:int(line.split()[0],16) for line in syms.splitlines() if len(line.split())>=5 and '*UND*' not in line and re.fullmatch('[0-9a-f]+',line.split()[0])}
-   if len(ins)!=2 or [i[1] for i in ins]!=['break','bra'] or rows.get('.Lquarantined')!=int(ins[0][0],16):
-    raise ValueError('quarantine must trap and branch back without return/free/reset')
+   if len(ins)!=2 or [i[1] for i in ins]!=['and','bra'] or ins[0][2]!='63487,psw' or rows.get('.Lquarantined')!=int(ins[1][0],16):
+    raise ValueError('quarantine must mask local IRQs and hold without trap/call/return/free/reset')
    if dis.count('R_MN10300_PCREL8')!=1 or '.Lquarantined+0x1' not in dis:
     raise ValueError('quarantine loop relocation changed')
-   objects[name].update(checked_instructions=2,owned_terminal_loop=True,native_exception_behavior_executed=False)
+   objects[name].update(checked_instructions=2,owned_terminal_loop=True,
+       body_stack_bytes=0,explicit_break_removed=True,native_exception_behavior_executed=False)
   if name=='get_tid':
    dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
    ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)

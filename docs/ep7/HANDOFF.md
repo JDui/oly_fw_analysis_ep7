@@ -1,17 +1,25 @@
 # E-P7 研究检查点 / 恢复研究
 
 恢复日期：2026-10-30（Asia/Shanghai）。用户已要求继续推进研究测试。
-**本轮推进bootstrap原厂栈及IRQ责任；未进行刷机或相机操作。**
+**本轮落实冷启动现场检查和无trap终止体；未进行刷机或相机操作。**
 
 ## 2026-10-31 当前节点
+
+最新：[冷启动现场](COLD_CONTEXT.md)已在创建私有锁前检查实际TCB+48、内核嵌套/
+持锁状态和固定回调/mask/restart绑定，失败0xf06不创建锁。quarantine现为AND PSW
+后BRA自环，6字节、body栈0，不再显式BREAK；本核任务进展会停止，资源保留。
+10个root字段/9条指令、3次接受/12种拒绝只读观察、启动0/15及两种PSW下GNU语义通过。
+只刷新3个对象，104个源码/头文件未变的对象资料复用；text46,800、BSS8,084，345个
+全局定义、109外部依赖。C图刷新2个变化单元、复用16个，43函数/29callback，C峰值312。
+下一步集中审查现场条件在native调用/异步IRQ期间的有效期和UDF/原厂故障路径；
+原厂栈合并已知416，完整上界仍null，G6/G8未通过。不要再把自有quarantine列为BREAK。
 
 最新：[原厂bootstrap栈](NATIVE_BOOTSTRAP_STACK.md)核对27函数/997指令，正常返回帧
 无冲突；明确固定回调、context切换和任务入口top−4。合并此前C图的已知部分为栈顶
 以下416字节，完整上界仍null。[IRQ节点](IRQ_STACK_TRANSFER.md)定位独立8 KiB栈和
 进出SP：85条witness、451指令、14函数；单次已知部分8+56+40=104，不是全栈通过。
-下一项应集中核对bootstrap现场TCB+48任务异常资格、自有quarantine的BREAK依赖，
-以及UDF/故障嵌套；不要重新展开整条IRQ handler链后全部累加到Usr3。quarantine当前
-仍是原有BREAK循环，未实施“关中断终止”或其他替代行为。生产C/ASM均未改动。
+该原厂研究节点的证据继续复用；后续生产C/ASM及现场检查已按上方最新节点更新。
+不要重新展开整条IRQ handler链后全部累加到Usr3。
 
 此前：[bootstrap调用栈](BOOTSTRAP_STACK.md)按GCC调用图收敛到42函数和29条具体callback，
 只生成18个可达C对象元数据，尺寸/`.su`与统一清单一致。最深已知C路径312字节，

@@ -2939,6 +2939,23 @@
       "evidence": "tools/ep7_worker_scope.py"
     }
   },
+  "scope": "Enumerate the declared build1100 installation and object dependencies; never patch or link.",
+  "source_list": "prototypes/ep7_volatile_hl/target/sources.txt",
+  "source_count": 107,
+  "native_binding_count": 109,
+  "final_linker_bindings_emitted": false,
+  "installation_authorized": false,
+  "firmware_modified": false,
+  "firmware_built": false,
+  "hash_checks_performed": false,
+  "limits": [
+    "Enumerates currently declared hooks; does not prove native caller/alias/lifetime closure.",
+    "Binding evidence references existing investigations; only patch preimages and load-table rows are freshly compared here.",
+    "Three boot-prefix edits have no qualified upstream load path yet.",
+    "Executable/RAM placement, cache visibility, complete stack bounds and cold installer ordering remain unqualified.",
+    "A mapped stock symbol does not approve its ABI or runtime domain beyond its existing evidence.",
+    "No candidate image, linker output, packer, emulator run or device operation is produced."
+  ],
   "object_inventory": {
     "compiler": "mn10300-elf-gcc (GCC) 13.4.0",
     "implementation_sources": 107,
@@ -3510,13 +3527,14 @@
           "_ep7n_postbuilder_cohort_present",
           "_ep7q_native_cohort_present",
           "_ep7r_get",
+          "_ep7r_native_cold_context",
           "_ep7r_native_early_cohort_present",
           "_ep7r_native_environment",
           "_ep7r_prepare",
           "_ep7r_publish"
         ],
         "text_data_bss": [
-          399,
+          426,
           0,
           5708
         ],
@@ -3544,6 +3562,7 @@
       "runtime/cold_cohort.c": {
         "source": "prototypes/ep7_volatile_hl/runtime/cold_cohort.c",
         "definitions": {
+          "_ep7r_native_cold_context": "T",
           "_ep7r_native_early_cohort_present": "T"
         },
         "undefined": [
@@ -3555,12 +3574,13 @@
           "ep7_native_queue_send_gate"
         ],
         "text_data_bss": [
-          357,
+          584,
           0,
           0
         ],
         "stack_usage": [
-          "runtime/cold_cohort.c:21:6:ep7r_native_early_cohort_present\t12\tstatic"
+          "runtime/cold_cohort.c:21:6:ep7r_native_cold_context\t4\tstatic",
+          "runtime/cold_cohort.c:44:6:ep7r_native_early_cohort_present\t12\tstatic"
         ]
       },
       "runtime/contexts.c": {
@@ -3698,7 +3718,7 @@
         },
         "undefined": [],
         "text_data_bss": [
-          3,
+          6,
           0,
           0
         ],
@@ -5542,7 +5562,7 @@
         ]
       }
     },
-    "global_definition_count": 344,
+    "global_definition_count": 345,
     "external_count": 109,
     "external_consumers": {
       "__ep7_private_uncached_start": [
@@ -5889,29 +5909,35 @@
     ],
     "patch_target_symbols_checked": 84,
     "unlinked_text_data_bss": [
-      46543,
+      46800,
       0,
       8084
     ],
-    "current_implementation_recompiled": true,
+    "current_implementation_recompiled": false,
+    "recompiled_sources": [
+      "runtime/cold_bootstrap.c",
+      "runtime/cold_cohort.c",
+      "runtime/quarantine.s"
+    ],
+    "reused_object_count": 104,
     "target_linked": false,
-    "target_executed": false
+    "target_executed": false,
+    "reuse_validation": {
+      "base_commit": "00b658e",
+      "changed_production_files": [
+        "runtime/cold_bootstrap.c",
+        "runtime/cold_bootstrap.h",
+        "runtime/cold_cohort.c",
+        "runtime/quarantine.s"
+      ],
+      "changed_header_consumers": [
+        "runtime/cold_bootstrap.c",
+        "runtime/cold_cohort.c"
+      ],
+      "unchanged_production_source_and_header_diff_checked": true,
+      "git_newlines_normalized_for_windows_worktree": true,
+      "source_content_hashes_computed": false
+    }
   },
-  "scope": "Enumerate the declared build1100 installation and object dependencies; never patch or link.",
-  "source_list": "prototypes/ep7_volatile_hl/target/sources.txt",
-  "source_count": 107,
-  "native_binding_count": 109,
-  "final_linker_bindings_emitted": false,
-  "installation_authorized": false,
-  "firmware_modified": false,
-  "firmware_built": false,
-  "hash_checks_performed": false,
-  "limits": [
-    "Enumerates currently declared hooks; does not prove native caller/alias/lifetime closure.",
-    "Binding evidence references existing investigations; only patch preimages and load-table rows are freshly compared here.",
-    "Three boot-prefix edits have no qualified upstream load path yet.",
-    "Executable/RAM placement, cache visibility, complete stack bounds and cold installer ordering remain unqualified.",
-    "A mapped stock symbol does not approve its ABI or runtime domain beyond its existing evidence.",
-    "No candidate image, linker output, packer, emulator run or device operation is produced."
-  ]
+  "incremental_update": "Cold context and terminal body: 3 objects rebuilt; unchanged source/header set compared with 00b658e. Stock patch preimages freshly checked."
 }

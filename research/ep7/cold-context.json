@@ -1,0 +1,200 @@
+{
+  "scope": "Check cold-context admission and the no-trap terminal body; refresh only changed target objects.",
+  "stock_root_fields_checked": [
+    {
+      "address": "0x60041204",
+      "stock_value": "0x621a630c"
+    },
+    {
+      "address": "0x600411c0",
+      "stock_value": "0x621a631c"
+    },
+    {
+      "address": "0x600412ec",
+      "stock_value": "0x621a63b0"
+    },
+    {
+      "address": "0x600412b4",
+      "stock_value": "0x60073215"
+    },
+    {
+      "address": "0x600412b8",
+      "stock_value": "0x60073218"
+    },
+    {
+      "address": "0x600412bc",
+      "stock_value": "0x6007321b"
+    },
+    {
+      "address": "0x600412e0",
+      "stock_value": "0x600300a1"
+    },
+    {
+      "address": "0x600412fc",
+      "stock_value": "0x0"
+    },
+    {
+      "address": "0x60041300",
+      "stock_value": "0x800"
+    },
+    {
+      "address": "0x60041308",
+      "stock_value": "0x0"
+    }
+  ],
+  "task_exception_gate_instructions_checked": 9,
+  "context_host": {
+    "positive_observations": 3,
+    "rejected_contexts": 12,
+    "all_observations_read_only": true,
+    "synthetic_pages_executable": false
+  },
+  "startup_scenarios": [
+    {
+      "scenario": 0,
+      "creates": 1,
+      "deletes": 0,
+      "terminal_reason": 3841
+    },
+    {
+      "scenario": 15,
+      "creates": 0,
+      "deletes": 0,
+      "terminal_reason": 3846
+    }
+  ],
+  "quarantine": {
+    "text_bytes": 6,
+    "body_stack_bytes": 0,
+    "explicit_trap": false,
+    "external_calls": false,
+    "maskable_interrupts_disabled_on_current_core": true,
+    "terminal_reason_kept_in_d0": true,
+    "gnu_body_semantics": {
+      "psw_cases": 2,
+      "steps_per_case": 6,
+      "reason_and_sp_preserved": true,
+      "memory_writes": 0
+    },
+    "gnu_reference": "https://gnu.googlesource.com/binutils-gdb/+/cbe950e9fe8a56f788bcf985cc51733f18abb45b/sim/mn10300/mn10300.igen",
+    "reused_gnu_bodies": [
+      "OP_FAFC0000",
+      "OP_CA00"
+    ],
+    "synthetic_single_object_linked": true,
+    "production_firmware_linked": false,
+    "hardware_executed": false
+  },
+  "source_reuse_validation": {
+    "base_commit": "00b658e",
+    "changed_production_files": [
+      "runtime/cold_bootstrap.c",
+      "runtime/cold_bootstrap.h",
+      "runtime/cold_cohort.c",
+      "runtime/quarantine.s"
+    ],
+    "changed_header_consumers": [
+      "runtime/cold_bootstrap.c",
+      "runtime/cold_cohort.c"
+    ],
+    "unchanged_production_source_and_header_diff_checked": true,
+    "git_newlines_normalized_for_windows_worktree": true,
+    "source_content_hashes_computed": false
+  },
+  "objects": {
+    "runtime/cold_bootstrap.c": {
+      "source": "prototypes/ep7_volatile_hl/runtime/cold_bootstrap.c",
+      "definitions": {
+        "_ep7r_bootstrap_initialize": "T"
+      },
+      "undefined": [
+        "_ep7_controller_sidecar_unresolved",
+        "_ep7_gcc_quarantine",
+        "_ep7_native_runtime_slot",
+        "_ep7b_abort_unpublished",
+        "_ep7b_prepare",
+        "_ep7b_unresolved_native",
+        "_ep7cn_native_cohort_present",
+        "_ep7n_native_current_task",
+        "_ep7n_postbuilder_cohort_present",
+        "_ep7q_native_cohort_present",
+        "_ep7r_get",
+        "_ep7r_native_cold_context",
+        "_ep7r_native_early_cohort_present",
+        "_ep7r_native_environment",
+        "_ep7r_prepare",
+        "_ep7r_publish"
+      ],
+      "text_data_bss": [
+        426,
+        0,
+        5708
+      ],
+      "stack_usage": [
+        "runtime/cold_bootstrap.c:13:13:installed\t20\tstatic",
+        "runtime/cold_bootstrap.c:24:6:ep7r_bootstrap_initialize\t96\tstatic"
+      ]
+    },
+    "runtime/cold_cohort.c": {
+      "source": "prototypes/ep7_volatile_hl/runtime/cold_cohort.c",
+      "definitions": {
+        "_ep7r_native_cold_context": "T",
+        "_ep7r_native_early_cohort_present": "T"
+      },
+      "undefined": [
+        "ep7_native_capture_initialize",
+        "ep7_native_cold_bootstrap_bridge",
+        "ep7_native_cold_clear",
+        "ep7_native_queue_delete_observer",
+        "ep7_native_queue_receive_gate",
+        "ep7_native_queue_send_gate"
+      ],
+      "text_data_bss": [
+        584,
+        0,
+        0
+      ],
+      "stack_usage": [
+        "runtime/cold_cohort.c:21:6:ep7r_native_cold_context\t4\tstatic",
+        "runtime/cold_cohort.c:44:6:ep7r_native_early_cohort_present\t12\tstatic"
+      ]
+    },
+    "runtime/quarantine.s": {
+      "source": "prototypes/ep7_volatile_hl/runtime/quarantine.s",
+      "definitions": {
+        "_ep7_gcc_quarantine": "T"
+      },
+      "undefined": [],
+      "text_data_bss": [
+        6,
+        0,
+        0
+      ],
+      "stack_usage": []
+    }
+  },
+  "aggregate": {
+    "implementation_sources": 107,
+    "global_definitions": 345,
+    "externals": 109,
+    "unlinked_text_data_bss": [
+      46800,
+      0,
+      8084
+    ],
+    "production_sources_recompiled": 3,
+    "unchanged_object_metadata_reused": 104
+  },
+  "complete_stack_bound_proven": false,
+  "firmware_modified": false,
+  "firmware_built": false,
+  "target_executed": false,
+  "hash_checks_performed": false,
+  "limits": [
+    "Context admission is read-only and does not prove later callback/TCB immutability, cancellation exclusion or absence of IRQ before the check.",
+    "Host context pages and startup native APIs are synthetic; only the production admission algorithm and C startup flow execute there.",
+    "GNU instruction bodies verify the owned terminal mask/loop only; NMI, reset, watchdog and other cores are not modeled.",
+    "Kernel BREAK paths, UDF effects, complete IRQ/task bounds, code/RAM/loader and remaining lifecycle qualification remain open.",
+    "Only the 3 changed target objects and this cold-path host fixture are compiled; earlier full business/sanitizer suites are not rerun."
+  ]
+}

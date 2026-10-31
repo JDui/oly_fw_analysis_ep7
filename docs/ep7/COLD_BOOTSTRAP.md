@@ -16,16 +16,19 @@
 
 1. 拒绝重复进入或已有发布slot；查询实际任务，要求ID002d、domain0、entry601912fb、
    实际栈2048字节且当前anchor在其中。栈范围判断复用ep7n_native_current_task。
-2. 核对早期安装组，以及sidecar确实已初始化、未poison、state/serial/generation均为0。
+2. [只读核对实际冷启动现场](COLD_CONTEXT.md)：TCB+48、内核嵌套/锁状态及关键回调/
+   mask/restart绑定；不满足则以0xf06终止，不通过改写内核状态制造资格。
+3. 核对早期安装组，以及sidecar确实已初始化、未poison、state/serial/generation均为0。
    不靠补写一个ready开关跳过安装事实，也不尝试重置旧对象。
-3. 使用既有ep7b_prepare创建独占1/1 semaphore和同一个core；ep7r_prepare复用它。
-4. ep7r_publish再次调用安装检查，验证并固定五个真实queue实例/容量/backing，然后只发布一次。
+4. 使用既有ep7b_prepare创建独占1/1 semaphore和同一个core；ep7r_prepare复用它。
+5. ep7r_publish再次调用安装检查，验证并固定五个真实queue实例/容量/backing，然后只发布一次。
 
 core/boot/runtime现在有真正的永久BSS实例，目标总计5704字节，另有4字节once状态。
 仍依赖已研究的16KiB冷清零/独占放置，不能靠“BSS链接出来了”推断设备已经清零。
 原厂函数的新绑定只有 `ep7_stock_bootstrap_original_unresolved = 6011f620`。
 
-失败使用现有自有quarantine保持循环，不回到原厂启动后续接收任务。
+失败使用自有quarantine屏蔽本核普通中断后保持循环，不再主动触发BREAK，
+不回到原厂启动后续接收任务。
 prepare失败沿用ep7b现有回收/保留策略；prepare成功但runtime准备/发布失败时，仅尝试
 回收尚未发布的私有锁。删除失败保留owned handle；已发布或重复调用不删除、不清空runtime。
 这不是已验证的相机故障恢复机制，真实exception/cache行为仍在后续资格范围。
@@ -54,7 +57,10 @@ NOP采用GNU定义的CB。跨度逐条对应完整原指令，不截断尾部。
 selector初始化与COLOR gate均已有initializer表项检查，继续复用，后续汇入完整离线安装清单。
 发布runtime不会直接开放H/L renderer，初始四profile的H/L仍为零。
 
-## 本次最小验证
+## 初版最小验证
+
+以下保留初版对象/15场景记录；当前3个变化对象和新增现场拒绝分支的增量验证见
+[冷启动现场节点](COLD_CONTEXT.md)，并非重新执行以下整个批次。
 
 [检查脚本](../../tools/ep7_cold_bootstrap_check.py)、[报告](../../research/ep7/cold-bootstrap.json)：
 
@@ -73,8 +79,8 @@ selector初始化与COLOR gate均已有initializer表项检查，继续复用，
 编译告警或替换生产逻辑来通过。未重跑历史pipeline/UI生命周期全集或完整聚合对象检查。
 聚合脚本已登记新源码及4个cold外部绑定，现有对象尺寸/定义用于增量核对。
 
-[更新预算](../../research/ep7/prebuild-storage-budget.json)：107个实现源的未链接text46,543，
-静态BSS8,084；16KiB payload余8,300，两个代码候选合计65,280还余18,737，均未扣最终对齐。
+[当前预算](../../research/ep7/prebuild-storage-budget.json)：107个实现源的未链接text46,800，
+静态BSS8,084；16KiB payload余8,300，两个代码候选合计65,280还余18,480，均未扣最终对齐。
 永久runtime已经计入BSS，删除了旧预算重复追加5704字节的可能；只重新编译一个sizeof探针。
 
 下一项为完整安装清单与最终符号/分区、原厂调用段和新增桥合并的全栈上界；原生捕获/退出、

@@ -229,6 +229,10 @@ class NativeGraph:
 
 
 def context_contracts(graph):
+    cold_source=re.sub(r'\s+','',(ROOT/'prototypes/ep7_volatile_hl/runtime/cold_bootstrap.c').read_text())
+    guard_source=re.sub(r'\s+','',(ROOT/'prototypes/ep7_volatile_hl/runtime/cold_cohort.c').read_text())
+    guarded=('if(!ep7r_native_cold_context(task.tcb))ep7_gcc_quarantine(0xf06u);' in cold_source and
+             '*(constvolatileuint16_t*)(uintptr_t)(tcb+48u)!=1u' in guard_source)
     for pc,expected in CONTEXT_WITNESSES.items():
         if graph.instruction(pc)[2:] != expected:
             raise ValueError('native context witness changed '+hex(pc))
@@ -273,10 +277,12 @@ def context_contracts(graph):
             cold_exclusion='The restart requires root+356==1; the stock domain0 value is 0. Runtime immutability is not proven here.'),
         task_exception_gate=dict(flag_offset=48,pending_offset=56,initial_flag=1,
             skip_condition='Current TCB halfword+48==1 makes 6003434b return 0 and skips the task exception callback.',
-            condition_proven_at_bootstrap=False,
-            reason='Usr3 invokes initializers before the seam. Initial task state alone does not prove the later live flag.'),
+            cold_admission_observation_implemented=guarded,live_device_condition_observed=False,
+            condition_lifetime_proven=False,
+            reason='The cold bootstrap now observes the live flag before native semaphore calls. The observation is not a TCB lease or proof against a later writer, cancellation, or IRQ before admission.'),
         witnesses=[dict(pc=hex(pc),mnemonic=mn,operands=ops) for pc,(mn,ops) in CONTEXT_WITNESSES.items()],
-        fixed_root_runtime_immutability_proven=False)
+        fixed_root_runtime_immutability_proven=False,
+        cold_context_admission_evidence='research/ep7/cold-context.json' if guarded else None)
 
 
 def initial_context_semantics(reference):

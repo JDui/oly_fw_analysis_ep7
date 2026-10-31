@@ -2,11 +2,7 @@
   "scope": "Reuse object sizes and check target type sizes against the actual cold runtime storage.",
   "compiler": "mn10300-elf-gcc (GCC) 13.4.0",
   "prior_object_reports": [
-    "research/ep7/pipeline-far-call-target.json",
-    "research/ep7/ui-far-call-target.json",
-    "research/ep7/pipeline-installation-cohort.json",
-    "research/ep7/cold-bootstrap.json",
-    "research/ep7/cold-clear-semantics.json"
+    "research/ep7/installation-manifest.json"
   ],
   "prior_measurements_recompiled": false,
   "implementation_sources": 107,
@@ -15,242 +11,19 @@
     "prototypes/ep7_volatile_hl/text_lifecycle/factory_caller.c"
   ],
   "prior_unlinked_text_data_bss": [
-    46543,
+    46800,
     0,
     8084
   ],
   "prior_object_sizes": {
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_bridge.s": {
+    "prototypes/ep7_volatile_hl/capture_state_guard/bridge.s": {
       "text_data_bss": [
-        13,
+        47,
         0,
         0
       ],
       "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_layout.c": {
-      "text_data_bss": [
-        383,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_binding.c": {
-      "text_data_bss": [
-        155,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/queue_bridges.s": {
-      "text_data_bss": [
-        66,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/stack.c": {
-      "text_data_bss": [
-        183,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c": {
-      "text_data_bss": [
-        1114,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/wire.c": {
-      "text_data_bss": [
-        1062,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json",
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/target/memory.c": {
-      "text_data_bss": [
-        49,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json",
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_bridge.s": {
-      "text_data_bss": [
-        45,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_layout.c": {
-      "text_data_bss": [
-        376,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_binding.c": {
-      "text_data_bss": [
-        162,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/target/postbuilder/postbuilder_bridge.s": {
-      "text_data_bss": [
-        43,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/target/postbuilder/native_observer.c": {
-      "text_data_bss": [
-        103,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/target/postbuilder/far_calls.s": {
-      "text_data_bss": [
-        30,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/target/postbuilder/cohort.c": {
-      "text_data_bss": [
-        65,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/controller_sidecar/sidecar.c": {
-      "text_data_bss": [
-        2928,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/controller_sidecar/native_binding.c": {
-      "text_data_bss": [
-        3600,
-        0,
-        1912
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/controller_sidecar/cohort.c": {
-      "text_data_bss": [
-        662,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/controller_sidecar/far_calls.s": {
-      "text_data_bss": [
-        540,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/target/far_call.c": {
-      "text_data_bss": [
-        434,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json",
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/controller_sidecar/native_bridges.s": {
-      "text_data_bss": [
-        530,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/controller_sidecar/wait_bridges.s": {
-      "text_data_bss": [
-        214,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/controller_sidecar/engine_bridges.s": {
-      "text_data_bss": [
-        92,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
     "prototypes/ep7_volatile_hl/capture_state_guard/observer.c": {
@@ -260,246 +33,77 @@
         0
       ],
       "reports": [
-        "research/ep7/pipeline-far-call-target.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
-    "prototypes/ep7_volatile_hl/capture_state_guard/bridge.s": {
+    "prototypes/ep7_volatile_hl/controller_sidecar/cohort.c": {
       "text_data_bss": [
-        47,
+        662,
         0,
         0
       ],
       "reports": [
-        "research/ep7/pipeline-far-call-target.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
-    "prototypes/ep7_volatile_hl/runtime/runtime.c": {
+    "prototypes/ep7_volatile_hl/controller_sidecar/engine_bridges.s": {
       "text_data_bss": [
-        1448,
-        0,
-        4
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json",
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/runtime/contexts.c": {
-      "text_data_bss": [
-        920,
+        92,
         0,
         0
       ],
       "reports": [
-        "research/ep7/pipeline-far-call-target.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
-    "prototypes/ep7_volatile_hl/runtime/native_context.c": {
+    "prototypes/ep7_volatile_hl/controller_sidecar/far_calls.s": {
       "text_data_bss": [
-        103,
+        540,
         0,
         0
       ],
       "reports": [
-        "research/ep7/pipeline-far-call-target.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
-    "prototypes/ep7_volatile_hl/runtime/task_context.c": {
+    "prototypes/ep7_volatile_hl/controller_sidecar/native_binding.c": {
       "text_data_bss": [
-        535,
+        3600,
+        0,
+        1912
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/controller_sidecar/native_bridges.s": {
+      "text_data_bss": [
+        530,
         0,
         0
       ],
       "reports": [
-        "research/ep7/pipeline-far-call-target.json",
-        "research/ep7/ui-far-call-target.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
-    "prototypes/ep7_volatile_hl/runtime/task_context_native.c": {
+    "prototypes/ep7_volatile_hl/controller_sidecar/sidecar.c": {
       "text_data_bss": [
-        98,
+        2928,
         0,
         0
       ],
       "reports": [
-        "research/ep7/pipeline-far-call-target.json",
-        "research/ep7/ui-far-call-target.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
-    "prototypes/ep7_volatile_hl/runtime/queue_context.c": {
+    "prototypes/ep7_volatile_hl/controller_sidecar/wait_bridges.s": {
       "text_data_bss": [
-        853,
+        214,
         0,
         0
       ],
       "reports": [
-        "research/ep7/pipeline-far-call-target.json",
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/runtime/delay_bridge.s": {
-      "text_data_bss": [
-        17,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/runtime/quarantine.s": {
-      "text_data_bss": [
-        3,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json",
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/runtime/kernel_gate.c": {
-      "text_data_bss": [
-        208,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/runtime/kernel_gate_bridges.s": {
-      "text_data_bss": [
-        232,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/target/get_tid_bridge.s": {
-      "text_data_bss": [
-        17,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json",
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c": {
-      "text_data_bss": [
-        378,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json",
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/bootstrap.c": {
-      "text_data_bss": [
-        560,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json",
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/poll_lock_provider/native/raw_callbacks.c": {
-      "text_data_bss": [
-        78,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/poll_lock_provider/native/sem_bridges.s": {
-      "text_data_bss": [
-        31,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/native_callbacks.c": {
-      "text_data_bss": [
-        70,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/create_delete_bridges.s": {
-      "text_data_bss": [
-        32,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/forward.c": {
-      "text_data_bss": [
-        114,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/transport.c": {
-      "text_data_bss": [
-        1029,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json",
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/producer.c": {
-      "text_data_bss": [
-        399,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/consumer.c": {
-      "text_data_bss": [
-        180,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/job.c": {
-      "text_data_bss": [
-        288,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
     "prototypes/ep7_volatile_hl/ep7p.c": {
@@ -509,8 +113,7 @@
         0
       ],
       "reports": [
-        "research/ep7/pipeline-far-call-target.json",
-        "research/ep7/ui-far-call-target.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
     "prototypes/ep7_volatile_hl/ep7p_decode.c": {
@@ -520,398 +123,7 @@
         0
       ],
       "reports": [
-        "research/ep7/pipeline-far-call-target.json",
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_bridges.s": {
-      "text_data_bss": [
-        162,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_layout.c": {
-      "text_data_bss": [
-        419,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_binding.c": {
-      "text_data_bss": [
-        561,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/ack_bridge.s": {
-      "text_data_bss": [
-        41,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/ack_layout.c": {
-      "text_data_bss": [
-        190,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/ack_binding.c": {
-      "text_data_bss": [
-        116,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/queue_send_binding.c": {
-      "text_data_bss": [
-        33,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_bridge.s": {
-      "text_data_bss": [
-        44,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_layout.c": {
-      "text_data_bss": [
-        319,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_binding.c": {
-      "text_data_bss": [
-        130,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_bridge.s": {
-      "text_data_bss": [
-        81,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_layout.c": {
-      "text_data_bss": [
-        1014,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_binding.c": {
-      "text_data_bss": [
-        227,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/pipeline-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/text_rollback/rollback.c": {
-      "text_data_bss": [
-        217,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/text_rollback/native_context.c": {
-      "text_data_bss": [
-        348,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/text_rollback/context_bridges.s": {
-      "text_data_bss": [
-        86,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/text_rollback/cleanup_destroy.s": {
-      "text_data_bss": [
-        35,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/text_lifecycle/native_create.s": {
-      "text_data_bss": [
-        83,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/text_lifecycle/lifecycle.c": {
-      "text_data_bss": [
-        228,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/text_lifecycle/native_lifecycle.c": {
-      "text_data_bss": [
-        925,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/text_lifecycle/attach_bind.s": {
-      "text_data_bss": [
-        34,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/text_viewer/set_text.s": {
-      "text_data_bss": [
-        17,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/text_lifecycle/find_child.s": {
-      "text_data_bss": [
-        32,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/text_lifecycle/native_resource.c": {
-      "text_data_bss": [
-        72,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_owner/owner.c": {
-      "text_data_bss": [
-        2352,
-        0,
-        196
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_owner/cohort.c": {
-      "text_data_bss": [
-        63,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_owner/bridges.s": {
-      "text_data_bss": [
-        197,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_selector/selector.c": {
-      "text_data_bss": [
-        531,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_selector/bridges.s": {
-      "text_data_bss": [
-        76,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_mvc/lifetime.c": {
-      "text_data_bss": [
-        2053,
-        0,
-        76
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_mvc/cohort.c": {
-      "text_data_bss": [
-        212,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_mvc/bridges.s": {
-      "text_data_bss": [
-        183,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_mvc/far_calls.s": {
-      "text_data_bss": [
-        120,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_content/content.c": {
-      "text_data_bss": [
-        650,
-        0,
-        8
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_content/bridges.s": {
-      "text_data_bss": [
-        203,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_model/model.c": {
-      "text_data_bss": [
-        665,
-        0,
-        68
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_model/public_mode.s": {
-      "text_data_bss": [
-        36,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_render/viewer.c": {
-      "text_data_bss": [
-        844,
-        0,
-        32
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_render/bridge.s": {
-      "text_data_bss": [
-        71,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
     "prototypes/ep7_volatile_hl/ep7p_ui.c": {
@@ -921,67 +133,7 @@
         0
       ],
       "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/text_viewer/text.c": {
-      "text_data_bss": [
-        432,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_native/input.c": {
-      "text_data_bss": [
-        1918,
-        0,
-        68
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_native/cohort.c": {
-      "text_data_bss": [
-        406,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_native/input_bridges.s": {
-      "text_data_bss": [
-        222,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_native/bridge.c": {
-      "text_data_bss": [
-        134,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_native/bridge.s": {
-      "text_data_bss": [
-        52,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
     "prototypes/ep7_volatile_hl/ep7p_ui_raw.c": {
@@ -991,97 +143,77 @@
         0
       ],
       "reports": [
-        "research/ep7/ui-far-call-target.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
-    "prototypes/ep7_volatile_hl/ui_native/far_calls.s": {
+    "prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/bootstrap.c": {
       "text_data_bss": [
-        150,
+        560,
         0,
         0
       ],
       "reports": [
-        "research/ep7/ui-far-call-target.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
-    "prototypes/ep7_volatile_hl/ui_gate/gate.c": {
+    "prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/create_delete_bridges.s": {
       "text_data_bss": [
-        923,
-        0,
-        12
-      ],
-      "reports": [
-        "research/ep7/ui-far-call-target.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/ui_content/stock.c": {
-      "text_data_bss": [
-        595,
+        32,
         0,
         0
       ],
       "reports": [
-        "research/ep7/ui-far-call-target.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
-    "prototypes/ep7_volatile_hl/ui_content/stock_bridges.s": {
+    "prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/native_callbacks.c": {
       "text_data_bss": [
-        93,
+        70,
         0,
         0
       ],
       "reports": [
-        "research/ep7/ui-far-call-target.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
-    "prototypes/ep7_volatile_hl/ui_render/original_draw.s": {
+    "prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c": {
       "text_data_bss": [
-        15,
+        378,
         0,
         0
       ],
       "reports": [
-        "research/ep7/ui-far-call-target.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/cohort.c": {
+    "prototypes/ep7_volatile_hl/poll_lock_provider/native/raw_callbacks.c": {
       "text_data_bss": [
-        647,
+        78,
         0,
         0
       ],
       "reports": [
-        "research/ep7/pipeline-installation-cohort.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
-    "prototypes/ep7_volatile_hl/snapshot_transport/native/far_calls.s": {
+    "prototypes/ep7_volatile_hl/poll_lock_provider/native/sem_bridges.s": {
       "text_data_bss": [
-        240,
+        31,
         0,
         0
       ],
       "reports": [
-        "research/ep7/pipeline-installation-cohort.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
     "prototypes/ep7_volatile_hl/runtime/cold_bootstrap.c": {
       "text_data_bss": [
-        399,
+        426,
         0,
         5708
       ],
       "reports": [
-        "research/ep7/cold-bootstrap.json"
-      ]
-    },
-    "prototypes/ep7_volatile_hl/runtime/cold_cohort.c": {
-      "text_data_bss": [
-        357,
-        0,
-        0
-      ],
-      "reports": [
-        "research/ep7/cold-bootstrap.json"
+        "research/ep7/installation-manifest.json"
       ]
     },
     "prototypes/ep7_volatile_hl/runtime/cold_bootstrap_bridge.s": {
@@ -1091,7 +223,417 @@
         0
       ],
       "reports": [
-        "research/ep7/cold-bootstrap.json"
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/runtime/cold_cohort.c": {
+      "text_data_bss": [
+        584,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/runtime/contexts.c": {
+      "text_data_bss": [
+        920,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/runtime/delay_bridge.s": {
+      "text_data_bss": [
+        17,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/runtime/kernel_gate.c": {
+      "text_data_bss": [
+        208,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/runtime/kernel_gate_bridges.s": {
+      "text_data_bss": [
+        232,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/runtime/native_context.c": {
+      "text_data_bss": [
+        103,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/runtime/quarantine.s": {
+      "text_data_bss": [
+        6,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/runtime/queue_context.c": {
+      "text_data_bss": [
+        853,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/runtime/runtime.c": {
+      "text_data_bss": [
+        1448,
+        0,
+        4
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/runtime/task_context.c": {
+      "text_data_bss": [
+        535,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/runtime/task_context_native.c": {
+      "text_data_bss": [
+        98,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/consumer.c": {
+      "text_data_bss": [
+        180,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/forward.c": {
+      "text_data_bss": [
+        114,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/job.c": {
+      "text_data_bss": [
+        288,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/ack_binding.c": {
+      "text_data_bss": [
+        116,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/ack_bridge.s": {
+      "text_data_bss": [
+        41,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/ack_layout.c": {
+      "text_data_bss": [
+        190,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/cohort.c": {
+      "text_data_bss": [
+        647,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_binding.c": {
+      "text_data_bss": [
+        162,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_bridge.s": {
+      "text_data_bss": [
+        45,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_layout.c": {
+      "text_data_bss": [
+        376,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_binding.c": {
+      "text_data_bss": [
+        130,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_bridge.s": {
+      "text_data_bss": [
+        44,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_layout.c": {
+      "text_data_bss": [
+        319,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/far_calls.s": {
+      "text_data_bss": [
+        240,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_binding.c": {
+      "text_data_bss": [
+        155,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_bridge.s": {
+      "text_data_bss": [
+        13,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_layout.c": {
+      "text_data_bss": [
+        383,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_binding.c": {
+      "text_data_bss": [
+        227,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_bridge.s": {
+      "text_data_bss": [
+        81,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_layout.c": {
+      "text_data_bss": [
+        1014,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/queue_bridges.s": {
+      "text_data_bss": [
+        66,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/queue_send_binding.c": {
+      "text_data_bss": [
+        33,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/stack.c": {
+      "text_data_bss": [
+        183,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_binding.c": {
+      "text_data_bss": [
+        561,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_bridges.s": {
+      "text_data_bss": [
+        162,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_layout.c": {
+      "text_data_bss": [
+        419,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c": {
+      "text_data_bss": [
+        1114,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/producer.c": {
+      "text_data_bss": [
+        399,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/transport.c": {
+      "text_data_bss": [
+        1029,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/wire.c": {
+      "text_data_bss": [
+        1062,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
       ]
     },
     "prototypes/ep7_volatile_hl/target/cold_clear.s": {
@@ -1101,7 +643,447 @@
         0
       ],
       "reports": [
-        "research/ep7/cold-clear-semantics.json"
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/target/far_call.c": {
+      "text_data_bss": [
+        434,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/target/get_tid_bridge.s": {
+      "text_data_bss": [
+        17,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/target/memory.c": {
+      "text_data_bss": [
+        49,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/target/postbuilder/cohort.c": {
+      "text_data_bss": [
+        65,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/target/postbuilder/far_calls.s": {
+      "text_data_bss": [
+        30,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/target/postbuilder/native_observer.c": {
+      "text_data_bss": [
+        103,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/target/postbuilder/postbuilder_bridge.s": {
+      "text_data_bss": [
+        43,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/text_lifecycle/attach_bind.s": {
+      "text_data_bss": [
+        34,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/text_lifecycle/find_child.s": {
+      "text_data_bss": [
+        32,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/text_lifecycle/lifecycle.c": {
+      "text_data_bss": [
+        228,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/text_lifecycle/native_create.s": {
+      "text_data_bss": [
+        83,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/text_lifecycle/native_lifecycle.c": {
+      "text_data_bss": [
+        925,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/text_lifecycle/native_resource.c": {
+      "text_data_bss": [
+        72,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/text_rollback/cleanup_destroy.s": {
+      "text_data_bss": [
+        35,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/text_rollback/context_bridges.s": {
+      "text_data_bss": [
+        86,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/text_rollback/native_context.c": {
+      "text_data_bss": [
+        348,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/text_rollback/rollback.c": {
+      "text_data_bss": [
+        217,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/text_viewer/set_text.s": {
+      "text_data_bss": [
+        17,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/text_viewer/text.c": {
+      "text_data_bss": [
+        432,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_content/bridges.s": {
+      "text_data_bss": [
+        203,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_content/content.c": {
+      "text_data_bss": [
+        650,
+        0,
+        8
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_content/stock.c": {
+      "text_data_bss": [
+        595,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_content/stock_bridges.s": {
+      "text_data_bss": [
+        93,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_gate/gate.c": {
+      "text_data_bss": [
+        923,
+        0,
+        12
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_model/model.c": {
+      "text_data_bss": [
+        665,
+        0,
+        68
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_model/public_mode.s": {
+      "text_data_bss": [
+        36,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_mvc/bridges.s": {
+      "text_data_bss": [
+        183,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_mvc/cohort.c": {
+      "text_data_bss": [
+        212,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_mvc/far_calls.s": {
+      "text_data_bss": [
+        120,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_mvc/lifetime.c": {
+      "text_data_bss": [
+        2053,
+        0,
+        76
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_native/bridge.c": {
+      "text_data_bss": [
+        134,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_native/bridge.s": {
+      "text_data_bss": [
+        52,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_native/cohort.c": {
+      "text_data_bss": [
+        406,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_native/far_calls.s": {
+      "text_data_bss": [
+        150,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_native/input.c": {
+      "text_data_bss": [
+        1918,
+        0,
+        68
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_native/input_bridges.s": {
+      "text_data_bss": [
+        222,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_owner/bridges.s": {
+      "text_data_bss": [
+        197,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_owner/cohort.c": {
+      "text_data_bss": [
+        63,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_owner/owner.c": {
+      "text_data_bss": [
+        2352,
+        0,
+        196
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_render/bridge.s": {
+      "text_data_bss": [
+        71,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_render/original_draw.s": {
+      "text_data_bss": [
+        15,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_render/viewer.c": {
+      "text_data_bss": [
+        844,
+        0,
+        32
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_selector/bridges.s": {
+      "text_data_bss": [
+        76,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/ui_selector/selector.c": {
+      "text_data_bss": [
+        531,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/installation-manifest.json"
       ]
     }
   },
@@ -1120,7 +1102,7 @@
   "rough_remaining_storage_bytes": 8300,
   "storage_budget_fits_before_link_alignment": true,
   "limits": [
-    "Historical object sizes are reused, not revalidated against every current source.",
+    "Sizes come from the current unified inventory, including its recorded incremental refresh; this budget check does not rebuild those objects.",
     "Only the current header type sizes are freshly compiled; no target code is executed.",
     "No linker layout, alignment, installer storage, native queue growth or full stack is included.",
     "Production cold storage is included once via its object; this probe reserves no target memory."

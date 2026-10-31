@@ -18,6 +18,29 @@ static uint32_t word(uint32_t address)
 { return *(const volatile uint32_t *)(uintptr_t)address; }
 static uint32_t displacement(const volatile unsigned char *p)
 { return (uint32_t)p[1]|((uint32_t)p[2]<<8)|((uint32_t)p[3]<<16)|((uint32_t)p[4]<<24); }
+bool ep7r_native_cold_context(uint32_t tcb)
+{
+    /* Check the root and current-cell chain before dereferencing the supplied
+     * current TCB. These are the stock domain0 bindings used by the native
+     * stack analysis; an unexpected root is not followed speculatively. */
+    if(!tcb || (tcb&3u) || tcb>UINT32_MAX-50u ||
+       word(0x8ff00004u)!=0x600411a4u || word(0x60041204u)!=0x621a630cu ||
+       word(0x621a630cu)!=tcb)return false;
+    /* No IRQ/nested context or held shared kernel lock. The TCB+48 value is
+     * observed, never changed to manufacture a disabled-exception condition. */
+    if(word(0x600411c0u)!=0x621a631cu || word(0x600412ecu)!=0x621a63b0u ||
+       *(const volatile uint16_t *)(uintptr_t)0x621a631cu ||
+       *(const volatile unsigned char *)(uintptr_t)0x621a63b0u ||
+       *(const volatile uint16_t *)(uintptr_t)(tcb+16u)!=0x2du ||
+       *(const volatile uint16_t *)(uintptr_t)(tcb+48u)!=1u)return false;
+    /* Preserve the exact scheduler/IRQ callbacks and mask/restart configuration
+     * on which the offline context model depends. This remains an admission
+     * observation, not proof against a later foreign writer or cancellation. */
+    return word(0x600412b4u)==0x60073215u && word(0x600412b8u)==0x60073218u &&
+        word(0x600412bcu)==0x6007321bu && word(0x600412e0u)==0x600300a1u &&
+        word(0x600412fcu)==0 && word(0x60041300u)==0x800u &&
+        word(0x60041308u)==0 && word(0x621a630cu)==tcb;
+}
 bool ep7r_native_early_cohort_present(void)
 {
     /* First four ordinary sections have returned from their local initializer.

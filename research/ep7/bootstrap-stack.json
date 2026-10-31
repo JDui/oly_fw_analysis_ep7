@@ -5,11 +5,12 @@
   "compiled_sources": {
     "runtime/cold_bootstrap.c": {
       "text_data_bss": [
-        399,
+        426,
         0,
         5708
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": false
     },
     "runtime/runtime.c": {
       "text_data_bss": [
@@ -17,7 +18,8 @@
         0,
         4
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": true
     },
     "poll_lock_provider/bootstrap/bootstrap.c": {
       "text_data_bss": [
@@ -25,7 +27,8 @@
         0,
         0
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": true
     },
     "runtime/native_context.c": {
       "text_data_bss": [
@@ -33,7 +36,8 @@
         0,
         0
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": true
     },
     "runtime/task_context_native.c": {
       "text_data_bss": [
@@ -41,7 +45,8 @@
         0,
         0
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": true
     },
     "runtime/queue_context.c": {
       "text_data_bss": [
@@ -49,7 +54,8 @@
         0,
         0
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": true
     },
     "target/memory.c": {
       "text_data_bss": [
@@ -57,7 +63,8 @@
         0,
         0
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": true
     },
     "target/postbuilder/cohort.c": {
       "text_data_bss": [
@@ -65,7 +72,8 @@
         0,
         0
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": true
     },
     "target/far_call.c": {
       "text_data_bss": [
@@ -73,7 +81,8 @@
         0,
         0
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": true
     },
     "snapshot_transport/native/cohort.c": {
       "text_data_bss": [
@@ -81,7 +90,8 @@
         0,
         0
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": true
     },
     "controller_sidecar/cohort.c": {
       "text_data_bss": [
@@ -89,15 +99,17 @@
         0,
         0
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": true
     },
     "runtime/cold_cohort.c": {
       "text_data_bss": [
-        357,
+        584,
         0,
         0
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": false
     },
     "poll_lock_provider/ep7_sem_provider.c": {
       "text_data_bss": [
@@ -105,7 +117,8 @@
         0,
         0
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": true
     },
     "poll_lock_provider/bootstrap/native_callbacks.c": {
       "text_data_bss": [
@@ -113,7 +126,8 @@
         0,
         0
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": true
     },
     "poll_lock_provider/native/raw_callbacks.c": {
       "text_data_bss": [
@@ -121,7 +135,8 @@
         0,
         0
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": true
     },
     "snapshot_transport/transport.c": {
       "text_data_bss": [
@@ -129,7 +144,8 @@
         0,
         0
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": true
     },
     "ep7p.c": {
       "text_data_bss": [
@@ -137,7 +153,8 @@
         0,
         0
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": true
     },
     "runtime/task_context.c": {
       "text_data_bss": [
@@ -145,11 +162,14 @@
         0,
         0
       ],
-      "all_reported_frames_match_prior_su": true
+      "all_reported_frames_match_prior_su": true,
+      "reused_prior_graph": true
     }
   },
-  "compiled_c_source_count": 18,
-  "reachable_function_count": 42,
+  "compiled_c_source_count": 2,
+  "reused_c_source_count": 16,
+  "total_c_source_count": 18,
+  "reachable_function_count": 43,
   "reachable_nodes": {
     "ep7_gcc_get_tid": {
       "frame_bytes": 20,
@@ -160,7 +180,7 @@
     "ep7_gcc_quarantine": {
       "frame_bytes": 0,
       "kind": "assembly_frame_and_native_call",
-      "boundary": "exception_entry_stack_unknown",
+      "boundary": "owned_terminal_no_call",
       "source": "runtime/quarantine.s"
     },
     "ep7_gcc_raw_sem_create": {
@@ -271,9 +291,15 @@
       "source": "runtime/runtime.c",
       "kind": "gcc_static_frame"
     },
+    "ep7r_native_cold_context": {
+      "frame_bytes": 4,
+      "compiler_location": "runtime/cold_cohort.c:21:6",
+      "source": "runtime/cold_cohort.c",
+      "kind": "gcc_static_frame"
+    },
     "ep7r_native_early_cohort_present": {
       "frame_bytes": 12,
-      "compiler_location": "runtime/cold_cohort.c:21:6",
+      "compiler_location": "runtime/cold_cohort.c:44:6",
       "source": "runtime/cold_cohort.c",
       "kind": "gcc_static_frame"
     },
@@ -606,47 +632,56 @@
         "location": "runtime/cold_bootstrap.c:31:32"
       },
       {
-        "target": "runtime/cold_bootstrap.c:installed",
+        "target": "ep7r_native_cold_context",
         "location": "runtime/cold_bootstrap.c:32:9"
       },
       {
         "target": "ep7_gcc_quarantine",
-        "location": "runtime/cold_bootstrap.c:32:25"
+        "location": "runtime/cold_bootstrap.c:32:44"
+      },
+      {
+        "target": "runtime/cold_bootstrap.c:installed",
+        "location": "runtime/cold_bootstrap.c:33:9"
+      },
+      {
+        "target": "ep7_gcc_quarantine",
+        "location": "runtime/cold_bootstrap.c:33:25"
       },
       {
         "target": "ep7b_unresolved_native",
-        "location": "runtime/cold_bootstrap.c:33:9"
-      },
-      {
-        "target": "ep7b_prepare",
-        "location": "runtime/cold_bootstrap.c:33:9"
-      },
-      {
-        "target": "ep7_gcc_quarantine",
         "location": "runtime/cold_bootstrap.c:34:9"
       },
       {
-        "target": "ep7r_native_environment",
-        "location": "runtime/cold_bootstrap.c:35:9"
-      },
-      {
-        "target": "ep7r_prepare",
-        "location": "runtime/cold_bootstrap.c:35:9"
-      },
-      {
-        "target": "ep7b_abort_unpublished",
-        "location": "runtime/cold_bootstrap.c:37:15"
+        "target": "ep7b_prepare",
+        "location": "runtime/cold_bootstrap.c:34:9"
       },
       {
         "target": "ep7_gcc_quarantine",
-        "location": "runtime/cold_bootstrap.c:38:9"
+        "location": "runtime/cold_bootstrap.c:35:9"
+      },
+      {
+        "target": "ep7r_native_environment",
+        "location": "runtime/cold_bootstrap.c:36:9"
+      },
+      {
+        "target": "ep7r_prepare",
+        "location": "runtime/cold_bootstrap.c:36:9"
+      },
+      {
+        "target": "ep7b_abort_unpublished",
+        "location": "runtime/cold_bootstrap.c:38:15"
+      },
+      {
+        "target": "ep7_gcc_quarantine",
+        "location": "runtime/cold_bootstrap.c:39:9"
       },
       {
         "target": "ep7r_publish",
-        "location": "runtime/cold_bootstrap.c:36:9"
+        "location": "runtime/cold_bootstrap.c:37:9"
       }
     ],
     "ep7r_get": [],
+    "ep7r_native_cold_context": [],
     "ep7r_native_early_cohort_present": [],
     "ep7r_native_environment": [],
     "ep7r_prepare": [
@@ -1030,6 +1065,9 @@
   "recursive_reachable_edges": false,
   "native_get_tid_instructions_checked": 30,
   "native_get_tid_body_extra_stack_bytes": 0,
+  "owned_quarantine_body_stack_bytes": 0,
+  "owned_quarantine_explicit_trap": false,
+  "quarantine_evidence": "research/ep7/cold-context.json; exact current assembly source and 6-byte inventory shape rechecked",
   "root_stack": {
     "prefix_bytes": 312,
     "path": [
@@ -1045,14 +1083,6 @@
     "complete_stack_bound_bytes": null
   },
   "unknown_native_boundaries": [
-    {
-      "boundary": "exception_entry_stack_unknown",
-      "known_prefix_bytes": 96,
-      "path": [
-        "ep7r_bootstrap_initialize",
-        "ep7_gcc_quarantine"
-      ]
-    },
     {
       "boundary": "native_sem_delete_body_unknown",
       "known_prefix_bytes": 164,
@@ -1095,7 +1125,8 @@
   "limits": [
     "Graph and callback mapping are only for this fixed one-shot bootstrap composition.",
     "Per-function static frames and all child edges are summed conservatively; mutually exclusive paths are not summed together.",
-    "Native semaphore create/delete bodies, exception/IRQ stack, task initial context and other Usr3 paths remain outside the bound.",
+    "Native semaphore create/delete bodies, exception/IRQ stack and other Usr3 paths remain outside this C graph; separate native reports include the 4-byte initial task entry overhead.",
+    "Unchanged C graphs may be reused only after the cold-context source/header diff check; changed sources are recompiled and compared to the updated object inventory.",
     "The known prefix is not an upper bound on the complete native/task stack and is not subtracted from 2048 as available headroom.",
     "Existing assembly frame and Usr3 prologue witnesses are reused; only native get_tid is newly disassembled here.",
     "No hardware, target code, full firmware linker or application test suite is executed."

@@ -8,9 +8,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 CORE=ROOT/'prototypes/ep7_volatile_hl'
-REPORTS=['research/ep7/pipeline-far-call-target.json','research/ep7/ui-far-call-target.json',
-         'research/ep7/pipeline-installation-cohort.json','research/ep7/cold-bootstrap.json']
-COLD_REPORT='research/ep7/cold-clear-semantics.json'
+INVENTORY='research/ep7/installation-manifest.json'
 # These compiler-call probes verify ABI; they are not runtime implementation.
 PROBES={'prototypes/ep7_volatile_hl/snapshot_transport/native/worker_caller.c',
         'prototypes/ep7_volatile_hl/text_lifecycle/factory_caller.c'}
@@ -26,22 +24,13 @@ unsigned char ep7_align_cold_storage[_Alignof(struct cold_storage)];
 
 def inspect(prefix):
     objects={}
-    for relative in REPORTS:
-        report=json.loads((ROOT/relative).read_text(encoding='utf-8-sig'))
-        for row in report['objects'].values():
-            source=row['source']
-            if source in PROBES:
-                continue
-            if not (ROOT/source).is_file():
-                raise ValueError('missing implementation source '+source)
-            sizes=[int(x) for x in row['size_output'][:3]]
-            if source in objects and objects[source]['text_data_bss']!=sizes:
-                raise ValueError('conflicting historical size measurements for '+source)
-            objects.setdefault(source,dict(text_data_bss=sizes,reports=[]))['reports'].append(relative)
-    cold=json.loads((ROOT/COLD_REPORT).read_text(encoding='utf-8-sig'))
-    if not (ROOT/cold['source']).is_file() or cold['source'] in objects:
-        raise ValueError('missing or duplicate cold-clear implementation source')
-    objects[cold['source']]=dict(text_data_bss=cold['text_data_bss'],reports=[COLD_REPORT])
+    inventory=json.loads((ROOT/INVENTORY).read_text(encoding='utf-8-sig'))['object_inventory']
+    for row in inventory['objects'].values():
+        source=row['source']
+        if source in PROBES or not (ROOT/source).is_file():
+            raise ValueError('invalid implementation source in unified inventory '+source)
+        if source in objects:raise ValueError('duplicate implementation object '+source)
+        objects[source]=dict(text_data_bss=row['text_data_bss'],reports=[INVENTORY])
     gcc=prefix+'gcc'
     include=subprocess.check_output([gcc,'-print-file-name=include'],text=True).strip()
     version=subprocess.check_output([gcc,'--version'],text=True).splitlines()[0]
@@ -69,7 +58,7 @@ def inspect(prefix):
     # former forecast5704 bytes a second time on top of the measured object.
     required=totals[1]+totals[2]
     return dict(scope=__doc__,compiler=version,
-        prior_object_reports=REPORTS+[COLD_REPORT],prior_measurements_recompiled=False,
+        prior_object_reports=[INVENTORY],prior_measurements_recompiled=False,
         implementation_sources=len(objects),excluded_abi_probe_sources=sorted(PROBES),
         prior_unlinked_text_data_bss=totals,prior_object_sizes=objects,
         current_target_type_sizes=sizes,new_objects_compiled=1,
@@ -77,7 +66,7 @@ def inspect(prefix):
         rough_static_storage_bytes=required,reservation_payload_bytes=16384,
         rough_remaining_storage_bytes=16384-required,
         storage_budget_fits_before_link_alignment=required<=16384,
-        limits=['Historical object sizes are reused, not revalidated against every current source.',
+        limits=['Sizes come from the current unified inventory, including its recorded incremental refresh; this budget check does not rebuild those objects.',
                 'Only the current header type sizes are freshly compiled; no target code is executed.',
                 'No linker layout, alignment, installer storage, native queue growth or full stack is included.',
                 'Production cold storage is included once via its object; this probe reserves no target memory.'],

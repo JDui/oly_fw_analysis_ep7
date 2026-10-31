@@ -1360,8 +1360,10 @@
       "pending_offset": 56,
       "initial_flag": 1,
       "skip_condition": "Current TCB halfword+48==1 makes 6003434b return 0 and skips the task exception callback.",
-      "condition_proven_at_bootstrap": false,
-      "reason": "Usr3 invokes initializers before the seam. Initial task state alone does not prove the later live flag."
+      "cold_admission_observation_implemented": true,
+      "live_device_condition_observed": false,
+      "condition_lifetime_proven": false,
+      "reason": "The cold bootstrap now observes the live flag before native semaphore calls. The observation is not a TCB lease or proof against a later writer, cancellation, or IRQ before admission."
     },
     "witnesses": [
       {
@@ -1635,7 +1637,8 @@
         "operands": "0x6003436e,[d2,d3,a2,a3],36"
       }
     ],
-    "fixed_root_runtime_immutability_proven": false
+    "fixed_root_runtime_immutability_proven": false,
+    "cold_context_admission_evidence": "research/ep7/cold-context.json"
   },
   "initial_context_semantics": {
     "initial_restore_checks": 1,

@@ -212,15 +212,23 @@ def implementation_sources():
     return rows
 
 
-def inspect_objects(prefix, patches):
+def inspect_objects(prefix, patches, source_selection=None, prior_objects=None):
+    # A caller using prior metadata must separately prove the unchanged source
+    # and header set. The normal CLI always rebuilds the complete inventory.
     sources = implementation_sources()
+    selected = sources if source_selection is None else list(source_selection)
+    if len(selected)!=len(set(selected)) or not selected or not set(selected)<=set(sources):
+        raise ValueError('invalid object refresh selection')
+    objects = {} if prior_objects is None else dict(prior_objects)
+    if set(selected)!=set(sources) and set(objects)!=set(sources):
+        raise ValueError('partial object refresh requires the complete prior inventory')
     include = subprocess.check_output([prefix+'gcc','-print-file-name=include'],text=True).strip()
     flags = ['-std=c11','-O2','-Wall','-Wextra','-Werror','-ffreestanding','-fno-builtin',
              '-mno-setlb','-mno-liw','-nostdinc','-I'+str(CORE/'target/include'),
              '-I'+include,'-I'+str(CORE),'-I'+str(CORE/'poll_lock_provider'),'-fstack-usage']
-    definitions = {}; references = {}; objects = {}
+    definitions = {}; references = {}
     with tempfile.TemporaryDirectory(prefix='ep7-installation-objects-') as temp:
-        for i, relative in enumerate(sources):
+        for i, relative in enumerate(selected):
             src = CORE/relative; obj = Path(temp)/(str(i)+'.o')
             if src.suffix == '.c':
                 extra = ['-fno-tree-loop-distribute-patterns'] if relative == 'target/memory.c' else []
@@ -231,17 +239,19 @@ def inspect_objects(prefix, patches):
             defs = {}
             for line in subprocess.check_output([prefix+'nm','-g','--defined-only',str(obj)],text=True).splitlines():
                 _, kind, name = line.split()
-                if name in definitions:
-                    raise ValueError('duplicate global '+name)
-                definitions[name] = relative; defs[name] = kind
+                defs[name] = kind
             und = [line.split()[-1] for line in subprocess.check_output([prefix+'nm','-u',str(obj)],text=True).splitlines()]
-            for name in und:
-                references.setdefault(name,[]).append(relative)
             sizes = [int(v) for v in subprocess.check_output([prefix+'size',str(obj)],text=True).splitlines()[-1].split()[:3]]
             usage = obj.with_suffix('.su')
             objects[relative] = dict(source='prototypes/ep7_volatile_hl/'+relative,
                 definitions=defs, undefined=und, text_data_bss=sizes,
                 stack_usage=[line.replace(str(CORE)+'/', '') for line in usage.read_text().splitlines()] if usage.exists() else [])
+    for relative,row in objects.items():
+        for name in row['definitions']:
+            if name in definitions:raise ValueError('duplicate global '+name)
+            definitions[name]=relative
+        for name in row['undefined']:
+            references.setdefault(name,[]).append(relative)
     external = set(references)-set(definitions)
     native = bindings()
     if external != set(native):
@@ -258,7 +268,9 @@ def inspect_objects(prefix, patches):
         resolved_native_address_count=sum(r['address'] is not None for r in native.values()),
         placement_required_symbols=[s for s,r in native.items() if r['address'] is None],
         patch_target_symbols_checked=len(targets), unlinked_text_data_bss=totals,
-        current_implementation_recompiled=True, target_linked=False, target_executed=False)
+        current_implementation_recompiled=set(selected)==set(sources),
+        recompiled_sources=selected, reused_object_count=len(sources)-len(selected),
+        target_linked=False, target_executed=False)
 
 
 def main():

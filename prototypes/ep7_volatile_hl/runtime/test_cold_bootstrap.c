@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static unsigned scenario,creates,deletes,checks,queries,reason;
+static unsigned scenario,creates,deletes,checks,queries,reason,context_checks;
 static jmp_buf escape;
 ep7c ep7_controller_sidecar_unresolved;
 static int get_tid(void *ctx,uint16_t *out)
@@ -35,6 +35,8 @@ bool ep7n_native_current_task(uint32_t anchor,ep7n_task *out)
 }
 bool ep7r_native_early_cohort_present(void)
 { checks++;return scenario!=5 && !(scenario==7 && checks==2); }
+bool ep7r_native_cold_context(uint32_t tcb)
+{ assert(tcb==0x1000);context_checks++;return scenario!=15; }
 bool ep7cn_native_cohort_present(void){return scenario!=11;}
 bool ep7q_native_cohort_present(void){return true;}
 bool ep7n_postbuilder_cohort_present(void){return true;}
@@ -57,14 +59,14 @@ ep7r_environment ep7r_native_environment(void *ctx,bool (*ready)(void *))
 { return (ep7r_environment){ctx,ready,task,queue,delay,quarantine}; }
 int main(int argc,char **argv)
 {
-    assert(argc==2);scenario=(unsigned)strtoul(argv[1],NULL,10);assert(scenario<=14);
+    assert(argc==2);scenario=(unsigned)strtoul(argv[1],NULL,10);assert(scenario<=15);
     ep7_controller_sidecar_unresolved.initialized=scenario!=12;
     ep7_controller_sidecar_unresolved.poison=scenario==13;
     ep7_controller_sidecar_unresolved.serial=scenario==14;
     assert(!ep7r_get(&ep7_native_runtime_slot));
     if(!setjmp(escape)){
         ep7r_bootstrap_initialize();assert(scenario==0);
-        assert(creates==1 && deletes==0 && checks==2 && queries==5);
+        assert(creates==1 && deletes==0 && checks==2 && queries==5 && context_checks==1);
         ep7r *r=ep7r_get(&ep7_native_runtime_slot);
         assert(r==&storage.runtime && r->boot==&storage.boot && r->boot->core==&storage.core);
         assert(ep7r_accepting(r) && storage.boot.state==EP7B_PUBLISHED);
@@ -76,7 +78,8 @@ int main(int argc,char **argv)
         assert(!ep7r_get(&ep7_native_runtime_slot));
         if(scenario==1 || scenario==2 || scenario==3 || scenario==4 || scenario==10)
             assert(reason==0xf02 && creates==0 && deletes==0 && checks==0);
-        if(scenario==5 || scenario==11 || scenario>=12)assert(reason==0xf03 && creates==0 && deletes==0);
+        if(scenario==5 || scenario==11 || (scenario>=12 && scenario<=14))assert(reason==0xf03 && creates==0 && deletes==0);
+        if(scenario==15)assert(reason==0xf06 && context_checks==1 && creates==0 && deletes==0 && checks==0);
         if(scenario==6)assert(reason==0xf04 && creates==1 && deletes==0 && storage.boot.state==EP7B_FAILED);
         if(scenario==7 || scenario==8)assert(reason==0xf05 && creates==1 && deletes==1 && storage.boot.state==EP7B_CLOSED);
         if(scenario==9)assert(reason==0xf05 && creates==1 && deletes==1 &&

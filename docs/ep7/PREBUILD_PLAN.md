@@ -81,7 +81,13 @@ G6 依赖 E 的工具链设计和 G1–G4 的候选接口；G8 汇合全部结�
 
 ## 当前编译准入结论
 
-[bootstrap C栈图](BOOTSTRAP_STACK.md)已解析42函数和29条固定callback；后续
+[冷启动现场准入](COLD_CONTEXT.md)已实现：创建锁前观察TCB+48、内核嵌套/锁状态及
+关键回调配置，失败不改写内核资格、不创建锁。自有quarantine已移除BREAK，改为
+6字节、body栈0的本核终止循环；3个变化对象及最小host/GNU语义检查通过。
+原厂BREAK、资格有效期及IRQ/UDF等余项仍未通过，未开始整包固件编译。
+
+[bootstrap C栈图](BOOTSTRAP_STACK.md)现有43函数和29条固定callback，增量重生成2个
+变化单元并复用16个未变单元；后续
 [原厂栈节点](NATIVE_BOOTSTRAP_STACK.md)核对27个函数及997条不同地址指令，明确
 固定回调、保存/替换SP和任务入口4字节开销。当前合并已知部分为栈顶以下416字节；
 任务异常callback及BREAK/IRQ仍未定界，完整上界保留null。这不是2 KiB栈通过证明。
@@ -91,13 +97,13 @@ G6 依赖 E 的工具链设计和 G1–G4 的候选接口；G8 汇合全部结�
 UDF、任务异常callback、故障和嵌套仍未资格化，不能据此填写完整任务上界。
 
 [统一安装清单](INSTALLATION_MANIFEST.md)已汇合101项、546字节；107个生产对象统一
-编译通过，344全局定义无重复，84个安装目标存在。109外部依赖均已分类，108有既有
+首次统一编译通过，当前增量刷新后345全局定义无重复，84个安装目标存在。109外部依赖均已分类，108有既有
 原厂地址，私有RAM符号仍无最终值。3处启动前缀修改的上游装载路径仍未资格化，
 完整栈、代码/RAM放置及生命周期关卡未通过；未开始整体固件编译。
 
 [一次性bootstrap](COLD_BOOTSTRAP.md)已实现：早期安装组→私有锁/core/runtime→单次发布，
 失败不继续启动改造后的接收任务。15个定向host场景、48项安装组负检查及桥语义通过。
-永久存储计入后静态8,084、text46,543；完整安装清单、全栈及放置/生命周期资格仍未完成。
+当前永久存储计入后静态8,084、text46,800；全栈及放置/生命周期资格仍未完成。
 
 启动入口已收敛到[Usr3的60191371](BOOTSTRAP_ENTRY.md)，位于接收任务启动前。
 须分离早期pipeline/kernel安装资格与后续第6段UI资格；等待全部段才发布会产生启动依赖。
@@ -108,7 +114,10 @@ G6 放置/安装仍未闭合。G4的资源、内容对象、输入与COLOR gatin
 generation-bearing handoff、共享runtime发布和CPU reader已有
 实现；具体证据见本页末尾更新。继续离线研究，没有可承诺的安全试刷时间。
 
-最新实际进展：[当前工具链](CURRENT_TOOLCHAIN.md)、[异步别名接合](ASYNC_NODE_ALIASES.md)、
+以下为各节点当时的进展与后续项，保留作证据索引；当前待办和数值以上述准入结论为准，
+不把已经完成的旧“下一项”再次当作未做工作。
+
+过程记录：[当前工具链](CURRENT_TOOLCHAIN.md)、[异步别名接合](ASYNC_NODE_ALIASES.md)、
 [异步调度生命周期](ASYNC_DISPATCH_LIFETIME.md)。G2已实现
 [一次消费快照票据](../../prototypes/ep7_volatile_hl/snapshot_transport/README.md)，
 并接入实际主机处理链。不在异步回调中重新查询controller sidecar。

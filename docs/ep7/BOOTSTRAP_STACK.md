@@ -11,11 +11,12 @@
 
 [检查器](../../tools/ep7_bootstrap_stack.py)使用已有GCC13.4的
 [`-fcallgraph-info=su`](https://gcc.gnu.org/onlinedocs/gcc-13.4.0/gcc/Developer-Options.html)，
-按可达调用逐个取得对象VCG图及静态栈帧。只重新生成18个实际需要的C对象元数据，
-每个对象的尺寸及每函数栈记录均与本轮[107对象清单](INSTALLATION_MANIFEST.md)相符。
+按可达调用逐个取得对象VCG图及静态栈帧。当前[冷启动现场节点](COLD_CONTEXT.md)只重新
+生成2个变化单元、复用16个未变单元；源/头文件变更集已核对，尺寸及每函数栈记录
+与当前[107对象清单](INSTALLATION_MANIFEST.md)相符。
 没有为此重跑host业务/ASan全集，也没有链接固件。
 
-结果为42个可达函数；29条间接调用边由**当前一次性bootstrap的具体组合**解析：
+结果为43个可达函数；29条间接调用边由**当前一次性bootstrap的具体组合**解析：
 
 - `ep7b_unresolved_native()`中的create/drop和raw get_tid回调；
 - `ep7r_native_environment(NULL,installed)`中的安装组与queue查询；
@@ -57,7 +58,10 @@ GCC自动生成的结构体`memcpy`边也保留。静态函数优化clone名称�
 |raw semaphore create|252|进入原厂6003057f之后的嵌套/临界区/调度路径|
 |prepare失败后的raw delete|276|进入60031107之后的嵌套/唤醒/调度路径|
 |发布失败后的raw delete|164|同上，调用层数较少|
-|quarantine BREAK|96|实际异常入口与保存栈，不能按leaf0推定完整异常成本|
+
+自有quarantine现已改为无call/显式trap的6字节终止体，body额外栈0；调用者栈仍计入。
+该项依据当前汇编、目标对象及GNU两指令语义检查移出未知callee清单，不是把旧BREAK
+假定为零成本。原厂BREAK、IRQ/NMI和其他故障路径仍不受此结论覆盖。
 
 表中create/delete已计入适配桥16和各自原厂CALL的16/20，不能再重复加这两段。
 原厂critical入口60038594还会自行保存寄存器、分配局部栈并继续调用RTOS服务；
@@ -69,6 +73,6 @@ GCC自动生成的结构体`memcpy`边也保留。静态函数优化clone名称�
 
 ## 执行边界
 
-本批只有18个目标C对象的元数据生成和get_tid的只读反汇编；没有目标执行、固件
+当前增量只有2个目标C对象的图更新、16个已核对未变单元复用和get_tid只读反汇编；没有目标执行、固件
 整体链接、改写输入、相机操作或SHA校验。工具链、sources.txt及原厂绑定均复用现有内容。
 G8继续保持未通过。
