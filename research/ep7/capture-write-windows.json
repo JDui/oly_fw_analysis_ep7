@@ -1,0 +1,216 @@
+{
+  "scope": "Check two node-writing callbacks against the H/L ID/associated read fields.\n\nTwo complete native callback bodies on explicit live fixtures; no scheduler,\nallocator, event delivery, concurrent execution or lifetime qualification.\n",
+  "checked_witnesses": 76,
+  "functions": [
+    {
+      "entry": "0x602a334f",
+      "instruction_count": 40,
+      "reached_extent": [
+        "0x602a334f",
+        "0x602a33b3"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [
+        {
+          "site": "0x602a337a",
+          "target": "0x60555123",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60555123,[],0"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x602a33b0",
+          "mnemonic": "ret",
+          "operands": "[d2,d3,a2,a3],20",
+          "local_depth": 0,
+          "inferred_incoming_frame": 20
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": [
+        {
+          "site": "0x602a3371",
+          "target": "0x602a3360"
+        }
+      ]
+    },
+    {
+      "entry": "0x60555123",
+      "instruction_count": 19,
+      "reached_extent": [
+        "0x60555123",
+        "0x60555155"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [
+        {
+          "site": "0x60555152",
+          "mnemonic": "retf",
+          "operands": "[],0",
+          "local_depth": 0,
+          "inferred_incoming_frame": 0
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    {
+      "entry": "0x6029e8f1",
+      "instruction_count": 40,
+      "reached_extent": [
+        "0x6029e8f1",
+        "0x6029e956"
+      ],
+      "maximum_own_sp_depth": 16,
+      "maximum_direct_stack_address_depth": 12,
+      "stack_operations": [
+        {
+          "site": "0x6029e8f1",
+          "mnemonic": "movm",
+          "operands": "[d2,a2],(sp)",
+          "before": 0,
+          "after": 8
+        },
+        {
+          "site": "0x6029e8f3",
+          "mnemonic": "add",
+          "operands": "-4,sp",
+          "before": 8,
+          "after": 12
+        }
+      ],
+      "calls": [
+        {
+          "site": "0x6029e947",
+          "target": "0x602a302b",
+          "frame": 4,
+          "register_save_bytes": 0,
+          "caller_local_depth": 12,
+          "mnemonic": "call",
+          "operands": "0x602a302b,[],4"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x6029e953",
+          "mnemonic": "ret",
+          "operands": "[d2,a2],12",
+          "local_depth": 12,
+          "inferred_incoming_frame": 0
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    {
+      "entry": "0x602a302b",
+      "instruction_count": 8,
+      "reached_extent": [
+        "0x602a302b",
+        "0x602a3042"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [
+        {
+          "site": "0x602a303f",
+          "mnemonic": "ret",
+          "operands": "[],4",
+          "local_depth": 0,
+          "inferred_incoming_frame": 4
+        }
+      ],
+      "boundaries": [
+        {
+          "site": "0x602a3038",
+          "kind": "call_leaves_reviewed_native_range",
+          "depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6020c0f0,[],16"
+        }
+      ],
+      "hardware_loop_edges": []
+    }
+  ],
+  "introduced_node_reads": [
+    {
+      "offset": 0,
+      "bytes": 4
+    },
+    {
+      "offset": 8,
+      "bytes": 4
+    }
+  ],
+  "stage": {
+    "entry": "0x602a334f",
+    "node_writes": [
+      {
+        "offset": 12,
+        "bytes": 16
+      },
+      {
+        "offset": 28,
+        "bytes": 8
+      }
+    ],
+    "associated_flag": 1,
+    "execution": {
+      "status": "returned",
+      "completed": 137,
+      "fault": null,
+      "final_pc": "0x602a2f7b",
+      "final_sp": "0x19010200"
+    }
+  },
+  "type39": {
+    "entry": "0x6029e8f1",
+    "node_writes": [
+      {
+        "offset": 4,
+        "bytes": 4
+      },
+      {
+        "offset": 50,
+        "bytes": 4
+      }
+    ],
+    "sequence": 1,
+    "event4c_emitted": false,
+    "execution": {
+      "status": "returned",
+      "completed": 41,
+      "fault": null,
+      "final_pc": "0x6010c05b",
+      "final_sp": "0x19010200"
+    }
+  },
+  "all_other_node_bytes_unchanged": true,
+  "native_source_regions_read_only": true,
+  "private_hl_or_capture_region_unmapped": true,
+  "instructions_emulated": true,
+  "allocator_and_scheduler_unmapped": true,
+  "all_assertions_passed": true,
+  "native_lifetime_or_exclusion_proven": false,
+  "hash_checks_performed": false,
+  "firmware_modified": false,
+  "firmware_built": false,
+  "hardware_executed": false,
+  "limits": [
+    "Each explicit node and associated allocation stays live throughout its execution. No concurrent interrupt or retirement is injected.",
+    "The stage execution selects associated flag1; the type39 execution selects odd sequence1 and flags without0x20, so event4c delivery is not entered.",
+    "Other static branches remain in the recorded finite CFG; its event-delivery boundary is not a lifetime or cancellation proof.",
+    "Only these two callbacks and the named helper are classified. Other writers, engine callbacks, release aliases and source ownership remain separate obligations."
+  ]
+}
