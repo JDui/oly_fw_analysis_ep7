@@ -50,5 +50,7 @@ engine指针所指区域、分配器、RTOS和MMIO均未映射，调用没有访
 
 [探针](../../tools/ep7_type7_work_queue.py)核对52个精确witness、名称与3项分派表数据；
 [报告](../../research/ep7/type7-work-queue.json)保存两次执行结果。无SHA、生产代码改动、
-固件改写或整包编译。下一项应沿type135/type149调用来源和60120d73完成分派继续，
-无需重新验证TOP的三字复制；H/L保持现有独立冻结值输送方案。
+固件改写或整包编译。后续[触发与完成链](TYPE7_COMPLETION.md)已接通一条条件下的
+lower92→sensor71→lower85→upper135路线，以及60120d73借用engine、完成时读取
+engine+64的关系；它没有关闭全部调用域或取消。无需重新验证TOP的三字复制；
+H/L保持现有独立冻结值输送方案。

@@ -1,0 +1,66 @@
+{
+  "scope": "Bind one conditional TOP trigger chain and its borrowed engine completion.\n\nStatic exact-instruction/table checks only. No scheduling, allocator, resource\nrelease, callback execution or whole-program lifetime claim.\n",
+  "checked_witnesses": 150,
+  "checked_dispatch_rows": 4,
+  "trigger_route": [
+    "lower92:6014dc5a -> 6014dfb8 -> 6014e67c",
+    "sensor71:6013015a -> 601307b3 -> 60137df6 -> 60136337",
+    "conditional lower85:601363d8 -> 6014dc5a -> 6014def0",
+    "upper135:6014df08 -> 601e77d8 -> 601200aa -> TOP pop"
+  ],
+  "trigger_conditions": [
+    "Original allocations, initializers and returning callees succeed.",
+    "The object reached through621f4a7c has halfword+4 !=3.",
+    "Optional preceding lower141 call returns to the reviewed branch."
+  ],
+  "wrapper": {
+    "entry": "0x6014e67c",
+    "priority_argument": 2,
+    "enter": "0x6014e6d5",
+    "restore": "0x6014e728",
+    "leaf": "0x60054d9f",
+    "conditional_psw_mask": "0x0700",
+    "all_callees_preserve_threshold_proven": false,
+    "fixed_task_or_exclusive_completion_proven": false
+  },
+  "processing_descriptor": {
+    "bytes": 136,
+    "constructor": "0x60120d73",
+    "fields": {
+      "8": "engine+4",
+      "20": "original engine pointer",
+      "24": "0x601210ae",
+      "28": "0x601211c0 for type7/type139"
+    },
+    "normal_mode2_flags": "0x8007",
+    "alternate_mode5_flags": "0x18007",
+    "alternate_overwrites_engine_callback": "0x60120cac",
+    "normal_preserves_engine_callback": true,
+    "engine_generation_carried": false,
+    "engine_deep_copy": false
+  },
+  "completion": {
+    "entry": "0x601210ae",
+    "engine_field": 20,
+    "callback_read_from_engine_offset": 64,
+    "call": "0x601210fc",
+    "callback_argument": "original engine pointer",
+    "current_callback_read": true,
+    "callback_captured_at_submission": false,
+    "resource_release_frontier": "0x6014fb57",
+    "cleanup_or_cancellation_closed": false
+  },
+  "static_checks_passed": true,
+  "native_executions": 0,
+  "hash_checks_performed": false,
+  "firmware_modified": false,
+  "firmware_built": false,
+  "hardware_executed": false,
+  "limits": [
+    "This is one conditional call chain, not a census of all type135/type149 producers or origins of lower92.",
+    "The priority wrapper is observed at entry/restore only; helpers and callback bodies have no transitive PSW/exclusion proof.",
+    "Raw engine pointers and late callback reads require native lifetime/identity contracts; no new H/L observer is added to these callbacks.",
+    "Resource release and allocator semantics are not closed. The observed cleanup calls do not establish an original-firmware use-after-free.",
+    "G1/G2/G3/G6/G8 remain open; use the introduced-read obligations to scope subsequent research."
+  ]
+}

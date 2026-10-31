@@ -81,6 +81,13 @@ G6 依赖 E 的工具链设计和 G1–G4 的候选接口；G8 汇合全部结�
 
 ## 当前编译准入结论
 
+[TOP触发与完成链](TYPE7_COMPLETION.md)已接通条件下的lower92→sensor71→lower85→
+upper135路线，以及136字节描述符保存原engine、完成时读取engine+64的关系。
+150条指令和4项分派表核对通过。优先级阈值2的入口包围不等于全部回调互斥，
+资源释放/取消未闭合。后续按[新增读取责任表](CAPTURE_READ_OBLIGATIONS.md)聚焦
+associated/backlink、node前缀及capture profile的实际读取区间，避免扩大为无关
+原厂字段恒定的证明；原G1/G2/G3/G6/G8门槛不变，整体编译尚未开始。
+
 [type7 TOP工作队列](TYPE7_WORK_QUEUE.md)已接通普通提交的三字载体、type135/type149
 消费者和engine+64完成分派。两次原生入队/出队执行共167条指令，发送缓冲覆盖后仍
 保持原值；engine指针目标全程未映射，不能解释为深复制或生命周期租约。普通submit
