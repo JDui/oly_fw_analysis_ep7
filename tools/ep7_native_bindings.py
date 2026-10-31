@@ -36,8 +36,10 @@ def bindings():
     add('function', 'ep7_ack_frames', dict(ack=0x603df97d))
     add('function', 'ep7_descriptor_receive_frames', dict(receive_wrapper=0x603eeb57))
     add('function', 'ep7_descriptor_send_frames', dict(send_wrapper=0x603eeba4))
-    add('function', 'ep7_runtime_queue', dict(queue_receive_local=0x60036caf))
-    add('function', 'ep7_queue_transport', dict(queue_send_local=0x60036ede))
+    # 60036caf is the index-check analysis window, not a callable entry: it
+    # skips saving destination/timeout and the native dispatch-context check.
+    add('function', 'ep7_queue_transport', dict(
+        queue_receive_local=0x60036c8e, queue_send_local=0x60036ede))
     add('function', 'ep7_semaphore_bootstrap', dict(raw_sem_create=0x6003057f, raw_sem_delete=0x60031107))
     add('function', 'ep7_private_semaphore', dict(raw_sem_signal=0x60035b62, raw_sem_wait=0x600370af))
     add('function', 'ep7_current_task_stack', dict(get_tid=0x600317ac))

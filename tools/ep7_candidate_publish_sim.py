@@ -102,16 +102,20 @@ def unpublished(machine,syms):
     require(u32(machine,syms['_ep7_native_runtime_slot'])==0,'failed bootstrap published a runtime')
 
 
-def bootstrap_context(directory,prefix,engine):
+def bootstrap_context(directory,prefix,engine,prepare_kernel=None):
     """Reach the real create boundary, then supply the explicit S2 kernel fixture."""
     data,syms,build = candidate_inputs(directory,prefix)
     base = Machine(data,engine)
+    if prepare_kernel is not None:
+        queues = fixture(base)
+        prepare_kernel(base,syms)
     returned(base.run(CLEAR_SITE,CLEAR_RESUME),CLEAR_RESUME)
     returned(base.run(INIT_SITE,INIT_RESUME,overrides={'d0':0}),INIT_RESUME)
     front = base.run(BOOT_SITE,ORIGINAL_BOOT,breakpoints=[CREATE,syms['_ep7_gcc_quarantine']],full_trace=True)
     require(front['status']=='breakpoint' and front['registers']['pc']==CREATE,
             'candidate no longer reaches the actual native-create boundary')
-    queues = fixture(base)
+    if prepare_kernel is None:
+        queues = fixture(base)
     return base,front,syms,build,queues
 
 

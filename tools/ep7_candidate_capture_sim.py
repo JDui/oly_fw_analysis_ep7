@@ -92,9 +92,8 @@ def relocate_helpers(machine,syms):
     return copied
 
 
-def inspect(directory,prefix,engine):
-    base,front,syms,build,_ = bootstrap_context(directory,prefix,engine)
-    machine,_,_,_ = publish_runtime(base,front,syms)
+def prepare_frozen_fifo(machine,syms):
+    """Use the actual published runtime to freeze and enqueue one capture value."""
     runtime,_,core,provider = objects(machine,syms)
     controller_fixture(machine)
     cases = []
@@ -132,18 +131,42 @@ def inspect(directory,prefix,engine):
     enqueued = block('patched_wait_enqueue',0x602ac3f6,0x602ac3fd,dict(a0=WAIT,d0=ASSOCIATED))
     require(enqueued['registers']['d0']==4 and u32(machine,WAIT_BACKING)==ASSOCIATED and
             machine.read(WAIT+12,6)==struct.pack('<3H',1,1,0),'real enqueue did not append associated')
+    return cases,frozen,fresh,sealed
+
+
+def pop_fifo(machine,syms):
+    # The actual patched CALL constructs W=CALL_SP-24 and W+24 return PC.
+    # Ancestor continuation words are the explicit enclosing-stack fixture.
+    machine.mutate('stack',CALL_SP+8-STACK,struct.pack('<I',syms['_ep7_wait_scope_native_return']))
+    machine.mutate('stack',CALL_SP+80-STACK,struct.pack('<I',0x602ac502))
+    machine.mutate('stack',CALL_SP+32-STACK,b'\xcc'*32)
+    result = native_block(machine,syms,0x602ac5e8,0x602ac5ef,dict(a0=WAIT))
+    require(result['registers']['d0']==ASSOCIATED and
+            machine.read(WAIT+12,6)==struct.pack('<3H',0,1,1),'real pop lost FIFO position/value')
+    return result,machine.read(CALL_SP+32,32)
+
+
+def inspect(directory,prefix,engine):
+    base,front,syms,build,_ = bootstrap_context(directory,prefix,engine)
+    machine,_,_,_ = publish_runtime(base,front,syms)
+    runtime,_,_,provider = objects(machine,syms)
+    cases,frozen,fresh,sealed = prepare_frozen_fifo(machine,syms)
     queued = machine.clone()
 
+    def run(name,args=(),wanted=None,m=machine):
+        result = gcc_call(m,syms,name,args,wanted=wanted,limit=20000)
+        cases.append(summarize_capture(name,result))
+        return result
+
+    def block(name,start,stop,registers=None,m=machine):
+        result = native_block(m,syms,start,stop,registers)
+        cases.append(summarize_capture(name,result))
+        return result
+
     def pop(m,label):
-        # The actual patched CALL constructs W=CALL_SP-24 and W+24 return PC.
-        # Ancestor continuation words are the explicit enclosing-stack fixture.
-        m.mutate('stack',CALL_SP+8-STACK,struct.pack('<I',syms['_ep7_wait_scope_native_return']))
-        m.mutate('stack',CALL_SP+80-STACK,struct.pack('<I',0x602ac502))
-        m.mutate('stack',CALL_SP+32-STACK,b'\xcc'*32)
-        result = block(label,0x602ac5e8,0x602ac5ef,dict(a0=WAIT),m=m)
-        require(result['registers']['d0']==ASSOCIATED and
-                m.read(WAIT+12,6)==struct.pack('<3H',0,1,1),'real pop lost FIFO position/value')
-        return m.read(CALL_SP+32,32)
+        result,scope = pop_fifo(m,syms)
+        cases.append(summarize_capture(label,result))
+        return scope
 
     scope = pop(machine,'patched_wait_pop_frozen')
     require(scope==struct.pack('<I',1)+frozen+b'\x01\x00\x00',
