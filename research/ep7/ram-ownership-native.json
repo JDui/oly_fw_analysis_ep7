@@ -1,0 +1,313 @@
+{
+  "scope": "Map E-P7 startup RAM owners and a bounded reservation proposal; no SHA or patches.",
+  "input_structure": {
+    "scope": "Prepare a local E-P7 research input using container structure, without SHA.\n\nThis does not establish byte identity with historical hash-pinned reports.\nIt decodes stock only, never modifies firmware or produces an install image.",
+    "bytes": 111017984,
+    "model": "E-P7",
+    "build": "1100",
+    "whole_container_checked": true,
+    "components": [
+      {
+        "offset": 0,
+        "payload_bytes": 26214336,
+        "kind": "0x100",
+        "header_build": "1100",
+        "model_bytes": "1420",
+        "container_address": "0x406a0000"
+      },
+      {
+        "offset": 26214400,
+        "payload_bytes": 26214336,
+        "kind": "0x101",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x421a0000"
+      },
+      {
+        "offset": 52428800,
+        "payload_bytes": 45219776,
+        "kind": "0x106",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x43aa0000"
+      },
+      {
+        "offset": 97648640,
+        "payload_bytes": 262080,
+        "kind": "0x10e",
+        "header_build": "0001",
+        "model_bytes": "1420",
+        "container_address": "0x0"
+      },
+      {
+        "offset": 97910784,
+        "payload_bytes": 13107136,
+        "kind": "0x102",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x467e0000"
+      }
+    ],
+    "component_sums_valid": true,
+    "unchanged_roundtrip_equal": true,
+    "runtime_base": "0x60020020",
+    "entry_witnesses_match": true,
+    "hash_checks_performed": false,
+    "historical_exact_byte_identity_proven": false,
+    "firmware_modified": false,
+    "firmware_executed": false,
+    "camera_accessed": false,
+    "flash_ready": false
+  },
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "checked_instructions": 134,
+  "checked_data_rows": 13,
+  "startup_clear_ranges": [
+    {
+      "start": "0x62038100",
+      "end_exclusive": "0x6203c934",
+      "bytes": 18484
+    },
+    {
+      "start": "0x621caf00",
+      "end_exclusive": "0x62796888",
+      "bytes": 6076808
+    }
+  ],
+  "clear_entry": "0x6002046d",
+  "clear_direct_call_candidates": [
+    "0x60020059",
+    "0x60020074"
+  ],
+  "clear_hardware_dma_executed": false,
+  "early_initialized_globals": {
+    "source": "0x6002e020",
+    "end_exclusive": "0x6002e8e8",
+    "destination": "0x61b20fe0",
+    "destination_end": "0x61b218a8",
+    "bytes": 2248
+  },
+  "kernel_arena_initializer": "0x600360b5",
+  "kernel_arenas": [
+    {
+      "domain": 0,
+      "config": "0x600411a4",
+      "start": "0x6203c940",
+      "end_exclusive": "0x620ed940",
+      "bytes": 724992
+    },
+    {
+      "domain": 1,
+      "config": "0x60041330",
+      "start": "0x620ed940",
+      "end_exclusive": "0x6215d940",
+      "bytes": 458752
+    },
+    {
+      "domain": 2,
+      "config": "0x600414bc",
+      "start": "0x6215d940",
+      "end_exclusive": "0x6218d940",
+      "bytes": 196608
+    }
+  ],
+  "cached_pools": [
+    {
+      "domain": 0,
+      "size_class": 0,
+      "start": "0x61b21fc0",
+      "end_exclusive": "0x61bb07c0",
+      "slots": 3040,
+      "payload_bytes": 128,
+      "guard_bytes": 64,
+      "stride": 192,
+      "bitmap": "0x62039cf0",
+      "allocation_limit_instruction": "0x60022907",
+      "free_limit_instruction": "0x60022b70"
+    },
+    {
+      "domain": 0,
+      "size_class": 1,
+      "start": "0x61e85800",
+      "end_exclusive": "0x61f6c800",
+      "slots": 448,
+      "payload_bytes": 2048,
+      "guard_bytes": 64,
+      "stride": 2112,
+      "bitmap": "0x62039e6c",
+      "allocation_limit_instruction": "0x60022919",
+      "free_limit_instruction": "0x60022b82"
+    },
+    {
+      "domain": 0,
+      "size_class": 2,
+      "start": "0x61bd6d40",
+      "end_exclusive": "0x61cd7d40",
+      "slots": 64,
+      "payload_bytes": 16384,
+      "guard_bytes": 64,
+      "stride": 16448,
+      "bitmap": "0x62039ea4",
+      "allocation_limit_instruction": "0x6002292b",
+      "free_limit_instruction": "0x60022b94"
+    },
+    {
+      "domain": 1,
+      "size_class": 0,
+      "start": "0x61bb07c0",
+      "end_exclusive": "0x61bbf7c0",
+      "slots": 320,
+      "payload_bytes": 128,
+      "guard_bytes": 64,
+      "stride": 192,
+      "bitmap": "0x62640f18",
+      "allocation_limit_instruction": "0x60022952",
+      "free_limit_instruction": "0x60022bbe"
+    },
+    {
+      "domain": 1,
+      "size_class": 1,
+      "start": "0x61f6c800",
+      "end_exclusive": "0x61f7d000",
+      "slots": 32,
+      "payload_bytes": 2048,
+      "guard_bytes": 64,
+      "stride": 2112,
+      "bitmap": "0x62640f40",
+      "allocation_limit_instruction": "0x60022963",
+      "free_limit_instruction": "0x60022bcf"
+    },
+    {
+      "domain": 1,
+      "size_class": 2,
+      "start": "0x61cd7d40",
+      "end_exclusive": "0x61d58540",
+      "slots": 32,
+      "payload_bytes": 16384,
+      "guard_bytes": 64,
+      "stride": 16448,
+      "bitmap": "0x62640f44",
+      "allocation_limit_instruction": "0x60022973",
+      "free_limit_instruction": "0x60022bdf"
+    },
+    {
+      "domain": 2,
+      "size_class": 0,
+      "start": "0x61bbf7c0",
+      "end_exclusive": "0x61bce7c0",
+      "slots": 320,
+      "payload_bytes": 128,
+      "guard_bytes": 64,
+      "stride": 192,
+      "bitmap": "0x62668f18",
+      "allocation_limit_instruction": "0x60022998",
+      "free_limit_instruction": "0x60022c07"
+    },
+    {
+      "domain": 2,
+      "size_class": 1,
+      "start": "0x61f7d000",
+      "end_exclusive": "0x61f8d800",
+      "slots": 32,
+      "payload_bytes": 2048,
+      "guard_bytes": 64,
+      "stride": 2112,
+      "bitmap": "0x62668f40",
+      "allocation_limit_instruction": "0x600229a9",
+      "free_limit_instruction": "0x60022c18"
+    },
+    {
+      "domain": 2,
+      "size_class": 2,
+      "start": "0x61d58540",
+      "end_exclusive": "0x61dd8d40",
+      "slots": 32,
+      "payload_bytes": 16384,
+      "guard_bytes": 64,
+      "stride": 16448,
+      "bitmap": "0x62668f44",
+      "allocation_limit_instruction": "0x600229b9",
+      "free_limit_instruction": "0x60022c28"
+    }
+  ],
+  "uncached_pools": [
+    {
+      "size_class": 0,
+      "start": "0xa1bce7c0",
+      "end_exclusive": "0xa1bd6d40",
+      "cached_alias": "0x61bce7c0",
+      "slots": 178,
+      "payload_bytes": 128,
+      "guard_bytes": 64
+    },
+    {
+      "size_class": 1,
+      "start": "0xa1f8d800",
+      "end_exclusive": "0xa1f98540",
+      "cached_alias": "0x61f8d800",
+      "slots": 21,
+      "payload_bytes": 2048,
+      "guard_bytes": 64
+    },
+    {
+      "size_class": 2,
+      "start": "0xa1dd8d40",
+      "end_exclusive": "0xa1e85800",
+      "cached_alias": "0x61dd8d40",
+      "slots": 43,
+      "payload_bytes": 16384,
+      "guard_bytes": 64
+    },
+    {
+      "size_class": 3,
+      "start": "0xa27f3500",
+      "end_exclusive": "0xa27f8000",
+      "cached_alias": "0x627f3500",
+      "slots": 100,
+      "payload_bytes": 128,
+      "guard_bytes": 64
+    }
+  ],
+  "fence_scanner": {
+    "entry_window": "0x600fad97",
+    "table": "0x60026f38",
+    "rows": 7,
+    "guard_words": 16,
+    "reads_guard_only_in_reviewed_loop": true
+  },
+  "reservation_proposal": {
+    "domain": 2,
+    "size_class": 2,
+    "retained_native_slots": 31,
+    "start": "0x61dd4d00",
+    "end_exclusive": "0x61dd8d00",
+    "bytes": 16384,
+    "preserved_guard_start": "0x61dd8d00",
+    "preserved_guard_end": "0x61dd8d40",
+    "operand_edits": [
+      {
+        "address": "0x600229b9",
+        "expected": "8020",
+        "proposed": "801f"
+      },
+      {
+        "address": "0x60022c28",
+        "expected": "8f20",
+        "proposed": "8f1f"
+      }
+    ],
+    "stock_bytes_written": false,
+    "explicit_candidate_zeroing_required": true,
+    "fence_table_change_needed_for_payload_only": false,
+    "native_capacity_reduction_tested": false,
+    "cold_install_order_qualified": false,
+    "other_computed_accesses_excluded": false,
+    "approved_for_placement": false
+  },
+  "udf_multiply_semantics_executed": false,
+  "allocator_success_or_nonreturn_on_exhaustion_proven": false,
+  "hash_checks_performed": false,
+  "firmware_modified": false,
+  "firmware_built": false,
+  "camera_accessed": false
+}
