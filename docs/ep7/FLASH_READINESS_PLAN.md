@@ -69,3 +69,9 @@ materialization、下游queue和worker/CPU/撤销链；S3尚未整体完成。
 imm8/imm16乘法的符号扩展错误，按松下手册修正模型后通过6条定向指令；固件004
 未重建。后续引擎用`ep7-mn103-mulqu`。metadata来源仍为明确fixture；继续下游
 队列及worker原生分配/处理/撤销/ACK，不把局部materializer通过算成S3完成。
+
+[下游队列与worker领取](CANDIDATE_RELAY_SIM.md)随后完成12段50,621条指令：4c→ab→4f
+实际原生复制/接收保留同一312字节descriptor；worker领取原先冻结值，旧有效票据
+重放后第二次scope保持全零。4c/4d真实注册flag58并执行通知；ab/4f走原厂无hook分支。
+尚未执行中间两段预处理、worker preflight及body；任务交接、空等待flag和独立queue
+backing仍是fixture。下一步关闭这些间隔及原生分配/处理/撤销/ACK，S3仍未整体完成。

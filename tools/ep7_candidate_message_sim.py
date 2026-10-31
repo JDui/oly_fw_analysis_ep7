@@ -40,18 +40,20 @@ def native_call(machine,syms,target,mask,frame,overrides=None):
     return result
 
 
-def initialize_queue(machine,syms):
+def initialize_queue(machine,syms,handle=QUEUE):
     """Run before runtime publication, using already supplied independent backing."""
-    region = machine.regions['queue_4b']
+    name = f'queue_{handle:x}'
+    region = machine.regions[name]
     backing = u32(machine,region.address+32)
-    machine.regions['queue_4b'] = replace(region,data=region.data+b'\xa5'*24,
-                                         permissions='rw',capture=True)
-    guarded(machine,'queue_4b_backing',backing,b'\xa5'*4864)
+    capacity = u32(machine,region.address+28)
+    machine.regions[name] = replace(region,data=region.data+b'\xa5'*24,
+                                   permissions='rw',capture=True)
+    guarded(machine,name+'_backing',backing,b'\xa5'*capacity)
     result = native_call(machine,syms,0x60030c4c,0xb0,16,dict(a0=region.address))
     require(result['registers']['d0']==0 and
             machine.read(region.address+4,16)==struct.pack('<4I',region.address+4,region.address+4,
                                                          region.address+12,region.address+12) and
-            machine.read(region.address+36,20)==struct.pack('<5I',backing,backing,backing+4864,4864,0),
+            machine.read(region.address+36,20)==struct.pack('<5I',backing,backing,backing+capacity,capacity,0),
             'native queue initializer did not create empty wait lists and ring cursors')
     return result
 
@@ -94,10 +96,12 @@ def summarize_message(name,result,sp):
     return row
 
 
-def message_context(directory,prefix,engine,expect_legacy_entry=False):
+def message_context(directory,prefix,engine,expect_legacy_entry=False,*,prepare_kernel=None):
     queue_setup = []
     def prepare(machine,syms):
         queue_setup.append(initialize_queue(machine,syms))
+        if prepare_kernel:
+            prepare_kernel(machine,syms)
     base,front,syms,build,_ = bootstrap_context(directory,prefix,engine,prepare_kernel=prepare)
     machine,_,_,_ = publish_runtime(base,front,syms)
     runtime,_,_,provider = objects(machine,syms)

@@ -7,7 +7,20 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[原厂descriptor填充与MULQIU修正](CANDIDATE_DESCRIPTOR_SIM.md)通过，候选仍004。
+最新：[下游queue与worker领取](CANDIDATE_RELAY_SIM.md)通过，候选仍004；新探针
+`ep7_candidate_relay_sim.py`12段50,621指令。4c/ab/4f在S2发布前原生初始化，
+603ef864真实注册4c/4d→flag58；4c发送执行通知/flag-set，ab/4f在600515c2真实
+读到未注册hook0并跳过通知。三次raw receive各返回312，descriptor全字节不变，
+每次发送清除本地票据、接收清空队列。原厂worker CALL进入wrapper领取初始COLOR2
+H0=5/L0=−3，停603f2800；旧有效E7T1票据重放后scope全零，首次scope状态1。
+最大新增观测深度884，完整栈未知。`descriptor_context`返回materialized现场，
+message_context支持额外发布前回调；旧CLI兼容，上游saved report各项不变。
+接收后手动选择后续调用片段，不执行dual603efb6d/kind19 603f04b9预处理及worker
+603f28da preflight；任务TCB/栈handover和preflight成功分支D0=0是明确fixture。
+下一步关闭这些间隔并推进原厂job分配/构造/CPU/撤销/ACK。capture目前只读24084B，
+较高偏移写入需真实布局依据，不得自动扩展补零。固件未重建/无SHA，S3未整体完成。
+
+此前：[原厂descriptor填充与MULQIU修正](CANDIDATE_DESCRIPTOR_SIM.md)通过，候选仍004。
 GNU旧模型udfu01 imm8/imm16误符号扩展；class1乘216变−40，7397指令后在603e050b
 向未映射a26a07e8写入，未补错误映射。松下手册page70及GNU自身注释要求零扩展。
 新增独立`mn103_mulqu_unsigned.patch`两行，ep7_build_sim追加`--unsigned-multiply-fix`

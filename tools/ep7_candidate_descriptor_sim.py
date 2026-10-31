@@ -17,8 +17,8 @@ from ep7_candidate_message_sim import message_context,METADATA,RECEIVE_SP
 from ep7_sim_probe import brief
 
 
-def inspect(directory,prefix,engine,expect_legacy_mulqu=False):
-    upstream,context = message_context(directory,prefix,engine)
+def descriptor_context(directory,prefix,engine,expect_legacy_mulqu=False,*,prepare_kernel=None):
+    upstream,context = message_context(directory,prefix,engine,prepare_kernel=prepare_kernel)
     machine,syms = context['machine'],context['syms']
     descriptor,wire = context['descriptor'],context['wire']
     metadata = bytearray(148)
@@ -44,7 +44,7 @@ def inspect(directory,prefix,engine,expect_legacy_mulqu=False):
             expectation='known_mulqu_engine_defect',all_assertions_passed=True,materialization_passed=False,
             case=brief(result),expected_identity_entry=hex(identity),wrong_identity_entry='0xa26a07e4',
             expected_slot_unchanged=True,wrong_slot_unmapped=True,firmware_files_modified=False,
-            hash_checks_performed=False,hardware_executed=False,installable=False)
+            hash_checks_performed=False,hardware_executed=False,installable=False),context
     require(result['status']=='returned' and result['registers']['sp']==RECEIVE_SP+440 and
             result['registers']['d0']==1 and result['fault'] is None,
             'native materializer stopped: '+str(brief(result)))
@@ -67,7 +67,7 @@ def inspect(directory,prefix,engine,expect_legacy_mulqu=False):
     require(multiply['d0']==216 and multiply['mdrq']==0 and row['native_identity_lookup_entries']==1 and
             row['native_lookup_entries']==1 and u32(machine,0xa26c1e40)==0xa26c1b00,
             'native class stride, lookup or libc setup changed')
-    return dict(scope=__doc__,candidate_build_revision=upstream['candidate_build_revision'],engine=str(engine),
+    report = dict(scope=__doc__,candidate_build_revision=upstream['candidate_build_revision'],engine=str(engine),
         all_assertions_passed=True,materialization_passed=True,case=row,descriptor_address=hex(descriptor),
         metadata_address=hex(METADATA),metadata_bytes=148,metadata_fixture=True,
         selected_capture=hex(CAPTURE),ticket_bytes_preserved=True,
@@ -84,6 +84,12 @@ def inspect(directory,prefix,engine,expect_legacy_mulqu=False):
                 'The trace-enable mask is explicitly zero. Loggers and formatter execute original code with native ROM locale initialization; logging output is not modeled.',
                 'The eight-byte identity table slot is independent fixture storage, not a generation lease or a proved full-table lifetime.',
                 'Observed stack depth excludes outer task and IRQ paths. Corrected instruction semantics are a manufacturer-based model, not silicon acceptance.'])
+    context['materialized'] = result
+    return report,context
+
+
+def inspect(directory,prefix,engine,expect_legacy_mulqu=False):
+    return descriptor_context(directory,prefix,engine,expect_legacy_mulqu)[0]
 
 
 if __name__=='__main__':
