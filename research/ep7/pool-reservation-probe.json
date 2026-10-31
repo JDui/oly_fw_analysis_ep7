@@ -1,0 +1,245 @@
+{
+  "scope": "Exercise the proposed domain-2 pool bound in memory, using the existing engine.\n\nNo output firmware, service stubs, board model, hashing or whole-boot claim.\nOriginal native lock/multiply/bitmap/free instructions execute on explicit data.\n",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103",
+  "engine_bytes": 8845992,
+  "instruction_witnesses": 96,
+  "different_executed_stock_addresses": 250,
+  "cases": [
+    {
+      "name": "stock-last-slot-control",
+      "mode": "stock",
+      "result": {
+        "status": "returned",
+        "completed": 110,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x19010100"
+      },
+      "before": {
+        "next_index": 31,
+        "recycled_count": 0,
+        "first_recycled_index": 0,
+        "allocated_bitmap": "0x7fffffff"
+      },
+      "after": {
+        "next_index": 32,
+        "recycled_count": 0,
+        "first_recycled_index": 0,
+        "allocated_bitmap": "0xffffffff"
+      },
+      "returned_pointer": "0x61dd4d00",
+      "expected_stop": "0x19000007",
+      "pool_payload_and_guards_unmapped": true,
+      "minimum_sp": "0x190100d4",
+      "reviewed_body_lm_zero": true,
+      "exact_state_transition": true
+    },
+    {
+      "name": "candidate-last-retained-slot",
+      "mode": "two in-memory operand edits",
+      "result": {
+        "status": "returned",
+        "completed": 110,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x19010100"
+      },
+      "before": {
+        "next_index": 30,
+        "recycled_count": 0,
+        "first_recycled_index": 0,
+        "allocated_bitmap": "0x3fffffff"
+      },
+      "after": {
+        "next_index": 31,
+        "recycled_count": 0,
+        "first_recycled_index": 0,
+        "allocated_bitmap": "0x7fffffff"
+      },
+      "returned_pointer": "0x61dd0cc0",
+      "expected_stop": "0x19000007",
+      "pool_payload_and_guards_unmapped": true,
+      "minimum_sp": "0x190100d4",
+      "reviewed_body_lm_zero": true,
+      "exact_state_transition": true
+    },
+    {
+      "name": "candidate-exhaustion-stops-before-diagnostic",
+      "mode": "two in-memory operand edits",
+      "result": {
+        "status": "breakpoint",
+        "completed": 80,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x190100c0"
+      },
+      "before": {
+        "next_index": 31,
+        "recycled_count": 0,
+        "first_recycled_index": 0,
+        "allocated_bitmap": "0x7fffffff"
+      },
+      "after": {
+        "next_index": 31,
+        "recycled_count": 0,
+        "first_recycled_index": 0,
+        "allocated_bitmap": "0x7fffffff"
+      },
+      "returned_pointer": null,
+      "expected_stop": "0x6002247c",
+      "pool_payload_and_guards_unmapped": true,
+      "minimum_sp": "0x190100d4",
+      "reviewed_body_lm_zero": true,
+      "exact_state_transition": true
+    },
+    {
+      "name": "candidate-free-last-retained-slot",
+      "mode": "two in-memory operand edits",
+      "result": {
+        "status": "returned",
+        "completed": 141,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x19010100"
+      },
+      "before": {
+        "next_index": 31,
+        "recycled_count": 0,
+        "first_recycled_index": 0,
+        "allocated_bitmap": "0x7fffffff"
+      },
+      "after": {
+        "next_index": 31,
+        "recycled_count": 1,
+        "first_recycled_index": 30,
+        "allocated_bitmap": "0x3fffffff"
+      },
+      "returned_pointer": null,
+      "expected_stop": "0x19000007",
+      "pool_payload_and_guards_unmapped": true,
+      "minimum_sp": "0x190100d0",
+      "reviewed_body_lm_zero": true,
+      "exact_state_transition": true
+    },
+    {
+      "name": "candidate-reuses-last-retained-slot",
+      "mode": "two in-memory operand edits",
+      "result": {
+        "status": "returned",
+        "completed": 129,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x19010100"
+      },
+      "before": {
+        "next_index": 31,
+        "recycled_count": 1,
+        "first_recycled_index": 30,
+        "allocated_bitmap": "0x3fffffff"
+      },
+      "after": {
+        "next_index": 31,
+        "recycled_count": 0,
+        "first_recycled_index": 30,
+        "allocated_bitmap": "0x7fffffff"
+      },
+      "returned_pointer": "0x61dd0cc0",
+      "expected_stop": "0x19000007",
+      "pool_payload_and_guards_unmapped": true,
+      "minimum_sp": "0x190100d4",
+      "reviewed_body_lm_zero": true,
+      "exact_state_transition": true
+    },
+    {
+      "name": "candidate-rejects-free-of-reserved-slot",
+      "mode": "two in-memory operand edits",
+      "result": {
+        "status": "breakpoint",
+        "completed": 79,
+        "fault": null,
+        "final_pc": "0x60022694",
+        "final_sp": "0x190100c0"
+      },
+      "before": {
+        "next_index": 32,
+        "recycled_count": 0,
+        "first_recycled_index": 0,
+        "allocated_bitmap": "0xffffffff"
+      },
+      "after": {
+        "next_index": 32,
+        "recycled_count": 0,
+        "first_recycled_index": 0,
+        "allocated_bitmap": "0xffffffff"
+      },
+      "returned_pointer": null,
+      "expected_stop": "0x60022694",
+      "pool_payload_and_guards_unmapped": true,
+      "minimum_sp": "0x190100d0",
+      "reviewed_body_lm_zero": true,
+      "exact_state_transition": true
+    },
+    {
+      "name": "stale-recycle-index-bypasses-new-count",
+      "mode": "two in-memory operand edits",
+      "result": {
+        "status": "returned",
+        "completed": 129,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x19010100"
+      },
+      "before": {
+        "next_index": 31,
+        "recycled_count": 1,
+        "first_recycled_index": 31,
+        "allocated_bitmap": "0x7fffffff"
+      },
+      "after": {
+        "next_index": 31,
+        "recycled_count": 0,
+        "first_recycled_index": 31,
+        "allocated_bitmap": "0xffffffff"
+      },
+      "returned_pointer": "0x61dd4d00",
+      "expected_stop": "0x19000007",
+      "pool_payload_and_guards_unmapped": true,
+      "minimum_sp": "0x190100d4",
+      "reviewed_body_lm_zero": true,
+      "exact_state_transition": true
+    }
+  ],
+  "all_assertions_passed": true,
+  "reservation": {
+    "start": "0x61dd4d00",
+    "payload_bytes": 16384,
+    "count_change_effective_for_fresh_allocation": true,
+    "free_bound_rejects_reserved_index": true,
+    "recycled_index_is_revalidated": false,
+    "late_installation_safe": false,
+    "approved_for_placement": false
+  },
+  "fixture": {
+    "cpu_id": 2,
+    "pre_kernel_state_word": 0,
+    "restore_mask_state_word": 0,
+    "initial_psw": "0xf00",
+    "counter": "0x62668c08",
+    "recycled_count": "0x62668c14",
+    "recycle_words": "0x62668ed8",
+    "bitmap": "0x62668f44",
+    "native_services_stubbed": []
+  },
+  "hash_checks_performed": false,
+  "firmware_file_modified": false,
+  "firmware_built": false,
+  "in_memory_operand_edits_only": true,
+  "hardware_executed": false,
+  "limits": [
+    "The state words and stack are explicit synthetic fixtures. Startup zeroing and the upstream prefix loader were not executed.",
+    "Pre-kernel native PSW lock helpers ran; scheduler-active locking, cross-core exclusion, IRQ delivery and physical cache are not modeled here.",
+    "Exhaustion and invalid free stop before their native diagnostic entry. Return, fault policy and caller capacity handling remain unproven.",
+    "The stale-recycle case is a counterexample to late installation, not evidence that stock boot produces such state.",
+    "Executed paths touch only mapped allocator state/stack. Guard initialization, other owners and whole-lifecycle reservation remain open."
+  ]
+}
