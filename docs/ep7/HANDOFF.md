@@ -7,7 +7,24 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[queue4b 消息/通知/接收](CANDIDATE_MESSAGE_SIM.md)已进入候选004，源码0b874fa。
+最新：[原厂descriptor填充与MULQIU修正](CANDIDATE_DESCRIPTOR_SIM.md)通过，候选仍004。
+GNU旧模型udfu01 imm8/imm16误符号扩展；class1乘216变−40，7397指令后在603e050b
+向未映射a26a07e8写入，未补错误映射。松下手册page70及GNU自身注释要求零扩展。
+新增独立`mn103_mulqu_unsigned.patch`两行，ep7_build_sim追加`--unsigned-multiply-fix`
+可在现有build约8秒增量更新，保留旧binary，后续用
+`/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu`。6条单指令前后证据
+保留；原厂materializer7413指令返回603dfb7d/D0=1，SP190105b8，同一票据及metadata
+身份/ID1/capture正确，a26a08e4原生初始化0/1。locale48B与formatter pointer由原厂
+初始化，trace mask0 fixture，真实logger/get_tid/formatter执行；没有成功stub。
+
+`ep7_candidate_message_sim.message_context`现在返回report及包含machine/syms/descriptor/
+received/wire/frozen的context；旧inspect结果不变。descriptor脚本在真实接收寄存器
+处resume；METADATA19410000提供148B只读fixture（前2字12345678/55667788、+8ID1、
++72dispatch2001），不是原生metadata分配证明。最大新增深度300，完整栈仍未知。
+下一步4c→ab→4f及worker，复用现有descriptor/worker/ACK frame研究；额外队列必须
+在S2发布前初始化、原厂通知注册不能漏掉。固件004保持未变/不可安装，无SHA/真机。
+
+此前：[queue4b 消息/通知/接收](CANDIDATE_MESSAGE_SIM.md)已进入候选004，源码0b874fa。
 原厂接收函数真实入口60036c8e；旧绑定60036caf跳过destination/timeout保存与dispatch
 检查，导致native−17/candidate−1并留队。004复用107对象，仅两个CALL重定位字节
 600cb0a3/a4变化，布局及自有符号不变。修复后真实native返回28，command+票据完整

@@ -1,0 +1,81 @@
+{
+  "scope": "Pin the unsigned immediate multiplication discrepancy without a board model.\n\nManufacturer MULQIU requires zero extension for imm8/imm16. Check low/high product\nand defined N/Z flags, retain the signed sibling, and leave C/V unspecified.\n",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu",
+  "cases": [
+    {
+      "name": "native_class_stride",
+      "opcode": "f914d8",
+      "input": 1,
+      "immediate": 216,
+      "signed": false,
+      "expected_product": "0xd8",
+      "actual_product": "0xd8",
+      "product_matches": true,
+      "defined_nz_flags_consistent": true
+    },
+    {
+      "name": "unsigned8_high_word",
+      "opcode": "f91480",
+      "input": 4294967295,
+      "immediate": 128,
+      "signed": false,
+      "expected_product": "0x7fffffff80",
+      "actual_product": "0x7fffffff80",
+      "product_matches": true,
+      "defined_nz_flags_consistent": true
+    },
+    {
+      "name": "unsigned16_high_word",
+      "opcode": "fb140080",
+      "input": 4294967295,
+      "immediate": 32768,
+      "signed": false,
+      "expected_product": "0x7fffffff8000",
+      "actual_product": "0x7fffffff8000",
+      "product_matches": true,
+      "defined_nz_flags_consistent": true
+    },
+    {
+      "name": "low_immediate_unchanged",
+      "opcode": "f9147f",
+      "input": 3,
+      "immediate": 127,
+      "signed": false,
+      "expected_product": "0x17d",
+      "actual_product": "0x17d",
+      "product_matches": true,
+      "defined_nz_flags_consistent": true
+    },
+    {
+      "name": "zero_product",
+      "opcode": "f914ff",
+      "input": 0,
+      "immediate": 255,
+      "signed": false,
+      "expected_product": "0x0",
+      "actual_product": "0x0",
+      "product_matches": true,
+      "defined_nz_flags_consistent": true
+    },
+    {
+      "name": "signed_sibling_unchanged",
+      "opcode": "f900d8",
+      "input": 1,
+      "immediate": -40,
+      "signed": true,
+      "expected_product": "0xffffffffffffffd8",
+      "actual_product": "0xffffffffffffffd8",
+      "product_matches": true,
+      "defined_nz_flags_consistent": true
+    }
+  ],
+  "all_assertions_passed": true,
+  "expectation": "manufacturer_zero_extension",
+  "multiplication_passed": true,
+  "hash_checks_performed": false,
+  "hardware_executed": false,
+  "manual": "https://www.manualslib.com/manual/119167/Panasonic-Mn103001g-F01k.html?page=70",
+  "limits": [
+    "Only immediate multiplication and its defined output flags are tested; this is not general CPU, pipeline timing or silicon acceptance."
+  ]
+}

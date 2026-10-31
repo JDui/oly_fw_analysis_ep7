@@ -63,3 +63,9 @@ S3 的[状态与参数子节点](CANDIDATE_STATE_SIM.md)已通过：原生 poll/
 返回28、票据完整进入descriptor，空轮询−50清除旧票据。原生通知表初始化/注册和
 flag-set均执行，flag等待任务和队列backing分配仍为边界。下一步实际descriptor
 materialization、下游queue和worker/CPU/撤销链；S3尚未整体完成。
+
+[原厂descriptor填充](CANDIDATE_DESCRIPTOR_SIM.md)也已通过：7,413条指令，metadata
+身份、ID1/capture和同一票据保留，identity槽实际初始化。此过程发现GNU unsigned
+imm8/imm16乘法的符号扩展错误，按松下手册修正模型后通过6条定向指令；固件004
+未重建。后续引擎用`ep7-mn103-mulqu`。metadata来源仍为明确fixture；继续下游
+队列及worker原生分配/处理/撤销/ACK，不把局部materializer通过算成S3完成。

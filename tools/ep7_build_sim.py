@@ -32,7 +32,7 @@ def run(command,log,cwd):
         raise RuntimeError('command failed; see '+str(log))
 
 
-def prepare(archive,reference_dir,work):
+def prepare(archive,reference_dir,work,unsigned_multiply_fix=False):
     source=work/ARCHIVE_ROOT
     marker=source/'.ep7-source.json'
     originals={name:(reference_dir/name).read_bytes() for name in REFERENCE_FILES}
@@ -77,13 +77,22 @@ def prepare(archive,reference_dir,work):
             text=True,cwd=stage,capture_output=True)
         if result.returncode or 'offset' in result.stdout.lower():
             raise ValueError('strict patch does not apply exactly: '+result.stdout+result.stderr)
+        baseline={name:(native/name).read_bytes() for name in REFERENCE_FILES}
+        patch_log=result.stdout
+        if unsigned_multiply_fix:
+            correction=(ROOT/'tools/mn103_mulqu_unsigned.patch').read_text()
+            result=subprocess.run(['patch','--batch','--fuzz=0','-p1'],input=correction,
+                text=True,cwd=stage,capture_output=True)
+            if result.returncode or 'offset' in result.stdout.lower():
+                raise ValueError('unsigned multiply patch does not apply exactly: '+result.stdout+result.stderr)
+            patch_log+=result.stdout
         for name,original in originals.items():
             target=source/'sim/mn10300'/name;expected=(native/name).read_bytes()
             current=target.read_bytes()
-            if current not in (original,expected):
+            if current not in (original,baseline[name],expected):
                 raise ValueError('refusing unexpected local simulator change: '+str(target))
             if current!=expected:target.write_bytes(expected)
-    (work/'strict-patch-applied.txt').write_text(result.stdout)
+    (work/'strict-patch-applied.txt').write_text(patch_log)
     return source,record
 
 
@@ -93,7 +102,7 @@ def build(args):
         raise ValueError('use a dedicated research work directory')
     if not 1<=args.jobs<=8:raise ValueError('jobs must be between 1 and 8')
     work.mkdir(parents=True,exist_ok=True)
-    source,record=prepare(args.archive,args.reference_dir,work)
+    source,record=prepare(args.archive,args.reference_dir,work,args.unsigned_multiply_fix)
     output=work/'build';output.mkdir(exist_ok=True)
     configure=list(CONFIGURE)
     if args.mpfr_include or args.mpfr_lib:
@@ -108,31 +117,35 @@ def build(args):
     else:
         run([str(source/'configure'),*configure],output/'configure.log',output)
         settings.write_text(json.dumps(configure,indent=2)+'\n')
-    run(['make','-j'+str(args.jobs),'all-sim','MAKEINFO=true'],output/'build.log',output)
-    # Copy only the existing wrapper. No model-specific addresses or new CPU
-    # implementation are introduced into the simulator build.
+    suffix='-mulqu' if args.unsigned_multiply_fix else ''
+    executable='ep7-mn103'+suffix
+    run(['make','-j'+str(args.jobs),'all-sim','MAKEINFO=true'],output/('build'+suffix+'.log'),output)
+    # The wrapper stays unchanged; the optional model correction is isolated
+    # in its separately reviewed patch and does not add camera addresses.
     runner=output/'ep7_runner.c'
     original_runner=(ROOT/'tools/mn103_runner.c').read_text()
     if not runner.is_file() or runner.read_text()!=original_runner:runner.write_text(original_runner)
-    makefile=output/'sim/ep7-harness.mk'
+    makefile=output/('sim/ep7-harness'+suffix+'.mk')
     makefile.write_text('''mn10300/ep7_runner.o: ../ep7_runner.c
 \t$(COMPILE) -c -o $@ $<
 
 ../ep7-mn103: mn10300/ep7_runner.o mn10300/libsim.a $(SIM_COMMON_LIBS)
 \t$(LINK) mn10300/ep7_runner.o mn10300/libsim.a $(SIM_COMMON_LIBS) $(LIBS)
-''')
-    run(['make','-f','Makefile','-f',makefile.name,'../ep7-mn103','V=1'],
-        output/'harness-build.log',output/'sim')
+'''.replace('../ep7-mn103:', '../'+executable+':'))
+    run(['make','-f','Makefile','-f',makefile.name,'../'+executable,'V=1'],
+        output/('harness-build'+suffix+'.log'),output/'sim')
     result=dict(scope=__doc__,source=record,configure=configure,
         strict_patch='tools/mn103_strict.patch',wrapper='tools/mn103_runner.c',
-        executable=str(output/'ep7-mn103'),executable_bytes=(output/'ep7-mn103').stat().st_size,
+        executable=str(output/executable),executable_bytes=(output/executable).stat().st_size,
+        unsigned_multiply_patch='tools/mn103_mulqu_unsigned.patch' if args.unsigned_multiply_fix else None,
         compiler=subprocess.check_output(['cc','--version'],text=True).splitlines()[0],
         hash_checks_performed=False,old_hash_gates_modified=False,
         firmware_built=False,firmware_executed=False,camera_accessed=False,
         limits=['Archive identity is recorded by HTTPS source/revision and two complete file comparisons, not a cryptographic archive identity claim.',
                 'The existing MAC extension is a manufacturer-based model with deterministic undefined flags, not E-P7 silicon validation.',
+                'The optional MULQIU fix changes immediate extension only; general CPU and delayed flag timing remain outside this acceptance.',
                 'Building the strict engine is not firmware construction or a boot/placement acceptance test.'])
-    (output/'ep7-build.json').write_text(json.dumps(result,indent=2)+'\n')
+    (output/('ep7-build'+suffix+'.json')).write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result,indent=2),flush=True)
 
 
@@ -144,4 +157,6 @@ if __name__=='__main__':
     p.add_argument('--jobs',type=int,default=4)
     p.add_argument('--mpfr-include',type=Path)
     p.add_argument('--mpfr-lib',type=Path)
+    p.add_argument('--unsigned-multiply-fix',action='store_true',
+                   help='apply the manufacturer zero-extension correction; preserve the old executable')
     build(p.parse_args())

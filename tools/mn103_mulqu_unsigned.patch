@@ -1,0 +1,16 @@
+--- a/sim/mn10300/mn10300.igen
++++ b/sim/mn10300/mn10300.igen
+@@ -3810,5 +3810,5 @@
+   PC = cia;
+   temp = ((uint64_t)State.regs[REG_D0 + DN0]
+-	  * (uint64_t)EXTEND8 (IMM8));
++	  * (uint64_t)IMM8);
+   State.regs[REG_D0 + DN0] = temp & 0xffffffff;
+   State.regs[REG_MDRQ] = (temp & 0xffffffff00000000LL) >> 32;;
+@@ -3835,5 +3835,5 @@
+   PC = cia;
+   temp = ((uint64_t)State.regs[REG_D0 + DN0]
+-	  * (uint64_t) EXTEND16 (FETCH16(IMM16A, IMM16B)));
++	  * (uint64_t) FETCH16(IMM16A, IMM16B));
+   State.regs[REG_D0 + DN0] = temp & 0xffffffff;
+   State.regs[REG_MDRQ] = (temp & 0xffffffff00000000LL) >> 32;;

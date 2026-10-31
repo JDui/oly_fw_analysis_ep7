@@ -94,7 +94,7 @@ def summarize_message(name,result,sp):
     return row
 
 
-def inspect(directory,prefix,engine,expect_legacy_entry=False):
+def message_context(directory,prefix,engine,expect_legacy_entry=False):
     queue_setup = []
     def prepare(machine,syms):
         queue_setup.append(initialize_queue(machine,syms))
@@ -205,7 +205,7 @@ def inspect(directory,prefix,engine,expect_legacy_entry=False):
                             command_descriptor_prefix_and_queue_header_unchanged=True)
         cases.append(poll_summary)
     ready_lock(machine,provider)
-    return dict(scope=__doc__,candidate_build_revision=build['source_revision'],
+    report = dict(scope=__doc__,candidate_build_revision=build['source_revision'],
         actual_elf_code_equals_decoded_candidate=True,all_assertions_passed=True,
         expectation='known_skipped_receive_prologue' if expect_legacy_entry else 'native_message_carriage',
         message_carriage_passed=not expect_legacy_entry,receive=observation,
@@ -222,6 +222,12 @@ def inspect(directory,prefix,engine,expect_legacy_entry=False):
                 'Notification arrays and registration execute original code, and native flag-set changes an explicit idle flag203 object from its original ROM binding. No waiter/task wakeup is modeled.',
                 'Producer and materializer CALLs execute their actual candidate bridges, using reviewed ancestor stack words and task TCB fields as fixtures. Outer metadata constructor/router loops do not execute.',
                 'Metadata remains an unmapped identity label. This stage proves native command/ticket carriage; stock descriptor materialization, downstream queues, worker allocator/job/cleanup and ISP are later stages.'])
+    return report,dict(machine=machine,syms=syms,build=build,descriptor=descriptor,
+                       command_out=command_out,received=received,wire=wire,frozen=frozen)
+
+
+def inspect(directory,prefix,engine,expect_legacy_entry=False):
+    return message_context(directory,prefix,engine,expect_legacy_entry)[0]
 
 
 if __name__=='__main__':

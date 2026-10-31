@@ -1,0 +1,30 @@
+{
+  "scope": "Continue actual queue4b receipt through native kind19 descriptor materialization.\n\nThe 148-byte metadata and idle identity slot are explicit fixtures; the received\ncommand, ticket, runtime and capture registry come from the preceding execution.\n",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103",
+  "expectation": "known_mulqu_engine_defect",
+  "all_assertions_passed": true,
+  "materialization_passed": false,
+  "case": {
+    "status": "memory_fault",
+    "completed": 7397,
+    "fault": {
+      "kind": 1,
+      "pc": 1614677259,
+      "map": 1,
+      "address": 2724857832,
+      "size": 4,
+      "access": "write"
+    },
+    "final_pc": "0x603e050b",
+    "final_sp": "0x19010400"
+  },
+  "expected_identity_entry": "0xa26a08e4",
+  "wrong_identity_entry": "0xa26a07e4",
+  "expected_slot_unchanged": true,
+  "wrong_slot_unmapped": true,
+  "firmware_files_modified": false,
+  "hash_checks_performed": false,
+  "hardware_executed": false,
+  "installable": false
+}

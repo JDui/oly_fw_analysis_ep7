@@ -1,5 +1,10 @@
 # 严格指令引擎与 E-P7 定向原生回放
 
+2026-11-01 更新：[MULQIU 修正与descriptor回放](CANDIDATE_DESCRIPTOR_SIM.md)确认 GNU
+原有 imm8/imm16 无符号乘法误用符号扩展，独立两行补丁按松下手册修正。后续用
+`/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu`；旧二进制保留作历史
+复现。6条定向指令通过，原厂descriptor正常返回；下面是最初构建的历史证据。
+
 2026-10-31。已有 GNU libsim、仓库 strict patch 和 C runner 已在现有 Docker 环境
 实际构建并用于 E-P7 原厂指令片段。六个定向场景全部通过。**这是指令模型回放，
 没有完整相机仿真、启动回放或新固件整体编译。**
