@@ -105,6 +105,8 @@ if receiver_mode:
      [('descriptor_receive_bridge','descriptor_receive_bridge.s'),('descriptor_receive_layout','descriptor_receive_layout.c'),('descriptor_receive_binding','descriptor_receive_binding.c')]})
 if args.queue_pipeline_abi_only:
  flags.append('-I'+str(core/'poll_lock_provider'))
+ files['pipeline_cohort']=core/'snapshot_transport/native/cohort.c'
+ files['pipeline_far_calls']=core/'snapshot_transport/native/far_calls.s'
  files['postbuilder_bridge']=core/'target/postbuilder/postbuilder_bridge.s'
  files['postbuilder_observer']=core/'target/postbuilder/native_observer.c'
  files['postbuilder_far_calls']=core/'target/postbuilder/far_calls.s'
@@ -174,6 +176,9 @@ with tempfile.TemporaryDirectory() as temp:
   if name=='capture_far_calls':
    validator=runpy.run_path(str(root/'tools/ep7_far_call_check.py'))
    objects[name].update(validator['validate_capture_object'](obj,prefix))
+  if name=='pipeline_far_calls':
+   validator=runpy.run_path(str(root/'tools/ep7_pipeline_cohort_check.py'))
+   objects[name].update(validator['validate_pipeline_object'](obj,prefix))
   if name in {'mvc_far_calls','input_far_calls','postbuilder_far_calls'}:
    validator=runpy.run_path(str(root/'tools/ep7_remaining_far_calls.py'))
    objects[name].update(validator['validate_group_object'](obj,prefix,name.removesuffix('_far_calls')))

@@ -1,0 +1,415 @@
+{
+  "scope": "Qualify the pipeline's complete declared CALL/frame/queue cohort, without installing it.",
+  "checked_original_calls": [
+    {
+      "site": "0x602ac3de",
+      "original": "0x602ac748",
+      "bytes": 5,
+      "mask": "0xb0",
+      "frame": 32,
+      "adapter": "ep7_native_capture_scope_bridge",
+      "original_resume": "0x602ac3e3",
+      "replacement": "JMP32 to known veneer"
+    },
+    {
+      "site": "0x602ac869",
+      "original": "0x6020beb4",
+      "bytes": 7,
+      "mask": "0xc0",
+      "frame": 48,
+      "adapter": "ep7_native_producer_send_bridge",
+      "original_resume": "0x602ac870",
+      "replacement": "same-width CALL32"
+    },
+    {
+      "site": "0x603dfc9b",
+      "original": "0x603eeb57",
+      "bytes": 7,
+      "mask": "0xf0",
+      "frame": 44,
+      "adapter": "ep7_native_materializer_receive_bridge",
+      "original_resume": "0x603dfca2",
+      "replacement": "same-width CALL32"
+    },
+    {
+      "site": "0x603ef8b5",
+      "original": "0x603eeb57",
+      "bytes": 5,
+      "mask": "0xf0",
+      "frame": 44,
+      "adapter": "ep7_native_descriptor_receive_bridge",
+      "original_resume": "0x603ef8ba",
+      "replacement": "JMP32 to known veneer"
+    },
+    {
+      "site": "0x603ef8d2",
+      "original": "0x603eeb57",
+      "bytes": 5,
+      "mask": "0xf0",
+      "frame": 44,
+      "adapter": "ep7_native_descriptor_receive_bridge",
+      "original_resume": "0x603ef8d7",
+      "replacement": "JMP32 to known veneer"
+    },
+    {
+      "site": "0x603ef8fd",
+      "original": "0x603eeb57",
+      "bytes": 5,
+      "mask": "0xf0",
+      "frame": 44,
+      "adapter": "ep7_native_descriptor_receive_bridge",
+      "original_resume": "0x603ef902",
+      "replacement": "JMP32 to known veneer"
+    },
+    {
+      "site": "0x603ef91a",
+      "original": "0x603eeb57",
+      "bytes": 5,
+      "mask": "0xf0",
+      "frame": 44,
+      "adapter": "ep7_native_descriptor_receive_bridge",
+      "original_resume": "0x603ef91f",
+      "replacement": "JMP32 to known veneer"
+    },
+    {
+      "site": "0x603dfa04",
+      "original": "0x603eeb57",
+      "bytes": 7,
+      "mask": "0xf0",
+      "frame": 44,
+      "adapter": "ep7_native_descriptor_receive_bridge",
+      "original_resume": "0x603dfa0b",
+      "replacement": "same-width CALL32"
+    },
+    {
+      "site": "0x603dfaa1",
+      "original": "0x603eeba4",
+      "bytes": 7,
+      "mask": "0xe0",
+      "frame": 36,
+      "adapter": "ep7_native_descriptor_send_bridge",
+      "original_resume": "0x603dfaa8",
+      "replacement": "same-width CALL32"
+    },
+    {
+      "site": "0x603f2722",
+      "original": "0x603f2800",
+      "bytes": 5,
+      "mask": "0x30",
+      "frame": 56,
+      "adapter": "ep7_native_worker_scope_bridge",
+      "original_resume": "0x603f2727",
+      "replacement": "JMP32 to known veneer"
+    },
+    {
+      "site": "0x603537f3",
+      "original": "0x60022700",
+      "bytes": 7,
+      "mask": "0x0",
+      "frame": 4,
+      "adapter": "ep7_native_worker_allocate_bridge",
+      "original_resume": "0x603537fa",
+      "replacement": "same-width CALL32"
+    },
+    {
+      "site": "0x603f2890",
+      "original": "0x603e61b8",
+      "bytes": 7,
+      "mask": "0xb0",
+      "frame": 24,
+      "adapter": "ep7_native_worker_process_bridge",
+      "original_resume": "0x603f2897",
+      "replacement": "same-width CALL32"
+    },
+    {
+      "site": "0x603f28c0",
+      "original": "0x603e6c8d",
+      "bytes": 7,
+      "mask": "0x30",
+      "frame": 24,
+      "adapter": "ep7_native_worker_cleanup_bridge",
+      "original_resume": "0x603f28c7",
+      "replacement": "same-width CALL32"
+    },
+    {
+      "site": "0x603dfc67",
+      "original": "0x603df97d",
+      "bytes": 5,
+      "mask": "0x30",
+      "frame": 32,
+      "adapter": "ep7_native_ack_bridge",
+      "original_resume": "0x603dfc6c",
+      "replacement": "JMP32 to known veneer"
+    },
+    {
+      "site": "0x603e05c6",
+      "original": "0x603df97d",
+      "bytes": 5,
+      "mask": "0x30",
+      "frame": 32,
+      "adapter": "ep7_native_ack_bridge",
+      "original_resume": "0x603e05cb",
+      "replacement": "JMP32 to known veneer"
+    },
+    {
+      "site": "0x603f2769",
+      "original": "0x603df97d",
+      "bytes": 7,
+      "mask": "0x30",
+      "frame": 32,
+      "adapter": "ep7_native_ack_bridge",
+      "original_resume": "0x603f2770",
+      "replacement": "same-width CALL32"
+    }
+  ],
+  "checked_frame_edits": [
+    {
+      "site": "0x603df805",
+      "original": "fafec0fe",
+      "proposed": "fafeb4fe",
+      "adjustment": -332
+    },
+    {
+      "site": "0x603df933",
+      "original": "fafe4001",
+      "proposed": "fafe4c01",
+      "adjustment": 332
+    },
+    {
+      "site": "0x603ef894",
+      "original": "fafec8fe",
+      "proposed": "fafebcfe",
+      "adjustment": -324
+    },
+    {
+      "site": "0x603ef94c",
+      "original": "fafed0fe",
+      "proposed": "fafec4fe",
+      "adjustment": -316
+    },
+    {
+      "site": "0x603ef9b4",
+      "original": "fafe3001",
+      "proposed": "fafe3c01",
+      "adjustment": 316
+    },
+    {
+      "site": "0x603f26a3",
+      "original": "fafed0fe",
+      "proposed": "fafec4fe",
+      "adjustment": -316
+    },
+    {
+      "site": "0x603f2792",
+      "original": "fafe3001",
+      "proposed": "fafe3c01",
+      "adjustment": 316
+    },
+    {
+      "site": "0x603e0546",
+      "original": "fafec8fe",
+      "proposed": "fafebcfe",
+      "adjustment": -324
+    },
+    {
+      "site": "0x603e05e2",
+      "original": "fafe3801",
+      "proposed": "fafe4401",
+      "adjustment": 324
+    }
+  ],
+  "checked_queue_fields": [
+    {
+      "address": "0x6003b424",
+      "proposed": 312
+    },
+    {
+      "address": "0x6003b428",
+      "proposed": 10112
+    },
+    {
+      "address": "0x6003bb90",
+      "proposed": 312
+    },
+    {
+      "address": "0x6003bb94",
+      "proposed": 10112
+    },
+    {
+      "address": "0x6003b460",
+      "proposed": 312
+    },
+    {
+      "address": "0x6003b464",
+      "proposed": 10112
+    }
+  ],
+  "declared_group_items": 31,
+  "all_ranges_nonoverlapping": true,
+  "objects": {
+    "cohort": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/cohort.c",
+      "size_output": [
+        "647",
+        "0",
+        "0"
+      ],
+      "undefined": [
+        "_ep7n_far_call_present",
+        "ep7_native_ack_bridge",
+        "ep7_native_capture_scope_bridge",
+        "ep7_native_descriptor_receive_bridge",
+        "ep7_native_descriptor_send_bridge",
+        "ep7_native_materializer_receive_bridge",
+        "ep7_native_producer_send_bridge",
+        "ep7_native_worker_allocate_bridge",
+        "ep7_native_worker_cleanup_bridge",
+        "ep7_native_worker_process_bridge",
+        "ep7_native_worker_scope_bridge",
+        "ep7_pipeline_far_calls",
+        "ep7_pipeline_far_calls_end"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/native/cohort.c:38:6:ep7q_native_cohort_present\t44\tstatic"
+      ]
+    },
+    "far_calls": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/far_calls.s",
+      "size_output": [
+        "240",
+        "0",
+        "0"
+      ],
+      "undefined": [
+        "ep7_native_ack_bridge",
+        "ep7_native_capture_scope_bridge",
+        "ep7_native_descriptor_receive_bridge",
+        "ep7_native_worker_scope_bridge"
+      ],
+      "stack_usage": []
+    }
+  },
+  "checked_veneer_rows": 8,
+  "veneer_bytes": 240,
+  "extra_transient_stack_bytes": 4,
+  "actual_cohort_order_and_resume_checked": true,
+  "actual_adapter_relocations_checked": true,
+  "host_checks": {
+    "synthetic_complete_group_accepted": true,
+    "missing_or_corrupt_items_rejected": 39
+  },
+  "veneer_semantics": {
+    "scope": "Check one far-CALL veneer against reused GNU instruction bodies, on synthetic state only.",
+    "gnu_reference": "https://gnu.googlesource.com/binutils-gdb/+/cbe950e9fe8a56f788bcf985cc51733f18abb45b/sim/mn10300/mn10300.igen",
+    "download_mirror": "https://raw.githubusercontent.com/RTEMS/sourceware-mirror-binutils-gdb/cbe950e9fe8a56f788bcf985cc51733f18abb45b/sim/mn10300/mn10300.igen",
+    "reference_bytes": 79236,
+    "reused_gnu_instruction_bodies": [
+      "OP_CD000000",
+      "OP_DC000000",
+      "OP_DF0000",
+      "OP_DE0000",
+      "OP_F8FE00",
+      "OP_4200",
+      "OP_5800",
+      "OP_FCCC0000",
+      "OP_F2F2"
+    ],
+    "tested_save_frame_tuples": [
+      {
+        "mask": "0x0",
+        "frame": 0
+      },
+      {
+        "mask": "0x20",
+        "frame": 8
+      },
+      {
+        "mask": "0x30",
+        "frame": 32
+      },
+      {
+        "mask": "0x30",
+        "frame": 56
+      },
+      {
+        "mask": "0x80",
+        "frame": 8
+      },
+      {
+        "mask": "0xa0",
+        "frame": 28
+      },
+      {
+        "mask": "0xb0",
+        "frame": 32
+      },
+      {
+        "mask": "0xc0",
+        "frame": 16
+      },
+      {
+        "mask": "0xf0",
+        "frame": 20
+      },
+      {
+        "mask": "0xf0",
+        "frame": 28
+      },
+      {
+        "mask": "0xf0",
+        "frame": 32
+      },
+      {
+        "mask": "0xf0",
+        "frame": 44
+      },
+      {
+        "mask": "0xf0",
+        "frame": 48
+      },
+      {
+        "mask": "0xf0",
+        "frame": 96
+      }
+    ],
+    "synthetic_veneer_bytes_each": 30,
+    "extra_transient_stack_bytes": 4,
+    "callee_entry_registers_stack_return_mdr_psw_equal": true,
+    "native_frame_bytes_unchanged": true,
+    "return_path_checks": 28,
+    "negative_controls": 28,
+    "self_authored_fixture_assembled_and_linked": true,
+    "gnu_libsim_full_engine_run": false,
+    "firmware_input_used": false,
+    "firmware_modified": false,
+    "firmware_built": false,
+    "capture_veneer_rows": 18,
+    "capture_runtime_cohort_conversion_implemented": true,
+    "cohort_positive_checks": 1,
+    "cohort_negative_checks": 6,
+    "camera_executed": false,
+    "hash_checks_performed": false,
+    "limits": [
+      "GNU instruction C bodies run in a small host semantic harness, not the full libsim decoder.",
+      "Synthetic aligned stack and base MN103 register masks only; no UDF/MMIO/interrupts.",
+      "Actual hook rewrites, cohort recognition, executable placement, cache and total stack remain separate."
+    ]
+  },
+  "previous_28_short_site_inventory_incomplete": true,
+  "additional_pipeline_short_sites": 8,
+  "combined_known_short_sites": 36,
+  "publication_callback_wired": false,
+  "existing_adapter_object_report_reused": true,
+  "all_native_hook_entries_enumerated": false,
+  "pipeline_lifecycle_suites_rerun": false,
+  "firmware_modified": false,
+  "firmware_built": false,
+  "camera_executed": false,
+  "hash_checks_performed": false,
+  "limits": [
+    "Cohort comparison requires resident code/tables and a separately qualified cold installer.",
+    "This group does not include capture initialization, kernel gates, UI tables or all placement checks.",
+    "No hardware visibility, original caller closure, total stack or live queue lifetime proof.",
+    "New object references are compared with prior object definitions, not a whole firmware link."
+  ]
+}

@@ -3,16 +3,18 @@
   "compiler": "mn10300-elf-gcc (GCC) 13.4.0",
   "prior_object_reports": [
     "research/ep7/pipeline-far-call-target.json",
-    "research/ep7/ui-far-call-target.json"
+    "research/ep7/ui-far-call-target.json",
+    "research/ep7/pipeline-installation-cohort.json",
+    "research/ep7/cold-clear-semantics.json"
   ],
   "prior_measurements_recompiled": false,
-  "implementation_sources": 101,
+  "implementation_sources": 104,
   "excluded_abi_probe_sources": [
     "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_caller.c",
     "prototypes/ep7_volatile_hl/text_lifecycle/factory_caller.c"
   ],
   "prior_unlinked_text_data_bss": [
-    44793,
+    45733,
     0,
     2376
   ],
@@ -1039,6 +1041,36 @@
       ],
       "reports": [
         "research/ep7/ui-far-call-target.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/cohort.c": {
+      "text_data_bss": [
+        647,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/pipeline-installation-cohort.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/snapshot_transport/native/far_calls.s": {
+      "text_data_bss": [
+        240,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/pipeline-installation-cohort.json"
+      ]
+    },
+    "prototypes/ep7_volatile_hl/target/cold_clear.s": {
+      "text_data_bss": [
+        53,
+        0,
+        0
+      ],
+      "reports": [
+        "research/ep7/cold-clear-semantics.json"
       ]
     }
   },

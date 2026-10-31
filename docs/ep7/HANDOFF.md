@@ -5,7 +5,13 @@
 
 ## 2026-10-31 当前节点
 
-最新：[原生capture source](CAPTURE_NATIVE_BINDING.md)已定义具体provider，接合初始化、
+最新：[冷启动清零桥](COLD_START_CLEAR.md)已实现53字节候选及局部启动顺序核对；
+[流水线安装组](PIPELINE_INSTALLATION_COHORT.md)补齐旧清单遗漏的8处短CALL，当前归档36座，
+并把16个CALL、9条栈调整、6个容量字段作为同组检查。104实现源text45,733，静态存储
+粗计8,080。实际cold installer/bootstrap发布入口、代码/RAM资格、总栈及生命周期余项仍待
+完成，未开始整体固件编译。优先依据上述两份新报告继续，避免重复旧对象/主机全集检查。
+
+此前：[原生capture source](CAPTURE_NATIVE_BINDING.md)已定义具体provider，接合初始化、
 fresh登记、两次population、13个node free以及capture pool release。目标56对象通过，
 剩余32个符号全部为原厂地址；原生排他/完整闭包、G4、G6仍未完成，固件整体编译未开始。
 

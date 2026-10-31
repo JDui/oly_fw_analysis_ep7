@@ -181,11 +181,11 @@ int main(void) {
 '''
 
 
-def inspect(reference,prefix):
+def inspect(reference,prefix,additional_shapes=()):
     source=reference.read_text()
     step_source,markers=semantic_step(source)
     rows=capture_rows()
-    shapes=sorted({(mask,frame) for _,_,mask,frame in rows}|{(0,0),(0xf0,96)})
+    shapes=sorted({(mask,frame) for _,_,mask,frame in rows}|{(0,0),(0xf0,96)}|set(additional_shapes))
     macro=ROOT/'prototypes/ep7_volatile_hl/target/far_call.inc'
     asm='.text\n.include "'+str(macro)+'"\n'
     for i,(mask,frame) in enumerate(shapes):
