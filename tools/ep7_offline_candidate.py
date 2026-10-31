@@ -3,11 +3,12 @@
 import argparse
 import json
 import re
+import shutil
 import struct
 import subprocess
 from pathlib import Path
 
-from ep7_installation_manifest import BASE, implementation_sources, inspect_objects, inspect_stock
+from ep7_installation_manifest import BASE, ROOT, implementation_sources, inspect_objects, inspect_stock
 from ep7_native_bindings import bindings
 
 CODE = ((0x60048040, 0x6004ffc0), (0x600c8040, 0x600cffc0))
@@ -114,10 +115,12 @@ def linker_script(groups, native):
     result.append('SECTIONS {')
     for i, rows in enumerate(groups):
         result += [f'  .ep7_code{i} : {{', *rows, f'  }} > CODE{i}']
-    result += ['  .data : { *(.data .data.*) } > PRIVATE',
+    result += ['  .ep7_empty_readonly : { *(.text .text.* .rodata .rodata.*) } > CODE0',
+               '  .data : { *(.data .data.*) } > PRIVATE',
                '  .bss (NOLOAD) : {', '    __ep7_bss_start = .;',
                '    *(.bss .bss.* COMMON)', '    . = ALIGN(4);', '    __ep7_bss_end = .;',
                '  } > PRIVATE', '  /DISCARD/ : { *(.comment .note.GNU-stack) }', '}',
+               'ASSERT(SIZEOF(.ep7_empty_readonly) == 0, "unassigned readonly input bytes")',
                'ASSERT(SIZEOF(.data) == 0, "initialized writable data has no startup copy")',
                'ASSERT(__ep7_bss_start == ORIGIN(PRIVATE), "BSS origin drift")',
                'ASSERT(__ep7_bss_end <= __ep7_private_uncached_end, "private RAM overflow")']
@@ -187,7 +190,21 @@ def check_branch(prefix, candidate, row, target):
         raise ValueError('GNU does not decode candidate branch as intended: '+row['site']+' '+instruction)
 
 
-def build(decoded, prefix, out, report):
+def check_sources_at_revision(revision):
+    # Reuse is based on the recorded Git revision and unchanged tracked sources,
+    # never hashes of firmware or generated binaries. Include assembly macros,
+    # headers and the existing compiler command implementation in this check.
+    if not re.fullmatch(r'[0-9a-f]{40}', revision):
+        raise ValueError('expected a full recorded Git revision')
+    command = ['git','--no-optional-locks','-c',f'safe.directory={ROOT}',
+               '-c','core.autocrlf=true','-C',str(ROOT)]
+    paths = ['prototypes/ep7_volatile_hl','tools/ep7_installation_manifest.py']
+    subprocess.run([*command,'diff','--quiet',revision,'--',*paths],check=True)
+    if subprocess.check_output([*command,'ls-files','--others','--exclude-standard','--',*paths],text=True):
+        raise ValueError('untracked build inputs prevent object reuse/provenance verification')
+
+
+def build(decoded, prefix, out, report, reuse=None):
     print('Checking stock input and declared installation manifest...',flush=True)
     manifest = inspect_stock(decoded)
     stock = decoded.read_bytes()
@@ -196,8 +213,28 @@ def build(decoded, prefix, out, report):
         if stock[start-BASE:end-BASE] != b'\xff'*(end-start):
             raise ValueError('assumed code region no longer contains the expected FF bytes')
     sources = implementation_sources()
-    print(f'Compiling {len(sources)} implementation sources for the whole candidate...',flush=True)
-    inventory = inspect_objects(prefix,manifest['patches'],object_directory=out/'objects')
+    if reuse is None:
+        print(f'Compiling {len(sources)} implementation sources for the whole candidate...',flush=True)
+        inventory = inspect_objects(prefix,manifest['patches'],object_directory=out/'objects')
+        report['objects_reused'] = 0
+    else:
+        previous = json.loads((reuse/'report.json').read_text(encoding='utf-8'))
+        if not previous['whole_candidate_compiled']:
+            raise ValueError('cached build did not finish compiling all implementation objects')
+        check_sources_at_revision(previous['source_revision'])
+        inventory = json.loads((reuse/'object-inventory.json').read_text(encoding='utf-8'))
+        if list(inventory['objects']) != sources or inventory['compiler'] != \
+                subprocess.check_output([prefix+'gcc','--version'],text=True).splitlines()[0]:
+            raise ValueError('cached source order or compiler differs')
+        (out/'objects').mkdir()
+        for i in range(len(sources)):
+            shutil.copyfile(reuse/'objects'/f'{i}.o',out/'objects'/f'{i}.o')
+            usage = reuse/'objects'/f'{i}.su'
+            if usage.exists():
+                shutil.copyfile(usage,out/'objects'/usage.name)
+        report.update(objects_reused=len(sources),object_source_revision=previous['source_revision'],
+            reused_source_and_header_diff_empty=True)
+        print(f'Reusing {len(sources)} objects: implementation/header/compiler recipe diff is empty.',flush=True)
     save(out/'object-inventory.json',inventory)
     report.update(whole_candidate_compiled=True,source_count=len(sources))
     save(out/'report.json',report)
@@ -325,12 +362,15 @@ def main():
     parser.add_argument('--tool-prefix',required=True)
     parser.add_argument('--source-revision',required=True,help='Git revision recorded by the invoking build job')
     parser.add_argument('--output',type=Path,required=True,help='new or empty dedicated output directory')
+    parser.add_argument('--reuse-objects-from',type=Path,
+                        help='reuse a completed object set after checking its recorded source revision')
     args = parser.parse_args()
     out, decoded = args.output.resolve(), args.decoded.resolve()
     if out == decoded.parent or decoded.is_relative_to(out):
         parser.error('output must be separate from stock input')
     if out.exists() and any(out.iterdir()):
         parser.error('output must be empty; existing artifacts are never overwritten')
+    check_sources_at_revision(args.source_revision)
     out.mkdir(parents=True,exist_ok=True)
     (out/'NONINSTALLABLE.txt').write_text(
         'NON-INSTALLABLE RESEARCH CANDIDATE. DO NOT FLASH.\n'
@@ -347,7 +387,8 @@ def main():
         evidence='docs/ep7/OFFLINE_CANDIDATE.md')
     save(out/'report.json',report)
     try:
-        build(decoded,args.tool_prefix,out,report)
+        build(decoded,args.tool_prefix,out,report,
+              args.reuse_objects_from.resolve() if args.reuse_objects_from else None)
     except Exception as error:
         report.update(status='failed',error=str(error))
         save(out/'report.json',report)
