@@ -30,3 +30,18 @@ plus valid embedded references), NUL16text and callbacks. No stock category, S
 property, native vtable, memory patch, renderer_ready flag, or real device changed.
 No new object is ready solely because factory returned nonnull. Binding/render
 failure remains distinct from already-committed H/L edit success.
+
+## Current native factory primitive
+
+`native_create.s` now reuses original factory60d337b2 and returns both A0 child and
+D0 initializer status through `struct ep7_text_factory_result`. It saves/restores
+the actual service's prior allocator selection across every normal return. The
+factory's nonnull path preserves its initializer0/1 even though stock callers do
+not inspect that register. A NULL child gets normalized status0. This primitive
+does not yet implement all lifecycle callbacks or authorize arbitrary resources.
+
+The original mock-only status above describes the initial scaffold. Actual fresh
+rollback with context selection is now available in `../text_rollback`, but its
+allocation/service ownership prerequisites still apply. Do not drop nonnull failed
+factory results or treat independent result storage as a lifetime lease. Full
+details: [TEXT_FACTORY_RESULT](../../../docs/ep7/TEXT_FACTORY_RESULT.md).

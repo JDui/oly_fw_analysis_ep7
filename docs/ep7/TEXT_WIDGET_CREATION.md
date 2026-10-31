@@ -108,3 +108,8 @@ startup data-copy recipe to the RAM resource table and identifies four existing
 type8010 descriptors, font1 and two rectangles per descriptor. It retains the
 RAM-alias/cache and later-table-mutation limits; opaque embedded fields and actual
 glyph/rendering behavior are not yet fully qualified.
+
+[Factory result continuation](TEXT_FACTORY_RESULT.md) confirms that the native
+common exit preserves initializer D0 as well as child A0. A new GCC veneer captures
+both and restores the prior allocator selection; nonnull partial initialization
+still requires rollback. The complete parent attachment flow remains unbound.

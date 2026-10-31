@@ -12,9 +12,11 @@ mode.add_argument('--receive-abi-only',action='store_true',help='compile command
 mode.add_argument('--queue-pipeline-abi-only',action='store_true',help='compile command/descriptor receive and descriptor forward bridges')
 mode.add_argument('--task-context-only',action='store_true',help='compile read-only actual current-TCB stack view and reuse get_tid veneer')
 mode.add_argument('--ui-context-only',action='store_true',help='compile native text rollback context callbacks and audited native selection leaves')
+mode.add_argument('--ui-create-only',action='store_true',help='compile context-preserving text factory result bridge with existing rollback bindings')
 args=parser.parse_args()
 receiver_mode=args.receive_abi_only or args.queue_pipeline_abi_only
 materializer_mode=args.materializer_abi_only or receiver_mode
+ui_mode=args.ui_context_only or args.ui_create_only
 root=Path(__file__).resolve().parents[1];core=root/'prototypes/ep7_volatile_hl';prefix=args.tool_prefix
 versions={n:subprocess.check_output([prefix+n,'--version'],text=True).splitlines()[0] for n in ['gcc','as','ld','objdump']}
 include=subprocess.check_output([prefix+'gcc','-print-file-name=include'],text=True).strip()
@@ -30,7 +32,7 @@ if args.task_context_only:
         'queue_context':core/'runtime/queue_context.c',
         'get_tid':core/'target/get_tid_bridge.s','task_delay':core/'runtime/delay_bridge.s','memory':core/'target/memory.c'}
  flags.append('-fstack-usage')
-if args.ui_context_only:
+if ui_mode:
  files={n:core/'text_rollback'/p for n,p in [('text_rollback','rollback.c'),
      ('ui_context','native_context.c'),('ui_context_bridges','context_bridges.s'),
      ('text_cleanup_bridge','cleanup_destroy.s')]}
@@ -38,6 +40,9 @@ if args.ui_context_only:
      ('task_native','task_context_native.c'),('queue_context','queue_context.c')]})
  files.update({'get_tid':core/'target/get_tid_bridge.s','memory':core/'target/memory.c'})
  flags.append('-fstack-usage')
+ if args.ui_create_only:
+  files.update({n:core/'text_lifecycle'/p for n,p in [('text_factory_bridge','native_create.s'),
+      ('text_factory_caller','factory_caller.c'),('text_lifecycle','lifecycle.c')]})
 if materializer_mode:
  files={'materializer_bridge':core/'snapshot_transport/native/materializer_bridge.s',
         'materializer_layout':core/'snapshot_transport/native/materializer_layout.c',
@@ -99,7 +104,7 @@ with tempfile.TemporaryDirectory() as temp:
    definitions[symbol]=name
   undefined|=und
   objects[name]=dict(source=str(src.relative_to(root)),definitions=sorted(defs),undefined=sorted(und))
-  if args.queue_pipeline_abi_only or args.ui_context_only:
+  if args.queue_pipeline_abi_only or ui_mode:
    dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
    audit=re.findall(r'^\s*[0-9a-f]+:[ \t]+(?:[0-9a-f]{2}[ \t]+)+([a-z][a-z0-9]*)(?:[ \t]+([^\n]*))?$',dis,re.M)
    forbidden={'setlb','leq','lne','lgt','lge','lle','llt','lhi','lcc','lls','lcs','lra'}
@@ -110,6 +115,45 @@ with tempfile.TemporaryDirectory() as temp:
        re.sub(r'\b[0-9a-f]+\s+<[^>]+>','',operands))]
    if suspicious:raise ValueError('unqualified loop/extended register state in '+name+': '+repr(suspicious))
    objects[name]['loop_extended_state_audited']=True
+  if name=='text_factory_bridge':
+   # CLR D0 is opcode00. At a local-symbol boundary objdump's default zero
+   # suppression can hide this real instruction, so decode zero bytes too.
+   dis=subprocess.check_output([prefix+'objdump','-dr','-z','--insn-width=16',str(obj)],text=True)
+   ins=re.findall(r'^[ \t]*[0-9a-f]+:[ \t]+(?:[0-9a-f]{2}[ \t]+)+([a-z][a-z0-9]*)(?:[ \t]+([^\n]*))?$',dis,re.M)
+   expected=[('movm','[d2,d3,a2,a3],(sp)'),('add','-24,sp'),('mov','d0,(12,sp)'),
+       ('mov','d1,(16,sp)'),('mov','(52,sp),d0'),('mov','d0,(20,sp)'),('call',None),
+       ('mov','a0,(4,sp)'),('mov','sp,a1'),('add','8,a1'),('mov','a1,d0'),('add','1,d0'),('call',None),
+       ('mov','(12,sp),d1'),('mov','(16,sp),a1'),('mov','32784,d0'),('call',None),
+       ('cmp','0,a0'),('bne',None),('clr','d0'),('mov','(20,sp),a1'),('mov','a0,(a1)'),('mov','d0,(4,a1)'),
+       ('mov','(4,sp),a0'),('movbu','(8,sp),d0'),('movbu','(9,sp),d1'),('call',None),('ret','[d2,d3,a2,a3],40')]
+   if len(ins)!=len(expected) or any(a[0]!=b[0] or (b[1] is not None and a[1]!=b[1]) for a,b in zip(ins,expected)):
+    raise ValueError('factory result/context preservation changed: '+repr(ins))
+   if not ins[16][1].endswith(',[d2,a2,a3],24') or any(not ins[i][1].endswith(',[],0') for i in [6,12,26]):
+    raise ValueError('factory/context native call frame changed')
+   relocs=re.findall(r'R_MN10300_(\w+)\s+([^\n]+)',dis)
+   expected_relocs=[('PCREL32',s+'+0x1') for s in ['ep7_stock_ui_service_unresolved',
+       'ep7_stock_ui_context_get_unresolved','ep7_stock_widget_factory_unresolved']]+[
+       ('PCREL8','.Ltext_allocated+0x1'),('PCREL32','ep7_stock_ui_context_set_unresolved+0x1')]
+   if relocs!=expected_relocs:raise ValueError('factory native/branch relocation changed')
+   addresses=re.findall(r'^\s*([0-9a-f]+):\s+(?:[0-9a-f]{2}\s+)+[a-z]',dis,re.M)
+   rows={line.split()[-1]:int(line.split()[0],16) for line in syms.splitlines() if len(line.split())>=5 and '*UND*' not in line and re.fullmatch('[0-9a-f]+',line.split()[0])}
+   if rows.get('.Ltext_allocated')!=int(addresses[20],16):raise ValueError('factory null branch result destination changed')
+   objects[name].update(checked_instructions=len(ins),own_frame_bytes=40,native_factory_frame_bytes=24,
+       third_gcc_argument_offset=52,independent_result_child_offset=0,independent_result_status_offset=4,
+       prior_context_restored_on_normal_return=True)
+  if name=='text_factory_caller':
+   assembly=Path(temp)/'text_factory_caller.s'
+   subprocess.run([prefix+'gcc',*flags,'-S',str(src),'-o',str(assembly)],check=True)
+   caller=assembly.read_text()
+   body=caller.split('_ep7_text_factory_probe:\n',1)[1].split('\t.size',1)[0]
+   expected=['add -24,sp','mov sp,a0','add 16,a0','mov a0,(12,sp)',
+       'call _ep7_gcc_text_factory,[],0','mov (16,sp),d0','cmp 0,d0','beq .L3',
+       'mov (20,sp),d1','mov (36,sp),a0','mov d1,(a0)','mov d0,a0','ret [],24',
+       '.L3:','mov d0,d1','mov (36,sp),a0','mov d1,(a0)','mov d0,a0','ret [],24']
+   if [line.strip() for line in body.splitlines() if line.strip()]!=expected:
+    raise ValueError('GCC third argument/result layout changed')
+   objects[name].update(compiler_assembly=caller,compiler_abi_checked=True,
+       caller_frame_bytes=24,third_argument_slot=12,result_local_offset=16,pointer_return_register='a0')
   if name=='text_cleanup_bridge':
    # Reuse the existing exact sequence/relocation validator only. Its legacy
    # main/tool SHA guard is not invoked in this explicitly selected tool mode.
@@ -413,15 +457,16 @@ with tempfile.TemporaryDirectory() as temp:
     raise ValueError('existing get_tid veneer frame/argument routing changed')
    if dis.count('R_MN10300_PCREL32')!=1 or 'ep7_stock_get_tid_unresolved+0x1' not in dis:raise ValueError('get_tid relocation changed')
    objects[name]['checked_instructions']=5
-  if args.transport_only or materializer_mode or args.task_context_only or args.ui_context_only:
+  if args.transport_only or materializer_mode or args.task_context_only or ui_mode:
    objects[name]['size_output']=subprocess.check_output([prefix+'size',str(obj)],text=True).splitlines()[1].split()[:4]
    if src.suffix=='.c':objects[name]['stack_usage']=obj.with_suffix('.su').read_text().splitlines()
 external=undefined-set(definitions)
 expected=set() if args.transport_only else {'_ep7_controller_sidecar_unresolved','ep7_stock_state_service_unresolved'}
 if args.task_context_only:expected={'ep7_stock_get_tid_unresolved','ep7_stock_task_delay_unresolved'}
-if args.ui_context_only:expected={'ep7_stock_get_tid_unresolved','ep7_stock_ui_service_unresolved',
+if ui_mode:expected={'ep7_stock_get_tid_unresolved','ep7_stock_ui_service_unresolved',
     'ep7_stock_ui_context_get_unresolved','ep7_stock_ui_context_set_unresolved',
     'ep7_stock_text_cleanup_unresolved','ep7_stock_text_destructor_unresolved'}
+if args.ui_create_only:expected.add('ep7_stock_widget_factory_unresolved')
 if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved','ep7_stock_receive_wrapper_unresolved'}
@@ -450,6 +495,7 @@ if args.materializer_abi_only:scope='Exact materializer receive bridge and bound
 if args.receive_abi_only:scope='Command and descriptor receive bridges with bounded stack mappers; native context providers/addresses unresolved'
 if args.queue_pipeline_abi_only:scope='Owned pipeline, shared runtime, native capture source and kernel-critical queue gate candidates; installation, full lifetime closure and native addresses remain unbound'
 if args.task_context_only:scope='Read-only current-task stack and actual local queue views with existing get_tid/delay veneers; no lifetime lease, installation flag or native execution'
-if args.ui_context_only:scope='Fresh text rollback with actual native context callbacks; qualified object/service lifetime and serialized GUI ownership remain caller obligations'
+if ui_mode:scope='Fresh text rollback with actual native context callbacks; qualified object/service lifetime and serialized GUI ownership remain caller obligations'
+if args.ui_create_only:scope='Existing text factory result/context bridge and native rollback closure; resource/UI ownership and actual lifecycle attachment remain unqualified'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))

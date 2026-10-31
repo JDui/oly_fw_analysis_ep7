@@ -178,3 +178,8 @@ population/free/pool-release桥。56对象中自写provider符号已闭合，32�
 和 `61fc3874` 父回调表，定位四个原厂文本描述符及两组实际布局。搬运参数和关键字段
 已在当前输入核对；硬件 cache/启动成功与后续表改写未验证。下一项保留原厂工厂的
 初始化返回值、保存/恢复 allocator context，再完成实际挂接/失败清理和 H/L viewer。
+
+[原厂 text factory result](TEXT_FACTORY_RESULT.md)现已通过 GCC veneer 同时返回 child
+与原生初始化状态，并在正常返回时恢复先前 allocator selection。115 条原厂指令、
+28 条新桥指令和 12 个目标对象通过定向检查；失败且非空的 child 明确保留回滚义务。
+下一项实际生命周期回调/资源副本/parent attach 与 H/L viewer 接合，G4 尚未整体通过。

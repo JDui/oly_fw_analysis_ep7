@@ -1,0 +1,294 @@
+{
+  "scope": "Existing text factory result/context bridge and native rollback closure; resource/UI ownership and actual lifecycle attachment remain unqualified",
+  "versions": {
+    "gcc": "mn10300-elf-gcc (GCC) 13.4.0",
+    "as": "GNU assembler (GNU Binutils) 2.45",
+    "ld": "GNU ld (GNU Binutils) 2.45",
+    "objdump": "GNU objdump (GNU Binutils) 2.45"
+  },
+  "objects": {
+    "text_rollback": {
+      "source": "prototypes/ep7_volatile_hl/text_rollback/rollback.c",
+      "definitions": [
+        "_ep7_text_rollback"
+      ],
+      "undefined": [
+        "_ep7_gcc_text_cleanup_destroy_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "217",
+        "0",
+        "0",
+        "217"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/text_rollback/rollback.c:4:5:ep7_text_rollback\t36\tstatic"
+      ]
+    },
+    "ui_context": {
+      "source": "prototypes/ep7_volatile_hl/text_rollback/native_context.c",
+      "definitions": [
+        "_ep7_text_rollback_native"
+      ],
+      "undefined": [
+        "_ep7_gcc_ui_context_exchange",
+        "_ep7_gcc_ui_context_select",
+        "_ep7_gcc_ui_service",
+        "_ep7_text_rollback",
+        "_ep7n_native_current_task"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "348",
+        "0",
+        "0",
+        "348"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/text_rollback/native_context.c:40:13:restore\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_rollback/native_context.c:16:12:qualify\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_rollback/native_context.c:29:12:enter\t44\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_rollback/native_context.c:47:5:ep7_text_rollback_native\t60\tstatic"
+      ]
+    },
+    "ui_context_bridges": {
+      "source": "prototypes/ep7_volatile_hl/text_rollback/context_bridges.s",
+      "definitions": [
+        "_ep7_gcc_ui_context_exchange",
+        "_ep7_gcc_ui_context_select",
+        "_ep7_gcc_ui_service"
+      ],
+      "undefined": [
+        "ep7_stock_ui_context_get_unresolved",
+        "ep7_stock_ui_context_set_unresolved",
+        "ep7_stock_ui_service_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 30,
+      "own_frame_bytes": [
+        4,
+        20,
+        4
+      ],
+      "exchange_saved_selection_offsets": [
+        8,
+        9
+      ],
+      "exchange_requested_selection_offset": 12,
+      "exchange_saved_a2_offset": 16,
+      "native_getter_self_frame_bytes": 4,
+      "size_output": [
+        "86",
+        "0",
+        "0",
+        "86"
+      ]
+    },
+    "text_cleanup_bridge": {
+      "source": "prototypes/ep7_volatile_hl/text_rollback/cleanup_destroy.s",
+      "definitions": [
+        "_ep7_gcc_text_cleanup_destroy_unresolved"
+      ],
+      "undefined": [
+        "ep7_stock_text_cleanup_unresolved",
+        "ep7_stock_text_destructor_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 13,
+      "own_frame_bytes": 32,
+      "size_output": [
+        "35",
+        "0",
+        "0",
+        "35"
+      ]
+    },
+    "task_context": {
+      "source": "prototypes/ep7_volatile_hl/runtime/task_context.c",
+      "definitions": [
+        "_ep7n_query_task"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "535",
+        "0",
+        "0",
+        "535"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context.c:6:13:current_tcb\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context.c:14:6:ep7n_query_task\t60\tstatic"
+      ]
+    },
+    "task_native": {
+      "source": "prototypes/ep7_volatile_hl/runtime/task_context_native.c",
+      "definitions": [
+        "_ep7n_native_current_task",
+        "_ep7n_native_queue"
+      ],
+      "undefined": [
+        "_ep7_gcc_get_tid",
+        "_ep7n_query_queue",
+        "_ep7n_query_task"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "98",
+        "0",
+        "0",
+        "98"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:7:13:read_word\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:9:13:read_half\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:5:12:query\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:12:6:ep7n_native_current_task\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:16:6:ep7n_native_queue\t16\tstatic"
+      ]
+    },
+    "queue_context": {
+      "source": "prototypes/ep7_volatile_hl/runtime/queue_context.c",
+      "definitions": [
+        "_ep7n_query_queue",
+        "_ep7n_same_queue"
+      ],
+      "undefined": [
+        "_memcpy"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "853",
+        "0",
+        "0",
+        "853"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/queue_context.c:6:13:read_view\t44\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/queue_context.c:26:6:ep7n_same_queue\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/queue_context.c:32:6:ep7n_query_queue\t104\tstatic"
+      ]
+    },
+    "get_tid": {
+      "source": "prototypes/ep7_volatile_hl/target/get_tid_bridge.s",
+      "definitions": [
+        "_ep7_gcc_get_tid"
+      ],
+      "undefined": [
+        "ep7_stock_get_tid_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 5,
+      "size_output": [
+        "17",
+        "0",
+        "0",
+        "17"
+      ]
+    },
+    "memory": {
+      "source": "prototypes/ep7_volatile_hl/target/memory.c",
+      "definitions": [
+        "_memcpy",
+        "_memset"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "49",
+        "0",
+        "0",
+        "49"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/target/memory.c:8:7:memcpy\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/target/memory.c:18:7:memset\t0\tstatic"
+      ]
+    },
+    "text_factory_bridge": {
+      "source": "prototypes/ep7_volatile_hl/text_lifecycle/native_create.s",
+      "definitions": [
+        "_ep7_gcc_text_factory"
+      ],
+      "undefined": [
+        "ep7_stock_ui_context_get_unresolved",
+        "ep7_stock_ui_context_set_unresolved",
+        "ep7_stock_ui_service_unresolved",
+        "ep7_stock_widget_factory_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 28,
+      "own_frame_bytes": 40,
+      "native_factory_frame_bytes": 24,
+      "third_gcc_argument_offset": 52,
+      "independent_result_child_offset": 0,
+      "independent_result_status_offset": 4,
+      "prior_context_restored_on_normal_return": true,
+      "size_output": [
+        "83",
+        "0",
+        "0",
+        "83"
+      ]
+    },
+    "text_factory_caller": {
+      "source": "prototypes/ep7_volatile_hl/text_lifecycle/factory_caller.c",
+      "definitions": [
+        "_ep7_text_factory_probe"
+      ],
+      "undefined": [
+        "_ep7_gcc_text_factory"
+      ],
+      "loop_extended_state_audited": true,
+      "compiler_assembly": "\t.file\t\"factory_caller.c\"\n\t.section .text\n\t.global _ep7_text_factory_probe\n\t.type\t_ep7_text_factory_probe, @function\n_ep7_text_factory_probe:\n\tadd -24,sp\n\tmov sp,a0\n\tadd 16,a0\n\tmov a0,(12,sp)\n\tcall _ep7_gcc_text_factory,[],0\n\tmov (16,sp),d0\n\tcmp 0,d0\n\tbeq .L3\n\tmov (20,sp),d1\n\tmov (36,sp),a0\n\tmov d1,(a0)\n\tmov d0,a0\n\tret [],24\n.L3:\n\tmov d0,d1\n\tmov (36,sp),a0\n\tmov d1,(a0)\n\tmov d0,a0\n\tret [],24\n\t.size\t_ep7_text_factory_probe, .-_ep7_text_factory_probe\n\t.ident\t\"GCC: (GNU) 13.4.0\"\n",
+      "compiler_abi_checked": true,
+      "caller_frame_bytes": 24,
+      "third_argument_slot": 12,
+      "result_local_offset": 16,
+      "pointer_return_register": "a0",
+      "size_output": [
+        "40",
+        "0",
+        "0",
+        "40"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/factory_caller.c:6:7:ep7_text_factory_probe\t24\tstatic"
+      ]
+    },
+    "text_lifecycle": {
+      "source": "prototypes/ep7_volatile_hl/text_lifecycle/lifecycle.c",
+      "definitions": [
+        "_ep7_text_create_attach",
+        "_ep7_text_revoke"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "228",
+        "0",
+        "0",
+        "228"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/lifecycle.c:2:5:ep7_text_create_attach\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/lifecycle.c:30:6:ep7_text_revoke\t0\tstatic"
+      ]
+    }
+  },
+  "remaining_external_symbols": [
+    "ep7_stock_get_tid_unresolved",
+    "ep7_stock_text_cleanup_unresolved",
+    "ep7_stock_text_destructor_unresolved",
+    "ep7_stock_ui_context_get_unresolved",
+    "ep7_stock_ui_context_set_unresolved",
+    "ep7_stock_ui_service_unresolved",
+    "ep7_stock_widget_factory_unresolved"
+  ],
+  "hash_checks_performed": false,
+  "target_linked": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "native_adapter_installed": false
+}
