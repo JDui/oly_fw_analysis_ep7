@@ -1,0 +1,917 @@
+{
+  "scope": "Bounded audit of two early-loaded padding interiors; no free-space approval or SHA.",
+  "decoded_bytes": 26214336,
+  "instruction_witness_count": 61,
+  "instruction_witnesses": [
+    {
+      "address": "0x600201db",
+      "mnemonic": "mov",
+      "operands": "1611466752,d0",
+      "bytes": 6
+    },
+    {
+      "address": "0x600201e7",
+      "mnemonic": "mov",
+      "operands": "1080754176,a0",
+      "bytes": 6
+    },
+    {
+      "address": "0x600201ed",
+      "mnemonic": "mov",
+      "operands": "-1610416128,a1",
+      "bytes": 6
+    },
+    {
+      "address": "0x600201f3",
+      "mnemonic": "add",
+      "operands": "-1610809344,d0",
+      "bytes": 6
+    },
+    {
+      "address": "0x600201f9",
+      "mnemonic": "call",
+      "operands": "0x6002144e,[d2,d3,a2,a3],32",
+      "bytes": 5
+    },
+    {
+      "address": "0x600201fe",
+      "mnemonic": "mov",
+      "operands": "(0x6218d984),d0",
+      "bytes": 6
+    },
+    {
+      "address": "0x60020392",
+      "mnemonic": "call",
+      "operands": "0x6003009c,[],0",
+      "bytes": 7
+    },
+    {
+      "address": "0x60041e2f",
+      "mnemonic": "mov",
+      "operands": "(0x6222cd9c),d0",
+      "bytes": 6
+    },
+    {
+      "address": "0x60041e82",
+      "mnemonic": "mov",
+      "operands": "(0x6222cd9c),d0",
+      "bytes": 6
+    },
+    {
+      "address": "0x60041ea2",
+      "mnemonic": "mov",
+      "operands": "(0x6222cd9c),d0",
+      "bytes": 6
+    },
+    {
+      "address": "0x60041ee2",
+      "mnemonic": "mov",
+      "operands": "(0x6222cd9c),d0",
+      "bytes": 6
+    },
+    {
+      "address": "0x60041eeb",
+      "mnemonic": "mov",
+      "operands": "d0,(0x6222cd9c)",
+      "bytes": 6
+    },
+    {
+      "address": "0x600441c3",
+      "mnemonic": "jmp",
+      "operands": "0x60044290",
+      "bytes": 3
+    },
+    {
+      "address": "0x600457bc",
+      "mnemonic": "mov",
+      "operands": "1629761536,d0",
+      "bytes": 6
+    },
+    {
+      "address": "0x600457d4",
+      "mnemonic": "mov",
+      "operands": "1616607232,d0",
+      "bytes": 6
+    },
+    {
+      "address": "0x60045e56",
+      "mnemonic": "mov",
+      "operands": "385892362,d0",
+      "bytes": 6
+    },
+    {
+      "address": "0x60045ea7",
+      "mnemonic": "mov",
+      "operands": "385892362,d0",
+      "bytes": 6
+    },
+    {
+      "address": "0x60051667",
+      "mnemonic": "add",
+      "operands": "-1569731262,a2",
+      "bytes": 6
+    },
+    {
+      "address": "0x60051ac9",
+      "mnemonic": "mov",
+      "operands": "48879,d0",
+      "bytes": 6
+    },
+    {
+      "address": "0x60051b9e",
+      "mnemonic": "mov",
+      "operands": "48879,d0",
+      "bytes": 6
+    },
+    {
+      "address": "0x60051c6d",
+      "mnemonic": "add",
+      "operands": "-1569731262,a0",
+      "bytes": 6
+    },
+    {
+      "address": "0x60051c7f",
+      "mnemonic": "mov",
+      "operands": "48879,d0",
+      "bytes": 6
+    },
+    {
+      "address": "0x60051cdb",
+      "mnemonic": "add",
+      "operands": "-1569731262,a0",
+      "bytes": 6
+    },
+    {
+      "address": "0x60051d02",
+      "mnemonic": "add",
+      "operands": "-1569731262,a0",
+      "bytes": 6
+    },
+    {
+      "address": "0x60051d57",
+      "mnemonic": "mov",
+      "operands": "48879,d0",
+      "bytes": 6
+    },
+    {
+      "address": "0x60051f1f",
+      "mnemonic": "mov",
+      "operands": "-559038737,d0",
+      "bytes": 6
+    },
+    {
+      "address": "0x600523ec",
+      "mnemonic": "mov",
+      "operands": "1167693824,d1",
+      "bytes": 6
+    },
+    {
+      "address": "0x60052c7b",
+      "mnemonic": "call",
+      "operands": "0x60052447,[d2,a2],8",
+      "bytes": 5
+    },
+    {
+      "address": "0x60053621",
+      "mnemonic": "call",
+      "operands": "0x600525ed,[d2,a2],12",
+      "bytes": 5
+    },
+    {
+      "address": "0x602fcbd0",
+      "mnemonic": "call",
+      "operands": "0x602c1291,[d2,d3],12",
+      "bytes": 7
+    },
+    {
+      "address": "0x613c330d",
+      "mnemonic": "call",
+      "operands": "0x60022fab,[d2],4",
+      "bytes": 7
+    },
+    {
+      "address": "0x6061ecfa",
+      "mnemonic": "call",
+      "operands": "0x6005e971,[d2,d3],12",
+      "bytes": 7
+    },
+    {
+      "address": "0x6061ed4d",
+      "mnemonic": "call",
+      "operands": "0x6005e971,[d2,d3],12",
+      "bytes": 7
+    },
+    {
+      "address": "0x60c9bbaf",
+      "mnemonic": "add",
+      "operands": "-4,sp",
+      "bytes": 3
+    },
+    {
+      "address": "0x60c9bbb2",
+      "mnemonic": "cmp",
+      "operands": "15,d0",
+      "bytes": 2
+    },
+    {
+      "address": "0x60c9bca2",
+      "mnemonic": "add",
+      "operands": "-4,sp",
+      "bytes": 3
+    },
+    {
+      "address": "0x60c9bca5",
+      "mnemonic": "cmp",
+      "operands": "15,d0",
+      "bytes": 2
+    },
+    {
+      "address": "0x60c9c13e",
+      "mnemonic": "add",
+      "operands": "-4,sp",
+      "bytes": 3
+    },
+    {
+      "address": "0x60c9c141",
+      "mnemonic": "cmp",
+      "operands": "15,d0",
+      "bytes": 2
+    },
+    {
+      "address": "0x60c9c176",
+      "mnemonic": "add",
+      "operands": "-4,sp",
+      "bytes": 3
+    },
+    {
+      "address": "0x60c9c179",
+      "mnemonic": "cmp",
+      "operands": "15,d0",
+      "bytes": 2
+    },
+    {
+      "address": "0x60c9c3ed",
+      "mnemonic": "add",
+      "operands": "-4,sp",
+      "bytes": 3
+    },
+    {
+      "address": "0x60c9c3f0",
+      "mnemonic": "cmp",
+      "operands": "15,d0",
+      "bytes": 2
+    },
+    {
+      "address": "0x60c9c587",
+      "mnemonic": "add",
+      "operands": "-4,sp",
+      "bytes": 3
+    },
+    {
+      "address": "0x60c9c58a",
+      "mnemonic": "cmp",
+      "operands": "15,d0",
+      "bytes": 2
+    },
+    {
+      "address": "0x60c34b5e",
+      "mnemonic": "clr",
+      "operands": "d0",
+      "bytes": 1
+    },
+    {
+      "address": "0x60c34b5f",
+      "mnemonic": "mov",
+      "operands": "1080868864,d1",
+      "bytes": 6
+    },
+    {
+      "address": "0x60c34b65",
+      "mnemonic": "call",
+      "operands": "0x60c3eb6f,[d2,d3,a2],16",
+      "bytes": 7
+    },
+    {
+      "address": "0x60c34b6c",
+      "mnemonic": "mov",
+      "operands": "d0,(68,a2)",
+      "bytes": 3
+    },
+    {
+      "address": "0x60c34b6f",
+      "mnemonic": "mov",
+      "operands": "d1,(72,a2)",
+      "bytes": 3
+    },
+    {
+      "address": "0x60c3eb6f",
+      "mnemonic": "mov",
+      "operands": "d0,d2",
+      "bytes": 1
+    },
+    {
+      "address": "0x60c3eb70",
+      "mnemonic": "mov",
+      "operands": "d1,d3",
+      "bytes": 1
+    },
+    {
+      "address": "0x60c3eb71",
+      "mnemonic": "call",
+      "operands": "0x60c3a4a6,[],0",
+      "bytes": 5
+    },
+    {
+      "address": "0x60c3eb7d",
+      "mnemonic": "beq",
+      "operands": "0x60c3eb9e",
+      "bytes": 2
+    },
+    {
+      "address": "0x60c3eb8c",
+      "mnemonic": "beq",
+      "operands": "0x60c3eb9e",
+      "bytes": 2
+    },
+    {
+      "address": "0x60c3eb95",
+      "mnemonic": "call",
+      "operands": "0x600da83c,[a2],12",
+      "bytes": 7
+    },
+    {
+      "address": "0x60c3eb9c",
+      "mnemonic": "mov",
+      "operands": "d0,d2",
+      "bytes": 1
+    },
+    {
+      "address": "0x60c3eb9d",
+      "mnemonic": "mov",
+      "operands": "d1,d3",
+      "bytes": 1
+    },
+    {
+      "address": "0x60c3eb9e",
+      "mnemonic": "mov",
+      "operands": "d2,d0",
+      "bytes": 1
+    },
+    {
+      "address": "0x60c3eb9f",
+      "mnemonic": "mov",
+      "operands": "d3,d1",
+      "bytes": 1
+    },
+    {
+      "address": "0x60c3eba0",
+      "mnemonic": "ret",
+      "operands": "[d2,d3,a2],16",
+      "bytes": 3
+    }
+  ],
+  "regions": [
+    {
+      "start": "0x60048040",
+      "end_exclusive": "0x6004ffc0",
+      "bytes": 32640,
+      "decoded_padding_start": "0x60048010",
+      "padding_bytes": 32752,
+      "unchanged_zero_header_bytes": 16,
+      "preserved_ff_prefix_bytes": 48,
+      "preserved_ff_suffix_bytes": 64,
+      "early_copy_cached_span": [
+        "0x60030000",
+        "0x600d0800"
+      ],
+      "actual_copy_alias_start": "0xa0048040",
+      "logical_flash_start": "0x406c8040",
+      "raw_literal_scans": [
+        {
+          "alias": "cached",
+          "start": "0x60048040",
+          "end_exclusive": "0x6004ffc0",
+          "raw_match_count": 331,
+          "fc_prefix_triage": [],
+          "nonpriority_matches_not_classified": 331
+        },
+        {
+          "alias": "uncached",
+          "start": "0xa0048040",
+          "end_exclusive": "0xa004ffc0",
+          "raw_match_count": 1919,
+          "fc_prefix_triage": [
+            {
+              "site": "0x613c3311",
+              "value": "0xa00480fe"
+            }
+          ],
+          "nonpriority_matches_not_classified": 1918
+        },
+        {
+          "alias": "logical_flash",
+          "start": "0x406c8040",
+          "end_exclusive": "0x406cffc0",
+          "raw_match_count": 27,
+          "fc_prefix_triage": [
+            {
+              "site": "0x60c34b61",
+              "value": "0x406cc000"
+            }
+          ],
+          "nonpriority_matches_not_classified": 26
+        },
+        {
+          "alias": "flash_alias",
+          "start": "0x806c8040",
+          "end_exclusive": "0x806cffc0",
+          "raw_match_count": 150,
+          "fc_prefix_triage": [],
+          "nonpriority_matches_not_classified": 150
+        }
+      ],
+      "relative_local_classification": [
+        {
+          "site": "0x60041e32",
+          "raw_target": "0x60048054",
+          "encoding": "call16",
+          "containing_instruction": {
+            "address": "0x60041e2f",
+            "mnemonic": "mov",
+            "operands": "(0x6222cd9c),d0",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x60041e85",
+          "raw_target": "0x600480a7",
+          "encoding": "call16",
+          "containing_instruction": {
+            "address": "0x60041e82",
+            "mnemonic": "mov",
+            "operands": "(0x6222cd9c),d0",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x60041ea5",
+          "raw_target": "0x600480c7",
+          "encoding": "call16",
+          "containing_instruction": {
+            "address": "0x60041ea2",
+            "mnemonic": "mov",
+            "operands": "(0x6222cd9c),d0",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x60041ee5",
+          "raw_target": "0x60048107",
+          "encoding": "call16",
+          "containing_instruction": {
+            "address": "0x60041ee2",
+            "mnemonic": "mov",
+            "operands": "(0x6222cd9c),d0",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x60041eee",
+          "raw_target": "0x60048110",
+          "encoding": "call16",
+          "containing_instruction": {
+            "address": "0x60041eeb",
+            "mnemonic": "mov",
+            "operands": "d0,(0x6222cd9c)",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x600441c4",
+          "raw_target": "0x600499c4",
+          "encoding": "call16",
+          "containing_instruction": {
+            "address": "0x600441c3",
+            "mnemonic": "jmp",
+            "operands": "0x60044290",
+            "bytes": 3
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x600457bd",
+          "raw_target": "0x600487bd",
+          "encoding": "jmp16",
+          "containing_instruction": {
+            "address": "0x600457bc",
+            "mnemonic": "mov",
+            "operands": "1629761536,d0",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x600457d5",
+          "raw_target": "0x6004cfd5",
+          "encoding": "jmp16",
+          "containing_instruction": {
+            "address": "0x600457d4",
+            "mnemonic": "mov",
+            "operands": "1616607232,d0",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x60045e57",
+          "raw_target": "0x60049e61",
+          "encoding": "jmp16",
+          "containing_instruction": {
+            "address": "0x60045e56",
+            "mnemonic": "mov",
+            "operands": "385892362,d0",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x60045ea8",
+          "raw_target": "0x60049eb2",
+          "encoding": "jmp16",
+          "containing_instruction": {
+            "address": "0x60045ea7",
+            "mnemonic": "mov",
+            "operands": "385892362,d0",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x6005166a",
+          "raw_target": "0x6004b8d9",
+          "encoding": "call16",
+          "containing_instruction": {
+            "address": "0x60051667",
+            "mnemonic": "add",
+            "operands": "-1569731262,a2",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x60051aca",
+          "raw_target": "0x6004d9b9",
+          "encoding": "jmp16",
+          "containing_instruction": {
+            "address": "0x60051ac9",
+            "mnemonic": "mov",
+            "operands": "48879,d0",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x60051b9f",
+          "raw_target": "0x6004da8e",
+          "encoding": "jmp16",
+          "containing_instruction": {
+            "address": "0x60051b9e",
+            "mnemonic": "mov",
+            "operands": "48879,d0",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x60051c70",
+          "raw_target": "0x6004bedf",
+          "encoding": "call16",
+          "containing_instruction": {
+            "address": "0x60051c6d",
+            "mnemonic": "add",
+            "operands": "-1569731262,a0",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x60051c80",
+          "raw_target": "0x6004db6f",
+          "encoding": "jmp16",
+          "containing_instruction": {
+            "address": "0x60051c7f",
+            "mnemonic": "mov",
+            "operands": "48879,d0",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x60051cde",
+          "raw_target": "0x6004bf4d",
+          "encoding": "call16",
+          "containing_instruction": {
+            "address": "0x60051cdb",
+            "mnemonic": "add",
+            "operands": "-1569731262,a0",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x60051d05",
+          "raw_target": "0x6004bf74",
+          "encoding": "call16",
+          "containing_instruction": {
+            "address": "0x60051d02",
+            "mnemonic": "add",
+            "operands": "-1569731262,a0",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x60051d58",
+          "raw_target": "0x6004dc47",
+          "encoding": "jmp16",
+          "containing_instruction": {
+            "address": "0x60051d57",
+            "mnemonic": "mov",
+            "operands": "48879,d0",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x60051f20",
+          "raw_target": "0x6004de0f",
+          "encoding": "jmp16",
+          "containing_instruction": {
+            "address": "0x60051f1f",
+            "mnemonic": "mov",
+            "operands": "-559038737,d0",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x600523ed",
+          "raw_target": "0x6004bbed",
+          "encoding": "call16",
+          "containing_instruction": {
+            "address": "0x600523ec",
+            "mnemonic": "mov",
+            "operands": "1167693824,d1",
+            "bytes": 6
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x60052c7c",
+          "raw_target": "0x6004cd73",
+          "encoding": "jmp16",
+          "containing_instruction": {
+            "address": "0x60052c7b",
+            "mnemonic": "call",
+            "operands": "0x60052447,[d2,a2],8",
+            "bytes": 5
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        },
+        {
+          "site": "0x60053622",
+          "raw_target": "0x6004d711",
+          "encoding": "jmp16",
+          "containing_instruction": {
+            "address": "0x60053621",
+            "mnemonic": "call",
+            "operands": "0x600525ed,[d2,a2],12",
+            "bytes": 5
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        }
+      ],
+      "relocated_helper_raw_transfers": 0,
+      "approved_for_placement": false
+    },
+    {
+      "start": "0x600c8040",
+      "end_exclusive": "0x600cffc0",
+      "bytes": 32640,
+      "decoded_padding_start": "0x600c8010",
+      "padding_bytes": 32752,
+      "unchanged_zero_header_bytes": 16,
+      "preserved_ff_prefix_bytes": 48,
+      "preserved_ff_suffix_bytes": 64,
+      "early_copy_cached_span": [
+        "0x60030000",
+        "0x600d0800"
+      ],
+      "actual_copy_alias_start": "0xa00c8040",
+      "logical_flash_start": "0x40748040",
+      "raw_literal_scans": [
+        {
+          "alias": "cached",
+          "start": "0x600c8040",
+          "end_exclusive": "0x600cffc0",
+          "raw_match_count": 102,
+          "fc_prefix_triage": [],
+          "nonpriority_matches_not_classified": 102
+        },
+        {
+          "alias": "uncached",
+          "start": "0xa00c8040",
+          "end_exclusive": "0xa00cffc0",
+          "raw_match_count": 2548,
+          "fc_prefix_triage": [
+            {
+              "site": "0x6061ecfe",
+              "value": "0xa00cc0ff"
+            },
+            {
+              "site": "0x6061ed51",
+              "value": "0xa00cc0ff"
+            },
+            {
+              "site": "0x60c9bbb3",
+              "value": "0xa00cc80f"
+            },
+            {
+              "site": "0x60c9bca6",
+              "value": "0xa00cc80f"
+            },
+            {
+              "site": "0x60c9c142",
+              "value": "0xa00cc80f"
+            },
+            {
+              "site": "0x60c9c17a",
+              "value": "0xa00cc80f"
+            },
+            {
+              "site": "0x60c9c3f1",
+              "value": "0xa00cc80f"
+            },
+            {
+              "site": "0x60c9c58b",
+              "value": "0xa00cc80f"
+            }
+          ],
+          "nonpriority_matches_not_classified": 2540
+        },
+        {
+          "alias": "logical_flash",
+          "start": "0x40748040",
+          "end_exclusive": "0x4074ffc0",
+          "raw_match_count": 95,
+          "fc_prefix_triage": [],
+          "nonpriority_matches_not_classified": 95
+        },
+        {
+          "alias": "flash_alias",
+          "start": "0x80748040",
+          "end_exclusive": "0x8074ffc0",
+          "raw_match_count": 142,
+          "fc_prefix_triage": [],
+          "nonpriority_matches_not_classified": 142
+        }
+      ],
+      "relative_local_classification": [
+        {
+          "site": "0x602fcbd3",
+          "raw_target": "0x600cd893",
+          "encoding": "calls",
+          "containing_instruction": {
+            "address": "0x602fcbd0",
+            "mnemonic": "call",
+            "operands": "0x602c1291,[d2,d3],12",
+            "bytes": 7
+          },
+          "classification": "Inside reviewed local instruction; alternate-entry CFG not closed"
+        }
+      ],
+      "relocated_helper_raw_transfers": 0,
+      "approved_for_placement": false
+    }
+  ],
+  "total_proposed_capacity": 65280,
+  "literal_priority_classification": [
+    {
+      "site": "0x613c3311",
+      "classification": "Crosses wide CALL operands and following instruction",
+      "instruction": {
+        "address": "0x613c330d",
+        "mnemonic": "call",
+        "operands": "0x60022fab,[d2],4",
+        "bytes": 7
+      }
+    },
+    {
+      "site": "0x6061ecfe",
+      "classification": "Crosses wide CALL operands and following instruction",
+      "instruction": {
+        "address": "0x6061ecfa",
+        "mnemonic": "call",
+        "operands": "0x6005e971,[d2,d3],12",
+        "bytes": 7
+      }
+    },
+    {
+      "site": "0x6061ed51",
+      "classification": "Crosses wide CALL operands and following instruction",
+      "instruction": {
+        "address": "0x6061ed4d",
+        "mnemonic": "call",
+        "operands": "0x6005e971,[d2,d3],12",
+        "bytes": 7
+      }
+    },
+    {
+      "site": "0x60c9bbb3",
+      "classification": "FC is ADD immediate; candidate spans CMP/branch bytes",
+      "instruction_addresses": [
+        "0x60c9bbaf",
+        "0x60c9bbb2"
+      ]
+    },
+    {
+      "site": "0x60c9bca6",
+      "classification": "FC is ADD immediate; candidate spans CMP/branch bytes",
+      "instruction_addresses": [
+        "0x60c9bca2",
+        "0x60c9bca5"
+      ]
+    },
+    {
+      "site": "0x60c9c142",
+      "classification": "FC is ADD immediate; candidate spans CMP/branch bytes",
+      "instruction_addresses": [
+        "0x60c9c13e",
+        "0x60c9c141"
+      ]
+    },
+    {
+      "site": "0x60c9c17a",
+      "classification": "FC is ADD immediate; candidate spans CMP/branch bytes",
+      "instruction_addresses": [
+        "0x60c9c176",
+        "0x60c9c179"
+      ]
+    },
+    {
+      "site": "0x60c9c3f1",
+      "classification": "FC is ADD immediate; candidate spans CMP/branch bytes",
+      "instruction_addresses": [
+        "0x60c9c3ed",
+        "0x60c9c3f0"
+      ]
+    },
+    {
+      "site": "0x60c9c58b",
+      "classification": "FC is ADD immediate; candidate spans CMP/branch bytes",
+      "instruction_addresses": [
+        "0x60c9c587",
+        "0x60c9c58a"
+      ]
+    },
+    {
+      "site": "0x60c34b61",
+      "value": "0x406cc000",
+      "classification": "Real immediate in D1, paired with D0=0 and stored in parameter record; later meaning unresolved",
+      "if_interpreted_as_ieee754_binary64": 230.0,
+      "called_wrapper": "0x60c3eb6f",
+      "record_word_offsets": [
+        68,
+        72
+      ],
+      "pointer_use_excluded_globally": false
+    }
+  ],
+  "post_copy_seam": {
+    "address": "0x600201fe",
+    "original_instruction_bytes": 6,
+    "resume": "0x60020204",
+    "original_operation": "reload D0 from6218d984 before next data copy",
+    "previous_copy_returned_locally": true,
+    "other_cpu_order_proven": false,
+    "bootstrap_implemented": false
+  },
+  "qualified_free_code_regions": [],
+  "firmware_modified": false,
+  "firmware_built": false,
+  "target_executed": false,
+  "camera_executed": false,
+  "hash_checks_performed": false,
+  "limits": [
+    "Only decoded main literal matches and main/known-helper raw relative transfers were scanned.",
+    "Nonpriority literal matches and other update components remain unclassified.",
+    "Local instruction decoding does not rule out alternate instruction entry or computed addressing.",
+    "No DMA, later writes, boot success, execute/cache permission or cross-core ordering proof.",
+    "Padding/header shape and source load coverage are capacity evidence, not allocation ownership."
+  ]
+}
