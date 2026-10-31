@@ -1,0 +1,98 @@
+{
+  "scope": "Additional stock witnesses used by request278 owner capture/retire bridges.",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "input_structure": {
+    "scope": "Prepare a local E-P7 research input using container structure, without SHA.\n\nThis does not establish byte identity with historical hash-pinned reports.\nIt decodes stock only, never modifies firmware or produces an install image.",
+    "bytes": 111017984,
+    "model": "E-P7",
+    "build": "1100",
+    "whole_container_checked": true,
+    "components": [
+      {
+        "offset": 0,
+        "payload_bytes": 26214336,
+        "kind": "0x100",
+        "header_build": "1100",
+        "model_bytes": "1420",
+        "container_address": "0x406a0000"
+      },
+      {
+        "offset": 26214400,
+        "payload_bytes": 26214336,
+        "kind": "0x101",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x421a0000"
+      },
+      {
+        "offset": 52428800,
+        "payload_bytes": 45219776,
+        "kind": "0x106",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x43aa0000"
+      },
+      {
+        "offset": 97648640,
+        "payload_bytes": 262080,
+        "kind": "0x10e",
+        "header_build": "0001",
+        "model_bytes": "1420",
+        "container_address": "0x0"
+      },
+      {
+        "offset": 97910784,
+        "payload_bytes": 13107136,
+        "kind": "0x102",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x467e0000"
+      }
+    ],
+    "component_sums_valid": true,
+    "unchanged_roundtrip_equal": true,
+    "runtime_base": "0x60020020",
+    "entry_witnesses_match": true,
+    "hash_checks_performed": false,
+    "historical_exact_byte_identity_proven": false,
+    "firmware_modified": false,
+    "firmware_executed": false,
+    "camera_accessed": false,
+    "flash_ready": false
+  },
+  "checked_instructions": 30,
+  "checked_data_rows": 4,
+  "owner_header_type_offset": 4,
+  "owner_header_id_offset": 6,
+  "child_list_vtable": "0x60f94aa0",
+  "original_methods": [
+    {
+      "entry": "0x60d37b53",
+      "self_frame": 64
+    },
+    {
+      "entry": "0x60d43d4b",
+      "self_frame": 36
+    },
+    {
+      "entry": "0x60d42d69",
+      "self_frame": 32
+    },
+    {
+      "entry": "0x60d7ab79",
+      "self_frame": 4
+    }
+  ],
+  "bridge_calls_full_self_prologue_entries": true,
+  "destructor_returns_deallocator_in_a0": true,
+  "reused_evidence": [
+    "ui-screen-activation-current.json",
+    "ui-owner-lifecycle-current.json"
+  ],
+  "full_bypass_and_allocator_lifetime_closure": false,
+  "gui_exclusion_proven": false,
+  "installed": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "hash_checks_performed": false
+}

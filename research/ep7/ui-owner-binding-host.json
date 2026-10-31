@@ -1,0 +1,24 @@
+{
+  "scope": "Owner switch/retire with actual cohort/lifecycle/rollback C; native methods mocked.",
+  "runs": {
+    "strict": {
+      "passed": true
+    },
+    "asan_ubsan": {
+      "passed": true
+    }
+  },
+  "scenarios": 12,
+  "host_fixture_static_addresses_fit_native32": true,
+  "actual_cohort_checks_used": true,
+  "actual_native_text_lifecycle_and_rollback_C_used": true,
+  "resource_constructor_and_native_leaf_calls_mocked": true,
+  "manager_execution_modeled_at_boundaries": true,
+  "quarantine_modeled_with_longjmp": true,
+  "hardware_exception_behavior_tested": false,
+  "renderer_ready": false,
+  "installed": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "hash_checks_performed": false
+}

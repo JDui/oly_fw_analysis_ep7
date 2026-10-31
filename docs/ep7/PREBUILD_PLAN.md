@@ -201,3 +201,10 @@ type6111 描述符和 service+416 发布顺序：新 owner bind/draw 后才回�
 新增112字节专用文本资源，复制原厂index53，仅改独立ID和自有layout指针，保留空
 导航表。目标对象构造器72字节，17对象通过；未重复跑未改动host测试。下一项在完整
 manager前后接捕获/撤销，并覆盖bulk cleanup/析构，再汇入 H/L viewer。
+
+[显示 owner 接合](UI_OWNER_BINDING.md)已实现完整manager前后桥、匹配owner的
+cleanup/bulk/析构撤销、实际四表项cohort及真实来源qualifier，复用已有text生命周期。
+30条新增原厂指令、4表项、12组strict/ASan/UBSan和21对象通过；bare destructor与
+重入销毁不会静默丢掉child。fresh保留仍要求原生allocator存活证明，四表项匹配也
+不代表安装/排他/旁路闭包。下一项MVC parent/session、category4/5与实际输入资格，
+`renderer_ready`继续关闭，G4/G6/G8尚未整体通过。

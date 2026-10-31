@@ -14,10 +14,12 @@ mode.add_argument('--task-context-only',action='store_true',help='compile read-o
 mode.add_argument('--ui-context-only',action='store_true',help='compile native text rollback context callbacks and audited native selection leaves')
 mode.add_argument('--ui-create-only',action='store_true',help='compile context-preserving text factory result bridge with existing rollback bindings')
 mode.add_argument('--ui-lifecycle-only',action='store_true',help='compile actual text creation/attach/bind/set/rollback callback composition')
+mode.add_argument('--ui-owner-only',action='store_true',help='compile request278 owner capture/revoke, actual table cohort and native method bridges')
 args=parser.parse_args()
 receiver_mode=args.receive_abi_only or args.queue_pipeline_abi_only
 materializer_mode=args.materializer_abi_only or receiver_mode
-ui_create_mode=args.ui_create_only or args.ui_lifecycle_only
+ui_lifecycle_mode=args.ui_lifecycle_only or args.ui_owner_only
+ui_create_mode=args.ui_create_only or ui_lifecycle_mode
 ui_mode=args.ui_context_only or ui_create_mode
 root=Path(__file__).resolve().parents[1];core=root/'prototypes/ep7_volatile_hl';prefix=args.tool_prefix
 versions={n:subprocess.check_output([prefix+n,'--version'],text=True).splitlines()[0] for n in ['gcc','as','ld','objdump']}
@@ -45,11 +47,15 @@ if ui_mode:
  if ui_create_mode:
   files.update({n:core/'text_lifecycle'/p for n,p in [('text_factory_bridge','native_create.s'),
       ('text_factory_caller','factory_caller.c'),('text_lifecycle','lifecycle.c')]})
- if args.ui_lifecycle_only:
+ if ui_lifecycle_mode:
   files.update({'text_native_lifecycle':core/'text_lifecycle/native_lifecycle.c',
       'text_attach_bind':core/'text_lifecycle/attach_bind.s','text_setter':core/'text_viewer/set_text.s',
       'text_find_child':core/'text_lifecycle/find_child.s',
       'text_native_resource':core/'text_lifecycle/native_resource.c'})
+ if args.ui_owner_only:
+  files.update({n:core/'ui_owner'/p for n,p in [('ui_owner','owner.c'),
+      ('ui_owner_cohort','cohort.c'),('ui_owner_bridges','bridges.s')]})
+  files['quarantine']=core/'runtime/quarantine.s'
 if materializer_mode:
  files={'materializer_bridge':core/'snapshot_transport/native/materializer_bridge.s',
         'materializer_layout':core/'snapshot_transport/native/materializer_layout.c',
@@ -196,6 +202,35 @@ with tempfile.TemporaryDirectory() as temp:
     raise ValueError('child lookup native target/frame changed')
    objects[name].update(checked_instructions=12,own_frame_bytes=12,native_self_frame_bytes=24,
        owner_list_offset=92,preserved_iterator_offset=108,pointer_result_register='a0')
+  if name=='ui_owner_bridges':
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   screen=[('movm','[d2,d3,a2,a3],(sp)'),('add','-48,sp'),('mov','a0,(12,sp)'),
+       ('mov','d0,(16,sp)'),('mov','d1,(28,sp)'),('mov','a1,(32,sp)'),
+       ('mov','sp,a0'),('add','12,a0'),('mov','a0,d0'),('call',None),
+       ('mov','(12,sp),a0'),('mov','(16,sp),d0'),('mov','(28,sp),d1'),
+       ('mov','(32,sp),a1'),('call',None),('mov','d0,(20,sp)'),
+       ('mov','a0,(36,sp)'),('mov','d1,(40,sp)'),('mov','a1,(44,sp)'),
+       ('mov','sp,a0'),('add','12,a0'),('mov','a0,d0'),('call',None),
+       ('mov','(20,sp),d0'),('mov','(36,sp),a0'),('mov','(40,sp),d1'),
+       ('mov','(44,sp),a1'),('ret','[d2,d3,a2,a3],64')]
+   retire_prefix=[('movm','[d2,d3,a2,a3],(sp)'),('add','-32,sp'),('mov','a0,(12,sp)'),
+       ('mov','d0,(16,sp)'),('mov','d1,(20,sp)'),('mov','a1,(24,sp)'),
+       ('mov','a0,d0')]
+   retire_suffix=[('call',None),('mov','(12,sp),a0'),('mov','(16,sp),d0'),
+       ('mov','(20,sp),d1'),('mov','(24,sp),a1'),('call',None),('ret','[d2,d3,a2,a3],48')]
+   expected=screen+[item for stage in [1,2,3] for item in retire_prefix+[('mov',str(stage)+',d1')]+retire_suffix]
+   if len(ins)!=len(expected) or any(a[0]!=b[0] or (b[1] is not None and a[1]!=b[1]) for a,b in zip(ins,expected)):
+    raise ValueError('owner full-method argument/result/frame routing changed')
+   if any(not operand.endswith(',[],0') for mnemonic,operand in ins if mnemonic=='call'):
+    raise ValueError('owner bridge must call full self-prologue entries')
+   targets=['_ep7u_screen_enter','ep7_stock_screen_manager_unresolved','_ep7u_screen_leave']
+   for target in ['cleanup','bulk','destructor']:
+    targets+=['_ep7u_before_retire','ep7_stock_ui_owner_'+target+'_unresolved']
+   if re.findall(r'R_MN10300_(\w+)\s+([^\n]+)',dis)!=[('PCREL32',s+'+0x1') for s in targets]:
+    raise ValueError('owner method/callback targets changed')
+   objects[name].update(checked_instructions=73,own_frame_bytes=[64,48,48,48],
+       original_method_self_frames=[64,36,32,4],original_screen_scratch_results_preserved=True,
+       destructor_result_a0_preserved=True)
   if name=='ui_context_bridges':
    ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
    expected=[('add','-4,sp'),('call',None),('mov','a0,d0'),('ret','[],4'),
@@ -503,9 +538,13 @@ if ui_mode:expected={'ep7_stock_get_tid_unresolved','ep7_stock_ui_service_unreso
     'ep7_stock_ui_context_get_unresolved','ep7_stock_ui_context_set_unresolved',
     'ep7_stock_text_cleanup_unresolved','ep7_stock_text_destructor_unresolved'}
 if ui_create_mode:expected.add('ep7_stock_widget_factory_unresolved')
-if args.ui_lifecycle_only:expected|={'ep7_stock_ui_attach_unresolved','ep7_stock_text_bind_unresolved',
+if ui_lifecycle_mode:expected|={'ep7_stock_ui_attach_unresolved','ep7_stock_text_bind_unresolved',
     'ep7_stock_text_setter_unresolved','ep7_stock_ui_find_child_unresolved',
     '_ep7_stock_hl_text_descriptor_unresolved','_ep7_stock_hl_text_layouts_unresolved'}
+if args.ui_owner_only:expected|={'ep7_stock_screen_manager_unresolved',
+    'ep7_stock_ui_owner_cleanup_unresolved','ep7_stock_ui_owner_bulk_unresolved',
+    'ep7_stock_ui_owner_destructor_unresolved','_ep7_stock_ui_service_vtable_unresolved',
+    '_ep7_stock_ui_display_vtable_unresolved'}
 if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved','ep7_stock_receive_wrapper_unresolved'}
@@ -536,6 +575,7 @@ if args.queue_pipeline_abi_only:scope='Owned pipeline, shared runtime, native ca
 if args.task_context_only:scope='Read-only current-task stack and actual local queue views with existing get_tid/delay veneers; no lifetime lease, installation flag or native execution'
 if ui_mode:scope='Fresh text rollback with actual native context callbacks; qualified object/service lifetime and serialized GUI ownership remain caller obligations'
 if ui_create_mode:scope='Existing text factory result/context bridge and native rollback closure; resource/UI ownership and actual lifecycle attachment remain unqualified'
-if args.ui_lifecycle_only:scope='Actual text create/attach/bind/set/rollback C and native ABI closure; concrete live owner/GUI entry, resource semantics and teardown hooks remain unqualified'
+if ui_lifecycle_mode:scope='Actual text create/attach/bind/set/rollback C and native ABI closure; concrete live owner/GUI entry, resource semantics and teardown hooks remain unqualified'
+if args.ui_owner_only:scope='Request278 owner capture and matching retirement with native table cohort and text lifecycle; cold installation, bypass closure, GUI exclusion, MVC/renderer and placement remain unqualified'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))
