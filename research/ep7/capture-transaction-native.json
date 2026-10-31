@@ -1,0 +1,171 @@
+{
+  "scope": "Three native refill envelopes, actual25-CALL cohort and finite reference inventory; no SHA.",
+  "input_structure": {
+    "scope": "Prepare a local E-P7 research input using container structure, without SHA.\n\nThis does not establish byte identity with historical hash-pinned reports.\nIt decodes stock only, never modifies firmware or produces an install image.",
+    "bytes": 111017984,
+    "model": "E-P7",
+    "build": "1100",
+    "whole_container_checked": true,
+    "components": [
+      {
+        "offset": 0,
+        "payload_bytes": 26214336,
+        "kind": "0x100",
+        "header_build": "1100",
+        "model_bytes": "1420",
+        "container_address": "0x406a0000"
+      },
+      {
+        "offset": 26214400,
+        "payload_bytes": 26214336,
+        "kind": "0x101",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x421a0000"
+      },
+      {
+        "offset": 52428800,
+        "payload_bytes": 45219776,
+        "kind": "0x106",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x43aa0000"
+      },
+      {
+        "offset": 97648640,
+        "payload_bytes": 262080,
+        "kind": "0x10e",
+        "header_build": "0001",
+        "model_bytes": "1420",
+        "container_address": "0x0"
+      },
+      {
+        "offset": 97910784,
+        "payload_bytes": 13107136,
+        "kind": "0x102",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x467e0000"
+      }
+    ],
+    "component_sums_valid": true,
+    "unchanged_roundtrip_equal": true,
+    "runtime_base": "0x60020020",
+    "entry_witnesses_match": true,
+    "hash_checks_performed": false,
+    "historical_exact_byte_identity_proven": false,
+    "firmware_modified": false,
+    "firmware_executed": false,
+    "camera_accessed": false,
+    "flash_ready": false
+  },
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "checked_instructions": 91,
+  "checked_data_rows": 3,
+  "source_envelopes": [
+    [
+      "0x602a31c7",
+      "0x602a31ea",
+      "0x602a31f7"
+    ],
+    [
+      "0x602a440a",
+      "0x602a442c",
+      "0x602a443e"
+    ],
+    [
+      "0x602a4480",
+      "0x602a44a3",
+      "0x602a44b5"
+    ]
+  ],
+  "cohort_call_sites": [
+    "0x60289c5e",
+    "0x60289d02",
+    "0x6029be5d",
+    "0x6029f1c2",
+    "0x6029f6ba",
+    "0x602a29ab",
+    "0x602a2a00",
+    "0x602a2a48",
+    "0x602a2ab5",
+    "0x602a2cb9",
+    "0x602a2d0d",
+    "0x602a31b1",
+    "0x602a31c7",
+    "0x602a31ea",
+    "0x602a31f7",
+    "0x602a4220",
+    "0x602a427d",
+    "0x602a440a",
+    "0x602a442c",
+    "0x602a443e",
+    "0x602a4461",
+    "0x602a4480",
+    "0x602a44a3",
+    "0x602a44b5",
+    "0x602a44d8"
+  ],
+  "cohort_call_count": 25,
+  "candidate_short_call_target_intervals": {
+    "fresh": [
+      "0x6029c480",
+      "0x602ab1c6"
+    ],
+    "sample": [
+      "0x6029c4a3",
+      "0x602ab1e9"
+    ],
+    "finish": [
+      "0x6029c4b5",
+      "0x602ab1f6"
+    ]
+  },
+  "qualified_code_placement": false,
+  "full_main_direct_CALL_candidates": {
+    "0x602a3116": [
+      "0x6029cdd0",
+      "0x602a31c7",
+      "0x602a440a",
+      "0x602a4480"
+    ],
+    "0x602a31bb": [
+      "0x602a29bf",
+      "0x602a2a5c"
+    ],
+    "0x602a7ea0": [
+      "0x6029586d",
+      "0x60298147",
+      "0x60298d8e",
+      "0x6029cfe4",
+      "0x6029d7cd",
+      "0x602a161a",
+      "0x602a2182",
+      "0x602a31ea",
+      "0x602a442c",
+      "0x602a44a3"
+    ],
+    "0x602a8dbd": [
+      "0x602996e5",
+      "0x6029ddb2",
+      "0x6029eeb9",
+      "0x6029f3ec",
+      "0x6029f94d",
+      "0x602a0f1b",
+      "0x602a2240",
+      "0x602a26fc",
+      "0x602a31f7",
+      "0x602a443e",
+      "0x602a44b5"
+    ]
+  },
+  "raw_reference_scan_is_control_flow_proof": false,
+  "unqualified_distinct_fresh_route": "0x6029cdd0: associated+6=1, queue6223e314, no matched A2 sample/finish envelope",
+  "other_population_and_repopulation_paths_qualified": false,
+  "full_native_alias_and_retirement_closure_proven": false,
+  "interrupt_or_other_core_exclusion_proven": false,
+  "installed": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "hash_checks_performed": false
+}

@@ -2,6 +2,10 @@
 
 ## 已实现
 
+后续 [捕获事务与三组接合](CAPTURE_TRANSACTION_GUARD.md) 已扩展实际调用检查，加入
+新增C访问期间的busy保护和非返回的销毁失败处理；下文初次56对象结果保留为历史证据，
+当前结果为57对象。其他原生别名/释放闭包依然须单独证明。
+
 `controller_sidecar/native_binding.c` 定义实际 source provider
 `ep7q_capture_snapshot_unresolved`，以及共享 sidecar 存储、初始化、state观察、fresh登记、
 两阶段population、node free、capture pool release observer。历史名字中的`unresolved`
@@ -12,9 +16,9 @@
 |---|---|---|
 |初始化inline|602897d7|重放实际state=0写入，续接602897dd|
 |state service|60289c5e、60289d02|复用原桥；先调用6028a882，正常返回后观察|
-|fresh返回登记|602a31c7|602a3116，[d2,a2],28；原A0 node返回给原调用者|
-|sample|602a31ea|602a7ea0，[d2,d3,a2,a3],20；正常返回后使用原caller A2=node|
-|finish|602a31f7|602a8dbd，[d2,d3,a2,a3],48；相同node完成确认|
+|fresh返回登记|602a31c7、602a440a、602a4480|602a3116，[d2,a2],28；原A0 node返回给原调用者|
+|sample|602a31ea、602a442c、602a44a3|602a7ea0，[d2,d3,a2,a3],20；正常返回后使用原caller A2=node|
+|finish|602a31f7、602a443e、602a44b5|602a8dbd，[d2,d3,a2,a3],48；相同node完成确认|
 |node free|既有清单13处|observer后尾转60022732，原A0和[],4帧不变|
 |capture pool release|6029be5d|observer后尾转603db89e，原pool handle和[],4帧不变|
 
@@ -40,12 +44,13 @@ observer在释放+16前按+12撤销reservations，覆盖未sample、已sample和
 ## 上下文与关闭行为
 
 使用已发布runtime的实际current-TCB查询，要求domain0/controller entry60289852。
-首次有效调用保留其TCB、ID和stack视图；变化或未知上下文永久关闭新的capture接合。
-外部上下文只设置atomic关闭标志，不并发清理controller-owned sidecar。初始化只允许
-第一次native state=0；重复初始化关闭接合，不重置旧sidecar或token。
+首次有效调用保留其TCB、ID和stack视图；变化或未知非销毁上下文永久关闭新的capture接合。
+外部非销毁上下文只设置atomic关闭标志，不并发清理controller-owned sidecar；销毁或
+state observer上下文失配则隔离，不能返回原厂继续释放。新增C访问有busy保护，并核对
+25处实际CALL。初始化只允许第一次native state=0；重复初始化隔离，不重置旧sidecar或token。
 settings采样复用同一个worker/reader core，原state service callback改用这个具体绑定。
 
-这些检查不证明task generation、不禁止中断，也不能补救已经进入prefix读取后的并发free。
+这些检查不证明task generation、不禁止中断，也不能补救未接合路径的并发free。
 安装前仍须证明该controller区间、异步别名、重入与任务/捕获存活；不以“同entry”代替锁。
 G6必须先建立zeroed storage及全部hooks，然后在controller开始使用前完成初始化/发布顺序。
 运行时发生restart后没有重新启用协议。
@@ -72,5 +77,6 @@ native binding文本1159字节、BSS656字节；新桥325字节。observer自有
 
 优先核实controller与异步node别名的排他、其他capture retirement/repopulation入口及全部
 支持的释放闭包，然后落实G4原生UI资源和G6 placement/installer/完整stack预算。
-当前绑定只登记31c7这条fresh路线，其他分配/填充路线保持中性；state33出入清除规则保持。
+当前绑定登记31c7/440a/4480三条同形fresh路线，其他分配/填充路线保持未资格化；
+state33出入清除规则保持，最新具体边界见[后续记录](CAPTURE_TRANSACTION_GUARD.md)。
 没有将限定子集扩称所有连拍、影片或回放已支持。整体固件构建、升级打包及相机操作未开始。

@@ -107,6 +107,7 @@ if args.queue_pipeline_abi_only:
  files['postbuilder_observer']=core/'target/postbuilder/native_observer.c'
  files['capture_sidecar']=core/'controller_sidecar/sidecar.c'
  files['capture_native']=core/'controller_sidecar/native_binding.c'
+ files['capture_cohort']=core/'controller_sidecar/cohort.c'
  files['capture_bridges']=core/'controller_sidecar/native_bridges.s'
  files['capture_state_observer']=core/'capture_state_guard/observer.c'
  files['capture_state_bridge']=core/'capture_state_guard/bridge.s'
