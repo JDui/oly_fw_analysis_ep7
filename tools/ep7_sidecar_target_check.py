@@ -13,10 +13,12 @@ mode.add_argument('--queue-pipeline-abi-only',action='store_true',help='compile 
 mode.add_argument('--task-context-only',action='store_true',help='compile read-only actual current-TCB stack view and reuse get_tid veneer')
 mode.add_argument('--ui-context-only',action='store_true',help='compile native text rollback context callbacks and audited native selection leaves')
 mode.add_argument('--ui-create-only',action='store_true',help='compile context-preserving text factory result bridge with existing rollback bindings')
+mode.add_argument('--ui-lifecycle-only',action='store_true',help='compile actual text creation/attach/bind/set/rollback callback composition')
 args=parser.parse_args()
 receiver_mode=args.receive_abi_only or args.queue_pipeline_abi_only
 materializer_mode=args.materializer_abi_only or receiver_mode
-ui_mode=args.ui_context_only or args.ui_create_only
+ui_create_mode=args.ui_create_only or args.ui_lifecycle_only
+ui_mode=args.ui_context_only or ui_create_mode
 root=Path(__file__).resolve().parents[1];core=root/'prototypes/ep7_volatile_hl';prefix=args.tool_prefix
 versions={n:subprocess.check_output([prefix+n,'--version'],text=True).splitlines()[0] for n in ['gcc','as','ld','objdump']}
 include=subprocess.check_output([prefix+'gcc','-print-file-name=include'],text=True).strip()
@@ -40,9 +42,12 @@ if ui_mode:
      ('task_native','task_context_native.c'),('queue_context','queue_context.c')]})
  files.update({'get_tid':core/'target/get_tid_bridge.s','memory':core/'target/memory.c'})
  flags.append('-fstack-usage')
- if args.ui_create_only:
+ if ui_create_mode:
   files.update({n:core/'text_lifecycle'/p for n,p in [('text_factory_bridge','native_create.s'),
       ('text_factory_caller','factory_caller.c'),('text_lifecycle','lifecycle.c')]})
+ if args.ui_lifecycle_only:
+  files.update({'text_native_lifecycle':core/'text_lifecycle/native_lifecycle.c',
+      'text_attach_bind':core/'text_lifecycle/attach_bind.s','text_setter':core/'text_viewer/set_text.s'})
 if materializer_mode:
  files={'materializer_bridge':core/'snapshot_transport/native/materializer_bridge.s',
         'materializer_layout':core/'snapshot_transport/native/materializer_layout.c',
@@ -160,6 +165,22 @@ with tempfile.TemporaryDirectory() as temp:
    legacy=runpy.run_path(str(core/'text_rollback/check.py'))
    legacy['validate'](dis,subprocess.check_output([prefix+'objdump','-h',str(obj)],text=True))
    objects[name].update(checked_instructions=13,own_frame_bytes=32)
+  if name=='text_setter':
+   legacy=runpy.run_path(str(core/'text_viewer/check.py'))
+   legacy['validate'](dis,subprocess.check_output([prefix+'objdump','-h',str(obj)],text=True))
+   objects[name].update(checked_instructions=5,own_frame_bytes=12,native_frame_bytes=24)
+  if name=='text_attach_bind':
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   expected=[('add','-4,sp'),('mov','d0,a0'),('mov','d1,a1'),('call',None),('ret','[],4')]*2
+   if len(ins)!=len(expected) or any(a[0]!=b[0] or (b[1] is not None and a[1]!=b[1]) for a,b in zip(ins,expected)):
+    raise ValueError('attach/bind argument/frame routing changed')
+   if not ins[3][1].endswith(',[a2],8') or not ins[8][1].endswith(',[],0'):
+    raise ValueError('attach/bind native frame changed')
+   relocs=re.findall(r'R_MN10300_(\w+)\s+([^\n]+)',dis)
+   if relocs!=[('PCREL32',s+'+0x1') for s in ['ep7_stock_ui_attach_unresolved','ep7_stock_text_bind_unresolved']]:
+    raise ValueError('attach/bind native targets changed')
+   objects[name].update(checked_instructions=10,own_frame_bytes=[4,4],native_frames=[8,12],
+       bind_native_frame_is_self_prologue=True)
   if name=='ui_context_bridges':
    ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
    expected=[('add','-4,sp'),('call',None),('mov','a0,d0'),('ret','[],4'),
@@ -466,7 +487,8 @@ if args.task_context_only:expected={'ep7_stock_get_tid_unresolved','ep7_stock_ta
 if ui_mode:expected={'ep7_stock_get_tid_unresolved','ep7_stock_ui_service_unresolved',
     'ep7_stock_ui_context_get_unresolved','ep7_stock_ui_context_set_unresolved',
     'ep7_stock_text_cleanup_unresolved','ep7_stock_text_destructor_unresolved'}
-if args.ui_create_only:expected.add('ep7_stock_widget_factory_unresolved')
+if ui_create_mode:expected.add('ep7_stock_widget_factory_unresolved')
+if args.ui_lifecycle_only:expected|={'ep7_stock_ui_attach_unresolved','ep7_stock_text_bind_unresolved','ep7_stock_text_setter_unresolved'}
 if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved','ep7_stock_receive_wrapper_unresolved'}
@@ -496,6 +518,7 @@ if args.receive_abi_only:scope='Command and descriptor receive bridges with boun
 if args.queue_pipeline_abi_only:scope='Owned pipeline, shared runtime, native capture source and kernel-critical queue gate candidates; installation, full lifetime closure and native addresses remain unbound'
 if args.task_context_only:scope='Read-only current-task stack and actual local queue views with existing get_tid/delay veneers; no lifetime lease, installation flag or native execution'
 if ui_mode:scope='Fresh text rollback with actual native context callbacks; qualified object/service lifetime and serialized GUI ownership remain caller obligations'
-if args.ui_create_only:scope='Existing text factory result/context bridge and native rollback closure; resource/UI ownership and actual lifecycle attachment remain unqualified'
+if ui_create_mode:scope='Existing text factory result/context bridge and native rollback closure; resource/UI ownership and actual lifecycle attachment remain unqualified'
+if args.ui_lifecycle_only:scope='Actual text create/attach/bind/set/rollback C and native ABI closure; concrete live owner/GUI entry, resource semantics and teardown hooks remain unqualified'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))

@@ -45,3 +45,21 @@ rollback with context selection is now available in `../text_rollback`, but its
 allocation/service ownership prerequisites still apply. Do not drop nonnull failed
 factory results or treat independent result storage as a lifetime lease. Full
 details: [TEXT_FACTORY_RESULT](../../../docs/ep7/TEXT_FACTORY_RESULT.md).
+
+## Current full callback composition
+
+`native_lifecycle.c` now implements create/initialized/destroy/attach/bind/set via
+the audited native primitives and reuses the original lifecycle algorithm. For
+exact owner61032f10, native text bind normally returns -1 from event6144, after
+writing child+20. This adapter checks both facts instead of equating raw1 with
+success. A transferred child stays parent-owned even on later failure.
+
+Rejected fresh rollback preserves its original allocation record and returns -2
+from the outer operation; it cannot be silently discarded by the void callback.
+Retry and revoke have explicit ownership rules in `native_lifecycle.h`. The real
+GUI entry must still supply the qualified1360-byte owner, stable service and
+resource/embedded-data/ID contract before any metadata reads. No live entry or
+teardown hook is installed by these C files. The current no-hash check is
+`check_native.py`; native leaves/task facts are mocks, while the actual C context
+and rollback implementations are included. See
+[TEXT_NATIVE_LIFECYCLE](../../../docs/ep7/TEXT_NATIVE_LIFECYCLE.md).

@@ -64,3 +64,7 @@ W 以下。结果结构在目标上为 8 字节，child 位于 +0、initialized 
 下一项：把上述真实 factory result 接入既有 `text_lifecycle` 回调，完成资源副本中
 opaque 字段、独立 ID、parent/list attach 与失败所有权的实际绑定，再联通 H/L viewer。
 `renderer_ready` 仍为 false；本批不是整体固件编译或相机显示验收。
+
+后续已实现 [原生生命周期回调](TEXT_NATIVE_LIFECYCLE.md)，包括 attach 的所有权
+转移、正常 bind=-1 的处理以及失败 cleanup 的 retained/retry。具体 GUI 入口和
+资源资格仍未完成，不能由回调实现推断已创建可见 H/L 控件。

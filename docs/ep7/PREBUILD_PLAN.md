@@ -183,3 +183,9 @@ population/free/pool-release桥。56对象中自写provider符号已闭合，32�
 与原生初始化状态，并在正常返回时恢复先前 allocator selection。115 条原厂指令、
 28 条新桥指令和 12 个目标对象通过定向检查；失败且非空的 child 明确保留回滚义务。
 下一项实际生命周期回调/资源副本/parent attach 与 H/L viewer 接合，G4 尚未整体通过。
+
+[原生文本生命周期](TEXT_NATIVE_LIFECYCLE.md)已把 factory/attach/bind/set/rollback 接入
+现有 C 流程。确认精确 parent 的正常 bind 返回 -1；按 parent 字段和事件结果正确
+归一，attach 成功后不再独立 free，cleanup 拒绝则保留待清理对象。96 指令/7 vtable、
+定向 strict/ASan/UBSan 和 15 个目标对象通过。真实 owner 入口/退出、descriptor+12
+及独立 ID/资源副本、H/L viewer 仍待接合，未安装或启用 renderer_ready。

@@ -1,0 +1,21 @@
+{
+  "scope": "Actual C creation/attach/rollback composition with mocked native leaves/task facts.",
+  "runs": {
+    "strict": {
+      "passed": true
+    },
+    "asan_ubsan": {
+      "passed": true
+    }
+  },
+  "scenarios": 15,
+  "actual_native_context_and_rollback_C_used": true,
+  "retained_cleanup_rejection_exercised": true,
+  "normal_bind_event_minus_one_exercised": true,
+  "target_executed": false,
+  "concrete_gui_owner_entry_qualified": false,
+  "resource_semantics_fully_qualified": false,
+  "hash_checks_performed": false,
+  "firmware_built": false,
+  "renderer_ready": false
+}
