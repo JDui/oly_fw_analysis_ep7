@@ -24,6 +24,11 @@ entry into that initial frame. The reviewed deletion path passes the same base
 to the stack free routine when the kernel allocated it. This supports obtaining
 the real current stack bounds; it is not proof of lifetime for a foreign TCB.
 
+The later [native bootstrap stack review](NATIVE_BOOTSTRAP_STACK.md) follows that
+initial frame through `60038544` and task-entry `CALLS600325ad`: the 16-byte RET
+restore leaves the actual task-entry SP at `base+bytes-4`. The initial saved SP
+at `top-20` must not be counted as a permanent 20-byte task-entry overhead.
+
 ## Query behavior
 
 1. Call the original`get_tid`; reject errors and unsupported ID/domain shape.

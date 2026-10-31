@@ -1,0 +1,1766 @@
+{
+  "scope": "Follow native semaphore/critical CFG stack deltas, stopping at explicit stack-switch boundaries.",
+  "root_entries": {
+    "create": "0x6003057f",
+    "delete": "0x60031107"
+  },
+  "functions": {
+    "0x6003057f": {
+      "entry": "0x6003057f",
+      "instruction_count": 76,
+      "reached_extent": [
+        "0x6003057f",
+        "0x60030619"
+      ],
+      "maximum_own_sp_depth": 24,
+      "maximum_direct_stack_address_depth": 16,
+      "stack_operations": [],
+      "calls": [
+        {
+          "site": "0x600305e4",
+          "target": "0x60038594",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60038594,[],0"
+        },
+        {
+          "site": "0x600305ec",
+          "target": "0x60034f31",
+          "frame": 24,
+          "register_save_bytes": 16,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60034f31,[d2,d3,a2,a3],24"
+        },
+        {
+          "site": "0x60030610",
+          "target": "0x6003860b",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6003860b,[],0"
+        },
+        {
+          "site": "0x6003060b",
+          "target": "0x60030b78",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60030b78,[],0"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x60030616",
+          "mnemonic": "ret",
+          "operands": "[d2,a2],16",
+          "local_depth": 0,
+          "inferred_incoming_frame": 16
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": [
+        {
+          "site": "0x60030608",
+          "target": "0x60030603"
+        }
+      ]
+    },
+    "0x60030b78": {
+      "entry": "0x60030b78",
+      "instruction_count": 16,
+      "reached_extent": [
+        "0x60030b78",
+        "0x60030b9c"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [
+        {
+          "site": "0x60030b99",
+          "mnemonic": "retf",
+          "operands": "[],0",
+          "local_depth": 0,
+          "inferred_incoming_frame": 0
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    "0x60031107": {
+      "entry": "0x60031107",
+      "instruction_count": 118,
+      "reached_extent": [
+        "0x60031107",
+        "0x60031229"
+      ],
+      "maximum_own_sp_depth": 16,
+      "maximum_direct_stack_address_depth": 12,
+      "stack_operations": [],
+      "calls": [
+        {
+          "site": "0x6003117a",
+          "target": "0x60031503",
+          "frame": 4,
+          "register_save_bytes": 4,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60031503,[d2],4"
+        },
+        {
+          "site": "0x60031183",
+          "target": "0x600315a3",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x600315a3,[],0"
+        },
+        {
+          "site": "0x60031190",
+          "target": "0x60038594",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60038594,[],0"
+        },
+        {
+          "site": "0x60031220",
+          "target": "0x6003860b",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6003860b,[],0"
+        },
+        {
+          "site": "0x600311c7",
+          "target": "0x600344b2",
+          "frame": 12,
+          "register_save_bytes": 8,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x600344b2,[a2,a3],12"
+        },
+        {
+          "site": "0x6003121a",
+          "target": "0x6003593f",
+          "frame": 16,
+          "register_save_bytes": 12,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6003593f,[d2,a2,a3],16"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x60031226",
+          "mnemonic": "ret",
+          "operands": "[d2,d3,a2,a3],20",
+          "local_depth": 0,
+          "inferred_incoming_frame": 20
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    "0x60031503": {
+      "entry": "0x60031503",
+      "instruction_count": 26,
+      "reached_extent": [
+        "0x60031503",
+        "0x60031540"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [
+        {
+          "site": "0x6003153d",
+          "mnemonic": "retf",
+          "operands": "[d2],4",
+          "local_depth": 0,
+          "inferred_incoming_frame": 4
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    "0x600315a3": {
+      "entry": "0x600315a3",
+      "instruction_count": 1,
+      "reached_extent": [
+        "0x600315a3",
+        "0x600315a6"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [
+        {
+          "site": "0x600315a3",
+          "mnemonic": "retf",
+          "operands": "[],0",
+          "local_depth": 0,
+          "inferred_incoming_frame": 0
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    "0x600319fb": {
+      "entry": "0x600319fb",
+      "instruction_count": 47,
+      "reached_extent": [
+        "0x600319fb",
+        "0x60031a69"
+      ],
+      "maximum_own_sp_depth": 4,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [
+        {
+          "site": "0x60031a19",
+          "target": "0x60038582",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60038582,[],0"
+        },
+        {
+          "site": "0x60031a48",
+          "target": "0x6003858f",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6003858f,[],0"
+        },
+        {
+          "site": "0x60031a58",
+          "target": "0x6003853d",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6003853d,[],0"
+        },
+        {
+          "site": "0x60031a61",
+          "target": "0x60031a69",
+          "frame": 4,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60031a69,[],4"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x60031a66",
+          "mnemonic": "ret",
+          "operands": "[d2,d3,a2,a3],28",
+          "local_depth": 0,
+          "inferred_incoming_frame": 28
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": [
+        {
+          "site": "0x60031a43",
+          "target": "0x60031a2e"
+        }
+      ]
+    },
+    "0x60031a69": {
+      "entry": "0x60031a69",
+      "instruction_count": 5,
+      "reached_extent": [
+        "0x60031a69",
+        "0x60031a76"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [
+        {
+          "site": "0x60031a6e",
+          "target": "0x60038562",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60038562,[],0"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x60031a73",
+          "mnemonic": "ret",
+          "operands": "[],4",
+          "local_depth": 0,
+          "inferred_incoming_frame": 4
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    "0x60031a76": {
+      "entry": "0x60031a76",
+      "instruction_count": 55,
+      "reached_extent": [
+        "0x60031a76",
+        "0x60031aff"
+      ],
+      "maximum_own_sp_depth": 4,
+      "maximum_direct_stack_address_depth": 4,
+      "stack_operations": [],
+      "calls": [
+        {
+          "site": "0x60031a8e",
+          "target": "0x60038582",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60038582,[],0"
+        },
+        {
+          "site": "0x60031af7",
+          "target": "0x6003858f",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6003858f,[],0"
+        },
+        {
+          "site": "0x60031ad4",
+          "target": "0x6003430d",
+          "frame": 4,
+          "register_save_bytes": 4,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6003430d,[a2],4"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x60031afc",
+          "mnemonic": "ret",
+          "operands": "[d2,d3,a2,a3],20",
+          "local_depth": 0,
+          "inferred_incoming_frame": 20
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    "0x60031aff": {
+      "entry": "0x60031aff",
+      "instruction_count": 46,
+      "reached_extent": [
+        "0x60031aff",
+        "0x60031b66"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [
+        {
+          "site": "0x60031b0f",
+          "target": "0x60038582",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60038582,[],0"
+        },
+        {
+          "site": "0x60031b5c",
+          "target": "0x6003858f",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6003858f,[],0"
+        },
+        {
+          "site": "0x60031b43",
+          "target": "0x6003858f",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6003858f,[],0"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x60031b63",
+          "mnemonic": "ret",
+          "operands": "[a2,a3],12",
+          "local_depth": 0,
+          "inferred_incoming_frame": 12
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": [
+        {
+          "site": "0x60031b58",
+          "target": "0x60031b2f"
+        }
+      ]
+    },
+    "0x6003430d": {
+      "entry": "0x6003430d",
+      "instruction_count": 29,
+      "reached_extent": [
+        "0x6003430d",
+        "0x6003434b"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [
+        {
+          "site": "0x60034348",
+          "mnemonic": "retf",
+          "operands": "[a2],4",
+          "local_depth": 0,
+          "inferred_incoming_frame": 4
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    "0x6003434b": {
+      "entry": "0x6003434b",
+      "instruction_count": 16,
+      "reached_extent": [
+        "0x6003434b",
+        "0x6003436e"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [
+        {
+          "site": "0x6003436b",
+          "mnemonic": "retf",
+          "operands": "[],0",
+          "local_depth": 0,
+          "inferred_incoming_frame": 0
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    "0x6003436e": {
+      "entry": "0x6003436e",
+      "instruction_count": 49,
+      "reached_extent": [
+        "0x6003436e",
+        "0x600343d7"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [
+        {
+          "site": "0x60034374",
+          "target": "0x60038657",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60038657,[],0"
+        },
+        {
+          "site": "0x600343a8",
+          "target": "0x60038680",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60038680,[],0"
+        },
+        {
+          "site": "0x600343b5",
+          "target": "0x60038657",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60038657,[],0"
+        },
+        {
+          "site": "0x600343cf",
+          "target": "0x60038680",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60038680,[],0"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x600343d4",
+          "mnemonic": "ret",
+          "operands": "[d2,d3,a2,a3],36",
+          "local_depth": 0,
+          "inferred_incoming_frame": 36
+        }
+      ],
+      "boundaries": [
+        {
+          "site": "0x600343b1",
+          "kind": "indirect_call",
+          "depth": 0,
+          "mnemonic": "calls",
+          "operands": "(a2)"
+        }
+      ],
+      "hardware_loop_edges": []
+    },
+    "0x600344b2": {
+      "entry": "0x600344b2",
+      "instruction_count": 60,
+      "reached_extent": [
+        "0x600344b2",
+        "0x60034533"
+      ],
+      "maximum_own_sp_depth": 28,
+      "maximum_direct_stack_address_depth": 16,
+      "stack_operations": [],
+      "calls": [
+        {
+          "site": "0x6003452b",
+          "target": "0x600319fb",
+          "frame": 28,
+          "register_save_bytes": 16,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x600319fb,[d2,d3,a2,a3],28"
+        },
+        {
+          "site": "0x60034501",
+          "target": "0x6003430d",
+          "frame": 4,
+          "register_save_bytes": 4,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6003430d,[a2],4"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x60034530",
+          "mnemonic": "ret",
+          "operands": "[a2,a3],12",
+          "local_depth": 0,
+          "inferred_incoming_frame": 12
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    "0x60034f31": {
+      "entry": "0x60034f31",
+      "instruction_count": 123,
+      "reached_extent": [
+        "0x60034f31",
+        "0x60035023"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [
+        {
+          "site": "0x60035020",
+          "mnemonic": "retf",
+          "operands": "[d2,d3,a2,a3],24",
+          "local_depth": 0,
+          "inferred_incoming_frame": 24
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": [
+        {
+          "site": "0x60034fae",
+          "target": "0x60034f91"
+        },
+        {
+          "site": "0x60034fb3",
+          "target": "0x60034f91"
+        }
+      ]
+    },
+    "0x6003593f": {
+      "entry": "0x6003593f",
+      "instruction_count": 127,
+      "reached_extent": [
+        "0x6003593f",
+        "0x60035a59"
+      ],
+      "maximum_own_sp_depth": 16,
+      "maximum_direct_stack_address_depth": 16,
+      "stack_operations": [],
+      "calls": [
+        {
+          "site": "0x60035957",
+          "target": "0x6003853d",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6003853d,[],0"
+        },
+        {
+          "site": "0x60035a51",
+          "target": "0x60038547",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60038547,[],0"
+        },
+        {
+          "site": "0x60035a16",
+          "target": "0x6003853e",
+          "frame": 16,
+          "register_save_bytes": 16,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6003853e,[d2,d3,a2,a3],16"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x6003596b",
+          "mnemonic": "ret",
+          "operands": "[d2,a2,a3],16",
+          "local_depth": 0,
+          "inferred_incoming_frame": 16
+        },
+        {
+          "site": "0x60035a56",
+          "mnemonic": "ret",
+          "operands": "[d2,a2,a3],16",
+          "local_depth": 0,
+          "inferred_incoming_frame": 16
+        }
+      ],
+      "boundaries": [
+        {
+          "site": "0x60035a01",
+          "kind": "indirect_call",
+          "depth": 0,
+          "mnemonic": "calls",
+          "operands": "(a1)"
+        }
+      ],
+      "hardware_loop_edges": [
+        {
+          "site": "0x600359a0",
+          "target": "0x6003599b"
+        }
+      ]
+    },
+    "0x60036832": {
+      "entry": "0x60036832",
+      "instruction_count": 32,
+      "reached_extent": [
+        "0x60036832",
+        "0x60036884"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [
+        {
+          "site": "0x6003684b",
+          "target": "0x6003853d",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6003853d,[],0"
+        },
+        {
+          "site": "0x60036864",
+          "target": "0x60038582",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x60038582,[],0"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x60036881",
+          "mnemonic": "ret",
+          "operands": "[d2,a2],12",
+          "local_depth": 0,
+          "inferred_incoming_frame": 12
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    "0x60036884": {
+      "entry": "0x60036884",
+      "instruction_count": 18,
+      "reached_extent": [
+        "0x60036884",
+        "0x600368b7"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [
+        {
+          "site": "0x600368af",
+          "target": "0x6003858f",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 0,
+          "mnemonic": "call",
+          "operands": "0x6003858f,[],0"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x600368b4",
+          "mnemonic": "ret",
+          "operands": "[],4",
+          "local_depth": 0,
+          "inferred_incoming_frame": 4
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    "0x6003853d": {
+      "entry": "0x6003853d",
+      "instruction_count": 1,
+      "reached_extent": [
+        "0x6003853d",
+        "0x6003853e"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [],
+      "boundaries": [
+        {
+          "site": "0x6003853d",
+          "kind": "exception_or_interrupt_control",
+          "depth": 0,
+          "mnemonic": "break",
+          "operands": ""
+        }
+      ],
+      "hardware_loop_edges": []
+    },
+    "0x6003853e": {
+      "entry": "0x6003853e",
+      "instruction_count": 2,
+      "reached_extent": [
+        "0x6003853e",
+        "0x60038544"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [],
+      "boundaries": [
+        {
+          "site": "0x60038541",
+          "kind": "sp_replaced_from_register_or_memory",
+          "depth": 0,
+          "mnemonic": "mov",
+          "operands": "(0,a0),sp"
+        }
+      ],
+      "hardware_loop_edges": []
+    },
+    "0x60038547": {
+      "entry": "0x60038547",
+      "instruction_count": 1,
+      "reached_extent": [
+        "0x60038547",
+        "0x60038549"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [],
+      "boundaries": [
+        {
+          "site": "0x60038547",
+          "kind": "sp_replaced_from_register_or_memory",
+          "depth": 0,
+          "mnemonic": "mov",
+          "operands": "a1,sp"
+        }
+      ],
+      "hardware_loop_edges": []
+    },
+    "0x60038562": {
+      "entry": "0x60038562",
+      "instruction_count": 9,
+      "reached_extent": [
+        "0x60038562",
+        "0x6003857e"
+      ],
+      "maximum_own_sp_depth": 4,
+      "maximum_direct_stack_address_depth": 4,
+      "stack_operations": [
+        {
+          "site": "0x60038562",
+          "mnemonic": "movm",
+          "operands": "[a3],(sp)",
+          "before": 0,
+          "after": 4
+        }
+      ],
+      "calls": [],
+      "returns": [],
+      "boundaries": [
+        {
+          "site": "0x6003857c",
+          "kind": "indirect_jump",
+          "depth": 4,
+          "mnemonic": "jmp",
+          "operands": "(a0)"
+        }
+      ],
+      "hardware_loop_edges": []
+    },
+    "0x60038582": {
+      "entry": "0x60038582",
+      "instruction_count": 6,
+      "reached_extent": [
+        "0x60038582",
+        "0x6003858f"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [
+        {
+          "site": "0x6003858c",
+          "mnemonic": "retf",
+          "operands": "[],0",
+          "local_depth": 0,
+          "inferred_incoming_frame": 0
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    "0x6003858f": {
+      "entry": "0x6003858f",
+      "instruction_count": 2,
+      "reached_extent": [
+        "0x6003858f",
+        "0x60038594"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [
+        {
+          "site": "0x60038591",
+          "mnemonic": "retf",
+          "operands": "[],0",
+          "local_depth": 0,
+          "inferred_incoming_frame": 0
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    "0x60038594": {
+      "entry": "0x60038594",
+      "instruction_count": 46,
+      "reached_extent": [
+        "0x60038594",
+        "0x6003860b"
+      ],
+      "maximum_own_sp_depth": 32,
+      "maximum_direct_stack_address_depth": 28,
+      "stack_operations": [
+        {
+          "site": "0x60038594",
+          "mnemonic": "movm",
+          "operands": "[d2,d3],(sp)",
+          "before": 0,
+          "after": 8
+        },
+        {
+          "site": "0x60038596",
+          "mnemonic": "add",
+          "operands": "-4,sp",
+          "before": 8,
+          "after": 12
+        },
+        {
+          "site": "0x60038604",
+          "mnemonic": "add",
+          "operands": "4,sp",
+          "before": 12,
+          "after": 8
+        },
+        {
+          "site": "0x60038607",
+          "mnemonic": "movm",
+          "operands": "(sp),[d2,d3]",
+          "before": 8,
+          "after": 0
+        }
+      ],
+      "calls": [
+        {
+          "site": "0x600385ce",
+          "target": "0x60036832",
+          "frame": 12,
+          "register_save_bytes": 8,
+          "caller_local_depth": 12,
+          "mnemonic": "call",
+          "operands": "0x60036832,[d2,a2],12"
+        },
+        {
+          "site": "0x600385e8",
+          "target": "0x60036884",
+          "frame": 4,
+          "register_save_bytes": 0,
+          "caller_local_depth": 12,
+          "mnemonic": "call",
+          "operands": "0x60036884,[],4"
+        },
+        {
+          "site": "0x600385d7",
+          "target": "0x60031a76",
+          "frame": 20,
+          "register_save_bytes": 16,
+          "caller_local_depth": 12,
+          "mnemonic": "call",
+          "operands": "0x60031a76,[d2,d3,a2,a3],20"
+        },
+        {
+          "site": "0x600385dd",
+          "target": "0x60031aff",
+          "frame": 12,
+          "register_save_bytes": 8,
+          "caller_local_depth": 12,
+          "mnemonic": "call",
+          "operands": "0x60031aff,[a2,a3],12"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x60038609",
+          "mnemonic": "rets",
+          "operands": "",
+          "local_depth": 0,
+          "inferred_incoming_frame": 0
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    "0x6003860b": {
+      "entry": "0x6003860b",
+      "instruction_count": 28,
+      "reached_extent": [
+        "0x6003860b",
+        "0x60038657"
+      ],
+      "maximum_own_sp_depth": 44,
+      "maximum_direct_stack_address_depth": 24,
+      "stack_operations": [
+        {
+          "site": "0x6003860b",
+          "mnemonic": "movm",
+          "operands": "[a2],(sp)",
+          "before": 0,
+          "after": 4
+        },
+        {
+          "site": "0x6003860d",
+          "mnemonic": "add",
+          "operands": "-4,sp",
+          "before": 4,
+          "after": 8
+        },
+        {
+          "site": "0x60038650",
+          "mnemonic": "add",
+          "operands": "4,sp",
+          "before": 8,
+          "after": 4
+        },
+        {
+          "site": "0x60038653",
+          "mnemonic": "movm",
+          "operands": "(sp),[a2]",
+          "before": 4,
+          "after": 0
+        }
+      ],
+      "calls": [
+        {
+          "site": "0x60038610",
+          "target": "0x60036884",
+          "frame": 4,
+          "register_save_bytes": 0,
+          "caller_local_depth": 8,
+          "mnemonic": "call",
+          "operands": "0x60036884,[],4"
+        },
+        {
+          "site": "0x6003862c",
+          "target": "0x6003434b",
+          "frame": 0,
+          "register_save_bytes": 0,
+          "caller_local_depth": 8,
+          "mnemonic": "call",
+          "operands": "0x6003434b,[],0"
+        },
+        {
+          "site": "0x6003863f",
+          "target": "0x6003436e",
+          "frame": 36,
+          "register_save_bytes": 16,
+          "caller_local_depth": 8,
+          "mnemonic": "call",
+          "operands": "0x6003436e,[d2,d3,a2,a3],36"
+        }
+      ],
+      "returns": [
+        {
+          "site": "0x60038655",
+          "mnemonic": "rets",
+          "operands": "",
+          "local_depth": 0,
+          "inferred_incoming_frame": 0
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    "0x60038657": {
+      "entry": "0x60038657",
+      "instruction_count": 16,
+      "reached_extent": [
+        "0x60038657",
+        "0x60038680"
+      ],
+      "maximum_own_sp_depth": 4,
+      "maximum_direct_stack_address_depth": 4,
+      "stack_operations": [
+        {
+          "site": "0x60038657",
+          "mnemonic": "movm",
+          "operands": "[d2],(sp)",
+          "before": 0,
+          "after": 4
+        },
+        {
+          "site": "0x6003867b",
+          "mnemonic": "movm",
+          "operands": "(sp),[d2]",
+          "before": 4,
+          "after": 0
+        }
+      ],
+      "calls": [],
+      "returns": [
+        {
+          "site": "0x6003867d",
+          "mnemonic": "retf",
+          "operands": "[],0",
+          "local_depth": 0,
+          "inferred_incoming_frame": 0
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    },
+    "0x60038680": {
+      "entry": "0x60038680",
+      "instruction_count": 5,
+      "reached_extent": [
+        "0x60038680",
+        "0x6003868b"
+      ],
+      "maximum_own_sp_depth": 0,
+      "maximum_direct_stack_address_depth": 0,
+      "stack_operations": [],
+      "calls": [],
+      "returns": [
+        {
+          "site": "0x60038688",
+          "mnemonic": "retf",
+          "operands": "[],0",
+          "local_depth": 0,
+          "inferred_incoming_frame": 0
+        }
+      ],
+      "boundaries": [],
+      "hardware_loop_edges": []
+    }
+  },
+  "reached_function_count": 27,
+  "unique_instructions_decoded": 997,
+  "returning_call_frame_mismatches": [],
+  "native_stack_effects": {
+    "create": {
+      "known_stack_effect_envelope_bytes": 48,
+      "path": [
+        "0x6003057f",
+        "0x6003860b",
+        "0x6003436e",
+        "0x60038657"
+      ],
+      "frontier": [
+        {
+          "function": "0x6003853d",
+          "site": "0x6003853d",
+          "kind": "exception_or_interrupt_control",
+          "depth": 0,
+          "mnemonic": "break",
+          "operands": "",
+          "known_stack_effect_bytes": 24,
+          "path": [
+            "0x6003057f",
+            "0x60038594",
+            "0x60036832",
+            "0x6003853d"
+          ],
+          "conditional_classification": null
+        },
+        {
+          "function": "0x6003436e",
+          "site": "0x600343b1",
+          "kind": "indirect_call",
+          "depth": 0,
+          "mnemonic": "calls",
+          "operands": "(a2)",
+          "known_stack_effect_bytes": 44,
+          "path": [
+            "0x6003057f",
+            "0x6003860b",
+            "0x6003436e"
+          ],
+          "conditional_classification": null
+        }
+      ],
+      "complete_stack_bound_bytes": null
+    },
+    "delete": {
+      "known_stack_effect_envelope_bytes": 48,
+      "path": [
+        "0x60031107",
+        "0x6003860b",
+        "0x6003436e",
+        "0x60038657"
+      ],
+      "frontier": [
+        {
+          "function": "0x6003853d",
+          "site": "0x6003853d",
+          "kind": "exception_or_interrupt_control",
+          "depth": 0,
+          "mnemonic": "break",
+          "operands": "",
+          "known_stack_effect_bytes": 24,
+          "path": [
+            "0x60031107",
+            "0x60038594",
+            "0x60036832",
+            "0x6003853d"
+          ],
+          "conditional_classification": null
+        },
+        {
+          "function": "0x6003436e",
+          "site": "0x600343b1",
+          "kind": "indirect_call",
+          "depth": 0,
+          "mnemonic": "calls",
+          "operands": "(a2)",
+          "known_stack_effect_bytes": 44,
+          "path": [
+            "0x60031107",
+            "0x6003860b",
+            "0x6003436e"
+          ],
+          "conditional_classification": null
+        },
+        {
+          "function": "0x6003853d",
+          "site": "0x6003853d",
+          "kind": "exception_or_interrupt_control",
+          "depth": 0,
+          "mnemonic": "break",
+          "operands": "",
+          "known_stack_effect_bytes": 40,
+          "path": [
+            "0x60031107",
+            "0x600344b2",
+            "0x600319fb",
+            "0x6003853d"
+          ],
+          "conditional_classification": null
+        },
+        {
+          "function": "0x60038562",
+          "site": "0x6003857c",
+          "kind": "indirect_jump",
+          "depth": 4,
+          "mnemonic": "jmp",
+          "operands": "(a0)",
+          "known_stack_effect_bytes": 48,
+          "path": [
+            "0x60031107",
+            "0x600344b2",
+            "0x600319fb",
+            "0x60031a69",
+            "0x60038562"
+          ],
+          "conditional_classification": "stock_domain0_doorbell_custom_return"
+        },
+        {
+          "function": "0x6003593f",
+          "site": "0x60035a01",
+          "kind": "indirect_call",
+          "depth": 0,
+          "mnemonic": "calls",
+          "operands": "(a1)",
+          "known_stack_effect_bytes": 16,
+          "path": [
+            "0x60031107",
+            "0x6003593f"
+          ],
+          "conditional_classification": "stock_domain0_scheduler_callback"
+        },
+        {
+          "function": "0x6003853d",
+          "site": "0x6003853d",
+          "kind": "exception_or_interrupt_control",
+          "depth": 0,
+          "mnemonic": "break",
+          "operands": "",
+          "known_stack_effect_bytes": 16,
+          "path": [
+            "0x60031107",
+            "0x6003593f",
+            "0x6003853d"
+          ],
+          "conditional_classification": null
+        },
+        {
+          "function": "0x60038547",
+          "site": "0x60038547",
+          "kind": "sp_replaced_from_register_or_memory",
+          "depth": 0,
+          "mnemonic": "mov",
+          "operands": "a1,sp",
+          "known_stack_effect_bytes": 16,
+          "path": [
+            "0x60031107",
+            "0x6003593f",
+            "0x60038547"
+          ],
+          "conditional_classification": "outgoing_stack_discarded_at_restart"
+        },
+        {
+          "function": "0x6003853e",
+          "site": "0x60038541",
+          "kind": "sp_replaced_from_register_or_memory",
+          "depth": 0,
+          "mnemonic": "mov",
+          "operands": "(0,a0),sp",
+          "known_stack_effect_bytes": 32,
+          "path": [
+            "0x60031107",
+            "0x6003593f",
+            "0x6003853e"
+          ],
+          "conditional_classification": "outgoing_stack_saved_before_context_transfer"
+        }
+      ],
+      "complete_stack_bound_bytes": null
+    }
+  },
+  "context_contracts": {
+    "instruction_witness_count": 54,
+    "domain0_root": "0x600411a4",
+    "stock_root_fields": {
+      "96": "0x621a630c",
+      "100": "0x621a6334",
+      "272": "0x60073215",
+      "316": "0x600300a1",
+      "328": "0x621a63b0",
+      "344": "0x0",
+      "356": "0x0"
+    },
+    "scheduler_callback": {
+      "site": "0x60035a01",
+      "stock_target": "0x60073215",
+      "extra_stack_bytes": 0,
+      "condition": "domain0 root+272 retains its stock value"
+    },
+    "doorbell": {
+      "site": "0x6003857c",
+      "stock_target": "0x600300a1",
+      "checked_body_instructions": 14,
+      "body_extra_stack_bytes": 0,
+      "wrapper_save_bytes": 4,
+      "return_via_a3": "0x6003857e",
+      "condition": "domain0 root+316 retains its stock value"
+    },
+    "context_switch": {
+      "save_site": "0x6003853e",
+      "replace_site": "0x60038541",
+      "outgoing_tcb_saved_sp_offset": 24,
+      "caller_frame_bytes": 16,
+      "meaning": "Outgoing stack is saved before incoming SP is loaded; the next RET runs on the incoming stack. The outgoing continuation assumes later restoration of that saved context."
+    },
+    "restart": {
+      "replace_site": "0x60038547",
+      "meaning": "Discards the current SP. Work after replacement belongs to the new task stack, not the outgoing stack.",
+      "cold_exclusion": "The restart requires root+356==1; the stock domain0 value is 0. Runtime immutability is not proven here."
+    },
+    "task_exception_gate": {
+      "flag_offset": 48,
+      "pending_offset": 56,
+      "initial_flag": 1,
+      "skip_condition": "Current TCB halfword+48==1 makes 6003434b return 0 and skips the task exception callback.",
+      "condition_proven_at_bootstrap": false,
+      "reason": "Usr3 invokes initializers before the seam. Initial task state alone does not prove the later live flag."
+    },
+    "witnesses": [
+      {
+        "pc": "0x60032243",
+        "mnemonic": "mov",
+        "operands": "1,d1"
+      },
+      {
+        "pc": "0x60032245",
+        "mnemonic": "movhu",
+        "operands": "d1,(48,a0)"
+      },
+      {
+        "pc": "0x60032248",
+        "mnemonic": "clr",
+        "operands": "d1"
+      },
+      {
+        "pc": "0x60032249",
+        "mnemonic": "mov",
+        "operands": "d1,(56,a0)"
+      },
+      {
+        "pc": "0x6003224c",
+        "mnemonic": "mov",
+        "operands": "(20,a2),d2"
+      },
+      {
+        "pc": "0x6003224f",
+        "mnemonic": "mov",
+        "operands": "(16,a2),d1"
+      },
+      {
+        "pc": "0x60032252",
+        "mnemonic": "add",
+        "operands": "d1,d2"
+      },
+      {
+        "pc": "0x60032253",
+        "mnemonic": "mov",
+        "operands": "20,d1"
+      },
+      {
+        "pc": "0x60032255",
+        "mnemonic": "sub",
+        "operands": "d1,d2"
+      },
+      {
+        "pc": "0x60032257",
+        "mnemonic": "mov",
+        "operands": "d2,a1"
+      },
+      {
+        "pc": "0x60032259",
+        "mnemonic": "mov",
+        "operands": "d2,(24,a0)"
+      },
+      {
+        "pc": "0x6003225c",
+        "mnemonic": "mov",
+        "operands": "d0,(12,a1)"
+      },
+      {
+        "pc": "0x6003225f",
+        "mnemonic": "mov",
+        "operands": "(8,a2),d1"
+      },
+      {
+        "pc": "0x60032262",
+        "mnemonic": "mov",
+        "operands": "d1,(4,a1)"
+      },
+      {
+        "pc": "0x60032265",
+        "mnemonic": "mov",
+        "operands": "1610818983,d0"
+      },
+      {
+        "pc": "0x6003226b",
+        "mnemonic": "mov",
+        "operands": "d0,(16,a1)"
+      },
+      {
+        "pc": "0x600325a7",
+        "mnemonic": "call",
+        "operands": "0x6003860b,[],0"
+      },
+      {
+        "pc": "0x600325ac",
+        "mnemonic": "mov",
+        "operands": "d2,d0"
+      },
+      {
+        "pc": "0x600325ad",
+        "mnemonic": "calls",
+        "operands": "(a2)"
+      },
+      {
+        "pc": "0x600359be",
+        "mnemonic": "mov",
+        "operands": "(96,a0),a0"
+      },
+      {
+        "pc": "0x600359c1",
+        "mnemonic": "mov",
+        "operands": "a2,(a0)"
+      },
+      {
+        "pc": "0x600359dc",
+        "mnemonic": "mov",
+        "operands": "(260,a0),a0"
+      },
+      {
+        "pc": "0x600359eb",
+        "mnemonic": "mov",
+        "operands": "(272,a0),a1"
+      },
+      {
+        "pc": "0x60035a01",
+        "mnemonic": "calls",
+        "operands": "(a1)"
+      },
+      {
+        "pc": "0x60035a0f",
+        "mnemonic": "add",
+        "operands": "24,a2"
+      },
+      {
+        "pc": "0x60035a11",
+        "mnemonic": "mov",
+        "operands": "24,a1"
+      },
+      {
+        "pc": "0x60035a13",
+        "mnemonic": "add",
+        "operands": "d2,a1"
+      },
+      {
+        "pc": "0x60035a15",
+        "mnemonic": "mov",
+        "operands": "a2,a0"
+      },
+      {
+        "pc": "0x60035a16",
+        "mnemonic": "call",
+        "operands": "0x6003853e,[d2,d3,a2,a3],16"
+      },
+      {
+        "pc": "0x60035a2c",
+        "mnemonic": "mov",
+        "operands": "(100,a0),a0"
+      },
+      {
+        "pc": "0x60035a2f",
+        "mnemonic": "cmp",
+        "operands": "a0,a2"
+      },
+      {
+        "pc": "0x60035a30",
+        "mnemonic": "bne",
+        "operands": "0x60035a56"
+      },
+      {
+        "pc": "0x60035a38",
+        "mnemonic": "mov",
+        "operands": "(356,a0),d0"
+      },
+      {
+        "pc": "0x60035a3c",
+        "mnemonic": "cmp",
+        "operands": "1,d0"
+      },
+      {
+        "pc": "0x60035a3e",
+        "mnemonic": "bne",
+        "operands": "0x60035a56"
+      },
+      {
+        "pc": "0x6003853e",
+        "mnemonic": "mov",
+        "operands": "sp,(0,a1)"
+      },
+      {
+        "pc": "0x60038541",
+        "mnemonic": "mov",
+        "operands": "(0,a0),sp"
+      },
+      {
+        "pc": "0x60038544",
+        "mnemonic": "ret",
+        "operands": "[d2,d3,a2,a3],16"
+      },
+      {
+        "pc": "0x60038547",
+        "mnemonic": "mov",
+        "operands": "a1,sp"
+      },
+      {
+        "pc": "0x60038562",
+        "mnemonic": "movm",
+        "operands": "[a3],(sp)"
+      },
+      {
+        "pc": "0x60038564",
+        "mnemonic": "mov",
+        "operands": "1610843518,a3"
+      },
+      {
+        "pc": "0x60038578",
+        "mnemonic": "mov",
+        "operands": "(316,a1),a0"
+      },
+      {
+        "pc": "0x6003857c",
+        "mnemonic": "jmp",
+        "operands": "(a0)"
+      },
+      {
+        "pc": "0x6003857e",
+        "mnemonic": "movm",
+        "operands": "(sp),[a3]"
+      },
+      {
+        "pc": "0x60038580",
+        "mnemonic": "rets",
+        "operands": ""
+      },
+      {
+        "pc": "0x6003435c",
+        "mnemonic": "movhu",
+        "operands": "(48,a0),d0"
+      },
+      {
+        "pc": "0x6003435f",
+        "mnemonic": "cmp",
+        "operands": "1,d0"
+      },
+      {
+        "pc": "0x60034361",
+        "mnemonic": "bne",
+        "operands": "0x60034366"
+      },
+      {
+        "pc": "0x60034363",
+        "mnemonic": "clr",
+        "operands": "d0"
+      },
+      {
+        "pc": "0x60034364",
+        "mnemonic": "bra",
+        "operands": "0x6003436b"
+      },
+      {
+        "pc": "0x6003862c",
+        "mnemonic": "call",
+        "operands": "0x6003434b,[],0"
+      },
+      {
+        "pc": "0x60038631",
+        "mnemonic": "cmp",
+        "operands": "0,d0"
+      },
+      {
+        "pc": "0x60038633",
+        "mnemonic": "beq",
+        "operands": "0x60038646"
+      },
+      {
+        "pc": "0x6003863f",
+        "mnemonic": "call",
+        "operands": "0x6003436e,[d2,d3,a2,a3],36"
+      }
+    ],
+    "fixed_root_runtime_immutability_proven": false
+  },
+  "initial_context_semantics": {
+    "initial_restore_checks": 1,
+    "task_entry_calls_checks": 1,
+    "entry_below_stack_top_bytes": 4,
+    "gnu_bodies_reused": [
+      "OP_DF0000",
+      "OP_F0F0"
+    ],
+    "stock_api_executed": false,
+    "task_initializer_executed": false,
+    "initial_frame_values_derived_from_checked_stock_instructions": true
+  },
+  "bootstrap_integration": {
+    "prior_c_graph": "research/ep7/bootstrap-stack.json",
+    "usr3_initial_entry_overhead_bytes": 4,
+    "usr3_prologue_call_and_bridge_bytes": 88,
+    "native_paths": [
+      {
+        "native_root": "delete",
+        "c_path": [
+          "ep7r_bootstrap_initialize",
+          "ep7b_abort_unpublished",
+          "poll_lock_provider/bootstrap/native_callbacks.c:drop",
+          "ep7_gcc_raw_sem_delete_unpublished"
+        ],
+        "c_and_bridge_prefix": 164,
+        "native_known_stack_effect_envelope_bytes": 48,
+        "known_stack_effects_below_usr3_stack_top_bytes": 304
+      },
+      {
+        "native_root": "delete",
+        "c_path": [
+          "ep7r_bootstrap_initialize",
+          "ep7b_prepare",
+          "ep7b_abort_unpublished",
+          "poll_lock_provider/bootstrap/native_callbacks.c:drop",
+          "ep7_gcc_raw_sem_delete_unpublished"
+        ],
+        "c_and_bridge_prefix": 276,
+        "native_known_stack_effect_envelope_bytes": 48,
+        "known_stack_effects_below_usr3_stack_top_bytes": 416
+      },
+      {
+        "native_root": "create",
+        "c_path": [
+          "ep7r_bootstrap_initialize",
+          "ep7b_prepare",
+          "poll_lock_provider/bootstrap/native_callbacks.c:create",
+          "ep7_gcc_raw_sem_create"
+        ],
+        "c_and_bridge_prefix": 252,
+        "native_known_stack_effect_envelope_bytes": 48,
+        "known_stack_effects_below_usr3_stack_top_bytes": 392
+      }
+    ],
+    "known_stack_effect_envelope_below_stack_top_bytes": 416,
+    "complete_stack_bound_bytes": null,
+    "remaining_stack_bytes": null
+  },
+  "unresolved_boundaries": [
+    {
+      "function": "0x6003593f",
+      "site": "0x60035a01",
+      "kind": "indirect_call",
+      "depth": 0,
+      "mnemonic": "calls",
+      "operands": "(a1)"
+    },
+    {
+      "function": "0x6003853e",
+      "site": "0x60038541",
+      "kind": "sp_replaced_from_register_or_memory",
+      "depth": 0,
+      "mnemonic": "mov",
+      "operands": "(0,a0),sp"
+    },
+    {
+      "function": "0x60038547",
+      "site": "0x60038547",
+      "kind": "sp_replaced_from_register_or_memory",
+      "depth": 0,
+      "mnemonic": "mov",
+      "operands": "a1,sp"
+    },
+    {
+      "function": "0x6003853d",
+      "site": "0x6003853d",
+      "kind": "exception_or_interrupt_control",
+      "depth": 0,
+      "mnemonic": "break",
+      "operands": ""
+    },
+    {
+      "function": "0x60038562",
+      "site": "0x6003857c",
+      "kind": "indirect_jump",
+      "depth": 4,
+      "mnemonic": "jmp",
+      "operands": "(a0)"
+    },
+    {
+      "function": "0x6003436e",
+      "site": "0x600343b1",
+      "kind": "indirect_call",
+      "depth": 0,
+      "mnemonic": "calls",
+      "operands": "(a2)"
+    }
+  ],
+  "gnu_instruction_reference": "https://gnu.googlesource.com/binutils-gdb/+/cbe950e9fe8a56f788bcf985cc51733f18abb45b/sim/mn10300/mn10300.igen",
+  "stack_model": "CALL save/frame, MOVM integer save sets, immediate ADD SP, in-function conditional edges and local hardware loops",
+  "complete_stack_bound_proven": false,
+  "limits": [
+    "Static control flow follows both sides of conditional branches; no register/value feasibility pruning.",
+    "A direct call continuation assumes normal return; decoded return-frame mismatches remain explicit failures.",
+    "Indirect control, exception control and SP replacement remain explicit boundaries; four have conditional stock-domain0 contracts.",
+    "Known stack-effect envelopes are not complete upper bounds. Unknown callbacks, BREAK/IRQ and context restoration still need qualification.",
+    "The initial frame fixture executes only reused GNU RET/CALLS bodies; it does not run the stock task initializer, scheduler or critical leave.",
+    "The earlier C graph is reused unchanged. No C implementation is modified or recompiled in this check.",
+    "Native opcode behavior beyond reviewed explicit stack/control effects is not executed.",
+    "No general alias-store, arbitrary interruption, DMA, scheduler correctness or real device claim."
+  ],
+  "firmware_modified": false,
+  "firmware_built": false,
+  "target_executed": false,
+  "hash_checks_performed": false
+}
