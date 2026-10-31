@@ -5,6 +5,12 @@
 
 ## 2026-10-31 当前节点
 
+最新：[runtime启动接续](BOOTSTRAP_ENTRY.md)核对85指令/10任务行，选定候选60191371：
+domain0的Usr3、2048字节配置栈，早于四个接收任务和capture controller的启动。
+第9段之后的候选太晚，domain2加载任务也不适合；UI第6段必须在后续驻留入口做资格检查，
+不能由Usr3等待其尚未启动的Usr4/Usr5。下一项为早期inline/cohort与一次性bootstrap实现。
+实际kernel任务配置consumer为60032998，旧6005b447查询路径不再作为创建证明。
+
 最新：[冷启动清零桥](COLD_START_CLEAR.md)已实现53字节候选及局部启动顺序核对；
 [流水线安装组](PIPELINE_INSTALLATION_COHORT.md)补齐旧清单遗漏的8处短CALL，当前归档36座，
 并把16个CALL、9条栈调整、6个容量字段作为同组检查。104实现源text45,733，静态存储

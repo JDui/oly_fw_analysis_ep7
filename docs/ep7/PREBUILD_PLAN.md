@@ -81,6 +81,10 @@ G6 依赖 E 的工具链设计和 G1–G4 的候选接口；G8 汇合全部结�
 
 ## 当前编译准入结论
 
+启动入口已收敛到[Usr3的60191371](BOOTSTRAP_ENTRY.md)，位于接收任务启动前。
+须分离早期pipeline/kernel安装资格与后续第6段UI资格；等待全部段才发布会产生启动依赖。
+85条指令和10条任务配置已核对，具体bootstrap、完整栈与放置尚待完成。
+
 **未就绪**：G1 原生捕获/释放闭包、G2/G3 退出与queue/task存活、G4 GUI串行所有权/旁路、
 G6 放置/安装仍未闭合。G4的资源、内容对象、输入与COLOR gating已有软件接合；
 generation-bearing handoff、共享runtime发布和CPU reader已有

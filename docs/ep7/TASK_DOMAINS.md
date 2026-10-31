@@ -4,6 +4,12 @@ Exact stock1.1 only, no firmware execution. This finds a real GUI creation chain
 and kind19 worker configuration, **not proof that the two run on the same core**.
 It avoids treating shared instruction space as a scheduler/domain guarantee.
 
+2026-10-31 update: [bootstrap-entry audit](BOOTSTRAP_ENTRY.md) now verifies the
+actual kernel task-table consumer60032998, root+124/table600389d0 and the six-word
+copy intoTCB+68..+88. The earlier6005b447 traversal below is not a task-creation
+proof. The kind19 task006c is explicitly started at60191618 by domain0-configured
+Usr3; live task/domain checks and teardown/alternate-start closure remain required.
+
 ## GUI birth is dynamic and inherits its creator's domain
 
 GUI constructor60cfceba builds a four-word task spec atsp+12:
