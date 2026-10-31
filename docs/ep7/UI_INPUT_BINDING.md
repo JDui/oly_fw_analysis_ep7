@@ -3,7 +3,8 @@
 本批实现 `ui_native/input.c` 和三座原生边界桥，复用原有 raw adapter、同一 runtime
 core、MVC/session 和 native text lifecycle。`ep7_ui_native_admit_unresolved` 已由完整
 事务替代：准入、frame 查询、编辑都在 MVC/显示 owner 持有期间完成，不返回借用的
-可变 UI 指针。仍是未安装候选，selector 的 H/L mask 保持默认禁用。
+可变 UI 指针。仍是未安装候选。本文记录输入节点的检查结果；后续已由
+[COLOR gating](UI_COLOR_GATING.md)接入真实 mask 启用及失效归一，默认值仍为禁用。
 
 ## 从同一事件复制完整计数
 
@@ -101,6 +102,6 @@ provider替代这些绑定；完整冷启动安装、任务存活和合法放置
 `--ui-input-only`。旧 `ui_native/check.py` 保留历史工具验证入口，本次仅复用其纯
 assembly validator；旧历史报告不重写为本次结果。
 
-下一项：在真实mode/runtime/display/input条件下启用六项selector，并在条件失效时
-撤销session、禁用H/L和归一到仍可用的原厂类别；处理相关重建/计时状态后才能开放
-UI入口。G1/G2/G3退出闭包、G6 placement/atomic install/cache/总栈以及G8准入仍保留。
+后续 [COLOR gating](UI_COLOR_GATING.md)已完成真实资格和失效恢复，当前事件边界先做
+门控，归一事件禁止回落S；本文历史输入数据仍保留。G1/G2/G3退出闭包、G6 placement/
+atomic install/cache/总栈以及G8准入仍保留。

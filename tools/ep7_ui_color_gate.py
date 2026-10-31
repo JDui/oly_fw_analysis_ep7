@@ -1,0 +1,87 @@
+#!/usr/bin/env python3
+"""Current-input COLOR stock restoration, NULL-safe creator and transition-timer evidence; no SHA."""
+import argparse,json
+from pathlib import Path
+from ep7_async_aliases import inspect as inspect_windows
+WINDOWS=[(0x60dd5083,0x60dd50dc),(0x60dd518e,0x60dd51cb),(0x60dd5623,0x60dd5685),
+    (0x60dd5857,0x60dd586b),(0x60de33a7,0x60de33c8),(0x60de34bb,0x60de34cb),
+    (0x60e2054e,0x60e2056d),(0x60e2065e,0x60e206a0),(0x60df002e,0x60df00b7),
+    (0x60e266a9,0x60e26789),(0x60e26795,0x60e267e1),
+    (0x60e26380,0x60e26392),(0x60e26415,0x60e26425),
+    (0x60ea15ca,0x60ea15e0),(0x60d11212,0x60d11280),(0x60d102a7,0x60d102f1)]
+W={
+    0x60dd50d8:('mov','0,a0'),0x60dd50da:('retf','[],0'),
+    0x60dd5192:('mov','a0,(0x61fc1ba8)'),0x60dd5198:('mov','d1,(0x61fc1bac)'),
+    0x60dd51a6:('add','1628701532,a1'),0x60dd51b3:('mov','a2,a0'),0x60dd51b4:('calls','(a1)'),
+    0x60dd51b6:('bra','0x60dd51be'),0x60dd51be:('clr','d0'),0x60dd51bf:('mov','d0,(32,a0)'),
+    0x60dd51c2:('movhu','d0,(36,a0)'),0x60dd51c5:('movhu','d0,(38,a0)'),0x60dd51c8:('ret','[d2,d3,a2],16'),
+    0x60de33a7:('movm','[d2],(sp)'),0x60de33a9:('add','-4,sp'),0x60de33ac:('movhu','(a0),d2'),
+    0x60de33ae:('mov','144,d0'),0x60de33b1:('call','0x60a4ec03,[],4'),
+    0x60de33b8:('mov','a0,a1'),0x60de33b9:('mov','0,a0'),0x60de33bb:('cmp','a0,a1'),
+    0x60de33bc:('beq','0x60de33c5'),0x60de33c0:('call','0x60de34bb,[d2,a2,a3],16'),0x60de33c5:('ret','[d2],8'),
+    0x60de34c4:('mov','1628789372,d0'),0x60de34ca:('mov','d0,(a2)'),
+    0x60e2054e:('movm','[d2,a2],(sp)'),0x60e20550:('add','-12,sp'),0x60e20553:('movhu','(a0),d2'),
+    0x60e2065e:('mov','188,d0'),0x60e20661:('call','0x60a4ec03,[],4'),
+    0x60e20668:('mov','a0,a1'),0x60e20669:('mov','0,a0'),0x60e2066b:('cmp','a0,a1'),
+    0x60e2066c:('beq','0x60e20675'),0x60e20670:('call','0x60e20678,[d2,a2],16'),
+    0x60e20675:('ret','[d2,a2],20'),0x60e2068f:('mov','1628992820,d0'),0x60e20695:('mov','d0,(a2)'),
+    0x60df002e:('movm','[a2,a3],(sp)'),0x60df0030:('add','-24,sp'),0x60df0034:('add','16,a1'),
+    0x60df0036:('mov','-3,d1'),0x60df0039:('movhu','(a0),d0'),0x60df003d:('movhu','d0,(a1)'),
+    0x60df0055:('mov','1127,d0'),0x60df005a:('mov','240,d0'),0x60df005d:('call','0x60a4ec03,[],4'),
+    0x60df0064:('mov','a0,a3'),0x60df0065:('mov','0,a0'),0x60df0067:('cmp','a0,a3'),
+    0x60df0068:('beq','0x60df0088'),0x60df006b:('add','16,a2'),0x60df006e:('inc4','a1'),
+    0x60df006f:('mov','-3,d1'),0x60df0072:('movhu','(a2),d0'),0x60df0076:('movhu','d0,(a1)'),
+    0x60df0083:('call','0x60df008b,[d2,a2,a3],136'),0x60df0088:('ret','[a2,a3],32'),
+    0x60df008c:('add','140,a2'),0x60df0092:('mov','-3,d2'),
+    0x60df00ad:('mov','1628806824,d0'),0x60df00b3:('mov','d0,(a3)'),
+    0x60e266ac:('mov','d0,(4,sp)'),0x60e266ae:('mov','d0,(8,sp)'),
+    0x60e266c4:('mov','(40,a1),a1'),0x60e266c7:('calls','(a1)'),0x60e266d4:('call','0x60a4ec17,[],4'),
+    0x60e266dc:('mov','d0,(a3)'),0x60e266f6:('add','8,a1'),0x60e266f9:('mov','111,d0'),
+    0x60e26710:('mov','111,d0'),0x60e26712:('mov','d0,(4,sp)'),0x60e26717:('call','0x60dd518e,[d2,d3,a2],16'),
+    0x60e26722:('call','0x60e26795,[a2],8'),0x60e26727:('ret','[d2,d3,a2,a3],28'),
+    0x60e26735:('add','1629000312,a0'),0x60e26742:('mov','d0,(4,sp)'),0x60e26749:('cmp','8,d2'),
+    0x60e26759:('add','1629000376,a0'),0x60e26766:('mov','d0,(4,sp)'),0x60e2676d:('cmp','8,d2'),
+    0x60e26770:('mov','7,d0'),0x60e26774:('mov','383,d0'),0x60e26777:('mov','d0,(4,sp)'),
+    0x60e26779:('mov','14,d0'),0x60e2677b:('mov','sp,a0'),0x60e2677c:('inc4','a0'),
+    0x60e2677d:('call','0x60dd518e,[d2,d3,a2],16'),0x60e26784:('mov','a0,(a3)'),
+    0x60e26796:('mov','(80,a2),a0'),0x60e2679b:('mov','(4,a1),a1'),0x60e2679e:('calls','(a1)'),
+    0x60dd5623:('mov','(0x61fc1bac),d1'),0x60dd563d:('mov','(a2),d0'),0x60dd563e:('cmp','3,d0'),
+    0x60dd5642:('mov','(20,a3),d0'),0x60dd564a:('calls','(a1)'),0x60dd5650:('mov','d0,(44,a3)'),
+    0x60dd565e:('mov','(16,a3),d1'),0x60dd5661:('cmp','0,d1'),0x60dd5663:('bne','0x60dd5668'),
+    0x60dd5665:('jmp','0x60dd5782'),0x60dd5671:('calls','(a1)'),0x60dd5678:('mov','537,d0'),
+    0x60dd5857:('mov','535,d0'),0x60dd585a:('call','0x60ea15ca,[d2],8'),
+    0x60dd5862:('mov','d0,(0x61fc1bbc)'),0x60dd5868:('ret','[],4'),
+    0x60e26380:('mov','572,d0'),0x60e26386:('call','0x60ea15a3,[d2,d3],12'),0x60e2638f:('mov','d2,(84,a0)'),
+    0x60e26415:('mov','572,d0'),0x60e2641b:('call','0x60ea15a3,[d2,d3],12'),0x60e26422:('mov','d3,(84,a3)'),
+    0x60ea15ca:('mov','d0,d2'),0x60ea15cb:('call','0x60d3379b,[],0'),
+    0x60ea15d4:('call','0x60d11212,[d2,d3,a2,a3],24'),0x60ea15dd:('ret','[d2],8'),
+    0x60d11217:('call','0x60d14cb1,[d2],8'),0x60d1122c:('cmp','1,d0'),0x60d11237:('cmp','-1,d0'),
+    0x60d11242:('cmp','d2,d0'),0x60d1124d:('cmp','d2,d0'),0x60d11267:('movbu','d0,(a2)'),
+    0x60d1126c:('call','0x60d102a7,[d2,d3,a2,a3],20'),0x60d11275:('cmp','10,d1'),
+    0x60d11278:('call','0x60d14cd9,[],4'),0x60d1127d:('ret','[d2,d3,a2,a3],24'),
+    0x60d102ab:('call','0x60d14c70,[d2],8'),0x60d102cd:('cmp','a3,d0'),0x60d102d5:('cmp','d3,d0'),
+    0x60d102d9:('movbu','d0,(a2)'),0x60d102e3:('cmp','500,d2'),0x60d102e9:('call','0x60d14c94,[],4')}
+CHECKS=[(0x6114035c,'<II',(0,0x60de33a7)),(0x6114035c+7*8,'<II',(7,0x60e2054e)),
+    (0x6114035c+11*8,'<II',(14,0x60df002e)),
+    (0x61189278,'<16I',(57,0x13b6,58,0x13b7,59,0x13b8,65,0x140d,54,0x13b3,55,0x13b4,56,0x13b5,64,0x140c)),
+    (0x611892b8,'<16I',(57,0x13b9,58,0x13ba,59,0x13bb,65,0x140e,54,0x140f,55,0x1410,56,0x1411,64,0x1412)),
+    (0x6114044c,'<II',(0xf801-0x9003,0x60dd561b)),(0x6114045c,'<II',(0xf802-0x9003,0x60dd5623))]
+def inspect(stock,objdump):
+    e=inspect_windows(stock,objdump,WINDOWS,W,CHECKS)
+    return dict(scope=__doc__,input_structure=e['input_structure'],objdump_version=e['objdump_version'],
+        checked_instructions=e['checked_instructions'],checked_fixed_data_rows=len(CHECKS),
+        generic_factory_has_unconditional_null_postwrite=True,generic_rebuild_frees_before_allocation=True,
+        reused_full_creators={'0':dict(entry='0x60de33a7',extent=144,self_frame=8,vtable='0x61155a7c'),
+            '7':dict(entry='0x60e2054e',extent=188,self_frame=20,vtable='0x61187534'),
+            '14':dict(entry='0x60df002e',extent=240,self_frame=32,vtable='0x61159ea8')},
+        creator14_input_halfwords=3,creator14_third_halfword='low16(public_mode111)',
+        stock_categories_1_and_2_use_exact_mode_keys=True,unknown_mode_does_not_invent_key0=True,
+        stopped_timers=[535,537,572],cleared_parent_words=[16,20,44,84],
+        native_cancel_queued_removal_is_conditional_on_matching_timer_entry=True,
+        all_native_internal_allocation_failures_proven=False,native_timer_scheduling_proven=False,
+        full_installation_and_stack_qualification=False,installed=False,target_executed=False,
+        firmware_built=False,hash_checks_performed=False)
+if __name__=='__main__':
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--stock',type=Path,required=True)
+    p.add_argument('--objdump',type=Path,required=True);a=p.parse_args()
+    print(json.dumps(inspect(a.stock,a.objdump),indent=2))

@@ -18,7 +18,7 @@ struct ep7i_scope {
     const uint8_t *packet;
     uint32_t original_event,event,parameter,extra,machine;
     int32_t delta;
-    unsigned phase,samples,valid,consumed;
+    unsigned phase,samples,valid,consumed; /* consumed2 suppresses stock replay after normalization. */
 };
 extern struct ep7i_scope ep7_native_ui_input_scope;
 int ep7i_native_cohort_present(void);

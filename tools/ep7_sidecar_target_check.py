@@ -20,10 +20,11 @@ mode.add_argument('--ui-mvc-only',action='store_true',help='compile GUI041d cont
 mode.add_argument('--ui-content-only',action='store_true',help='compile owned H/L content rebuild with native destruction and MVC/cohort closure')
 mode.add_argument('--ui-viewer-only',action='store_true',help='compile joined MVC/content/model/owner/viewer and shared runtime core closure')
 mode.add_argument('--ui-input-only',action='store_true',help='compile event-scoped full wheel samples and native input transaction with the joined UI graph')
+mode.add_argument('--ui-gate-only',action='store_true',help='compile COLOR gating and allocation-before-free stock restoration with the joined UI graph')
 args=parser.parse_args()
 receiver_mode=args.receive_abi_only or args.queue_pipeline_abi_only
 materializer_mode=args.materializer_abi_only or receiver_mode
-graph_mode=args.ui_owner_only or args.ui_mvc_only or args.ui_content_only or args.ui_viewer_only or args.ui_input_only
+graph_mode=args.ui_owner_only or args.ui_mvc_only or args.ui_content_only or args.ui_viewer_only or args.ui_input_only or args.ui_gate_only
 ui_lifecycle_mode=args.ui_lifecycle_only or graph_mode
 ui_create_mode=args.ui_create_only or ui_lifecycle_mode
 ui_mode=args.ui_context_only or ui_create_mode
@@ -83,10 +84,12 @@ if selector_mode:
       'poll_provider':core/'poll_lock_provider/ep7_sem_provider.c',
       'bootstrap':core/'poll_lock_provider/bootstrap/bootstrap.c',
       'transport':core/'snapshot_transport/transport.c','wire':core/'snapshot_transport/wire.c'})
-if args.ui_input_only:
+if graph_mode:
  files.update({n:core/'ui_native'/p for n,p in [('ui_input','input.c'),('ui_input_cohort','cohort.c'),
      ('ui_input_bridges','input_bridges.s'),('ui_input_route','bridge.c'),('ui_event_bridge','bridge.s')]})
  files['ui_raw']=core/'ep7p_ui_raw.c'
+ files.update({'ui_gate':core/'ui_gate/gate.c','ui_stock_restore':core/'ui_content/stock.c',
+     'ui_stock_bridges':core/'ui_content/stock_bridges.s','ui_original_draw':core/'ui_render/original_draw.s'})
 if materializer_mode:
  files={'materializer_bridge':core/'snapshot_transport/native/materializer_bridge.s',
         'materializer_layout':core/'snapshot_transport/native/materializer_layout.c',
@@ -323,6 +326,9 @@ with tempfile.TemporaryDirectory() as temp:
     raise ValueError('viewer call targets changed')
    objects[name].update(checked_instructions=27,own_frame_bytes=56,original_self_frame_bytes=36,
        original_arguments_and_scratch_results_preserved=True,held_token_offset=28,viewer_offset=32)
+  if name in ('ui_stock_bridges','ui_original_draw'):
+   dis=subprocess.check_output([prefix+'objdump','-dr','-z','--insn-width=16',str(obj)],text=True)
+   objects[name].update(runpy.run_path(str(core/'ui_gate/validate_bridges.py'))['validate'](name,dis))
   if name=='ui_public_mode':
    dis=subprocess.check_output([prefix+'objdump','-dr','-z','--insn-width=16',str(obj)],text=True)
    ins=re.findall(r'^\s*[0-9a-f]+:[ \t]+(?:[0-9a-f]{2}[ \t]+)+([a-z][a-z0-9]*)(?:[ \t]+([^\n]*))?$',dis,re.M)
@@ -715,13 +721,16 @@ if mvc_mode:expected|={'_ep7_stock_gui_color_entry_unresolved','_ep7_stock_gui_c
     'ep7_stock_mvc_scalar_new_unresolved','ep7_stock_mvc_scalar_delete_unresolved',
     'ep7_stock_mvc_base_init_unresolved','ep7_stock_mvc_base_destroy_unresolved'}
 if graph_mode:expected|={'ep7_stock_property_service_unresolved','ep7_stock_mvc_viewer_draw_unresolved'}
-if args.ui_input_only:expected|={'_ep7_stock_gui_machine_unresolved','_ep7_stock_ui_input_gate_unresolved',
+if graph_mode:expected|={'_ep7_stock_gui_machine_unresolved','_ep7_stock_ui_input_gate_unresolved',
     '_ep7_stock_ui_repeat_context_unresolved','ep7_stock_ui_preprocess_unresolved','ep7_stock_ui_dispatch_unresolved',
     'ep7_stock_ui_wheel_set_unresolved','ep7_stock_ui_event_unresolved','ep7_stock_ui_drop_event_unresolved',
     '_ep7_stock_ui_preprocess_call_unresolved','_ep7_stock_ui_dispatch_call_unresolved',
     '_ep7_stock_ui_wheel_1_call_unresolved','_ep7_stock_ui_wheel_0_call_unresolved',
     '_ep7_stock_ui_wheel_2_call_unresolved','_ep7_stock_ui_wheel_4_call_unresolved',
     '_ep7_stock_ui_wheel_3_call_unresolved'}
+if graph_mode:expected|={'_ep7_stock_mvc_category_keys_unresolved','_ep7_stock_ui_active_content_unresolved',
+    'ep7_stock_mvc_creator0_unresolved','ep7_stock_mvc_creator7_unresolved','ep7_stock_mvc_creator14_unresolved',
+    'ep7_stock_mvc_stock_selected_unresolved','ep7_stock_mvc_stop535_unresolved','ep7_stock_ui_timer_cancel_unresolved'}
 if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved','ep7_stock_receive_wrapper_unresolved'}
@@ -755,7 +764,6 @@ if ui_create_mode:scope='Existing text factory result/context bridge and native 
 if ui_lifecycle_mode:scope='Actual text create/attach/bind/set/rollback C and native ABI closure; concrete live owner/GUI entry, resource semantics and teardown hooks remain unqualified'
 if args.ui_owner_only:scope='Request278 owner capture and matching retirement with native table cohort and text lifecycle; cold installation, bypass closure, GUI exclusion, MVC/renderer and placement remain unqualified'
 if args.ui_selector_only:scope='Native ID193 post-initializer six-entry storage upgrade with H/L disabled and allocation-failure stock fallback; no MVC/viewer/input admission or installation'
-if graph_mode:scope='Joined GUI041d graph/content, shared published core UI session and actual owner text update at viewer/owner completion; input/gating, native bypass closure, installation/placement and LCD acceptance still pending'
-if args.ui_input_only:scope='Complete preprocess/sample/engine scope and held H/L input transaction joined to actual UI graph/core; COLOR gating, cold placement/installation, hardware and LCD acceptance pending'
+if graph_mode:scope='COLOR-qualified H/L masks, safe stock restoration and event-scoped input joined to actual UI graph/core; cold placement/installation, native bypass closure, total stack, hardware and LCD acceptance pending'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))

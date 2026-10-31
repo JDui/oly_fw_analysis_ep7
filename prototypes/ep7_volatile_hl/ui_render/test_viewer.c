@@ -115,12 +115,17 @@ static void owner_complete(void)
     ui_service[1378]=1;pointer(ui_service+416,display_owner);ep7u_screen_leave(&call);
     assert(ui_service[28]==0x81&&ui_service[29]==0xfe);
 }
-static void native_draw(void)
+void ep7_gcc_ui_draw_original(void *v)
 {
-    unsigned held=ep7v_draw_begin(viewer);
+    assert(v==viewer&&ep7_native_mvc.busy);
     /* Full original draw and property/queue delivery are boundary fixtures. */
     pointer(viewer+388,selector);pointer(viewer+392,getpointer(parent+80));
     put16(viewer+396,selector[86]);put32(viewer+400,public_mode);
+}
+static void native_draw(void)
+{
+    unsigned held=ep7v_draw_begin(viewer);
+    ep7_gcc_ui_draw_original(viewer);
     ep7v_draw_end(viewer,held);
 }
 static void enter_hl(unsigned category)

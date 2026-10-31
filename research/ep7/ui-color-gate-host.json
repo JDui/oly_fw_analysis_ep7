@@ -1,0 +1,32 @@
+{
+  "scope": "COLOR availability and allocation-before-free stock restoration joined to real UI/core C.",
+  "runs": {
+    "strict": {
+      "passed": true
+    },
+    "asan_ubsan": {
+      "passed": true
+    }
+  },
+  "scenario_groups": 8,
+  "real_hl_mask_admission": true,
+  "all_four_stock_category_routes_checked": true,
+  "stock_masks_preserved": true,
+  "allocation_failure_keeps_owned_child": true,
+  "same_event_stock_replay_suppressed": true,
+  "native_creators_timers_task_draw_and_text_calls_mocked": true,
+  "additional_existing_input_checker": {
+    "entry": "prototypes/ep7_volatile_hl/ui_native/check_input.py",
+    "strict": true,
+    "asan_ubsan": true,
+    "input_groups": 8,
+    "reused_viewer_mvc_content_groups": 19,
+    "gate_and_stock_restore_are_boundary_fixtures_in_this_older_checker": true
+  },
+  "initial_fixture_failure": "Expected H ALL +3 after editing only sector1; corrected to the existing H ALL MIX formatter contract. Production formatter unchanged.",
+  "no_sha_checks": true,
+  "installed": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "lcd_acceptance": false
+}

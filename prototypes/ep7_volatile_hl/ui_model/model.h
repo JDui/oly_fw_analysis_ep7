@@ -15,6 +15,8 @@ extern struct ep7cm_model ep7_native_ui_model;
 /* Caller holds the actual recorded MVC graph through every native/core call.
  * Reads property111 via the native service; never accepts a caller's mode flag. */
 int ep7cm_frame_held(struct ep7m_lifetime *,struct ep7_ui_frame *);
+/* Capability check also used before selecting H/L; does not open a session. */
+int ep7cm_available_held(struct ep7m_lifetime *,uint32_t public_mode);
 void ep7cm_revoke(void); /* GUI scope; no native callbacks, core reset or image mutation. */
 uint32_t ep7_gcc_ui_public_mode(void);
 #endif

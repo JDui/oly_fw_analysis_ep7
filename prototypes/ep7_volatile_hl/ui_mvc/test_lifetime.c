@@ -49,8 +49,8 @@ bool ep7n_native_current_task(uint32_t anchor,ep7n_task *task)
 }
 _Noreturn void ep7_gcc_quarantine(unsigned reason)
 { assert((reason>=0x701&&reason<=0x70c)||(reason>=0x801&&reason<=0x80b)||
-    (reason>=0x901&&reason<=0x905)||(reason>=0xa01&&reason<=0xa02)||(reason>=0xb01&&reason<=0xb02)||
-    (reason>=0xc01&&reason<=0xc0a));
+    (reason>=0x901&&reason<=0x908)||(reason>=0xa01&&reason<=0xa02)||(reason>=0xb01&&reason<=0xb03)||
+    (reason>=0xc01&&reason<=0xc0a)||(reason>=0xd01&&reason<=0xd02));
   quarantines++;longjmp(fatal,1); }
 static void call_patch(volatile unsigned char *p)
 {

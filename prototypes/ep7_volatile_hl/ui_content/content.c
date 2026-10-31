@@ -1,5 +1,7 @@
 #include "content.h"
 #include "../ui_model/model.h"
+#include "../ui_gate/gate.h"
+#include "stock.h"
 #include <stddef.h>
 #include <string.h>
 _Static_assert(sizeof(struct ep7c_child)==56,"owned MVC child extent");
@@ -30,18 +32,24 @@ void ep7c_rebuild(void *parent)
     struct ep7m_lifetime *m=ep7m_hold_content(parent);
     if (!m) { ep7_gcc_mvc_stock_rebuild(parent);return; }
     struct ep7c_content *s=&ep7_native_content;
+    uint32_t mode;
+    unsigned flags=ep7g_reconcile_held(m,&mode);
+    if (flags&EP7G_REBUILT) { ep7m_release_content(m);return; }
     unsigned category=half((const uint8_t *)m->selector+86);
     if (m->category>=4) ep7c_require_owned(m);
     else if (s->child) inconsistent(2);
     if (category<4) {
-        /* Original factories and semantics for stock categories, including the
-         * original allocation-failure behavior; no S factory is used for H/L. */
-        ep7_gcc_mvc_stock_rebuild(parent);
-        if (s->child) inconsistent(3);
-        m->content=(void *)(uintptr_t)word((uint8_t *)parent+80);m->category=category;
+        if (m->category>=4) {
+            if (!ep7c_to_stock_held(m,category,mode)) restore_category(m);
+        } else {
+            /* Retain the stock-to-stock rebuild, including its native failure
+             * semantics. H/L exit allocates via the same creators before free. */
+            ep7_gcc_mvc_stock_rebuild(parent);
+            if (s->child) inconsistent(3);
+            m->content=(void *)(uintptr_t)word((uint8_t *)parent+80);m->category=category;
+        }
     } else if (m->selector_count!=6||half((const uint8_t *)m->masks+2*category)) {
-        /* Default H/L masks stay disabled. Later native renderer admission owns
-         * enabling them; this module never writes a mask or claims readiness. */
+        /* The gate is the sole writer of the two extension masks. */
         restore_category(m);
     } else if (m->category>=4) {
         s->child->category=category;m->category=category; /* H <-> L retains extent. */
@@ -51,6 +59,7 @@ void ep7c_rebuild(void *parent)
         else {
             memset(next,0,sizeof *next);ep7_gcc_mvc_base_init(next);
             pointer(next->native,ep7_content_vtable);next->generation=m->generation;next->category=category;
+            ep7c_stop_transition(m);
             /* Native allocation/initialization completed before old ownership
              * changes. The held graph forbids matching teardown/rebuild reentry. */
             s->child=next;s->generation=m->generation;

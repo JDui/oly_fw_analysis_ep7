@@ -28,9 +28,8 @@ static void patch_input_call(volatile unsigned char *p,const void *target,unsign
     for (unsigned i=0;i<(wide?4u:2u);i++) p[1+i]=(uint8_t)(d>>(8*i));
     p[wide?5:3]=(uint8_t)mask;p[wide?6:4]=(uint8_t)frame;
 }
-static void input_case(unsigned category)
+static void input_install_fixture(void)
 {
-    input_poll_callback=NULL;render_case(1);owner_complete();enter_hl(category);
     memset(&ep7_native_ui_input_scope,0,sizeof ep7_native_ui_input_scope);
     atomic_init(&ep7_native_ui_input_scope.started,false);
     memset(packet,0,sizeof packet);memset(machine,0,sizeof machine);machine[0]=4;machine[1]=29;
@@ -43,6 +42,10 @@ static void input_case(unsigned category)
         ep7_stock_ui_wheel_2_call_unresolved,ep7_stock_ui_wheel_4_call_unresolved,ep7_stock_ui_wheel_3_call_unresolved};
     for (unsigned i=0;i<5;i++) patch_input_call(sites[i],ep7_native_ui_wheel_sample_bridge,0,0,0);
     assert(ep7i_native_cohort_present());
+}
+static void input_case(unsigned category)
+{
+    input_poll_callback=NULL;render_case(1);input_install_fixture();owner_complete();enter_hl(category);
 }
 static const uint32_t source_event[5]={0x9031,0x9032,0x904f,0x9051,0x9050};
 static const uint32_t sample_pc[5]={0x60ea0075,0x60ea00fc,0x60ea0d75,0x60ea0df0,0x60ea0e6b};
@@ -79,7 +82,10 @@ static void recursive_screen(void)
 { struct ep7u_screen_call call={ui_service,278,0,0};ep7u_screen_enter(&call); }
 static void recursive_prepare(void) { ep7i_prepare_begin(packet); }
 static void recursive_retire(void) { ep7m_before_parent_destroy(parent); }
-int main(void)
+#ifndef EP7_INPUT_TEST_MAIN
+#define EP7_INPUT_TEST_MAIN main
+#endif
+int EP7_INPUT_TEST_MAIN(void)
 {
     assert(!viewer_regressions());
     /*1 Five actual sample origins; packet direction/capped count is never delta. */

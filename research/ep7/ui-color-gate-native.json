@@ -1,0 +1,110 @@
+{
+  "scope": "Current-input COLOR stock restoration, NULL-safe creator and transition-timer evidence; no SHA.",
+  "input_structure": {
+    "scope": "Prepare a local E-P7 research input using container structure, without SHA.\n\nThis does not establish byte identity with historical hash-pinned reports.\nIt decodes stock only, never modifies firmware or produces an install image.",
+    "bytes": 111017984,
+    "model": "E-P7",
+    "build": "1100",
+    "whole_container_checked": true,
+    "components": [
+      {
+        "offset": 0,
+        "payload_bytes": 26214336,
+        "kind": "0x100",
+        "header_build": "1100",
+        "model_bytes": "1420",
+        "container_address": "0x406a0000"
+      },
+      {
+        "offset": 26214400,
+        "payload_bytes": 26214336,
+        "kind": "0x101",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x421a0000"
+      },
+      {
+        "offset": 52428800,
+        "payload_bytes": 45219776,
+        "kind": "0x106",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x43aa0000"
+      },
+      {
+        "offset": 97648640,
+        "payload_bytes": 262080,
+        "kind": "0x10e",
+        "header_build": "0001",
+        "model_bytes": "1420",
+        "container_address": "0x0"
+      },
+      {
+        "offset": 97910784,
+        "payload_bytes": 13107136,
+        "kind": "0x102",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x467e0000"
+      }
+    ],
+    "component_sums_valid": true,
+    "unchanged_roundtrip_equal": true,
+    "runtime_base": "0x60020020",
+    "entry_witnesses_match": true,
+    "hash_checks_performed": false,
+    "historical_exact_byte_identity_proven": false,
+    "firmware_modified": false,
+    "firmware_executed": false,
+    "camera_accessed": false,
+    "flash_ready": false
+  },
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "checked_instructions": 135,
+  "checked_fixed_data_rows": 7,
+  "generic_factory_has_unconditional_null_postwrite": true,
+  "generic_rebuild_frees_before_allocation": true,
+  "reused_full_creators": {
+    "0": {
+      "entry": "0x60de33a7",
+      "extent": 144,
+      "self_frame": 8,
+      "vtable": "0x61155a7c"
+    },
+    "7": {
+      "entry": "0x60e2054e",
+      "extent": 188,
+      "self_frame": 20,
+      "vtable": "0x61187534"
+    },
+    "14": {
+      "entry": "0x60df002e",
+      "extent": 240,
+      "self_frame": 32,
+      "vtable": "0x61159ea8"
+    }
+  },
+  "creator14_input_halfwords": 3,
+  "creator14_third_halfword": "low16(public_mode111)",
+  "stock_categories_1_and_2_use_exact_mode_keys": true,
+  "unknown_mode_does_not_invent_key0": true,
+  "stopped_timers": [
+    535,
+    537,
+    572
+  ],
+  "cleared_parent_words": [
+    16,
+    20,
+    44,
+    84
+  ],
+  "native_cancel_queued_removal_is_conditional_on_matching_timer_entry": true,
+  "all_native_internal_allocation_failures_proven": false,
+  "native_timer_scheduling_proven": false,
+  "full_installation_and_stack_qualification": false,
+  "installed": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "hash_checks_performed": false
+}

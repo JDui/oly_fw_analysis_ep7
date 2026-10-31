@@ -1,4 +1,6 @@
 #include "content.h"
+#include "stock.h"
+#include "../ui_gate/gate.h"
 /* Reuse the actual MVC/cohort fixture and its six existing lifetime regressions. */
 #define main mvc_lifetime_regressions
 #include "../ui_mvc/test_lifetime.c"
@@ -7,7 +9,7 @@
 volatile uint16_t ep7_stock_selector_remembered_unresolved;
 const unsigned char ep7_content_vtable[72]={0};
 static struct ep7c_child allocation;
-static uint8_t stock_content[48];
+static uint8_t stock_content[240]; /* Largest reused native creator extent. */
 static unsigned allocations,initializations,stock_calls,stock_frees,private_frees,fail_alloc,reenter;
 static unsigned free_count_at_allocate;
 static void *getpointer(const uint8_t *p)
@@ -43,6 +45,19 @@ void ep7_gcc_mvc_stock_rebuild(void *p)
     if (old) ep7_gcc_mvc_dispose(old);
     pointer(parent+80,stock_content); /* Original allocation success boundary. */
 }
+#ifndef EP7_UI_GATE_INTEGRATION
+/* Earlier isolated checks retain their explicit gate/stock boundary fixtures.
+ * ui_gate/check.py links the real gate and allocation-before-free adapter. */
+unsigned ep7g_reconcile_held(struct ep7m_lifetime *m,uint32_t *mode)
+{ assert(m->busy);*mode=54;return EP7G_AVAILABLE; }
+int ep7g_before_event(void *p)
+{ const struct ep7m_lifetime *m=ep7m_current();return m&&m->parent==p?(int)m->category:-1; }
+void ep7c_stop_transition(struct ep7m_lifetime *m) { assert(m->busy); }
+int ep7c_to_stock_held(struct ep7m_lifetime *m,unsigned category,uint32_t mode)
+{
+    (void)mode;ep7_gcc_mvc_stock_rebuild(m->parent);m->content=stock_content;m->category=category;return 1;
+}
+#endif
 static void begin_case(void)
 {
     reset();memset(&ep7_native_content,0,sizeof ep7_native_content);
