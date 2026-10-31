@@ -1,0 +1,67 @@
+{
+  "scope": "Assemble the cold-clear candidate and check its bounded writes using GNU instruction bodies.",
+  "source": "prototypes/ep7_volatile_hl/target/cold_clear.s",
+  "text_data_bss": [
+    53,
+    0,
+    0
+  ],
+  "instruction_count": 21,
+  "transient_stack_bytes": 16,
+  "zeroed_payload_bytes": 16384,
+  "gnu_references": [
+    "https://gnu.googlesource.com/binutils-gdb/+/cbe950e9fe8a56f788bcf985cc51733f18abb45b/sim/mn10300/mn10300.igen",
+    "https://gnu.googlesource.com/binutils-gdb/+/cbe950e9fe8a56f788bcf985cc51733f18abb45b/sim/mn10300/op_utils.c",
+    "https://gnu.googlesource.com/binutils-gdb/+/cbe950e9fe8a56f788bcf985cc51733f18abb45b/sim/mn10300/mn10300_sim.h"
+  ],
+  "reused_gnu_instruction_bodies": [
+    "OP_F8FE00",
+    "OP_4200",
+    "OP_4300",
+    "OP_F2E4",
+    "OP_F2F3",
+    "OP_FCDC0000",
+    "OP_2C0000",
+    "OP_0",
+    "OP_60",
+    "OP_50",
+    "OP_2800",
+    "OP_C900",
+    "OP_5800",
+    "OP_5C00",
+    "OP_FCA40000",
+    "OP_DC000000"
+  ],
+  "reused_gnu_helpers": [
+    "genericAdd"
+  ],
+  "reference_bytes": 79236,
+  "helper_reference_bytes": 5212,
+  "exact_object_and_relocation_shape_checked": true,
+  "synthetic_link_relaxation_disabled": true,
+  "all_registers_match_original_mov_then_resume": true,
+  "memory_outside_payload_and_stack_unchanged": true,
+  "positive_state_checks": 2,
+  "negative_controls": 3,
+  "payload_word_writes_each": 4096,
+  "stack_word_writes_each": 4,
+  "unresolved_production_bindings": [
+    "__ep7_private_uncached_start",
+    "ep7_stock_boot_next_copy_end_unresolved",
+    "ep7_stock_boot_after_clear_unresolved+0x00000001"
+  ],
+  "production_object_assembled": true,
+  "synthetic_fixture_linked": true,
+  "gnu_libsim_full_engine_run": false,
+  "firmware_input_used": false,
+  "firmware_modified": false,
+  "firmware_built": false,
+  "camera_executed": false,
+  "hash_checks_performed": false,
+  "limits": [
+    "Restricted decoder and reused GNU C bodies, not full libsim or proprietary hardware execution.",
+    "Aligned synthetic RAM/stack only; no cache, interrupts, secondary CPU or DMA model.",
+    "Placement, exclusive reservation and cold-only execution are prerequisites, not established here.",
+    "No firmware rewrite, runtime bootstrap, hook installer or publication is performed."
+  ]
+}
