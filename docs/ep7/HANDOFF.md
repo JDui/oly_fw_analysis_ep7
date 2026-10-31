@@ -7,13 +7,21 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[实际链接候选启动模拟](CANDIDATE_STARTUP_SIM.md)已完成 S1。直接执行候选 ELF
+最新：[原生创建与发布模拟](CANDIDATE_PUBLISH_SIM.md)已完成 S2 的有条件场景。
+原厂 create 316 指令取得 ID1，正常 bootstrap 共 52,820 指令后发布 a1dd6108，并
+恢复原调用现场尾转 6011f620。原厂耗尽返回 −34 后候选 f04 隔离；queue4c 失配后
+真实 delete 384 指令清除 ID/计数并释放锁，再 f05 隔离。没有 API 成功 stub。
+其他核空 pending list、单节点 ready list、原生锁字节及预初始化 queue header 都是
+明确 fixture；真实初始化、多核、加载/占用、完整栈和恢复仍未通过。下一步 S3 复用
+这个由候选代码实际发布的 runtime，执行原生 poll/signal 下的 H/L 修改/冻结及后续
+capture/queue/worker/CPU 链；不要手写已发布 runtime 或自动填充未知内存。
+
+此前：[实际链接候选启动模拟](CANDIDATE_STARTUP_SIM.md)已完成 S1。直接执行候选 ELF
 对应机器码：16 KiB 清零、capture 初始化、七组 cohort、损坏补丁/错误 TCB/重复初始化
 拒绝均通过。bootstrap 的三次原生 get_tid 完成，12,729 条指令后到达 6003057f，
 A0 指向正确 0/1/1 semaphore spec，尚未执行 create，也未发布 runtime。
 前缀观测栈深 296 字节，不是完整栈界。无对象重编译、SHA、固件文件修改或相机操作。
-下一项沿此实际现场推进原生 create/内核分配、队列查询和 runtime 发布；复用候选与
-严格引擎，不再重做已完成的工具链和对象清单。
+S2 已沿此现场推进；复用候选与严格引擎，不再重做已完成的工具链和对象清单。
 
 恢复日期：2026-10-30（Asia/Shanghai）。用户已要求继续推进研究测试。
 **本轮已完成首个不可安装离线候选的整体编译、链接与合成；未进行刷机或相机操作。**

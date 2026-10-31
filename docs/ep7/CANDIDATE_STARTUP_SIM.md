@@ -5,6 +5,9 @@
 复用现有 GNU 严格引擎、`penf_emulator.execute` 和候选链接器的 ELF 检查；
 [实际报告](../../research/ep7/candidate-startup-sim.json)保留执行边界。产物继续不可安装。
 
+后续 [S2 原生创建/发布/回收](CANDIDATE_PUBLISH_SIM.md)已在明确内核 fixture 下继续
+通过实际 create/delete 和 runtime 发布。下文仍保留 S1 本身停止于 create 前的边界。
+
 ## 输入与现场
 
 实际 ELF 的两个代码段经 GNU objcopy 提取，与当前 decoded 候选对应字节相等；

@@ -9,7 +9,8 @@
 修改、完整 ELF 与链接图已生成；产物仅用于离线研究，没有可刷升级包，不连接相机。
 
 2026-11-01：[实际候选启动模拟](docs/ep7/CANDIDATE_STARTUP_SIM.md)已通过冷清零、
-初始化、七组安装检查及定向拒绝；bootstrap 已执行到原生信号量创建入口。
+初始化、七组安装检查及定向拒绝；后续[原生创建/发布/回收](docs/ep7/CANDIDATE_PUBLISH_SIM.md)
+已在明确内核 fixture 下通过正常路径及两条关键失败路径，未替换原厂 create/delete。
 继续按[刷机资格计划](docs/ep7/FLASH_READINESS_PLAN.md)推进，完整启动与安装资格尚未通过。
 
 This branch investigates full per-color **Hue / Saturation / Lightness** controls

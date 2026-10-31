@@ -111,7 +111,11 @@ class Machine:
         self.regions[name] = replace(region,data=region.data[:offset]+data+region.data[offset+len(data):])
 
     def run(self,start,stop,*,overrides=None,breakpoints=(),full_trace=False,limit=30000):
-        result = execute(list(self.regions.values()),dict(self.initial,pc=start,**(overrides or {})),stop,
+        return self.resume(dict(self.initial,pc=start,**(overrides or {})),stop,
+            breakpoints=breakpoints,full_trace=full_trace,limit=limit)
+
+    def resume(self,registers,stop,*,breakpoints=(),full_trace=False,limit=30000):
+        result = execute(list(self.regions.values()),registers,stop,
             limit=limit,trace_limit=limit if full_trace else 16,trace_tail=not full_trace,
             breakpoints=breakpoints,timeout=20,engine=self.engine,record_hashes=False)
         require(result.get('hash_checks_performed') is False,'unexpected provenance mode')
@@ -119,10 +123,10 @@ class Machine:
             self.regions[row['name']] = replace(self.regions[row['name']],data=bytes.fromhex(row['hex']))
         return result
 
-    def call(self,target):
+    def call(self,target,*,overrides=None):
         code = b'\xdd'+struct.pack('<i',target-CALLER)+bytes(2)
         self.regions['caller'] = Region('caller',CALLER,code,'rx')
-        return self.run(CALLER,CALLER+7)
+        return self.run(CALLER,CALLER+7,overrides=overrides)
 
 
 def returned(result,stop):

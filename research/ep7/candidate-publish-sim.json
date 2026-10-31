@@ -1,0 +1,356 @@
+{
+  "scope": "Execute candidate bootstrap with real native semaphore create/delete and explicit kernel fixtures.\n\nThe original queue pointer tables are used; queue headers/TCB/pending state and\nthe single-contender shared-lock byte are fixtures, not a whole-board model.\n",
+  "candidate_build_revision": "7386faa33453ceb266343c4773a9520f7c5b616f",
+  "candidate_object_revision": "96c611dbc478e4b3ddc3f3823a8846769c08156a",
+  "actual_elf_code_equals_decoded_candidate": true,
+  "all_assertions_passed": true,
+  "hash_checks_performed": false,
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103",
+  "root_fields_checked": {
+    "16": "0x621a6320",
+    "28": "0x621a631c",
+    "56": "0x621a63d4",
+    "60": "0x600410d8",
+    "64": "0x62192400",
+    "68": "0x621a63ac",
+    "96": "0x621a630c",
+    "100": "0x621a6334",
+    "208": "0x6003df9c",
+    "232": "0x6003e99c",
+    "272": "0x60073215",
+    "276": "0x60073218",
+    "280": "0x6007321b",
+    "316": "0x600300a1",
+    "320": "0x40",
+    "328": "0x621a63b0",
+    "332": "0xa2793e80",
+    "344": "0x0",
+    "348": "0x800",
+    "352": "0x0",
+    "356": "0x0",
+    "380": "0x3"
+  },
+  "root_address_instruction_checks": [
+    {
+      "pc": "0x60032613",
+      "root": "0x600411a4"
+    },
+    {
+      "pc": "0x60033506",
+      "root": "0x60041330"
+    },
+    {
+      "pc": "0x600335b6",
+      "root": "0x600414bc"
+    }
+  ],
+  "peer_pending_list_fixtures": [
+    {
+      "root": "0x60041330",
+      "pending": "0xa27942b0",
+      "first_word": "0xffffffff"
+    },
+    {
+      "root": "0x600414bc",
+      "pending": "0xa27944d8",
+      "first_word": "0xffffffff"
+    }
+  ],
+  "queue_header_fixtures": [
+    {
+      "handle": "0x4b",
+      "object": "0x621a167c",
+      "attributes": 128,
+      "maximum": 148,
+      "ring_bytes": 4864,
+      "backing": "0x1992c000",
+      "backing_mapped": false
+    },
+    {
+      "handle": "0x4c",
+      "object": "0x621a16b8",
+      "attributes": 128,
+      "maximum": 312,
+      "ring_bytes": 10112,
+      "backing": "0x19930000",
+      "backing_mapped": false
+    },
+    {
+      "handle": "0x4d",
+      "object": "0x621a16f4",
+      "attributes": 128,
+      "maximum": 300,
+      "ring_bytes": 9728,
+      "backing": "0x19934000",
+      "backing_mapped": false
+    },
+    {
+      "handle": "0xab",
+      "object": "0x621a2cfc",
+      "attributes": 128,
+      "maximum": 312,
+      "ring_bytes": 10112,
+      "backing": "0x19aac000",
+      "backing_mapped": false
+    },
+    {
+      "handle": "0x4f",
+      "object": "0x621a176c",
+      "attributes": 128,
+      "maximum": 312,
+      "ring_bytes": 10112,
+      "backing": "0x1993c000",
+      "backing_mapped": false
+    }
+  ],
+  "native_create_success": {
+    "result": {
+      "status": "returned",
+      "completed": 316,
+      "fault": null,
+      "final_pc": "0x60049bc1",
+      "final_sp": "0x190106d8",
+      "returned_d0": 1,
+      "observed_stack_depth_from_hook_sp": 328,
+      "native_get_tid_entries": 0,
+      "native_create_entries": 1,
+      "native_delete_entries": 0,
+      "native_slot_allocator_entries": 1,
+      "shared_bset_entries": 1,
+      "shared_bclr_entries": 1,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "handle": 1,
+    "object": "0x62199fd0",
+    "attributes_initial_maximum_count": [
+      0,
+      1,
+      1,
+      1
+    ],
+    "empty_native_wait_list": true,
+    "used_count": 1,
+    "locks_released": true
+  },
+  "successful_bootstrap": {
+    "prefix": {
+      "status": "breakpoint",
+      "completed": 12729,
+      "fault": null,
+      "final_pc": "0x6003057f",
+      "final_sp": "0x190106c8",
+      "returned_d0": 419497756,
+      "observed_stack_depth_from_hook_sp": 296,
+      "native_get_tid_entries": 3,
+      "native_create_entries": 0,
+      "native_delete_entries": 0,
+      "native_slot_allocator_entries": 0,
+      "shared_bset_entries": 0,
+      "shared_bclr_entries": 0,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "after_create": {
+      "status": "returned",
+      "completed": 39775,
+      "fault": null,
+      "final_pc": "0x6011f620",
+      "final_sp": "0x190107ec",
+      "returned_d0": 287454020,
+      "observed_stack_depth_from_hook_sp": 356,
+      "native_get_tid_entries": 11,
+      "native_create_entries": 0,
+      "native_delete_entries": 0,
+      "native_slot_allocator_entries": 0,
+      "shared_bset_entries": 0,
+      "shared_bclr_entries": 0,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "total_instructions": 52820,
+    "executed_path_stack_depth_from_hook_sp": 356,
+    "runtime_address": "0xa1dd6108",
+    "original_entry": "0x6011f620",
+    "original_entry_registers_checked": [
+      "d0",
+      "d1",
+      "d2",
+      "d3",
+      "a0",
+      "a1",
+      "a2",
+      "a3",
+      "sp",
+      "mdr",
+      "psw"
+    ],
+    "runtime_queries": [
+      {
+        "symbol": "_ep7r_get",
+        "result": {
+          "status": "returned",
+          "completed": 7,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107f0"
+        },
+        "returned_d0": "0xa1dd6108"
+      },
+      {
+        "symbol": "_ep7r_accepting",
+        "result": {
+          "status": "returned",
+          "completed": 23,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107f0"
+        },
+        "returned_d0": "0x1"
+      },
+      {
+        "symbol": "_ep7r_io_open",
+        "result": {
+          "status": "returned",
+          "completed": 10,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107f0"
+        },
+        "returned_d0": "0x1"
+      }
+    ],
+    "original_stock_initializer_executed": false
+  },
+  "native_exhaustion": {
+    "create": {
+      "status": "returned",
+      "completed": 233,
+      "fault": null,
+      "final_pc": "0x60049bc1",
+      "final_sp": "0x190106d8",
+      "returned_d0": -34,
+      "observed_stack_depth_from_hook_sp": 328,
+      "native_get_tid_entries": 0,
+      "native_create_entries": 1,
+      "native_delete_entries": 0,
+      "native_slot_allocator_entries": 1,
+      "shared_bset_entries": 1,
+      "shared_bclr_entries": 1,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "candidate_rejection": {
+      "status": "breakpoint",
+      "completed": 15,
+      "fault": null,
+      "final_pc": "0x6004a342",
+      "final_sp": "0x19010764",
+      "returned_d0": 3844,
+      "observed_stack_depth_from_hook_sp": 280,
+      "native_get_tid_entries": 0,
+      "native_create_entries": 0,
+      "native_delete_entries": 0,
+      "native_slot_allocator_entries": 0,
+      "shared_bset_entries": 0,
+      "shared_bclr_entries": 0,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "native_status": -34,
+    "quarantine_reason": "0xf04",
+    "semaphore_object_unmapped": true,
+    "runtime_unpublished": true
+  },
+  "queue_mismatch_rollback": {
+    "handle": "0x4c",
+    "fixture_maximum": 300,
+    "required_maximum": 312,
+    "created": {
+      "status": "returned",
+      "completed": 316,
+      "fault": null,
+      "final_pc": "0x60049bc1",
+      "final_sp": "0x190106d8",
+      "returned_d0": 1,
+      "observed_stack_depth_from_hook_sp": 328,
+      "native_get_tid_entries": 0,
+      "native_create_entries": 1,
+      "native_delete_entries": 0,
+      "native_slot_allocator_entries": 1,
+      "shared_bset_entries": 1,
+      "shared_bclr_entries": 1,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "to_delete": {
+      "status": "breakpoint",
+      "completed": 36203,
+      "fault": null,
+      "final_pc": "0x60031107",
+      "final_sp": "0x19010720",
+      "returned_d0": 1,
+      "observed_stack_depth_from_hook_sp": 356,
+      "native_get_tid_entries": 6,
+      "native_create_entries": 0,
+      "native_delete_entries": 0,
+      "native_slot_allocator_entries": 0,
+      "shared_bset_entries": 0,
+      "shared_bclr_entries": 0,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "native_delete": {
+      "status": "returned",
+      "completed": 384,
+      "fault": null,
+      "final_pc": "0x60049bd0",
+      "final_sp": "0x19010734",
+      "returned_d0": 0,
+      "observed_stack_depth_from_hook_sp": 240,
+      "native_get_tid_entries": 0,
+      "native_create_entries": 0,
+      "native_delete_entries": 1,
+      "native_slot_allocator_entries": 0,
+      "shared_bset_entries": 3,
+      "shared_bclr_entries": 3,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "candidate_rejection": {
+      "status": "breakpoint",
+      "completed": 12,
+      "fault": null,
+      "final_pc": "0x6004a342",
+      "final_sp": "0x19010764",
+      "returned_d0": 3845,
+      "observed_stack_depth_from_hook_sp": 188,
+      "native_get_tid_entries": 0,
+      "native_create_entries": 0,
+      "native_delete_entries": 0,
+      "native_slot_allocator_entries": 0,
+      "shared_bset_entries": 0,
+      "shared_bclr_entries": 0,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "quarantine_reason": "0xf05",
+    "native_semaphore_id_cleared": true,
+    "native_used_count_after": 0,
+    "locks_released": true,
+    "runtime_unpublished": true
+  },
+  "api_success_stubs": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "full_boot_executed": false,
+  "installable": false,
+  "limits": [
+    "The shared byte at 8fe00000 is ordinary read/write fixture storage with one contender. Real bus atomicity, peers, IRQ timing and physical locking are unproven.",
+    "Task, its single-node ready list, all three empty pending-list sentinels, root cells, allocator counters and five already-initialized queue headers are explicit fixtures; their earlier real boot initialization is not executed.",
+    "Semaphore and queue object addresses come from the original unchanged ROM pointer tables. Queue backing addresses are synthetic and deliberately unmapped: no queue I/O runs here.",
+    "All semaphore creation/deletion and critical helpers execute original candidate/native instructions, including their failure returns; no API body or return value is replaced.",
+    "The normal run ends at the original initializer entry after restoring its call frame. It does not execute that initializer, task startup, the capture/worker chain or hardware.",
+    "Observed stack depth is only for these executed paths; full IRQ/alternate-context bounds, placement/load ownership and recovery remain open."
+  ]
+}
