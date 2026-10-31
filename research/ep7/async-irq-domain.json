@@ -1,0 +1,47 @@
+{
+  "scope": "Join the known type39 scheduler route to domain0's class5 IRQ dispatch.\n\nOne native dispatcher-prefix execution with explicit pending-source/register\nfixtures. No physical interrupt injection, nested scheduling or callback body.\n",
+  "checked_witnesses": 92,
+  "checked_data_rows": 3,
+  "source_number": 29,
+  "priority_class": 5,
+  "consumer": "0x6006860a",
+  "reader": "0x600686e2",
+  "rings": {
+    "0": "0x6203be60",
+    "1": "0xa27160b8",
+    "2": "0xa27169e8"
+  },
+  "callback_tables": {
+    "0": "0xa26ca7bc",
+    "1": "0xa26caa94",
+    "2": "0xa26cad6c"
+  },
+  "domain0_root": "0x600411a4",
+  "class_table": "0x6003c13c",
+  "class5_handler": "0x60054e0f",
+  "execution": {
+    "status": "returned",
+    "completed": 18,
+    "fault": null,
+    "final_pc": "0x6006860a",
+    "final_sp": "0x19010074"
+  },
+  "final_psw": "0xd00",
+  "irq_handler_reenables_interrupts_before_queue_consumer": true,
+  "type39_first_stage_is_controller_task_callback": false,
+  "writer_and_reader_use_same_selector_mapping": true,
+  "other_core_handler_paths_qualified": false,
+  "type39_second_stage_same_context_proven": false,
+  "type7_type39_completion_serialization_proven": false,
+  "all_assertions_passed": true,
+  "hash_checks_performed": false,
+  "firmware_modified": false,
+  "firmware_built": false,
+  "hardware_executed": false,
+  "limits": [
+    "Only initialized stock domain0 bindings join the ROM/kernel/interrupt route; alternate table writers and other core dispatchers remain outside this check.",
+    "The single native execution begins in the dispatcher with synthetic registers/pending-source/table values and stops at the consumer entry.",
+    "Physical IRQ delivery, source acknowledgement, preemption and reentrancy are not simulated. The reader/callback bodies are not executed.",
+    "The conditional second stage and type7 completion have separate contexts still to qualify; this result is not a global serialization proof."
+  ]
+}

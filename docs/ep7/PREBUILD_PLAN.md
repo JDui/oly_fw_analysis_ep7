@@ -81,6 +81,11 @@ G6 依赖 E 的工具链设计和 G1–G4 的候选接口；G8 汇合全部结�
 
 ## 当前编译准入结论
 
+[type39首阶段IRQ入口](ASYNC_IRQ_DOMAIN.md)已接通domain0的初始化注册、ROM类表、
+kernel分派与队列consumer，确认class5/source29路径。92条指令、3项配置和一次
+18指令原生片段执行通过；handler在consumer之前重开IE，不能假定回调都在controller
+任务内串行。第二阶段与type7工作队列消费者继续待审，未据此启用跨上下文共享或放行G8。
+
 [mailbox管理槽来源](MAILBOX_REGISTRY_LIFETIME.md)已确认正常+4句柄来自内核create，
 外部注册表ID不是原始mailbox ID。原生片段执行同时证实reserve提前设置active、
 release保留旧句柄，delete前缀可读取该旧值。71条witness及四次短执行通过；这是局部

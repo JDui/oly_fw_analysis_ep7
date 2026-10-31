@@ -16,6 +16,11 @@
 用保存值调用6006a96b，返回队列状态。8050的硬件核语义、这些函数的完整屏障、
 中断/任务域和重入语义尚未独立资格化；不得据此启用H/L跨域共享状态。
 
+后续[IRQ入口审查](ASYNC_IRQ_DOMAIN.md)已接通domain0的第一阶段：初始化将
+consumer6006860a注册为class5/source29，ROM类表与kernel入口通向60054e0f，
+再经source表进入该consumer。发布与消费使用同一selector→队列映射。第一阶段属于
+IRQ回调路径，不是controller任务回调；第二阶段、其他核入口和嵌套互斥仍待审。
+
 600685d9比较(head+1)&31与tail，两个游标在队列+384/+388；相等路线返回1。
 其他路线更新head，将callback、原request地址、半字参数写入槽+0/+4/+8。
 600686e2按同样游标和掩码读取这三个字段，以request为a0间接调用callback，
