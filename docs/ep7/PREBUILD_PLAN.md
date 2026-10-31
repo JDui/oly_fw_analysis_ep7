@@ -195,3 +195,9 @@ bind 时填充子控件、bulk cleanup 与析构的不同责任；纯析构只�
 现查询实际 child ID 冲突，桥保存/恢复 owner+108 共享遍历游标。124条原厂指令、
 12项数据、16个定向host场景和16个对象通过。下一项具体 owner 捕获/撤销 hook、
 独立资源副本及 H/L viewer；没有将已知调用位置等同于已安装的生命周期闭包。
+
+[request278 显示切换](UI_SCREEN_ACTIVATION.md)已定位 service+784 的实际 manager、
+type6111 描述符和 service+416 发布顺序：新 owner bind/draw 后才回收旧 owner。
+新增112字节专用文本资源，复制原厂index53，仅改独立ID和自有layout指针，保留空
+导航表。目标对象构造器72字节，17对象通过；未重复跑未改动host测试。下一项在完整
+manager前后接捕获/撤销，并覆盖bulk cleanup/析构，再汇入 H/L viewer。

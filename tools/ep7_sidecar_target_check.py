@@ -48,7 +48,8 @@ if ui_mode:
  if args.ui_lifecycle_only:
   files.update({'text_native_lifecycle':core/'text_lifecycle/native_lifecycle.c',
       'text_attach_bind':core/'text_lifecycle/attach_bind.s','text_setter':core/'text_viewer/set_text.s',
-      'text_find_child':core/'text_lifecycle/find_child.s'})
+      'text_find_child':core/'text_lifecycle/find_child.s',
+      'text_native_resource':core/'text_lifecycle/native_resource.c'})
 if materializer_mode:
  files={'materializer_bridge':core/'snapshot_transport/native/materializer_bridge.s',
         'materializer_layout':core/'snapshot_transport/native/materializer_layout.c',
@@ -503,7 +504,8 @@ if ui_mode:expected={'ep7_stock_get_tid_unresolved','ep7_stock_ui_service_unreso
     'ep7_stock_text_cleanup_unresolved','ep7_stock_text_destructor_unresolved'}
 if ui_create_mode:expected.add('ep7_stock_widget_factory_unresolved')
 if args.ui_lifecycle_only:expected|={'ep7_stock_ui_attach_unresolved','ep7_stock_text_bind_unresolved',
-    'ep7_stock_text_setter_unresolved','ep7_stock_ui_find_child_unresolved'}
+    'ep7_stock_text_setter_unresolved','ep7_stock_ui_find_child_unresolved',
+    '_ep7_stock_hl_text_descriptor_unresolved','_ep7_stock_hl_text_layouts_unresolved'}
 if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved','ep7_stock_receive_wrapper_unresolved'}
