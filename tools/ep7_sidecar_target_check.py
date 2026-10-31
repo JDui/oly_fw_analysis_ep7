@@ -110,6 +110,7 @@ if args.queue_pipeline_abi_only:
  files['capture_cohort']=core/'controller_sidecar/cohort.c'
  files['capture_bridges']=core/'controller_sidecar/native_bridges.s'
  files['wait_bridges']=core/'controller_sidecar/wait_bridges.s'
+ files['engine_bridges']=core/'controller_sidecar/engine_bridges.s'
  files['capture_state_observer']=core/'capture_state_guard/observer.c'
  files['capture_state_bridge']=core/'capture_state_guard/bridge.s'
  files.update({n:core/'runtime'/p for n,p in [
@@ -572,6 +573,22 @@ with tempfile.TemporaryDirectory() as temp:
    objects[name].update(checked_instructions=len(ins),transaction_bridge_frame_bytes=40,
        owned_scope_frame_bytes=64,owned_scope_offset=24,pop_scope_offset=56,send_scope_offset=112,
        initializer_tail_preserves_incoming_tag=True)
+  if args.queue_pipeline_abi_only and name=='engine_bridges':
+   dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
+   ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
+   body=[('add','-40,sp'),('mov','d0,(12,sp)'),('mov','d1,(16,sp)'),('mov','a0,(20,sp)'),
+         ('mov','a1,(24,sp)'),('mov','d2,(32,sp)'),('mov','mdr,d2'),('mov','d2,(28,sp)'),('call',None),
+         ('mov','(28,sp),d2'),('mov','d2,mdr'),('mov','(32,sp),d2'),('mov','(12,sp),d0'),
+         ('mov','(16,sp),d1'),('mov','(20,sp),a0'),('mov','(24,sp),a1'),('add','40,sp'),('jmp',None)]
+   if len(ins)!=2*len(body):raise ValueError('engine epoch bridge instruction count changed')
+   for actual,want in zip(ins,body*2):
+    if actual[0]!=want[0] or (want[1] is not None and actual[1].strip()!=want[1]):raise ValueError('engine epoch bridge operand changed')
+   if any(not x[1].endswith(',[],0') for x in ins if x[0]=='call') or dis.count('R_MN10300_PCREL32')!=4:
+    raise ValueError('engine epoch bridge call frame/relocations changed')
+   for symbol in ['_ep7cn_engine_epoch','ep7_stock_engine_configure_unresolved','ep7_stock_engine_pool_unresolved']:
+    if symbol+'+0x1' not in dis:raise ValueError('engine epoch bridge target changed')
+   objects[name].update(checked_instructions=len(ins),additional_bridge_frame_bytes=40,
+       both_original_calls_tail_transferred=True)
   if name=='worker_bridge':
    dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)
    ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
@@ -792,6 +809,7 @@ if args.queue_pipeline_abi_only:
      'ep7_stock_capture_pool_release_unresolved','ep7_stock_capture_lookup_unresolved',
      'ep7_stock_associated_enqueue_unresolved','ep7_stock_associated_initialize_unresolved',
      'ep7_stock_wait_pop_unresolved','ep7_stock_wait_initialize_unresolved','ep7_stock_wait_service_unresolved',
+     'ep7_stock_engine_configure_unresolved','ep7_stock_engine_pool_unresolved',
      'ep7_stock_receive_gate_continue_unresolved','ep7_stock_receive_gate_error_unresolved',
      'ep7_stock_send_gate_continue_unresolved','ep7_stock_send_gate_error_unresolved','ep7_stock_delete_gate_continue_unresolved',
      'ep7_stock_raw_sem_wait_unresolved','ep7_stock_raw_sem_signal_unresolved',

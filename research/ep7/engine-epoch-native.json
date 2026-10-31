@@ -1,0 +1,140 @@
+{
+  "scope": "Engine workrecord order and reset epochs; exact bounded static checks, no SHA or CPU emulation.",
+  "input_structure": {
+    "scope": "Prepare a local E-P7 research input using container structure, without SHA.\n\nThis does not establish byte identity with historical hash-pinned reports.\nIt decodes stock only, never modifies firmware or produces an install image.",
+    "bytes": 111017984,
+    "model": "E-P7",
+    "build": "1100",
+    "whole_container_checked": true,
+    "components": [
+      {
+        "offset": 0,
+        "payload_bytes": 26214336,
+        "kind": "0x100",
+        "header_build": "1100",
+        "model_bytes": "1420",
+        "container_address": "0x406a0000"
+      },
+      {
+        "offset": 26214400,
+        "payload_bytes": 26214336,
+        "kind": "0x101",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x421a0000"
+      },
+      {
+        "offset": 52428800,
+        "payload_bytes": 45219776,
+        "kind": "0x106",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x43aa0000"
+      },
+      {
+        "offset": 97648640,
+        "payload_bytes": 262080,
+        "kind": "0x10e",
+        "header_build": "0001",
+        "model_bytes": "1420",
+        "container_address": "0x0"
+      },
+      {
+        "offset": 97910784,
+        "payload_bytes": 13107136,
+        "kind": "0x102",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x467e0000"
+      }
+    ],
+    "component_sums_valid": true,
+    "unchanged_roundtrip_equal": true,
+    "runtime_base": "0x60020020",
+    "entry_witnesses_match": true,
+    "hash_checks_performed": false,
+    "historical_exact_byte_identity_proven": false,
+    "firmware_modified": false,
+    "firmware_executed": false,
+    "camera_accessed": false,
+    "flash_ready": false
+  },
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "checked_instructions": 250,
+  "callback_table": "0x6223d134",
+  "callbacks": [
+    "0x602a2d43",
+    "0x602a2ec7",
+    "0x602a2ef7",
+    "0x602a2f57",
+    "0x602a2f62",
+    "0x602a2f91",
+    "0x602a2f6d",
+    "0x602a2f73",
+    "0x602a2f70",
+    "0x602a2f7e",
+    "0x0",
+    "0x602a301b",
+    "0x602a2f81",
+    "0x602a3042",
+    "0x60000",
+    "0x602a2edd",
+    "0x70000"
+  ],
+  "required_mask": "0x000f000f",
+  "selected_event_mask": "0x00060000",
+  "all_complete_mask": "0x000f0000",
+  "workrecord_words": [
+    "node",
+    "current_flags",
+    "last_reported_flags"
+  ],
+  "workrecord_count": 4,
+  "workrecord_backing": "0x6223d104",
+  "native_workrecord_stride_opcode_emulated": false,
+  "call_references": {
+    "0x6029acd8": [
+      "0x6029ce9d"
+    ],
+    "0x6029ad23": [
+      "0x6029ef4c",
+      "0x602a27e4"
+    ],
+    "0x6029aef8": [
+      "0x6029b09e",
+      "0x6029b175",
+      "0x6029b24d",
+      "0x6029b311",
+      "0x6029b34c"
+    ],
+    "0x6029b387": [
+      "0x6029b05d",
+      "0x6029b095",
+      "0x6029b134",
+      "0x6029b16c",
+      "0x6029b20c",
+      "0x6029b244",
+      "0x6029b2d0",
+      "0x6029b308",
+      "0x6029b343"
+    ]
+  },
+  "configure_short_CALL_common_target_interval": [
+    "0x6029a7e4",
+    "0x602a6f4b"
+  ],
+  "pool_short_CALL_target_interval": [
+    "0x60294e9d",
+    "0x602a4e9c"
+  ],
+  "selected_precedes_all_complete_in_one_serialized_normal_cycle": true,
+  "event4c_requires_node_flags": "0x24",
+  "stop_request_is_not_completion_or_drain": true,
+  "callback_serialization_proven": false,
+  "duplicate_completion_excluded": false,
+  "raw_scan_is_control_flow_proof": false,
+  "installed": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "hash_checks_performed": false
+}

@@ -40,6 +40,24 @@ static void wait_revoke(uint32_t associated,uint32_t capture)
 }
 static uint32_t word(uint32_t p){return *(const volatile uint32_t *)(uintptr_t)p;}
 static unsigned state(void){return *(const volatile uint16_t *)(uintptr_t)0x62234fc0u;}
+static bool engine_supported(void)
+{
+    /* State33's complete callback/mask set, installed by602a27e4. In particular
+     * selected0x60000 must precede the normal all-complete0xf0000 callback. */
+    static const uint32_t callbacks[17]={0x602a2d43,0x602a2ec7,0x602a2ef7,0x602a2f57,
+        0x602a2f62,0x602a2f91,0x602a2f6d,0x602a2f73,0x602a2f70,0x602a2f7e,0,
+        0x602a301b,0x602a2f81,0x602a3042,0x60000,0x602a2edd,0x70000};
+    if(word(0x6223d0d8u)!=0xf000fu)return false;
+    for(unsigned i=0;i<17;i++)if(word(0x6223d134u+4u*i)!=callbacks[i])return false;
+    return true;
+}
+static void engine_revoke(void)
+{
+    unsigned s=state();
+    /* Reuse the existing same-state epoch operation. This changes no native
+     * state and never resets token serials; queued values are revoked as well. */
+    ep7c_transition(&ep7_controller_sidecar_unresolved,s,s);wait_revoke(0,0);
+}
 static bool span(uint32_t p,uint32_t bytes){return p && !(p&3u) && p<=UINT32_MAX-bytes;}
 /* Exact initialized25-slot pool: each16-byte slot has a4-byte refcount and
  * a12-byte associated payload. No heap/tail size inferred from a node pointer. */
@@ -83,7 +101,12 @@ static ep7r *enter(uint32_t anchor,bool admitting)
     if(!ep7_controller_sidecar_unresolved.initialized || ep7_controller_sidecar_unresolved.poison)return NULL;
     if(!ep7cn_native_cohort_present())fault(4);
     if(admitting && !ep7r_accepting(r))return NULL;
-    busy=true;return r;
+    busy=true;
+    if(state()==33u && !engine_supported()) {
+        engine_revoke();
+        if(admitting){busy=false;return NULL;}
+    }
+    return r;
 }
 static void leave(void) { busy=false; }
 void ep7cn_initialize(unsigned initial)
@@ -297,4 +320,12 @@ void ep7cn_wait_reset(void)
     uint32_t anchor;
     if(!enter((uint32_t)(uintptr_t)&anchor,false))return;
     memset(&waiting,0,sizeof waiting);leave();
+}
+void ep7cn_engine_epoch(void)
+{
+    uint32_t anchor;
+    if(!enter((uint32_t)(uintptr_t)&anchor,false))return;
+    /* Both complete callback registration calls AND the workrecord-pool reset,
+     * before the first original write, including a same-state/same-table reset. */
+    engine_revoke();leave();
 }

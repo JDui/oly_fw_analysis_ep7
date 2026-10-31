@@ -16,8 +16,12 @@ extern const unsigned char wait_enqueue[] __asm__("ep7_native_wait_enqueue");
 extern const unsigned char wait_pop[] __asm__("ep7_native_wait_pop");
 extern const unsigned char wait_reset[] __asm__("ep7_native_wait_reset");
 extern const unsigned char wait_scope[] __asm__("ep7_native_wait_scope");
+extern const unsigned char engine_configure[] __asm__("ep7_native_engine_configure");
+extern const unsigned char engine_pool[] __asm__("ep7_native_engine_pool");
 struct site { uint32_t address;const unsigned char *target;uint8_t width,mask,frame; };
 static const struct site sites[]={
+    {0x6029ef4c,engine_configure,2,0x20,8},{0x602a27e4,engine_configure,2,0x20,8},
+    {0x6029ce9d,engine_pool,2,0xc0,16},
     {0x602ac3f6,wait_enqueue,4,0,8},{0x602ac5e8,wait_pop,4,0,24},
     {0x602ac8f8,wait_pop,4,0,24},{0x602abe96,wait_reset,4,0x80,4},
     {0x602ac4fd,wait_scope,2,0x80,8},{0x602ac5a6,wait_scope,2,0x80,8},{0x602ac66c,wait_scope,2,0x80,8},

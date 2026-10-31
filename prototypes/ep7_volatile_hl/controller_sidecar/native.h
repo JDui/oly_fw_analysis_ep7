@@ -14,4 +14,5 @@ void ep7cn_associated_reset(void);
 uint32_t ep7cn_wait_enqueue(uint32_t queue,uint32_t associated);
 uint32_t ep7cn_wait_pop(uint32_t queue,uint32_t wrapper_sp);
 void ep7cn_wait_reset(void);
+void ep7cn_engine_epoch(void);
 #endif

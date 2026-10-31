@@ -18,8 +18,9 @@ def check():
                 *[str(CORE/p) for p in SOURCES],'-o',str(exe)],check=True,timeout=60)
             subprocess.run([str(exe)],check=True,timeout=30,env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0'))
             runs[name]=dict(passed=True)
-    return dict(scope=__doc__,runs=runs,isolated_boot_scenarios=45,actual_native_binding_C_executed=True,
-        actual_36_call_cohort_decoder_executed=True,actual_native_state_and_prefix_layout_reads=True,
+    return dict(scope=__doc__,runs=runs,isolated_boot_scenarios=50,actual_native_binding_C_executed=True,
+        actual_39_call_cohort_decoder_executed=True,actual_native_state_and_prefix_layout_reads=True,
+        engine_reinitialization_and_callback_mask_mismatch_revoke_capture_epoch=True,
         deferred_snapshot_fifo_and_owned_stack_transfer_executed=True,
         actual_associated_pool_layout_and_slot_checks=True,
         zero_reference_return_and_pool_reset_revoke_before_reuse=True,

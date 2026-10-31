@@ -32,6 +32,12 @@ This callback modifies native capture-stage parameters; it does not itself build
 kind16 commandmetadata. Other sameworkrecord callbacks are installed in the table.
 No engineworkrecord lifecycle/generation guarantee is inferred frompointerstorage.
 
+The current continuation binds [engine reset epochs and callback qualification](ENGINE_WORKRECORD_EPOCH.md):
+both callback-table initializers and the workrecord-pool initializer now revoke
+capture admission before native writes. The normal selected-before-complete order
+is established only for a serialized cycle; callback execution-domain/exclusion
+and mailbox delivery still require review.
+
 ## Concrete event-envelope identity transport and later mutation
 
 ROM event pairs at6042d2dc/e0=(0x4b,602a281a),6042d2e4/e8=(0x4c,602a2a66),

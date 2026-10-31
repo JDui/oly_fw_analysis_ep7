@@ -25,8 +25,12 @@ __asm__(".globl ep7_native_capture_fresh\n.set ep7_native_capture_fresh,0x602a60
         ".globl ep7_native_wait_reset\n.set ep7_native_wait_reset,0x602aca40\n"
         ".globl ep7_native_wait_scope\n.set ep7_native_wait_scope,0x602aca60\n"
         ".globl ep7_wait_scope_native_return\n.set ep7_wait_scope_native_return,0x602aca80\n"
+        ".globl ep7_native_engine_configure\n.set ep7_native_engine_configure,0x602a6100\n"
+        ".globl ep7_native_engine_pool\n.set ep7_native_engine_pool,0x602a4000\n"
         ".globl ep7_native_state_service_bridge\n.set ep7_native_state_service_bridge,0x6028b000\n");
 static const uint32_t calls[][5]={
+    {0x6029ef4c,0x602a6100,2,0x20,8},{0x602a27e4,0x602a6100,2,0x20,8},
+    {0x6029ce9d,0x602a4000,2,0xc0,16},
     {0x602ac3f6,0x602aca00,4,0,8},{0x602ac5e8,0x602aca20,4,0,24},
     {0x602ac8f8,0x602aca20,4,0,24},{0x602abe96,0x602aca40,4,0x80,4},
     {0x602ac4fd,0x602aca60,2,0x80,8},{0x602ac5a6,0x602aca60,2,0x80,8},{0x602ac66c,0x602aca60,2,0x80,8},
@@ -86,6 +90,14 @@ static void list_initialize(void)
     put32((uint8_t *)(uintptr_t)0x6223e7e8,0x6223e7f4);
     *list_half(12)=*list_half(14)=*list_half(16)=0;
 }
+static void engine_initialize(void)
+{
+    const uint32_t callbacks[17]={0x602a2d43,0x602a2ec7,0x602a2ef7,0x602a2f57,
+        0x602a2f62,0x602a2f91,0x602a2f6d,0x602a2f73,0x602a2f70,0x602a2f7e,0,
+        0x602a301b,0x602a2f81,0x602a3042,0x60000,0x602a2edd,0x70000};
+    put32((uint8_t *)(uintptr_t)0x6223d0d8,0xf000f);
+    for(unsigned i=0;i<17;i++)put32((uint8_t *)(uintptr_t)(0x6223d134u+4u*i),callbacks[i]);
+}
 static void wait_layout(void)
 {
     memset(wait_stack,0,sizeof wait_stack);
@@ -134,12 +146,14 @@ static void setup(void)
         MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED_NOREPLACE,-1,0);assert(p==(void *)(uintptr_t)0x62234000);
     p=mmap((void *)(uintptr_t)0x6223e000,4096,PROT_READ|PROT_WRITE,
         MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED_NOREPLACE,-1,0);assert(p==(void *)(uintptr_t)0x6223e000);
+    p=mmap((void *)(uintptr_t)0x6223d000,4096,PROT_READ|PROT_WRITE,
+        MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED_NOREPLACE,-1,0);assert(p==(void *)(uintptr_t)0x6223d000);
     put32((uint8_t *)(uintptr_t)0x6223e0d8,0x6223e0dc);
     put32((uint8_t *)(uintptr_t)0x6223e0e4,(4u<<16)|25u);
     put32((uint8_t *)(uintptr_t)0x6223e0e8,0x6223e0fc);
     put32((uint8_t *)(uintptr_t)0x6223e0f4,16);
     put32((uint8_t *)(uintptr_t)0x6223e0f8,0x6223e160);
-    list_initialize();wait_layout();
+    list_initialize();wait_layout();engine_initialize();
     for (unsigned i=0;i<sizeof calls/sizeof calls[0];i++) {
         const uint32_t *c=calls[i];uint8_t *site=(uint8_t *)(uintptr_t)c[0];uint32_t delta=c[1]-c[0];
         if(c[2]==2) assert((int32_t)delta>=INT16_MIN&&(int32_t)delta<=INT16_MAX);
@@ -182,6 +196,7 @@ static void try_reset(void) { ep7cn_associated_reset();native_resumed=1; }
 static void bad_prefix(void) { ep7cn_fresh(4);native_resumed=1; }
 static void try_enqueue(void) { (void)ep7cn_wait_enqueue(0x6223e7e0,addr(associated[0]));native_resumed=1; }
 static void try_pop(void) { (void)ep7cn_wait_pop(0x6223e7e0,addr(wait_stack+56));native_resumed=1; }
+static void try_engine(void) { ep7cn_engine_epoch();native_resumed=1; }
 static void population(void) { run_population(0,0); }
 static void expect_fault(void (*fn)(void),unsigned reason)
 {
@@ -383,13 +398,40 @@ static void scenario(unsigned which)
         seal(0);enqueue(0);enqueue(0);pop_one(0);assert(wait_output()->state==EP7Q_SCOPE_AVAILABLE);
         wrong_task=4;assert(!copy(0,&out));wrong_task=0;pop_one(0);
         assert(wait_output()->state==EP7Q_SCOPE_EMPTY);break;
+    case 45: {
+        ep7p_snapshot frozen;edit(5);seal(0);assert(copy(0,&frozen));enqueue(0);
+        uint64_t generation=ep7_controller_sidecar_unresolved.generation;
+        uint64_t serial=ep7_controller_sidecar_unresolved.serial;
+        ep7cn_engine_epoch();assert(ep7_controller_sidecar_unresolved.generation==generation+1);
+        assert(ep7_controller_sidecar_unresolved.serial==serial&&!copy(0,&out));
+        pop_one(0);assert(wait_output()->state==EP7Q_SCOPE_EMPTY&&frozen.hl[0]==5);
+        edit(-4);seal(0);assert(copy(0,&out)&&out.hl[0]==-4);
+        assert(ep7_controller_sidecar_unresolved.serial>serial);break;
+    }
+    case 46: { /* Table restoration cannot resurrect an observed invalid epoch. */
+        const uint32_t fields[]={0x6223d134,0x6223d16c,0x6223d0d8};
+        for(unsigned i=0;i<3;i++) {
+            seal(0);enqueue(0);uint32_t *field=(uint32_t *)(uintptr_t)fields[i],old=*field;
+            *field=0;assert(!copy(0,&out));*field=old;assert(!copy(0,&out));
+            pop_one(0);assert(wait_output()->state==EP7Q_SCOPE_EMPTY);
+        }
+        seal(0);assert(copy(0,&out));break;
+    }
+    case 47:
+        ep7cn_fresh(addr(nodes[0]));lookup_callback=try_engine;expect_fault(population,0xe05);break;
+    case 48:
+        seal(0);wrong_task=4;expect_fault(try_engine,0xe03);break;
+    case 49:
+        seal(0);enqueue(0);ep7r_stop(&runtime);ep7cn_engine_epoch();
+        assert(!ep7c_resolve_live(&ep7_controller_sidecar_unresolved,33,addr(nodes[0]),&token));
+        pop_one(0);assert(wait_output()->state==EP7Q_SCOPE_EMPTY);break;
     default:assert(!"unknown case");
     }
 }
 int main(void)
 {
     /* Each fork is a fresh simulated boot; production state exposes no reset. */
-    for (unsigned i=0;i<45;i++) {
+    for (unsigned i=0;i<50;i++) {
         pid_t child=fork();assert(child>=0);
         if (!child) { scenario(i);_exit(0); }
         int status;assert(waitpid(child,&status,0)==child);
