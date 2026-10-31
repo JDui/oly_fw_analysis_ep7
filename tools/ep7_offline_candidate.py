@@ -6,6 +6,7 @@ import re
 import shutil
 import struct
 import subprocess
+import tempfile
 from pathlib import Path
 
 from ep7_installation_manifest import BASE, ROOT, implementation_sources, inspect_objects, inspect_stock
@@ -190,7 +191,7 @@ def check_branch(prefix, candidate, row, target):
         raise ValueError('GNU does not decode candidate branch as intended: '+row['site']+' '+instruction)
 
 
-def check_sources_at_revision(revision):
+def changed_build_inputs(revision):
     # Reuse is based on the recorded Git revision and unchanged tracked sources,
     # never hashes of firmware or generated binaries. Include assembly macros,
     # headers and the existing compiler command implementation in this check.
@@ -199,9 +200,15 @@ def check_sources_at_revision(revision):
     command = ['git','--no-optional-locks','-c',f'safe.directory={ROOT}',
                '-c','core.autocrlf=true','-c','core.safecrlf=false','-C',str(ROOT)]
     paths = ['prototypes/ep7_volatile_hl','tools/ep7_installation_manifest.py']
-    subprocess.run([*command,'diff','--quiet',revision,'--',*paths],check=True)
     if subprocess.check_output([*command,'ls-files','--others','--exclude-standard','--',*paths],text=True):
         raise ValueError('untracked build inputs prevent object reuse/provenance verification')
+    return subprocess.check_output([*command,'diff','--name-only',revision,'--',*paths],text=True).splitlines()
+
+
+def check_sources_at_revision(revision):
+    changed = changed_build_inputs(revision)
+    if changed:
+        raise ValueError('build inputs differ from recorded revision: '+', '.join(changed))
 
 
 def build(decoded, prefix, out, report, reuse=None):
@@ -221,20 +228,43 @@ def build(decoded, prefix, out, report, reuse=None):
         previous = json.loads((reuse/'report.json').read_text(encoding='utf-8'))
         if not previous['whole_candidate_compiled']:
             raise ValueError('cached build did not finish compiling all implementation objects')
-        check_sources_at_revision(previous['source_revision'])
+        changed = changed_build_inputs(previous['source_revision'])
         inventory = json.loads((reuse/'object-inventory.json').read_text(encoding='utf-8'))
         if list(inventory['objects']) != sources or inventory['compiler'] != \
                 subprocess.check_output([prefix+'gcc','--version'],text=True).splitlines()[0]:
             raise ValueError('cached source order or compiler differs')
+        source_paths = {'prototypes/ep7_volatile_hl/'+source:source for source in sources}
+        if not set(changed)<=set(source_paths):
+            raise ValueError('cached headers/macros/compiler recipe changed; whole compile required')
+        selected = [source for source in sources if 'prototypes/ep7_volatile_hl/'+source in changed]
         (out/'objects').mkdir()
         for i in range(len(sources)):
             shutil.copyfile(reuse/'objects'/f'{i}.o',out/'objects'/f'{i}.o')
             usage = reuse/'objects'/f'{i}.su'
             if usage.exists():
                 shutil.copyfile(usage,out/'objects'/usage.name)
-        report.update(objects_reused=len(sources),object_source_revision=previous['source_revision'],
-            reused_source_and_header_diff_empty=True)
-        print(f'Reusing {len(sources)} objects: implementation/header/compiler recipe diff is empty.',flush=True)
+        if selected:
+            # Reuse the existing partial-inventory compiler. It numbers selected
+            # objects locally, so remap them to the stable whole-candidate order.
+            with tempfile.TemporaryDirectory(prefix='ep7-object-refresh-') as temp:
+                inventory = inspect_objects(prefix,manifest['patches'],source_selection=selected,
+                    prior_objects=inventory['objects'],object_directory=Path(temp))
+                for index,source in enumerate(selected):
+                    destination = sources.index(source)
+                    shutil.copyfile(Path(temp)/f'{index}.o',out/'objects'/f'{destination}.o')
+                    usage = Path(temp)/f'{index}.su'
+                    if usage.exists():
+                        shutil.copyfile(usage,out/'objects'/f'{destination}.su')
+            report.update(objects_reused=len(sources)-len(selected),objects_recompiled=selected,
+                reused_from_source_revision=previous['source_revision'],
+                object_source_revision=report['source_revision'],
+                reused_headers_macros_and_compiler_recipe_unchanged=True,
+                changed_build_inputs=changed)
+            print(f'Recompiled {len(selected)} changed sources; reused {len(sources)-len(selected)} unchanged objects.',flush=True)
+        else:
+            report.update(objects_reused=len(sources),object_source_revision=previous['source_revision'],
+                reused_source_and_header_diff_empty=True)
+            print(f'Reusing {len(sources)} objects: implementation/header/compiler recipe diff is empty.',flush=True)
     save(out/'object-inventory.json',inventory)
     report.update(whole_candidate_compiled=True,source_count=len(sources))
     save(out/'report.json',report)

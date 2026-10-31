@@ -1,9 +1,20 @@
 #!/usr/bin/env python3
 """Native queue critical-section gate seams and deletion wake/return path; no patching or hashes."""
-import argparse,json
+import argparse,json,struct
 from pathlib import Path
 from ep7_async_aliases import inspect as inspect_windows
 from ep7_producer_scope import W as PRODUCER_W
+from ep7_prepare_input import BASE
+
+
+def named_send_returns(data):
+    """Derive return PCs from the actual native CALL32 bytes, not a copied list."""
+    result=[]
+    for site in (0x600514ec,0x60051550):
+        if data[site-BASE:site-BASE+7]!=b'\xdd'+struct.pack('<i',0x60036ede-site)+b'\xf0\x28':
+            raise ValueError('named send CALL32/target/frame changed')
+        result.append(hex(site+7))
+    return result
 
 WINDOWS=[(0x6003103d,0x60031107),(0x600344b2,0x60034535),
     (0x60036d0c,0x60036e23),(0x60036f63,0x600370af),
@@ -52,7 +63,8 @@ W.update({
 })
 
 def inspect(stock,objdump):
-    e=inspect_windows(stock,objdump,WINDOWS,W)
+    returns=[]
+    e=inspect_windows(stock,objdump,WINDOWS,W,observe_data=lambda data:returns.extend(named_send_returns(data)))
     return dict(scope=__doc__,objdump_version=e['objdump_version'],input_structure=e['input_structure'],
         checked_instructions=e['checked_instructions'],
         hooks=[dict(entry='0x60036d3c',replay_bytes=10,object_register='a2',continuation='0x60036d46',error='0x60036e17'),
@@ -63,7 +75,7 @@ def inspect(stock,objdump):
         negative_receive_wakeup_skips_length_and_copy=True,
         native_send_returns_wakeup_status=True,gate_rejection_status=-42,
         raw_frame_bytes=dict(receive=32,send=40,delete=24),named_send_frame_bytes=48,
-        named_send_raw_return_sites=['0x600514f1','0x60051555'],
+        named_send_raw_return_sites=returns,named_returns_derived_from_call32_bytes=True,
         candidate_caller_return_offsets=dict(receive=32,raw_send=40,named_send=88),
         native_delete_and_notification_retained=True,live_reenable_supported=False,
         all_queue_callers_and_task_exits_qualified=False,atomic_installation_proved=False,

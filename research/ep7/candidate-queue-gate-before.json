@@ -1,0 +1,162 @@
+{
+  "scope": "Exercise actual named-send CALL frames through the linked native critical gate.\n\nStops before accepted queue I/O. Rejections execute the original error epilogue;\nthe named wrapper's ancestor return slot is explicit fixture input.\n",
+  "candidate_build_revision": "7386faa33453ceb266343c4773a9520f7c5b616f",
+  "actual_elf_code_equals_decoded_candidate": true,
+  "all_assertions_passed": true,
+  "expectation": "known_legacy_bypass",
+  "ownership_checks_passed": false,
+  "actual_named_return_sites": [
+    "0x600514f3",
+    "0x60051557"
+  ],
+  "cases": [
+    {
+      "call_site": "0x600514ec",
+      "actual_return": "0x600514f3",
+      "condition": "valid",
+      "front": {
+        "status": "returned",
+        "completed": 254,
+        "fault": null,
+        "final_pc": "0x60036f93",
+        "final_sp": "0x19010788"
+      },
+      "gate": {
+        "status": "returned",
+        "completed": 39,
+        "fault": null,
+        "final_pc": "0x60036f99",
+        "final_sp": "0x19010788"
+      },
+      "accepted": true,
+      "queue_backing_unmapped": true,
+      "native_critical_entry_executed": true,
+      "gate_native_api_calls": 0
+    },
+    {
+      "call_site": "0x600514ec",
+      "actual_return": "0x600514f3",
+      "condition": "maximum_changed",
+      "front": {
+        "status": "returned",
+        "completed": 254,
+        "fault": null,
+        "final_pc": "0x60036f93",
+        "final_sp": "0x19010788"
+      },
+      "gate": {
+        "status": "returned",
+        "completed": 39,
+        "fault": null,
+        "final_pc": "0x60036f99",
+        "final_sp": "0x19010788"
+      },
+      "accepted": true,
+      "queue_backing_unmapped": true,
+      "native_critical_entry_executed": true,
+      "gate_native_api_calls": 0
+    },
+    {
+      "call_site": "0x600514ec",
+      "actual_return": "0x600514f3",
+      "condition": "io_closed",
+      "front": {
+        "status": "returned",
+        "completed": 254,
+        "fault": null,
+        "final_pc": "0x60036f93",
+        "final_sp": "0x19010788"
+      },
+      "gate": {
+        "status": "returned",
+        "completed": 39,
+        "fault": null,
+        "final_pc": "0x60036f99",
+        "final_sp": "0x19010788"
+      },
+      "accepted": true,
+      "queue_backing_unmapped": true,
+      "native_critical_entry_executed": true,
+      "gate_native_api_calls": 0
+    },
+    {
+      "call_site": "0x60051550",
+      "actual_return": "0x60051557",
+      "condition": "valid",
+      "front": {
+        "status": "returned",
+        "completed": 254,
+        "fault": null,
+        "final_pc": "0x60036f93",
+        "final_sp": "0x19010788"
+      },
+      "gate": {
+        "status": "returned",
+        "completed": 39,
+        "fault": null,
+        "final_pc": "0x60036f99",
+        "final_sp": "0x19010788"
+      },
+      "accepted": true,
+      "queue_backing_unmapped": true,
+      "native_critical_entry_executed": true,
+      "gate_native_api_calls": 0
+    },
+    {
+      "call_site": "0x60051550",
+      "actual_return": "0x60051557",
+      "condition": "maximum_changed",
+      "front": {
+        "status": "returned",
+        "completed": 254,
+        "fault": null,
+        "final_pc": "0x60036f93",
+        "final_sp": "0x19010788"
+      },
+      "gate": {
+        "status": "returned",
+        "completed": 39,
+        "fault": null,
+        "final_pc": "0x60036f99",
+        "final_sp": "0x19010788"
+      },
+      "accepted": true,
+      "queue_backing_unmapped": true,
+      "native_critical_entry_executed": true,
+      "gate_native_api_calls": 0
+    },
+    {
+      "call_site": "0x60051550",
+      "actual_return": "0x60051557",
+      "condition": "io_closed",
+      "front": {
+        "status": "returned",
+        "completed": 254,
+        "fault": null,
+        "final_pc": "0x60036f93",
+        "final_sp": "0x19010788"
+      },
+      "gate": {
+        "status": "returned",
+        "completed": 39,
+        "fault": null,
+        "final_pc": "0x60036f99",
+        "final_sp": "0x19010788"
+      },
+      "accepted": true,
+      "queue_backing_unmapped": true,
+      "native_critical_entry_executed": true,
+      "gate_native_api_calls": 0
+    }
+  ],
+  "hash_checks_performed": false,
+  "native_api_success_stubs": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "Runtime and kernel context are created by the S2 probe with its explicit fixtures.",
+    "Both actual seven-byte CALLs construct their native frames and execute original lookup/critical entry plus the linked gate. The outer named-wrapper return label is a fixture.",
+    "Accepted calls stop before native queue I/O. Rejected calls execute the original critical-exit/return epilogue. Post-send notification and full queue send remain later tests."
+  ]
+}

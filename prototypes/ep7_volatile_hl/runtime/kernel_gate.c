@@ -30,7 +30,8 @@ bool ep7r_native_send_gate(uint32_t w,uint32_t object)
     uint32_t pc=word(w+40);bool owned=pc==(uint32_t)(uintptr_t)ep7_queue_raw_send_native_return;
     /* Read parent+48 only after exact raw callsite proves the named frame48.
      * Both local branches of the notification-preserving wrapper are covered. */
-    if(!owned && (pc==0x600514f1u || pc==0x60051555u))
+    /* Both stock sites use seven-byte DD CALL32, not five-byte CALL16. */
+    if(!owned && (pc==0x600514f3u || pc==0x60051557u))
         owned=word(w+88)==(uint32_t)(uintptr_t)ep7_queue_named_send_native_return;
     return !owned || admitted(object);
 }

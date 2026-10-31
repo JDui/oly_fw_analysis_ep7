@@ -20,9 +20,14 @@
 不相关 queue 和未发布 runtime 无动作。原厂删除流程继续执行。
 
 收发仅识别本候选桥的链接返回标签。raw receive 的 native W+32、raw send 的 W+40
-分别为返回槽；named send 的两个 raw 返回点是600514f1/60051555，只有匹配后才读取
+分别为返回槽；named send 的两个 raw 返回点是600514f3/60051557，只有匹配后才读取
 W+88，即 raw40+named48 的父返回槽。其他原厂调用保持原路径；扩展 queue 的所有
 原厂 buffer 容量仍必须另做调用者闭包，不能以该白名单代替。
+
+2026-11-01 实际候选模拟发现旧实现误按五字节 CALL16 计算两个地址，少了2字节。
+两处实际是七字节 DD CALL32。旧候选在 maximum 变化和 I/O 已关闭时均漏过 named
+路径的 gate；[修复前报告](../../research/ep7/candidate-queue-gate-before.json)保留真实
+失败证据。现在地址由原厂指令字节推导，候选回归直接执行两处 CALL 建立原生 frame。
 
 ## 删除与等待的语义
 
