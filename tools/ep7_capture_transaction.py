@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Three native refill envelopes, actual25-CALL cohort and finite reference inventory; no SHA."""
+"""Three native refill envelopes, common prewrite entries and27-CALL cohort; no SHA."""
 import argparse,json,struct
 from pathlib import Path
 from ep7_async_aliases import inspect as inspect_windows
@@ -10,10 +10,28 @@ REFILLS=[(0x602a31c7,0x602a31ea,0x602a31f7),(0x602a440a,0x602a442c,0x602a443e),
 ORIGINALS=[(0x602a3116,'[d2,a2]',28),(0x602a7ea0,'[d2,d3,a2,a3]',20),(0x602a8dbd,'[d2,d3,a2,a3]',48)]
 FREE=[0x602a31b1,0x602a4461,0x6029f1c2,0x602a4220,0x6029f6ba,0x602a29ab,0x602a2a00,
       0x602a2a48,0x602a2ab5,0x602a427d,0x602a44d8,0x602a2cb9,0x602a2d0d]
-WINDOWS=[(0x602a31bb,0x602a3204),(0x602a43db,0x602a446d),(0x602a446d,0x602a44e2),
+WINDOWS=[(0x602a7ea0,0x602a7eb0),(0x602a8dbd,0x602a8de1),(0x60300055,0x60300068),
+    (0x6029b9d1,0x6029ba1e),
+    (0x602a31bb,0x602a3204),(0x602a43db,0x602a446d),(0x602a446d,0x602a44e2),
     (0x602a2b32,0x602a2b39),(0x6029cdc6,0x6029ce1b),(0x60289908,0x60289933),
     (0x60289b73,0x60289b9f),(0x60289a3b,0x60289a67)]
 W={
+    0x602a7ea7:('mov','a0,d3'),0x602a7ea9:('call','0x60300055,[],0'),
+    0x602a8dbd:('mov','a0,(24,sp)'),0x602a8dbf:('mov','d0,a2'),
+    0x602a8dc1:('mov','a0,d0'),0x602a8dc3:('add','496,d0'),
+    0x602a8dc7:('mov','d0,(28,sp)'),0x602a8dc9:('mov','(a1),d0'),
+    0x602a8dd1:('mov','a0,(20,sp)'),0x602a8dd3:('call','0x602814ab,[],0'),
+    0x602a8dda:('mov','(20,sp),a0'),0x602a8ddc:('extbu','d0'),
+    0x602a8ddd:('movhu','d0,(23926,a0)'),
+    0x60300055:('mov','1646626860,a1'),0x6030005b:('mov','-6833,d1'),
+    0x6030005f:('mov','(a1),d0'),0x60300061:('mov','d0,(a0)'),
+    0x6029b9d1:('cmp','1,d0'),0x6029b9d3:('bcs','0x6029b9ec'),
+    0x6029b9d5:('cmp','26,d0'),0x6029b9d7:('bcc','0x6029b9ec'),
+    0x6029b9d9:('mov','d0,d1'),0x6029b9da:('udfu01','24,d1'),
+    0x6029b9dd:('mov','d1,a0'),0x6029b9df:('add','1646514552,a0'),
+    0x6029b9e5:('movhu','(a0),d1'),0x6029b9e7:('btst','4,d1'),
+    0x6029b9ea:('bne','0x6029ba18'),0x6029ba18:('mov','(12,a0),a0'),
+    0x6029ba1b:('ret','[],24'),
     0x602a31cc:('mov','a0,a2'),0x602a31cf:('beq','0x602a31fc'),
     0x602a31d1:('call','0x602a3204,[d2,a2],16'),0x602a31d9:('beq','0x602a31e3'),
     0x602a31db:('mov','a2,a0'),0x602a31dc:('call','0x602a31a9,[a2],8'),
@@ -47,6 +65,7 @@ COHORT={a:('call',f'{target:#x},{mask},{frame}') for row in REFILLS for a,(targe
 COHORT.update({a:('call','0x60022732,[],4') for a in FREE})
 COHORT.update({a:('call','0x6028a882,[d2,d3,a2,a3],32') for a in (0x60289c5e,0x60289d02)})
 COHORT[0x6029be5d]=('call','0x603db89e,[],4')
+COHORT.update({a:('call','0x6029b9d1,[],24') for a in (0x602a7ea0,0x602a8dca)})
 W.update(COHORT)
 for a in COHORT:
     if not any(lo<=a<hi for lo,hi in WINDOWS):WINDOWS.append((a,a+7))
@@ -79,6 +98,10 @@ def inspect(stock,objdump):
     return dict(scope=__doc__,input_structure=e['input_structure'],objdump_version=e['objdump_version'],
         checked_instructions=e['checked_instructions'],checked_data_rows=len(CHECKS),
         source_envelopes=[[hex(a) for a in row] for row in REFILLS],
+        common_prewrite_lookup_calls=['0x602a7ea0','0x602a8dca'],
+        lookup_result_register='a0',original_lookup_frame_bytes=24,
+        common_entry_precedes_first_capture_store=True,
+        new_prewrite_call_relocation_width_bytes=4,
         cohort_call_sites=[hex(a) for a in sorted(COHORT)],cohort_call_count=len(COHORT),
         candidate_short_call_target_intervals=bounds,qualified_code_placement=False,
         full_main_direct_CALL_candidates=inventory,raw_reference_scan_is_control_flow_proof=False,

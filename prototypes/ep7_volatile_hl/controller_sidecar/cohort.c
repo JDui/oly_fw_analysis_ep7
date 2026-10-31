@@ -8,8 +8,11 @@ extern const unsigned char finish[] __asm__("ep7_native_capture_finish");
 extern const unsigned char release_node[] __asm__("ep7_native_capture_node_free");
 extern const unsigned char release_capture[] __asm__("ep7_native_capture_pool_release");
 extern const unsigned char transition[] __asm__("ep7_native_state_service_bridge");
+extern const unsigned char prewrite[] __asm__("ep7_native_capture_prewrite");
+extern const unsigned char postwrite[] __asm__("ep7_native_capture_postwrite");
 struct site { uint32_t address;const unsigned char *target;uint8_t width,mask,frame; };
 static const struct site sites[]={
+    {0x602a7ea0,prewrite,4,0,24},{0x602a8dca,postwrite,4,0,24},
     {0x602a31c7,fresh,2,0xa0,28},{0x602a440a,fresh,2,0xa0,28},{0x602a4480,fresh,2,0xa0,28},
     {0x602a31ea,sample,2,0xf0,20},{0x602a442c,sample,2,0xf0,20},{0x602a44a3,sample,2,0xf0,20},
     {0x602a31f7,finish,2,0xf0,48},{0x602a443e,finish,2,0xf0,48},{0x602a44b5,finish,2,0xf0,48},

@@ -81,11 +81,18 @@ Native evidence: docs/ep7/{NODE_STATE_GUARD,NODE_DISPOSAL,CAPTURE_ATTACHMENT}.md
 
 ## Current-live node/token join (host validated, native binding unbound)
 
-The split native population envelope now uses `ep7c_sample_population` after
+Both native population functions now notify `ep7c_prewrite_capture` immediately
+after their common lookup and before their first capture write. Repeated or
+out-of-order entry permanently unseals the matching capture; unchanged addresses
+and profiles cannot preserve the old image snapshot. See
+[repopulation guard](../../../docs/ep7/CAPTURE_REPOPULATION_GUARD.md).
+
+The split native population envelope uses `ep7c_sample_population` after
 the first normal return and `ep7c_finish_population` after postpopulation. The
 second step uses the stored snapshot only. Early copyout burns a pending sample;
-later completion cannot backfill it. Existing `ep7c_seal` combines both steps for
-an already complete envelope. See
+later completion cannot backfill it. Each stage now requires a corresponding
+`ep7c_begin_population` before its writes. Existing `ep7c_seal` combines both
+begin/completion pairs for a software-only complete envelope. See
 [capture population evidence](../../../docs/ep7/CAPTURE_POPULATION_ENVELOPE.md)
 for current host/target checks and the still-unbound native hooks.
 

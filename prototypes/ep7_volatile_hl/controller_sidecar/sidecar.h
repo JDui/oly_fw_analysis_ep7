@@ -9,7 +9,7 @@ typedef struct {
 typedef struct {
  uintptr_t node, associated;
  uint64_t token,generation;
- bool attempted,sampled,sealed;
+ bool attempted,sampled,sealed,begun,post_begun;
  ep7c_prefix prefix;
  ep7p_snapshot snapshot;
 } ep7c_entry;
@@ -42,6 +42,14 @@ bool ep7c_authorize(ep7c *,unsigned state,uintptr_t node,uint64_t token);
  * address reuse is indistinguishable here. No native reads or memory pinning.
  * On failure *token is unchanged; caller MUST branch on the returned status. */
 bool ep7c_resolve_live(ep7c *,unsigned state,uintptr_t node,uint64_t *token);
+/* Enter BEFORE the first native write in each population function. Reentry,
+ * repetition or out-of-order entry permanently neutralizes this node. Labels
+ * stay reserved until actual free/retirement; this cannot create a new image. */
+bool ep7c_begin_population(ep7c *,unsigned state,uintptr_t node,uint64_t token,bool postpopulation);
+/* Common native lookup return, before any capture write: visit every matching
+ * reserved capture without dereferencing it or resolving a new node/token.
+ * Covers callers beyond the three routes allowed to sample/finish. */
+void ep7c_prewrite_capture(ep7c *,unsigned state,uintptr_t capture,bool postpopulation);
 /* Split native population envelope: sample after602a7ea0 returns, finish only
  * after the matched602a8dbd returns. Both boundaries require authorize before
  * reading their independently live prefixes. Finish never rereads settings.
@@ -52,7 +60,9 @@ bool ep7c_sample_population(ep7c *,unsigned state,uintptr_t node,uint64_t token,
  const ep7c_prefix *,bool normal_return,ep7p *settings);
 bool ep7c_finish_population(ep7c *,unsigned state,uintptr_t node,uint64_t token,
  const ep7c_prefix *,bool normal_return);
-/* Single complete envelope, reusing sample+finish. Exactly one sampling attempt.
+/* Software-only complete envelope, reusing begin/sample/begin/finish. Native
+ * integration MUST enter the common prewrite hooks before its actual writes.
+ * Exactly one sampling attempt.
  * Unsupported profile/failure/early attempt permanently neutral for this token.
  * settings callbacks cannot reenter sidecar. Captured profile, NOT current GUI.
  */

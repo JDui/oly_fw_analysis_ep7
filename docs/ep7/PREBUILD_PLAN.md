@@ -257,3 +257,11 @@ lookup/core采样，重入free/pool release/state observer不会继续原厂销�
 固定、重复初始化和销毁任务失配均隔离。91条指令/3组数据、12个直接native C host
 场景及57目标对象通过，没有SHA。其他分配/重填充、异步别名和完整释放闭包仍须审查；
 下一项据本批有限入口清单继续关闭G1，再汇入G2/G3退出与G6放置/安装/总栈。G8未就绪。
+
+[捕获重填充守卫](CAPTURE_REPOPULATION_GUARD.md)已在7ea0/8dbd公共lookup返回、首次
+capture写入前接入撤销，覆盖这两个函数的全部正常入口调用；重复、倒序或漏通知
+不能继续使用旧sealed快照。实际CALL组扩为27处，三条新建路线保持现有准入范围。
+123条指令/3项数据、21个native C host场景、portable sidecar、既有16-job整链和57个
+目标对象通过；整链fixture同步到当前UI transaction mock接口，没有SHA。其余图像
+重用/写入入口、异步别名和完整释放闭包仍待审，下一项继续G1对象责任追踪，然后
+G2/G3退出与G6合法放置/安装/总栈；尚未达到整体固件编译准入。

@@ -5,6 +5,7 @@
 #include "../snapshot_transport/native/producer.h"
 #include <assert.h>
 #include <setjmp.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/mman.h>
 #include <sys/wait.h>
@@ -15,8 +16,11 @@ __asm__(".globl ep7_native_capture_fresh\n.set ep7_native_capture_fresh,0x602a60
         ".globl ep7_native_capture_finish\n.set ep7_native_capture_finish,0x602a6040\n"
         ".globl ep7_native_capture_node_free\n.set ep7_native_capture_node_free,0x602a6060\n"
         ".globl ep7_native_capture_pool_release\n.set ep7_native_capture_pool_release,0x602a6080\n"
+        ".globl ep7_native_capture_prewrite\n.set ep7_native_capture_prewrite,0x602a60a0\n"
+        ".globl ep7_native_capture_postwrite\n.set ep7_native_capture_postwrite,0x602a60c0\n"
         ".globl ep7_native_state_service_bridge\n.set ep7_native_state_service_bridge,0x6028b000\n");
 static const uint32_t calls[][5]={
+    {0x602a7ea0,0x602a60a0,4,0,24},{0x602a8dca,0x602a60c0,4,0,24},
     {0x602a31c7,0x602a6000,2,0xa0,28},{0x602a440a,0x602a6000,2,0xa0,28},{0x602a4480,0x602a6000,2,0xa0,28},
     {0x602a31ea,0x602a6020,2,0xf0,20},{0x602a442c,0x602a6020,2,0xf0,20},{0x602a44a3,0x602a6020,2,0xf0,20},
     {0x602a31f7,0x602a6040,2,0xf0,48},{0x602a443e,0x602a6040,2,0xf0,48},{0x602a44b5,0x602a6040,2,0xf0,48},
@@ -73,7 +77,7 @@ static int delay(void *ctx) { (void)ctx;assert(!"capture must not delay");return
 static void runtime_fault(void *ctx,unsigned reason) { (void)ctx;ep7_gcc_quarantine(reason); }
 static void setup(void)
 {
-    void *p=mmap((void *)(uintptr_t)0x60289000,0x1e000,PROT_READ|PROT_WRITE,
+    void *p=mmap((void *)(uintptr_t)0x60289000,0x20000,PROT_READ|PROT_WRITE,
         MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED_NOREPLACE,-1,0);assert(p==(void *)(uintptr_t)0x60289000);
     p=mmap((void *)(uintptr_t)0x62234000,4096,PROT_READ|PROT_WRITE,
         MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED_NOREPLACE,-1,0);assert(p==(void *)(uintptr_t)0x62234000);
@@ -100,13 +104,17 @@ static void setup(void)
 }
 static void edit(int8_t value) { int8_t hl[24]={0};hl[0]=value;assert(ep7p_edit(&core,1,hl)); }
 static bool copy(unsigned i,ep7p_snapshot *out) { return ep7q_capture_snapshot_unresolved(i+1,addr(associated[i]),out); }
-static void seal(unsigned i) { ep7cn_fresh(addr(nodes[i]));ep7cn_population(addr(nodes[i]),0);ep7cn_population(addr(nodes[i]),1); }
+static void run_population(unsigned i,unsigned post)
+{ ep7cn_prewrite(addr(captures[i]),post);ep7cn_population(addr(nodes[i]),post); }
+static void seal(unsigned i) { ep7cn_fresh(addr(nodes[i]));run_population(i,0);run_population(i,1); }
 static void try_free(void) { ep7cn_free(addr(nodes[0]));native_resumed=1; }
 static void try_pool(void) { ep7cn_release_capture(addr(registry[0]));native_resumed=1; }
 static void try_state(void) { ep7_sidecar_transition_unresolved(33,34);native_resumed=1; }
 static void try_init(void) { ep7cn_initialize(0);native_resumed=1; }
+static void try_prewrite(void) { ep7cn_prewrite(addr(captures[0]),0);native_resumed=1; }
+static void bad_prewrite(void) { ep7cn_prewrite(0,0);native_resumed=1; }
 static void bad_prefix(void) { ep7cn_fresh(4);native_resumed=1; }
-static void population(void) { ep7cn_population(addr(nodes[0]),0); }
+static void population(void) { run_population(0,0); }
 static void expect_fault(void (*fn)(void),unsigned reason)
 {
     if (!setjmp(fatal)) { fn();assert(!"destructive callback returned"); }
@@ -117,13 +125,13 @@ static void scenario(unsigned which)
     setup();ep7p_snapshot out;uint64_t token;
     switch(which) {
     case 0: /* Real address reads, same published core, and frozen sample. */
-        edit(5);ep7cn_fresh(addr(nodes[0]));ep7cn_population(addr(nodes[0]),0);edit(-3);
-        ep7cn_population(addr(nodes[0]),1);assert(copy(0,&out)&&out.profile==1&&out.hl[0]==5);
+        edit(5);ep7cn_fresh(addr(nodes[0]));run_population(0,0);edit(-3);
+        run_population(0,1);assert(copy(0,&out)&&out.profile==1&&out.hl[0]==5);
         ep7r_stop(&runtime);assert(!copy(0,&out));try_free();
         assert(native_resumed&&!ep7c_resolve_live(&ep7_controller_sidecar_unresolved,33,addr(nodes[0]),&token));break;
     case 1: /* Early copy consumes the chance; no late resampling. */
         ep7cn_fresh(addr(nodes[0]));assert(!copy(0,&out));edit(7);
-        ep7cn_population(addr(nodes[0]),0);ep7cn_population(addr(nodes[0]),1);assert(!copy(0,&out));break;
+        run_population(0,0);run_population(0,1);assert(!copy(0,&out));break;
     case 2: /* Capture retirement and address reuse; other capture stays valid. */
         edit(4);seal(0);seal(1);assert(ep7c_resolve_live(&ep7_controller_sidecar_unresolved,33,addr(nodes[0]),&token));
         ep7cn_release_capture(addr(registry[0]));assert(!copy(0,&out)&&copy(1,&out));
@@ -150,16 +158,58 @@ static void scenario(unsigned which)
     case 11: /* No live reinitialization/reset can proceed through native state0 store. */
         seal(0);expect_fault(try_init,0xe01);
         assert(ep7c_resolve_live(&ep7_controller_sidecar_unresolved,33,addr(nodes[0]),&token));break;
+    case 12: { /* Same ID/address/profile is a new population, BEFORE its writes. */
+        ep7p_snapshot frozen;edit(5);seal(0);seal(1);assert(copy(0,&frozen));
+        ep7cn_prewrite(addr(captures[0]),0);assert(!copy(0,&out)&&copy(1,&out));
+        edit(-6);ep7cn_population(addr(nodes[0]),0);run_population(0,1);
+        assert(!copy(0,&out)&&frozen.hl[0]==5);break;
+    }
+    case 13: /* Postpopulation alone may rewrite mode; revoke before first store. */
+        seal(0);seal(1);ep7cn_prewrite(addr(captures[0]),1);
+        assert(!copy(0,&out)&&copy(1,&out));ep7cn_population(addr(nodes[0]),1);
+        assert(!copy(0,&out));break;
+    case 14: /* Overlapping entry and reversed phases both burn a fresh chance. */
+        ep7cn_fresh(addr(nodes[0]));ep7cn_prewrite(addr(captures[0]),0);
+        run_population(0,0);run_population(0,1);assert(!copy(0,&out));
+        ep7cn_fresh(addr(nodes[1]));ep7cn_prewrite(addr(captures[1]),1);
+        run_population(1,0);run_population(1,1);assert(!copy(1,&out));break;
+    case 15: /* Neither completion observer can substitute for prewrite entry. */
+        ep7cn_fresh(addr(nodes[0]));ep7cn_population(addr(nodes[0]),0);
+        run_population(0,1);assert(!copy(0,&out));
+        ep7cn_fresh(addr(nodes[1]));run_population(1,0);
+        ep7cn_population(addr(nodes[1]),1);assert(!copy(1,&out));break;
+    case 16: /* Mutating another capture cannot authorize this node's sample. */
+        ep7cn_fresh(addr(nodes[0]));ep7cn_fresh(addr(nodes[1]));
+        ep7cn_prewrite(addr(captures[1]),0);ep7cn_population(addr(nodes[0]),0);
+        run_population(0,1);assert(!copy(0,&out));
+        run_population(1,0);run_population(1,1);assert(!copy(1,&out));break;
+    case 17:
+        seal(0);wrong_task=4;expect_fault(try_prewrite,0xe03);break;
+    case 18:
+        ep7cn_fresh(addr(nodes[0]));lookup_callback=try_prewrite;
+        expect_fault(population,0xe05);break;
+    case 19: { /* Stop does not suppress required revocation of existing images. */
+        seal(0);ep7r_stop(&runtime);ep7cn_prewrite(addr(captures[0]),0);
+        assert(ep7c_resolve_live(&ep7_controller_sidecar_unresolved,33,addr(nodes[0]),&token));
+        ep7c_prefix v={addr(associated[0]),addr(captures[0]),1,11,2};
+        assert(!ep7c_copyout(&ep7_controller_sidecar_unresolved,33,addr(nodes[0]),token,&v,&out));break;
+    }
+    case 20:
+        seal(0);expect_fault(bad_prewrite,0xe07);break;
     default:assert(!"unknown case");
     }
 }
 int main(void)
 {
     /* Each fork is a fresh simulated boot; production state exposes no reset. */
-    for (unsigned i=0;i<12;i++) {
+    for (unsigned i=0;i<21;i++) {
         pid_t child=fork();assert(child>=0);
         if (!child) { scenario(i);_exit(0); }
-        int status;assert(waitpid(child,&status,0)==child&&WIFEXITED(status)&&WEXITSTATUS(status)==0);
+        int status;assert(waitpid(child,&status,0)==child);
+        if(!WIFEXITED(status)||WEXITSTATUS(status)!=0) {
+            fprintf(stderr,"capture fixture scenario %u failed (wait status %d)\n",i,status);
+            assert(!"capture fixture failed");
+        }
     }
     return 0;
 }

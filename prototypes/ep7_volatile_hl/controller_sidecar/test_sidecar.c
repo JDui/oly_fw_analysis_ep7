@@ -59,7 +59,9 @@ static void test_split_population(ep7p *settings)
  memset(&sentinel,0x55,sizeof sentinel);
  fresh(&p);assert(ep7c_register_fresh(&p,33,1,2,&token));
  hl[0]=5;hl[23]=-6;assert(ep7p_edit(settings,3,hl));
+ assert(ep7c_begin_population(&p,33,1,token,false));
  assert(ep7c_sample_population(&p,33,1,token,&v,true,settings));
+ assert(ep7c_begin_population(&p,33,1,token,true));
  hl[0]=-7;hl[23]=7;assert(ep7p_edit(settings,3,hl));
  fail_lock=true; /* Completion needs only the already frozen value. */
  assert(ep7c_finish_population(&p,33,1,token,&v,true));fail_lock=false;
@@ -69,7 +71,9 @@ static void test_split_population(ep7p *settings)
  /* Early queued selection burns the pending snapshot, even with a NULL output. */
  for(i=0;i<2;i++){
   fresh(&p);assert(ep7c_register_fresh(&p,33,1,2,&token));
-  assert(ep7c_sample_population(&p,33,1,token,&v,true,settings));out=sentinel;
+  assert(ep7c_begin_population(&p,33,1,token,false));
+  assert(ep7c_sample_population(&p,33,1,token,&v,true,settings));
+  assert(ep7c_begin_population(&p,33,1,token,true));out=sentinel;
   assert(!ep7c_copyout(&p,33,1,token,&v,i?NULL:&out));
   assert(!ep7c_finish_population(&p,33,1,token,&v,true));
   assert(!ep7c_sample_population(&p,33,1,token,&v,true,settings));
@@ -77,7 +81,9 @@ static void test_split_population(ep7p *settings)
  }
  for(i=0;i<5;i++){
   fresh(&p);assert(ep7c_register_fresh(&p,33,1,2,&token));
-  assert(ep7c_sample_population(&p,33,1,token,&v,true,settings));changed=v;
+  assert(ep7c_begin_population(&p,33,1,token,false));
+  assert(ep7c_sample_population(&p,33,1,token,&v,true,settings));
+  assert(ep7c_begin_population(&p,33,1,token,true));changed=v;
   if(i==0)changed.associated++;else if(i==1)changed.capture++;else if(i==2)changed.capture_id++;
   else if(i==3)changed.raw_mode=10;else changed.selector=3;
   assert(!ep7c_finish_population(&p,33,1,token,&changed,true));
@@ -85,15 +91,21 @@ static void test_split_population(ep7p *settings)
   assert(!ep7c_copyout(&p,33,1,token,&v,&out));
  }
  fresh(&p);assert(ep7c_register_fresh(&p,33,1,2,&token));
+ assert(ep7c_begin_population(&p,33,1,token,false));
  assert(ep7c_sample_population(&p,33,1,token,&v,true,settings));
+ assert(ep7c_begin_population(&p,33,1,token,true));
  assert(!ep7c_finish_population(&p,33,1,token,&v,false));
  assert(!ep7c_finish_population(&p,33,1,token,&v,true));
  fresh(&p);assert(ep7c_register_fresh(&p,33,1,2,&token));
+ assert(ep7c_begin_population(&p,33,1,token,false));
  assert(ep7c_sample_population(&p,33,1,token,&v,true,settings));
+ assert(ep7c_begin_population(&p,33,1,token,true));
  assert(ep7c_forget(&p,33,1,token));assert(ep7c_register_fresh(&p,33,1,2,&reused));
  assert(reused!=token && !ep7c_finish_population(&p,33,1,token,&v,true));
  assert(!ep7c_finish_population(&p,33,1,reused,&v,true));
+ assert(ep7c_begin_population(&p,33,1,reused,false));
  assert(ep7c_sample_population(&p,33,1,reused,&v,true,settings));
+ assert(ep7c_begin_population(&p,33,1,reused,true));
  ep7c_transition(&p,33,33);assert(!ep7c_finish_population(&p,33,1,reused,&v,true));
 }
 static void test_capture_retirement(ep7p *settings)
@@ -108,7 +120,9 @@ static void test_capture_retirement(ep7p *settings)
  assert(ep7c_register_fresh_capture(&p,33,3,2,3,30,&sealed));
  assert(ep7c_seal(&p,33,3,sealed,&v,true,settings));
  assert(ep7c_copyout(&p,33,3,sealed,&v,&frozen));
- v.capture=20;v.capture_id=2;assert(ep7c_sample_population(&p,33,2,sampled,&v,true,settings));
+ v.capture=20;v.capture_id=2;assert(ep7c_begin_population(&p,33,2,sampled,false));
+ assert(ep7c_sample_population(&p,33,2,sampled,&v,true,settings));
+ assert(ep7c_begin_population(&p,33,2,sampled,true));
  ep7c_retire_capture(&p,33,20);ep7c_retire_capture(&p,33,20);
  assert(!ep7c_authorize(&p,33,2,sampled) && !ep7c_finish_population(&p,33,2,sampled,&v,true));
  assert(ep7c_authorize(&p,33,1,unsampled) && ep7c_authorize(&p,33,3,sealed));
@@ -117,6 +131,7 @@ static void test_capture_retirement(ep7p *settings)
  assert(ep7c_register_fresh_capture(&p,33,3,2,3,30,&reused) && reused!=sealed);
  v.capture=30;v.capture_id=3;assert(!ep7c_copyout(&p,33,3,sealed,&v,&out));
  /* A changed capture must fail before it can overwrite the reservation. */
+ assert(ep7c_begin_population(&p,33,3,reused,false));
  wrong=v;wrong.capture=31;assert(!ep7c_sample_population(&p,33,3,reused,&wrong,true,settings));
  assert(!ep7c_sample_population(&p,33,3,reused,&v,true,settings));
  assert(frozen.profile==3); /* Independently copied value survives pool release. */

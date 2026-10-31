@@ -17,8 +17,10 @@ def check():
                 *[str(CORE/p) for p in SOURCES],'-o',str(exe)],check=True,timeout=60)
             subprocess.run([str(exe)],check=True,timeout=30,env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0'))
             runs[name]=dict(passed=True)
-    return dict(scope=__doc__,runs=runs,isolated_boot_scenarios=12,actual_native_binding_C_executed=True,
-        actual_25_call_cohort_decoder_executed=True,actual_native_state_and_prefix_layout_reads=True,
+    return dict(scope=__doc__,runs=runs,isolated_boot_scenarios=21,actual_native_binding_C_executed=True,
+        actual_27_call_cohort_decoder_executed=True,actual_native_state_and_prefix_layout_reads=True,
+        repeated_and_out_of_order_population_revoked_before_writes=True,
+        missing_prewrite_observers_cannot_seal=True,
         native_lookup_task_semaphore_queue_calls_mocked=True,firmware_code_not_mapped_or_executed=True,
         host_pointer_width_exception_only_for_fixture=True,full_native_alias_closure_proven=False,
         installed=False,target_executed=False,firmware_built=False,hash_checks_performed=False)

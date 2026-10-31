@@ -80,6 +80,31 @@ ep7_native_capture_pool_release:
  restore_capture
  jmp ep7_stock_capture_pool_release_unresolved
 .size ep7_native_capture_pool_release,.-ep7_native_capture_pool_release
+/* Replace the wide lookup CALL at7ea0 /8dca, not the lookup function itself.
+ * D0 input ID goes unchanged to stock; preserve its complete result before C.
+ * Both returns precede the first capture write in the containing function. */
+.global ep7_native_capture_prewrite
+.type ep7_native_capture_prewrite,@function
+ep7_native_capture_prewrite:
+ call ep7_stock_capture_lookup_unresolved,[],24
+ save_capture
+ mov a0,d0
+ clr d1
+ call _ep7cn_prewrite,[],0
+ restore_capture
+ ret [],24
+.size ep7_native_capture_prewrite,.-ep7_native_capture_prewrite
+.global ep7_native_capture_postwrite
+.type ep7_native_capture_postwrite,@function
+ep7_native_capture_postwrite:
+ call ep7_stock_capture_lookup_unresolved,[],24
+ save_capture
+ mov a0,d0
+ mov 1,d1
+ call _ep7cn_prewrite,[],0
+ restore_capture
+ ret [],24
+.size ep7_native_capture_postwrite,.-ep7_native_capture_postwrite
 .global _ep7_gcc_capture_lookup
 .type _ep7_gcc_capture_lookup,@function
 _ep7_gcc_capture_lookup:

@@ -1,5 +1,6 @@
-/* Self-authored host test: real router/raw/UI/core; mocked native admission. */
-#include "bridge.h"
+/* Self-authored host test: real router/raw/UI/core; mocked native transaction. */
+#include "input.h"
+#include "ui_gate/gate.h"
 #include "text.h"
 #include "ep7p_lifecycle.h"
 #include "controller_sidecar/sidecar.h"
@@ -42,17 +43,24 @@ static void text_is(struct ep7_ui_frame f,const char *expected){
 static bool lock(void *p){(void)p;assert(!held);if(fail_lock)return false;held=true;return true;}
 static void unlock(void *p){(void)p;assert(held);held=false;}
 static int current(void *p,ep7p_task *t){(void)p;(void)t;++current_queries;return -1;}
-int ep7_ui_native_admit_unresolved(const struct ep7_native_ui_input *in,struct ep7_ui_admission *a){
+struct ep7i_scope ep7_native_ui_input_scope;
+struct ep7m_lifetime ep7_native_mvc;
+int ep7g_before_event(void *parent) { (void)parent;return -1; }
+uint32_t ep7i_route(const struct ep7_native_ui_input *in){
     ++admissions;
     /* Single-thread fixture owns UI execution; these booleans simulate missing
-       native qualification. They are NOT evidence of a native renderer. */
-    if(known_stock)return EP7_NATIVE_STOCK;
-    if(in->parent!=0x12340000u || !renderer_ready || modal_blocked)return EP7_NATIVE_REJECT;
-    a->ui=&ui;a->session=session;a->synchronized_full_delta=full_delta;
-    return EP7_NATIVE_OWNED;
+       native qualification. Actual input/gate providers have separate focused
+       checks. This fixture supplies the complete transaction, not an escaped
+       UI/session pointer from the removed admission interface. */
+    if(known_stock)return EP7_NATIVE_CALL_STOCK;
+    if(in->parent!=0x12340000u || !renderer_ready || modal_blocked)return 0;
+    struct ep7p_ui_raw_event event={in->event,full_delta};
+    int result=ep7p_ui_raw_dispatch(&ui,session,&event);
+    if(result==EP7P_UI_RAW_DELEGATE)return EP7_NATIVE_CALL_STOCK;
+    return result==EP7_UI_CHANGED?1u:0u;
 }
 static uint32_t send(uint32_t event,int32_t delta){
-    struct ep7_native_ui_input in={event,1,0x12340000u};
+    struct ep7_native_ui_input in={event,1,0x12340000u,0x60e4d101u,0x12341000u};
     full_delta=delta;return ep7_gcc_ui_route(&in);
 }
 static struct ep7_ui_frame frame(void){
@@ -639,10 +647,12 @@ static void capture_vertical_slice(void){
     assert(ep7c_register_fresh(&sidecar,33,1,2,&token));
     assert(ep7c_resolve_live(&sidecar,33,1,&resolved) && resolved==token);
     assert(ep7c_authorize(&sidecar,33,1,resolved));
+    assert(ep7c_begin_population(&sidecar,33,1,resolved,false));
     assert(ep7c_sample_population(&sidecar,33,1,resolved,&prefix,true,&core));
     /* Change real UI values while native postpopulation would still be running. */
     assert(send(0x9032,2)==1);assert(ep7p_ui_ops.sync(&ui,session,56,4)==EP7_UI_CHANGED);
     assert(send(0x9032,-3)==1);text_is(frame(),"H 01 +0");
+    assert(ep7c_begin_population(&sidecar,33,1,resolved,true));
     assert(ep7c_finish_population(&sidecar,33,1,resolved,&prefix,true));
     assert(ep7c_copyout(&sidecar,33,1,resolved,&prefix,&frozen));
     assert(frozen.hl[0]==3 && frozen.hl[12]==-2);

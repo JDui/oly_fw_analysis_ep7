@@ -91,6 +91,16 @@ static bool prefix(unsigned observed_state,uint32_t node,uint64_t token,ep7c_pre
         *(const volatile unsigned char *)(uintptr_t)(capture+24083)};
     return true;
 }
+void ep7cn_prewrite(uint32_t capture,unsigned postpopulation)
+{
+    uint32_t anchor;
+    /* A write/identity boundary, including stopped runtime cleanup. A foreign
+     * or reentrant writer cannot resume after merely disabling admission. */
+    if(!enter((uint32_t)(uintptr_t)&anchor,false))return;
+    if(!span(capture,24084) || postpopulation>1u)fault(7);
+    ep7c_prewrite_capture(&ep7_controller_sidecar_unresolved,state(),capture,postpopulation!=0);
+    leave();
+}
 void ep7cn_population(uint32_t node,unsigned finish)
 {
     uint32_t anchor;uint64_t token;unsigned s;ep7c_prefix v;ep7r *r;

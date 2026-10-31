@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Host-only actual routing integration; native admission is mocked."""
+"""Host-only actual routing integration; native input/gate transactions are mocked."""
 import argparse,hashlib,json,os,subprocess,tempfile
 from pathlib import Path
 HERE=Path(__file__).resolve().parent
@@ -9,6 +9,7 @@ def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def check(record_hashes=True,asan_verbose=False):
     sources=[HERE/'test_integration.c',CORE/'ui_native/bridge.c',CORE/'ep7p_ui_raw.c',CORE/'ep7p_ui.c',CORE/'ep7p.c',CORE/'ep7p_decode.c',CORE/'ep7p_lifecycle.c',CORE/'text_viewer/text.c']
     headers=[CORE/n for n in ['ui_native/bridge.h','ep7p_ui_raw.h','ep7p_ui.h','ep7p.h','ep7p_decode.h','ep7p_lifecycle.h','ep7p_direct.h','ep7_ui_adapter_contract.h']]
+    headers.extend(CORE/n for n in ['ui_native/input.h','ui_gate/gate.h','ui_mvc/lifetime.h'])
     headers.append(CORE/'text_viewer/text.h')
     sources.append(CORE/'controller_sidecar/sidecar.c')
     headers.append(CORE/'controller_sidecar/sidecar.h')
@@ -51,7 +52,7 @@ def check(record_hashes=True,asan_verbose=False):
                 if isinstance(detail,bytes):detail=detail.decode(errors='replace')
                 raise RuntimeError(f'{name} failed: {error}\nCaptured stderr tail:\n{detail[-5000:]}') from error
             results[name]=dict(passed=True,stdout=result.stdout.strip())
-    return dict(scope='Actual C router/raw/UI/core/text/sidecar/direct-lifecycle integration with frozen producer, owned queue forward/receive and bounded stack maps; native backend/ABI mocked',sources={str(p.relative_to(ROOT)):sha(p) if record_hashes else None for p in sources+headers+[HERE/'check.py']},hashes_recorded=record_hashes,runs=results,asan_options=asan_options,sanitizer_executable='non-PIE; sanitizer startup mitigation independently reproduced',producer_publish_before_immediate_consumer=True,producer_scope_layout_exercised=True,named_send_status_adapter_executed=True,native_send_notification_mocked=True,materializer_layouts_exercised=3,descriptor_receive_layouts_exercised=6,descriptor_send_layouts_exercised=3,retirement_lock_failure_value_retained=True,raw_dispatch_stubbed=False,text_setter_mocked=True,native_admission_mocked=True,lifecycle_native_callbacks_mocked=True,native_snapshot_transport_mocked=True,sidecar_executed=True,node_retired_before_job=True,early_publication_neutral=True,real_decoder_operation_slots_exercised=16,renderer_implemented=False,ui_serialization='single host thread',lsan_disabled_due_ptrace=True,core_task_lease_queries=0,task_view_kernel_reads_mocked=True,target_executed=False,camera_accessed=False,flash_ready=False)
+    return dict(scope='Actual C router/raw/UI/core/text/sidecar/direct-lifecycle integration with frozen producer, owned queue forward/receive and bounded stack maps; native backend/ABI mocked',sources={str(p.relative_to(ROOT)):sha(p) if record_hashes else None for p in sources+headers+[HERE/'check.py']},hashes_recorded=record_hashes,runs=results,asan_options=asan_options,sanitizer_executable='non-PIE; sanitizer startup mitigation independently reproduced',producer_publish_before_immediate_consumer=True,producer_scope_layout_exercised=True,named_send_status_adapter_executed=True,native_send_notification_mocked=True,materializer_layouts_exercised=3,descriptor_receive_layouts_exercised=6,descriptor_send_layouts_exercised=3,retirement_lock_failure_value_retained=True,raw_dispatch_stubbed=False,text_setter_mocked=True,native_admission_mocked=True,native_input_transaction_mocked=True,native_gate_mocked=True,lifecycle_native_callbacks_mocked=True,native_snapshot_transport_mocked=True,sidecar_executed=True,node_retired_before_job=True,early_publication_neutral=True,real_decoder_operation_slots_exercised=16,renderer_implemented=False,ui_serialization='single host thread',lsan_disabled_due_ptrace=True,core_task_lease_queries=0,task_view_kernel_reads_mocked=True,target_executed=False,camera_accessed=False,flash_ready=False)
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--no-hash',action='store_true',help='omit optional source hash recording')

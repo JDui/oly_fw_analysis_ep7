@@ -1,5 +1,8 @@
 # 捕获事务、三组补充节点接合与实际 CALL 检查
 
+后续实现已加入[公共写入前守卫](CAPTURE_REPOPULATION_GUARD.md)，当前 CALL 检查组为
+27处。本文保留前一批25处接合与12个host场景的历史验证范围。
+
 本批回到 G1。现有原生 capture provider 虽然检查 controller 任务，却没有在额外的
 prefix 读取、lookup 或 core poll 回调期间阻止重入释放：仅关闭后续准入后返回，会让
 原 free bridge 继续执行原厂释放。现在这些原生 C 操作具有明确的 busy 区间，重入

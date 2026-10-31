@@ -89,13 +89,36 @@ static bool prefix_same(const ep7c_prefix *a,const ep7c_prefix *b)
  return a && b && a->associated==b->associated && a->capture==b->capture &&
   a->capture_id==b->capture_id && a->raw_mode==b->raw_mode && a->selector==b->selector;
 }
+static bool begin(ep7c_entry *e,bool postpopulation)
+{
+ if(postpopulation ? (!e->begun || !e->sampled || e->post_begun) : (e->begun || e->attempted)) {
+  e->attempted=true;e->sampled=false;e->sealed=false;return false;
+ }
+ if(postpopulation)e->post_begun=true;else e->begun=true;
+ return true;
+}
+bool ep7c_begin_population(ep7c *p,unsigned state,uintptr_t node,uint64_t token,bool postpopulation)
+{
+ ep7c_entry *e;
+ return state_ok(p,state) && (e=lookup(p,node,token))!=NULL && begin(e,postpopulation);
+}
+void ep7c_prewrite_capture(ep7c *p,unsigned state,uintptr_t capture,bool postpopulation)
+{
+ unsigned i;
+ if(!capture || !state_ok(p,state))return;
+ for(i=0;i<EP7C_CAP;i++) {
+  ep7c_entry *e=&p->entries[i];
+  if(e->token && e->generation==p->generation && e->prefix.capture==capture)
+   (void)begin(e,postpopulation);
+ }
+}
 bool ep7c_sample_population(ep7c *p,unsigned state,uintptr_t node,uint64_t token,const ep7c_prefix *v,bool complete,ep7p *settings)
 {
  ep7c_entry *e;ep7p_snapshot s;
  if(!state_ok(p,state) || !(e=lookup(p,node,token)))return false;
  if(e->attempted)return false;
  e->attempted=true; /* BEFORE any fallible capture; never retry current settings */
- if(!complete || !prefix_ok(e,v) || !settings)return false;
+ if(!e->begun || e->post_begun || !complete || !prefix_ok(e,v) || !settings)return false;
  if(!ep7p_capture(settings,v->raw_mode,v->selector,&s))return false;
  if(s.profile!=v->selector-1u)return false;
  e->prefix=*v;e->snapshot=s;e->sampled=true;return true;
@@ -105,12 +128,14 @@ bool ep7c_finish_population(ep7c *p,unsigned state,uintptr_t node,uint64_t token
  ep7c_entry *e;
  if(!state_ok(p,state) || !(e=lookup(p,node,token)) || !e->sampled)return false;
  e->sampled=false; /* This matched completion opportunity is consumed. */
- if(!complete || !prefix_ok(e,v) || !prefix_same(v,&e->prefix))return false;
+ if(!e->post_begun || !complete || !prefix_ok(e,v) || !prefix_same(v,&e->prefix))return false;
  e->sealed=true;return true;
 }
 bool ep7c_seal(ep7c *p,unsigned state,uintptr_t node,uint64_t token,const ep7c_prefix *v,bool complete,ep7p *settings)
 {
- return ep7c_sample_population(p,state,node,token,v,complete,settings) &&
+ return ep7c_begin_population(p,state,node,token,false) &&
+  ep7c_sample_population(p,state,node,token,v,complete,settings) &&
+  ep7c_begin_population(p,state,node,token,true) &&
   ep7c_finish_population(p,state,node,token,v,complete);
 }
 bool ep7c_copyout(ep7c *p,unsigned state,uintptr_t node,uint64_t token,const ep7c_prefix *v,ep7p_snapshot *out)
