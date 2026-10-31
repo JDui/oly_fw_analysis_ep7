@@ -173,3 +173,8 @@ population/free/pool-release桥。56对象中自写provider符号已闭合，32�
 59 条原厂指令、9 个目标对象及定向 strict/ASan/UBSan 检查通过；仅关闭上下文回调的
 实现空缺。GUI 串行所有权、文本资源/初始化、category4/5 创建/挂接仍须完成，
 `renderer_ready` 保持 false，整体固件编译准入仍未通过。
+
+[UI 资源来源](UI_RESOURCE_ORIGIN.md)已将启动初始化数据段连接到 `61fb7070` 资源表
+和 `61fc3874` 父回调表，定位四个原厂文本描述符及两组实际布局。搬运参数和关键字段
+已在当前输入核对；硬件 cache/启动成功与后续表改写未验证。下一项保留原厂工厂的
+初始化返回值、保存/恢复 allocator context，再完成实际挂接/失败清理和 H/L viewer。

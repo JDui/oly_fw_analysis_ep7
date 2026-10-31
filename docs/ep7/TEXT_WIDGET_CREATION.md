@@ -102,3 +102,9 @@ edit. None of this changes S properties or proves a rendered camera image.
 
 `tools/ep7_text_creation.py` and `tests/test_ep7_text_creation.py` reproduce the read-only stock evidence; report `research/ep7/text-creation-1100.json`.
 `prototypes/ep7_volatile_hl/text_lifecycle/` contains normalized callback sequencing and mock host tests, not native bindings. Run its `check.py` for temporary host/target compile checks.
+
+Current continuation: [UI resource origin](UI_RESOURCE_ORIGIN.md) joins the actual
+startup data-copy recipe to the RAM resource table and identifies four existing
+type8010 descriptors, font1 and two rectangles per descriptor. It retains the
+RAM-alias/cache and later-table-mutation limits; opaque embedded fields and actual
+glyph/rendering behavior are not yet fully qualified.

@@ -78,7 +78,7 @@ W = {
 }
 
 
-def inspect(stock, objdump, windows=WINDOWS, witnesses=W, data_checks=(), observe=None):
+def inspect(stock, objdump, windows=WINDOWS, witnesses=W, data_checks=(), observe=None, observe_data=None):
     version=subprocess.check_output([str(objdump),'--version'],text=True).splitlines()[0]
     checked=0
     unknown=[]
@@ -93,6 +93,8 @@ def inspect(stock, objdump, windows=WINDOWS, witnesses=W, data_checks=(), observ
         for address,fmt,expected in data_checks:
             if struct.unpack_from(fmt,data,address-BASE)!=expected:
                 raise ValueError(f'data row mismatch at {address:#x}')
+        if observe_data is not None:
+            observe_data(data)
         for start,stop in windows:
             asm=subprocess.check_output([str(objdump),'-b','binary','-m','mn10300','-D','-z',
                 '--insn-width=16',f'--adjust-vma={BASE:#x}',f'--start-address={start:#x}',

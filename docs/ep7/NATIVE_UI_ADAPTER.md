@@ -37,3 +37,8 @@ Native factory creation returns object in a0; parent constructor60e26108 receive
 ## Exact unresolved installation boundaries
 
 The ROM callback initializer array6025bb34..4c names expected functions, but its loaderjoin toRAM61fc3874 remains unqualified. Real installer must establish which callbacks are installed, not blindly patch ROM addresses. Every parent event arm must be mapped to its physical/logical wheel semantics; this pass establishes forwarding/guards, not allwheel delta signs/repeatunits. Six-entry selector allocation, customH/Lchild vtable/destructor query, drawing primitives/layout, nativecompiler ABI veneers and installation/unwind transaction are unimplemented. Thus portablecore can be compilechecked now, while actualnative installation is still blocked on these concrete seams; not on userchoosingtechnicaldetails or NVMavailability.
+
+Current continuation: [UI resource origin](UI_RESOURCE_ORIGIN.md) now connects
+6025bb34 to61fc3874 through the actual startup copy recipe, conditional on successful
+loading and the established RAM alias interpretation. Installer still needs current
+table/lifetime qualification; this finding alone does not authorize callback writes.

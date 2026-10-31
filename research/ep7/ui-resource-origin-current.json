@@ -1,0 +1,254 @@
+{
+  "scope": "Startup data-copy recipe and four existing text descriptors; static, no hashes.",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "input_structure": {
+    "scope": "Prepare a local E-P7 research input using container structure, without SHA.\n\nThis does not establish byte identity with historical hash-pinned reports.\nIt decodes stock only, never modifies firmware or produces an install image.",
+    "bytes": 111017984,
+    "model": "E-P7",
+    "build": "1100",
+    "whole_container_checked": true,
+    "components": [
+      {
+        "offset": 0,
+        "payload_bytes": 26214336,
+        "kind": "0x100",
+        "header_build": "1100",
+        "model_bytes": "1420",
+        "container_address": "0x406a0000"
+      },
+      {
+        "offset": 26214400,
+        "payload_bytes": 26214336,
+        "kind": "0x101",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x421a0000"
+      },
+      {
+        "offset": 52428800,
+        "payload_bytes": 45219776,
+        "kind": "0x106",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x43aa0000"
+      },
+      {
+        "offset": 97648640,
+        "payload_bytes": 262080,
+        "kind": "0x10e",
+        "header_build": "0001",
+        "model_bytes": "1420",
+        "container_address": "0x0"
+      },
+      {
+        "offset": 97910784,
+        "payload_bytes": 13107136,
+        "kind": "0x102",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x467e0000"
+      }
+    ],
+    "component_sums_valid": true,
+    "unchanged_roundtrip_equal": true,
+    "runtime_base": "0x60020020",
+    "entry_witnesses_match": true,
+    "hash_checks_performed": false,
+    "historical_exact_byte_identity_proven": false,
+    "firmware_modified": false,
+    "firmware_executed": false,
+    "camera_accessed": false,
+    "flash_ready": false
+  },
+  "checked_instructions": 71,
+  "startup_copy": {
+    "source": "0x408b0800",
+    "decoded_source": "0x60230800",
+    "decoded_end_exclusive": "0x6025eb50",
+    "destination": "0xa1f98540",
+    "cached_alias": "0x61f98540",
+    "bytes": 189264,
+    "cached_end_exclusive": "0x61fc6890",
+    "component_payload_flash": "0x406a0020",
+    "full_page_bytes": 188416,
+    "tail_bytes": 848
+  },
+  "resource_table": {
+    "runtime": "0x61fb7070",
+    "decoded_initializer": "0x6024f330",
+    "entries": 58
+  },
+  "text_descriptors": [
+    {
+      "table_index": 7,
+      "descriptor": "0x61032d88",
+      "type": "0x8010",
+      "id": 6559,
+      "layout_pointer": "0x61031b54",
+      "reviewed_rectangles": [
+        [
+          102,
+          353,
+          436,
+          40
+        ],
+        [
+          142,
+          353,
+          436,
+          40
+        ]
+      ],
+      "readable_descriptor_minimum": 94,
+      "font_selector": 1,
+      "resource_string_id": 0,
+      "opaque12_pointer": "0x610308ec",
+      "opaque12_reviewed_zero_words": 4,
+      "opaque56_value": 7,
+      "rollback_guard_descriptor_offsets": [
+        68,
+        84
+      ],
+      "rollback_guard_values": [
+        0,
+        0
+      ],
+      "opaque12_semantics_or_null_substitution_qualified": false
+    },
+    {
+      "table_index": 11,
+      "descriptor": "0x61032de8",
+      "type": "0x8010",
+      "id": 6563,
+      "layout_pointer": "0x61031b64",
+      "reviewed_rectangles": [
+        [
+          330,
+          69,
+          300,
+          40
+        ],
+        [
+          370,
+          69,
+          300,
+          40
+        ]
+      ],
+      "readable_descriptor_minimum": 94,
+      "font_selector": 1,
+      "resource_string_id": 0,
+      "opaque12_pointer": "0x6103090c",
+      "opaque12_reviewed_zero_words": 4,
+      "opaque56_value": 7,
+      "rollback_guard_descriptor_offsets": [
+        68,
+        84
+      ],
+      "rollback_guard_values": [
+        0,
+        0
+      ],
+      "opaque12_semantics_or_null_substitution_qualified": false
+    },
+    {
+      "table_index": 51,
+      "descriptor": "0x61032e48",
+      "type": "0x8010",
+      "id": 6603,
+      "layout_pointer": "0x61031b74",
+      "reviewed_rectangles": [
+        [
+          113,
+          435,
+          507,
+          40
+        ],
+        [
+          113,
+          435,
+          587,
+          40
+        ]
+      ],
+      "readable_descriptor_minimum": 94,
+      "font_selector": 1,
+      "resource_string_id": 0,
+      "opaque12_pointer": "0x61030a4c",
+      "opaque12_reviewed_zero_words": 4,
+      "opaque56_value": 7,
+      "rollback_guard_descriptor_offsets": [
+        68,
+        84
+      ],
+      "rollback_guard_values": [
+        0,
+        0
+      ],
+      "opaque12_semantics_or_null_substitution_qualified": false
+    },
+    {
+      "table_index": 53,
+      "descriptor": "0x61032ea8",
+      "type": "0x8010",
+      "id": 6605,
+      "layout_pointer": "0x61031b84",
+      "reviewed_rectangles": [
+        [
+          20,
+          435,
+          600,
+          40
+        ],
+        [
+          20,
+          435,
+          680,
+          40
+        ]
+      ],
+      "readable_descriptor_minimum": 94,
+      "font_selector": 1,
+      "resource_string_id": 0,
+      "opaque12_pointer": "0x61030a5c",
+      "opaque12_reviewed_zero_words": 4,
+      "opaque56_value": 7,
+      "rollback_guard_descriptor_offsets": [
+        68,
+        84
+      ],
+      "rollback_guard_values": [
+        0,
+        0
+      ],
+      "opaque12_semantics_or_null_substitution_qualified": false
+    }
+  ],
+  "parent_callbacks": {
+    "runtime": "0x61fc3874",
+    "decoded_initializer": "0x6025bb34",
+    "entries": [
+      "0x60e261f0",
+      "0x60e26215",
+      "0x60e26270",
+      "0x60e262c0",
+      "0x60e26397",
+      "0x60e2642a",
+      "0x60e26609"
+    ]
+  },
+  "alias_relation": "0xa1/0x61 RAM mapping used by existing firmware analysis; cache coherence and board behavior not executed",
+  "service_layout_count_offset": 80,
+  "service_layout_index_offset": 82,
+  "admitted_template_requirement": "count=2, signed index=0 or 1, stable live service and loaded ROM references",
+  "later_runtime_table_writes_excluded": false,
+  "opaque_fields_fully_qualified": false,
+  "glyph_rendering_verified": false,
+  "conditional_startup_copy_recipe_joined": true,
+  "whole_boot_executed": false,
+  "storage_ecc_cache_modeled": false,
+  "hash_checks_performed": false,
+  "firmware_modified": false,
+  "renderer_ready": false,
+  "flash_ready": false
+}
