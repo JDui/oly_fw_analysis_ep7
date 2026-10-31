@@ -48,3 +48,57 @@ ELF entry 选择自有冷清零桥仅用于工具识别；实际原厂启动仍�
 
 产物固定标记 `installable=false`、`hardware_executed=false`；无 `.BIN` 升级包，
 不连接相机、烧录或发布 Release。以上项目不会因为链接/合成通过而自动转为已验证。
+
+## 实际构建结果
+
+**首个完整离线候选已编译、整体链接并合成成功。**
+[结构化报告](../../research/ep7/offline-candidate.json)对应本地
+`generated/ep7/offline-candidate-002/`。源码版本 `7386faa`，107 个实现对象来自
+`96c611d` 的本次完整编译；复用前检查实现源、头文件、汇编宏和编译配方相对该版本
+无差异，编译器版本相同。没有重新编译未变的对象或重跑业务测试。
+
+|最终分配|起点..结束，不含|实际字节|候选容量|剩余字节|
+|---|---|---:|---:|---:|
+|代码/只读常量 0|60048040..6004da7c|23,100|32,640|9,540|
+|代码/只读常量 1|600c8040..600cdce3|23,715|32,640|8,925|
+|BSS，NOLOAD|a1dd4d00..a1dd6c94|8,084|16,384|8,300|
+
+链接后代码/常量共 46,815 字节，比未链接合计多 15 字节对齐空间。109 个外部符号
+全部解析，其中私有 RAM 是上述显式候选覆盖；84 个修改目标/adapter 均位于输出代码段。
+独立 `readelf -h -l -S` 检查为 little-endian MN10300 ELF32，两个 R/E LOAD 和一个
+文件长度为零的 RW BSS LOAD，没有 RWX 段。ELF entry 为 `6004bb92`，对应冷清零桥。
+
+101 项修改原跨度 546 字节，36 座已链接 veneer 的完整 30 字节、原返回地址、frame
+和 adapter 位移符合既有宏；73 处最终 CALL/JMP 经 GNU 解码符合目标。两段代码与
+101 项修改共 103 个写入跨度，无重叠；其外字节保持原样。合成镜像为 26,214,336 字节，
+实际改变 46,279 字节，落盘回读相等；只读原厂输入保持不变。没有哈希或相机执行。
+
+保留首次失败：`offline-candidate-001` 已完成 107 源编译，但严格孤立段检查拒绝
+六个汇编对象的空 `.text`。`7386faa` 显式接收剩余只读段并断言总大小为零，保留
+`--orphan-handling=error`，随后复用对象完成本候选。失败报告与日志未删除。
+构建后只关闭 Git 行尾警告的命令级输出，不改全局配置、链接规则或固件实现。
+
+本地主要产物：
+
+- `EP7HSL-NONINSTALLABLE.elf`：103,056 字节，完整自有实现及原厂绝对符号。
+- `EP7HSL-NONINSTALLABLE.map`、`offline-layout.ld`、`symbols.json`：实际链接与分配。
+- `EP7HSL-NONINSTALLABLE.decoded-main.bin`：解码研究镜像，没有厂商更新头尾或封装。
+- `object-inventory.json`、`objects/`、`report.json`、`NONINSTALLABLE.txt`：对象、栈资料与限制。
+
+## 复现
+
+使用现有隔离镜像 `rust:1.96-bookworm` 和工具卷 `ep7-research-toolchain-20261030`。
+将仓库只读挂载到 `/repo`、工具卷只读挂载到 `/work`，一个新的空输出目录可写挂载到
+`/output`；容器 `--network none --env PYTHONDONTWRITEBYTECODE=1`，执行：
+
+```sh
+python3 /repo/tools/ep7_offline_candidate.py \
+  --decoded /repo/generated/ep7/full-input/main.decoded.bin \
+  --tool-prefix /work/install/bin/mn10300-elf- \
+  --source-revision "$(git -c safe.directory=/repo -C /repo rev-parse HEAD)" \
+  --output /output
+```
+
+需要复用本次对象时追加 `--reuse-objects-from /repo/generated/ep7/offline-candidate-001`；
+工具自动核对记录的实现源版本与当前编译器，差异会拒绝。输出目录非空也会拒绝，
+不覆盖前一次结果。后续安装研究直接使用上述实际布局，仍需逐项关闭保留的未通过项。

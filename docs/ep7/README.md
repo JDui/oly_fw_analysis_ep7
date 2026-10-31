@@ -2,13 +2,20 @@
 
 ## Current prebuild work
 
+2026-10-31: the first [non-installable offline candidate](OFFLINE_CANDIDATE.md)
+has been compiled, linked and synthesized as a decoded main image. All 107
+implementation sources, 101 patches and 109 external bindings participate.
+The user explicitly authorized this offline build while retaining every open
+lifetime, placement, startup and hardware qualification item. The candidate is
+not an updater package and is not approved for installation.
+
 See the [complete prebuild plan](PREBUILD_PLAN.md) and
 [lifecycle hook inventory](LIFECYCLE_HOOK_INVENTORY.md). The current source inventory
 cross-check covers 13 node frees, 3 non-node frees and both state-service seams;
 it is not fresh stock validation or native lifecycle closure. A separate
-Terra/max chat is designing the VM research environment.
+Terra/max chat completed the [VM research environment design](VM_ENVIRONMENT_PLAN.md).
 
-## Latest source-only integration milestone
+## Earlier source-only integration milestones
 
 - [Actual portable vertical slice](../../prototypes/ep7_volatile_hl/integration/):
   real UI/H-L/capture/direct-reader code,16 operation slots; native boundaries mocked.
@@ -21,8 +28,9 @@ Terra/max chat is designing the VM research environment.
 - No flash-ready firmware, native execution or hardware HSL demonstration.
 
 
-Status: **incomplete; no E-P7 firmware patch, install image, device execution or
-claim of flash safety**. Initial source review: 2026-10-30. Baseline:
+Status: **non-installable offline candidate built; hardware HSL remains incomplete,
+with no updater package, device execution or claim of flash safety**.
+Initial source review: 2026-10-30. Baseline:
 [`539fcf1fa9eda5fdef8ede4deeab94a4691d94c3`](https://github.com/fishcu/oly_fw_analysis/commit/539fcf1fa9eda5fdef8ede4deeab94a4691d94c3).
 The substantive upstream source arrived in
 [`422e415`](https://github.com/fishcu/oly_fw_analysis/commit/422e415); the next commit

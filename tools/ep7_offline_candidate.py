@@ -197,7 +197,7 @@ def check_sources_at_revision(revision):
     if not re.fullmatch(r'[0-9a-f]{40}', revision):
         raise ValueError('expected a full recorded Git revision')
     command = ['git','--no-optional-locks','-c',f'safe.directory={ROOT}',
-               '-c','core.autocrlf=true','-C',str(ROOT)]
+               '-c','core.autocrlf=true','-c','core.safecrlf=false','-C',str(ROOT)]
     paths = ['prototypes/ep7_volatile_hl','tools/ep7_installation_manifest.py']
     subprocess.run([*command,'diff','--quiet',revision,'--',*paths],check=True)
     if subprocess.check_output([*command,'ls-files','--others','--exclude-standard','--',*paths],text=True):

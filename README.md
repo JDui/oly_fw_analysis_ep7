@@ -1,17 +1,19 @@
 # E-P7 HSL port research / E-P7 HSL 移植研究
 
-> **EP7 research resumed: current-live node/token join host-tested; no flash-ready E-P7 firmware.**
-> **已按用户要求恢复研究，推进捕获节点与 token 接合；PEN-F H/S/L 到 E-P7 的移植尚未完成，禁止把 PEN-F 固件或偏移直接用于 E-P7。**
+> **First E-P7 offline candidate compiled and linked; explicitly non-installable.**
+> **首个 E-P7 HSL 离线候选已完成整体编译、链接与解码镜像合成；安装资格和真机 HSL 尚未通过。**
 
 **本地运行： [Windows / WSL / Linux QUICKSTART](docs/ep7/QUICKSTART.md)** · **[当前交接与阻塞](docs/ep7/HANDOFF.md)**
 
-先跑电脑端测试，不连接相机；不会生成可刷镜像。
+最新：[离线候选结果与未通过项](docs/ep7/OFFLINE_CANDIDATE.md)。107 个实现源、101 处
+修改、完整 ELF 与链接图已生成；产物仅用于离线研究，没有可刷升级包，不连接相机。
 
 This branch investigates full per-color **Hue / Saturation / Lightness** controls
 for the E-P7, building on [fishcu/oly_fw_analysis](https://github.com/fishcu/oly_fw_analysis).
 The stock twelve-color saturation editor is not already a full-HSL editor.
 The first research target is **E-P7 1.1, internal build 1100, model 1420**,
-identified by an exact stock hash—not every firmware with a similar name.
+with explicit stock structure, length and patch-preimage checks. The current
+build performs no SHA checks; earlier hash-pinned reports retain their original scope.
 
 Current work:
 
@@ -22,13 +24,14 @@ Current work:
   COLOR GUI machine event table does not directly admit local `0x9016`.
 - Byte-verify all **four** COLOR profiles, including noncontiguous COLOR4 IDs,
   raw selectors **1–4**, storage/recall and conditional CPU coefficient construction.
-- Develop a [compile-checkable volatile H/L prototype](prototypes/ep7_volatile_hl/):
+- Develop a [volatile H/L implementation](prototypes/ep7_volatile_hl/):
   raw logical UI → captured-profile snapshot → fresh host job → bounded CPU lanes.
   A direct lifecycle path now avoids task-ID lookup; an exact-site native→GCC
-  bridge and32-bit setup observer compile, but remain unlinked/uninstalled.
-  Host integration tests run, and verified-source MN10300 GCC compiles the core,
-  UI and bounded job decoder to unlinked objects. Native UI/lifetime adapters remain unbound,
-  settings reset on boot, and **camera HSL has not been demonstrated**.
+  bridge and32-bit setup observer now participate in the whole offline link.
+  All 107 implementation objects link with 109 explicit native/placement bindings;
+  two assumed code regions hold 46,815 bytes and private BSS occupies 8,084 bytes.
+  Placement, lifetime and hardware qualification remain open; settings reset on
+  boot, and **camera HSL has not been demonstrated**.
 - Run an [actual software vertical slice](prototypes/ep7_volatile_hl/integration/):
   logical edits → real H/L state → UTF16 text payload → captured snapshot →
   all16 fresh-job operation slots → direct coefficients → revoke/free. Strict
@@ -37,8 +40,9 @@ Current work:
 - Follow the conditional **kind19/0x2001 capture route** to its distinct fresh-job
   wrapper; the earlier concrete0x100d producer is labeled RecView/createAfFineTune,
   not demonstrated normal capture. Keep metadata ACK/free and image identity explicit.
-- Establish E-P7-specific storage, capture, rendering and recovery evidence before
-  enabling any patch builder. No E-P7 patch offsets or install image are supplied.
+- Build only the explicitly non-installable decoded candidate while retaining
+  E-P7-specific storage, capture, rendering and recovery gaps. The offline builder
+  emits no vendor updater container or installation tool.
 
 Start with the [research status, compatibility matrix and port plan](docs/ep7/README.md),
 [bounded input/editor and processing trace](docs/ep7/INPUT_AND_PROCESSING_TRACE.md),
@@ -67,11 +71,11 @@ now preserves native-handle ownership through startup failure, but native hook
 installation, publication and [task-domain qualification](docs/ep7/TASK_DOMAINS.md)
 remain open; published-runtime teardown is not implemented.
 
-The native [text widget path](docs/ep7/TEXT_WIDGET.md) can copy UTF16 text, offering
-a concrete alternative to the stock ±5 icon maps. Self-authored text formatting
-and a setter ABI bridge compile, but [resource/factory qualification](docs/ep7/TEXT_WIDGET_CREATION.md),
-unattached-child cleanup and H/L category binding remain unresolved. No native
-renderer is enabled. Additional [node disposal evidence](docs/ep7/NODE_DISPOSAL.md)
+The native [text widget path](docs/ep7/TEXT_WIDGET.md), resource/factory adapters,
+cleanup, H/L content, input and COLOR gating participate in the linked candidate;
+see the [current implementation and qualification plan](docs/ep7/PREBUILD_PLAN.md).
+GUI exclusion and actual display behavior remain unverified. Additional
+[node disposal evidence](docs/ep7/NODE_DISPOSAL.md)
 and a [state-generation boundary](docs/ep7/NODE_STATE_GUARD.md) prevent treating the
 earlier five observed free sites as complete lifetime coverage.
 
