@@ -1,0 +1,218 @@
+{
+  "scope": "Execute the linked E-P7 candidate startup prefix in the existing strict GNU model.\n\nReal candidate instructions, explicit resident-image/TCB/RAM fixtures, no API\nsuccess stubs. Stop before semaphore creation; this is not a full boot proof.\n",
+  "candidate_build_revision": "7386faa33453ceb266343c4773a9520f7c5b616f",
+  "candidate_object_revision": "96c611dbc478e4b3ddc3f3823a8846769c08156a",
+  "actual_elf_code_equals_decoded_candidate": true,
+  "unchanged_implementation_inputs": true,
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103",
+  "hash_checks_performed": false,
+  "all_assertions_passed": true,
+  "cold_clear": {
+    "result": {
+      "status": "returned",
+      "completed": 16402,
+      "fault": null,
+      "final_pc": "0x60020204",
+      "final_sp": "0x190107f0"
+    },
+    "private_bytes_zeroed": 16384,
+    "read_only_boundary_guards": true,
+    "preserved_registers_checked": [
+      "a0",
+      "a1",
+      "a2",
+      "a3",
+      "d0",
+      "d1",
+      "d2",
+      "d3",
+      "lar",
+      "lir",
+      "mdr",
+      "psw",
+      "sp"
+    ],
+    "stack_writes_confined_to_bytes": 16
+  },
+  "native_capture_initialize": {
+    "result": {
+      "status": "returned",
+      "completed": 2630,
+      "fault": null,
+      "final_pc": "0x602897dd",
+      "final_sp": "0x190107f0"
+    },
+    "fresh_private_state_checked": true
+  },
+  "linked_cohort_functions": [
+    {
+      "symbol": "_ep7r_native_early_cohort_present",
+      "address": "0x600c9ffd",
+      "result": {
+        "status": "returned",
+        "completed": 286,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      },
+      "returned_d0": 1
+    },
+    {
+      "symbol": "_ep7cn_native_cohort_present",
+      "address": "0x6004806f",
+      "result": {
+        "status": "returned",
+        "completed": 7592,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      },
+      "returned_d0": 1
+    },
+    {
+      "symbol": "_ep7q_native_cohort_present",
+      "address": "0x600caace",
+      "result": {
+        "status": "returned",
+        "completed": 3392,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      },
+      "returned_d0": 1
+    },
+    {
+      "symbol": "_ep7n_postbuilder_cohort_present",
+      "address": "0x600cbd48",
+      "result": {
+        "status": "returned",
+        "completed": 323,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      },
+      "returned_d0": 1
+    },
+    {
+      "symbol": "_ep7i_native_cohort_present",
+      "address": "0x6004caff",
+      "result": {
+        "status": "returned",
+        "completed": 1701,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      },
+      "returned_d0": 1
+    },
+    {
+      "symbol": "_ep7m_native_cohort_present",
+      "address": "0x6004c973",
+      "result": {
+        "status": "returned",
+        "completed": 1340,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      },
+      "returned_d0": 1
+    },
+    {
+      "symbol": "_ep7u_native_cohort_present",
+      "address": "0x600cd374",
+      "result": {
+        "status": "returned",
+        "completed": 16,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      },
+      "returned_d0": 1
+    }
+  ],
+  "corrupted_candidate_rejections": [
+    {
+      "symbol": "_ep7r_native_early_cohort_present",
+      "corrupted_address": "0x600229ba",
+      "result": {
+        "status": "returned",
+        "completed": 278,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      },
+      "returned_d0": 0
+    },
+    {
+      "symbol": "_ep7cn_native_cohort_present",
+      "corrupted_address": "0x600c82d2",
+      "result": {
+        "status": "returned",
+        "completed": 6228,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      },
+      "returned_d0": 0
+    }
+  ],
+  "bootstrap_creation_frontier": {
+    "result": {
+      "status": "breakpoint",
+      "completed": 12729,
+      "fault": null,
+      "final_pc": "0x6003057f",
+      "final_sp": "0x190106c8"
+    },
+    "native_get_tid_executions": 3,
+    "creation_specification": [
+      0,
+      1,
+      1
+    ],
+    "specification_address": "0x1901071c",
+    "executed_prefix_stack_depth": 296,
+    "runtime_still_unpublished": true,
+    "native_create_executed": false
+  },
+  "invalid_tcb_flag": {
+    "result": {
+      "status": "breakpoint",
+      "completed": 553,
+      "fault": null,
+      "final_pc": "0x6004a342",
+      "final_sp": "0x19010764"
+    },
+    "quarantine_reason": "0xf06"
+  },
+  "repeated_capture_initialize": {
+    "result": {
+      "status": "breakpoint",
+      "completed": 20,
+      "fault": null,
+      "final_pc": "0x6004a342",
+      "final_sp": "0x190107bc"
+    },
+    "quarantine_reason": "0xe01",
+    "terminal_hold": {
+      "status": "instruction_limit",
+      "completed": 6,
+      "fault": null,
+      "final_pc": "0x6004a346",
+      "final_sp": "0x190107bc"
+    }
+  },
+  "firmware_files_modified": false,
+  "full_boot_executed": false,
+  "runtime_publication_executed": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "Decoded candidate is explicitly supplied resident and executable; loading, cache and region ownership are not proven.",
+    "TCB, current-task root, CPU ID, load flags, stack and private RAM are explicit fixtures; no scheduler or hardware interrupt occurs.",
+    "The bootstrap run stops BEFORE the original semaphore-create entry. No API success value or initialized kernel object is fabricated.",
+    "Prefix stack usage covers this one executed path only, not complete bootstrap, IRQ, callback or recursion bounds.",
+    "Cohort functions accept current bytes; that does not prove all native aliases, lifecycle closures or updater acceptance.",
+    "User reports no validated firmware backup or independent recovery method; offline work continues without camera access."
+  ]
+}
