@@ -117,7 +117,7 @@ int EP7_CONTENT_TEST_MAIN(void)
     pointer(parent+80,stock_content);
     if (!setjmp(fatal)) { ep7c_rebuild(parent);assert(!"invalid graph delegated"); }
     assert(quarantines==1&&!stock_calls&&!allocations);
-    begin_case();ep7_stock_mvc_rebuild_touch_call_unresolved[4]=24;
+    begin_case();ep7_mvc_far_calls[3*EP7_FAR_CALL_BYTES+4]=24;
     if (!setjmp(fatal)) { ep7c_rebuild(parent);assert(!"wrong CALL frame admitted"); }
     assert(quarantines==1&&!stock_calls&&!allocations);
     begin_case();ep7c_rebuild((void *)1);assert(stock_calls==1&&!allocations&&ep7m_current());

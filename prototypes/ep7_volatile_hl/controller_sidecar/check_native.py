@@ -4,7 +4,7 @@ import json,os,subprocess,tempfile
 from pathlib import Path
 CORE=Path(__file__).resolve().parent.parent
 SOURCES=['controller_sidecar/test_native_binding.c','controller_sidecar/native_binding.c',
-    'controller_sidecar/cohort.c','controller_sidecar/sidecar.c','runtime/runtime.c','runtime/queue_context.c',
+    'controller_sidecar/cohort.c','target/far_call.c','controller_sidecar/sidecar.c','runtime/runtime.c','runtime/queue_context.c',
     'ep7p.c','ep7p_decode.c','snapshot_transport/transport.c','snapshot_transport/wire.c',
     'snapshot_transport/producer.c','snapshot_transport/native/producer_layout.c','snapshot_transport/native/stack.c',
     'poll_lock_provider/ep7_sem_provider.c','poll_lock_provider/bootstrap/bootstrap.c']

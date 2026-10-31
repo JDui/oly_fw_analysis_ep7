@@ -1,0 +1,1656 @@
+{
+  "scope": "COLOR-qualified H/L masks, safe stock restoration and event-scoped input joined to actual UI graph/core; cold placement/installation, native bypass closure, total stack, hardware and LCD acceptance pending",
+  "versions": {
+    "gcc": "mn10300-elf-gcc (GCC) 13.4.0",
+    "as": "GNU assembler (GNU Binutils) 2.45",
+    "ld": "GNU ld (GNU Binutils) 2.45",
+    "objdump": "GNU objdump (GNU Binutils) 2.45"
+  },
+  "objects": {
+    "text_rollback": {
+      "source": "prototypes/ep7_volatile_hl/text_rollback/rollback.c",
+      "definitions": [
+        "_ep7_text_rollback"
+      ],
+      "undefined": [
+        "_ep7_gcc_text_cleanup_destroy_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "217",
+        "0",
+        "0",
+        "217"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/text_rollback/rollback.c:4:5:ep7_text_rollback\t36\tstatic"
+      ]
+    },
+    "ui_context": {
+      "source": "prototypes/ep7_volatile_hl/text_rollback/native_context.c",
+      "definitions": [
+        "_ep7_text_rollback_native"
+      ],
+      "undefined": [
+        "_ep7_gcc_ui_context_exchange",
+        "_ep7_gcc_ui_context_select",
+        "_ep7_gcc_ui_service",
+        "_ep7_text_rollback",
+        "_ep7n_native_current_task"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "348",
+        "0",
+        "0",
+        "348"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/text_rollback/native_context.c:40:13:restore\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_rollback/native_context.c:16:12:qualify\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_rollback/native_context.c:29:12:enter\t44\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_rollback/native_context.c:47:5:ep7_text_rollback_native\t60\tstatic"
+      ]
+    },
+    "ui_context_bridges": {
+      "source": "prototypes/ep7_volatile_hl/text_rollback/context_bridges.s",
+      "definitions": [
+        "_ep7_gcc_ui_context_exchange",
+        "_ep7_gcc_ui_context_select",
+        "_ep7_gcc_ui_service"
+      ],
+      "undefined": [
+        "ep7_stock_ui_context_get_unresolved",
+        "ep7_stock_ui_context_set_unresolved",
+        "ep7_stock_ui_service_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 30,
+      "own_frame_bytes": [
+        4,
+        20,
+        4
+      ],
+      "exchange_saved_selection_offsets": [
+        8,
+        9
+      ],
+      "exchange_requested_selection_offset": 12,
+      "exchange_saved_a2_offset": 16,
+      "native_getter_self_frame_bytes": 4,
+      "size_output": [
+        "86",
+        "0",
+        "0",
+        "86"
+      ]
+    },
+    "text_cleanup_bridge": {
+      "source": "prototypes/ep7_volatile_hl/text_rollback/cleanup_destroy.s",
+      "definitions": [
+        "_ep7_gcc_text_cleanup_destroy_unresolved"
+      ],
+      "undefined": [
+        "ep7_stock_text_cleanup_unresolved",
+        "ep7_stock_text_destructor_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 13,
+      "own_frame_bytes": 32,
+      "size_output": [
+        "35",
+        "0",
+        "0",
+        "35"
+      ]
+    },
+    "task_context": {
+      "source": "prototypes/ep7_volatile_hl/runtime/task_context.c",
+      "definitions": [
+        "_ep7n_query_task"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "535",
+        "0",
+        "0",
+        "535"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context.c:6:13:current_tcb\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context.c:14:6:ep7n_query_task\t60\tstatic"
+      ]
+    },
+    "task_native": {
+      "source": "prototypes/ep7_volatile_hl/runtime/task_context_native.c",
+      "definitions": [
+        "_ep7n_native_current_task",
+        "_ep7n_native_queue"
+      ],
+      "undefined": [
+        "_ep7_gcc_get_tid",
+        "_ep7n_query_queue",
+        "_ep7n_query_task"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "98",
+        "0",
+        "0",
+        "98"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:7:13:read_word\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:9:13:read_half\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:5:12:query\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:12:6:ep7n_native_current_task\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:16:6:ep7n_native_queue\t16\tstatic"
+      ]
+    },
+    "queue_context": {
+      "source": "prototypes/ep7_volatile_hl/runtime/queue_context.c",
+      "definitions": [
+        "_ep7n_query_queue",
+        "_ep7n_same_queue"
+      ],
+      "undefined": [
+        "_memcpy"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "853",
+        "0",
+        "0",
+        "853"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/queue_context.c:6:13:read_view\t44\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/queue_context.c:26:6:ep7n_same_queue\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/queue_context.c:32:6:ep7n_query_queue\t104\tstatic"
+      ]
+    },
+    "get_tid": {
+      "source": "prototypes/ep7_volatile_hl/target/get_tid_bridge.s",
+      "definitions": [
+        "_ep7_gcc_get_tid"
+      ],
+      "undefined": [
+        "ep7_stock_get_tid_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 5,
+      "size_output": [
+        "17",
+        "0",
+        "0",
+        "17"
+      ]
+    },
+    "memory": {
+      "source": "prototypes/ep7_volatile_hl/target/memory.c",
+      "definitions": [
+        "_memcpy",
+        "_memset"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "49",
+        "0",
+        "0",
+        "49"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/target/memory.c:8:7:memcpy\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/target/memory.c:18:7:memset\t0\tstatic"
+      ]
+    },
+    "text_factory_bridge": {
+      "source": "prototypes/ep7_volatile_hl/text_lifecycle/native_create.s",
+      "definitions": [
+        "_ep7_gcc_text_factory"
+      ],
+      "undefined": [
+        "ep7_stock_ui_context_get_unresolved",
+        "ep7_stock_ui_context_set_unresolved",
+        "ep7_stock_ui_service_unresolved",
+        "ep7_stock_widget_factory_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 28,
+      "own_frame_bytes": 40,
+      "native_factory_frame_bytes": 24,
+      "third_gcc_argument_offset": 52,
+      "independent_result_child_offset": 0,
+      "independent_result_status_offset": 4,
+      "prior_context_restored_on_normal_return": true,
+      "size_output": [
+        "83",
+        "0",
+        "0",
+        "83"
+      ]
+    },
+    "text_factory_caller": {
+      "source": "prototypes/ep7_volatile_hl/text_lifecycle/factory_caller.c",
+      "definitions": [
+        "_ep7_text_factory_probe"
+      ],
+      "undefined": [
+        "_ep7_gcc_text_factory"
+      ],
+      "loop_extended_state_audited": true,
+      "compiler_assembly": "\t.file\t\"factory_caller.c\"\n\t.section .text\n\t.global _ep7_text_factory_probe\n\t.type\t_ep7_text_factory_probe, @function\n_ep7_text_factory_probe:\n\tadd -24,sp\n\tmov sp,a0\n\tadd 16,a0\n\tmov a0,(12,sp)\n\tcall _ep7_gcc_text_factory,[],0\n\tmov (16,sp),d0\n\tcmp 0,d0\n\tbeq .L3\n\tmov (20,sp),d1\n\tmov (36,sp),a0\n\tmov d1,(a0)\n\tmov d0,a0\n\tret [],24\n.L3:\n\tmov d0,d1\n\tmov (36,sp),a0\n\tmov d1,(a0)\n\tmov d0,a0\n\tret [],24\n\t.size\t_ep7_text_factory_probe, .-_ep7_text_factory_probe\n\t.ident\t\"GCC: (GNU) 13.4.0\"\n",
+      "compiler_abi_checked": true,
+      "caller_frame_bytes": 24,
+      "third_argument_slot": 12,
+      "result_local_offset": 16,
+      "pointer_return_register": "a0",
+      "size_output": [
+        "40",
+        "0",
+        "0",
+        "40"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/factory_caller.c:6:7:ep7_text_factory_probe\t24\tstatic"
+      ]
+    },
+    "text_lifecycle": {
+      "source": "prototypes/ep7_volatile_hl/text_lifecycle/lifecycle.c",
+      "definitions": [
+        "_ep7_text_create_attach",
+        "_ep7_text_revoke"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "228",
+        "0",
+        "0",
+        "228"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/lifecycle.c:2:5:ep7_text_create_attach\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/lifecycle.c:30:6:ep7_text_revoke\t0\tstatic"
+      ]
+    },
+    "text_native_lifecycle": {
+      "source": "prototypes/ep7_volatile_hl/text_lifecycle/native_lifecycle.c",
+      "definitions": [
+        "_ep7_text_native_open",
+        "_ep7_text_native_retry_rollback",
+        "_ep7_text_native_revoke"
+      ],
+      "undefined": [
+        "_ep7_gcc_set_text_unresolved_binding",
+        "_ep7_gcc_text_bind",
+        "_ep7_gcc_text_factory",
+        "_ep7_gcc_ui_attach",
+        "_ep7_gcc_ui_context_exchange",
+        "_ep7_gcc_ui_context_select",
+        "_ep7_gcc_ui_find_child",
+        "_ep7_gcc_ui_service",
+        "_ep7_text_create_attach",
+        "_ep7_text_revoke",
+        "_ep7_text_rollback_native",
+        "_ep7n_native_current_task"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "925",
+        "0",
+        "0",
+        "925"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/native_lifecycle.c:16:12:fresh\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/native_lifecycle.c:28:12:initialized\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/native_lifecycle.c:55:12:set\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/native_lifecycle.c:47:12:bind\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/native_lifecycle.c:40:12:attach\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/native_lifecycle.c:33:13:destroy\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/native_lifecycle.c:21:14:create\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/native_lifecycle.c:58:5:ep7_text_native_open\t80\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/native_lifecycle.c:87:5:ep7_text_native_retry_rollback\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/native_lifecycle.c:94:5:ep7_text_native_revoke\t20\tstatic"
+      ]
+    },
+    "text_attach_bind": {
+      "source": "prototypes/ep7_volatile_hl/text_lifecycle/attach_bind.s",
+      "definitions": [
+        "_ep7_gcc_text_bind",
+        "_ep7_gcc_ui_attach"
+      ],
+      "undefined": [
+        "ep7_stock_text_bind_unresolved",
+        "ep7_stock_ui_attach_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 10,
+      "own_frame_bytes": [
+        4,
+        4
+      ],
+      "native_frames": [
+        8,
+        12
+      ],
+      "bind_native_frame_is_self_prologue": true,
+      "size_output": [
+        "34",
+        "0",
+        "0",
+        "34"
+      ]
+    },
+    "text_setter": {
+      "source": "prototypes/ep7_volatile_hl/text_viewer/set_text.s",
+      "definitions": [
+        "_ep7_gcc_set_text_unresolved_binding"
+      ],
+      "undefined": [
+        "ep7_stock_text_setter_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 5,
+      "own_frame_bytes": 12,
+      "native_frame_bytes": 24,
+      "size_output": [
+        "17",
+        "0",
+        "0",
+        "17"
+      ]
+    },
+    "text_find_child": {
+      "source": "prototypes/ep7_volatile_hl/text_lifecycle/find_child.s",
+      "definitions": [
+        "_ep7_gcc_ui_find_child"
+      ],
+      "undefined": [
+        "ep7_stock_ui_find_child_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 12,
+      "own_frame_bytes": 12,
+      "native_self_frame_bytes": 24,
+      "owner_list_offset": 92,
+      "preserved_iterator_offset": 108,
+      "pointer_result_register": "a0",
+      "size_output": [
+        "32",
+        "0",
+        "0",
+        "32"
+      ]
+    },
+    "text_native_resource": {
+      "source": "prototypes/ep7_volatile_hl/text_lifecycle/native_resource.c",
+      "definitions": [
+        "_ep7_text_resource_prepare"
+      ],
+      "undefined": [
+        "_ep7_stock_hl_text_descriptor_unresolved",
+        "_ep7_stock_hl_text_layouts_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "72",
+        "0",
+        "0",
+        "72"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/text_lifecycle/native_resource.c:8:6:ep7_text_resource_prepare\t8\tstatic"
+      ]
+    },
+    "ui_owner": {
+      "source": "prototypes/ep7_volatile_hl/ui_owner/owner.c",
+      "definitions": [
+        "_ep7_native_ui_owner",
+        "_ep7u_before_retire",
+        "_ep7u_hold_ready",
+        "_ep7u_present",
+        "_ep7u_release_ready",
+        "_ep7u_screen_enter",
+        "_ep7u_screen_leave"
+      ],
+      "undefined": [
+        "_ep7_gcc_quarantine",
+        "_ep7_gcc_set_text_unresolved_binding",
+        "_ep7_gcc_ui_context_exchange",
+        "_ep7_gcc_ui_context_select",
+        "_ep7_gcc_ui_find_child",
+        "_ep7_gcc_ui_service",
+        "_ep7_text_native_open",
+        "_ep7_text_native_retry_rollback",
+        "_ep7_text_native_revoke",
+        "_ep7_text_resource_prepare",
+        "_ep7n_native_current_task",
+        "_ep7u_native_cohort_present",
+        "_ep7v_invalidate",
+        "_ep7v_refresh"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "2352",
+        "0",
+        "196",
+        "2548"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_owner/owner.c:44:12:service_shape\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_owner/owner.c:79:12:qualify\t44\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_owner/owner.c:30:13:require_live_call.constprop\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_owner/owner.c:52:6:ep7u_screen_enter\t52\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_owner/owner.c:92:6:ep7u_screen_leave\t68\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_owner/owner.c:131:6:ep7u_before_retire\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_owner/owner.c:152:5:ep7u_hold_ready\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_owner/owner.c:177:6:ep7u_release_ready\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_owner/owner.c:184:5:ep7u_present\t32\tstatic"
+      ]
+    },
+    "ui_owner_cohort": {
+      "source": "prototypes/ep7_volatile_hl/ui_owner/cohort.c",
+      "definitions": [
+        "_ep7u_native_cohort_present"
+      ],
+      "undefined": [
+        "_ep7_stock_ui_display_vtable_unresolved",
+        "_ep7_stock_ui_service_vtable_unresolved",
+        "ep7_native_ui_owner_bulk_bridge",
+        "ep7_native_ui_owner_cleanup_bridge",
+        "ep7_native_ui_owner_destructor_bridge",
+        "ep7_native_ui_screen_bridge"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "63",
+        "0",
+        "0",
+        "63"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_owner/cohort.c:10:5:ep7u_native_cohort_present\t0\tstatic"
+      ]
+    },
+    "ui_owner_bridges": {
+      "source": "prototypes/ep7_volatile_hl/ui_owner/bridges.s",
+      "definitions": [
+        "ep7_native_ui_owner_bulk_bridge",
+        "ep7_native_ui_owner_cleanup_bridge",
+        "ep7_native_ui_owner_destructor_bridge",
+        "ep7_native_ui_screen_bridge"
+      ],
+      "undefined": [
+        "_ep7u_before_retire",
+        "_ep7u_screen_enter",
+        "_ep7u_screen_leave",
+        "ep7_stock_screen_manager_unresolved",
+        "ep7_stock_ui_owner_bulk_unresolved",
+        "ep7_stock_ui_owner_cleanup_unresolved",
+        "ep7_stock_ui_owner_destructor_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 73,
+      "own_frame_bytes": [
+        64,
+        48,
+        48,
+        48
+      ],
+      "original_method_self_frames": [
+        64,
+        36,
+        32,
+        4
+      ],
+      "original_screen_scratch_results_preserved": true,
+      "destructor_result_a0_preserved": true,
+      "size_output": [
+        "197",
+        "0",
+        "0",
+        "197"
+      ]
+    },
+    "quarantine": {
+      "source": "prototypes/ep7_volatile_hl/runtime/quarantine.s",
+      "definitions": [
+        "_ep7_gcc_quarantine"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 2,
+      "owned_terminal_loop": true,
+      "native_exception_behavior_executed": false,
+      "size_output": [
+        "3",
+        "0",
+        "0",
+        "3"
+      ]
+    },
+    "ui_selector": {
+      "source": "prototypes/ep7_volatile_hl/ui_selector/selector.c",
+      "definitions": [
+        "_ep7s_categories",
+        "_ep7s_expand_after_init"
+      ],
+      "undefined": [
+        "_ep7_gcc_mvc_array_delete",
+        "_ep7_gcc_mvc_array_new",
+        "_ep7_stock_selector_initializer_unresolved",
+        "_ep7n_native_current_task",
+        "ep7_native_selector_init_bridge"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "531",
+        "0",
+        "0",
+        "531"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_selector/selector.c:17:5:ep7s_expand_after_init\t44\tstatic"
+      ]
+    },
+    "ui_selector_bridges": {
+      "source": "prototypes/ep7_volatile_hl/ui_selector/bridges.s",
+      "definitions": [
+        "_ep7_gcc_mvc_array_delete",
+        "_ep7_gcc_mvc_array_new",
+        "ep7_native_selector_init_bridge"
+      ],
+      "undefined": [
+        "_ep7s_expand_after_init",
+        "ep7_stock_mvc_array_delete_unresolved",
+        "ep7_stock_mvc_array_new_unresolved",
+        "ep7_stock_selector_init_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 25,
+      "own_frame_bytes": [
+        56,
+        4,
+        4
+      ],
+      "original_initializer_self_frame": 12,
+      "original_array_caller_frames": [
+        4,
+        4
+      ],
+      "original_initializer_scratch_results_preserved": true,
+      "size_output": [
+        "76",
+        "0",
+        "0",
+        "76"
+      ]
+    },
+    "mvc_lifetime": {
+      "source": "prototypes/ep7_volatile_hl/ui_mvc/lifetime.c",
+      "definitions": [
+        "_ep7_native_mvc",
+        "_ep7m_before_gui_exit",
+        "_ep7m_before_parent_destroy",
+        "_ep7m_before_viewer_destroy",
+        "_ep7m_current",
+        "_ep7m_gui_begin",
+        "_ep7m_gui_complete",
+        "_ep7m_hold_content",
+        "_ep7m_release_content",
+        "_ep7m_require_context"
+      ],
+      "undefined": [
+        "_ep7_gcc_quarantine",
+        "_ep7_stock_color_container_unresolved",
+        "_ep7cm_revoke",
+        "_ep7m_native_cohort_present",
+        "_ep7n_native_current_task",
+        "_ep7s_categories",
+        "_ep7v_clear",
+        "_ep7v_invalidate",
+        "_ep7v_refresh"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "2053",
+        "0",
+        "76",
+        "2129"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:42:12:selector_shape\t8\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:100:13:retire.part.0\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:26:13:require_live.constprop\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:51:6:ep7m_gui_begin\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:66:6:ep7m_gui_complete\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:90:6:ep7m_before_gui_exit\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:109:6:ep7m_before_parent_destroy\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:110:6:ep7m_before_viewer_destroy\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:111:29:ep7m_current\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:131:6:ep7m_require_context\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:137:23:ep7m_hold_content\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:149:6:ep7m_release_content\t12\tstatic"
+      ]
+    },
+    "mvc_cohort": {
+      "source": "prototypes/ep7_volatile_hl/ui_mvc/cohort.c",
+      "definitions": [
+        "_ep7m_native_cohort_present"
+      ],
+      "undefined": [
+        "_ep7_stock_gui_color_entry_unresolved",
+        "_ep7_stock_gui_color_exit_unresolved",
+        "_ep7_stock_mvc_parent_vtable_unresolved",
+        "_ep7_stock_mvc_rebuild_initial_call_unresolved",
+        "_ep7_stock_mvc_rebuild_next_call_unresolved",
+        "_ep7_stock_mvc_rebuild_previous_call_unresolved",
+        "_ep7_stock_mvc_rebuild_touch_call_unresolved",
+        "_ep7_stock_mvc_viewer_vtable_unresolved",
+        "_ep7n_far_call_present",
+        "ep7_mvc_far_calls",
+        "ep7_mvc_far_calls_end",
+        "ep7_native_content_rebuild_bridge",
+        "ep7_native_mvc_gui_entry_bridge",
+        "ep7_native_mvc_gui_exit_bridge",
+        "ep7_native_mvc_parent_destroy_bridge",
+        "ep7_native_mvc_viewer_destroy_bridge",
+        "ep7_native_ui_viewer_bridge"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "212",
+        "0",
+        "0",
+        "212"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/cohort.c:19:12:rebuild_call\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/cohort.c:25:5:ep7m_native_cohort_present\t12\tstatic"
+      ]
+    },
+    "mvc_bridges": {
+      "source": "prototypes/ep7_volatile_hl/ui_mvc/bridges.s",
+      "definitions": [
+        "ep7_native_mvc_gui_entry_bridge",
+        "ep7_native_mvc_gui_exit_bridge",
+        "ep7_native_mvc_parent_destroy_bridge",
+        "ep7_native_mvc_viewer_destroy_bridge"
+      ],
+      "undefined": [
+        "_ep7m_before_gui_exit",
+        "_ep7m_before_parent_destroy",
+        "_ep7m_before_viewer_destroy",
+        "_ep7m_gui_begin",
+        "_ep7m_gui_complete",
+        "ep7_stock_mvc_gui_entry_unresolved",
+        "ep7_stock_mvc_gui_exit_unresolved",
+        "ep7_stock_mvc_parent_destroy_unresolved",
+        "ep7_stock_mvc_viewer_destroy_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 65,
+      "own_frame_bytes": [
+        48,
+        48,
+        48,
+        48
+      ],
+      "original_self_frames": [
+        4,
+        8,
+        28,
+        8
+      ],
+      "original_entry_scratch_results_preserved": true,
+      "original_destructor_a0_results_preserved": true,
+      "size_output": [
+        "183",
+        "0",
+        "0",
+        "183"
+      ]
+    },
+    "mvc_far_calls": {
+      "source": "prototypes/ep7_volatile_hl/ui_mvc/far_calls.s",
+      "definitions": [
+        "ep7_mvc_far_60e261d4",
+        "ep7_mvc_far_60e26201",
+        "ep7_mvc_far_60e26226",
+        "ep7_mvc_far_60e269f0",
+        "ep7_mvc_far_calls",
+        "ep7_mvc_far_calls_end"
+      ],
+      "undefined": [
+        "ep7_native_content_rebuild_bridge"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_veneer_rows": 4,
+      "veneer_bytes": 120,
+      "extra_transient_stack_bytes": 4,
+      "actual_cohort_order_and_resume_checked": true,
+      "actual_adapter_relocations_checked": true,
+      "size_output": [
+        "120",
+        "0",
+        "0",
+        "120"
+      ]
+    },
+    "native_far_call": {
+      "source": "prototypes/ep7_volatile_hl/target/far_call.c",
+      "definitions": [
+        "_ep7n_far_call_present"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "434",
+        "0",
+        "0",
+        "434"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/target/far_call.c:6:6:ep7n_far_call_present\t20\tstatic"
+      ]
+    },
+    "ui_content": {
+      "source": "prototypes/ep7_volatile_hl/ui_content/content.c",
+      "definitions": [
+        "_ep7_native_content",
+        "_ep7c_before_destroy",
+        "_ep7c_rebuild",
+        "_ep7c_require_owned"
+      ],
+      "undefined": [
+        "_ep7_gcc_mvc_base_init",
+        "_ep7_gcc_mvc_dispose",
+        "_ep7_gcc_mvc_scalar_new",
+        "_ep7_gcc_mvc_stock_rebuild",
+        "_ep7_gcc_quarantine",
+        "_ep7_native_mvc",
+        "_ep7_stock_selector_remembered_unresolved",
+        "_ep7c_stop_transition",
+        "_ep7c_to_stock_held",
+        "_ep7cm_revoke",
+        "_ep7g_reconcile_held",
+        "_ep7m_hold_content",
+        "_ep7m_release_content",
+        "_ep7m_require_context",
+        "_memset",
+        "ep7_native_content_vtable"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "650",
+        "0",
+        "8",
+        "658"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_content/content.c:23:6:ep7c_require_owned\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_content/content.c:30:6:ep7c_rebuild\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_content/content.c:72:6:ep7c_before_destroy\t20\tstatic"
+      ]
+    },
+    "ui_content_bridges": {
+      "source": "prototypes/ep7_volatile_hl/ui_content/bridges.s",
+      "definitions": [
+        "_ep7_gcc_mvc_base_init",
+        "_ep7_gcc_mvc_dispose",
+        "_ep7_gcc_mvc_scalar_new",
+        "_ep7_gcc_mvc_stock_rebuild",
+        "ep7_native_content_destroy_bridge",
+        "ep7_native_content_null",
+        "ep7_native_content_rebuild_bridge",
+        "ep7_native_content_vtable",
+        "ep7_native_content_zero"
+      ],
+      "undefined": [
+        "_ep7c_before_destroy",
+        "_ep7c_rebuild",
+        "ep7_stock_mvc_base_destroy_unresolved",
+        "ep7_stock_mvc_base_init_unresolved",
+        "ep7_stock_mvc_rebuild_unresolved",
+        "ep7_stock_mvc_scalar_delete_unresolved",
+        "ep7_stock_mvc_scalar_new_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 43,
+      "vtable_entries_checked": 18,
+      "rebuild_inherited_frame_bytes": 28,
+      "rebuild_own_frame_bytes": 0,
+      "destructor_own_frame_bytes": 32,
+      "short_call_sites_use_far_veneers": true,
+      "stock_rebuild_entry_remains_unpatched": true,
+      "destructor_returns_original_base_a0": true,
+      "pointer_return_a0_preserved": true,
+      "size_output": [
+        "203",
+        "0",
+        "0",
+        "203"
+      ]
+    },
+    "ui_model": {
+      "source": "prototypes/ep7_volatile_hl/ui_model/model.c",
+      "definitions": [
+        "_ep7_native_ui_model",
+        "_ep7cm_available_held",
+        "_ep7cm_frame_held",
+        "_ep7cm_revoke"
+      ],
+      "undefined": [
+        "_ep7_gcc_quarantine",
+        "_ep7_gcc_ui_public_mode",
+        "_ep7_native_mvc",
+        "_ep7_native_runtime_slot",
+        "_ep7c_require_owned",
+        "_ep7m_current",
+        "_ep7p_ui_init",
+        "_ep7p_ui_ops",
+        "_ep7r_accepting",
+        "_ep7r_get"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "665",
+        "0",
+        "68",
+        "733"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_model/model.c:5:6:ep7cm_revoke\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_model/model.c:11:5:ep7cm_available_held\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_model/model.c:25:5:ep7cm_frame_held\t60\tstatic"
+      ]
+    },
+    "ui_public_mode": {
+      "source": "prototypes/ep7_volatile_hl/ui_model/public_mode.s",
+      "definitions": [
+        "_ep7_gcc_ui_public_mode"
+      ],
+      "undefined": [
+        "ep7_stock_property_service_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 15,
+      "own_frame_bytes": 20,
+      "property_id": 111,
+      "output_offset": 12,
+      "output_initialized_zero": true,
+      "null_service_rejects": true,
+      "size_output": [
+        "36",
+        "0",
+        "0",
+        "36"
+      ]
+    },
+    "ui_viewer": {
+      "source": "prototypes/ep7_volatile_hl/ui_render/viewer.c",
+      "definitions": [
+        "_ep7_native_ui_receipt",
+        "_ep7v_clear",
+        "_ep7v_draw_begin",
+        "_ep7v_draw_end",
+        "_ep7v_invalidate",
+        "_ep7v_refresh",
+        "_ep7v_refresh_held"
+      ],
+      "undefined": [
+        "_ep7_gcc_quarantine",
+        "_ep7_gcc_ui_draw_original",
+        "_ep7_native_mvc",
+        "_ep7_native_ui_model",
+        "_ep7_native_ui_owner",
+        "_ep7_text_format",
+        "_ep7cm_frame_held",
+        "_ep7cm_revoke",
+        "_ep7g_reconcile_held",
+        "_ep7m_current",
+        "_ep7m_hold_content",
+        "_ep7m_release_content",
+        "_ep7u_present"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "844",
+        "0",
+        "32",
+        "876"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_render/viewer.c:8:6:ep7v_invalidate\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_render/viewer.c:13:6:ep7v_clear\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_render/viewer.c:19:6:ep7v_refresh_held\t108\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_render/viewer.c:47:6:ep7v_refresh\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_render/viewer.c:58:10:ep7v_draw_begin\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_render/viewer.c:70:6:ep7v_draw_end\t16\tstatic"
+      ]
+    },
+    "ui_viewer_bridge": {
+      "source": "prototypes/ep7_volatile_hl/ui_render/bridge.s",
+      "definitions": [
+        "ep7_native_ui_viewer_bridge"
+      ],
+      "undefined": [
+        "_ep7v_draw_begin",
+        "_ep7v_draw_end",
+        "ep7_stock_mvc_viewer_draw_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 27,
+      "own_frame_bytes": 56,
+      "original_self_frame_bytes": 36,
+      "original_arguments_and_scratch_results_preserved": true,
+      "held_token_offset": 28,
+      "viewer_offset": 32,
+      "size_output": [
+        "71",
+        "0",
+        "0",
+        "71"
+      ]
+    },
+    "ui_portable": {
+      "source": "prototypes/ep7_volatile_hl/ep7p_ui.c",
+      "definitions": [
+        "_ep7p_ui_init",
+        "_ep7p_ui_ops"
+      ],
+      "undefined": [
+        "_ep7p_axis_adjust_result",
+        "_ep7p_axis_read",
+        "_memset"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "1107",
+        "0",
+        "0",
+        "1107"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ep7p_ui.c:20:12:open_ui\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p_ui.c:46:12:event_ui\t52\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p_ui.c:73:13:close_ui\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p_ui.c:29:12:sync_ui\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p_ui.c:39:12:frame_ui\t48\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p_ui.c:17:6:ep7p_ui_init\t24\tstatic"
+      ]
+    },
+    "ui_formatter": {
+      "source": "prototypes/ep7_volatile_hl/text_viewer/text.c",
+      "definitions": [
+        "_ep7_text_format",
+        "_ep7_text_present"
+      ],
+      "undefined": [
+        "_ep7_gcc_set_text_unresolved_binding"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "432",
+        "0",
+        "0",
+        "432"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/text_viewer/text.c:3:8:ep7_text_format\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/text_viewer/text.c:28:5:ep7_text_present\t40\tstatic"
+      ]
+    },
+    "runtime": {
+      "source": "prototypes/ep7_volatile_hl/runtime/runtime.c",
+      "definitions": [
+        "_ep7_native_runtime_slot",
+        "_ep7r_accepting",
+        "_ep7r_apply",
+        "_ep7r_fault",
+        "_ep7r_get",
+        "_ep7r_guard_queue",
+        "_ep7r_io_open",
+        "_ep7r_note_queue_delete",
+        "_ep7r_prepare",
+        "_ep7r_progress",
+        "_ep7r_publish",
+        "_ep7r_qualify_queue",
+        "_ep7r_retire",
+        "_ep7r_stop",
+        "_ep7r_task"
+      ],
+      "undefined": [
+        "_ep7b_mark_published",
+        "_ep7n_same_queue",
+        "_ep7p_direct_apply",
+        "_ep7s_ops",
+        "_ep7s_poisoned",
+        "_ep7t_init",
+        "_ep7t_retire_owned"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "1448",
+        "0",
+        "4",
+        "1452"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:7:6:ep7r_prepare\t64\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:16:7:ep7r_get\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:18:6:ep7r_apply\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:23:6:ep7r_publish\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:38:6:ep7r_accepting\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:43:6:ep7r_stop\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:45:6:ep7r_task\t48\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:57:16:ep7r_fault\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:64:6:ep7r_qualify_queue\t64\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:78:6:ep7r_io_open\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:80:6:ep7r_guard_queue\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:91:6:ep7r_note_queue_delete\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:100:6:ep7r_progress\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/runtime.c:110:6:ep7r_retire\t44\tstatic"
+      ]
+    },
+    "core": {
+      "source": "prototypes/ep7_volatile_hl/ep7p.c",
+      "definitions": [
+        "_ep7p_apply",
+        "_ep7p_axis_adjust",
+        "_ep7p_axis_adjust_result",
+        "_ep7p_axis_read",
+        "_ep7p_capture",
+        "_ep7p_direct_apply",
+        "_ep7p_edit",
+        "_ep7p_enter",
+        "_ep7p_init",
+        "_ep7p_register_job",
+        "_ep7p_register_task",
+        "_ep7p_release_job",
+        "_ep7p_release_task",
+        "_ep7p_unwind"
+      ],
+      "undefined": [
+        "_ep7p_decode",
+        "_memcpy",
+        "_memset"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "3552",
+        "0",
+        "0",
+        "3552"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:24:24:current\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:30:13:shape\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:145:13:apply_local\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:41:6:ep7p_init\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:45:6:ep7p_edit\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:50:6:ep7p_axis_read\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:55:6:ep7p_axis_adjust_result\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:75:6:ep7p_axis_adjust\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:79:6:ep7p_capture\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:85:6:ep7p_register_job\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:101:6:ep7p_release_job\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:109:6:ep7p_register_task\t48\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:120:6:ep7p_release_task\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:127:6:ep7p_enter\t68\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:135:6:ep7p_unwind\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:159:6:ep7p_apply\t84\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ep7p.c:179:6:ep7p_direct_apply\t132\tstatic"
+      ]
+    },
+    "decode": {
+      "source": "prototypes/ep7_volatile_hl/ep7p_decode.c",
+      "definitions": [
+        "_ep7p_decode"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "720",
+        "0",
+        "0",
+        "720"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ep7p_decode.c:6:6:ep7p_decode\t16\tstatic"
+      ]
+    },
+    "poll_provider": {
+      "source": "prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c",
+      "definitions": [
+        "_ep7s_init",
+        "_ep7s_ops",
+        "_ep7s_poisoned"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "378",
+        "0",
+        "0",
+        "378"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c:37:12:no_lease\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c:5:13:domain.constprop\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c:12:13:take\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c:26:13:give\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c:38:6:ep7s_init\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c:42:10:ep7s_ops\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c:43:6:ep7s_poisoned\t0\tstatic"
+      ]
+    },
+    "bootstrap": {
+      "source": "prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/bootstrap.c",
+      "definitions": [
+        "_ep7b_abort_unpublished",
+        "_ep7b_mark_published",
+        "_ep7b_prepare"
+      ],
+      "undefined": [
+        "_ep7p_init",
+        "_ep7s_init",
+        "_ep7s_ops",
+        "_memcpy"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "560",
+        "0",
+        "0",
+        "560"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/bootstrap.c:8:13:same_domain.constprop\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/bootstrap.c:9:6:ep7b_abort_unpublished\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/bootstrap.c:22:6:ep7b_prepare\t112\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/bootstrap.c:35:6:ep7b_mark_published\t0\tstatic"
+      ]
+    },
+    "transport": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/transport.c",
+      "definitions": [
+        "_ep7t_claim",
+        "_ep7t_init",
+        "_ep7t_invalidate_all",
+        "_ep7t_prepare",
+        "_ep7t_publish",
+        "_ep7t_retire",
+        "_ep7t_retire_owned"
+      ],
+      "undefined": [
+        "_memcpy",
+        "_memset"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "1029",
+        "0",
+        "0",
+        "1029"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:15:6:ep7t_init\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:21:6:ep7t_prepare\t52\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:37:6:ep7t_publish\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:45:6:ep7t_claim\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:56:6:ep7t_retire\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:64:6:ep7t_invalidate_all\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/transport.c:70:6:ep7t_retire_owned\t36\tstatic"
+      ]
+    },
+    "wire": {
+      "source": "prototypes/ep7_volatile_hl/snapshot_transport/wire.c",
+      "definitions": [
+        "_ep7w_decode",
+        "_ep7w_encode",
+        "_ep7w_mark_consumed",
+        "_ep7w_retirement_ticket",
+        "_ep7w_ticket",
+        "_ep7w_write_trailer"
+      ],
+      "undefined": [
+        "_memcpy",
+        "_memset"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "1062",
+        "0",
+        "0",
+        "1062"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:13:13:route_ok\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:18:6:ep7w_write_trailer\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:26:6:ep7w_encode\t44\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:42:5:ep7w_ticket\t28\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:55:5:ep7w_decode\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:66:6:ep7w_retirement_ticket\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/snapshot_transport/wire.c:79:6:ep7w_mark_consumed\t0\tstatic"
+      ]
+    },
+    "ui_input": {
+      "source": "prototypes/ep7_volatile_hl/ui_native/input.c",
+      "definitions": [
+        "_ep7_native_ui_input_scope",
+        "_ep7i_dispatch_begin",
+        "_ep7i_dispatch_end",
+        "_ep7i_prepare_begin",
+        "_ep7i_prepare_end",
+        "_ep7i_route",
+        "_ep7i_sample_wheel"
+      ],
+      "undefined": [
+        "_ep7_gcc_quarantine",
+        "_ep7_gcc_ui_drop_info",
+        "_ep7_native_mvc",
+        "_ep7_native_ui_model",
+        "_ep7_native_ui_receipt",
+        "_ep7_stock_gui_machine_unresolved",
+        "_ep7_stock_ui_input_gate_unresolved",
+        "_ep7_stock_ui_repeat_context_unresolved",
+        "_ep7cm_frame_held",
+        "_ep7i_native_cohort_present",
+        "_ep7m_current",
+        "_ep7m_hold_content",
+        "_ep7m_release_content",
+        "_ep7n_native_current_task",
+        "_ep7p_ui_raw_dispatch",
+        "_ep7u_hold_ready",
+        "_ep7u_release_ready",
+        "_ep7v_refresh"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "1918",
+        "0",
+        "68",
+        "1986"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_native/input.c:23:13:current_task.constprop\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_native/input.c:32:6:ep7i_prepare_begin\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_native/input.c:43:6:ep7i_sample_wheel\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_native/input.c:64:6:ep7i_prepare_end\t24\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_native/input.c:80:10:ep7i_dispatch_begin\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_native/input.c:93:6:ep7i_dispatch_end\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_native/input.c:101:10:ep7i_route\t100\tstatic"
+      ]
+    },
+    "ui_input_cohort": {
+      "source": "prototypes/ep7_volatile_hl/ui_native/cohort.c",
+      "definitions": [
+        "_ep7i_native_cohort_present"
+      ],
+      "undefined": [
+        "_ep7_stock_mvc_parent_vtable_unresolved",
+        "_ep7_stock_ui_dispatch_call_unresolved",
+        "_ep7_stock_ui_preprocess_call_unresolved",
+        "_ep7_stock_ui_wheel_0_call_unresolved",
+        "_ep7_stock_ui_wheel_1_call_unresolved",
+        "_ep7_stock_ui_wheel_2_call_unresolved",
+        "_ep7_stock_ui_wheel_3_call_unresolved",
+        "_ep7_stock_ui_wheel_4_call_unresolved",
+        "_ep7n_far_call_present",
+        "ep7_input_far_calls",
+        "ep7_input_far_calls_end",
+        "ep7_native_ui_dispatch_bridge",
+        "ep7_native_ui_event_bridge",
+        "ep7_native_ui_preprocess_bridge",
+        "ep7_native_ui_wheel_sample_bridge"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "406",
+        "0",
+        "0",
+        "406"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_native/cohort.c:23:12:sample_call\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_native/cohort.c:29:5:ep7i_native_cohort_present\t44\tstatic"
+      ]
+    },
+    "ui_input_bridges": {
+      "source": "prototypes/ep7_volatile_hl/ui_native/input_bridges.s",
+      "definitions": [
+        "_ep7_gcc_ui_drop_info",
+        "ep7_native_ui_dispatch_bridge",
+        "ep7_native_ui_preprocess_bridge",
+        "ep7_native_ui_wheel_sample_bridge"
+      ],
+      "undefined": [
+        "_ep7i_dispatch_begin",
+        "_ep7i_dispatch_end",
+        "_ep7i_prepare_begin",
+        "_ep7i_prepare_end",
+        "_ep7i_sample_wheel",
+        "ep7_stock_ui_dispatch_unresolved",
+        "ep7_stock_ui_drop_event_unresolved",
+        "ep7_stock_ui_preprocess_unresolved",
+        "ep7_stock_ui_wheel_set_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 84,
+      "preprocess_inherited_frame": 224,
+      "preprocess_nested_native_frame": 224,
+      "dispatch_inherited_frame": 48,
+      "dispatch_additional_frame": 20,
+      "sample_own_frame": 64,
+      "sample_preserves_volatile_registers_and_mdr": true,
+      "original_results_preserved": true,
+      "stack_layout_checked": true,
+      "stack_model_not_native_execution": true,
+      "size_output": [
+        "222",
+        "0",
+        "0",
+        "222"
+      ]
+    },
+    "ui_input_route": {
+      "source": "prototypes/ep7_volatile_hl/ui_native/bridge.c",
+      "definitions": [
+        "_ep7_gcc_ui_route"
+      ],
+      "undefined": [
+        "_ep7_native_mvc",
+        "_ep7_native_ui_input_scope",
+        "_ep7g_before_event",
+        "_ep7i_route"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "134",
+        "0",
+        "0",
+        "134"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_native/bridge.c:5:10:ep7_gcc_ui_route\t16\tstatic"
+      ]
+    },
+    "ui_event_bridge": {
+      "source": "prototypes/ep7_volatile_hl/ui_native/bridge.s",
+      "definitions": [
+        "ep7_native_ui_event_bridge"
+      ],
+      "undefined": [
+        "_ep7_gcc_ui_route",
+        "ep7_stock_ui_event_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 20,
+      "own_frame_bytes": 48,
+      "stock_delegate_original_preserved": true,
+      "size_output": [
+        "52",
+        "0",
+        "0",
+        "52"
+      ]
+    },
+    "ui_raw": {
+      "source": "prototypes/ep7_volatile_hl/ep7p_ui_raw.c",
+      "definitions": [
+        "_ep7p_ui_raw_dispatch"
+      ],
+      "undefined": [
+        "_ep7p_ui_ops"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "255",
+        "0",
+        "0",
+        "255"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ep7p_ui_raw.c:3:5:ep7p_ui_raw_dispatch\t80\tstatic"
+      ]
+    },
+    "input_far_calls": {
+      "source": "prototypes/ep7_volatile_hl/ui_native/far_calls.s",
+      "definitions": [
+        "ep7_input_far_60ea0070",
+        "ep7_input_far_60ea00f7",
+        "ep7_input_far_60ea0d70",
+        "ep7_input_far_60ea0deb",
+        "ep7_input_far_60ea0e66",
+        "ep7_input_far_calls",
+        "ep7_input_far_calls_end"
+      ],
+      "undefined": [
+        "ep7_native_ui_wheel_sample_bridge"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_veneer_rows": 5,
+      "veneer_bytes": 150,
+      "extra_transient_stack_bytes": 4,
+      "actual_cohort_order_and_resume_checked": true,
+      "actual_adapter_relocations_checked": true,
+      "size_output": [
+        "150",
+        "0",
+        "0",
+        "150"
+      ]
+    },
+    "ui_gate": {
+      "source": "prototypes/ep7_volatile_hl/ui_gate/gate.c",
+      "definitions": [
+        "_ep7_native_ui_gate",
+        "_ep7g_before_event",
+        "_ep7g_reconcile_held"
+      ],
+      "undefined": [
+        "_ep7_gcc_quarantine",
+        "_ep7_gcc_ui_public_mode",
+        "_ep7_native_mvc",
+        "_ep7_native_ui_owner",
+        "_ep7_stock_selector_initializer_unresolved",
+        "_ep7_stock_selector_remembered_unresolved",
+        "_ep7c_stock_supported",
+        "_ep7c_stop_transition",
+        "_ep7c_to_stock_held",
+        "_ep7cm_available_held",
+        "_ep7cm_revoke",
+        "_ep7i_native_cohort_present",
+        "_ep7m_current",
+        "_ep7m_hold_content",
+        "_ep7m_release_content",
+        "_ep7u_hold_ready",
+        "_ep7u_release_ready",
+        "_ep7v_clear",
+        "_ep7v_refresh_held",
+        "ep7_native_selector_init_bridge"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "923",
+        "0",
+        "12",
+        "935"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_gate/gate.c:16:10:ep7g_reconcile_held\t52\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_gate/gate.c:54:5:ep7g_before_event\t24\tstatic"
+      ]
+    },
+    "ui_stock_restore": {
+      "source": "prototypes/ep7_volatile_hl/ui_content/stock.c",
+      "definitions": [
+        "_ep7c_stock_supported",
+        "_ep7c_stop_transition",
+        "_ep7c_to_stock_held"
+      ],
+      "undefined": [
+        "_ep7_gcc_mvc_dispose",
+        "_ep7_gcc_mvc_stock_create",
+        "_ep7_gcc_mvc_stock_selected",
+        "_ep7_gcc_mvc_transition_timers",
+        "_ep7_gcc_quarantine",
+        "_ep7_native_mvc",
+        "_ep7_stock_mvc_category_keys_unresolved",
+        "_ep7_stock_selector_remembered_unresolved",
+        "_ep7_stock_ui_active_content_unresolved",
+        "_ep7_stock_ui_input_gate_unresolved",
+        "_ep7c_require_owned",
+        "_ep7m_current"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "595",
+        "0",
+        "0",
+        "595"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_content/stock.c:19:5:ep7c_stock_supported\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_content/stock.c:21:6:ep7c_stop_transition\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_content/stock.c:27:5:ep7c_to_stock_held\t44\tstatic"
+      ]
+    },
+    "ui_stock_bridges": {
+      "source": "prototypes/ep7_volatile_hl/ui_content/stock_bridges.s",
+      "definitions": [
+        "_ep7_gcc_mvc_stock_create",
+        "_ep7_gcc_mvc_stock_selected",
+        "_ep7_gcc_mvc_transition_timers"
+      ],
+      "undefined": [
+        "ep7_stock_mvc_creator0_unresolved",
+        "ep7_stock_mvc_creator14_unresolved",
+        "ep7_stock_mvc_creator7_unresolved",
+        "ep7_stock_mvc_stock_selected_unresolved",
+        "ep7_stock_mvc_stop535_unresolved",
+        "ep7_stock_ui_timer_cancel_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 25,
+      "native_call_frames_checked": [
+        "[],0",
+        "[],0",
+        "[],0",
+        "[a2],8",
+        "[],4",
+        "[d2],8",
+        "[d2],8"
+      ],
+      "full_original_entries_unpatched": true,
+      "pointer_return_a0_preserved": true,
+      "size_output": [
+        "93",
+        "0",
+        "0",
+        "93"
+      ]
+    },
+    "ui_original_draw": {
+      "source": "prototypes/ep7_volatile_hl/ui_render/original_draw.s",
+      "definitions": [
+        "_ep7_gcc_ui_draw_original"
+      ],
+      "undefined": [
+        "ep7_stock_mvc_viewer_draw_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 4,
+      "native_call_frames_checked": [
+        "[],0"
+      ],
+      "full_original_entries_unpatched": true,
+      "pointer_return_a0_preserved": true,
+      "size_output": [
+        "15",
+        "0",
+        "0",
+        "15"
+      ]
+    }
+  },
+  "remaining_external_symbols": [
+    "_ep7_stock_color_container_unresolved",
+    "_ep7_stock_gui_color_entry_unresolved",
+    "_ep7_stock_gui_color_exit_unresolved",
+    "_ep7_stock_gui_machine_unresolved",
+    "_ep7_stock_hl_text_descriptor_unresolved",
+    "_ep7_stock_hl_text_layouts_unresolved",
+    "_ep7_stock_mvc_category_keys_unresolved",
+    "_ep7_stock_mvc_parent_vtable_unresolved",
+    "_ep7_stock_mvc_rebuild_initial_call_unresolved",
+    "_ep7_stock_mvc_rebuild_next_call_unresolved",
+    "_ep7_stock_mvc_rebuild_previous_call_unresolved",
+    "_ep7_stock_mvc_rebuild_touch_call_unresolved",
+    "_ep7_stock_mvc_viewer_vtable_unresolved",
+    "_ep7_stock_selector_initializer_unresolved",
+    "_ep7_stock_selector_remembered_unresolved",
+    "_ep7_stock_ui_active_content_unresolved",
+    "_ep7_stock_ui_dispatch_call_unresolved",
+    "_ep7_stock_ui_display_vtable_unresolved",
+    "_ep7_stock_ui_input_gate_unresolved",
+    "_ep7_stock_ui_preprocess_call_unresolved",
+    "_ep7_stock_ui_repeat_context_unresolved",
+    "_ep7_stock_ui_service_vtable_unresolved",
+    "_ep7_stock_ui_wheel_0_call_unresolved",
+    "_ep7_stock_ui_wheel_1_call_unresolved",
+    "_ep7_stock_ui_wheel_2_call_unresolved",
+    "_ep7_stock_ui_wheel_3_call_unresolved",
+    "_ep7_stock_ui_wheel_4_call_unresolved",
+    "ep7_stock_get_tid_unresolved",
+    "ep7_stock_mvc_array_delete_unresolved",
+    "ep7_stock_mvc_array_new_unresolved",
+    "ep7_stock_mvc_base_destroy_unresolved",
+    "ep7_stock_mvc_base_init_unresolved",
+    "ep7_stock_mvc_creator0_unresolved",
+    "ep7_stock_mvc_creator14_unresolved",
+    "ep7_stock_mvc_creator7_unresolved",
+    "ep7_stock_mvc_gui_entry_unresolved",
+    "ep7_stock_mvc_gui_exit_unresolved",
+    "ep7_stock_mvc_parent_destroy_unresolved",
+    "ep7_stock_mvc_rebuild_unresolved",
+    "ep7_stock_mvc_scalar_delete_unresolved",
+    "ep7_stock_mvc_scalar_new_unresolved",
+    "ep7_stock_mvc_stock_selected_unresolved",
+    "ep7_stock_mvc_stop535_unresolved",
+    "ep7_stock_mvc_viewer_destroy_unresolved",
+    "ep7_stock_mvc_viewer_draw_unresolved",
+    "ep7_stock_property_service_unresolved",
+    "ep7_stock_screen_manager_unresolved",
+    "ep7_stock_selector_init_unresolved",
+    "ep7_stock_text_bind_unresolved",
+    "ep7_stock_text_cleanup_unresolved",
+    "ep7_stock_text_destructor_unresolved",
+    "ep7_stock_text_setter_unresolved",
+    "ep7_stock_ui_attach_unresolved",
+    "ep7_stock_ui_context_get_unresolved",
+    "ep7_stock_ui_context_set_unresolved",
+    "ep7_stock_ui_dispatch_unresolved",
+    "ep7_stock_ui_drop_event_unresolved",
+    "ep7_stock_ui_event_unresolved",
+    "ep7_stock_ui_find_child_unresolved",
+    "ep7_stock_ui_owner_bulk_unresolved",
+    "ep7_stock_ui_owner_cleanup_unresolved",
+    "ep7_stock_ui_owner_destructor_unresolved",
+    "ep7_stock_ui_preprocess_unresolved",
+    "ep7_stock_ui_service_unresolved",
+    "ep7_stock_ui_timer_cancel_unresolved",
+    "ep7_stock_ui_wheel_set_unresolved",
+    "ep7_stock_widget_factory_unresolved"
+  ],
+  "hash_checks_performed": false,
+  "target_linked": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "native_adapter_installed": false
+}

@@ -1,5 +1,9 @@
 # E-P7 H/L 原生输入与完整拨轮计数接合
 
+G6更新：[远跳接合](REMAINING_FAR_CALLS.md)已替换5处短CALL的直接近跳方案，
+保留原返回PC/MDR和原setter帧。当前cohort检查JMP32及完整已知桥；下文近距交集
+和旧cohort尺寸为本输入节点的历史记录，不是当前放置限制。
+
 本批实现 `ui_native/input.c` 和三座原生边界桥，复用原有 raw adapter、同一 runtime
 core、MVC/session 和 native text lifecycle。`ep7_ui_native_admit_unresolved` 已由完整
 事务替代：准入、frame 查询、编辑都在 MVC/显示 owner 持有期间完成，不返回借用的

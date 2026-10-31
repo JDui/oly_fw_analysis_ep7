@@ -1,5 +1,6 @@
 #include "lifetime.h"
 #include "../ui_selector/selector.h"
+#include "../target/far_call_fixture.h"
 #include <assert.h>
 #include <setjmp.h>
 #include <string.h>
@@ -17,8 +18,7 @@ void ep7v_clear(void) {}
 void ep7v_invalidate(void) {}
 void ep7cm_revoke(void) {}
 #endif
-/* Address-only native bridge marker: keep it in the same writable fixture area
- * as CALL bytes, including with sanitizer redzones; no host code runs here. */
+/* Address-only native bridge marker; no host code runs here. */
 volatile unsigned char ep7_fixture_rebuild_target[1];
 extern const unsigned char ep7_native_content_rebuild_bridge[];
 __asm__(".globl ep7_native_content_rebuild_bridge\n"
@@ -27,6 +27,8 @@ volatile unsigned char ep7_stock_mvc_rebuild_initial_call_unresolved[5];
 volatile unsigned char ep7_stock_mvc_rebuild_previous_call_unresolved[5];
 volatile unsigned char ep7_stock_mvc_rebuild_next_call_unresolved[5];
 volatile unsigned char ep7_stock_mvc_rebuild_touch_call_unresolved[5];
+unsigned char ep7_mvc_far_calls[4*EP7_FAR_CALL_BYTES];
+__asm__(".globl ep7_mvc_far_calls_end\n.set ep7_mvc_far_calls_end,ep7_mvc_far_calls+120");
 const uint16_t ep7s_categories[6]={0,1,2,3,4,5};
 static uint8_t container[228],parent[100],selector[124],viewer[408],masks[12],other_masks[12];
 static unsigned queries,wrong_task,quarantines;
@@ -52,12 +54,10 @@ _Noreturn void ep7_gcc_quarantine(unsigned reason)
     (reason>=0x901&&reason<=0x908)||(reason>=0xa01&&reason<=0xa02)||(reason>=0xb01&&reason<=0xb03)||
     (reason>=0xc01&&reason<=0xc0a)||(reason>=0xd01&&reason<=0xd02));
   quarantines++;longjmp(fatal,1); }
-static void call_patch(volatile unsigned char *p)
+static void call_patch(volatile unsigned char *p,unsigned index)
 {
-    intptr_t delta=(intptr_t)ep7_native_content_rebuild_bridge-(intptr_t)p;
-    assert(delta>=INT16_MIN&&delta<=INT16_MAX);
-    uint16_t d=(uint16_t)delta;
-    p[0]=0xcd;p[1]=(uint8_t)d;p[2]=(uint8_t)(d>>8);p[3]=0xf0;p[4]=28;
+    ep7_far_fixture(p,ep7_mvc_far_calls+index*EP7_FAR_CALL_BYTES,
+                    ep7_native_content_rebuild_bridge,0xf0,28);
 }
 static void reset(void)
 {
@@ -68,10 +68,10 @@ static void reset(void)
     ep7_stock_mvc_parent_vtable_unresolved[10]=(uint32_t)(uintptr_t)ep7_native_mvc_parent_destroy_bridge;
     ep7_stock_mvc_viewer_vtable_unresolved[1]=(uint32_t)(uintptr_t)ep7_native_mvc_viewer_destroy_bridge;
     ep7_stock_mvc_viewer_vtable_unresolved[0]=(uint32_t)(uintptr_t)ep7_native_ui_viewer_bridge;
-    call_patch(ep7_stock_mvc_rebuild_initial_call_unresolved);
-    call_patch(ep7_stock_mvc_rebuild_previous_call_unresolved);
-    call_patch(ep7_stock_mvc_rebuild_next_call_unresolved);
-    call_patch(ep7_stock_mvc_rebuild_touch_call_unresolved);
+    call_patch(ep7_stock_mvc_rebuild_initial_call_unresolved,0);
+    call_patch(ep7_stock_mvc_rebuild_previous_call_unresolved,1);
+    call_patch(ep7_stock_mvc_rebuild_next_call_unresolved,2);
+    call_patch(ep7_stock_mvc_rebuild_touch_call_unresolved,3);
 }
 /* Boundary fixture: original native container creation, initial draw and global
  * publication are modeled, not executed. Exact object extents are ASan-visible. */

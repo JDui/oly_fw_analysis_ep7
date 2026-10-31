@@ -8,6 +8,8 @@ volatile unsigned char ep7_stock_ui_preprocess_call_unresolved[7],ep7_stock_ui_d
 volatile unsigned char ep7_stock_ui_wheel_1_call_unresolved[5],ep7_stock_ui_wheel_0_call_unresolved[5];
 volatile unsigned char ep7_stock_ui_wheel_2_call_unresolved[5],ep7_stock_ui_wheel_4_call_unresolved[5];
 volatile unsigned char ep7_stock_ui_wheel_3_call_unresolved[5];
+unsigned char ep7_input_far_calls[5*EP7_FAR_CALL_BYTES];
+__asm__(".globl ep7_input_far_calls_end\n.set ep7_input_far_calls_end,ep7_input_far_calls+150");
 const unsigned char ep7_native_ui_preprocess_bridge[1]={21},ep7_native_ui_dispatch_bridge[1]={22};
 const unsigned char ep7_native_ui_event_bridge[1]={23};
 volatile unsigned char ep7_fixture_sample_target[1];
@@ -40,7 +42,8 @@ static void input_install_fixture(void)
     patch_input_call(ep7_stock_ui_dispatch_call_unresolved,ep7_native_ui_dispatch_bridge,1,0xf0,48);
     volatile unsigned char *sites[]={ep7_stock_ui_wheel_1_call_unresolved,ep7_stock_ui_wheel_0_call_unresolved,
         ep7_stock_ui_wheel_2_call_unresolved,ep7_stock_ui_wheel_4_call_unresolved,ep7_stock_ui_wheel_3_call_unresolved};
-    for (unsigned i=0;i<5;i++) patch_input_call(sites[i],ep7_native_ui_wheel_sample_bridge,0,0,0);
+    for (unsigned i=0;i<5;i++) ep7_far_fixture(sites[i],ep7_input_far_calls+i*EP7_FAR_CALL_BYTES,
+                                              ep7_native_ui_wheel_sample_bridge,0,0);
     assert(ep7i_native_cohort_present());
 }
 static void input_case(unsigned category)
@@ -144,7 +147,7 @@ int EP7_INPUT_TEST_MAIN(void)
     select_category(1);ep7c_rebuild(parent);native_draw();in.parent=(uint32_t)(uintptr_t)parent;
     assert(ep7_gcc_ui_route(&in)==256);
     /*8 Actual CALL cohort and packet extent fail before arbitrary reads. */
-    input_case(4);ep7_stock_ui_wheel_3_call_unresolved[4]=4;assert(!ep7i_native_cohort_present());
+    input_case(4);ep7_input_far_calls[4*EP7_FAR_CALL_BYTES+4]=4;assert(!ep7i_native_cohort_present());
     if (!setjmp(fatal)) { ep7i_prepare_begin(packet);assert(!"broken cohort accepted"); }
     assert(quarantines==1);
     input_case(4);if (!setjmp(fatal)) { ep7i_prepare_begin((void *)1);assert(!"foreign packet read"); }

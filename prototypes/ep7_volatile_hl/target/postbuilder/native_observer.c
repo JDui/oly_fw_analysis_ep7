@@ -7,6 +7,7 @@
  * This translation does not establish those native preconditions or install hooks.
  */
 #include "runtime/runtime.h"
+#include "cohort.h"
 _Static_assert(sizeof(uintptr_t)==4, "adapter requires 32-bit target pointers");
 _Static_assert(sizeof(void *)==4, "adapter is not a host pointer decoder");
 /* Published runtime slot shares worker core/lock/registry. This is never a
@@ -21,6 +22,7 @@ void ep7_gcc_postbuilder_observer(const unsigned char *setup)
     uintptr_t request;
     unsigned char *output;
     if (!setup) return; /* Null guard only, not a readable-extent proof. */
+    if (!ep7n_postbuilder_cohort_present()) return;
     request=(uintptr_t)load_le32(setup+4);
     output=(unsigned char *)(uintptr_t)load_le32(setup+12);
     (void)ep7r_apply(&ep7_native_runtime_slot,request,output,EP7P_OUTPUT);

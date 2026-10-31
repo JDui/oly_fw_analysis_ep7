@@ -4,7 +4,7 @@ import json,os,subprocess,tempfile
 from pathlib import Path
 HERE=Path(__file__).resolve().parent;CORE=HERE.parent
 SOURCES=['ui_render/viewer.c','ui_render/test_viewer.c','ui_model/model.c',
-        'ui_mvc/lifetime.c','ui_mvc/cohort.c','ui_content/content.c','ui_owner/owner.c','ui_owner/cohort.c',
+        'ui_mvc/lifetime.c','ui_mvc/cohort.c','target/far_call.c','ui_content/content.c','ui_owner/owner.c','ui_owner/cohort.c',
         'text_lifecycle/native_lifecycle.c','text_lifecycle/lifecycle.c','text_rollback/native_context.c',
         'text_rollback/rollback.c','text_viewer/text.c','ep7p_ui.c','ep7p.c','ep7p_decode.c',
         'runtime/runtime.c','runtime/queue_context.c','poll_lock_provider/ep7_sem_provider.c',

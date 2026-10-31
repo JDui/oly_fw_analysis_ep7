@@ -1,0 +1,110 @@
+{
+  "scope": "Qualify the remaining UI/CPU short-call veneers against current decoded bytes and real cohorts.",
+  "decoded_bytes": 26214336,
+  "original_short_calls_checked": [
+    {
+      "group": "mvc",
+      "site": "0x60e261d4",
+      "original": "0x60e266a9",
+      "original_resume": "0x60e261d9",
+      "mask": "0xf0",
+      "frame": 28
+    },
+    {
+      "group": "mvc",
+      "site": "0x60e26201",
+      "original": "0x60e266a9",
+      "original_resume": "0x60e26206",
+      "mask": "0xf0",
+      "frame": 28
+    },
+    {
+      "group": "mvc",
+      "site": "0x60e26226",
+      "original": "0x60e266a9",
+      "original_resume": "0x60e2622b",
+      "mask": "0xf0",
+      "frame": 28
+    },
+    {
+      "group": "mvc",
+      "site": "0x60e269f0",
+      "original": "0x60e266a9",
+      "original_resume": "0x60e269f5",
+      "mask": "0xf0",
+      "frame": 28
+    },
+    {
+      "group": "input",
+      "site": "0x60ea0070",
+      "original": "0x60ea3b2c",
+      "original_resume": "0x60ea0075",
+      "mask": "0x0",
+      "frame": 0
+    },
+    {
+      "group": "input",
+      "site": "0x60ea00f7",
+      "original": "0x60ea3b2c",
+      "original_resume": "0x60ea00fc",
+      "mask": "0x0",
+      "frame": 0
+    },
+    {
+      "group": "input",
+      "site": "0x60ea0d70",
+      "original": "0x60ea3b2c",
+      "original_resume": "0x60ea0d75",
+      "mask": "0x0",
+      "frame": 0
+    },
+    {
+      "group": "input",
+      "site": "0x60ea0deb",
+      "original": "0x60ea3b2c",
+      "original_resume": "0x60ea0df0",
+      "mask": "0x0",
+      "frame": 0
+    },
+    {
+      "group": "input",
+      "site": "0x60ea0e66",
+      "original": "0x60ea3b2c",
+      "original_resume": "0x60ea0e6b",
+      "mask": "0x0",
+      "frame": 0
+    },
+    {
+      "group": "postbuilder",
+      "site": "0x603b02d9",
+      "original": "0x603b0068",
+      "original_resume": "0x603b02de",
+      "mask": "0xf0",
+      "frame": 96
+    }
+  ],
+  "host_checks": {
+    "capture_strict": {
+      "passed": true
+    },
+    "ui_cpu_strict": {
+      "passed": true
+    },
+    "capture_asan_ubsan": {
+      "passed": true
+    },
+    "ui_cpu_asan_ubsan": {
+      "passed": true
+    }
+  },
+  "capture_39_sites_and_reject_before_node_read_checked": true,
+  "ui_9_sites_resume_and_crosswired_veneer_rejected": true,
+  "cpu_color_site_resume_mdr_and_target_rejected": true,
+  "whole_lifecycle_suites_rerun": false,
+  "fixture_machine_code_executed": false,
+  "container_identity_rechecked": false,
+  "firmware_modified": false,
+  "firmware_built": false,
+  "camera_executed": false,
+  "hash_checks_performed": false
+}

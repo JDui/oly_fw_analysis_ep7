@@ -45,8 +45,12 @@ def capture_rows():
 
 
 def validate_capture_object(obj,prefix):
-    rows=capture_rows();binary=obj.with_suffix('.veneer.bin')
-    subprocess.run([prefix+'objcopy','-O','binary','-j','.text.ep7_capture_far_calls',str(obj),str(binary)],check=True)
+    return validate_object(obj,prefix,capture_rows(),'.text.ep7_capture_far_calls')
+
+
+def validate_object(obj,prefix,rows,section):
+    binary=obj.with_suffix('.veneer.bin')
+    subprocess.run([prefix+'objcopy','-O','binary','-j',section,str(obj),str(binary)],check=True)
     data=binary.read_bytes()
     if len(data)!=30*len(rows):raise ValueError('production veneer size changed')
     relocs=subprocess.check_output([prefix+'objdump','-r',str(obj)],text=True)
@@ -181,7 +185,7 @@ def inspect(reference,prefix):
     source=reference.read_text()
     step_source,markers=semantic_step(source)
     rows=capture_rows()
-    shapes=sorted({(mask,frame) for _,_,mask,frame in rows}|{(0xf0,96)})
+    shapes=sorted({(mask,frame) for _,_,mask,frame in rows}|{(0,0),(0xf0,96)})
     macro=ROOT/'prototypes/ep7_volatile_hl/target/far_call.inc'
     asm='.text\n.include "'+str(macro)+'"\n'
     for i,(mask,frame) in enumerate(shapes):

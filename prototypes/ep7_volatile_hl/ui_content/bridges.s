@@ -1,5 +1,5 @@
 /* Replaces all four caller-framed CALL f0,28 targets, not the original entry.
- * This 12-byte entry MUST be in signed16 CALL range of all four callers.
+ * Four far-call veneers recreate the original caller frames before this entry.
  * Inherited frame: outgoing0..11, saved f0 at12..27; no additional frame. */
 .section .text.ep7_content_rebuild,"ax"
 .global ep7_native_content_rebuild_bridge

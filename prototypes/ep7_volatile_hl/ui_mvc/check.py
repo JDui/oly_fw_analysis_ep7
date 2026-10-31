@@ -11,7 +11,7 @@ def check():
             exe=Path(temp)/name
             subprocess.run(['gcc','-std=c11','-O1','-g','-Wall','-Wextra','-Werror','-pedantic',
                 '-fno-pie','-no-pie',*extra,'-I'+str(HERE.parent),
-                *[str(HERE/p) for p in ['lifetime.c','cohort.c','test_lifetime.c']],'-o',str(exe)],
+                *[str(HERE/p) for p in ['lifetime.c','cohort.c','../target/far_call.c','test_lifetime.c']],'-o',str(exe)],
                 check=True,timeout=60)
             subprocess.run([str(exe)],check=True,timeout=30,env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0'))
             runs[name]=dict(passed=True)

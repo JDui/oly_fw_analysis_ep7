@@ -3,6 +3,7 @@
 #include "sidecar.h"
 #include "../runtime/runtime.h"
 #include "../snapshot_transport/native/producer.h"
+#include "../target/far_call_fixture.h"
 #include <assert.h>
 #include <setjmp.h>
 #include <stdio.h>
@@ -10,6 +11,8 @@
 #include <sys/mman.h>
 #include <sys/wait.h>
 #include <unistd.h>
+unsigned char ep7_capture_far_calls[18*EP7_FAR_CALL_BYTES];
+__asm__(".globl ep7_capture_far_calls_end\n.set ep7_capture_far_calls_end,ep7_capture_far_calls+540");
 /* These labels are address-only native bridge surrogates. No MN103 code runs. */
 __asm__(".globl ep7_native_capture_fresh\n.set ep7_native_capture_fresh,0x602a6000\n"
         ".globl ep7_native_capture_sample\n.set ep7_native_capture_sample,0x602a6020\n"
@@ -154,14 +157,20 @@ static void setup(void)
     put32((uint8_t *)(uintptr_t)0x6223e0f4,16);
     put32((uint8_t *)(uintptr_t)0x6223e0f8,0x6223e160);
     list_initialize();wait_layout();engine_initialize();
+    unsigned short_index=0;
     for (unsigned i=0;i<sizeof calls/sizeof calls[0];i++) {
         const uint32_t *c=calls[i];uint8_t *site=(uint8_t *)(uintptr_t)c[0];uint32_t delta=c[1]-c[0];
-        if(c[2]==2) assert((int32_t)delta>=INT16_MIN&&(int32_t)delta<=INT16_MAX);
-        site[0]=c[2]==2?0xcd:0xdd;
+        if(c[2]==2) {
+            assert(short_index<18);
+            ep7_far_fixture(site,ep7_capture_far_calls+short_index++*EP7_FAR_CALL_BYTES,
+                            (const void *)(uintptr_t)c[1],c[3],c[4]);
+            continue;
+        }
+        site[0]=0xdd;
         for (unsigned j=0;j<c[2];j++) site[1+j]=(uint8_t)(delta>>(8*j));
         site[1+c[2]]=(uint8_t)c[3];site[2+c[2]]=(uint8_t)c[4];
     }
-    assert(ep7cn_native_cohort_present());
+    assert(short_index==18&&ep7cn_native_cohort_present());
     ep7b_native n={NULL,create,destroy,{NULL,tid,poll,signal_sem}};
     assert(ep7b_prepare(&boot,&core,n));
     ep7r_environment e={NULL,ready,task,queue,delay,runtime_fault};
@@ -225,7 +234,7 @@ static void scenario(unsigned which)
             uint8_t *p=(uint8_t *)(uintptr_t)calls[i][0];p[1]^=1;
             assert(!ep7cn_native_cohort_present());p[1]^=1;assert(ep7cn_native_cohort_present());
         }
-        *(uint8_t *)(uintptr_t)(0x602a440a+4)=24;expect_fault(bad_prefix,0xe04);break;
+        ep7_capture_far_calls[8*EP7_FAR_CALL_BYTES+4]=24;expect_fault(bad_prefix,0xe04);break;
     case 4:case 5:case 6:case 7: /* Lookup and core poll callbacks cannot free held input. */
         ep7cn_fresh(addr(nodes[0]));
         if(which==7) poll_callback=try_free;
@@ -428,8 +437,10 @@ static void scenario(unsigned which)
     default:assert(!"unknown case");
     }
 }
-int main(void)
+int main(int argc,char **argv)
 {
+    if(argc==2&&strcmp(argv[1],"cohort")==0) { scenario(3);return 0; }
+    assert(argc==1);
     /* Each fork is a fresh simulated boot; production state exposes no reset. */
     for (unsigned i=0;i<50;i++) {
         pid_t child=fork();assert(child>=0);

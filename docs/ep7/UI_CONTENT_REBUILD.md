@@ -1,5 +1,9 @@
 # G4：独立 H/L 内容对象与原生类别重建
 
+G6更新：[远跳接合](REMAINING_FAR_CALLS.md)已将本文4处短CALL改为保持原返回PC的
+JMP32+30字节桥方案，并同步实际cohort。下文signed16交集仅描述原直接CALL方案，
+不再是当前adapter放置要求；生命周期和原生帧契约仍适用。
+
 `ui_content` 已实现独立56字节内容对象、18槽专用 vtable、四处重建调用的桥，以及
 分配失败回退和原生销毁接合。它填补 parent+80 的对象所有权层；后续
 [UI session与viewer接合](UI_VIEWER_JOIN.md)已连接共享core及文本更新，真实输入资格

@@ -78,7 +78,7 @@ _ep7_gcc_ui_drop_info:
  ret [],4
 .size _ep7_gcc_ui_drop_info,.-_ep7_gcc_ui_drop_info
 
-/* Five CALL[],0 setters share this entry; signed16 placement is a G6 gate.
+/* Five far-call veneers recreate CALL[],0 and the original PC/MDR at this entry.
  * Preserve every data/address input plus original MDR; no incoming flags live
  * past the source's following CMP. Own64: sample12..31,saved D1/A0/A1/MDR32..47,
  * saved f0 at48..63, original return PC at64. */

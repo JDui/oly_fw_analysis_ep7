@@ -75,6 +75,7 @@ if selector_mode:
  if mvc_mode:
   files.update({n:core/'ui_mvc'/p for n,p in [('mvc_lifetime','lifetime.c'),
       ('mvc_cohort','cohort.c'),('mvc_bridges','bridges.s')]})
+  files.update({'mvc_far_calls':core/'ui_mvc/far_calls.s','native_far_call':core/'target/far_call.c'})
   files['quarantine']=core/'runtime/quarantine.s'
   files.update({n:core/'ui_content'/p for n,p in [('ui_content','content.c'),('ui_content_bridges','bridges.s')]})
   files.update({'ui_model':core/'ui_model/model.c','ui_public_mode':core/'ui_model/public_mode.s',
@@ -88,6 +89,7 @@ if graph_mode:
  files.update({n:core/'ui_native'/p for n,p in [('ui_input','input.c'),('ui_input_cohort','cohort.c'),
      ('ui_input_bridges','input_bridges.s'),('ui_input_route','bridge.c'),('ui_event_bridge','bridge.s')]})
  files['ui_raw']=core/'ep7p_ui_raw.c'
+ files['input_far_calls']=core/'ui_native/far_calls.s'
  files.update({'ui_gate':core/'ui_gate/gate.c','ui_stock_restore':core/'ui_content/stock.c',
      'ui_stock_bridges':core/'ui_content/stock_bridges.s','ui_original_draw':core/'ui_render/original_draw.s'})
 if materializer_mode:
@@ -105,6 +107,8 @@ if args.queue_pipeline_abi_only:
  flags.append('-I'+str(core/'poll_lock_provider'))
  files['postbuilder_bridge']=core/'target/postbuilder/postbuilder_bridge.s'
  files['postbuilder_observer']=core/'target/postbuilder/native_observer.c'
+ files['postbuilder_far_calls']=core/'target/postbuilder/far_calls.s'
+ files['postbuilder_cohort']=core/'target/postbuilder/cohort.c'
  files['capture_sidecar']=core/'controller_sidecar/sidecar.c'
  files['capture_native']=core/'controller_sidecar/native_binding.c'
  files['capture_cohort']=core/'controller_sidecar/cohort.c'
@@ -170,6 +174,9 @@ with tempfile.TemporaryDirectory() as temp:
   if name=='capture_far_calls':
    validator=runpy.run_path(str(root/'tools/ep7_far_call_check.py'))
    objects[name].update(validator['validate_capture_object'](obj,prefix))
+  if name in {'mvc_far_calls','input_far_calls','postbuilder_far_calls'}:
+   validator=runpy.run_path(str(root/'tools/ep7_remaining_far_calls.py'))
+   objects[name].update(validator['validate_group_object'](obj,prefix,name.removesuffix('_far_calls')))
   if name=='ui_input_bridges':
    validator=runpy.run_path(str(core/'ui_native/validate_input.py'))
    objects[name].update(validator['validate'](dis))
@@ -276,7 +283,7 @@ with tempfile.TemporaryDirectory() as temp:
        original_destructor_a0_results_preserved=True)
   if name=='ui_content_bridges':
    dis=subprocess.check_output([prefix+'objdump','-dr','-z','--insn-width=16',str(obj)],text=True)
-   # Each body is independently selected: near entry is a separate placement section.
+   # Each body is independently selected; entry keeps its own section.
    def body(symbol):
     part=dis.split('<'+symbol+'>:\n',1)[1].split('\n\n',1)[0]
     return re.findall(r'^\s*[0-9a-f]+:[ \t]+(?:[0-9a-f]{2}[ \t]+)+([a-z][a-z0-9]*)(?:[ \t]+([^\n]*))?$',part,re.M)
@@ -316,7 +323,7 @@ with tempfile.TemporaryDirectory() as temp:
    if rows!=[(f'{i*4:08x}',v) for i,v in enumerate(vtable)]:raise ValueError('private MVC vtable changed')
    objects[name].update(checked_instructions=sum(map(len,expected_bodies.values())),vtable_entries_checked=18,
        rebuild_inherited_frame_bytes=28,rebuild_own_frame_bytes=0,destructor_own_frame_bytes=32,
-       near_call_target_range=['0x60e1e9f0','0x60e2e1d3'],stock_rebuild_entry_remains_unpatched=True,
+       short_call_sites_use_far_veneers=True,stock_rebuild_entry_remains_unpatched=True,
        destructor_returns_original_base_a0=True,pointer_return_a0_preserved=True)
   if name=='ui_viewer_bridge':
    ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
@@ -433,12 +440,16 @@ with tempfile.TemporaryDirectory() as temp:
    assembly=Path(temp)/'postbuilder_observer.s'
    subprocess.run([prefix+'gcc',*flags,'-S',str(src),'-o',str(assembly)],check=True)
    caller=assembly.read_text()
-   if und!={'_ep7_native_runtime_slot','_ep7r_apply'}:raise ValueError('postbuilder must use shared runtime reader')
+   if und!={'_ep7_native_runtime_slot','_ep7r_apply','_ep7n_postbuilder_cohort_present'}:raise ValueError('postbuilder must use cohort and shared runtime reader')
    for offset in [4,5,6,7,12,13,14,15]:
-    if not re.search(r'\bmovbu \('+str(offset)+r',a0\),d[0-3]',caller):raise ValueError('missing native setup byte read')
-   for witness in ['mov _ep7_native_runtime_slot,d0','call _ep7r_apply,[],0','mov 976,a1','mov a1,(16,sp)','mov d2,(12,sp)','ret [d2,d3],28']:
+    if not re.search(r'\bmovbu \('+str(offset)+r',a2\),d[0-3]',caller):raise ValueError('missing native setup byte read')
+   guard='call _ep7n_postbuilder_cohort_present,[],0\n\textbu d0\n\tcmp 0,d0\n\tbne .L10\n.L1:\n\tret [d2,d3,a2],32\n.L10:'
+   if guard not in caller or caller.index(guard)>caller.index('movbu (4,a2),d0'):
+    raise ValueError('postbuilder must reject missing cohort before reading setup')
+   for witness in ['mov d0,a2','mov _ep7_native_runtime_slot,d0','call _ep7r_apply,[],0','mov 976,a0','mov a0,(16,sp)','mov d2,(12,sp)','ret [d2,d3,a2],32']:
     if witness not in caller:raise ValueError('shared reader argument/frame mismatch')
-   objects[name].update(checked_setup_byte_reads=8,shared_runtime_reader_bound=True,output_extent=976)
+   objects[name].update(checked_setup_byte_reads=8,shared_runtime_reader_bound=True,output_extent=976,
+       actual_cpu_site_and_veneer_checked_before_setup_read=True)
   if (args.queue_abi_only or args.queue_pipeline_abi_only) and name in {'queue_bridge','caller'}:
    if name=='queue_bridge':
     dis=subprocess.check_output([prefix+'objdump','-dr','--insn-width=16',str(obj)],text=True)

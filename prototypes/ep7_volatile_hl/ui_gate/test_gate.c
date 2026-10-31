@@ -61,7 +61,7 @@ int main(void)
     gate_case(1);native_draw();assert(masks[8]);owner_complete();assert(!masks[8]);
     ep7_stock_selector_initializer_unresolved=0;native_draw();assert(masks[8]&&masks[10]);
     ep7_stock_selector_initializer_unresolved=(uint32_t)(uintptr_t)ep7_native_selector_init_bridge;
-    ep7_stock_ui_wheel_3_call_unresolved[4]=4;native_draw();assert(masks[8]);
+    ep7_input_far_calls[4*EP7_FAR_CALL_BYTES+4]=4;native_draw();assert(masks[8]);
     input_install_fixture();native_draw();assert(!masks[8]);
     const uint32_t color_modes[]={54,55,56,64};
     put16(masks+2,0x1234);uint8_t stock_masks[8];memcpy(stock_masks,masks,8);
