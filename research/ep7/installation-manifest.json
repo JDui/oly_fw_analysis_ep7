@@ -1,0 +1,5917 @@
+{
+  "patches": [
+    {
+      "site": "0x600201fe",
+      "bytes": 6,
+      "original_hex": "fca484d91862",
+      "kind": "inline_jump",
+      "group": "cold",
+      "replacement": {
+        "encoding": "JMP32_NOP_suffix",
+        "target_symbol": "ep7_native_cold_clear",
+        "nop_count": 1
+      },
+      "evidence": "research/ep7/cold-bootstrap.json",
+      "load": {
+        "stage": "boot-prefix-unqualified",
+        "decoded_address": "0x600201fe",
+        "flash_address": null,
+        "copy_destination": null,
+        "execution_address": "0x600201fe",
+        "loader_path_identified": false
+      }
+    },
+    {
+      "site": "0x600229b9",
+      "bytes": 2,
+      "original_hex": "8020",
+      "kind": "pool_bound",
+      "group": "cold",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "801f"
+      },
+      "evidence": "research/ep7/cold-bootstrap.json",
+      "load": {
+        "stage": "boot-prefix-unqualified",
+        "decoded_address": "0x600229b9",
+        "flash_address": null,
+        "copy_destination": null,
+        "execution_address": "0x600229b9",
+        "loader_path_identified": false
+      }
+    },
+    {
+      "site": "0x60022c28",
+      "bytes": 2,
+      "original_hex": "8f20",
+      "kind": "pool_bound",
+      "group": "cold",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "8f1f"
+      },
+      "evidence": "research/ep7/cold-bootstrap.json",
+      "load": {
+        "stage": "boot-prefix-unqualified",
+        "decoded_address": "0x60022c28",
+        "flash_address": null,
+        "copy_destination": null,
+        "execution_address": "0x60022c28",
+        "loader_path_identified": false
+      }
+    },
+    {
+      "site": "0x60031072",
+      "bytes": 6,
+      "original_hex": "9014f17cf040",
+      "kind": "inline_jump",
+      "group": "cold",
+      "replacement": {
+        "encoding": "JMP32_NOP_suffix",
+        "target_symbol": "ep7_native_queue_delete_observer",
+        "nop_count": 1
+      },
+      "evidence": "research/ep7/cold-bootstrap.json",
+      "load": {
+        "stage": "early-kernel-copy",
+        "decoded_address": "0x60031072",
+        "flash_address": "0x406b1072",
+        "copy_destination": "0xa0031072",
+        "execution_address": "0x60031072",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60036d3c",
+      "bytes": 10,
+      "original_hex": "30508054fcdc0400f08f",
+      "kind": "inline_jump",
+      "group": "cold",
+      "replacement": {
+        "encoding": "JMP32_NOP_suffix",
+        "target_symbol": "ep7_native_queue_receive_gate",
+        "nop_count": 5
+      },
+      "evidence": "research/ep7/cold-bootstrap.json",
+      "load": {
+        "stage": "early-kernel-copy",
+        "decoded_address": "0x60036d3c",
+        "flash_address": "0x406b6d3c",
+        "copy_destination": "0xa0036d3c",
+        "execution_address": "0x60036d3c",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60036f93",
+      "bytes": 6,
+      "original_hex": "58148f14f15b",
+      "kind": "inline_jump",
+      "group": "cold",
+      "replacement": {
+        "encoding": "JMP32_NOP_suffix",
+        "target_symbol": "ep7_native_queue_send_gate",
+        "nop_count": 1
+      },
+      "evidence": "research/ep7/cold-bootstrap.json",
+      "load": {
+        "stage": "early-kernel-copy",
+        "decoded_address": "0x60036f93",
+        "flash_address": "0x406b6f93",
+        "copy_destination": "0xa0036f93",
+        "execution_address": "0x60036f93",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x6003b424",
+      "bytes": 4,
+      "original_hex": "2c010000",
+      "kind": "queue_capacity",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "38010000"
+      },
+      "evidence": "tools/ep7_pipeline_cohort_check.py",
+      "load": {
+        "stage": "early-kernel-copy",
+        "decoded_address": "0x6003b424",
+        "flash_address": "0x406bb424",
+        "copy_destination": "0xa003b424",
+        "execution_address": "0x6003b424",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x6003b428",
+      "bytes": 4,
+      "original_hex": "00260000",
+      "kind": "queue_capacity",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "80270000"
+      },
+      "evidence": "tools/ep7_pipeline_cohort_check.py",
+      "load": {
+        "stage": "early-kernel-copy",
+        "decoded_address": "0x6003b428",
+        "flash_address": "0x406bb428",
+        "copy_destination": "0xa003b428",
+        "execution_address": "0x6003b428",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x6003b460",
+      "bytes": 4,
+      "original_hex": "2c010000",
+      "kind": "queue_capacity",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "38010000"
+      },
+      "evidence": "tools/ep7_pipeline_cohort_check.py",
+      "load": {
+        "stage": "early-kernel-copy",
+        "decoded_address": "0x6003b460",
+        "flash_address": "0x406bb460",
+        "copy_destination": "0xa003b460",
+        "execution_address": "0x6003b460",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x6003b464",
+      "bytes": 4,
+      "original_hex": "00260000",
+      "kind": "queue_capacity",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "80270000"
+      },
+      "evidence": "tools/ep7_pipeline_cohort_check.py",
+      "load": {
+        "stage": "early-kernel-copy",
+        "decoded_address": "0x6003b464",
+        "flash_address": "0x406bb464",
+        "copy_destination": "0xa003b464",
+        "execution_address": "0x6003b464",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x6003bb90",
+      "bytes": 4,
+      "original_hex": "2c010000",
+      "kind": "queue_capacity",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "38010000"
+      },
+      "evidence": "tools/ep7_pipeline_cohort_check.py",
+      "load": {
+        "stage": "early-kernel-copy",
+        "decoded_address": "0x6003bb90",
+        "flash_address": "0x406bbb90",
+        "copy_destination": "0xa003bb90",
+        "execution_address": "0x6003bb90",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x6003bb94",
+      "bytes": 4,
+      "original_hex": "00260000",
+      "kind": "queue_capacity",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "80270000"
+      },
+      "evidence": "tools/ep7_pipeline_cohort_check.py",
+      "load": {
+        "stage": "early-kernel-copy",
+        "decoded_address": "0x6003bb94",
+        "flash_address": "0x406bbb94",
+        "copy_destination": "0xa003bb94",
+        "execution_address": "0x6003bb94",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60191371",
+      "bytes": 7,
+      "original_hex": "ddafe2f8ff0004",
+      "kind": "wide_call",
+      "group": "bootstrap",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_cold_bootstrap_bridge",
+        "adapter_symbol": "ep7_native_cold_bootstrap_bridge",
+        "mask": 0,
+        "frame": 4,
+        "original_target": "0x6011f620",
+        "original_resume": "0x60191378"
+      },
+      "evidence": "tools/ep7_bootstrap_entry.py",
+      "load": {
+        "stage": "section1",
+        "decoded_address": "0x60191371",
+        "flash_address": "0x40811371",
+        "copy_destination": "0x60191371",
+        "execution_address": "0x60191371",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602897d7",
+      "bytes": 6,
+      "original_hex": "fc83c04f2362",
+      "kind": "inline_jump",
+      "group": "cold",
+      "replacement": {
+        "encoding": "JMP32_NOP_suffix",
+        "target_symbol": "ep7_native_capture_initialize",
+        "nop_count": 1
+      },
+      "evidence": "research/ep7/cold-bootstrap.json",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602897d7",
+        "flash_address": "0x409097d7",
+        "copy_destination": "0x602897d7",
+        "execution_address": "0x602897d7",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60289c5e",
+      "bytes": 5,
+      "original_hex": "cd240cf020",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_60289c5e",
+        "adapter_symbol": "ep7_native_state_service_bridge",
+        "mask": 240,
+        "frame": 32,
+        "original_target": "0x6028a882",
+        "original_resume": "0x60289c63"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x60289c5e",
+        "flash_address": "0x40909c5e",
+        "copy_destination": "0x60289c5e",
+        "execution_address": "0x60289c5e",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60289d02",
+      "bytes": 5,
+      "original_hex": "cd800bf020",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_60289d02",
+        "adapter_symbol": "ep7_native_state_service_bridge",
+        "mask": 240,
+        "frame": 32,
+        "original_target": "0x6028a882",
+        "original_resume": "0x60289d07"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x60289d02",
+        "flash_address": "0x40909d02",
+        "copy_destination": "0x60289d02",
+        "execution_address": "0x60289d02",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602973bc",
+      "bytes": 7,
+      "original_hex": "ddcf45f7ff0008",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_associated_recycle",
+        "adapter_symbol": "ep7_native_associated_recycle",
+        "mask": 0,
+        "frame": 8,
+        "original_target": "0x6020b98b",
+        "original_resume": "0x602973c3"
+      },
+      "evidence": "tools/ep7_associated_pool.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602973bc",
+        "flash_address": "0x409173bc",
+        "copy_destination": "0x602973bc",
+        "execution_address": "0x602973bc",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x6029be5d",
+      "bytes": 7,
+      "original_hex": "dd41fa13000004",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_capture_pool_release",
+        "adapter_symbol": "ep7_native_capture_pool_release",
+        "mask": 0,
+        "frame": 4,
+        "original_target": "0x603db89e",
+        "original_resume": "0x6029be64"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x6029be5d",
+        "flash_address": "0x4091be5d",
+        "copy_destination": "0x6029be5d",
+        "execution_address": "0x6029be5d",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x6029c692",
+      "bytes": 5,
+      "original_hex": "cd18acf01c",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_6029c692",
+        "adapter_symbol": "ep7_native_associated_reset",
+        "mask": 240,
+        "frame": 28,
+        "original_target": "0x602972aa",
+        "original_resume": "0x6029c697"
+      },
+      "evidence": "tools/ep7_associated_pool.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x6029c692",
+        "flash_address": "0x4091c692",
+        "copy_destination": "0x6029c692",
+        "execution_address": "0x6029c692",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x6029ce9d",
+      "bytes": 5,
+      "original_hex": "cd3bdec010",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_6029ce9d",
+        "adapter_symbol": "ep7_native_engine_pool",
+        "mask": 192,
+        "frame": 16,
+        "original_target": "0x6029acd8",
+        "original_resume": "0x6029cea2"
+      },
+      "evidence": "tools/ep7_engine_epoch.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x6029ce9d",
+        "flash_address": "0x4091ce9d",
+        "copy_destination": "0x6029ce9d",
+        "execution_address": "0x6029ce9d",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x6029ef4c",
+      "bytes": 5,
+      "original_hex": "cdd7bd2008",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_6029ef4c",
+        "adapter_symbol": "ep7_native_engine_configure",
+        "mask": 32,
+        "frame": 8,
+        "original_target": "0x6029ad23",
+        "original_resume": "0x6029ef51"
+      },
+      "evidence": "tools/ep7_engine_epoch.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x6029ef4c",
+        "flash_address": "0x4091ef4c",
+        "copy_destination": "0x6029ef4c",
+        "execution_address": "0x6029ef4c",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x6029f1c2",
+      "bytes": 7,
+      "original_hex": "dd7035d8ff0004",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_capture_node_free",
+        "adapter_symbol": "ep7_native_capture_node_free",
+        "mask": 0,
+        "frame": 4,
+        "original_target": "0x60022732",
+        "original_resume": "0x6029f1c9"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x6029f1c2",
+        "flash_address": "0x4091f1c2",
+        "copy_destination": "0x6029f1c2",
+        "execution_address": "0x6029f1c2",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x6029f6ba",
+      "bytes": 7,
+      "original_hex": "dd7830d8ff0004",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_capture_node_free",
+        "adapter_symbol": "ep7_native_capture_node_free",
+        "mask": 0,
+        "frame": 4,
+        "original_target": "0x60022732",
+        "original_resume": "0x6029f6c1"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x6029f6ba",
+        "flash_address": "0x4091f6ba",
+        "copy_destination": "0x6029f6ba",
+        "execution_address": "0x6029f6ba",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a27e4",
+      "bytes": 5,
+      "original_hex": "cd3f852008",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_602a27e4",
+        "adapter_symbol": "ep7_native_engine_configure",
+        "mask": 32,
+        "frame": 8,
+        "original_target": "0x6029ad23",
+        "original_resume": "0x602a27e9"
+      },
+      "evidence": "tools/ep7_engine_epoch.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a27e4",
+        "flash_address": "0x409227e4",
+        "copy_destination": "0x602a27e4",
+        "execution_address": "0x602a27e4",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a29ab",
+      "bytes": 7,
+      "original_hex": "dd87fdd7ff0004",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_capture_node_free",
+        "adapter_symbol": "ep7_native_capture_node_free",
+        "mask": 0,
+        "frame": 4,
+        "original_target": "0x60022732",
+        "original_resume": "0x602a29b2"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a29ab",
+        "flash_address": "0x409229ab",
+        "copy_destination": "0x602a29ab",
+        "execution_address": "0x602a29ab",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a2a00",
+      "bytes": 7,
+      "original_hex": "dd32fdd7ff0004",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_capture_node_free",
+        "adapter_symbol": "ep7_native_capture_node_free",
+        "mask": 0,
+        "frame": 4,
+        "original_target": "0x60022732",
+        "original_resume": "0x602a2a07"
+      },
+      "evidence": "tools/ep7_associated_pool.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a2a00",
+        "flash_address": "0x40922a00",
+        "copy_destination": "0x602a2a00",
+        "execution_address": "0x602a2a00",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a2a48",
+      "bytes": 7,
+      "original_hex": "ddeafcd7ff0004",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_capture_node_free",
+        "adapter_symbol": "ep7_native_capture_node_free",
+        "mask": 0,
+        "frame": 4,
+        "original_target": "0x60022732",
+        "original_resume": "0x602a2a4f"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a2a48",
+        "flash_address": "0x40922a48",
+        "copy_destination": "0x602a2a48",
+        "execution_address": "0x602a2a48",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a2ab5",
+      "bytes": 7,
+      "original_hex": "dd7dfcd7ff0004",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_capture_node_free",
+        "adapter_symbol": "ep7_native_capture_node_free",
+        "mask": 0,
+        "frame": 4,
+        "original_target": "0x60022732",
+        "original_resume": "0x602a2abc"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a2ab5",
+        "flash_address": "0x40922ab5",
+        "copy_destination": "0x602a2ab5",
+        "execution_address": "0x602a2ab5",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a2cb9",
+      "bytes": 7,
+      "original_hex": "dd79fad7ff0004",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_capture_node_free",
+        "adapter_symbol": "ep7_native_capture_node_free",
+        "mask": 0,
+        "frame": 4,
+        "original_target": "0x60022732",
+        "original_resume": "0x602a2cc0"
+      },
+      "evidence": "tools/ep7_associated_pool.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a2cb9",
+        "flash_address": "0x40922cb9",
+        "copy_destination": "0x602a2cb9",
+        "execution_address": "0x602a2cb9",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a2d0d",
+      "bytes": 7,
+      "original_hex": "dd25fad7ff0004",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_capture_node_free",
+        "adapter_symbol": "ep7_native_capture_node_free",
+        "mask": 0,
+        "frame": 4,
+        "original_target": "0x60022732",
+        "original_resume": "0x602a2d14"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a2d0d",
+        "flash_address": "0x40922d0d",
+        "copy_destination": "0x602a2d0d",
+        "execution_address": "0x602a2d0d",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a31b1",
+      "bytes": 7,
+      "original_hex": "dd81f5d7ff0004",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_capture_node_free",
+        "adapter_symbol": "ep7_native_capture_node_free",
+        "mask": 0,
+        "frame": 4,
+        "original_target": "0x60022732",
+        "original_resume": "0x602a31b8"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a31b1",
+        "flash_address": "0x409231b1",
+        "copy_destination": "0x602a31b1",
+        "execution_address": "0x602a31b1",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a31c7",
+      "bytes": 5,
+      "original_hex": "cd4fffa01c",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_602a31c7",
+        "adapter_symbol": "ep7_native_capture_fresh",
+        "mask": 160,
+        "frame": 28,
+        "original_target": "0x602a3116",
+        "original_resume": "0x602a31cc"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a31c7",
+        "flash_address": "0x409231c7",
+        "copy_destination": "0x602a31c7",
+        "execution_address": "0x602a31c7",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a31ea",
+      "bytes": 5,
+      "original_hex": "cdb64cf014",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_602a31ea",
+        "adapter_symbol": "ep7_native_capture_sample",
+        "mask": 240,
+        "frame": 20,
+        "original_target": "0x602a7ea0",
+        "original_resume": "0x602a31ef"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a31ea",
+        "flash_address": "0x409231ea",
+        "copy_destination": "0x602a31ea",
+        "execution_address": "0x602a31ea",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a31f7",
+      "bytes": 5,
+      "original_hex": "cdc65bf030",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_602a31f7",
+        "adapter_symbol": "ep7_native_capture_finish",
+        "mask": 240,
+        "frame": 48,
+        "original_target": "0x602a8dbd",
+        "original_resume": "0x602a31fc"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a31f7",
+        "flash_address": "0x409231f7",
+        "copy_destination": "0x602a31f7",
+        "execution_address": "0x602a31f7",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a4220",
+      "bytes": 7,
+      "original_hex": "dd12e5d7ff0004",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_capture_node_free",
+        "adapter_symbol": "ep7_native_capture_node_free",
+        "mask": 0,
+        "frame": 4,
+        "original_target": "0x60022732",
+        "original_resume": "0x602a4227"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a4220",
+        "flash_address": "0x40924220",
+        "copy_destination": "0x602a4220",
+        "execution_address": "0x602a4220",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a427d",
+      "bytes": 7,
+      "original_hex": "ddb5e4d7ff0004",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_capture_node_free",
+        "adapter_symbol": "ep7_native_capture_node_free",
+        "mask": 0,
+        "frame": 4,
+        "original_target": "0x60022732",
+        "original_resume": "0x602a4284"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a427d",
+        "flash_address": "0x4092427d",
+        "copy_destination": "0x602a427d",
+        "execution_address": "0x602a427d",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a440a",
+      "bytes": 5,
+      "original_hex": "cd0ceda01c",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_602a440a",
+        "adapter_symbol": "ep7_native_capture_fresh",
+        "mask": 160,
+        "frame": 28,
+        "original_target": "0x602a3116",
+        "original_resume": "0x602a440f"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a440a",
+        "flash_address": "0x4092440a",
+        "copy_destination": "0x602a440a",
+        "execution_address": "0x602a440a",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a442c",
+      "bytes": 5,
+      "original_hex": "cd743af014",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_602a442c",
+        "adapter_symbol": "ep7_native_capture_sample",
+        "mask": 240,
+        "frame": 20,
+        "original_target": "0x602a7ea0",
+        "original_resume": "0x602a4431"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a442c",
+        "flash_address": "0x4092442c",
+        "copy_destination": "0x602a442c",
+        "execution_address": "0x602a442c",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a443e",
+      "bytes": 5,
+      "original_hex": "cd7f49f030",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_602a443e",
+        "adapter_symbol": "ep7_native_capture_finish",
+        "mask": 240,
+        "frame": 48,
+        "original_target": "0x602a8dbd",
+        "original_resume": "0x602a4443"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a443e",
+        "flash_address": "0x4092443e",
+        "copy_destination": "0x602a443e",
+        "execution_address": "0x602a443e",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a4461",
+      "bytes": 7,
+      "original_hex": "ddd1e2d7ff0004",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_capture_node_free",
+        "adapter_symbol": "ep7_native_capture_node_free",
+        "mask": 0,
+        "frame": 4,
+        "original_target": "0x60022732",
+        "original_resume": "0x602a4468"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a4461",
+        "flash_address": "0x40924461",
+        "copy_destination": "0x602a4461",
+        "execution_address": "0x602a4461",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a4480",
+      "bytes": 5,
+      "original_hex": "cd96eca01c",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_602a4480",
+        "adapter_symbol": "ep7_native_capture_fresh",
+        "mask": 160,
+        "frame": 28,
+        "original_target": "0x602a3116",
+        "original_resume": "0x602a4485"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a4480",
+        "flash_address": "0x40924480",
+        "copy_destination": "0x602a4480",
+        "execution_address": "0x602a4480",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a44a3",
+      "bytes": 5,
+      "original_hex": "cdfd39f014",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_602a44a3",
+        "adapter_symbol": "ep7_native_capture_sample",
+        "mask": 240,
+        "frame": 20,
+        "original_target": "0x602a7ea0",
+        "original_resume": "0x602a44a8"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a44a3",
+        "flash_address": "0x409244a3",
+        "copy_destination": "0x602a44a3",
+        "execution_address": "0x602a44a3",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a44b5",
+      "bytes": 5,
+      "original_hex": "cd0849f030",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_602a44b5",
+        "adapter_symbol": "ep7_native_capture_finish",
+        "mask": 240,
+        "frame": 48,
+        "original_target": "0x602a8dbd",
+        "original_resume": "0x602a44ba"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a44b5",
+        "flash_address": "0x409244b5",
+        "copy_destination": "0x602a44b5",
+        "execution_address": "0x602a44b5",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a44d8",
+      "bytes": 7,
+      "original_hex": "dd5ae2d7ff0004",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_capture_node_free",
+        "adapter_symbol": "ep7_native_capture_node_free",
+        "mask": 0,
+        "frame": 4,
+        "original_target": "0x60022732",
+        "original_resume": "0x602a44df"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a44d8",
+        "flash_address": "0x409244d8",
+        "copy_destination": "0x602a44d8",
+        "execution_address": "0x602a44d8",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a7ea0",
+      "bytes": 7,
+      "original_hex": "dd313bffff0018",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_capture_prewrite",
+        "adapter_symbol": "ep7_native_capture_prewrite",
+        "mask": 0,
+        "frame": 24,
+        "original_target": "0x6029b9d1",
+        "original_resume": "0x602a7ea7"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a7ea0",
+        "flash_address": "0x40927ea0",
+        "copy_destination": "0x602a7ea0",
+        "execution_address": "0x602a7ea0",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602a8dca",
+      "bytes": 7,
+      "original_hex": "dd072cffff0018",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_capture_postwrite",
+        "adapter_symbol": "ep7_native_capture_postwrite",
+        "mask": 0,
+        "frame": 24,
+        "original_target": "0x6029b9d1",
+        "original_resume": "0x602a8dd1"
+      },
+      "evidence": "tools/ep7_capture_transaction.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602a8dca",
+        "flash_address": "0x40928dca",
+        "copy_destination": "0x602a8dca",
+        "execution_address": "0x602a8dca",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602abe96",
+      "bytes": 7,
+      "original_hex": "ddb3faf5ff8004",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_wait_reset",
+        "adapter_symbol": "ep7_native_wait_reset",
+        "mask": 128,
+        "frame": 4,
+        "original_target": "0x6020b949",
+        "original_resume": "0x602abe9d"
+      },
+      "evidence": "tools/ep7_deferred_producer.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602abe96",
+        "flash_address": "0x4092be96",
+        "copy_destination": "0x602abe96",
+        "execution_address": "0x602abe96",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602ac3de",
+      "bytes": 5,
+      "original_hex": "cd6a03b020",
+      "kind": "short_call_via_veneer",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_pipeline_far_602ac3de",
+        "adapter_symbol": "ep7_native_capture_scope_bridge",
+        "mask": 176,
+        "frame": 32,
+        "original_target": "0x602ac748",
+        "original_resume": "0x602ac3e3"
+      },
+      "evidence": "tools/ep7_producer_scope.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602ac3de",
+        "flash_address": "0x4092c3de",
+        "copy_destination": "0x602ac3de",
+        "execution_address": "0x602ac3de",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602ac3f6",
+      "bytes": 7,
+      "original_hex": "dd95f5f5ff0008",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_wait_enqueue",
+        "adapter_symbol": "ep7_native_wait_enqueue",
+        "mask": 0,
+        "frame": 8,
+        "original_target": "0x6020b98b",
+        "original_resume": "0x602ac3fd"
+      },
+      "evidence": "tools/ep7_deferred_producer.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602ac3f6",
+        "flash_address": "0x4092c3f6",
+        "copy_destination": "0x602ac3f6",
+        "execution_address": "0x602ac3f6",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602ac4fd",
+      "bytes": 5,
+      "original_hex": "cdd3008008",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_602ac4fd",
+        "adapter_symbol": "ep7_native_wait_scope",
+        "mask": 128,
+        "frame": 8,
+        "original_target": "0x602ac5d0",
+        "original_resume": "0x602ac502"
+      },
+      "evidence": "tools/ep7_deferred_producer.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602ac4fd",
+        "flash_address": "0x4092c4fd",
+        "copy_destination": "0x602ac4fd",
+        "execution_address": "0x602ac4fd",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602ac5a6",
+      "bytes": 5,
+      "original_hex": "cd2a008008",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_602ac5a6",
+        "adapter_symbol": "ep7_native_wait_scope",
+        "mask": 128,
+        "frame": 8,
+        "original_target": "0x602ac5d0",
+        "original_resume": "0x602ac5ab"
+      },
+      "evidence": "tools/ep7_deferred_producer.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602ac5a6",
+        "flash_address": "0x4092c5a6",
+        "copy_destination": "0x602ac5a6",
+        "execution_address": "0x602ac5a6",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602ac5e8",
+      "bytes": 7,
+      "original_hex": "dd17f4f5ff0018",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_wait_pop",
+        "adapter_symbol": "ep7_native_wait_pop",
+        "mask": 0,
+        "frame": 24,
+        "original_target": "0x6020b9ff",
+        "original_resume": "0x602ac5ef"
+      },
+      "evidence": "tools/ep7_deferred_producer.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602ac5e8",
+        "flash_address": "0x4092c5e8",
+        "copy_destination": "0x602ac5e8",
+        "execution_address": "0x602ac5e8",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602ac66c",
+      "bytes": 5,
+      "original_hex": "cd64ff8008",
+      "kind": "short_call_via_veneer",
+      "group": "capture",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_capture_far_602ac66c",
+        "adapter_symbol": "ep7_native_wait_scope",
+        "mask": 128,
+        "frame": 8,
+        "original_target": "0x602ac5d0",
+        "original_resume": "0x602ac671"
+      },
+      "evidence": "tools/ep7_deferred_producer.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602ac66c",
+        "flash_address": "0x4092c66c",
+        "copy_destination": "0x602ac66c",
+        "execution_address": "0x602ac66c",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602ac869",
+      "bytes": 7,
+      "original_hex": "dd4bf6f5ffc030",
+      "kind": "wide_call",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_producer_send_bridge",
+        "adapter_symbol": "ep7_native_producer_send_bridge",
+        "mask": 192,
+        "frame": 48,
+        "original_target": "0x6020beb4",
+        "original_resume": "0x602ac870"
+      },
+      "evidence": "tools/ep7_producer_scope.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602ac869",
+        "flash_address": "0x4092c869",
+        "copy_destination": "0x602ac869",
+        "execution_address": "0x602ac869",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x602ac8f8",
+      "bytes": 7,
+      "original_hex": "dd07f1f5ff0018",
+      "kind": "wide_call",
+      "group": "capture",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_wait_pop",
+        "adapter_symbol": "ep7_native_wait_pop",
+        "mask": 0,
+        "frame": 24,
+        "original_target": "0x6020b9ff",
+        "original_resume": "0x602ac8ff"
+      },
+      "evidence": "tools/ep7_deferred_producer.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x602ac8f8",
+        "flash_address": "0x4092c8f8",
+        "copy_destination": "0x602ac8f8",
+        "execution_address": "0x602ac8f8",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603537f3",
+      "bytes": 7,
+      "original_hex": "dd0defccff0004",
+      "kind": "wide_call",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_worker_allocate_bridge",
+        "adapter_symbol": "ep7_native_worker_allocate_bridge",
+        "mask": 0,
+        "frame": 4,
+        "original_target": "0x60022700",
+        "original_resume": "0x603537fa"
+      },
+      "evidence": "tools/ep7_worker_scope.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603537f3",
+        "flash_address": "0x409d37f3",
+        "copy_destination": "0x603537f3",
+        "execution_address": "0x603537f3",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603b02d9",
+      "bytes": 5,
+      "original_hex": "cd8ffdf060",
+      "kind": "short_call_via_veneer",
+      "group": "postbuilder",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_postbuilder_far_603b02d9",
+        "adapter_symbol": "ep7_native_postbuilder_bridge",
+        "mask": 240,
+        "frame": 96,
+        "original_target": "0x603b0068",
+        "original_resume": "0x603b02de"
+      },
+      "evidence": "tools/ep7_remaining_far_calls.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603b02d9",
+        "flash_address": "0x40a302d9",
+        "copy_destination": "0x603b02d9",
+        "execution_address": "0x603b02d9",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603df805",
+      "bytes": 4,
+      "original_hex": "fafec0fe",
+      "kind": "stack_frame",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "fafeb4fe"
+      },
+      "evidence": "tools/ep7_descriptor_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603df805",
+        "flash_address": "0x40a5f805",
+        "copy_destination": "0x603df805",
+        "execution_address": "0x603df805",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603df933",
+      "bytes": 4,
+      "original_hex": "fafe4001",
+      "kind": "stack_frame",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "fafe4c01"
+      },
+      "evidence": "tools/ep7_descriptor_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603df933",
+        "flash_address": "0x40a5f933",
+        "copy_destination": "0x603df933",
+        "execution_address": "0x603df933",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603dfa04",
+      "bytes": 7,
+      "original_hex": "dd53f10000f02c",
+      "kind": "wide_call",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_descriptor_receive_bridge",
+        "adapter_symbol": "ep7_native_descriptor_receive_bridge",
+        "mask": 240,
+        "frame": 44,
+        "original_target": "0x603eeb57",
+        "original_resume": "0x603dfa0b"
+      },
+      "evidence": "tools/ep7_descriptor_receive_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603dfa04",
+        "flash_address": "0x40a5fa04",
+        "copy_destination": "0x603dfa04",
+        "execution_address": "0x603dfa04",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603dfaa1",
+      "bytes": 7,
+      "original_hex": "dd03f10000e024",
+      "kind": "wide_call",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_descriptor_send_bridge",
+        "adapter_symbol": "ep7_native_descriptor_send_bridge",
+        "mask": 224,
+        "frame": 36,
+        "original_target": "0x603eeba4",
+        "original_resume": "0x603dfaa8"
+      },
+      "evidence": "tools/ep7_descriptor_send_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603dfaa1",
+        "flash_address": "0x40a5faa1",
+        "copy_destination": "0x603dfaa1",
+        "execution_address": "0x603dfaa1",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603dfc67",
+      "bytes": 5,
+      "original_hex": "cd16fd3020",
+      "kind": "short_call_via_veneer",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_pipeline_far_603dfc67",
+        "adapter_symbol": "ep7_native_ack_bridge",
+        "mask": 48,
+        "frame": 32,
+        "original_target": "0x603df97d",
+        "original_resume": "0x603dfc6c"
+      },
+      "evidence": "tools/ep7_ack_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603dfc67",
+        "flash_address": "0x40a5fc67",
+        "copy_destination": "0x603dfc67",
+        "execution_address": "0x603dfc67",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603dfc9b",
+      "bytes": 7,
+      "original_hex": "ddbcee0000f02c",
+      "kind": "wide_call",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_materializer_receive_bridge",
+        "adapter_symbol": "ep7_native_materializer_receive_bridge",
+        "mask": 240,
+        "frame": 44,
+        "original_target": "0x603eeb57",
+        "original_resume": "0x603dfca2"
+      },
+      "evidence": "tools/ep7_descriptor_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603dfc9b",
+        "flash_address": "0x40a5fc9b",
+        "copy_destination": "0x603dfc9b",
+        "execution_address": "0x603dfc9b",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603e0546",
+      "bytes": 4,
+      "original_hex": "fafec8fe",
+      "kind": "stack_frame",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "fafebcfe"
+      },
+      "evidence": "tools/ep7_descriptor_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603e0546",
+        "flash_address": "0x40a60546",
+        "copy_destination": "0x603e0546",
+        "execution_address": "0x603e0546",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603e05c6",
+      "bytes": 5,
+      "original_hex": "cdb7f33020",
+      "kind": "short_call_via_veneer",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_pipeline_far_603e05c6",
+        "adapter_symbol": "ep7_native_ack_bridge",
+        "mask": 48,
+        "frame": 32,
+        "original_target": "0x603df97d",
+        "original_resume": "0x603e05cb"
+      },
+      "evidence": "tools/ep7_ack_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603e05c6",
+        "flash_address": "0x40a605c6",
+        "copy_destination": "0x603e05c6",
+        "execution_address": "0x603e05c6",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603e05e2",
+      "bytes": 4,
+      "original_hex": "fafe3801",
+      "kind": "stack_frame",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "fafe4401"
+      },
+      "evidence": "tools/ep7_descriptor_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603e05e2",
+        "flash_address": "0x40a605e2",
+        "copy_destination": "0x603e05e2",
+        "execution_address": "0x603e05e2",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603ef894",
+      "bytes": 4,
+      "original_hex": "fafec8fe",
+      "kind": "stack_frame",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "fafebcfe"
+      },
+      "evidence": "tools/ep7_descriptor_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603ef894",
+        "flash_address": "0x40a6f894",
+        "copy_destination": "0x603ef894",
+        "execution_address": "0x603ef894",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603ef8b5",
+      "bytes": 5,
+      "original_hex": "cda2f2f02c",
+      "kind": "short_call_via_veneer",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_pipeline_far_603ef8b5",
+        "adapter_symbol": "ep7_native_descriptor_receive_bridge",
+        "mask": 240,
+        "frame": 44,
+        "original_target": "0x603eeb57",
+        "original_resume": "0x603ef8ba"
+      },
+      "evidence": "tools/ep7_descriptor_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603ef8b5",
+        "flash_address": "0x40a6f8b5",
+        "copy_destination": "0x603ef8b5",
+        "execution_address": "0x603ef8b5",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603ef8d2",
+      "bytes": 5,
+      "original_hex": "cd85f2f02c",
+      "kind": "short_call_via_veneer",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_pipeline_far_603ef8d2",
+        "adapter_symbol": "ep7_native_descriptor_receive_bridge",
+        "mask": 240,
+        "frame": 44,
+        "original_target": "0x603eeb57",
+        "original_resume": "0x603ef8d7"
+      },
+      "evidence": "tools/ep7_descriptor_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603ef8d2",
+        "flash_address": "0x40a6f8d2",
+        "copy_destination": "0x603ef8d2",
+        "execution_address": "0x603ef8d2",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603ef8fd",
+      "bytes": 5,
+      "original_hex": "cd5af2f02c",
+      "kind": "short_call_via_veneer",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_pipeline_far_603ef8fd",
+        "adapter_symbol": "ep7_native_descriptor_receive_bridge",
+        "mask": 240,
+        "frame": 44,
+        "original_target": "0x603eeb57",
+        "original_resume": "0x603ef902"
+      },
+      "evidence": "tools/ep7_descriptor_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603ef8fd",
+        "flash_address": "0x40a6f8fd",
+        "copy_destination": "0x603ef8fd",
+        "execution_address": "0x603ef8fd",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603ef91a",
+      "bytes": 5,
+      "original_hex": "cd3df2f02c",
+      "kind": "short_call_via_veneer",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_pipeline_far_603ef91a",
+        "adapter_symbol": "ep7_native_descriptor_receive_bridge",
+        "mask": 240,
+        "frame": 44,
+        "original_target": "0x603eeb57",
+        "original_resume": "0x603ef91f"
+      },
+      "evidence": "tools/ep7_descriptor_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603ef91a",
+        "flash_address": "0x40a6f91a",
+        "copy_destination": "0x603ef91a",
+        "execution_address": "0x603ef91a",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603ef94c",
+      "bytes": 4,
+      "original_hex": "fafed0fe",
+      "kind": "stack_frame",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "fafec4fe"
+      },
+      "evidence": "tools/ep7_descriptor_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603ef94c",
+        "flash_address": "0x40a6f94c",
+        "copy_destination": "0x603ef94c",
+        "execution_address": "0x603ef94c",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603ef9b4",
+      "bytes": 4,
+      "original_hex": "fafe3001",
+      "kind": "stack_frame",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "fafe3c01"
+      },
+      "evidence": "tools/ep7_descriptor_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603ef9b4",
+        "flash_address": "0x40a6f9b4",
+        "copy_destination": "0x603ef9b4",
+        "execution_address": "0x603ef9b4",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603f26a3",
+      "bytes": 4,
+      "original_hex": "fafed0fe",
+      "kind": "stack_frame",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "fafec4fe"
+      },
+      "evidence": "tools/ep7_descriptor_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603f26a3",
+        "flash_address": "0x40a726a3",
+        "copy_destination": "0x603f26a3",
+        "execution_address": "0x603f26a3",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603f2722",
+      "bytes": 5,
+      "original_hex": "cdde003038",
+      "kind": "short_call_via_veneer",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_pipeline_far_603f2722",
+        "adapter_symbol": "ep7_native_worker_scope_bridge",
+        "mask": 48,
+        "frame": 56,
+        "original_target": "0x603f2800",
+        "original_resume": "0x603f2727"
+      },
+      "evidence": "tools/ep7_worker_scope.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603f2722",
+        "flash_address": "0x40a72722",
+        "copy_destination": "0x603f2722",
+        "execution_address": "0x603f2722",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603f2769",
+      "bytes": 7,
+      "original_hex": "dd14d2feff3020",
+      "kind": "wide_call",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_ack_bridge",
+        "adapter_symbol": "ep7_native_ack_bridge",
+        "mask": 48,
+        "frame": 32,
+        "original_target": "0x603df97d",
+        "original_resume": "0x603f2770"
+      },
+      "evidence": "tools/ep7_ack_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603f2769",
+        "flash_address": "0x40a72769",
+        "copy_destination": "0x603f2769",
+        "execution_address": "0x603f2769",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603f2792",
+      "bytes": 4,
+      "original_hex": "fafe3001",
+      "kind": "stack_frame",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "literal",
+        "hex": "fafe3c01"
+      },
+      "evidence": "tools/ep7_descriptor_frames.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603f2792",
+        "flash_address": "0x40a72792",
+        "copy_destination": "0x603f2792",
+        "execution_address": "0x603f2792",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603f2890",
+      "bytes": 7,
+      "original_hex": "dd2839ffffb018",
+      "kind": "wide_call",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_worker_process_bridge",
+        "adapter_symbol": "ep7_native_worker_process_bridge",
+        "mask": 176,
+        "frame": 24,
+        "original_target": "0x603e61b8",
+        "original_resume": "0x603f2897"
+      },
+      "evidence": "tools/ep7_worker_scope.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603f2890",
+        "flash_address": "0x40a72890",
+        "copy_destination": "0x603f2890",
+        "execution_address": "0x603f2890",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x603f28c0",
+      "bytes": 7,
+      "original_hex": "ddcd43ffff3018",
+      "kind": "wide_call",
+      "group": "pipeline",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_worker_cleanup_bridge",
+        "adapter_symbol": "ep7_native_worker_cleanup_bridge",
+        "mask": 48,
+        "frame": 24,
+        "original_target": "0x603e6c8d",
+        "original_resume": "0x603f28c7"
+      },
+      "evidence": "tools/ep7_worker_scope.py",
+      "load": {
+        "stage": "section2",
+        "decoded_address": "0x603f28c0",
+        "flash_address": "0x40a728c0",
+        "copy_destination": "0x603f28c0",
+        "execution_address": "0x603f28c0",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60cfd53a",
+      "bytes": 7,
+      "original_hex": "dd4e251a00b0e0",
+      "kind": "wide_call",
+      "group": "input",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_ui_preprocess_bridge",
+        "adapter_symbol": "ep7_native_ui_preprocess_bridge",
+        "mask": 176,
+        "frame": 224,
+        "original_target": "0x60e9fa88",
+        "original_resume": "0x60cfd541"
+      },
+      "evidence": "tools/ep7_ui_input_binding.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x60cfd53a",
+        "flash_address": "0x4137d53a",
+        "copy_destination": "0x60cfd53a",
+        "execution_address": "0x60cfd53a",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60cfd558",
+      "bytes": 7,
+      "original_hex": "ddf53e0100f030",
+      "kind": "wide_call",
+      "group": "input",
+      "replacement": {
+        "encoding": "CALL32",
+        "target_symbol": "ep7_native_ui_dispatch_bridge",
+        "adapter_symbol": "ep7_native_ui_dispatch_bridge",
+        "mask": 240,
+        "frame": 48,
+        "original_target": "0x60d1144d",
+        "original_resume": "0x60cfd55f"
+      },
+      "evidence": "tools/ep7_ui_input_binding.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x60cfd558",
+        "flash_address": "0x4137d558",
+        "copy_destination": "0x60cfd558",
+        "execution_address": "0x60cfd558",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60e261d4",
+      "bytes": 5,
+      "original_hex": "cdd504f01c",
+      "kind": "short_call_via_veneer",
+      "group": "mvc",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_mvc_far_60e261d4",
+        "adapter_symbol": "ep7_native_content_rebuild_bridge",
+        "mask": 240,
+        "frame": 28,
+        "original_target": "0x60e266a9",
+        "original_resume": "0x60e261d9"
+      },
+      "evidence": "tools/ep7_remaining_far_calls.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x60e261d4",
+        "flash_address": "0x414a61d4",
+        "copy_destination": "0x60e261d4",
+        "execution_address": "0x60e261d4",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60e26201",
+      "bytes": 5,
+      "original_hex": "cda804f01c",
+      "kind": "short_call_via_veneer",
+      "group": "mvc",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_mvc_far_60e26201",
+        "adapter_symbol": "ep7_native_content_rebuild_bridge",
+        "mask": 240,
+        "frame": 28,
+        "original_target": "0x60e266a9",
+        "original_resume": "0x60e26206"
+      },
+      "evidence": "tools/ep7_remaining_far_calls.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x60e26201",
+        "flash_address": "0x414a6201",
+        "copy_destination": "0x60e26201",
+        "execution_address": "0x60e26201",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60e26226",
+      "bytes": 5,
+      "original_hex": "cd8304f01c",
+      "kind": "short_call_via_veneer",
+      "group": "mvc",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_mvc_far_60e26226",
+        "adapter_symbol": "ep7_native_content_rebuild_bridge",
+        "mask": 240,
+        "frame": 28,
+        "original_target": "0x60e266a9",
+        "original_resume": "0x60e2622b"
+      },
+      "evidence": "tools/ep7_remaining_far_calls.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x60e26226",
+        "flash_address": "0x414a6226",
+        "copy_destination": "0x60e26226",
+        "execution_address": "0x60e26226",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60e269f0",
+      "bytes": 5,
+      "original_hex": "cdb9fcf01c",
+      "kind": "short_call_via_veneer",
+      "group": "mvc",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_mvc_far_60e269f0",
+        "adapter_symbol": "ep7_native_content_rebuild_bridge",
+        "mask": 240,
+        "frame": 28,
+        "original_target": "0x60e266a9",
+        "original_resume": "0x60e269f5"
+      },
+      "evidence": "tools/ep7_remaining_far_calls.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x60e269f0",
+        "flash_address": "0x414a69f0",
+        "copy_destination": "0x60e269f0",
+        "execution_address": "0x60e269f0",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60ea0070",
+      "bytes": 5,
+      "original_hex": "cdbc3a0000",
+      "kind": "short_call_via_veneer",
+      "group": "input",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_input_far_60ea0070",
+        "adapter_symbol": "ep7_native_ui_wheel_sample_bridge",
+        "mask": 0,
+        "frame": 0,
+        "original_target": "0x60ea3b2c",
+        "original_resume": "0x60ea0075"
+      },
+      "evidence": "tools/ep7_remaining_far_calls.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x60ea0070",
+        "flash_address": "0x41520070",
+        "copy_destination": "0x60ea0070",
+        "execution_address": "0x60ea0070",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60ea00f7",
+      "bytes": 5,
+      "original_hex": "cd353a0000",
+      "kind": "short_call_via_veneer",
+      "group": "input",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_input_far_60ea00f7",
+        "adapter_symbol": "ep7_native_ui_wheel_sample_bridge",
+        "mask": 0,
+        "frame": 0,
+        "original_target": "0x60ea3b2c",
+        "original_resume": "0x60ea00fc"
+      },
+      "evidence": "tools/ep7_remaining_far_calls.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x60ea00f7",
+        "flash_address": "0x415200f7",
+        "copy_destination": "0x60ea00f7",
+        "execution_address": "0x60ea00f7",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60ea0d70",
+      "bytes": 5,
+      "original_hex": "cdbc2d0000",
+      "kind": "short_call_via_veneer",
+      "group": "input",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_input_far_60ea0d70",
+        "adapter_symbol": "ep7_native_ui_wheel_sample_bridge",
+        "mask": 0,
+        "frame": 0,
+        "original_target": "0x60ea3b2c",
+        "original_resume": "0x60ea0d75"
+      },
+      "evidence": "tools/ep7_remaining_far_calls.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x60ea0d70",
+        "flash_address": "0x41520d70",
+        "copy_destination": "0x60ea0d70",
+        "execution_address": "0x60ea0d70",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60ea0deb",
+      "bytes": 5,
+      "original_hex": "cd412d0000",
+      "kind": "short_call_via_veneer",
+      "group": "input",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_input_far_60ea0deb",
+        "adapter_symbol": "ep7_native_ui_wheel_sample_bridge",
+        "mask": 0,
+        "frame": 0,
+        "original_target": "0x60ea3b2c",
+        "original_resume": "0x60ea0df0"
+      },
+      "evidence": "tools/ep7_remaining_far_calls.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x60ea0deb",
+        "flash_address": "0x41520deb",
+        "copy_destination": "0x60ea0deb",
+        "execution_address": "0x60ea0deb",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60ea0e66",
+      "bytes": 5,
+      "original_hex": "cdc62c0000",
+      "kind": "short_call_via_veneer",
+      "group": "input",
+      "replacement": {
+        "encoding": "JMP32",
+        "target_symbol": "ep7_input_far_60ea0e66",
+        "adapter_symbol": "ep7_native_ui_wheel_sample_bridge",
+        "mask": 0,
+        "frame": 0,
+        "original_target": "0x60ea3b2c",
+        "original_resume": "0x60ea0e6b"
+      },
+      "evidence": "tools/ep7_remaining_far_calls.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x60ea0e66",
+        "flash_address": "0x41520e66",
+        "copy_destination": "0x60ea0e66",
+        "execution_address": "0x60ea0e66",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x60faadc4",
+      "bytes": 4,
+      "original_hex": "537bd360",
+      "kind": "function_pointer_word",
+      "group": "owner",
+      "replacement": {
+        "encoding": "absolute_le32",
+        "target_symbol": "ep7_native_ui_screen_bridge"
+      },
+      "evidence": "tools/ep7_ui_owner_binding.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x60faadc4",
+        "flash_address": "0x4162adc4",
+        "copy_destination": "0x60faadc4",
+        "execution_address": "0x60faadc4",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x61032f10",
+      "bytes": 4,
+      "original_hex": "79abd760",
+      "kind": "function_pointer_word",
+      "group": "owner",
+      "replacement": {
+        "encoding": "absolute_le32",
+        "target_symbol": "ep7_native_ui_owner_destructor_bridge"
+      },
+      "evidence": "tools/ep7_ui_owner_binding.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x61032f10",
+        "flash_address": "0x416b2f10",
+        "copy_destination": "0x61032f10",
+        "execution_address": "0x61032f10",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x61032fa8",
+      "bytes": 4,
+      "original_hex": "4b3dd460",
+      "kind": "function_pointer_word",
+      "group": "owner",
+      "replacement": {
+        "encoding": "absolute_le32",
+        "target_symbol": "ep7_native_ui_owner_cleanup_bridge"
+      },
+      "evidence": "tools/ep7_ui_owner_binding.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x61032fa8",
+        "flash_address": "0x416b2fa8",
+        "copy_destination": "0x61032fa8",
+        "execution_address": "0x61032fa8",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x610330c0",
+      "bytes": 4,
+      "original_hex": "692dd460",
+      "kind": "function_pointer_word",
+      "group": "owner",
+      "replacement": {
+        "encoding": "absolute_le32",
+        "target_symbol": "ep7_native_ui_owner_bulk_bridge"
+      },
+      "evidence": "tools/ep7_ui_owner_binding.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x610330c0",
+        "flash_address": "0x416b30c0",
+        "copy_destination": "0x610330c0",
+        "execution_address": "0x610330c0",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x6114f334",
+      "bytes": 4,
+      "original_hex": "0c15de60",
+      "kind": "function_pointer_word",
+      "group": "selector",
+      "replacement": {
+        "encoding": "absolute_le32",
+        "target_symbol": "ep7_native_selector_init_bridge"
+      },
+      "evidence": "tools/ep7_ui_selector_storage.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x6114f334",
+        "flash_address": "0x417cf334",
+        "copy_destination": "0x6114f334",
+        "execution_address": "0x6114f334",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x6118957c",
+      "bytes": 4,
+      "original_hex": "5052dd60",
+      "kind": "function_pointer_word",
+      "group": "input",
+      "replacement": {
+        "encoding": "absolute_le32",
+        "target_symbol": "ep7_native_ui_event_bridge"
+      },
+      "evidence": "tools/ep7_ui_input_binding.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x6118957c",
+        "flash_address": "0x4180957c",
+        "copy_destination": "0x6118957c",
+        "execution_address": "0x6118957c",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x611895a4",
+      "bytes": 4,
+      "original_hex": "3061e260",
+      "kind": "function_pointer_word",
+      "group": "mvc",
+      "replacement": {
+        "encoding": "absolute_le32",
+        "target_symbol": "ep7_native_mvc_parent_destroy_bridge"
+      },
+      "evidence": "tools/ep7_ui_mvc_lifetime.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x611895a4",
+        "flash_address": "0x418095a4",
+        "copy_destination": "0x611895a4",
+        "execution_address": "0x611895a4",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x61189ba8",
+      "bytes": 4,
+      "original_hex": "b06ae260",
+      "kind": "function_pointer_word",
+      "group": "mvc",
+      "replacement": {
+        "encoding": "absolute_le32",
+        "target_symbol": "ep7_native_ui_viewer_bridge"
+      },
+      "evidence": "tools/ep7_ui_viewer_join.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x61189ba8",
+        "flash_address": "0x41809ba8",
+        "copy_destination": "0x61189ba8",
+        "execution_address": "0x61189ba8",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x61189bac",
+      "bytes": 4,
+      "original_hex": "7c6ae260",
+      "kind": "function_pointer_word",
+      "group": "mvc",
+      "replacement": {
+        "encoding": "absolute_le32",
+        "target_symbol": "ep7_native_mvc_viewer_destroy_bridge"
+      },
+      "evidence": "tools/ep7_ui_mvc_lifetime.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x61189bac",
+        "flash_address": "0x41809bac",
+        "copy_destination": "0x61189bac",
+        "execution_address": "0x61189bac",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x611a3b50",
+      "bytes": 4,
+      "original_hex": "e9dae560",
+      "kind": "function_pointer_word",
+      "group": "mvc",
+      "replacement": {
+        "encoding": "absolute_le32",
+        "target_symbol": "ep7_native_mvc_gui_entry_bridge"
+      },
+      "evidence": "tools/ep7_ui_mvc_lifetime.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x611a3b50",
+        "flash_address": "0x41823b50",
+        "copy_destination": "0x611a3b50",
+        "execution_address": "0x611a3b50",
+        "loader_path_identified": true
+      }
+    },
+    {
+      "site": "0x611a3bc4",
+      "bytes": 4,
+      "original_hex": "01dbe560",
+      "kind": "function_pointer_word",
+      "group": "mvc",
+      "replacement": {
+        "encoding": "absolute_le32",
+        "target_symbol": "ep7_native_mvc_gui_exit_bridge"
+      },
+      "evidence": "tools/ep7_ui_mvc_lifetime.py",
+      "load": {
+        "stage": "section6",
+        "decoded_address": "0x611a3bc4",
+        "flash_address": "0x41823bc4",
+        "copy_destination": "0x611a3bc4",
+        "execution_address": "0x611a3bc4",
+        "loader_path_identified": true
+      }
+    }
+  ],
+  "count_by_kind": {
+    "short_call_via_veneer": 36,
+    "wide_call": 32,
+    "function_pointer_word": 11,
+    "stack_frame": 9,
+    "queue_capacity": 6,
+    "inline_jump": 5,
+    "pool_bound": 2
+  },
+  "count_by_stage": {
+    "boot-prefix-unqualified": 3,
+    "early-kernel-copy": 9,
+    "section1": 1,
+    "section2": 66,
+    "section6": 22
+  },
+  "total_patch_entries": 101,
+  "total_original_span_bytes": 546,
+  "ordinary_load_table_rows_checked": 10,
+  "patch_ranges_nonoverlapping": true,
+  "unknown_boot_prefix_loader_sites": [
+    "0x600201fe",
+    "0x600229b9",
+    "0x60022c28"
+  ],
+  "native_bindings": {
+    "__ep7_private_uncached_start": {
+      "address": null,
+      "proposed_address": "0xa1dd4d00",
+      "kind": "placement_required",
+      "evidence": "docs/ep7/RAM_OWNERSHIP_AND_BUDGET.md"
+    },
+    "_ep7_stock_color_container_unresolved": {
+      "address": "0x61fc436c",
+      "kind": "pointer_cell",
+      "evidence": "tools/ep7_ui_input_binding.py"
+    },
+    "_ep7_stock_gui_color_entry_unresolved": {
+      "address": "0x611a3b50",
+      "kind": "function_pointer_cell",
+      "evidence": "tools/ep7_ui_mvc_lifetime.py"
+    },
+    "_ep7_stock_gui_color_exit_unresolved": {
+      "address": "0x611a3bc4",
+      "kind": "function_pointer_cell",
+      "evidence": "tools/ep7_ui_mvc_lifetime.py"
+    },
+    "_ep7_stock_gui_machine_unresolved": {
+      "address": "0x61fb2564",
+      "kind": "pointer_cell",
+      "evidence": "tools/ep7_ui_input_binding.py"
+    },
+    "_ep7_stock_hl_text_descriptor_unresolved": {
+      "address": "0x61032ea8",
+      "kind": "resource_address",
+      "evidence": "tools/ep7_ui_resource_origin.py"
+    },
+    "_ep7_stock_hl_text_layouts_unresolved": {
+      "address": "0x61031b84",
+      "kind": "resource_address",
+      "evidence": "tools/ep7_ui_resource_origin.py"
+    },
+    "_ep7_stock_mvc_category_keys_unresolved": {
+      "address": "0x61189278",
+      "kind": "table_address",
+      "evidence": "tools/ep7_ui_color_gate.py"
+    },
+    "_ep7_stock_mvc_parent_vtable_unresolved": {
+      "address": "0x6118957c",
+      "kind": "table_address",
+      "evidence": "tools/ep7_ui_mvc_lifetime.py"
+    },
+    "_ep7_stock_mvc_rebuild_initial_call_unresolved": {
+      "address": "0x60e261d4",
+      "kind": "instruction_address",
+      "evidence": "tools/ep7_remaining_far_calls.py"
+    },
+    "_ep7_stock_mvc_rebuild_next_call_unresolved": {
+      "address": "0x60e26226",
+      "kind": "instruction_address",
+      "evidence": "tools/ep7_remaining_far_calls.py"
+    },
+    "_ep7_stock_mvc_rebuild_previous_call_unresolved": {
+      "address": "0x60e26201",
+      "kind": "instruction_address",
+      "evidence": "tools/ep7_remaining_far_calls.py"
+    },
+    "_ep7_stock_mvc_rebuild_touch_call_unresolved": {
+      "address": "0x60e269f0",
+      "kind": "instruction_address",
+      "evidence": "tools/ep7_remaining_far_calls.py"
+    },
+    "_ep7_stock_mvc_viewer_vtable_unresolved": {
+      "address": "0x61189ba8",
+      "kind": "table_address",
+      "evidence": "tools/ep7_ui_mvc_lifetime.py"
+    },
+    "_ep7_stock_selector_initializer_unresolved": {
+      "address": "0x6114f334",
+      "kind": "function_pointer_cell",
+      "evidence": "tools/ep7_ui_selector_storage.py"
+    },
+    "_ep7_stock_selector_remembered_unresolved": {
+      "address": "0x61fc26ae",
+      "kind": "mutable_halfword",
+      "evidence": "tools/ep7_ui_color_gate.py"
+    },
+    "_ep7_stock_ui_active_content_unresolved": {
+      "address": "0x61fc1ba8",
+      "kind": "mutable_word",
+      "evidence": "tools/ep7_ui_color_gate.py"
+    },
+    "_ep7_stock_ui_dispatch_call_unresolved": {
+      "address": "0x60cfd558",
+      "kind": "instruction_address",
+      "evidence": "tools/ep7_ui_input_binding.py"
+    },
+    "_ep7_stock_ui_display_vtable_unresolved": {
+      "address": "0x61032f10",
+      "kind": "table_address",
+      "evidence": "tools/ep7_ui_owner_binding.py"
+    },
+    "_ep7_stock_ui_input_gate_unresolved": {
+      "address": "0x61fc1bac",
+      "kind": "mutable_word",
+      "evidence": "tools/ep7_ui_color_gate.py"
+    },
+    "_ep7_stock_ui_preprocess_call_unresolved": {
+      "address": "0x60cfd53a",
+      "kind": "instruction_address",
+      "evidence": "tools/ep7_ui_input_binding.py"
+    },
+    "_ep7_stock_ui_repeat_context_unresolved": {
+      "address": "0x61fc3808",
+      "kind": "pointer_cell",
+      "evidence": "tools/ep7_ui_input_binding.py"
+    },
+    "_ep7_stock_ui_service_vtable_unresolved": {
+      "address": "0x60faaab4",
+      "kind": "table_address",
+      "evidence": "tools/ep7_ui_owner_binding.py"
+    },
+    "_ep7_stock_ui_wheel_0_call_unresolved": {
+      "address": "0x60ea00f7",
+      "kind": "instruction_address",
+      "evidence": "tools/ep7_remaining_far_calls.py"
+    },
+    "_ep7_stock_ui_wheel_1_call_unresolved": {
+      "address": "0x60ea0070",
+      "kind": "instruction_address",
+      "evidence": "tools/ep7_remaining_far_calls.py"
+    },
+    "_ep7_stock_ui_wheel_2_call_unresolved": {
+      "address": "0x60ea0d70",
+      "kind": "instruction_address",
+      "evidence": "tools/ep7_remaining_far_calls.py"
+    },
+    "_ep7_stock_ui_wheel_3_call_unresolved": {
+      "address": "0x60ea0e66",
+      "kind": "instruction_address",
+      "evidence": "tools/ep7_remaining_far_calls.py"
+    },
+    "_ep7_stock_ui_wheel_4_call_unresolved": {
+      "address": "0x60ea0deb",
+      "kind": "instruction_address",
+      "evidence": "tools/ep7_remaining_far_calls.py"
+    },
+    "ep7_stock_ack_unresolved": {
+      "address": "0x603df97d",
+      "kind": "function",
+      "evidence": "tools/ep7_ack_frames.py"
+    },
+    "ep7_stock_associated_enqueue_unresolved": {
+      "address": "0x6020b98b",
+      "kind": "function",
+      "evidence": "tools/ep7_associated_pool.py"
+    },
+    "ep7_stock_associated_initialize_unresolved": {
+      "address": "0x602972aa",
+      "kind": "function",
+      "evidence": "tools/ep7_associated_pool.py"
+    },
+    "ep7_stock_boot_after_clear_unresolved": {
+      "address": "0x60020204",
+      "kind": "continuation",
+      "evidence": "tools/ep7_load_regions.py"
+    },
+    "ep7_stock_boot_next_copy_end_unresolved": {
+      "address": "0x6218d984",
+      "kind": "assembly_word_address",
+      "evidence": "tools/ep7_load_regions.py"
+    },
+    "ep7_stock_bootstrap_original_unresolved": {
+      "address": "0x6011f620",
+      "kind": "function",
+      "evidence": "tools/ep7_bootstrap_entry.py"
+    },
+    "ep7_stock_capture_fresh_unresolved": {
+      "address": "0x602a3116",
+      "kind": "function",
+      "evidence": "tools/ep7_capture_native_binding.py"
+    },
+    "ep7_stock_capture_init_continue_unresolved": {
+      "address": "0x602897dd",
+      "kind": "continuation",
+      "evidence": "tools/ep7_capture_native_binding.py"
+    },
+    "ep7_stock_capture_lookup_unresolved": {
+      "address": "0x6029b9d1",
+      "kind": "function",
+      "evidence": "tools/ep7_capture_native_binding.py"
+    },
+    "ep7_stock_capture_node_free_unresolved": {
+      "address": "0x60022732",
+      "kind": "function",
+      "evidence": "tools/ep7_capture_native_binding.py"
+    },
+    "ep7_stock_capture_pool_release_unresolved": {
+      "address": "0x603db89e",
+      "kind": "function",
+      "evidence": "tools/ep7_capture_native_binding.py"
+    },
+    "ep7_stock_capture_population_unresolved": {
+      "address": "0x602a7ea0",
+      "kind": "function",
+      "evidence": "tools/ep7_capture_native_binding.py"
+    },
+    "ep7_stock_capture_postpopulation_unresolved": {
+      "address": "0x602a8dbd",
+      "kind": "function",
+      "evidence": "tools/ep7_capture_native_binding.py"
+    },
+    "ep7_stock_color_builder_unresolved": {
+      "address": "0x603b0068",
+      "kind": "function",
+      "evidence": "tools/ep7_remaining_far_calls.py"
+    },
+    "ep7_stock_command_send_unresolved": {
+      "address": "0x6020beb4",
+      "kind": "function",
+      "evidence": "tools/ep7_producer_scope.py"
+    },
+    "ep7_stock_delete_gate_continue_unresolved": {
+      "address": "0x60031078",
+      "kind": "continuation",
+      "evidence": "tools/ep7_queue_kernel_gate.py"
+    },
+    "ep7_stock_engine_configure_unresolved": {
+      "address": "0x6029ad23",
+      "kind": "function",
+      "evidence": "tools/ep7_engine_epoch.py"
+    },
+    "ep7_stock_engine_pool_unresolved": {
+      "address": "0x6029acd8",
+      "kind": "function",
+      "evidence": "tools/ep7_engine_epoch.py"
+    },
+    "ep7_stock_get_tid_unresolved": {
+      "address": "0x600317ac",
+      "kind": "function",
+      "evidence": "tools/ep7_current_task_stack.py"
+    },
+    "ep7_stock_job_allocate_unresolved": {
+      "address": "0x60022700",
+      "kind": "function",
+      "evidence": "tools/ep7_worker_scope.py"
+    },
+    "ep7_stock_kind19_metadata_producer_unresolved": {
+      "address": "0x602ac748",
+      "kind": "function",
+      "evidence": "tools/ep7_producer_scope.py"
+    },
+    "ep7_stock_mvc_array_delete_unresolved": {
+      "address": "0x60a4ec21",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_content_rebuild.py"
+    },
+    "ep7_stock_mvc_array_new_unresolved": {
+      "address": "0x60a4ec0d",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_content_rebuild.py"
+    },
+    "ep7_stock_mvc_base_destroy_unresolved": {
+      "address": "0x60dd50d8",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_content_rebuild.py"
+    },
+    "ep7_stock_mvc_base_init_unresolved": {
+      "address": "0x60dd5083",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_content_rebuild.py"
+    },
+    "ep7_stock_mvc_creator0_unresolved": {
+      "address": "0x60de33a7",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_color_gate.py"
+    },
+    "ep7_stock_mvc_creator14_unresolved": {
+      "address": "0x60df002e",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_color_gate.py"
+    },
+    "ep7_stock_mvc_creator7_unresolved": {
+      "address": "0x60e2054e",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_color_gate.py"
+    },
+    "ep7_stock_mvc_gui_entry_unresolved": {
+      "address": "0x60e5dae9",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_mvc_lifetime.py"
+    },
+    "ep7_stock_mvc_gui_exit_unresolved": {
+      "address": "0x60e5db01",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_mvc_lifetime.py"
+    },
+    "ep7_stock_mvc_parent_destroy_unresolved": {
+      "address": "0x60e26130",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_mvc_lifetime.py"
+    },
+    "ep7_stock_mvc_rebuild_unresolved": {
+      "address": "0x60e266a9",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_content_rebuild.py"
+    },
+    "ep7_stock_mvc_scalar_delete_unresolved": {
+      "address": "0x60a4ec17",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_content_rebuild.py"
+    },
+    "ep7_stock_mvc_scalar_new_unresolved": {
+      "address": "0x60a4ec03",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_content_rebuild.py"
+    },
+    "ep7_stock_mvc_stock_selected_unresolved": {
+      "address": "0x60e26795",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_color_gate.py"
+    },
+    "ep7_stock_mvc_stop535_unresolved": {
+      "address": "0x60dd5857",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_color_gate.py"
+    },
+    "ep7_stock_mvc_viewer_destroy_unresolved": {
+      "address": "0x60e26a7c",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_mvc_lifetime.py"
+    },
+    "ep7_stock_mvc_viewer_draw_unresolved": {
+      "address": "0x60e26ab0",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_viewer_join.py"
+    },
+    "ep7_stock_property_service_unresolved": {
+      "address": "0x607f9062",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_viewer_join.py"
+    },
+    "ep7_stock_queue_receive_local_unresolved": {
+      "address": "0x60036caf",
+      "kind": "function",
+      "evidence": "tools/ep7_runtime_queue.py"
+    },
+    "ep7_stock_queue_send_local_unresolved": {
+      "address": "0x60036ede",
+      "kind": "function",
+      "evidence": "tools/ep7_queue_transport.py"
+    },
+    "ep7_stock_queue_send_preserving_unresolved": {
+      "address": "0x600514b6",
+      "kind": "function",
+      "evidence": "tools/ep7_producer_scope.py"
+    },
+    "ep7_stock_raw_sem_create_unresolved": {
+      "address": "0x6003057f",
+      "kind": "function",
+      "evidence": "tools/ep7_semaphore_bootstrap.py"
+    },
+    "ep7_stock_raw_sem_delete_unresolved": {
+      "address": "0x60031107",
+      "kind": "function",
+      "evidence": "tools/ep7_semaphore_bootstrap.py"
+    },
+    "ep7_stock_raw_sem_signal_unresolved": {
+      "address": "0x60035b62",
+      "kind": "function",
+      "evidence": "tools/ep7_private_semaphore.py"
+    },
+    "ep7_stock_raw_sem_wait_unresolved": {
+      "address": "0x600370af",
+      "kind": "function",
+      "evidence": "tools/ep7_private_semaphore.py"
+    },
+    "ep7_stock_receive_gate_continue_unresolved": {
+      "address": "0x60036d46",
+      "kind": "continuation",
+      "evidence": "tools/ep7_queue_kernel_gate.py"
+    },
+    "ep7_stock_receive_gate_error_unresolved": {
+      "address": "0x60036e17",
+      "kind": "continuation",
+      "evidence": "tools/ep7_queue_kernel_gate.py"
+    },
+    "ep7_stock_receive_wrapper_unresolved": {
+      "address": "0x603eeb57",
+      "kind": "function",
+      "evidence": "tools/ep7_descriptor_receive_frames.py"
+    },
+    "ep7_stock_screen_manager_unresolved": {
+      "address": "0x60d37b53",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_owner_binding.py"
+    },
+    "ep7_stock_selector_init_unresolved": {
+      "address": "0x60de150c",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_selector_storage.py"
+    },
+    "ep7_stock_send_gate_continue_unresolved": {
+      "address": "0x60036f99",
+      "kind": "continuation",
+      "evidence": "tools/ep7_queue_kernel_gate.py"
+    },
+    "ep7_stock_send_gate_error_unresolved": {
+      "address": "0x600370a3",
+      "kind": "continuation",
+      "evidence": "tools/ep7_queue_kernel_gate.py"
+    },
+    "ep7_stock_send_wrapper_unresolved": {
+      "address": "0x603eeba4",
+      "kind": "function",
+      "evidence": "tools/ep7_descriptor_send_frames.py"
+    },
+    "ep7_stock_state_service_unresolved": {
+      "address": "0x6028a882",
+      "kind": "function",
+      "evidence": "tools/ep7_capture_native_binding.py"
+    },
+    "ep7_stock_task_delay_unresolved": {
+      "address": "0x600313ef",
+      "kind": "function",
+      "evidence": "tools/ep7_cleanup_delay.py"
+    },
+    "ep7_stock_text_bind_unresolved": {
+      "address": "0x60d0487a",
+      "kind": "function",
+      "evidence": "tools/ep7_text_native_lifecycle.py"
+    },
+    "ep7_stock_text_cleanup_unresolved": {
+      "address": "0x60d048d0",
+      "kind": "function",
+      "evidence": "tools/ep7_text_native_lifecycle.py"
+    },
+    "ep7_stock_text_destructor_unresolved": {
+      "address": "0x60d4be64",
+      "kind": "function",
+      "evidence": "tools/ep7_text_native_lifecycle.py"
+    },
+    "ep7_stock_text_setter_unresolved": {
+      "address": "0x60d4c9df",
+      "kind": "function",
+      "evidence": "tools/ep7_text_native_lifecycle.py"
+    },
+    "ep7_stock_ui_attach_unresolved": {
+      "address": "0x60d02beb",
+      "kind": "function",
+      "evidence": "tools/ep7_text_native_lifecycle.py"
+    },
+    "ep7_stock_ui_context_get_unresolved": {
+      "address": "0x60cfe58f",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_context_binding.py"
+    },
+    "ep7_stock_ui_context_set_unresolved": {
+      "address": "0x60cfe586",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_context_binding.py"
+    },
+    "ep7_stock_ui_dispatch_unresolved": {
+      "address": "0x60d1144d",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_input_binding.py"
+    },
+    "ep7_stock_ui_drop_event_unresolved": {
+      "address": "0x60d1050a",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_input_binding.py"
+    },
+    "ep7_stock_ui_event_unresolved": {
+      "address": "0x60dd5250",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_input_binding.py"
+    },
+    "ep7_stock_ui_find_child_unresolved": {
+      "address": "0x60d02cc2",
+      "kind": "function",
+      "evidence": "tools/ep7_text_native_lifecycle.py"
+    },
+    "ep7_stock_ui_owner_bulk_unresolved": {
+      "address": "0x60d42d69",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_owner_binding.py"
+    },
+    "ep7_stock_ui_owner_cleanup_unresolved": {
+      "address": "0x60d43d4b",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_owner_binding.py"
+    },
+    "ep7_stock_ui_owner_destructor_unresolved": {
+      "address": "0x60d7ab79",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_owner_binding.py"
+    },
+    "ep7_stock_ui_preprocess_unresolved": {
+      "address": "0x60e9fa88",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_input_binding.py"
+    },
+    "ep7_stock_ui_service_unresolved": {
+      "address": "0x60d3379b",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_context_binding.py"
+    },
+    "ep7_stock_ui_timer_cancel_unresolved": {
+      "address": "0x60ea15ca",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_color_gate.py"
+    },
+    "ep7_stock_ui_wheel_set_unresolved": {
+      "address": "0x60ea3b2c",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_input_binding.py"
+    },
+    "ep7_stock_wait_initialize_unresolved": {
+      "address": "0x6020b949",
+      "kind": "function",
+      "evidence": "tools/ep7_deferred_producer.py"
+    },
+    "ep7_stock_wait_pop_unresolved": {
+      "address": "0x6020b9ff",
+      "kind": "function",
+      "evidence": "tools/ep7_deferred_producer.py"
+    },
+    "ep7_stock_wait_service_unresolved": {
+      "address": "0x602ac5d0",
+      "kind": "function",
+      "evidence": "tools/ep7_deferred_producer.py"
+    },
+    "ep7_stock_widget_factory_unresolved": {
+      "address": "0x60d337b2",
+      "kind": "function",
+      "evidence": "tools/ep7_ui_screen_activation.py"
+    },
+    "ep7_stock_worker_cleanup_unresolved": {
+      "address": "0x603e6c8d",
+      "kind": "function",
+      "evidence": "tools/ep7_worker_scope.py"
+    },
+    "ep7_stock_worker_job_unresolved": {
+      "address": "0x603f2800",
+      "kind": "function",
+      "evidence": "tools/ep7_worker_scope.py"
+    },
+    "ep7_stock_worker_process_unresolved": {
+      "address": "0x603e61b8",
+      "kind": "function",
+      "evidence": "tools/ep7_worker_scope.py"
+    }
+  },
+  "object_inventory": {
+    "compiler": "mn10300-elf-gcc (GCC) 13.4.0",
+    "implementation_sources": 107,
+    "objects": {
+      "capture_state_guard/bridge.s": {
+        "source": "prototypes/ep7_volatile_hl/capture_state_guard/bridge.s",
+        "definitions": {
+          "ep7_native_state_service_bridge": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_state_transition_observer",
+          "ep7_stock_state_service_unresolved"
+        ],
+        "text_data_bss": [
+          47,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "capture_state_guard/observer.c": {
+        "source": "prototypes/ep7_volatile_hl/capture_state_guard/observer.c",
+        "definitions": {
+          "_ep7_gcc_state_transition_observer": "T"
+        },
+        "undefined": [
+          "_ep7_sidecar_transition_unresolved"
+        ],
+        "text_data_bss": [
+          60,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "capture_state_guard/observer.c:15:6:ep7_gcc_state_transition_observer\t20\tstatic"
+        ]
+      },
+      "controller_sidecar/cohort.c": {
+        "source": "prototypes/ep7_volatile_hl/controller_sidecar/cohort.c",
+        "definitions": {
+          "_ep7cn_native_cohort_present": "T"
+        },
+        "undefined": [
+          "_ep7n_far_call_present",
+          "ep7_capture_far_calls",
+          "ep7_capture_far_calls_end",
+          "ep7_native_associated_recycle",
+          "ep7_native_associated_reset",
+          "ep7_native_capture_finish",
+          "ep7_native_capture_fresh",
+          "ep7_native_capture_node_free",
+          "ep7_native_capture_pool_release",
+          "ep7_native_capture_postwrite",
+          "ep7_native_capture_prewrite",
+          "ep7_native_capture_sample",
+          "ep7_native_engine_configure",
+          "ep7_native_engine_pool",
+          "ep7_native_state_service_bridge",
+          "ep7_native_wait_enqueue",
+          "ep7_native_wait_pop",
+          "ep7_native_wait_reset",
+          "ep7_native_wait_scope"
+        ],
+        "text_data_bss": [
+          662,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "controller_sidecar/cohort.c:45:6:ep7cn_native_cohort_present\t48\tstatic"
+        ]
+      },
+      "controller_sidecar/engine_bridges.s": {
+        "source": "prototypes/ep7_volatile_hl/controller_sidecar/engine_bridges.s",
+        "definitions": {
+          "ep7_native_engine_configure": "T",
+          "ep7_native_engine_pool": "T"
+        },
+        "undefined": [
+          "_ep7cn_engine_epoch",
+          "ep7_stock_engine_configure_unresolved",
+          "ep7_stock_engine_pool_unresolved"
+        ],
+        "text_data_bss": [
+          92,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "controller_sidecar/far_calls.s": {
+        "source": "prototypes/ep7_volatile_hl/controller_sidecar/far_calls.s",
+        "definitions": {
+          "ep7_capture_far_60289c5e": "T",
+          "ep7_capture_far_60289d02": "T",
+          "ep7_capture_far_6029c692": "T",
+          "ep7_capture_far_6029ce9d": "T",
+          "ep7_capture_far_6029ef4c": "T",
+          "ep7_capture_far_602a27e4": "T",
+          "ep7_capture_far_602a31c7": "T",
+          "ep7_capture_far_602a31ea": "T",
+          "ep7_capture_far_602a31f7": "T",
+          "ep7_capture_far_602a440a": "T",
+          "ep7_capture_far_602a442c": "T",
+          "ep7_capture_far_602a443e": "T",
+          "ep7_capture_far_602a4480": "T",
+          "ep7_capture_far_602a44a3": "T",
+          "ep7_capture_far_602a44b5": "T",
+          "ep7_capture_far_602ac4fd": "T",
+          "ep7_capture_far_602ac5a6": "T",
+          "ep7_capture_far_602ac66c": "T",
+          "ep7_capture_far_calls": "T",
+          "ep7_capture_far_calls_end": "T"
+        },
+        "undefined": [
+          "ep7_native_associated_reset",
+          "ep7_native_capture_finish",
+          "ep7_native_capture_fresh",
+          "ep7_native_capture_sample",
+          "ep7_native_engine_configure",
+          "ep7_native_engine_pool",
+          "ep7_native_state_service_bridge",
+          "ep7_native_wait_scope"
+        ],
+        "text_data_bss": [
+          540,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "controller_sidecar/native_binding.c": {
+        "source": "prototypes/ep7_volatile_hl/controller_sidecar/native_binding.c",
+        "definitions": {
+          "_ep7_controller_sidecar_unresolved": "B",
+          "_ep7_sidecar_transition_unresolved": "T",
+          "_ep7cn_associated_recycle": "T",
+          "_ep7cn_associated_reset": "T",
+          "_ep7cn_engine_epoch": "T",
+          "_ep7cn_free": "T",
+          "_ep7cn_fresh": "T",
+          "_ep7cn_initialize": "T",
+          "_ep7cn_population": "T",
+          "_ep7cn_prewrite": "T",
+          "_ep7cn_release_capture": "T",
+          "_ep7cn_wait_enqueue": "T",
+          "_ep7cn_wait_pop": "T",
+          "_ep7cn_wait_reset": "T",
+          "_ep7q_capture_snapshot_unresolved": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_capture_lookup",
+          "_ep7_gcc_quarantine",
+          "_ep7_gcc_wait_enqueue",
+          "_ep7_gcc_wait_pop",
+          "_ep7_native_runtime_slot",
+          "_ep7_wait_scope_native_return",
+          "_ep7c_authorize",
+          "_ep7c_copyout",
+          "_ep7c_finish_population",
+          "_ep7c_forget",
+          "_ep7c_init",
+          "_ep7c_prewrite_capture",
+          "_ep7c_register_fresh_capture",
+          "_ep7c_resolve_live",
+          "_ep7c_retire_associated",
+          "_ep7c_retire_capture",
+          "_ep7c_sample_population",
+          "_ep7c_transition",
+          "_ep7cn_native_cohort_present",
+          "_ep7q_capture_scope_init",
+          "_ep7q_wait_pop_layout",
+          "_ep7r_accepting",
+          "_ep7r_get",
+          "_ep7r_task",
+          "_memcpy",
+          "_memset"
+        ],
+        "text_data_bss": [
+          3600,
+          0,
+          1912
+        ],
+        "stack_usage": [
+          "controller_sidecar/native_binding.c:249:13:wait_sync\t36\tstatic",
+          "controller_sidecar/native_binding.c:67:13:associated_live\t0\tstatic",
+          "controller_sidecar/native_binding.c:142:13:prefix\t36\tstatic",
+          "controller_sidecar/native_binding.c:221:13:capture_snapshot_locked\t76\tstatic",
+          "controller_sidecar/native_binding.c:79:14:enter\t52\tstatic",
+          "controller_sidecar/native_binding.c:112:6:ep7cn_initialize\t12\tstatic",
+          "controller_sidecar/native_binding.c:119:6:ep7_sidecar_transition_unresolved\t32\tstatic",
+          "controller_sidecar/native_binding.c:128:6:ep7cn_fresh\t56\tstatic",
+          "controller_sidecar/native_binding.c:155:6:ep7cn_prewrite\t36\tstatic",
+          "controller_sidecar/native_binding.c:166:6:ep7cn_population\t92\tstatic",
+          "controller_sidecar/native_binding.c:176:6:ep7cn_free\t44\tstatic",
+          "controller_sidecar/native_binding.c:185:6:ep7cn_release_capture\t32\tstatic",
+          "controller_sidecar/native_binding.c:198:6:ep7cn_associated_recycle\t32\tstatic",
+          "controller_sidecar/native_binding.c:210:6:ep7cn_associated_reset\t32\tstatic",
+          "controller_sidecar/native_binding.c:241:6:ep7q_capture_snapshot_unresolved\t40\tstatic",
+          "controller_sidecar/native_binding.c:264:10:ep7cn_wait_enqueue\t88\tstatic",
+          "controller_sidecar/native_binding.c:289:10:ep7cn_wait_pop\t80\tstatic",
+          "controller_sidecar/native_binding.c:318:6:ep7cn_wait_reset\t20\tstatic",
+          "controller_sidecar/native_binding.c:324:6:ep7cn_engine_epoch\t28\tstatic"
+        ]
+      },
+      "controller_sidecar/native_bridges.s": {
+        "source": "prototypes/ep7_volatile_hl/controller_sidecar/native_bridges.s",
+        "definitions": {
+          "_ep7_gcc_capture_lookup": "T",
+          "ep7_native_associated_recycle": "T",
+          "ep7_native_associated_reset": "T",
+          "ep7_native_capture_finish": "T",
+          "ep7_native_capture_fresh": "T",
+          "ep7_native_capture_initialize": "T",
+          "ep7_native_capture_node_free": "T",
+          "ep7_native_capture_pool_release": "T",
+          "ep7_native_capture_postwrite": "T",
+          "ep7_native_capture_prewrite": "T",
+          "ep7_native_capture_sample": "T"
+        },
+        "undefined": [
+          "_ep7cn_associated_recycle",
+          "_ep7cn_associated_reset",
+          "_ep7cn_free",
+          "_ep7cn_fresh",
+          "_ep7cn_initialize",
+          "_ep7cn_population",
+          "_ep7cn_prewrite",
+          "_ep7cn_release_capture",
+          "ep7_stock_associated_enqueue_unresolved",
+          "ep7_stock_associated_initialize_unresolved",
+          "ep7_stock_capture_fresh_unresolved",
+          "ep7_stock_capture_init_continue_unresolved",
+          "ep7_stock_capture_lookup_unresolved",
+          "ep7_stock_capture_node_free_unresolved",
+          "ep7_stock_capture_pool_release_unresolved",
+          "ep7_stock_capture_population_unresolved",
+          "ep7_stock_capture_postpopulation_unresolved"
+        ],
+        "text_data_bss": [
+          530,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "controller_sidecar/sidecar.c": {
+        "source": "prototypes/ep7_volatile_hl/controller_sidecar/sidecar.c",
+        "definitions": {
+          "_ep7c_authorize": "T",
+          "_ep7c_begin_population": "T",
+          "_ep7c_copyout": "T",
+          "_ep7c_finish_population": "T",
+          "_ep7c_forget": "T",
+          "_ep7c_init": "T",
+          "_ep7c_prewrite_capture": "T",
+          "_ep7c_register_fresh": "T",
+          "_ep7c_register_fresh_capture": "T",
+          "_ep7c_resolve_live": "T",
+          "_ep7c_retire_associated": "T",
+          "_ep7c_retire_capture": "T",
+          "_ep7c_sample_population": "T",
+          "_ep7c_seal": "T",
+          "_ep7c_transition": "T"
+        },
+        "undefined": [
+          "_ep7p_capture",
+          "_memcpy",
+          "_memset"
+        ],
+        "text_data_bss": [
+          2928,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "controller_sidecar/sidecar.c:90:13:prefix_ok\t4\tstatic",
+          "controller_sidecar/sidecar.c:94:13:prefix_same\t0\tstatic",
+          "controller_sidecar/sidecar.c:40:13:register_fresh\t32\tstatic",
+          "controller_sidecar/sidecar.c:11:6:ep7c_init\t24\tstatic",
+          "controller_sidecar/sidecar.c:18:6:ep7c_transition\t28\tstatic",
+          "controller_sidecar/sidecar.c:55:6:ep7c_register_fresh\t32\tstatic",
+          "controller_sidecar/sidecar.c:57:6:ep7c_register_fresh_capture\t36\tstatic",
+          "controller_sidecar/sidecar.c:62:6:ep7c_retire_capture\t32\tstatic",
+          "controller_sidecar/sidecar.c:69:6:ep7c_retire_associated\t32\tstatic",
+          "controller_sidecar/sidecar.c:76:6:ep7c_authorize\t32\tstatic",
+          "controller_sidecar/sidecar.c:78:6:ep7c_resolve_live\t32\tstatic",
+          "controller_sidecar/sidecar.c:107:6:ep7c_begin_population\t36\tstatic",
+          "controller_sidecar/sidecar.c:112:6:ep7c_prewrite_capture\t32\tstatic",
+          "controller_sidecar/sidecar.c:122:6:ep7c_sample_population\t64\tstatic",
+          "controller_sidecar/sidecar.c:133:6:ep7c_finish_population\t32\tstatic",
+          "controller_sidecar/sidecar.c:141:6:ep7c_seal\t56\tstatic",
+          "controller_sidecar/sidecar.c:148:6:ep7c_copyout\t32\tstatic",
+          "controller_sidecar/sidecar.c:158:6:ep7c_forget\t32\tstatic"
+        ]
+      },
+      "controller_sidecar/wait_bridges.s": {
+        "source": "prototypes/ep7_volatile_hl/controller_sidecar/wait_bridges.s",
+        "definitions": {
+          "_ep7_gcc_wait_enqueue": "T",
+          "_ep7_gcc_wait_pop": "T",
+          "_ep7_wait_scope_native_return": "T",
+          "ep7_native_wait_enqueue": "T",
+          "ep7_native_wait_pop": "T",
+          "ep7_native_wait_reset": "T",
+          "ep7_native_wait_scope": "T"
+        },
+        "undefined": [
+          "_ep7cn_wait_enqueue",
+          "_ep7cn_wait_pop",
+          "_ep7cn_wait_reset",
+          "_ep7q_capture_scope_init",
+          "ep7_stock_associated_enqueue_unresolved",
+          "ep7_stock_wait_initialize_unresolved",
+          "ep7_stock_wait_pop_unresolved",
+          "ep7_stock_wait_service_unresolved"
+        ],
+        "text_data_bss": [
+          214,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "ep7p.c": {
+        "source": "prototypes/ep7_volatile_hl/ep7p.c",
+        "definitions": {
+          "_ep7p_apply": "T",
+          "_ep7p_axis_adjust": "T",
+          "_ep7p_axis_adjust_result": "T",
+          "_ep7p_axis_read": "T",
+          "_ep7p_capture": "T",
+          "_ep7p_direct_apply": "T",
+          "_ep7p_edit": "T",
+          "_ep7p_enter": "T",
+          "_ep7p_init": "T",
+          "_ep7p_register_job": "T",
+          "_ep7p_register_task": "T",
+          "_ep7p_release_job": "T",
+          "_ep7p_release_task": "T",
+          "_ep7p_unwind": "T"
+        },
+        "undefined": [
+          "_ep7p_decode",
+          "_memcpy",
+          "_memset"
+        ],
+        "text_data_bss": [
+          3552,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "ep7p.c:24:24:current\t36\tstatic",
+          "ep7p.c:30:13:shape\t24\tstatic",
+          "ep7p.c:145:13:apply_local\t16\tstatic",
+          "ep7p.c:41:6:ep7p_init\t36\tstatic",
+          "ep7p.c:45:6:ep7p_edit\t32\tstatic",
+          "ep7p.c:50:6:ep7p_axis_read\t28\tstatic",
+          "ep7p.c:55:6:ep7p_axis_adjust_result\t40\tstatic",
+          "ep7p.c:75:6:ep7p_axis_adjust\t40\tstatic",
+          "ep7p.c:79:6:ep7p_capture\t28\tstatic",
+          "ep7p.c:85:6:ep7p_register_job\t40\tstatic",
+          "ep7p.c:101:6:ep7p_release_job\t40\tstatic",
+          "ep7p.c:109:6:ep7p_register_task\t48\tstatic",
+          "ep7p.c:120:6:ep7p_release_task\t40\tstatic",
+          "ep7p.c:127:6:ep7p_enter\t68\tstatic",
+          "ep7p.c:135:6:ep7p_unwind\t28\tstatic",
+          "ep7p.c:159:6:ep7p_apply\t84\tstatic",
+          "ep7p.c:179:6:ep7p_direct_apply\t132\tstatic"
+        ]
+      },
+      "ep7p_decode.c": {
+        "source": "prototypes/ep7_volatile_hl/ep7p_decode.c",
+        "definitions": {
+          "_ep7p_decode": "T"
+        },
+        "undefined": [],
+        "text_data_bss": [
+          720,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "ep7p_decode.c:6:6:ep7p_decode\t16\tstatic"
+        ]
+      },
+      "ep7p_ui.c": {
+        "source": "prototypes/ep7_volatile_hl/ep7p_ui.c",
+        "definitions": {
+          "_ep7p_ui_init": "T",
+          "_ep7p_ui_ops": "R"
+        },
+        "undefined": [
+          "_ep7p_axis_adjust_result",
+          "_ep7p_axis_read",
+          "_memset"
+        ],
+        "text_data_bss": [
+          1107,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "ep7p_ui.c:20:12:open_ui\t24\tstatic",
+          "ep7p_ui.c:46:12:event_ui\t52\tstatic",
+          "ep7p_ui.c:73:13:close_ui\t4\tstatic",
+          "ep7p_ui.c:29:12:sync_ui\t16\tstatic",
+          "ep7p_ui.c:39:12:frame_ui\t48\tstatic",
+          "ep7p_ui.c:17:6:ep7p_ui_init\t24\tstatic"
+        ]
+      },
+      "ep7p_ui_raw.c": {
+        "source": "prototypes/ep7_volatile_hl/ep7p_ui_raw.c",
+        "definitions": {
+          "_ep7p_ui_raw_dispatch": "T"
+        },
+        "undefined": [
+          "_ep7p_ui_ops"
+        ],
+        "text_data_bss": [
+          255,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "ep7p_ui_raw.c:3:5:ep7p_ui_raw_dispatch\t80\tstatic"
+        ]
+      },
+      "poll_lock_provider/bootstrap/bootstrap.c": {
+        "source": "prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/bootstrap.c",
+        "definitions": {
+          "_ep7b_abort_unpublished": "T",
+          "_ep7b_mark_published": "T",
+          "_ep7b_prepare": "T"
+        },
+        "undefined": [
+          "_ep7p_init",
+          "_ep7s_init",
+          "_ep7s_ops",
+          "_memcpy"
+        ],
+        "text_data_bss": [
+          560,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "poll_lock_provider/bootstrap/bootstrap.c:8:13:same_domain.constprop\t24\tstatic",
+          "poll_lock_provider/bootstrap/bootstrap.c:9:6:ep7b_abort_unpublished\t20\tstatic",
+          "poll_lock_provider/bootstrap/bootstrap.c:22:6:ep7b_prepare\t112\tstatic",
+          "poll_lock_provider/bootstrap/bootstrap.c:35:6:ep7b_mark_published\t0\tstatic"
+        ]
+      },
+      "poll_lock_provider/bootstrap/create_delete_bridges.s": {
+        "source": "prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/create_delete_bridges.s",
+        "definitions": {
+          "_ep7_gcc_raw_sem_create": "T",
+          "_ep7_gcc_raw_sem_delete_unpublished": "T"
+        },
+        "undefined": [
+          "ep7_stock_raw_sem_create_unresolved",
+          "ep7_stock_raw_sem_delete_unresolved"
+        ],
+        "text_data_bss": [
+          32,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "poll_lock_provider/bootstrap/native_callbacks.c": {
+        "source": "prototypes/ep7_volatile_hl/poll_lock_provider/bootstrap/native_callbacks.c",
+        "definitions": {
+          "_ep7b_unresolved_native": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_raw_sem_create",
+          "_ep7_gcc_raw_sem_delete_unpublished",
+          "_ep7s_unresolved_raw_callbacks"
+        ],
+        "text_data_bss": [
+          70,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "poll_lock_provider/bootstrap/native_callbacks.c:8:12:drop\t12\tstatic",
+          "poll_lock_provider/bootstrap/native_callbacks.c:7:12:create\t12\tstatic",
+          "poll_lock_provider/bootstrap/native_callbacks.c:9:13:ep7b_unresolved_native\t16\tstatic"
+        ]
+      },
+      "poll_lock_provider/ep7_sem_provider.c": {
+        "source": "prototypes/ep7_volatile_hl/poll_lock_provider/ep7_sem_provider.c",
+        "definitions": {
+          "_ep7s_init": "T",
+          "_ep7s_ops": "T",
+          "_ep7s_poisoned": "T"
+        },
+        "undefined": [],
+        "text_data_bss": [
+          378,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "poll_lock_provider/ep7_sem_provider.c:37:12:no_lease\t0\tstatic",
+          "poll_lock_provider/ep7_sem_provider.c:5:13:domain.constprop\t24\tstatic",
+          "poll_lock_provider/ep7_sem_provider.c:12:13:take\t24\tstatic",
+          "poll_lock_provider/ep7_sem_provider.c:26:13:give\t20\tstatic",
+          "poll_lock_provider/ep7_sem_provider.c:38:6:ep7s_init\t16\tstatic",
+          "poll_lock_provider/ep7_sem_provider.c:42:10:ep7s_ops\t0\tstatic",
+          "poll_lock_provider/ep7_sem_provider.c:43:6:ep7s_poisoned\t0\tstatic"
+        ]
+      },
+      "poll_lock_provider/native/raw_callbacks.c": {
+        "source": "prototypes/ep7_volatile_hl/poll_lock_provider/native/raw_callbacks.c",
+        "definitions": {
+          "_ep7s_unresolved_raw_callbacks": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_get_tid",
+          "_ep7_gcc_raw_sem_poll",
+          "_ep7_gcc_raw_sem_signal"
+        ],
+        "text_data_bss": [
+          78,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "poll_lock_provider/native/raw_callbacks.c:13:12:signal\t12\tstatic",
+          "poll_lock_provider/native/raw_callbacks.c:12:12:poll\t12\tstatic",
+          "poll_lock_provider/native/raw_callbacks.c:11:12:current\t12\tstatic",
+          "poll_lock_provider/native/raw_callbacks.c:14:13:ep7s_unresolved_raw_callbacks\t0\tstatic"
+        ]
+      },
+      "poll_lock_provider/native/sem_bridges.s": {
+        "source": "prototypes/ep7_volatile_hl/poll_lock_provider/native/sem_bridges.s",
+        "definitions": {
+          "_ep7_gcc_raw_sem_poll": "T",
+          "_ep7_gcc_raw_sem_signal": "T"
+        },
+        "undefined": [
+          "ep7_stock_raw_sem_signal_unresolved",
+          "ep7_stock_raw_sem_wait_unresolved"
+        ],
+        "text_data_bss": [
+          31,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "runtime/cold_bootstrap.c": {
+        "source": "prototypes/ep7_volatile_hl/runtime/cold_bootstrap.c",
+        "definitions": {
+          "_ep7r_bootstrap_initialize": "T"
+        },
+        "undefined": [
+          "_ep7_controller_sidecar_unresolved",
+          "_ep7_gcc_quarantine",
+          "_ep7_native_runtime_slot",
+          "_ep7b_abort_unpublished",
+          "_ep7b_prepare",
+          "_ep7b_unresolved_native",
+          "_ep7cn_native_cohort_present",
+          "_ep7n_native_current_task",
+          "_ep7n_postbuilder_cohort_present",
+          "_ep7q_native_cohort_present",
+          "_ep7r_get",
+          "_ep7r_native_early_cohort_present",
+          "_ep7r_native_environment",
+          "_ep7r_prepare",
+          "_ep7r_publish"
+        ],
+        "text_data_bss": [
+          399,
+          0,
+          5708
+        ],
+        "stack_usage": [
+          "runtime/cold_bootstrap.c:13:13:installed\t20\tstatic",
+          "runtime/cold_bootstrap.c:24:6:ep7r_bootstrap_initialize\t96\tstatic"
+        ]
+      },
+      "runtime/cold_bootstrap_bridge.s": {
+        "source": "prototypes/ep7_volatile_hl/runtime/cold_bootstrap_bridge.s",
+        "definitions": {
+          "ep7_native_cold_bootstrap_bridge": "T"
+        },
+        "undefined": [
+          "_ep7r_bootstrap_initialize",
+          "ep7_stock_bootstrap_original_unresolved"
+        ],
+        "text_data_bss": [
+          54,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "runtime/cold_cohort.c": {
+        "source": "prototypes/ep7_volatile_hl/runtime/cold_cohort.c",
+        "definitions": {
+          "_ep7r_native_early_cohort_present": "T"
+        },
+        "undefined": [
+          "ep7_native_capture_initialize",
+          "ep7_native_cold_bootstrap_bridge",
+          "ep7_native_cold_clear",
+          "ep7_native_queue_delete_observer",
+          "ep7_native_queue_receive_gate",
+          "ep7_native_queue_send_gate"
+        ],
+        "text_data_bss": [
+          357,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "runtime/cold_cohort.c:21:6:ep7r_native_early_cohort_present\t12\tstatic"
+        ]
+      },
+      "runtime/contexts.c": {
+        "source": "prototypes/ep7_volatile_hl/runtime/contexts.c",
+        "definitions": {
+          "_ep7q_ack_context_unresolved": "T",
+          "_ep7q_descriptor_receive_context_unresolved": "T",
+          "_ep7q_descriptor_send_context_unresolved": "T",
+          "_ep7q_materializer_context_unresolved": "T",
+          "_ep7q_owned_context_lost": "T",
+          "_ep7q_producer_context_unresolved": "T",
+          "_ep7q_worker_context_unresolved": "T"
+        },
+        "undefined": [
+          "_ep7_native_runtime_slot",
+          "_ep7r_accepting",
+          "_ep7r_fault",
+          "_ep7r_get",
+          "_ep7r_progress",
+          "_ep7r_qualify_queue",
+          "_ep7r_retire",
+          "_ep7r_task"
+        ],
+        "text_data_bss": [
+          920,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "runtime/contexts.c:24:6:ep7q_materializer_context_unresolved\t52\tstatic",
+          "runtime/contexts.c:31:6:ep7q_descriptor_receive_context_unresolved\t56\tstatic",
+          "runtime/contexts.c:41:6:ep7q_descriptor_send_context_unresolved\t52\tstatic",
+          "runtime/contexts.c:50:6:ep7q_producer_context_unresolved\t56\tstatic",
+          "runtime/contexts.c:58:6:ep7q_worker_context_unresolved\t52\tstatic",
+          "runtime/contexts.c:67:6:ep7q_ack_context_unresolved\t52\tstatic",
+          "runtime/contexts.c:75:6:ep7q_owned_context_lost\t12\tstatic"
+        ]
+      },
+      "runtime/delay_bridge.s": {
+        "source": "prototypes/ep7_volatile_hl/runtime/delay_bridge.s",
+        "definitions": {
+          "_ep7_gcc_task_delay_one": "T"
+        },
+        "undefined": [
+          "ep7_stock_task_delay_unresolved"
+        ],
+        "text_data_bss": [
+          17,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "runtime/kernel_gate.c": {
+        "source": "prototypes/ep7_volatile_hl/runtime/kernel_gate.c",
+        "definitions": {
+          "_ep7r_native_delete_observer": "T",
+          "_ep7r_native_receive_gate": "T",
+          "_ep7r_native_send_gate": "T"
+        },
+        "undefined": [
+          "_ep7_native_runtime_slot",
+          "_ep7_queue_named_send_native_return",
+          "_ep7_queue_raw_send_native_return",
+          "_ep7_queue_receive_native_return",
+          "_ep7r_get",
+          "_ep7r_guard_queue",
+          "_ep7r_io_open",
+          "_ep7r_note_queue_delete"
+        ],
+        "text_data_bss": [
+          208,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "runtime/kernel_gate.c:12:13:admitted\t44\tstatic",
+          "runtime/kernel_gate.c:21:6:ep7r_native_receive_gate\t12\tstatic",
+          "runtime/kernel_gate.c:28:6:ep7r_native_send_gate\t12\tstatic",
+          "runtime/kernel_gate.c:37:6:ep7r_native_delete_observer\t16\tstatic"
+        ]
+      },
+      "runtime/kernel_gate_bridges.s": {
+        "source": "prototypes/ep7_volatile_hl/runtime/kernel_gate_bridges.s",
+        "definitions": {
+          "ep7_native_queue_delete_observer": "T",
+          "ep7_native_queue_receive_gate": "T",
+          "ep7_native_queue_send_gate": "T"
+        },
+        "undefined": [
+          "_ep7r_native_delete_observer",
+          "_ep7r_native_receive_gate",
+          "_ep7r_native_send_gate",
+          "ep7_stock_delete_gate_continue_unresolved",
+          "ep7_stock_receive_gate_continue_unresolved",
+          "ep7_stock_receive_gate_error_unresolved",
+          "ep7_stock_send_gate_continue_unresolved",
+          "ep7_stock_send_gate_error_unresolved"
+        ],
+        "text_data_bss": [
+          232,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "runtime/native_context.c": {
+        "source": "prototypes/ep7_volatile_hl/runtime/native_context.c",
+        "definitions": {
+          "_ep7r_native_environment": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_quarantine",
+          "_ep7_gcc_task_delay_one",
+          "_ep7n_native_current_task",
+          "_ep7n_native_queue"
+        ],
+        "text_data_bss": [
+          103,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "runtime/native_context.c:11:13:quarantine\t12\tstatic",
+          "runtime/native_context.c:9:12:delay_one\t12\tstatic",
+          "runtime/native_context.c:7:13:queue\t12\tstatic",
+          "runtime/native_context.c:5:13:task\t12\tstatic",
+          "runtime/native_context.c:13:18:ep7r_native_environment\t0\tstatic"
+        ]
+      },
+      "runtime/quarantine.s": {
+        "source": "prototypes/ep7_volatile_hl/runtime/quarantine.s",
+        "definitions": {
+          "_ep7_gcc_quarantine": "T"
+        },
+        "undefined": [],
+        "text_data_bss": [
+          3,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "runtime/queue_context.c": {
+        "source": "prototypes/ep7_volatile_hl/runtime/queue_context.c",
+        "definitions": {
+          "_ep7n_query_queue": "T",
+          "_ep7n_same_queue": "T"
+        },
+        "undefined": [
+          "_memcpy"
+        ],
+        "text_data_bss": [
+          853,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "runtime/queue_context.c:6:13:read_view\t44\tstatic",
+          "runtime/queue_context.c:26:6:ep7n_same_queue\t4\tstatic",
+          "runtime/queue_context.c:32:6:ep7n_query_queue\t104\tstatic"
+        ]
+      },
+      "runtime/runtime.c": {
+        "source": "prototypes/ep7_volatile_hl/runtime/runtime.c",
+        "definitions": {
+          "_ep7_native_runtime_slot": "B",
+          "_ep7r_accepting": "T",
+          "_ep7r_apply": "T",
+          "_ep7r_fault": "T",
+          "_ep7r_get": "T",
+          "_ep7r_guard_queue": "T",
+          "_ep7r_io_open": "T",
+          "_ep7r_note_queue_delete": "T",
+          "_ep7r_prepare": "T",
+          "_ep7r_progress": "T",
+          "_ep7r_publish": "T",
+          "_ep7r_qualify_queue": "T",
+          "_ep7r_retire": "T",
+          "_ep7r_stop": "T",
+          "_ep7r_task": "T"
+        },
+        "undefined": [
+          "_ep7b_mark_published",
+          "_ep7n_same_queue",
+          "_ep7p_direct_apply",
+          "_ep7s_ops",
+          "_ep7s_poisoned",
+          "_ep7t_init",
+          "_ep7t_retire_owned"
+        ],
+        "text_data_bss": [
+          1448,
+          0,
+          4
+        ],
+        "stack_usage": [
+          "runtime/runtime.c:7:6:ep7r_prepare\t64\tstatic",
+          "runtime/runtime.c:16:7:ep7r_get\t0\tstatic",
+          "runtime/runtime.c:18:6:ep7r_apply\t20\tstatic",
+          "runtime/runtime.c:23:6:ep7r_publish\t40\tstatic",
+          "runtime/runtime.c:38:6:ep7r_accepting\t12\tstatic",
+          "runtime/runtime.c:43:6:ep7r_stop\t0\tstatic",
+          "runtime/runtime.c:45:6:ep7r_task\t48\tstatic",
+          "runtime/runtime.c:57:16:ep7r_fault\t20\tstatic",
+          "runtime/runtime.c:64:6:ep7r_qualify_queue\t64\tstatic",
+          "runtime/runtime.c:78:6:ep7r_io_open\t0\tstatic",
+          "runtime/runtime.c:80:6:ep7r_guard_queue\t12\tstatic",
+          "runtime/runtime.c:91:6:ep7r_note_queue_delete\t4\tstatic",
+          "runtime/runtime.c:100:6:ep7r_progress\t40\tstatic",
+          "runtime/runtime.c:110:6:ep7r_retire\t44\tstatic"
+        ]
+      },
+      "runtime/task_context.c": {
+        "source": "prototypes/ep7_volatile_hl/runtime/task_context.c",
+        "definitions": {
+          "_ep7n_query_task": "T"
+        },
+        "undefined": [],
+        "text_data_bss": [
+          535,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "runtime/task_context.c:6:13:current_tcb\t36\tstatic",
+          "runtime/task_context.c:14:6:ep7n_query_task\t60\tstatic"
+        ]
+      },
+      "runtime/task_context_native.c": {
+        "source": "prototypes/ep7_volatile_hl/runtime/task_context_native.c",
+        "definitions": {
+          "_ep7n_native_current_task": "T",
+          "_ep7n_native_queue": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_get_tid",
+          "_ep7n_query_queue",
+          "_ep7n_query_task"
+        ],
+        "text_data_bss": [
+          98,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "runtime/task_context_native.c:7:13:read_word\t0\tstatic",
+          "runtime/task_context_native.c:9:13:read_half\t0\tstatic",
+          "runtime/task_context_native.c:5:12:query\t12\tstatic",
+          "runtime/task_context_native.c:12:6:ep7n_native_current_task\t16\tstatic",
+          "runtime/task_context_native.c:16:6:ep7n_native_queue\t16\tstatic"
+        ]
+      },
+      "snapshot_transport/consumer.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/consumer.c",
+        "definitions": {
+          "_ep7q_claim_owned": "T",
+          "_ep7q_retire_owned": "T"
+        },
+        "undefined": [
+          "_ep7t_claim",
+          "_ep7t_retire_owned",
+          "_ep7w_mark_consumed",
+          "_ep7w_retirement_ticket",
+          "_ep7w_ticket",
+          "_memset"
+        ],
+        "text_data_bss": [
+          180,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/consumer.c:3:6:ep7q_claim_owned\t48\tstatic",
+          "snapshot_transport/consumer.c:11:6:ep7q_retire_owned\t40\tstatic"
+        ]
+      },
+      "snapshot_transport/forward.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/forward.c",
+        "definitions": {
+          "_ep7q_forward_send": "T"
+        },
+        "undefined": [
+          "_ep7q_descriptor_send"
+        ],
+        "text_data_bss": [
+          114,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/forward.c:2:5:ep7q_forward_send\t72\tstatic"
+        ]
+      },
+      "snapshot_transport/job.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/job.c",
+        "definitions": {
+          "_ep7j_allocate": "T",
+          "_ep7j_begin": "T",
+          "_ep7j_register": "T",
+          "_ep7j_revoke": "T"
+        },
+        "undefined": [
+          "_ep7p_register_job",
+          "_ep7p_release_job",
+          "_ep7q_claim_owned",
+          "_memset"
+        ],
+        "text_data_bss": [
+          288,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/job.c:3:6:ep7j_begin\t28\tstatic",
+          "snapshot_transport/job.c:9:7:ep7j_allocate\t24\tstatic",
+          "snapshot_transport/job.c:23:6:ep7j_register\t28\tstatic",
+          "snapshot_transport/job.c:31:6:ep7j_revoke\t28\tstatic"
+        ]
+      },
+      "snapshot_transport/native/ack_binding.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/ack_binding.c",
+        "definitions": {
+          "_ep7q_ack_entry": "T"
+        },
+        "undefined": [
+          "_ep7q_ack_context_unresolved",
+          "_ep7q_ack_layout",
+          "_ep7q_owned_context_lost",
+          "_ep7q_retire_owned"
+        ],
+        "text_data_bss": [
+          116,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/native/ack_binding.c:3:6:ep7q_ack_entry\t64\tstatic"
+        ]
+      },
+      "snapshot_transport/native/ack_bridge.s": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/ack_bridge.s",
+        "definitions": {
+          "ep7_native_ack_bridge": "T"
+        },
+        "undefined": [
+          "_ep7q_ack_entry",
+          "ep7_stock_ack_unresolved"
+        ],
+        "text_data_bss": [
+          41,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "snapshot_transport/native/ack_layout.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/ack_layout.c",
+        "definitions": {
+          "_ep7q_ack_layout": "T"
+        },
+        "undefined": [
+          "_ep7q_stack_span",
+          "_ep7q_stack_word"
+        ],
+        "text_data_bss": [
+          190,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/native/ack_layout.c:2:6:ep7q_ack_layout\t48\tstatic"
+        ]
+      },
+      "snapshot_transport/native/cohort.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/cohort.c",
+        "definitions": {
+          "_ep7q_native_cohort_present": "T"
+        },
+        "undefined": [
+          "_ep7n_far_call_present",
+          "ep7_native_ack_bridge",
+          "ep7_native_capture_scope_bridge",
+          "ep7_native_descriptor_receive_bridge",
+          "ep7_native_descriptor_send_bridge",
+          "ep7_native_materializer_receive_bridge",
+          "ep7_native_producer_send_bridge",
+          "ep7_native_worker_allocate_bridge",
+          "ep7_native_worker_cleanup_bridge",
+          "ep7_native_worker_process_bridge",
+          "ep7_native_worker_scope_bridge",
+          "ep7_pipeline_far_calls",
+          "ep7_pipeline_far_calls_end"
+        ],
+        "text_data_bss": [
+          647,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/native/cohort.c:38:6:ep7q_native_cohort_present\t44\tstatic"
+        ]
+      },
+      "snapshot_transport/native/descriptor_receive_binding.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_binding.c",
+        "definitions": {
+          "_ep7q_descriptor_receive_entry": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_queue_receive_local",
+          "_ep7q_descriptor_receive",
+          "_ep7q_descriptor_receive_context_unresolved",
+          "_ep7q_descriptor_receive_layout",
+          "_ep7q_receive_rejection"
+        ],
+        "text_data_bss": [
+          162,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/native/descriptor_receive_binding.c:4:12:receive_local\t16\tstatic",
+          "snapshot_transport/native/descriptor_receive_binding.c:6:5:ep7q_descriptor_receive_entry\t124\tstatic"
+        ]
+      },
+      "snapshot_transport/native/descriptor_receive_bridge.s": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_bridge.s",
+        "definitions": {
+          "ep7_native_descriptor_receive_bridge": "T"
+        },
+        "undefined": [
+          "_ep7q_descriptor_receive_entry",
+          "ep7_stock_receive_wrapper_unresolved"
+        ],
+        "text_data_bss": [
+          45,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "snapshot_transport/native/descriptor_receive_layout.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_receive_layout.c",
+        "definitions": {
+          "_ep7q_descriptor_receive_layout": "T",
+          "_ep7q_receive_rejection": "T"
+        },
+        "undefined": [
+          "_ep7q_stack_span",
+          "_ep7q_stack_word",
+          "_memcpy"
+        ],
+        "text_data_bss": [
+          376,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/native/descriptor_receive_layout.c:4:5:ep7q_receive_rejection\t0\tstatic",
+          "snapshot_transport/native/descriptor_receive_layout.c:6:6:ep7q_descriptor_receive_layout\t52\tstatic"
+        ]
+      },
+      "snapshot_transport/native/descriptor_send_binding.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_binding.c",
+        "definitions": {
+          "_ep7q_descriptor_send_entry": "T"
+        },
+        "undefined": [
+          "_ep7q_descriptor_send_context_unresolved",
+          "_ep7q_descriptor_send_layout",
+          "_ep7q_forward_send",
+          "_ep7q_owned_context_lost",
+          "_ep7q_send_local_preserving"
+        ],
+        "text_data_bss": [
+          130,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/native/descriptor_send_binding.c:4:5:ep7q_descriptor_send_entry\t92\tstatic"
+        ]
+      },
+      "snapshot_transport/native/descriptor_send_bridge.s": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_bridge.s",
+        "definitions": {
+          "ep7_native_descriptor_send_bridge": "T"
+        },
+        "undefined": [
+          "_ep7q_descriptor_send_entry",
+          "ep7_stock_send_wrapper_unresolved"
+        ],
+        "text_data_bss": [
+          44,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "snapshot_transport/native/descriptor_send_layout.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/descriptor_send_layout.c",
+        "definitions": {
+          "_ep7q_descriptor_send_layout": "T"
+        },
+        "undefined": [
+          "_ep7q_stack_span",
+          "_ep7q_stack_word",
+          "_memcpy"
+        ],
+        "text_data_bss": [
+          319,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/native/descriptor_send_layout.c:4:6:ep7q_descriptor_send_layout\t56\tstatic"
+        ]
+      },
+      "snapshot_transport/native/far_calls.s": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/far_calls.s",
+        "definitions": {
+          "ep7_pipeline_far_602ac3de": "T",
+          "ep7_pipeline_far_603dfc67": "T",
+          "ep7_pipeline_far_603e05c6": "T",
+          "ep7_pipeline_far_603ef8b5": "T",
+          "ep7_pipeline_far_603ef8d2": "T",
+          "ep7_pipeline_far_603ef8fd": "T",
+          "ep7_pipeline_far_603ef91a": "T",
+          "ep7_pipeline_far_603f2722": "T",
+          "ep7_pipeline_far_calls": "T",
+          "ep7_pipeline_far_calls_end": "T"
+        },
+        "undefined": [
+          "ep7_native_ack_bridge",
+          "ep7_native_capture_scope_bridge",
+          "ep7_native_descriptor_receive_bridge",
+          "ep7_native_worker_scope_bridge"
+        ],
+        "text_data_bss": [
+          240,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "snapshot_transport/native/materializer_binding.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_binding.c",
+        "definitions": {
+          "_ep7q_materializer_entry": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_queue_receive_local",
+          "_ep7q_command_receive",
+          "_ep7q_materializer_context_unresolved",
+          "_ep7q_materializer_layout"
+        ],
+        "text_data_bss": [
+          155,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/native/materializer_binding.c:4:12:receive_local\t16\tstatic",
+          "snapshot_transport/native/materializer_binding.c:6:5:ep7q_materializer_entry\t136\tstatic"
+        ]
+      },
+      "snapshot_transport/native/materializer_bridge.s": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_bridge.s",
+        "definitions": {
+          "ep7_native_materializer_receive_bridge": "T"
+        },
+        "undefined": [
+          "_ep7q_materializer_entry"
+        ],
+        "text_data_bss": [
+          13,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "snapshot_transport/native/materializer_layout.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/materializer_layout.c",
+        "definitions": {
+          "_ep7q_materializer_layout": "T"
+        },
+        "undefined": [
+          "_ep7q_stack_span",
+          "_ep7q_stack_word",
+          "_memcpy"
+        ],
+        "text_data_bss": [
+          383,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/native/materializer_layout.c:4:6:ep7q_materializer_layout\t60\tstatic"
+        ]
+      },
+      "snapshot_transport/native/producer_binding.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_binding.c",
+        "definitions": {
+          "_ep7q_capture_scope_entry": "T",
+          "_ep7q_producer_entry": "T"
+        },
+        "undefined": [
+          "_ep7_capture_scope_native_return",
+          "_ep7_wait_scope_native_return",
+          "_ep7q_capture_scope_init",
+          "_ep7q_capture_snapshot_unresolved",
+          "_ep7q_producer_context_unresolved",
+          "_ep7q_producer_layout",
+          "_ep7q_producer_send",
+          "_ep7q_send_local_preserving",
+          "_ep7q_wait_producer_layout"
+        ],
+        "text_data_bss": [
+          227,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/native/producer_binding.c:6:6:ep7q_capture_scope_entry\t52\tstatic",
+          "snapshot_transport/native/producer_binding.c:13:5:ep7q_producer_entry\t100\tstatic"
+        ]
+      },
+      "snapshot_transport/native/producer_bridge.s": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_bridge.s",
+        "definitions": {
+          "_ep7_capture_scope_native_return": "T",
+          "ep7_native_capture_scope_bridge": "T",
+          "ep7_native_producer_send_bridge": "T"
+        },
+        "undefined": [
+          "_ep7q_capture_scope_entry",
+          "_ep7q_producer_entry",
+          "ep7_stock_command_send_unresolved",
+          "ep7_stock_kind19_metadata_producer_unresolved"
+        ],
+        "text_data_bss": [
+          81,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "snapshot_transport/native/producer_layout.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/producer_layout.c",
+        "definitions": {
+          "_ep7q_producer_layout": "T",
+          "_ep7q_wait_pop_layout": "T",
+          "_ep7q_wait_producer_layout": "T"
+        },
+        "undefined": [
+          "_ep7q_stack_span",
+          "_ep7q_stack_word",
+          "_memcpy"
+        ],
+        "text_data_bss": [
+          1014,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/native/producer_layout.c:4:6:ep7q_producer_layout\t52\tstatic",
+          "snapshot_transport/native/producer_layout.c:24:6:ep7q_wait_pop_layout\t40\tstatic",
+          "snapshot_transport/native/producer_layout.c:37:6:ep7q_wait_producer_layout\t48\tstatic"
+        ]
+      },
+      "snapshot_transport/native/queue_bridges.s": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/queue_bridges.s",
+        "definitions": {
+          "_ep7_gcc_queue_receive_local": "T",
+          "_ep7_gcc_queue_send_local": "T",
+          "_ep7_gcc_queue_send_preserving_hooks": "T",
+          "_ep7_queue_named_send_native_return": "T",
+          "_ep7_queue_raw_send_native_return": "T",
+          "_ep7_queue_receive_native_return": "T"
+        },
+        "undefined": [
+          "ep7_stock_queue_receive_local_unresolved",
+          "ep7_stock_queue_send_local_unresolved",
+          "ep7_stock_queue_send_preserving_unresolved"
+        ],
+        "text_data_bss": [
+          66,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "snapshot_transport/native/queue_send_binding.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/queue_send_binding.c",
+        "definitions": {
+          "_ep7q_send_local_preserving": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_queue_send_preserving_hooks"
+        ],
+        "text_data_bss": [
+          33,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/native/queue_send_binding.c:2:5:ep7q_send_local_preserving\t20\tstatic"
+        ]
+      },
+      "snapshot_transport/native/stack.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/stack.c",
+        "definitions": {
+          "_ep7q_stack_span": "T",
+          "_ep7q_stack_word": "T"
+        },
+        "undefined": [],
+        "text_data_bss": [
+          183,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/native/stack.c:2:22:ep7q_stack_span\t12\tstatic",
+          "snapshot_transport/native/stack.c:12:6:ep7q_stack_word\t12\tstatic"
+        ]
+      },
+      "snapshot_transport/native/worker_binding.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_binding.c",
+        "definitions": {
+          "_ep7q_worker_allocate_entry": "T",
+          "_ep7q_worker_cleanup_entry": "T",
+          "_ep7q_worker_process_entry": "T",
+          "_ep7q_worker_scope_entry": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_job_allocate",
+          "_ep7_worker_native_return",
+          "_ep7j_allocate",
+          "_ep7j_begin",
+          "_ep7j_register",
+          "_ep7j_revoke",
+          "_ep7q_owned_context_lost",
+          "_ep7q_stack_word",
+          "_ep7q_worker_context_unresolved",
+          "_ep7q_worker_layout",
+          "_memset"
+        ],
+        "text_data_bss": [
+          561,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/native/worker_binding.c:27:14:native_allocate\t12\tstatic",
+          "snapshot_transport/native/worker_binding.c:15:6:ep7q_worker_scope_entry\t88\tstatic",
+          "snapshot_transport/native/worker_binding.c:29:7:ep7q_worker_allocate_entry\t84\tstatic",
+          "snapshot_transport/native/worker_binding.c:35:6:ep7q_worker_process_entry\t84\tstatic",
+          "snapshot_transport/native/worker_binding.c:42:6:ep7q_worker_cleanup_entry\t80\tstatic"
+        ]
+      },
+      "snapshot_transport/native/worker_bridges.s": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_bridges.s",
+        "definitions": {
+          "_ep7_gcc_job_allocate": "T",
+          "_ep7_worker_native_return": "T",
+          "ep7_native_worker_allocate_bridge": "T",
+          "ep7_native_worker_cleanup_bridge": "T",
+          "ep7_native_worker_process_bridge": "T",
+          "ep7_native_worker_scope_bridge": "T"
+        },
+        "undefined": [
+          "_ep7q_worker_allocate_entry",
+          "_ep7q_worker_cleanup_entry",
+          "_ep7q_worker_process_entry",
+          "_ep7q_worker_scope_entry",
+          "ep7_stock_job_allocate_unresolved",
+          "ep7_stock_worker_cleanup_unresolved",
+          "ep7_stock_worker_job_unresolved",
+          "ep7_stock_worker_process_unresolved"
+        ],
+        "text_data_bss": [
+          162,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "snapshot_transport/native/worker_layout.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/native/worker_layout.c",
+        "definitions": {
+          "_ep7q_worker_layout": "T"
+        },
+        "undefined": [
+          "_ep7q_stack_span",
+          "_ep7q_stack_word"
+        ],
+        "text_data_bss": [
+          419,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/native/worker_layout.c:2:6:ep7q_worker_layout\t56\tstatic"
+        ]
+      },
+      "snapshot_transport/owned_io.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/owned_io.c",
+        "definitions": {
+          "_ep7q_command_receive": "T",
+          "_ep7q_descriptor_receive": "T",
+          "_ep7q_descriptor_send": "T"
+        },
+        "undefined": [
+          "_ep7w_decode",
+          "_ep7w_encode",
+          "_ep7w_retirement_ticket",
+          "_ep7w_ticket",
+          "_ep7w_write_trailer",
+          "_memcpy",
+          "_memset"
+        ],
+        "text_data_bss": [
+          1114,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/owned_io.c:13:13:qualify\t24\tstatic",
+          "snapshot_transport/owned_io.c:18:13:ep7q_command_receive\t220\tstatic",
+          "snapshot_transport/owned_io.c:33:13:ep7q_descriptor_receive\t104\tstatic",
+          "snapshot_transport/owned_io.c:48:13:ep7q_descriptor_send\t400\tstatic"
+        ]
+      },
+      "snapshot_transport/producer.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/producer.c",
+        "definitions": {
+          "_ep7q_capture_scope_init": "T",
+          "_ep7q_producer_send": "T"
+        },
+        "undefined": [
+          "_ep7t_prepare",
+          "_ep7t_publish",
+          "_ep7w_encode",
+          "_memcpy",
+          "_memset"
+        ],
+        "text_data_bss": [
+          399,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/producer.c:5:6:ep7q_capture_scope_init\t28\tstatic",
+          "snapshot_transport/producer.c:11:5:ep7q_producer_send\t80\tstatic"
+        ]
+      },
+      "snapshot_transport/transport.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/transport.c",
+        "definitions": {
+          "_ep7t_claim": "T",
+          "_ep7t_init": "T",
+          "_ep7t_invalidate_all": "T",
+          "_ep7t_prepare": "T",
+          "_ep7t_publish": "T",
+          "_ep7t_retire": "T",
+          "_ep7t_retire_owned": "T"
+        },
+        "undefined": [
+          "_memcpy",
+          "_memset"
+        ],
+        "text_data_bss": [
+          1029,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/transport.c:15:6:ep7t_init\t24\tstatic",
+          "snapshot_transport/transport.c:21:6:ep7t_prepare\t52\tstatic",
+          "snapshot_transport/transport.c:37:6:ep7t_publish\t32\tstatic",
+          "snapshot_transport/transport.c:45:6:ep7t_claim\t36\tstatic",
+          "snapshot_transport/transport.c:56:6:ep7t_retire\t40\tstatic",
+          "snapshot_transport/transport.c:64:6:ep7t_invalidate_all\t24\tstatic",
+          "snapshot_transport/transport.c:70:6:ep7t_retire_owned\t36\tstatic"
+        ]
+      },
+      "snapshot_transport/wire.c": {
+        "source": "prototypes/ep7_volatile_hl/snapshot_transport/wire.c",
+        "definitions": {
+          "_ep7w_decode": "T",
+          "_ep7w_encode": "T",
+          "_ep7w_mark_consumed": "T",
+          "_ep7w_retirement_ticket": "T",
+          "_ep7w_ticket": "T",
+          "_ep7w_write_trailer": "T"
+        },
+        "undefined": [
+          "_memcpy",
+          "_memset"
+        ],
+        "text_data_bss": [
+          1062,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "snapshot_transport/wire.c:13:13:route_ok\t0\tstatic",
+          "snapshot_transport/wire.c:18:6:ep7w_write_trailer\t32\tstatic",
+          "snapshot_transport/wire.c:26:6:ep7w_encode\t44\tstatic",
+          "snapshot_transport/wire.c:42:5:ep7w_ticket\t28\tstatic",
+          "snapshot_transport/wire.c:55:5:ep7w_decode\t36\tstatic",
+          "snapshot_transport/wire.c:66:6:ep7w_retirement_ticket\t16\tstatic",
+          "snapshot_transport/wire.c:79:6:ep7w_mark_consumed\t0\tstatic"
+        ]
+      },
+      "target/cold_clear.s": {
+        "source": "prototypes/ep7_volatile_hl/target/cold_clear.s",
+        "definitions": {
+          "ep7_native_cold_clear": "T"
+        },
+        "undefined": [
+          "__ep7_private_uncached_start",
+          "ep7_stock_boot_after_clear_unresolved",
+          "ep7_stock_boot_next_copy_end_unresolved"
+        ],
+        "text_data_bss": [
+          53,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "target/far_call.c": {
+        "source": "prototypes/ep7_volatile_hl/target/far_call.c",
+        "definitions": {
+          "_ep7n_far_call_present": "T"
+        },
+        "undefined": [],
+        "text_data_bss": [
+          434,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "target/far_call.c:6:6:ep7n_far_call_present\t20\tstatic"
+        ]
+      },
+      "target/get_tid_bridge.s": {
+        "source": "prototypes/ep7_volatile_hl/target/get_tid_bridge.s",
+        "definitions": {
+          "_ep7_gcc_get_tid": "T"
+        },
+        "undefined": [
+          "ep7_stock_get_tid_unresolved"
+        ],
+        "text_data_bss": [
+          17,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "target/memory.c": {
+        "source": "prototypes/ep7_volatile_hl/target/memory.c",
+        "definitions": {
+          "_memcpy": "T",
+          "_memset": "T"
+        },
+        "undefined": [],
+        "text_data_bss": [
+          49,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "target/memory.c:8:7:memcpy\t4\tstatic",
+          "target/memory.c:18:7:memset\t0\tstatic"
+        ]
+      },
+      "target/postbuilder/cohort.c": {
+        "source": "prototypes/ep7_volatile_hl/target/postbuilder/cohort.c",
+        "definitions": {
+          "_ep7n_postbuilder_cohort_present": "T"
+        },
+        "undefined": [
+          "_ep7n_far_call_present",
+          "ep7_native_postbuilder_bridge",
+          "ep7_postbuilder_far_calls",
+          "ep7_postbuilder_far_calls_end"
+        ],
+        "text_data_bss": [
+          65,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "target/postbuilder/cohort.c:6:6:ep7n_postbuilder_cohort_present\t32\tstatic"
+        ]
+      },
+      "target/postbuilder/far_calls.s": {
+        "source": "prototypes/ep7_volatile_hl/target/postbuilder/far_calls.s",
+        "definitions": {
+          "ep7_postbuilder_far_603b02d9": "T",
+          "ep7_postbuilder_far_calls": "T",
+          "ep7_postbuilder_far_calls_end": "T"
+        },
+        "undefined": [
+          "ep7_native_postbuilder_bridge"
+        ],
+        "text_data_bss": [
+          30,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "target/postbuilder/native_observer.c": {
+        "source": "prototypes/ep7_volatile_hl/target/postbuilder/native_observer.c",
+        "definitions": {
+          "_ep7_gcc_postbuilder_observer": "T"
+        },
+        "undefined": [
+          "_ep7_native_runtime_slot",
+          "_ep7n_postbuilder_cohort_present",
+          "_ep7r_apply"
+        ],
+        "text_data_bss": [
+          103,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "target/postbuilder/native_observer.c:20:6:ep7_gcc_postbuilder_observer\t32\tstatic"
+        ]
+      },
+      "target/postbuilder/postbuilder_bridge.s": {
+        "source": "prototypes/ep7_volatile_hl/target/postbuilder/postbuilder_bridge.s",
+        "definitions": {
+          "ep7_native_postbuilder_bridge": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_postbuilder_observer",
+          "ep7_stock_color_builder_unresolved"
+        ],
+        "text_data_bss": [
+          43,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "text_lifecycle/attach_bind.s": {
+        "source": "prototypes/ep7_volatile_hl/text_lifecycle/attach_bind.s",
+        "definitions": {
+          "_ep7_gcc_text_bind": "T",
+          "_ep7_gcc_ui_attach": "T"
+        },
+        "undefined": [
+          "ep7_stock_text_bind_unresolved",
+          "ep7_stock_ui_attach_unresolved"
+        ],
+        "text_data_bss": [
+          34,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "text_lifecycle/find_child.s": {
+        "source": "prototypes/ep7_volatile_hl/text_lifecycle/find_child.s",
+        "definitions": {
+          "_ep7_gcc_ui_find_child": "T"
+        },
+        "undefined": [
+          "ep7_stock_ui_find_child_unresolved"
+        ],
+        "text_data_bss": [
+          32,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "text_lifecycle/lifecycle.c": {
+        "source": "prototypes/ep7_volatile_hl/text_lifecycle/lifecycle.c",
+        "definitions": {
+          "_ep7_text_create_attach": "T",
+          "_ep7_text_revoke": "T"
+        },
+        "undefined": [],
+        "text_data_bss": [
+          228,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "text_lifecycle/lifecycle.c:2:5:ep7_text_create_attach\t36\tstatic",
+          "text_lifecycle/lifecycle.c:30:6:ep7_text_revoke\t0\tstatic"
+        ]
+      },
+      "text_lifecycle/native_create.s": {
+        "source": "prototypes/ep7_volatile_hl/text_lifecycle/native_create.s",
+        "definitions": {
+          "_ep7_gcc_text_factory": "T"
+        },
+        "undefined": [
+          "ep7_stock_ui_context_get_unresolved",
+          "ep7_stock_ui_context_set_unresolved",
+          "ep7_stock_ui_service_unresolved",
+          "ep7_stock_widget_factory_unresolved"
+        ],
+        "text_data_bss": [
+          83,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "text_lifecycle/native_lifecycle.c": {
+        "source": "prototypes/ep7_volatile_hl/text_lifecycle/native_lifecycle.c",
+        "definitions": {
+          "_ep7_text_native_open": "T",
+          "_ep7_text_native_retry_rollback": "T",
+          "_ep7_text_native_revoke": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_set_text_unresolved_binding",
+          "_ep7_gcc_text_bind",
+          "_ep7_gcc_text_factory",
+          "_ep7_gcc_ui_attach",
+          "_ep7_gcc_ui_context_exchange",
+          "_ep7_gcc_ui_context_select",
+          "_ep7_gcc_ui_find_child",
+          "_ep7_gcc_ui_service",
+          "_ep7_text_create_attach",
+          "_ep7_text_revoke",
+          "_ep7_text_rollback_native",
+          "_ep7n_native_current_task"
+        ],
+        "text_data_bss": [
+          925,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "text_lifecycle/native_lifecycle.c:16:12:fresh\t0\tstatic",
+          "text_lifecycle/native_lifecycle.c:28:12:initialized\t0\tstatic",
+          "text_lifecycle/native_lifecycle.c:55:12:set\t12\tstatic",
+          "text_lifecycle/native_lifecycle.c:47:12:bind\t20\tstatic",
+          "text_lifecycle/native_lifecycle.c:40:12:attach\t16\tstatic",
+          "text_lifecycle/native_lifecycle.c:33:13:destroy\t20\tstatic",
+          "text_lifecycle/native_lifecycle.c:21:14:create\t20\tstatic",
+          "text_lifecycle/native_lifecycle.c:58:5:ep7_text_native_open\t80\tstatic",
+          "text_lifecycle/native_lifecycle.c:87:5:ep7_text_native_retry_rollback\t24\tstatic",
+          "text_lifecycle/native_lifecycle.c:94:5:ep7_text_native_revoke\t20\tstatic"
+        ]
+      },
+      "text_lifecycle/native_resource.c": {
+        "source": "prototypes/ep7_volatile_hl/text_lifecycle/native_resource.c",
+        "definitions": {
+          "_ep7_text_resource_prepare": "T"
+        },
+        "undefined": [
+          "_ep7_stock_hl_text_descriptor_unresolved",
+          "_ep7_stock_hl_text_layouts_unresolved"
+        ],
+        "text_data_bss": [
+          72,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "text_lifecycle/native_resource.c:8:6:ep7_text_resource_prepare\t8\tstatic"
+        ]
+      },
+      "text_rollback/cleanup_destroy.s": {
+        "source": "prototypes/ep7_volatile_hl/text_rollback/cleanup_destroy.s",
+        "definitions": {
+          "_ep7_gcc_text_cleanup_destroy_unresolved": "T"
+        },
+        "undefined": [
+          "ep7_stock_text_cleanup_unresolved",
+          "ep7_stock_text_destructor_unresolved"
+        ],
+        "text_data_bss": [
+          35,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "text_rollback/context_bridges.s": {
+        "source": "prototypes/ep7_volatile_hl/text_rollback/context_bridges.s",
+        "definitions": {
+          "_ep7_gcc_ui_context_exchange": "T",
+          "_ep7_gcc_ui_context_select": "T",
+          "_ep7_gcc_ui_service": "T"
+        },
+        "undefined": [
+          "ep7_stock_ui_context_get_unresolved",
+          "ep7_stock_ui_context_set_unresolved",
+          "ep7_stock_ui_service_unresolved"
+        ],
+        "text_data_bss": [
+          86,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "text_rollback/native_context.c": {
+        "source": "prototypes/ep7_volatile_hl/text_rollback/native_context.c",
+        "definitions": {
+          "_ep7_text_rollback_native": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_ui_context_exchange",
+          "_ep7_gcc_ui_context_select",
+          "_ep7_gcc_ui_service",
+          "_ep7_text_rollback",
+          "_ep7n_native_current_task"
+        ],
+        "text_data_bss": [
+          348,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "text_rollback/native_context.c:40:13:restore\t12\tstatic",
+          "text_rollback/native_context.c:16:12:qualify\t28\tstatic",
+          "text_rollback/native_context.c:29:12:enter\t44\tstatic",
+          "text_rollback/native_context.c:47:5:ep7_text_rollback_native\t60\tstatic"
+        ]
+      },
+      "text_rollback/rollback.c": {
+        "source": "prototypes/ep7_volatile_hl/text_rollback/rollback.c",
+        "definitions": {
+          "_ep7_text_rollback": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_text_cleanup_destroy_unresolved"
+        ],
+        "text_data_bss": [
+          217,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "text_rollback/rollback.c:4:5:ep7_text_rollback\t36\tstatic"
+        ]
+      },
+      "text_viewer/set_text.s": {
+        "source": "prototypes/ep7_volatile_hl/text_viewer/set_text.s",
+        "definitions": {
+          "_ep7_gcc_set_text_unresolved_binding": "T"
+        },
+        "undefined": [
+          "ep7_stock_text_setter_unresolved"
+        ],
+        "text_data_bss": [
+          17,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "text_viewer/text.c": {
+        "source": "prototypes/ep7_volatile_hl/text_viewer/text.c",
+        "definitions": {
+          "_ep7_text_format": "T",
+          "_ep7_text_present": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_set_text_unresolved_binding"
+        ],
+        "text_data_bss": [
+          432,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "text_viewer/text.c:3:8:ep7_text_format\t36\tstatic",
+          "text_viewer/text.c:28:5:ep7_text_present\t40\tstatic"
+        ]
+      },
+      "ui_content/bridges.s": {
+        "source": "prototypes/ep7_volatile_hl/ui_content/bridges.s",
+        "definitions": {
+          "_ep7_gcc_mvc_base_init": "T",
+          "_ep7_gcc_mvc_dispose": "T",
+          "_ep7_gcc_mvc_scalar_new": "T",
+          "_ep7_gcc_mvc_stock_rebuild": "T",
+          "ep7_native_content_destroy_bridge": "T",
+          "ep7_native_content_null": "T",
+          "ep7_native_content_rebuild_bridge": "T",
+          "ep7_native_content_vtable": "R",
+          "ep7_native_content_zero": "T"
+        },
+        "undefined": [
+          "_ep7c_before_destroy",
+          "_ep7c_rebuild",
+          "ep7_stock_mvc_base_destroy_unresolved",
+          "ep7_stock_mvc_base_init_unresolved",
+          "ep7_stock_mvc_rebuild_unresolved",
+          "ep7_stock_mvc_scalar_delete_unresolved",
+          "ep7_stock_mvc_scalar_new_unresolved"
+        ],
+        "text_data_bss": [
+          203,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "ui_content/content.c": {
+        "source": "prototypes/ep7_volatile_hl/ui_content/content.c",
+        "definitions": {
+          "_ep7_native_content": "B",
+          "_ep7c_before_destroy": "T",
+          "_ep7c_rebuild": "T",
+          "_ep7c_require_owned": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_mvc_base_init",
+          "_ep7_gcc_mvc_dispose",
+          "_ep7_gcc_mvc_scalar_new",
+          "_ep7_gcc_mvc_stock_rebuild",
+          "_ep7_gcc_quarantine",
+          "_ep7_native_mvc",
+          "_ep7_stock_selector_remembered_unresolved",
+          "_ep7c_stop_transition",
+          "_ep7c_to_stock_held",
+          "_ep7cm_revoke",
+          "_ep7g_reconcile_held",
+          "_ep7m_hold_content",
+          "_ep7m_release_content",
+          "_ep7m_require_context",
+          "_memset",
+          "ep7_native_content_vtable"
+        ],
+        "text_data_bss": [
+          650,
+          0,
+          8
+        ],
+        "stack_usage": [
+          "ui_content/content.c:23:6:ep7c_require_owned\t16\tstatic",
+          "ui_content/content.c:30:6:ep7c_rebuild\t40\tstatic",
+          "ui_content/content.c:72:6:ep7c_before_destroy\t20\tstatic"
+        ]
+      },
+      "ui_content/stock.c": {
+        "source": "prototypes/ep7_volatile_hl/ui_content/stock.c",
+        "definitions": {
+          "_ep7c_stock_supported": "T",
+          "_ep7c_stop_transition": "T",
+          "_ep7c_to_stock_held": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_mvc_dispose",
+          "_ep7_gcc_mvc_stock_create",
+          "_ep7_gcc_mvc_stock_selected",
+          "_ep7_gcc_mvc_transition_timers",
+          "_ep7_gcc_quarantine",
+          "_ep7_native_mvc",
+          "_ep7_stock_mvc_category_keys_unresolved",
+          "_ep7_stock_selector_remembered_unresolved",
+          "_ep7_stock_ui_active_content_unresolved",
+          "_ep7_stock_ui_input_gate_unresolved",
+          "_ep7c_require_owned",
+          "_ep7m_current"
+        ],
+        "text_data_bss": [
+          595,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "ui_content/stock.c:19:5:ep7c_stock_supported\t4\tstatic",
+          "ui_content/stock.c:21:6:ep7c_stop_transition\t16\tstatic",
+          "ui_content/stock.c:27:5:ep7c_to_stock_held\t44\tstatic"
+        ]
+      },
+      "ui_content/stock_bridges.s": {
+        "source": "prototypes/ep7_volatile_hl/ui_content/stock_bridges.s",
+        "definitions": {
+          "_ep7_gcc_mvc_stock_create": "T",
+          "_ep7_gcc_mvc_stock_selected": "T",
+          "_ep7_gcc_mvc_transition_timers": "T"
+        },
+        "undefined": [
+          "ep7_stock_mvc_creator0_unresolved",
+          "ep7_stock_mvc_creator14_unresolved",
+          "ep7_stock_mvc_creator7_unresolved",
+          "ep7_stock_mvc_stock_selected_unresolved",
+          "ep7_stock_mvc_stop535_unresolved",
+          "ep7_stock_ui_timer_cancel_unresolved"
+        ],
+        "text_data_bss": [
+          93,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "ui_gate/gate.c": {
+        "source": "prototypes/ep7_volatile_hl/ui_gate/gate.c",
+        "definitions": {
+          "_ep7_native_ui_gate": "B",
+          "_ep7g_before_event": "T",
+          "_ep7g_reconcile_held": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_quarantine",
+          "_ep7_gcc_ui_public_mode",
+          "_ep7_native_mvc",
+          "_ep7_native_ui_owner",
+          "_ep7_stock_selector_initializer_unresolved",
+          "_ep7_stock_selector_remembered_unresolved",
+          "_ep7c_stock_supported",
+          "_ep7c_stop_transition",
+          "_ep7c_to_stock_held",
+          "_ep7cm_available_held",
+          "_ep7cm_revoke",
+          "_ep7i_native_cohort_present",
+          "_ep7m_current",
+          "_ep7m_hold_content",
+          "_ep7m_release_content",
+          "_ep7u_hold_ready",
+          "_ep7u_release_ready",
+          "_ep7v_clear",
+          "_ep7v_refresh_held",
+          "ep7_native_selector_init_bridge"
+        ],
+        "text_data_bss": [
+          923,
+          0,
+          12
+        ],
+        "stack_usage": [
+          "ui_gate/gate.c:16:10:ep7g_reconcile_held\t52\tstatic",
+          "ui_gate/gate.c:54:5:ep7g_before_event\t24\tstatic"
+        ]
+      },
+      "ui_model/model.c": {
+        "source": "prototypes/ep7_volatile_hl/ui_model/model.c",
+        "definitions": {
+          "_ep7_native_ui_model": "B",
+          "_ep7cm_available_held": "T",
+          "_ep7cm_frame_held": "T",
+          "_ep7cm_revoke": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_quarantine",
+          "_ep7_gcc_ui_public_mode",
+          "_ep7_native_mvc",
+          "_ep7_native_runtime_slot",
+          "_ep7c_require_owned",
+          "_ep7m_current",
+          "_ep7p_ui_init",
+          "_ep7p_ui_ops",
+          "_ep7r_accepting",
+          "_ep7r_get"
+        ],
+        "text_data_bss": [
+          665,
+          0,
+          68
+        ],
+        "stack_usage": [
+          "ui_model/model.c:5:6:ep7cm_revoke\t20\tstatic",
+          "ui_model/model.c:11:5:ep7cm_available_held\t28\tstatic",
+          "ui_model/model.c:25:5:ep7cm_frame_held\t60\tstatic"
+        ]
+      },
+      "ui_model/public_mode.s": {
+        "source": "prototypes/ep7_volatile_hl/ui_model/public_mode.s",
+        "definitions": {
+          "_ep7_gcc_ui_public_mode": "T"
+        },
+        "undefined": [
+          "ep7_stock_property_service_unresolved"
+        ],
+        "text_data_bss": [
+          36,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "ui_mvc/bridges.s": {
+        "source": "prototypes/ep7_volatile_hl/ui_mvc/bridges.s",
+        "definitions": {
+          "ep7_native_mvc_gui_entry_bridge": "T",
+          "ep7_native_mvc_gui_exit_bridge": "T",
+          "ep7_native_mvc_parent_destroy_bridge": "T",
+          "ep7_native_mvc_viewer_destroy_bridge": "T"
+        },
+        "undefined": [
+          "_ep7m_before_gui_exit",
+          "_ep7m_before_parent_destroy",
+          "_ep7m_before_viewer_destroy",
+          "_ep7m_gui_begin",
+          "_ep7m_gui_complete",
+          "ep7_stock_mvc_gui_entry_unresolved",
+          "ep7_stock_mvc_gui_exit_unresolved",
+          "ep7_stock_mvc_parent_destroy_unresolved",
+          "ep7_stock_mvc_viewer_destroy_unresolved"
+        ],
+        "text_data_bss": [
+          183,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "ui_mvc/cohort.c": {
+        "source": "prototypes/ep7_volatile_hl/ui_mvc/cohort.c",
+        "definitions": {
+          "_ep7m_native_cohort_present": "T"
+        },
+        "undefined": [
+          "_ep7_stock_gui_color_entry_unresolved",
+          "_ep7_stock_gui_color_exit_unresolved",
+          "_ep7_stock_mvc_parent_vtable_unresolved",
+          "_ep7_stock_mvc_rebuild_initial_call_unresolved",
+          "_ep7_stock_mvc_rebuild_next_call_unresolved",
+          "_ep7_stock_mvc_rebuild_previous_call_unresolved",
+          "_ep7_stock_mvc_rebuild_touch_call_unresolved",
+          "_ep7_stock_mvc_viewer_vtable_unresolved",
+          "_ep7n_far_call_present",
+          "ep7_mvc_far_calls",
+          "ep7_mvc_far_calls_end",
+          "ep7_native_content_rebuild_bridge",
+          "ep7_native_mvc_gui_entry_bridge",
+          "ep7_native_mvc_gui_exit_bridge",
+          "ep7_native_mvc_parent_destroy_bridge",
+          "ep7_native_mvc_viewer_destroy_bridge",
+          "ep7_native_ui_viewer_bridge"
+        ],
+        "text_data_bss": [
+          212,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "ui_mvc/cohort.c:19:12:rebuild_call\t36\tstatic",
+          "ui_mvc/cohort.c:25:5:ep7m_native_cohort_present\t12\tstatic"
+        ]
+      },
+      "ui_mvc/far_calls.s": {
+        "source": "prototypes/ep7_volatile_hl/ui_mvc/far_calls.s",
+        "definitions": {
+          "ep7_mvc_far_60e261d4": "T",
+          "ep7_mvc_far_60e26201": "T",
+          "ep7_mvc_far_60e26226": "T",
+          "ep7_mvc_far_60e269f0": "T",
+          "ep7_mvc_far_calls": "T",
+          "ep7_mvc_far_calls_end": "T"
+        },
+        "undefined": [
+          "ep7_native_content_rebuild_bridge"
+        ],
+        "text_data_bss": [
+          120,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "ui_mvc/lifetime.c": {
+        "source": "prototypes/ep7_volatile_hl/ui_mvc/lifetime.c",
+        "definitions": {
+          "_ep7_native_mvc": "B",
+          "_ep7m_before_gui_exit": "T",
+          "_ep7m_before_parent_destroy": "T",
+          "_ep7m_before_viewer_destroy": "T",
+          "_ep7m_current": "T",
+          "_ep7m_gui_begin": "T",
+          "_ep7m_gui_complete": "T",
+          "_ep7m_hold_content": "T",
+          "_ep7m_release_content": "T",
+          "_ep7m_require_context": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_quarantine",
+          "_ep7_stock_color_container_unresolved",
+          "_ep7cm_revoke",
+          "_ep7m_native_cohort_present",
+          "_ep7n_native_current_task",
+          "_ep7s_categories",
+          "_ep7v_clear",
+          "_ep7v_invalidate",
+          "_ep7v_refresh"
+        ],
+        "text_data_bss": [
+          2053,
+          0,
+          76
+        ],
+        "stack_usage": [
+          "ui_mvc/lifetime.c:42:12:selector_shape\t8\tstatic",
+          "ui_mvc/lifetime.c:100:13:retire.part.0\t20\tstatic",
+          "ui_mvc/lifetime.c:26:13:require_live.constprop\t32\tstatic",
+          "ui_mvc/lifetime.c:51:6:ep7m_gui_begin\t36\tstatic",
+          "ui_mvc/lifetime.c:66:6:ep7m_gui_complete\t32\tstatic",
+          "ui_mvc/lifetime.c:90:6:ep7m_before_gui_exit\t16\tstatic",
+          "ui_mvc/lifetime.c:109:6:ep7m_before_parent_destroy\t16\tstatic",
+          "ui_mvc/lifetime.c:110:6:ep7m_before_viewer_destroy\t16\tstatic",
+          "ui_mvc/lifetime.c:111:29:ep7m_current\t20\tstatic",
+          "ui_mvc/lifetime.c:131:6:ep7m_require_context\t12\tstatic",
+          "ui_mvc/lifetime.c:137:23:ep7m_hold_content\t16\tstatic",
+          "ui_mvc/lifetime.c:149:6:ep7m_release_content\t12\tstatic"
+        ]
+      },
+      "ui_native/bridge.c": {
+        "source": "prototypes/ep7_volatile_hl/ui_native/bridge.c",
+        "definitions": {
+          "_ep7_gcc_ui_route": "T"
+        },
+        "undefined": [
+          "_ep7_native_mvc",
+          "_ep7_native_ui_input_scope",
+          "_ep7g_before_event",
+          "_ep7i_route"
+        ],
+        "text_data_bss": [
+          134,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "ui_native/bridge.c:5:10:ep7_gcc_ui_route\t16\tstatic"
+        ]
+      },
+      "ui_native/bridge.s": {
+        "source": "prototypes/ep7_volatile_hl/ui_native/bridge.s",
+        "definitions": {
+          "ep7_native_ui_event_bridge": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_ui_route",
+          "ep7_stock_ui_event_unresolved"
+        ],
+        "text_data_bss": [
+          52,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "ui_native/cohort.c": {
+        "source": "prototypes/ep7_volatile_hl/ui_native/cohort.c",
+        "definitions": {
+          "_ep7i_native_cohort_present": "T"
+        },
+        "undefined": [
+          "_ep7_stock_mvc_parent_vtable_unresolved",
+          "_ep7_stock_ui_dispatch_call_unresolved",
+          "_ep7_stock_ui_preprocess_call_unresolved",
+          "_ep7_stock_ui_wheel_0_call_unresolved",
+          "_ep7_stock_ui_wheel_1_call_unresolved",
+          "_ep7_stock_ui_wheel_2_call_unresolved",
+          "_ep7_stock_ui_wheel_3_call_unresolved",
+          "_ep7_stock_ui_wheel_4_call_unresolved",
+          "_ep7n_far_call_present",
+          "ep7_input_far_calls",
+          "ep7_input_far_calls_end",
+          "ep7_native_ui_dispatch_bridge",
+          "ep7_native_ui_event_bridge",
+          "ep7_native_ui_preprocess_bridge",
+          "ep7_native_ui_wheel_sample_bridge"
+        ],
+        "text_data_bss": [
+          406,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "ui_native/cohort.c:23:12:sample_call\t36\tstatic",
+          "ui_native/cohort.c:29:5:ep7i_native_cohort_present\t44\tstatic"
+        ]
+      },
+      "ui_native/far_calls.s": {
+        "source": "prototypes/ep7_volatile_hl/ui_native/far_calls.s",
+        "definitions": {
+          "ep7_input_far_60ea0070": "T",
+          "ep7_input_far_60ea00f7": "T",
+          "ep7_input_far_60ea0d70": "T",
+          "ep7_input_far_60ea0deb": "T",
+          "ep7_input_far_60ea0e66": "T",
+          "ep7_input_far_calls": "T",
+          "ep7_input_far_calls_end": "T"
+        },
+        "undefined": [
+          "ep7_native_ui_wheel_sample_bridge"
+        ],
+        "text_data_bss": [
+          150,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "ui_native/input.c": {
+        "source": "prototypes/ep7_volatile_hl/ui_native/input.c",
+        "definitions": {
+          "_ep7_native_ui_input_scope": "B",
+          "_ep7i_dispatch_begin": "T",
+          "_ep7i_dispatch_end": "T",
+          "_ep7i_prepare_begin": "T",
+          "_ep7i_prepare_end": "T",
+          "_ep7i_route": "T",
+          "_ep7i_sample_wheel": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_quarantine",
+          "_ep7_gcc_ui_drop_info",
+          "_ep7_native_mvc",
+          "_ep7_native_ui_model",
+          "_ep7_native_ui_receipt",
+          "_ep7_stock_gui_machine_unresolved",
+          "_ep7_stock_ui_input_gate_unresolved",
+          "_ep7_stock_ui_repeat_context_unresolved",
+          "_ep7cm_frame_held",
+          "_ep7i_native_cohort_present",
+          "_ep7m_current",
+          "_ep7m_hold_content",
+          "_ep7m_release_content",
+          "_ep7n_native_current_task",
+          "_ep7p_ui_raw_dispatch",
+          "_ep7u_hold_ready",
+          "_ep7u_release_ready",
+          "_ep7v_refresh"
+        ],
+        "text_data_bss": [
+          1918,
+          0,
+          68
+        ],
+        "stack_usage": [
+          "ui_native/input.c:23:13:current_task.constprop\t32\tstatic",
+          "ui_native/input.c:32:6:ep7i_prepare_begin\t16\tstatic",
+          "ui_native/input.c:43:6:ep7i_sample_wheel\t24\tstatic",
+          "ui_native/input.c:64:6:ep7i_prepare_end\t24\tstatic",
+          "ui_native/input.c:80:10:ep7i_dispatch_begin\t16\tstatic",
+          "ui_native/input.c:93:6:ep7i_dispatch_end\t16\tstatic",
+          "ui_native/input.c:101:10:ep7i_route\t100\tstatic"
+        ]
+      },
+      "ui_native/input_bridges.s": {
+        "source": "prototypes/ep7_volatile_hl/ui_native/input_bridges.s",
+        "definitions": {
+          "_ep7_gcc_ui_drop_info": "T",
+          "ep7_native_ui_dispatch_bridge": "T",
+          "ep7_native_ui_preprocess_bridge": "T",
+          "ep7_native_ui_wheel_sample_bridge": "T"
+        },
+        "undefined": [
+          "_ep7i_dispatch_begin",
+          "_ep7i_dispatch_end",
+          "_ep7i_prepare_begin",
+          "_ep7i_prepare_end",
+          "_ep7i_sample_wheel",
+          "ep7_stock_ui_dispatch_unresolved",
+          "ep7_stock_ui_drop_event_unresolved",
+          "ep7_stock_ui_preprocess_unresolved",
+          "ep7_stock_ui_wheel_set_unresolved"
+        ],
+        "text_data_bss": [
+          222,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "ui_owner/bridges.s": {
+        "source": "prototypes/ep7_volatile_hl/ui_owner/bridges.s",
+        "definitions": {
+          "ep7_native_ui_owner_bulk_bridge": "T",
+          "ep7_native_ui_owner_cleanup_bridge": "T",
+          "ep7_native_ui_owner_destructor_bridge": "T",
+          "ep7_native_ui_screen_bridge": "T"
+        },
+        "undefined": [
+          "_ep7u_before_retire",
+          "_ep7u_screen_enter",
+          "_ep7u_screen_leave",
+          "ep7_stock_screen_manager_unresolved",
+          "ep7_stock_ui_owner_bulk_unresolved",
+          "ep7_stock_ui_owner_cleanup_unresolved",
+          "ep7_stock_ui_owner_destructor_unresolved"
+        ],
+        "text_data_bss": [
+          197,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "ui_owner/cohort.c": {
+        "source": "prototypes/ep7_volatile_hl/ui_owner/cohort.c",
+        "definitions": {
+          "_ep7u_native_cohort_present": "T"
+        },
+        "undefined": [
+          "_ep7_stock_ui_display_vtable_unresolved",
+          "_ep7_stock_ui_service_vtable_unresolved",
+          "ep7_native_ui_owner_bulk_bridge",
+          "ep7_native_ui_owner_cleanup_bridge",
+          "ep7_native_ui_owner_destructor_bridge",
+          "ep7_native_ui_screen_bridge"
+        ],
+        "text_data_bss": [
+          63,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "ui_owner/cohort.c:10:5:ep7u_native_cohort_present\t0\tstatic"
+        ]
+      },
+      "ui_owner/owner.c": {
+        "source": "prototypes/ep7_volatile_hl/ui_owner/owner.c",
+        "definitions": {
+          "_ep7_native_ui_owner": "B",
+          "_ep7u_before_retire": "T",
+          "_ep7u_hold_ready": "T",
+          "_ep7u_present": "T",
+          "_ep7u_release_ready": "T",
+          "_ep7u_screen_enter": "T",
+          "_ep7u_screen_leave": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_quarantine",
+          "_ep7_gcc_set_text_unresolved_binding",
+          "_ep7_gcc_ui_context_exchange",
+          "_ep7_gcc_ui_context_select",
+          "_ep7_gcc_ui_find_child",
+          "_ep7_gcc_ui_service",
+          "_ep7_text_native_open",
+          "_ep7_text_native_retry_rollback",
+          "_ep7_text_native_revoke",
+          "_ep7_text_resource_prepare",
+          "_ep7n_native_current_task",
+          "_ep7u_native_cohort_present",
+          "_ep7v_invalidate",
+          "_ep7v_refresh"
+        ],
+        "text_data_bss": [
+          2352,
+          0,
+          196
+        ],
+        "stack_usage": [
+          "ui_owner/owner.c:44:12:service_shape\t0\tstatic",
+          "ui_owner/owner.c:79:12:qualify\t44\tstatic",
+          "ui_owner/owner.c:30:13:require_live_call.constprop\t36\tstatic",
+          "ui_owner/owner.c:52:6:ep7u_screen_enter\t52\tstatic",
+          "ui_owner/owner.c:92:6:ep7u_screen_leave\t68\tstatic",
+          "ui_owner/owner.c:131:6:ep7u_before_retire\t28\tstatic",
+          "ui_owner/owner.c:152:5:ep7u_hold_ready\t28\tstatic",
+          "ui_owner/owner.c:177:6:ep7u_release_ready\t16\tstatic",
+          "ui_owner/owner.c:184:5:ep7u_present\t32\tstatic"
+        ]
+      },
+      "ui_render/bridge.s": {
+        "source": "prototypes/ep7_volatile_hl/ui_render/bridge.s",
+        "definitions": {
+          "ep7_native_ui_viewer_bridge": "T"
+        },
+        "undefined": [
+          "_ep7v_draw_begin",
+          "_ep7v_draw_end",
+          "ep7_stock_mvc_viewer_draw_unresolved"
+        ],
+        "text_data_bss": [
+          71,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "ui_render/original_draw.s": {
+        "source": "prototypes/ep7_volatile_hl/ui_render/original_draw.s",
+        "definitions": {
+          "_ep7_gcc_ui_draw_original": "T"
+        },
+        "undefined": [
+          "ep7_stock_mvc_viewer_draw_unresolved"
+        ],
+        "text_data_bss": [
+          15,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "ui_render/viewer.c": {
+        "source": "prototypes/ep7_volatile_hl/ui_render/viewer.c",
+        "definitions": {
+          "_ep7_native_ui_receipt": "B",
+          "_ep7v_clear": "T",
+          "_ep7v_draw_begin": "T",
+          "_ep7v_draw_end": "T",
+          "_ep7v_invalidate": "T",
+          "_ep7v_refresh": "T",
+          "_ep7v_refresh_held": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_quarantine",
+          "_ep7_gcc_ui_draw_original",
+          "_ep7_native_mvc",
+          "_ep7_native_ui_model",
+          "_ep7_native_ui_owner",
+          "_ep7_text_format",
+          "_ep7cm_frame_held",
+          "_ep7cm_revoke",
+          "_ep7g_reconcile_held",
+          "_ep7m_current",
+          "_ep7m_hold_content",
+          "_ep7m_release_content",
+          "_ep7u_present"
+        ],
+        "text_data_bss": [
+          844,
+          0,
+          32
+        ],
+        "stack_usage": [
+          "ui_render/viewer.c:8:6:ep7v_invalidate\t0\tstatic",
+          "ui_render/viewer.c:13:6:ep7v_clear\t32\tstatic",
+          "ui_render/viewer.c:19:6:ep7v_refresh_held\t108\tstatic",
+          "ui_render/viewer.c:47:6:ep7v_refresh\t20\tstatic",
+          "ui_render/viewer.c:58:10:ep7v_draw_begin\t20\tstatic",
+          "ui_render/viewer.c:70:6:ep7v_draw_end\t16\tstatic"
+        ]
+      },
+      "ui_selector/bridges.s": {
+        "source": "prototypes/ep7_volatile_hl/ui_selector/bridges.s",
+        "definitions": {
+          "_ep7_gcc_mvc_array_delete": "T",
+          "_ep7_gcc_mvc_array_new": "T",
+          "ep7_native_selector_init_bridge": "T"
+        },
+        "undefined": [
+          "_ep7s_expand_after_init",
+          "ep7_stock_mvc_array_delete_unresolved",
+          "ep7_stock_mvc_array_new_unresolved",
+          "ep7_stock_selector_init_unresolved"
+        ],
+        "text_data_bss": [
+          76,
+          0,
+          0
+        ],
+        "stack_usage": []
+      },
+      "ui_selector/selector.c": {
+        "source": "prototypes/ep7_volatile_hl/ui_selector/selector.c",
+        "definitions": {
+          "_ep7s_categories": "R",
+          "_ep7s_expand_after_init": "T"
+        },
+        "undefined": [
+          "_ep7_gcc_mvc_array_delete",
+          "_ep7_gcc_mvc_array_new",
+          "_ep7_stock_selector_initializer_unresolved",
+          "_ep7n_native_current_task",
+          "ep7_native_selector_init_bridge"
+        ],
+        "text_data_bss": [
+          531,
+          0,
+          0
+        ],
+        "stack_usage": [
+          "ui_selector/selector.c:17:5:ep7s_expand_after_init\t44\tstatic"
+        ]
+      }
+    },
+    "global_definition_count": 344,
+    "external_count": 109,
+    "external_consumers": {
+      "__ep7_private_uncached_start": [
+        "target/cold_clear.s"
+      ],
+      "_ep7_stock_color_container_unresolved": [
+        "ui_mvc/lifetime.c"
+      ],
+      "_ep7_stock_gui_color_entry_unresolved": [
+        "ui_mvc/cohort.c"
+      ],
+      "_ep7_stock_gui_color_exit_unresolved": [
+        "ui_mvc/cohort.c"
+      ],
+      "_ep7_stock_gui_machine_unresolved": [
+        "ui_native/input.c"
+      ],
+      "_ep7_stock_hl_text_descriptor_unresolved": [
+        "text_lifecycle/native_resource.c"
+      ],
+      "_ep7_stock_hl_text_layouts_unresolved": [
+        "text_lifecycle/native_resource.c"
+      ],
+      "_ep7_stock_mvc_category_keys_unresolved": [
+        "ui_content/stock.c"
+      ],
+      "_ep7_stock_mvc_parent_vtable_unresolved": [
+        "ui_mvc/cohort.c",
+        "ui_native/cohort.c"
+      ],
+      "_ep7_stock_mvc_rebuild_initial_call_unresolved": [
+        "ui_mvc/cohort.c"
+      ],
+      "_ep7_stock_mvc_rebuild_next_call_unresolved": [
+        "ui_mvc/cohort.c"
+      ],
+      "_ep7_stock_mvc_rebuild_previous_call_unresolved": [
+        "ui_mvc/cohort.c"
+      ],
+      "_ep7_stock_mvc_rebuild_touch_call_unresolved": [
+        "ui_mvc/cohort.c"
+      ],
+      "_ep7_stock_mvc_viewer_vtable_unresolved": [
+        "ui_mvc/cohort.c"
+      ],
+      "_ep7_stock_selector_initializer_unresolved": [
+        "ui_gate/gate.c",
+        "ui_selector/selector.c"
+      ],
+      "_ep7_stock_selector_remembered_unresolved": [
+        "ui_content/content.c",
+        "ui_content/stock.c",
+        "ui_gate/gate.c"
+      ],
+      "_ep7_stock_ui_active_content_unresolved": [
+        "ui_content/stock.c"
+      ],
+      "_ep7_stock_ui_dispatch_call_unresolved": [
+        "ui_native/cohort.c"
+      ],
+      "_ep7_stock_ui_display_vtable_unresolved": [
+        "ui_owner/cohort.c"
+      ],
+      "_ep7_stock_ui_input_gate_unresolved": [
+        "ui_content/stock.c",
+        "ui_native/input.c"
+      ],
+      "_ep7_stock_ui_preprocess_call_unresolved": [
+        "ui_native/cohort.c"
+      ],
+      "_ep7_stock_ui_repeat_context_unresolved": [
+        "ui_native/input.c"
+      ],
+      "_ep7_stock_ui_service_vtable_unresolved": [
+        "ui_owner/cohort.c"
+      ],
+      "_ep7_stock_ui_wheel_0_call_unresolved": [
+        "ui_native/cohort.c"
+      ],
+      "_ep7_stock_ui_wheel_1_call_unresolved": [
+        "ui_native/cohort.c"
+      ],
+      "_ep7_stock_ui_wheel_2_call_unresolved": [
+        "ui_native/cohort.c"
+      ],
+      "_ep7_stock_ui_wheel_3_call_unresolved": [
+        "ui_native/cohort.c"
+      ],
+      "_ep7_stock_ui_wheel_4_call_unresolved": [
+        "ui_native/cohort.c"
+      ],
+      "ep7_stock_ack_unresolved": [
+        "snapshot_transport/native/ack_bridge.s"
+      ],
+      "ep7_stock_associated_enqueue_unresolved": [
+        "controller_sidecar/native_bridges.s",
+        "controller_sidecar/wait_bridges.s"
+      ],
+      "ep7_stock_associated_initialize_unresolved": [
+        "controller_sidecar/native_bridges.s"
+      ],
+      "ep7_stock_boot_after_clear_unresolved": [
+        "target/cold_clear.s"
+      ],
+      "ep7_stock_boot_next_copy_end_unresolved": [
+        "target/cold_clear.s"
+      ],
+      "ep7_stock_bootstrap_original_unresolved": [
+        "runtime/cold_bootstrap_bridge.s"
+      ],
+      "ep7_stock_capture_fresh_unresolved": [
+        "controller_sidecar/native_bridges.s"
+      ],
+      "ep7_stock_capture_init_continue_unresolved": [
+        "controller_sidecar/native_bridges.s"
+      ],
+      "ep7_stock_capture_lookup_unresolved": [
+        "controller_sidecar/native_bridges.s"
+      ],
+      "ep7_stock_capture_node_free_unresolved": [
+        "controller_sidecar/native_bridges.s"
+      ],
+      "ep7_stock_capture_pool_release_unresolved": [
+        "controller_sidecar/native_bridges.s"
+      ],
+      "ep7_stock_capture_population_unresolved": [
+        "controller_sidecar/native_bridges.s"
+      ],
+      "ep7_stock_capture_postpopulation_unresolved": [
+        "controller_sidecar/native_bridges.s"
+      ],
+      "ep7_stock_color_builder_unresolved": [
+        "target/postbuilder/postbuilder_bridge.s"
+      ],
+      "ep7_stock_command_send_unresolved": [
+        "snapshot_transport/native/producer_bridge.s"
+      ],
+      "ep7_stock_delete_gate_continue_unresolved": [
+        "runtime/kernel_gate_bridges.s"
+      ],
+      "ep7_stock_engine_configure_unresolved": [
+        "controller_sidecar/engine_bridges.s"
+      ],
+      "ep7_stock_engine_pool_unresolved": [
+        "controller_sidecar/engine_bridges.s"
+      ],
+      "ep7_stock_get_tid_unresolved": [
+        "target/get_tid_bridge.s"
+      ],
+      "ep7_stock_job_allocate_unresolved": [
+        "snapshot_transport/native/worker_bridges.s"
+      ],
+      "ep7_stock_kind19_metadata_producer_unresolved": [
+        "snapshot_transport/native/producer_bridge.s"
+      ],
+      "ep7_stock_mvc_array_delete_unresolved": [
+        "ui_selector/bridges.s"
+      ],
+      "ep7_stock_mvc_array_new_unresolved": [
+        "ui_selector/bridges.s"
+      ],
+      "ep7_stock_mvc_base_destroy_unresolved": [
+        "ui_content/bridges.s"
+      ],
+      "ep7_stock_mvc_base_init_unresolved": [
+        "ui_content/bridges.s"
+      ],
+      "ep7_stock_mvc_creator0_unresolved": [
+        "ui_content/stock_bridges.s"
+      ],
+      "ep7_stock_mvc_creator14_unresolved": [
+        "ui_content/stock_bridges.s"
+      ],
+      "ep7_stock_mvc_creator7_unresolved": [
+        "ui_content/stock_bridges.s"
+      ],
+      "ep7_stock_mvc_gui_entry_unresolved": [
+        "ui_mvc/bridges.s"
+      ],
+      "ep7_stock_mvc_gui_exit_unresolved": [
+        "ui_mvc/bridges.s"
+      ],
+      "ep7_stock_mvc_parent_destroy_unresolved": [
+        "ui_mvc/bridges.s"
+      ],
+      "ep7_stock_mvc_rebuild_unresolved": [
+        "ui_content/bridges.s"
+      ],
+      "ep7_stock_mvc_scalar_delete_unresolved": [
+        "ui_content/bridges.s"
+      ],
+      "ep7_stock_mvc_scalar_new_unresolved": [
+        "ui_content/bridges.s"
+      ],
+      "ep7_stock_mvc_stock_selected_unresolved": [
+        "ui_content/stock_bridges.s"
+      ],
+      "ep7_stock_mvc_stop535_unresolved": [
+        "ui_content/stock_bridges.s"
+      ],
+      "ep7_stock_mvc_viewer_destroy_unresolved": [
+        "ui_mvc/bridges.s"
+      ],
+      "ep7_stock_mvc_viewer_draw_unresolved": [
+        "ui_render/bridge.s",
+        "ui_render/original_draw.s"
+      ],
+      "ep7_stock_property_service_unresolved": [
+        "ui_model/public_mode.s"
+      ],
+      "ep7_stock_queue_receive_local_unresolved": [
+        "snapshot_transport/native/queue_bridges.s"
+      ],
+      "ep7_stock_queue_send_local_unresolved": [
+        "snapshot_transport/native/queue_bridges.s"
+      ],
+      "ep7_stock_queue_send_preserving_unresolved": [
+        "snapshot_transport/native/queue_bridges.s"
+      ],
+      "ep7_stock_raw_sem_create_unresolved": [
+        "poll_lock_provider/bootstrap/create_delete_bridges.s"
+      ],
+      "ep7_stock_raw_sem_delete_unresolved": [
+        "poll_lock_provider/bootstrap/create_delete_bridges.s"
+      ],
+      "ep7_stock_raw_sem_signal_unresolved": [
+        "poll_lock_provider/native/sem_bridges.s"
+      ],
+      "ep7_stock_raw_sem_wait_unresolved": [
+        "poll_lock_provider/native/sem_bridges.s"
+      ],
+      "ep7_stock_receive_gate_continue_unresolved": [
+        "runtime/kernel_gate_bridges.s"
+      ],
+      "ep7_stock_receive_gate_error_unresolved": [
+        "runtime/kernel_gate_bridges.s"
+      ],
+      "ep7_stock_receive_wrapper_unresolved": [
+        "snapshot_transport/native/descriptor_receive_bridge.s"
+      ],
+      "ep7_stock_screen_manager_unresolved": [
+        "ui_owner/bridges.s"
+      ],
+      "ep7_stock_selector_init_unresolved": [
+        "ui_selector/bridges.s"
+      ],
+      "ep7_stock_send_gate_continue_unresolved": [
+        "runtime/kernel_gate_bridges.s"
+      ],
+      "ep7_stock_send_gate_error_unresolved": [
+        "runtime/kernel_gate_bridges.s"
+      ],
+      "ep7_stock_send_wrapper_unresolved": [
+        "snapshot_transport/native/descriptor_send_bridge.s"
+      ],
+      "ep7_stock_state_service_unresolved": [
+        "capture_state_guard/bridge.s"
+      ],
+      "ep7_stock_task_delay_unresolved": [
+        "runtime/delay_bridge.s"
+      ],
+      "ep7_stock_text_bind_unresolved": [
+        "text_lifecycle/attach_bind.s"
+      ],
+      "ep7_stock_text_cleanup_unresolved": [
+        "text_rollback/cleanup_destroy.s"
+      ],
+      "ep7_stock_text_destructor_unresolved": [
+        "text_rollback/cleanup_destroy.s"
+      ],
+      "ep7_stock_text_setter_unresolved": [
+        "text_viewer/set_text.s"
+      ],
+      "ep7_stock_ui_attach_unresolved": [
+        "text_lifecycle/attach_bind.s"
+      ],
+      "ep7_stock_ui_context_get_unresolved": [
+        "text_lifecycle/native_create.s",
+        "text_rollback/context_bridges.s"
+      ],
+      "ep7_stock_ui_context_set_unresolved": [
+        "text_lifecycle/native_create.s",
+        "text_rollback/context_bridges.s"
+      ],
+      "ep7_stock_ui_dispatch_unresolved": [
+        "ui_native/input_bridges.s"
+      ],
+      "ep7_stock_ui_drop_event_unresolved": [
+        "ui_native/input_bridges.s"
+      ],
+      "ep7_stock_ui_event_unresolved": [
+        "ui_native/bridge.s"
+      ],
+      "ep7_stock_ui_find_child_unresolved": [
+        "text_lifecycle/find_child.s"
+      ],
+      "ep7_stock_ui_owner_bulk_unresolved": [
+        "ui_owner/bridges.s"
+      ],
+      "ep7_stock_ui_owner_cleanup_unresolved": [
+        "ui_owner/bridges.s"
+      ],
+      "ep7_stock_ui_owner_destructor_unresolved": [
+        "ui_owner/bridges.s"
+      ],
+      "ep7_stock_ui_preprocess_unresolved": [
+        "ui_native/input_bridges.s"
+      ],
+      "ep7_stock_ui_service_unresolved": [
+        "text_lifecycle/native_create.s",
+        "text_rollback/context_bridges.s"
+      ],
+      "ep7_stock_ui_timer_cancel_unresolved": [
+        "ui_content/stock_bridges.s"
+      ],
+      "ep7_stock_ui_wheel_set_unresolved": [
+        "ui_native/input_bridges.s"
+      ],
+      "ep7_stock_wait_initialize_unresolved": [
+        "controller_sidecar/wait_bridges.s"
+      ],
+      "ep7_stock_wait_pop_unresolved": [
+        "controller_sidecar/wait_bridges.s"
+      ],
+      "ep7_stock_wait_service_unresolved": [
+        "controller_sidecar/wait_bridges.s"
+      ],
+      "ep7_stock_widget_factory_unresolved": [
+        "text_lifecycle/native_create.s"
+      ],
+      "ep7_stock_worker_cleanup_unresolved": [
+        "snapshot_transport/native/worker_bridges.s"
+      ],
+      "ep7_stock_worker_job_unresolved": [
+        "snapshot_transport/native/worker_bridges.s"
+      ],
+      "ep7_stock_worker_process_unresolved": [
+        "snapshot_transport/native/worker_bridges.s"
+      ]
+    },
+    "resolved_native_address_count": 108,
+    "placement_required_symbols": [
+      "__ep7_private_uncached_start"
+    ],
+    "patch_target_symbols_checked": 84,
+    "unlinked_text_data_bss": [
+      46543,
+      0,
+      8084
+    ],
+    "current_implementation_recompiled": true,
+    "target_linked": false,
+    "target_executed": false
+  },
+  "scope": "Enumerate the declared build1100 installation and object dependencies; never patch or link.",
+  "source_list": "prototypes/ep7_volatile_hl/target/sources.txt",
+  "source_count": 107,
+  "native_binding_count": 109,
+  "final_linker_bindings_emitted": false,
+  "installation_authorized": false,
+  "firmware_modified": false,
+  "firmware_built": false,
+  "hash_checks_performed": false,
+  "limits": [
+    "Enumerates currently declared hooks; does not prove native caller/alias/lifetime closure.",
+    "Binding evidence references existing investigations; only patch preimages and load-table rows are freshly compared here.",
+    "Three boot-prefix edits have no qualified upstream load path yet.",
+    "Executable/RAM placement, cache visibility, complete stack bounds and cold installer ordering remain unqualified.",
+    "A mapped stock symbol does not approve its ABI or runtime domain beyond its existing evidence.",
+    "No candidate image, linker output, packer, emulator run or device operation is produced."
+  ]
+}
