@@ -11,14 +11,14 @@ def check_host(cc='cc',sanitize=False):
  with tempfile.TemporaryDirectory(prefix='ep7-sidecar-host-') as td:
   configurations=[('strict',[])]
   if sanitize:
-   configurations.append(('asan_ubsan',['-fsanitize=address,undefined','-fno-sanitize-recover=all','-fno-omit-frame-pointer']))
+   configurations.append(('asan_ubsan',['-fsanitize=address,undefined','-fno-sanitize-recover=all','-fno-omit-frame-pointer','-fno-pie','-no-pie']))
   for name,opts in configurations:
    exe=Path(td)/(name+('.exe' if os.name=='nt' else ''))
-   subprocess.run([cc,'-std=c11','-Wall','-Wextra','-Werror','-pedantic',*opts,'-I'+str(CORE),str(HERE/'sidecar.c'),str(HERE/'transition_binding.c'),str(HERE/'test_sidecar.c'),str(CORE/'ep7p.c'),str(CORE/'ep7p_decode.c'),'-o',str(exe)],check=True)
-   subprocess.run([str(exe)],check=True,env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0'))
+   subprocess.run([cc,'-std=c11','-Wall','-Wextra','-Werror','-pedantic',*opts,'-I'+str(CORE),str(HERE/'sidecar.c'),str(HERE/'transition_binding.c'),str(HERE/'test_sidecar.c'),str(CORE/'ep7p.c'),str(CORE/'ep7p_decode.c'),'-o',str(exe)],check=True,timeout=60)
+   subprocess.run([str(exe)],check=True,env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0'),timeout=30)
    host.append(name)
  return dict(host_tests=host,passed=True,compiler_version=subprocess.check_output([cc,'--version'],text=True).splitlines()[0],
-  scope='Controller sidecar host fixture including current-live node/token resolution',
+  scope='Controller sidecar live-node join and sample/finish population envelope; native environment mocked',
   hash_checks_performed=False,native_lifetime_proven=False,native_free_coverage_proven=False,
   target_compiled=False,target_executed=False,firmware_modified=False,camera_accessed=False,flash_ready=False)
 def check():

@@ -1,0 +1,17 @@
+{
+  "host_tests": [
+    "strict",
+    "asan_ubsan"
+  ],
+  "passed": true,
+  "compiler_version": "cc (Debian 12.2.0-14+deb12u1) 12.2.0",
+  "scope": "Controller sidecar live-node join and sample/finish population envelope; native environment mocked",
+  "hash_checks_performed": false,
+  "native_lifetime_proven": false,
+  "native_free_coverage_proven": false,
+  "target_compiled": false,
+  "target_executed": false,
+  "firmware_modified": false,
+  "camera_accessed": false,
+  "flash_ready": false
+}

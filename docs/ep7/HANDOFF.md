@@ -5,6 +5,11 @@
 
 ## 2026-10-31 当前节点
 
+捕获侧新增[两阶段冻结](CAPTURE_POPULATION_ENVELOPE.md)：第一段population返回时sample，
+第二段确认后才可copyout；期间UI变化不改变已冻结值，提前消费不事后补填。
+producer provider现限定实际controller entry60289852；13个已列node free call完成本次
+无SHA重验。原生source/释放桥与排他、G4/G6仍待完成。
+
 最新：[queue临界区准入](QUEUE_KERNEL_GATES.md)已落实为候选代码，收发最终检查与
 删除观察位于原厂临界区内；删除后永久关闭本次启动的实验I/O，旧清理context保留。
 定向host、51目标对象及88条原厂指令检查通过；整体固件构建仍未开始。

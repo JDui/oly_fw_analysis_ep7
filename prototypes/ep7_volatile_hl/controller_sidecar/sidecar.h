@@ -9,7 +9,7 @@ typedef struct {
 typedef struct {
  uintptr_t node, associated;
  uint64_t token,generation;
- bool attempted,sealed;
+ bool attempted,sampled,sealed;
  ep7c_prefix prefix;
  ep7p_snapshot snapshot;
 } ep7c_entry;
@@ -37,7 +37,17 @@ bool ep7c_authorize(ep7c *,unsigned state,uintptr_t node,uint64_t token);
  * address reuse is indistinguishable here. No native reads or memory pinning.
  * On failure *token is unchanged; caller MUST branch on the returned status. */
 bool ep7c_resolve_live(ep7c *,unsigned state,uintptr_t node,uint64_t *token);
-/* Exactly one sampling attempt, at caller-proven population completion.
+/* Split native population envelope: sample after602a7ea0 returns, finish only
+ * after the matched602a8dbd returns. Both boundaries require authorize before
+ * reading their independently live prefixes. Finish never rereads settings.
+ * An early copyout cancels a pending sample permanently. Revoke/state exit,
+ * failed completion or changed capture identity/profile likewise stays neutral.
+ * These are sequencing helpers, not native mutation/lifetime locks. */
+bool ep7c_sample_population(ep7c *,unsigned state,uintptr_t node,uint64_t token,
+ const ep7c_prefix *,bool normal_return,ep7p *settings);
+bool ep7c_finish_population(ep7c *,unsigned state,uintptr_t node,uint64_t token,
+ const ep7c_prefix *,bool normal_return);
+/* Single complete envelope, reusing sample+finish. Exactly one sampling attempt.
  * Unsupported profile/failure/early attempt permanently neutral for this token.
  * settings callbacks cannot reenter sidecar. Captured profile, NOT current GUI.
  */

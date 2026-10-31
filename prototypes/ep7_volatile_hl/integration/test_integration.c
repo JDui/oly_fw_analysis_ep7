@@ -639,14 +639,16 @@ static void capture_vertical_slice(void){
     assert(ep7c_register_fresh(&sidecar,33,1,2,&token));
     assert(ep7c_resolve_live(&sidecar,33,1,&resolved) && resolved==token);
     assert(ep7c_authorize(&sidecar,33,1,resolved));
-    assert(ep7c_seal(&sidecar,33,1,resolved,&prefix,true,&core));
+    assert(ep7c_sample_population(&sidecar,33,1,resolved,&prefix,true,&core));
+    /* Change real UI values while native postpopulation would still be running. */
+    assert(send(0x9032,2)==1);assert(ep7p_ui_ops.sync(&ui,session,56,4)==EP7_UI_CHANGED);
+    assert(send(0x9032,-3)==1);text_is(frame(),"H 01 +0");
+    assert(ep7c_finish_population(&sidecar,33,1,resolved,&prefix,true));
     assert(ep7c_copyout(&sidecar,33,1,resolved,&prefix,&frozen));
     assert(frozen.hl[0]==3 && frozen.hl[12]==-2);
     assert(ep7c_forget(&sidecar,33,1,token));
     ep7c_transition(&sidecar,33,33);
     assert(!ep7c_resolve_live(&sidecar,33,1,&resolved));
-    assert(send(0x9032,2)==1);assert(ep7p_ui_ops.sync(&ui,session,56,4)==EP7_UI_CHANGED);
-    assert(send(0x9032,-3)==1);text_is(frame(),"H 01 +0");
     assert(ep7p_capture(&core,11,3,&after));assert(after.hl[0]==0 && after.hl[12]==0);
     assert(ep7t_init(&transport,(ep7p_ops){NULL,lock,unlock,current}));
     for(i=0;i<16;i++){

@@ -52,12 +52,57 @@ static void test_live_join(ep7p *settings)
  assert(!ep7c_resolve_live(&p,7,1,&resolved) && p.poison && resolved==999);
  assert(!ep7c_resolve_live(&p,33,1,&resolved));
 }
+static void test_split_population(ep7p *settings)
+{
+ ep7c p={0};ep7c_prefix v={2,3,1,11,4},changed;
+ ep7p_snapshot out,sentinel;int8_t hl[24]={0};uint64_t token,reused;unsigned i;
+ memset(&sentinel,0x55,sizeof sentinel);
+ fresh(&p);assert(ep7c_register_fresh(&p,33,1,2,&token));
+ hl[0]=5;hl[23]=-6;assert(ep7p_edit(settings,3,hl));
+ assert(ep7c_sample_population(&p,33,1,token,&v,true,settings));
+ hl[0]=-7;hl[23]=7;assert(ep7p_edit(settings,3,hl));
+ fail_lock=true; /* Completion needs only the already frozen value. */
+ assert(ep7c_finish_population(&p,33,1,token,&v,true));fail_lock=false;
+ assert(!ep7c_finish_population(&p,33,1,token,&v,true));
+ assert(ep7c_copyout(&p,33,1,token,&v,&out));
+ assert(out.profile==3 && out.hl[0]==5 && out.hl[23]==-6);
+ /* Early queued selection burns the pending snapshot, even with a NULL output. */
+ for(i=0;i<2;i++){
+  fresh(&p);assert(ep7c_register_fresh(&p,33,1,2,&token));
+  assert(ep7c_sample_population(&p,33,1,token,&v,true,settings));out=sentinel;
+  assert(!ep7c_copyout(&p,33,1,token,&v,i?NULL:&out));
+  assert(!ep7c_finish_population(&p,33,1,token,&v,true));
+  assert(!ep7c_sample_population(&p,33,1,token,&v,true,settings));
+  assert(memcmp(&out,&sentinel,sizeof out)==0);
+ }
+ for(i=0;i<5;i++){
+  fresh(&p);assert(ep7c_register_fresh(&p,33,1,2,&token));
+  assert(ep7c_sample_population(&p,33,1,token,&v,true,settings));changed=v;
+  if(i==0)changed.associated++;else if(i==1)changed.capture++;else if(i==2)changed.capture_id++;
+  else if(i==3)changed.raw_mode=10;else changed.selector=3;
+  assert(!ep7c_finish_population(&p,33,1,token,&changed,true));
+  assert(!ep7c_finish_population(&p,33,1,token,&v,true));
+  assert(!ep7c_copyout(&p,33,1,token,&v,&out));
+ }
+ fresh(&p);assert(ep7c_register_fresh(&p,33,1,2,&token));
+ assert(ep7c_sample_population(&p,33,1,token,&v,true,settings));
+ assert(!ep7c_finish_population(&p,33,1,token,&v,false));
+ assert(!ep7c_finish_population(&p,33,1,token,&v,true));
+ fresh(&p);assert(ep7c_register_fresh(&p,33,1,2,&token));
+ assert(ep7c_sample_population(&p,33,1,token,&v,true,settings));
+ assert(ep7c_forget(&p,33,1,token));assert(ep7c_register_fresh(&p,33,1,2,&reused));
+ assert(reused!=token && !ep7c_finish_population(&p,33,1,token,&v,true));
+ assert(!ep7c_finish_population(&p,33,1,reused,&v,true));
+ assert(ep7c_sample_population(&p,33,1,reused,&v,true,settings));
+ ep7c_transition(&p,33,33);assert(!ep7c_finish_population(&p,33,1,reused,&v,true));
+}
 int main(void)
 {
  ep7c p={0};ep7p settings={0};ep7p_ops ops={NULL,lock,unlock,current};
  ep7c_prefix v={2,3,1,11,1},bad;ep7p_snapshot out,sentinel;uint64_t t,u;unsigned i;int8_t hl[24]={0};
  assert(ep7p_init(&settings,ops));hl[0]=4;assert(ep7p_edit(&settings,0,hl));
  test_live_join(&settings);
+ test_split_population(&settings);
  fresh(&p);assert(ep7c_register_fresh(&p,33,1,2,&t));assert(ep7c_authorize(&p,33,1,t));
  assert(!ep7c_authorize(&p,33,1,t+1));assert(!ep7c_authorize(&p,33,9,t));
  assert(ep7c_seal(&p,33,1,t,&v,true,&settings));

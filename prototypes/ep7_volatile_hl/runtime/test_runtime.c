@@ -111,6 +111,8 @@ static void exercise_contexts(void)
     assert(send.forward.retirement_context==&runtime && send.forward.retire_owned==ep7r_retire);
     assert(ep7q_ack_context_unresolved(0x100100,&ack));
     assert(ack.transport==&runtime.transport && ack.wait_retirement==ep7r_progress);
+    assert(!ep7q_producer_context_unresolved(0x4b,0x100100,&prod));
+    f.entry=0x60289852;
     assert(ep7q_producer_context_unresolved(0x4b,0x100100,&prod));
     assert(prod.producer.transport==&runtime.transport);
     f.entry=0x603ef892;assert(ep7q_descriptor_receive_context_unresolved(0x4c,0x100100,&recv));

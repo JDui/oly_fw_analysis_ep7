@@ -52,8 +52,8 @@ bool ep7q_producer_context_unresolved(unsigned handle,uint32_t w,ep7q_producer_c
 {
     ep7r *r=ep7r_get(&ep7_native_runtime_slot);ep7n_task t;
     *out=(ep7q_producer_context){0};
-    if(handle!=0x4b || !ep7r_accepting(r) || !current(r,w,&t,false))return false;
-    /* Producer scope/call chain separately proves the owned capture route. */
+    if(handle!=0x4b || !ep7r_accepting(r) || !current(r,w,&t,false) || t.entry!=0x60289852u)return false;
+    /* Actual controller entry; scope/call chain separately proves the owned capture route. */
     out->stack=mapped(&t);out->producer.transport=&r->transport;out->producer.forward=forward(r);return true;
 }
 bool ep7q_worker_context_unresolved(unsigned stage,uint32_t w,ep7q_worker_context *out)

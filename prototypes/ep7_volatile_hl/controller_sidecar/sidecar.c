@@ -67,7 +67,12 @@ bool ep7c_resolve_live(ep7c *p,unsigned state,uintptr_t node,uint64_t *token)
 }
 static bool prefix_ok(const ep7c_entry *e,const ep7c_prefix *v)
 { return v && v->associated==e->associated && v->capture && v->capture_id>=1u && v->capture_id<=25u && v->raw_mode==11u && v->selector>=1u && v->selector<=4u; }
-bool ep7c_seal(ep7c *p,unsigned state,uintptr_t node,uint64_t token,const ep7c_prefix *v,bool complete,ep7p *settings)
+static bool prefix_same(const ep7c_prefix *a,const ep7c_prefix *b)
+{
+ return a && b && a->associated==b->associated && a->capture==b->capture &&
+  a->capture_id==b->capture_id && a->raw_mode==b->raw_mode && a->selector==b->selector;
+}
+bool ep7c_sample_population(ep7c *p,unsigned state,uintptr_t node,uint64_t token,const ep7c_prefix *v,bool complete,ep7p *settings)
 {
  ep7c_entry *e;ep7p_snapshot s;
  if(!state_ok(p,state) || !(e=lookup(p,node,token)))return false;
@@ -76,16 +81,29 @@ bool ep7c_seal(ep7c *p,unsigned state,uintptr_t node,uint64_t token,const ep7c_p
  if(!complete || !prefix_ok(e,v) || !settings)return false;
  if(!ep7p_capture(settings,v->raw_mode,v->selector,&s))return false;
  if(s.profile!=v->selector-1u)return false;
- e->prefix=*v;e->snapshot=s;e->sealed=true;return true;
+ e->prefix=*v;e->snapshot=s;e->sampled=true;return true;
+}
+bool ep7c_finish_population(ep7c *p,unsigned state,uintptr_t node,uint64_t token,const ep7c_prefix *v,bool complete)
+{
+ ep7c_entry *e;
+ if(!state_ok(p,state) || !(e=lookup(p,node,token)) || !e->sampled)return false;
+ e->sampled=false; /* This matched completion opportunity is consumed. */
+ if(!complete || !prefix_ok(e,v) || !prefix_same(v,&e->prefix))return false;
+ e->sealed=true;return true;
+}
+bool ep7c_seal(ep7c *p,unsigned state,uintptr_t node,uint64_t token,const ep7c_prefix *v,bool complete,ep7p *settings)
+{
+ return ep7c_sample_population(p,state,node,token,v,complete,settings) &&
+  ep7c_finish_population(p,state,node,token,v,complete);
 }
 bool ep7c_copyout(ep7c *p,unsigned state,uintptr_t node,uint64_t token,const ep7c_prefix *v,ep7p_snapshot *out)
 {
  ep7c_entry *e;
  if(!state_ok(p,state) || !(e=lookup(p,node,token)))return false;
- if(!e->sealed) {e->attempted=true;return false;}
+ if(!e->sealed) {e->attempted=true;e->sampled=false;return false;}
  if(!out)return false;
  if(!prefix_ok(e,v)){e->sealed=false;return false;}
- if(v->associated!=e->prefix.associated || v->capture!=e->prefix.capture || v->capture_id!=e->prefix.capture_id || v->raw_mode!=e->prefix.raw_mode || v->selector!=e->prefix.selector){e->sealed=false;return false;}
+ if(!prefix_same(v,&e->prefix)){e->sealed=false;return false;}
  *out=e->snapshot;return true;
 }
 bool ep7c_forget(ep7c *p,unsigned state,uintptr_t node,uint64_t token)

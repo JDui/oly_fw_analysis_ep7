@@ -77,6 +77,14 @@ Native evidence: docs/ep7/{NODE_STATE_GUARD,NODE_DISPOSAL,CAPTURE_ATTACHMENT}.md
 
 ## Current-live node/token join (host validated, native binding unbound)
 
+The split native population envelope now uses `ep7c_sample_population` after
+the first normal return and `ep7c_finish_population` after postpopulation. The
+second step uses the stored snapshot only. Early copyout burns a pending sample;
+later completion cannot backfill it. Existing `ep7c_seal` combines both steps for
+an already complete envelope. See
+[capture population evidence](../../../docs/ep7/CAPTURE_POPULATION_ENVELOPE.md)
+for current host/target checks and the still-unbound native hooks.
+
 `ep7c_resolve_live(runtime, state, node, &token)` now resolves a registered,
 current-generation node label without reading native memory. It uses the existing
 bounded registry rather than a second token map. Failure leaves the output token
