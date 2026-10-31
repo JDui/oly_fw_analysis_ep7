@@ -36,6 +36,10 @@ S1 已完成：[实际候选启动前缀](CANDIDATE_STARTUP_SIM.md)通过冷清�
 S2 有条件模拟已完成：[原生创建/发布/回收](CANDIDATE_PUBLISH_SIM.md)实际执行原厂
 create/delete，正常路径 52,820 条指令后发布 runtime 并回到原厂入口；耗尽 −34 和
 队列配置失配后的原生回收均通过。TCB/队列 header、单竞争者锁和空待处理/就绪链
-是明确 fixture，真实创建这些现场及多核硬件仍归 S4。下一步 S3 基于实际已发布的
-runtime 执行 H/L 状态/冻结和原生 poll/signal，再扩展至消息/worker/CPU 消费。
-不将 S1/S2 的通过描述为整机启动通过或当前目标完成。
+是明确 fixture，真实创建这些现场及多核硬件仍归 S4。
+
+S3 的[状态与参数子节点](CANDIDATE_STATE_SIM.md)已通过：原生 poll/signal 下修改与
+冻结、busy −50 无修改、最终 observer 的 20 个系数写入，以及撤销后 unmapped job
+不读/输出不变。下一步接实际 controller adapter 和消息/worker 边界；原生分配与
+时序尚未因独立 job fixture 自动取得资格。不将子节点通过描述为 S3 整体完成、
+整机启动通过或当前目标完成。

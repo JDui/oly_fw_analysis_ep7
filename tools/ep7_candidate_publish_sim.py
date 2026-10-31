@@ -102,7 +102,8 @@ def unpublished(machine,syms):
     require(u32(machine,syms['_ep7_native_runtime_slot'])==0,'failed bootstrap published a runtime')
 
 
-def inspect(directory,prefix,engine):
+def bootstrap_context(directory,prefix,engine):
+    """Reach the real create boundary, then supply the explicit S2 kernel fixture."""
     data,syms,build = candidate_inputs(directory,prefix)
     base = Machine(data,engine)
     returned(base.run(CLEAR_SITE,CLEAR_RESUME),CLEAR_RESUME)
@@ -110,9 +111,13 @@ def inspect(directory,prefix,engine):
     front = base.run(BOOT_SITE,ORIGINAL_BOOT,breakpoints=[CREATE,syms['_ep7_gcc_quarantine']],full_trace=True)
     require(front['status']=='breakpoint' and front['registers']['pc']==CREATE,
             'candidate no longer reaches the actual native-create boundary')
-    create_return = front['registers']['mdr']
     queues = fixture(base)
+    return base,front,syms,build,queues
 
+
+def publish_runtime(base,front,syms):
+    """Return the machine initialized by candidate/native code, without failure probes."""
+    create_return = front['registers']['mdr']
     success = base.clone()
     created = success.resume(front['registers'],create_return,full_trace=True,
                              breakpoints=[syms['_ep7_gcc_quarantine']],limit=3000)
@@ -143,7 +148,15 @@ def inspect(directory,prefix,engine):
         require(result['registers']['d0']==wanted,'published runtime query rejected current actual state '+name)
         queries.append(dict(symbol=name,result=brief(result),returned_d0=hex(wanted)))
     released(success)
+    return success,created,published,queries
 
+
+def inspect(directory,prefix,engine):
+    base,front,syms,build,queues = bootstrap_context(directory,prefix,engine)
+    success,created,published,queries = publish_runtime(base,front,syms)
+    runtime = u32(success,syms['_ep7_native_runtime_slot'])
+    checked = ('d0','d1','d2','d3','a0','a1','a2','a3','sp','mdr','psw')
+    create_return = front['registers']['mdr']
     exhausted = base.clone()
     exhausted.mutate('allocation_counts',6,struct.pack('<H',255))
     # Exhaustion must return from the count guard; no semaphore slot is mapped.

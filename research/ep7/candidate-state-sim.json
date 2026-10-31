@@ -1,0 +1,505 @@
+{
+  "scope": "Run linked H/L state and frozen CPU-reader paths with the real native private lock.\n\nReuses the S2 candidate-published runtime. Direct API callers, owned input/job\nbuffers and a single-task kernel are explicit fixtures, not camera execution.\n",
+  "candidate_build_revision": "7386faa33453ceb266343c4773a9520f7c5b616f",
+  "actual_elf_code_equals_decoded_candidate": true,
+  "all_assertions_passed": true,
+  "hash_checks_performed": false,
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103",
+  "runtime": "0xa1dd6108",
+  "bootstrap": "0xa1dd60c0",
+  "core": "0xa1dd4d04",
+  "provider": "0xa1dd60e8",
+  "input_hl": [
+    1,
+    -2,
+    0,
+    3,
+    -4,
+    5,
+    -6,
+    7,
+    0,
+    -1,
+    2,
+    -3,
+    -1,
+    2,
+    0,
+    -3,
+    4,
+    -5,
+    6,
+    -7,
+    0,
+    1,
+    -2,
+    3
+  ],
+  "frozen_profile": 2,
+  "job_token": 1,
+  "cases": [
+    {
+      "symbol": "_ep7p_edit",
+      "status": "returned",
+      "completed": 1220,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 1,
+      "stack_depth_from_call_sp": 140,
+      "native_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 1,
+          "timeout": 0,
+          "returned_status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 1,
+          "timeout": null,
+          "returned_status": 0
+        }
+      ],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0
+    },
+    {
+      "symbol": "_ep7p_capture",
+      "status": "returned",
+      "completed": 1033,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 1,
+      "stack_depth_from_call_sp": 136,
+      "native_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 1,
+          "timeout": 0,
+          "returned_status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 1,
+          "timeout": null,
+          "returned_status": 0
+        }
+      ],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0
+    },
+    {
+      "symbol": "_ep7p_capture",
+      "status": "returned",
+      "completed": 1033,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 1,
+      "stack_depth_from_call_sp": 136,
+      "native_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 1,
+          "timeout": 0,
+          "returned_status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 1,
+          "timeout": null,
+          "returned_status": 0
+        }
+      ],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0
+    },
+    {
+      "symbol": "_ep7p_capture",
+      "status": "returned",
+      "completed": 1033,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 1,
+      "stack_depth_from_call_sp": 136,
+      "native_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 1,
+          "timeout": 0,
+          "returned_status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 1,
+          "timeout": null,
+          "returned_status": 0
+        }
+      ],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0
+    },
+    {
+      "symbol": "_ep7p_edit",
+      "status": "returned",
+      "completed": 1220,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 1,
+      "stack_depth_from_call_sp": 140,
+      "native_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 1,
+          "timeout": 0,
+          "returned_status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 1,
+          "timeout": null,
+          "returned_status": 0
+        }
+      ],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0
+    },
+    {
+      "symbol": "_ep7_gcc_raw_sem_poll",
+      "status": "returned",
+      "completed": 321,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 72,
+      "native_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 1,
+          "timeout": 0,
+          "returned_status": 0
+        }
+      ],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0
+    },
+    {
+      "symbol": "_ep7p_edit",
+      "status": "returned",
+      "completed": 443,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 140,
+      "native_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 1,
+          "timeout": 0,
+          "returned_status": -50
+        }
+      ],
+      "native_get_tid_entries": 1,
+      "context_switch_entries": 0
+    },
+    {
+      "symbol": "_ep7_gcc_raw_sem_signal",
+      "status": "returned",
+      "completed": 321,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 64,
+      "native_lock_calls": [
+        {
+          "api": "signal",
+          "handle": 1,
+          "timeout": null,
+          "returned_status": 0
+        }
+      ],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0
+    },
+    {
+      "symbol": "_ep7p_capture",
+      "status": "returned",
+      "completed": 864,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 136,
+      "native_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 1,
+          "timeout": 0,
+          "returned_status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 1,
+          "timeout": null,
+          "returned_status": 0
+        }
+      ],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0
+    },
+    {
+      "symbol": "_ep7p_register_job",
+      "status": "returned",
+      "completed": 1367,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 1,
+      "stack_depth_from_call_sp": 148,
+      "native_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 1,
+          "timeout": 0,
+          "returned_status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 1,
+          "timeout": null,
+          "returned_status": 0
+        }
+      ],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0
+    },
+    {
+      "symbol": "_ep7_gcc_postbuilder_observer",
+      "status": "returned",
+      "completed": 2490,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 1,
+      "stack_depth_from_call_sp": 292,
+      "native_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 1,
+          "timeout": 0,
+          "returned_status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 1,
+          "timeout": null,
+          "returned_status": 0
+        }
+      ],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0
+    },
+    {
+      "symbol": "_ep7p_release_job",
+      "status": "returned",
+      "completed": 1029,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 1,
+      "stack_depth_from_call_sp": 148,
+      "native_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 1,
+          "timeout": 0,
+          "returned_status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 1,
+          "timeout": null,
+          "returned_status": 0
+        }
+      ],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0
+    },
+    {
+      "symbol": "_ep7_gcc_postbuilder_observer",
+      "status": "returned",
+      "completed": 1298,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 292,
+      "native_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 1,
+          "timeout": 0,
+          "returned_status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 1,
+          "timeout": null,
+          "returned_status": 0
+        }
+      ],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0
+    }
+  ],
+  "cpu_coefficient_writes": [
+    {
+      "axis": "H",
+      "sector": 0,
+      "offset": 706,
+      "value": -1000
+    },
+    {
+      "axis": "L",
+      "sector": 0,
+      "offset": 710,
+      "value": -25
+    },
+    {
+      "axis": "H",
+      "sector": 4,
+      "offset": 754,
+      "value": 4000
+    },
+    {
+      "axis": "L",
+      "sector": 4,
+      "offset": 758,
+      "value": 150
+    },
+    {
+      "axis": "H",
+      "sector": 6,
+      "offset": 778,
+      "value": 6000
+    },
+    {
+      "axis": "L",
+      "sector": 6,
+      "offset": 782,
+      "value": 250
+    },
+    {
+      "axis": "H",
+      "sector": 10,
+      "offset": 826,
+      "value": -2000
+    },
+    {
+      "axis": "L",
+      "sector": 10,
+      "offset": 830,
+      "value": -50
+    },
+    {
+      "axis": "H",
+      "sector": 1,
+      "offset": 850,
+      "value": 2000
+    },
+    {
+      "axis": "L",
+      "sector": 1,
+      "offset": 854,
+      "value": 50
+    },
+    {
+      "axis": "H",
+      "sector": 3,
+      "offset": 874,
+      "value": -3000
+    },
+    {
+      "axis": "L",
+      "sector": 3,
+      "offset": 878,
+      "value": -100
+    },
+    {
+      "axis": "H",
+      "sector": 5,
+      "offset": 898,
+      "value": -5000
+    },
+    {
+      "axis": "L",
+      "sector": 5,
+      "offset": 902,
+      "value": -200
+    },
+    {
+      "axis": "H",
+      "sector": 7,
+      "offset": 922,
+      "value": -7000
+    },
+    {
+      "axis": "L",
+      "sector": 7,
+      "offset": 926,
+      "value": -300
+    },
+    {
+      "axis": "H",
+      "sector": 9,
+      "offset": 946,
+      "value": 1000
+    },
+    {
+      "axis": "L",
+      "sector": 9,
+      "offset": 950,
+      "value": 25
+    },
+    {
+      "axis": "H",
+      "sector": 11,
+      "offset": 970,
+      "value": 3000
+    },
+    {
+      "axis": "L",
+      "sector": 11,
+      "offset": 974,
+      "value": 100
+    }
+  ],
+  "busy_poll_status": -50,
+  "busy_core_unchanged": true,
+  "busy_provider_not_poisoned": true,
+  "adjacent_profile_unchanged": true,
+  "frozen_survives_later_edit": true,
+  "unsupported_mode_output_unchanged": true,
+  "retired_job_unmapped": true,
+  "retired_output_unchanged": true,
+  "readonly_buffer_guards": true,
+  "native_api_success_stubs": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "S2 resident code/kernel/task/queue/header/shared-lock fixtures are inherited. No board, multicore race or actual task launch is modeled.",
+    "Calls use an explicit GCC caller on the guarded task stack. This does not execute native UI/controller capture hook envelopes or queue/worker ownership transfer.",
+    "Job bytes and allocation lifetime are independently supplied from the existing direct-reader fixture, not created by the real native constructor/allocator.",
+    "The final postbuilder observer executes cohort validation, runtime lookup, native-lock-backed registry decode and coefficient writes. Stock ISP builder/hardware is not executed.",
+    "Retirement proves no read of an unmapped old job; it does not solve stale naked request address reuse, which still requires native lifetime exclusion.",
+    "LUT values are inherited comparative H/L coefficients, not E-P7 pixel calibration or image-quality acceptance."
+  ]
+}

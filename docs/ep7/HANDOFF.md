@@ -7,7 +7,15 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[原生创建与发布模拟](CANDIDATE_PUBLISH_SIM.md)已完成 S2 的有条件场景。
+最新：[H/L 状态与参数模拟](CANDIDATE_STATE_SIM.md)完成 S3 的首个子节点。复用 S2
+实际发布的 runtime，13 次候选调用/13,672 指令：COLOR3 修改/冻结与 COLOR2 隔离、
+后续编辑不影响旧快照、原生 poll busy −50 无修改/不 poison，最终 observer 的
+20 个系数写入正确；真实撤销后将 job 取消映射，再调用不读旧 job且输出不变。
+GCC CALL [],0 的第三参数在 caller SP+12，不能写成 SP+8。job 是既有 direct-reader
+schema fixture，尚未执行真实 constructor/worker。下一步 controller adapter 和
+消息/worker 原生连接；不要重跑完整主机测试或手写另一个已发布 runtime。
+
+此前：[原生创建与发布模拟](CANDIDATE_PUBLISH_SIM.md)已完成 S2 的有条件场景。
 原厂 create 316 指令取得 ID1，正常 bootstrap 共 52,820 指令后发布 a1dd6108，并
 恢复原调用现场尾转 6011f620。原厂耗尽返回 −34 后候选 f04 隔离；queue4c 失配后
 真实 delete 384 指令清除 ID/计数并释放锁，再 f05 隔离。没有 API 成功 stub。
