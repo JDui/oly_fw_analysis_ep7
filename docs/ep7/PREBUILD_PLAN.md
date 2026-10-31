@@ -220,3 +220,10 @@ cleanup/bulk/析构撤销、实际四表项cohort及真实来源qualifier，复�
 锁存失效，同址恢复不能复活旧代。98条指令、8数据项、6组host和11对象通过。
 下一项在此来源内接H/L内容对象/重建、viewer和UI session，再关闭实际输入provider；
 当前没有把登记成功等同于renderer_ready或原生安装闭包。
+
+[独立H/L内容重建](UI_CONTENT_REBUILD.md)已实现56字节私有child、18槽vtable和
+原生析构；分配失败保留旧内容并恢复两处类别索引，H/L切换复用已拥有对象。
+全main引用扫描补出第四处重建调用60e269f0，四处CALL全部加入实际cohort检查；
+96条原厂指令、6组新增+6组复用host场景和13对象通过。H/L mask仍禁用，没有
+开启renderer_ready。下一项将UI session/同一runtime core接入这些对象，再汇入
+viewer/显示owner和真实输入资格；G4/G6/G8仍未整体通过。

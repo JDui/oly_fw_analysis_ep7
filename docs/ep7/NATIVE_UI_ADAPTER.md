@@ -36,7 +36,7 @@ Native factory creation returns object in a0; parent constructor60e26108 receive
 
 ## Exact unresolved installation boundaries
 
-The ROM callback initializer array6025bb34..4c names expected functions, but its loaderjoin toRAM61fc3874 remains unqualified. Real installer must establish which callbacks are installed, not blindly patch ROM addresses. Every parent event arm must be mapped to its physical/logical wheel semantics; this pass establishes forwarding/guards, not allwheel delta signs/repeatunits. Six-entry selector allocation, customH/Lchild vtable/destructor query, drawing primitives/layout, nativecompiler ABI veneers and installation/unwind transaction are unimplemented. Thus portablecore can be compilechecked now, while actualnative installation is still blocked on these concrete seams; not on userchoosingtechnicaldetails or NVMavailability.
+The callback loader join is documented below; real installation still requires current table/lifetime qualification. Every parent event arm must be mapped to its physical/logical wheel semantics; static forwarding/guards alone do not establish all wheel delta signs/repeat units. Six-entry allocation, MVC ownership and private H/L child destruction now have concrete candidates and targeted checks. UI session/frame/native input admission, complete renderer/layout integration and installation/unwind remain incomplete. Native installation still depends on those seams and qualified G6 placement.
 
 Current continuation: [UI resource origin](UI_RESOURCE_ORIGIN.md) now connects
 6025bb34 to61fc3874 through the actual startup copy recipe, conditional on successful
@@ -46,5 +46,10 @@ table/lifetime qualification; this finding alone does not authorize callback wri
 [MVC lifetime binding](UI_MVC_LIFETIME.md) now captures the constructed graph only
 after the complete GUI041d entry has published its container, and revokes it before
 GUI exit or matching parent/viewer destruction. It also corrects the +40 terminology:
-the method performs destruction and returns an optional deallocator. H/L content,
-viewer rendering and actual input admission remain the next integration work.
+the method performs destruction and returns an optional deallocator.
+
+[Owned H/L content](UI_CONTENT_REBUILD.md) now covers four direct rebuild CALL
+sites, including60e269f0, with an independently allocated56-byte child. Failed H/L
+allocation retains the prior object and restores both selector and remembered
+indices. H/L masks stay disabled; UI session, viewer/owner joining and actual
+input admission remain incomplete.

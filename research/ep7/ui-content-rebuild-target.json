@@ -1,0 +1,410 @@
+{
+  "scope": "GUI041d lifetime and owned H/L content rebuild with actual table/CALL cohort; UI session, drawing/input, bypass closure and native installation/placement still pending",
+  "versions": {
+    "gcc": "mn10300-elf-gcc (GCC) 13.4.0",
+    "as": "GNU assembler (GNU Binutils) 2.45",
+    "ld": "GNU ld (GNU Binutils) 2.45",
+    "objdump": "GNU objdump (GNU Binutils) 2.45"
+  },
+  "objects": {
+    "ui_selector": {
+      "source": "prototypes/ep7_volatile_hl/ui_selector/selector.c",
+      "definitions": [
+        "_ep7s_categories",
+        "_ep7s_expand_after_init"
+      ],
+      "undefined": [
+        "_ep7_gcc_mvc_array_delete",
+        "_ep7_gcc_mvc_array_new",
+        "_ep7_stock_selector_initializer_unresolved",
+        "_ep7n_native_current_task",
+        "ep7_native_selector_init_bridge"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "531",
+        "0",
+        "0",
+        "531"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_selector/selector.c:17:5:ep7s_expand_after_init\t44\tstatic"
+      ]
+    },
+    "ui_selector_bridges": {
+      "source": "prototypes/ep7_volatile_hl/ui_selector/bridges.s",
+      "definitions": [
+        "_ep7_gcc_mvc_array_delete",
+        "_ep7_gcc_mvc_array_new",
+        "ep7_native_selector_init_bridge"
+      ],
+      "undefined": [
+        "_ep7s_expand_after_init",
+        "ep7_stock_mvc_array_delete_unresolved",
+        "ep7_stock_mvc_array_new_unresolved",
+        "ep7_stock_selector_init_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 25,
+      "own_frame_bytes": [
+        56,
+        4,
+        4
+      ],
+      "original_initializer_self_frame": 12,
+      "original_array_caller_frames": [
+        4,
+        4
+      ],
+      "original_initializer_scratch_results_preserved": true,
+      "size_output": [
+        "76",
+        "0",
+        "0",
+        "76"
+      ]
+    },
+    "task_context": {
+      "source": "prototypes/ep7_volatile_hl/runtime/task_context.c",
+      "definitions": [
+        "_ep7n_query_task"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "535",
+        "0",
+        "0",
+        "535"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context.c:6:13:current_tcb\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context.c:14:6:ep7n_query_task\t60\tstatic"
+      ]
+    },
+    "task_native": {
+      "source": "prototypes/ep7_volatile_hl/runtime/task_context_native.c",
+      "definitions": [
+        "_ep7n_native_current_task",
+        "_ep7n_native_queue"
+      ],
+      "undefined": [
+        "_ep7_gcc_get_tid",
+        "_ep7n_query_queue",
+        "_ep7n_query_task"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "98",
+        "0",
+        "0",
+        "98"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:7:13:read_word\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:9:13:read_half\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:5:12:query\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:12:6:ep7n_native_current_task\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/task_context_native.c:16:6:ep7n_native_queue\t16\tstatic"
+      ]
+    },
+    "queue_context": {
+      "source": "prototypes/ep7_volatile_hl/runtime/queue_context.c",
+      "definitions": [
+        "_ep7n_query_queue",
+        "_ep7n_same_queue"
+      ],
+      "undefined": [
+        "_memcpy"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "853",
+        "0",
+        "0",
+        "853"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/runtime/queue_context.c:6:13:read_view\t44\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/queue_context.c:26:6:ep7n_same_queue\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/runtime/queue_context.c:32:6:ep7n_query_queue\t104\tstatic"
+      ]
+    },
+    "get_tid": {
+      "source": "prototypes/ep7_volatile_hl/target/get_tid_bridge.s",
+      "definitions": [
+        "_ep7_gcc_get_tid"
+      ],
+      "undefined": [
+        "ep7_stock_get_tid_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 5,
+      "size_output": [
+        "17",
+        "0",
+        "0",
+        "17"
+      ]
+    },
+    "memory": {
+      "source": "prototypes/ep7_volatile_hl/target/memory.c",
+      "definitions": [
+        "_memcpy",
+        "_memset"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "49",
+        "0",
+        "0",
+        "49"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/target/memory.c:8:7:memcpy\t4\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/target/memory.c:18:7:memset\t0\tstatic"
+      ]
+    },
+    "mvc_lifetime": {
+      "source": "prototypes/ep7_volatile_hl/ui_mvc/lifetime.c",
+      "definitions": [
+        "_ep7_native_mvc",
+        "_ep7m_before_gui_exit",
+        "_ep7m_before_parent_destroy",
+        "_ep7m_before_viewer_destroy",
+        "_ep7m_current",
+        "_ep7m_gui_begin",
+        "_ep7m_gui_complete",
+        "_ep7m_hold_content",
+        "_ep7m_release_content",
+        "_ep7m_require_context"
+      ],
+      "undefined": [
+        "_ep7_gcc_quarantine",
+        "_ep7_stock_color_container_unresolved",
+        "_ep7m_native_cohort_present",
+        "_ep7n_native_current_task",
+        "_ep7s_categories"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "1987",
+        "0",
+        "76",
+        "2063"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:37:12:selector_shape\t8\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:94:13:retire.part.0\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:24:13:require_live.constprop\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:46:6:ep7m_gui_begin\t36\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:61:6:ep7m_gui_complete\t32\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:84:6:ep7m_before_gui_exit\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:103:6:ep7m_before_parent_destroy\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:104:6:ep7m_before_viewer_destroy\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:105:29:ep7m_current\t20\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:125:6:ep7m_require_context\t12\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:131:23:ep7m_hold_content\t16\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/lifetime.c:143:6:ep7m_release_content\t12\tstatic"
+      ]
+    },
+    "mvc_cohort": {
+      "source": "prototypes/ep7_volatile_hl/ui_mvc/cohort.c",
+      "definitions": [
+        "_ep7m_native_cohort_present"
+      ],
+      "undefined": [
+        "_ep7_stock_gui_color_entry_unresolved",
+        "_ep7_stock_gui_color_exit_unresolved",
+        "_ep7_stock_mvc_parent_vtable_unresolved",
+        "_ep7_stock_mvc_rebuild_initial_call_unresolved",
+        "_ep7_stock_mvc_rebuild_next_call_unresolved",
+        "_ep7_stock_mvc_rebuild_previous_call_unresolved",
+        "_ep7_stock_mvc_rebuild_touch_call_unresolved",
+        "_ep7_stock_mvc_viewer_vtable_unresolved",
+        "ep7_native_content_rebuild_bridge",
+        "ep7_native_mvc_gui_entry_bridge",
+        "ep7_native_mvc_gui_exit_bridge",
+        "ep7_native_mvc_parent_destroy_bridge",
+        "ep7_native_mvc_viewer_destroy_bridge"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "204",
+        "0",
+        "0",
+        "204"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/cohort.c:15:12:rebuild_call\t0\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_mvc/cohort.c:22:5:ep7m_native_cohort_present\t12\tstatic"
+      ]
+    },
+    "mvc_bridges": {
+      "source": "prototypes/ep7_volatile_hl/ui_mvc/bridges.s",
+      "definitions": [
+        "ep7_native_mvc_gui_entry_bridge",
+        "ep7_native_mvc_gui_exit_bridge",
+        "ep7_native_mvc_parent_destroy_bridge",
+        "ep7_native_mvc_viewer_destroy_bridge"
+      ],
+      "undefined": [
+        "_ep7m_before_gui_exit",
+        "_ep7m_before_parent_destroy",
+        "_ep7m_before_viewer_destroy",
+        "_ep7m_gui_begin",
+        "_ep7m_gui_complete",
+        "ep7_stock_mvc_gui_entry_unresolved",
+        "ep7_stock_mvc_gui_exit_unresolved",
+        "ep7_stock_mvc_parent_destroy_unresolved",
+        "ep7_stock_mvc_viewer_destroy_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 65,
+      "own_frame_bytes": [
+        48,
+        48,
+        48,
+        48
+      ],
+      "original_self_frames": [
+        4,
+        8,
+        28,
+        8
+      ],
+      "original_entry_scratch_results_preserved": true,
+      "original_destructor_a0_results_preserved": true,
+      "size_output": [
+        "183",
+        "0",
+        "0",
+        "183"
+      ]
+    },
+    "quarantine": {
+      "source": "prototypes/ep7_volatile_hl/runtime/quarantine.s",
+      "definitions": [
+        "_ep7_gcc_quarantine"
+      ],
+      "undefined": [],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 2,
+      "owned_terminal_loop": true,
+      "native_exception_behavior_executed": false,
+      "size_output": [
+        "3",
+        "0",
+        "0",
+        "3"
+      ]
+    },
+    "ui_content": {
+      "source": "prototypes/ep7_volatile_hl/ui_content/content.c",
+      "definitions": [
+        "_ep7_native_content",
+        "_ep7c_before_destroy",
+        "_ep7c_rebuild"
+      ],
+      "undefined": [
+        "_ep7_gcc_mvc_base_init",
+        "_ep7_gcc_mvc_dispose",
+        "_ep7_gcc_mvc_scalar_new",
+        "_ep7_gcc_mvc_stock_rebuild",
+        "_ep7_gcc_quarantine",
+        "_ep7_native_mvc",
+        "_ep7_stock_selector_remembered_unresolved",
+        "_ep7m_hold_content",
+        "_ep7m_release_content",
+        "_ep7m_require_context",
+        "_memset",
+        "ep7_native_content_vtable"
+      ],
+      "loop_extended_state_audited": true,
+      "size_output": [
+        "599",
+        "0",
+        "8",
+        "607"
+      ],
+      "stack_usage": [
+        "/repo/prototypes/ep7_volatile_hl/ui_content/content.c:27:6:ep7c_rebuild\t40\tstatic",
+        "/repo/prototypes/ep7_volatile_hl/ui_content/content.c:62:6:ep7c_before_destroy\t16\tstatic"
+      ]
+    },
+    "ui_content_bridges": {
+      "source": "prototypes/ep7_volatile_hl/ui_content/bridges.s",
+      "definitions": [
+        "_ep7_gcc_mvc_base_init",
+        "_ep7_gcc_mvc_dispose",
+        "_ep7_gcc_mvc_scalar_new",
+        "_ep7_gcc_mvc_stock_rebuild",
+        "ep7_native_content_destroy_bridge",
+        "ep7_native_content_null",
+        "ep7_native_content_rebuild_bridge",
+        "ep7_native_content_vtable",
+        "ep7_native_content_zero"
+      ],
+      "undefined": [
+        "_ep7c_before_destroy",
+        "_ep7c_rebuild",
+        "ep7_stock_mvc_base_destroy_unresolved",
+        "ep7_stock_mvc_base_init_unresolved",
+        "ep7_stock_mvc_rebuild_unresolved",
+        "ep7_stock_mvc_scalar_delete_unresolved",
+        "ep7_stock_mvc_scalar_new_unresolved"
+      ],
+      "loop_extended_state_audited": true,
+      "checked_instructions": 43,
+      "vtable_entries_checked": 18,
+      "rebuild_inherited_frame_bytes": 28,
+      "rebuild_own_frame_bytes": 0,
+      "destructor_own_frame_bytes": 32,
+      "near_call_target_range": [
+        "0x60e1e9f0",
+        "0x60e2e1d3"
+      ],
+      "stock_rebuild_entry_remains_unpatched": true,
+      "destructor_returns_original_base_a0": true,
+      "pointer_return_a0_preserved": true,
+      "size_output": [
+        "203",
+        "0",
+        "0",
+        "203"
+      ]
+    }
+  },
+  "remaining_external_symbols": [
+    "_ep7_stock_color_container_unresolved",
+    "_ep7_stock_gui_color_entry_unresolved",
+    "_ep7_stock_gui_color_exit_unresolved",
+    "_ep7_stock_mvc_parent_vtable_unresolved",
+    "_ep7_stock_mvc_rebuild_initial_call_unresolved",
+    "_ep7_stock_mvc_rebuild_next_call_unresolved",
+    "_ep7_stock_mvc_rebuild_previous_call_unresolved",
+    "_ep7_stock_mvc_rebuild_touch_call_unresolved",
+    "_ep7_stock_mvc_viewer_vtable_unresolved",
+    "_ep7_stock_selector_initializer_unresolved",
+    "_ep7_stock_selector_remembered_unresolved",
+    "ep7_stock_get_tid_unresolved",
+    "ep7_stock_mvc_array_delete_unresolved",
+    "ep7_stock_mvc_array_new_unresolved",
+    "ep7_stock_mvc_base_destroy_unresolved",
+    "ep7_stock_mvc_base_init_unresolved",
+    "ep7_stock_mvc_gui_entry_unresolved",
+    "ep7_stock_mvc_gui_exit_unresolved",
+    "ep7_stock_mvc_parent_destroy_unresolved",
+    "ep7_stock_mvc_rebuild_unresolved",
+    "ep7_stock_mvc_scalar_delete_unresolved",
+    "ep7_stock_mvc_scalar_new_unresolved",
+    "ep7_stock_mvc_viewer_destroy_unresolved",
+    "ep7_stock_selector_init_unresolved"
+  ],
+  "hash_checks_performed": false,
+  "target_linked": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "native_adapter_installed": false
+}

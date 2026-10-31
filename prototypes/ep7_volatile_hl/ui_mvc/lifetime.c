@@ -31,6 +31,7 @@ static void forget(struct ep7m_lifetime *s)
 {
     s->container=NULL;s->parent=NULL;s->viewer=NULL;s->selector=NULL;s->masks=NULL;
     s->selector_count=0;s->invalidated=0;
+    s->content=NULL;s->category=0;
     /* generation and pinned task never reset; address reuse is a new capture. */
 }
 static int selector_shape(const uint8_t *p)
@@ -51,7 +52,7 @@ void ep7m_gui_begin(void)
         return;
     }
     if (started&&!same_task(&t,&s->task)) inconsistent(1);
-    if (s->constructing||s->container) inconsistent(4); /* Before original allocation. */
+    if (s->constructing||s->container||s->busy) inconsistent(4); /* Before original allocation. */
     if (!started) {
         s->task=t;atomic_store_explicit(&s->started,true,memory_order_release);
     }
@@ -78,13 +79,14 @@ void ep7m_gui_complete(void *original_result)
     if (s->generation==UINT32_MAX) { s->stopped=1;return; }
     ++s->generation;s->container=container;s->parent=parent;s->viewer=viewer;
     s->selector=selector;s->masks=pointer(selector+88);s->selector_count=half(selector+84);
+    s->content=pointer(parent+80);s->category=half(selector+86);
 }
 void ep7m_before_gui_exit(void)
 {
     struct ep7m_lifetime *s=&ep7_native_mvc;
     if (!atomic_load_explicit(&s->started,memory_order_acquire)) return;
     require_live(s);
-    if (s->constructing) inconsistent(5);
+    if (s->constructing||s->busy) inconsistent(5);
     if (s->container&&ep7_stock_color_container_unresolved!=(uint32_t)(uintptr_t)s->container)
         inconsistent(6);
     forget(s); /* Before parent, viewer, argument block or container can be freed. */
@@ -95,7 +97,7 @@ static void retire(void *object,int is_viewer)
     if (!atomic_load_explicit(&s->started,memory_order_acquire)) return;
     require_live(s);
     if (!object||(is_viewer?s->viewer:s->parent)!=object) return;
-    if (s->constructing) inconsistent(7);
+    if (s->constructing||s->busy) inconsistent(7);
     forget(s);
 }
 void ep7m_before_parent_destroy(void *p) { retire(p,0); }
@@ -112,9 +114,35 @@ const struct ep7m_lifetime *ep7m_current(void)
     const uint8_t *p=s->parent,*v=s->viewer,*list=s->selector,*c=s->container;
     if (pointer(c)!=p||pointer(c+4)!=v||word(c+8)!=0x34||word(c+12)!=0x84||
         word(p)!=UINT32_C(0x6118957c)||word(v)!=UINT32_C(0x61189ba8)||
-        pointer(v+384)!=p||pointer(p+76)!=list) { s->invalidated=1;return NULL; }
+        pointer(v+384)!=p||pointer(p+76)!=list||pointer(p+80)!=s->content) {
+        s->invalidated=1;return NULL;
+    }
     if (!selector_shape(list)||half(list+84)!=s->selector_count||pointer(list+88)!=s->masks) {
         s->invalidated=1;return NULL; /* Never follow a substituted mask array. */
     }
     return s;
+}
+void ep7m_require_context(void)
+{
+    struct ep7m_lifetime *s=&ep7_native_mvc;
+    if (!atomic_load_explicit(&s->started,memory_order_acquire)) inconsistent(8);
+    require_live(s);
+}
+struct ep7m_lifetime *ep7m_hold_content(void *parent)
+{
+    const struct ep7m_lifetime *view=ep7m_current();
+    struct ep7m_lifetime *s=&ep7_native_mvc;
+    if (!view||view->parent!=parent) {
+        if (atomic_load_explicit(&s->started,memory_order_acquire)&&s->parent==parent&&parent)
+            inconsistent(9); /* Never delegate an invalidated owned graph. */
+        return NULL;
+    }
+    if (s->busy) inconsistent(10);
+    s->busy=1;return s;
+}
+void ep7m_release_content(struct ep7m_lifetime *s)
+{
+    if (s!=&ep7_native_mvc||!s->busy||ep7m_current()!=s||
+        half((const uint8_t *)s->selector+86)!=s->category) inconsistent(11);
+    s->busy=0;
 }

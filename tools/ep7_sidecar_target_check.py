@@ -17,13 +17,15 @@ mode.add_argument('--ui-lifecycle-only',action='store_true',help='compile actual
 mode.add_argument('--ui-owner-only',action='store_true',help='compile request278 owner capture/revoke, actual table cohort and native method bridges')
 mode.add_argument('--ui-selector-only',action='store_true',help='compile guarded six-entry selector storage upgrade after original ID193 initialization')
 mode.add_argument('--ui-mvc-only',action='store_true',help='compile GUI041d container/parent/viewer lifetime capture and pre-destruction revocation')
+mode.add_argument('--ui-content-only',action='store_true',help='compile owned H/L content rebuild with native destruction and MVC/cohort closure')
 args=parser.parse_args()
 receiver_mode=args.receive_abi_only or args.queue_pipeline_abi_only
 materializer_mode=args.materializer_abi_only or receiver_mode
 ui_lifecycle_mode=args.ui_lifecycle_only or args.ui_owner_only
 ui_create_mode=args.ui_create_only or ui_lifecycle_mode
 ui_mode=args.ui_context_only or ui_create_mode
-selector_mode=args.ui_selector_only or args.ui_mvc_only
+mvc_mode=args.ui_mvc_only or args.ui_content_only
+selector_mode=args.ui_selector_only or mvc_mode
 root=Path(__file__).resolve().parents[1];core=root/'prototypes/ep7_volatile_hl';prefix=args.tool_prefix
 versions={n:subprocess.check_output([prefix+n,'--version'],text=True).splitlines()[0] for n in ['gcc','as','ld','objdump']}
 include=subprocess.check_output([prefix+'gcc','-print-file-name=include'],text=True).strip()
@@ -65,10 +67,11 @@ if selector_mode:
      ('task_native','task_context_native.c'),('queue_context','queue_context.c')]})
  files.update({'get_tid':core/'target/get_tid_bridge.s','memory':core/'target/memory.c'})
  flags.append('-fstack-usage')
- if args.ui_mvc_only:
+ if mvc_mode:
   files.update({n:core/'ui_mvc'/p for n,p in [('mvc_lifetime','lifetime.c'),
       ('mvc_cohort','cohort.c'),('mvc_bridges','bridges.s')]})
   files['quarantine']=core/'runtime/quarantine.s'
+  files.update({n:core/'ui_content'/p for n,p in [('ui_content','content.c'),('ui_content_bridges','bridges.s')]})
 if materializer_mode:
  files={'materializer_bridge':core/'snapshot_transport/native/materializer_bridge.s',
         'materializer_layout':core/'snapshot_transport/native/materializer_layout.c',
@@ -238,6 +241,50 @@ with tempfile.TemporaryDirectory() as temp:
    objects[name].update(checked_instructions=65,own_frame_bytes=[48]*4,
        original_self_frames=[4,8,28,8],original_entry_scratch_results_preserved=True,
        original_destructor_a0_results_preserved=True)
+  if name=='ui_content_bridges':
+   dis=subprocess.check_output([prefix+'objdump','-dr','-z','--insn-width=16',str(obj)],text=True)
+   # Each body is independently selected: near entry is a separate placement section.
+   def body(symbol):
+    part=dis.split('<'+symbol+'>:\n',1)[1].split('\n\n',1)[0]
+    return re.findall(r'^\s*[0-9a-f]+:[ \t]+(?:[0-9a-f]{2}[ \t]+)+([a-z][a-z0-9]*)(?:[ \t]+([^\n]*))?$',part,re.M)
+   expected_bodies={
+       'ep7_native_content_rebuild_bridge':[('mov','a0,d0'),('call',None),('ret','[d2,d3,a2,a3],28')],
+       '_ep7_gcc_mvc_stock_rebuild':[('add','-4,sp'),('mov','d0,a0'),('call',None),('ret','[],4')],
+       '_ep7_gcc_mvc_scalar_new':[('add','-4,sp'),('call',None),('mov','a0,d0'),('ret','[],4')],
+       '_ep7_gcc_mvc_base_init':[('add','-4,sp'),('mov','d0,a0'),('call',None),('ret','[],4')],
+       '_ep7_gcc_mvc_dispose':[('movm','[a2],(sp)'),('add','-4,sp'),('mov','d0,a2'),('mov','a2,a0'),
+           ('mov','(a0),a1'),('mov','(40,a1),a1'),('calls','(a1)'),('mov','a0,a1'),('cmp','0,a0'),
+           ('beq',None),('mov','a2,a0'),('calls','(a1)'),('ret','[a2],8')],
+       '.Lscalar_delete':[('mov','a2,a0'),('call',None),('ret','[a2],8')],
+       'ep7_native_content_destroy_bridge':[('movm','[d2,d3,a2,a3],(sp)'),('add','-16,sp'),
+           ('mov','a0,(12,sp)'),('mov','a0,d0'),('call',None),('mov','(12,sp),a0'),('call',None),
+           ('ret','[d2,d3,a2,a3],32')],
+       'ep7_native_content_zero':[('clr','d0'),('retf','[],0')],
+       'ep7_native_content_null':[('mov','0,a0'),('retf','[],0')]}
+   for symbol,want in expected_bodies.items():
+    got=body(symbol)
+    if len(got)!=len(want) or any(a[0]!=b[0] or (b[1] is not None and a[1]!=b[1]) for a,b in zip(got,want)):
+     raise ValueError('content ABI changed in '+symbol+': '+repr(got))
+   frames={'ep7_native_content_rebuild_bridge':[',[],0'],'_ep7_gcc_mvc_stock_rebuild':[',[d2,d3,a2,a3],28'],
+       '_ep7_gcc_mvc_scalar_new':[',[],4'],'_ep7_gcc_mvc_base_init':[',[],0'],'.Lscalar_delete':[',[],4'],
+       'ep7_native_content_destroy_bridge':[',[],0',',[],0']}
+   for symbol,want in frames.items():
+    calls=[op for mn,op in body(symbol) if mn=='call']
+    if any(not op.endswith(suffix) for op,suffix in zip(calls,want)):raise ValueError('content CALL frame changed')
+   relocs=re.findall(r'R_MN10300_(\w+)\s+([^\n]+)',dis)
+   want=[('PCREL32',s+'+0x1') for s in ['ep7_stock_mvc_rebuild_unresolved','ep7_stock_mvc_scalar_new_unresolved',
+       'ep7_stock_mvc_base_init_unresolved']]+[('PCREL8','.Lscalar_delete+0x1')]+[
+       ('PCREL32',s+'+0x1') for s in ['ep7_stock_mvc_scalar_delete_unresolved','_ep7c_before_destroy',
+       'ep7_stock_mvc_base_destroy_unresolved','_ep7c_rebuild']]
+   if relocs!=want:raise ValueError('content native/C relocation targets changed: '+repr(relocs))
+   data_relocs=subprocess.check_output([prefix+'objdump','-r','-j','.rodata',str(obj)],text=True)
+   rows=re.findall(r'^([0-9a-f]+)\s+R_MN10300_32\s+(\S+)',data_relocs,re.M)
+   vtable=['ep7_native_content_zero']*18;vtable[7]='ep7_native_content_null';vtable[10]='ep7_native_content_destroy_bridge'
+   if rows!=[(f'{i*4:08x}',v) for i,v in enumerate(vtable)]:raise ValueError('private MVC vtable changed')
+   objects[name].update(checked_instructions=sum(map(len,expected_bodies.values())),vtable_entries_checked=18,
+       rebuild_inherited_frame_bytes=28,rebuild_own_frame_bytes=0,destructor_own_frame_bytes=32,
+       near_call_target_range=['0x60e1e9f0','0x60e2e1d3'],stock_rebuild_entry_remains_unpatched=True,
+       destructor_returns_original_base_a0=True,pointer_return_a0_preserved=True)
   if name=='ui_selector_bridges':
    ins=re.findall(r'^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2}\s+)+([a-z][a-z0-9]*)\s+([^\n]+)',dis,re.M)
    expected=[('movm','[d2,d3,a2,a3],(sp)'),('add','-40,sp'),('mov','a0,(12,sp)'),
@@ -604,11 +651,16 @@ if args.ui_owner_only:expected|={'ep7_stock_screen_manager_unresolved',
 if selector_mode:expected={'ep7_stock_get_tid_unresolved','ep7_stock_selector_init_unresolved',
     '_ep7_stock_selector_initializer_unresolved','ep7_stock_mvc_array_new_unresolved',
     'ep7_stock_mvc_array_delete_unresolved'}
-if args.ui_mvc_only:expected|={'_ep7_stock_gui_color_entry_unresolved','_ep7_stock_gui_color_exit_unresolved',
+if mvc_mode:expected|={'_ep7_stock_gui_color_entry_unresolved','_ep7_stock_gui_color_exit_unresolved',
     '_ep7_stock_mvc_parent_vtable_unresolved','_ep7_stock_mvc_viewer_vtable_unresolved',
     '_ep7_stock_color_container_unresolved','ep7_stock_mvc_gui_entry_unresolved',
     'ep7_stock_mvc_gui_exit_unresolved','ep7_stock_mvc_parent_destroy_unresolved',
-    'ep7_stock_mvc_viewer_destroy_unresolved'}
+    'ep7_stock_mvc_viewer_destroy_unresolved','_ep7_stock_mvc_rebuild_initial_call_unresolved',
+    '_ep7_stock_mvc_rebuild_previous_call_unresolved','_ep7_stock_mvc_rebuild_next_call_unresolved',
+    '_ep7_stock_mvc_rebuild_touch_call_unresolved',
+    '_ep7_stock_selector_remembered_unresolved','ep7_stock_mvc_rebuild_unresolved',
+    'ep7_stock_mvc_scalar_new_unresolved','ep7_stock_mvc_scalar_delete_unresolved',
+    'ep7_stock_mvc_base_init_unresolved','ep7_stock_mvc_base_destroy_unresolved'}
 if args.queue_abi_only:expected={'ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if args.materializer_abi_only:expected={'_ep7q_materializer_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved'}
 if receiver_mode:expected={'_ep7q_materializer_context_unresolved','_ep7q_descriptor_receive_context_unresolved','ep7_stock_queue_receive_local_unresolved','ep7_stock_queue_send_local_unresolved','ep7_stock_queue_send_preserving_unresolved','ep7_stock_receive_wrapper_unresolved'}
@@ -642,6 +694,6 @@ if ui_create_mode:scope='Existing text factory result/context bridge and native 
 if ui_lifecycle_mode:scope='Actual text create/attach/bind/set/rollback C and native ABI closure; concrete live owner/GUI entry, resource semantics and teardown hooks remain unqualified'
 if args.ui_owner_only:scope='Request278 owner capture and matching retirement with native table cohort and text lifecycle; cold installation, bypass closure, GUI exclusion, MVC/renderer and placement remain unqualified'
 if args.ui_selector_only:scope='Native ID193 post-initializer six-entry storage upgrade with H/L disabled and allocation-failure stock fallback; no MVC/viewer/input admission or installation'
-if args.ui_mvc_only:scope='GUI041d construction provenance and container/parent/viewer teardown with actual cohort checks; H/L content, drawing, input and native lifecycle exclusion still pending'
+if mvc_mode:scope='GUI041d lifetime and owned H/L content rebuild with actual table/CALL cohort; UI session, drawing/input, bypass closure and native installation/placement still pending'
 report=dict(scope=scope,versions=versions,objects=objects,remaining_external_symbols=sorted(external),hash_checks_performed=False,target_linked=False,target_executed=False,firmware_built=False,native_adapter_installed=False)
 print(json.dumps(report,indent=2))

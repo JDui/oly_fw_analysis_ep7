@@ -1,0 +1,108 @@
+{
+  "scope": "Native MVC rebuild CALLs, destructive default branch and owned-content base ABI.",
+  "objdump_version": "GNU objdump (GNU Binutils) 2.45",
+  "input_structure": {
+    "scope": "Prepare a local E-P7 research input using container structure, without SHA.\n\nThis does not establish byte identity with historical hash-pinned reports.\nIt decodes stock only, never modifies firmware or produces an install image.",
+    "bytes": 111017984,
+    "model": "E-P7",
+    "build": "1100",
+    "whole_container_checked": true,
+    "components": [
+      {
+        "offset": 0,
+        "payload_bytes": 26214336,
+        "kind": "0x100",
+        "header_build": "1100",
+        "model_bytes": "1420",
+        "container_address": "0x406a0000"
+      },
+      {
+        "offset": 26214400,
+        "payload_bytes": 26214336,
+        "kind": "0x101",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x421a0000"
+      },
+      {
+        "offset": 52428800,
+        "payload_bytes": 45219776,
+        "kind": "0x106",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x43aa0000"
+      },
+      {
+        "offset": 97648640,
+        "payload_bytes": 262080,
+        "kind": "0x10e",
+        "header_build": "0001",
+        "model_bytes": "1420",
+        "container_address": "0x0"
+      },
+      {
+        "offset": 97910784,
+        "payload_bytes": 13107136,
+        "kind": "0x102",
+        "header_build": "0100",
+        "model_bytes": "1420",
+        "container_address": "0x467e0000"
+      }
+    ],
+    "component_sums_valid": true,
+    "unchanged_roundtrip_equal": true,
+    "runtime_base": "0x60020020",
+    "entry_witnesses_match": true,
+    "hash_checks_performed": false,
+    "historical_exact_byte_identity_proven": false,
+    "firmware_modified": false,
+    "firmware_executed": false,
+    "camera_accessed": false,
+    "flash_ready": false
+  },
+  "checked_instructions": 96,
+  "checked_data_rows": 1,
+  "full_main_direct_CALL_candidates": [
+    "0x60e261d4",
+    "0x60e26201",
+    "0x60e26226",
+    "0x60e269f0"
+  ],
+  "absolute_entry_word_candidates": [],
+  "raw_reference_scan_is_control_flow_proof": false,
+  "all_indirect_or_computed_callers_proven": false,
+  "original_rebuild": "0x60e266a9",
+  "caller_allocated_frame_bytes": 28,
+  "saved_registers": [
+    "d2",
+    "d3",
+    "a2",
+    "a3"
+  ],
+  "content_pointer_field": 80,
+  "selector_index_field": 86,
+  "remembered_index": "0x61fc26ae",
+  "native_default_category_clears_content_without_replacement": true,
+  "forwarders_require_nonnull_content": true,
+  "scalar_new": "0x60a4ec03",
+  "scalar_delete": "0x60a4ec17",
+  "allocator_caller_frames": [
+    4,
+    4
+  ],
+  "base_init": "0x60dd5083",
+  "base_init_object_last_written_byte": 47,
+  "base_init_also_clears": "0x61fc1bbc",
+  "base_destructor": "0x60dd50d8",
+  "base_destructor_return_register": "a0",
+  "base_destructor_return_value": 0,
+  "private_child_allocation_bytes": 56,
+  "private_vtable_words": 18,
+  "hl_masks_enabled": false,
+  "renderer_ready": false,
+  "gui_exclusion_proven": false,
+  "installed": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "hash_checks_performed": false
+}

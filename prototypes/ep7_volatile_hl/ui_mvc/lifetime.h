@@ -5,12 +5,14 @@
 
 /* Permanent G6-owned storage. Fields after started are GUI-task-only; callers
  * must retain the same serialized native operation while using a returned view.
- * This records construction provenance, not H/L content or renderer admission. */
+ * This records construction/content ownership, not renderer or input admission. */
 struct ep7m_lifetime {
     atomic_bool started;
     ep7n_task task;
     uint32_t generation,constructing,stopped,selector_count,invalidated;
     void *container,*parent,*viewer,*selector,*masks;
+    void *content;
+    uint32_t category,busy;
 };
 extern struct ep7m_lifetime ep7_native_mvc;
 int ep7m_native_cohort_present(void);
@@ -22,4 +24,10 @@ void ep7m_before_viewer_destroy(void *viewer);
 /* Only inside pinned GUI calls. NULL before construction/after teardown or if
  * current native relationships changed. Never accepts an arbitrary pointer. */
 const struct ep7m_lifetime *ep7m_current(void);
+/* Rebuild holds the graph across native allocation/destruction. A recursive
+ * rebuild or matching retirement must stop before storage can disappear. */
+struct ep7m_lifetime *ep7m_hold_content(void *parent);
+void ep7m_release_content(struct ep7m_lifetime *);
+/* Task/cohort check without traversing a graph already being destroyed. */
+void ep7m_require_context(void);
 #endif
