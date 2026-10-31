@@ -1,0 +1,1107 @@
+{
+  "scope": "Collect a compiler-derived cold-bootstrap call graph, retaining unknown native stack boundaries.",
+  "compiler_reference": "https://gcc.gnu.org/onlinedocs/gcc-13.4.0/gcc/Developer-Options.html",
+  "root": "ep7r_bootstrap_initialize",
+  "compiled_sources": {
+    "runtime/cold_bootstrap.c": {
+      "text_data_bss": [
+        399,
+        0,
+        5708
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "runtime/runtime.c": {
+      "text_data_bss": [
+        1448,
+        0,
+        4
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "poll_lock_provider/bootstrap/bootstrap.c": {
+      "text_data_bss": [
+        560,
+        0,
+        0
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "runtime/native_context.c": {
+      "text_data_bss": [
+        103,
+        0,
+        0
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "runtime/task_context_native.c": {
+      "text_data_bss": [
+        98,
+        0,
+        0
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "runtime/queue_context.c": {
+      "text_data_bss": [
+        853,
+        0,
+        0
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "target/memory.c": {
+      "text_data_bss": [
+        49,
+        0,
+        0
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "target/postbuilder/cohort.c": {
+      "text_data_bss": [
+        65,
+        0,
+        0
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "target/far_call.c": {
+      "text_data_bss": [
+        434,
+        0,
+        0
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "snapshot_transport/native/cohort.c": {
+      "text_data_bss": [
+        647,
+        0,
+        0
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "controller_sidecar/cohort.c": {
+      "text_data_bss": [
+        662,
+        0,
+        0
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "runtime/cold_cohort.c": {
+      "text_data_bss": [
+        357,
+        0,
+        0
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "poll_lock_provider/ep7_sem_provider.c": {
+      "text_data_bss": [
+        378,
+        0,
+        0
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "poll_lock_provider/bootstrap/native_callbacks.c": {
+      "text_data_bss": [
+        70,
+        0,
+        0
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "poll_lock_provider/native/raw_callbacks.c": {
+      "text_data_bss": [
+        78,
+        0,
+        0
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "snapshot_transport/transport.c": {
+      "text_data_bss": [
+        1029,
+        0,
+        0
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "ep7p.c": {
+      "text_data_bss": [
+        3552,
+        0,
+        0
+      ],
+      "all_reported_frames_match_prior_su": true
+    },
+    "runtime/task_context.c": {
+      "text_data_bss": [
+        535,
+        0,
+        0
+      ],
+      "all_reported_frames_match_prior_su": true
+    }
+  },
+  "compiled_c_source_count": 18,
+  "reachable_function_count": 42,
+  "reachable_nodes": {
+    "ep7_gcc_get_tid": {
+      "frame_bytes": 20,
+      "kind": "assembly_frame_and_native_call",
+      "boundary": "native_get_tid_leaf",
+      "source": "target/get_tid_bridge.s"
+    },
+    "ep7_gcc_quarantine": {
+      "frame_bytes": 0,
+      "kind": "assembly_frame_and_native_call",
+      "boundary": "exception_entry_stack_unknown",
+      "source": "runtime/quarantine.s"
+    },
+    "ep7_gcc_raw_sem_create": {
+      "frame_bytes": 32,
+      "kind": "assembly_frame_and_native_call",
+      "boundary": "native_sem_create_body_unknown",
+      "source": "poll_lock_provider/bootstrap/create_delete_bridges.s"
+    },
+    "ep7_gcc_raw_sem_delete_unpublished": {
+      "frame_bytes": 36,
+      "kind": "assembly_frame_and_native_call",
+      "boundary": "native_sem_delete_body_unknown",
+      "source": "poll_lock_provider/bootstrap/create_delete_bridges.s"
+    },
+    "ep7b_abort_unpublished": {
+      "frame_bytes": 20,
+      "compiler_location": "poll_lock_provider/bootstrap/bootstrap.c:9:6",
+      "source": "poll_lock_provider/bootstrap/bootstrap.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7b_mark_published": {
+      "frame_bytes": 0,
+      "compiler_location": "poll_lock_provider/bootstrap/bootstrap.c:35:6",
+      "source": "poll_lock_provider/bootstrap/bootstrap.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7b_prepare": {
+      "frame_bytes": 112,
+      "compiler_location": "poll_lock_provider/bootstrap/bootstrap.c:22:6",
+      "source": "poll_lock_provider/bootstrap/bootstrap.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7b_unresolved_native": {
+      "frame_bytes": 16,
+      "compiler_location": "poll_lock_provider/bootstrap/native_callbacks.c:9:13",
+      "source": "poll_lock_provider/bootstrap/native_callbacks.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7cn_native_cohort_present": {
+      "frame_bytes": 48,
+      "compiler_location": "controller_sidecar/cohort.c:45:6",
+      "source": "controller_sidecar/cohort.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7n_far_call_present": {
+      "frame_bytes": 20,
+      "compiler_location": "target/far_call.c:6:6",
+      "source": "target/far_call.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7n_native_current_task": {
+      "frame_bytes": 16,
+      "compiler_location": "runtime/task_context_native.c:12:6",
+      "source": "runtime/task_context_native.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7n_native_queue": {
+      "frame_bytes": 16,
+      "compiler_location": "runtime/task_context_native.c:16:6",
+      "source": "runtime/task_context_native.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7n_postbuilder_cohort_present": {
+      "frame_bytes": 32,
+      "compiler_location": "target/postbuilder/cohort.c:6:6",
+      "source": "target/postbuilder/cohort.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7n_query_queue": {
+      "frame_bytes": 104,
+      "compiler_location": "runtime/queue_context.c:32:6",
+      "source": "runtime/queue_context.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7n_query_task": {
+      "frame_bytes": 60,
+      "compiler_location": "runtime/task_context.c:14:6",
+      "source": "runtime/task_context.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7n_same_queue": {
+      "frame_bytes": 4,
+      "compiler_location": "runtime/queue_context.c:26:6",
+      "source": "runtime/queue_context.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7p_init": {
+      "frame_bytes": 36,
+      "compiler_location": "ep7p.c:41:6",
+      "source": "ep7p.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7q_native_cohort_present": {
+      "frame_bytes": 44,
+      "compiler_location": "snapshot_transport/native/cohort.c:38:6",
+      "source": "snapshot_transport/native/cohort.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7r_bootstrap_initialize": {
+      "frame_bytes": 96,
+      "compiler_location": "runtime/cold_bootstrap.c:24:6",
+      "source": "runtime/cold_bootstrap.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7r_get": {
+      "frame_bytes": 0,
+      "compiler_location": "runtime/runtime.c:16:7",
+      "source": "runtime/runtime.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7r_native_early_cohort_present": {
+      "frame_bytes": 12,
+      "compiler_location": "runtime/cold_cohort.c:21:6",
+      "source": "runtime/cold_cohort.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7r_native_environment": {
+      "frame_bytes": 0,
+      "compiler_location": "runtime/native_context.c:13:18",
+      "source": "runtime/native_context.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7r_prepare": {
+      "frame_bytes": 64,
+      "compiler_location": "runtime/runtime.c:7:6",
+      "source": "runtime/runtime.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7r_publish": {
+      "frame_bytes": 40,
+      "compiler_location": "runtime/runtime.c:23:6",
+      "source": "runtime/runtime.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7s_init": {
+      "frame_bytes": 16,
+      "compiler_location": "poll_lock_provider/ep7_sem_provider.c:38:6",
+      "source": "poll_lock_provider/ep7_sem_provider.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7s_ops": {
+      "frame_bytes": 0,
+      "compiler_location": "poll_lock_provider/ep7_sem_provider.c:42:10",
+      "source": "poll_lock_provider/ep7_sem_provider.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7s_poisoned": {
+      "frame_bytes": 0,
+      "compiler_location": "poll_lock_provider/ep7_sem_provider.c:43:6",
+      "source": "poll_lock_provider/ep7_sem_provider.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7s_unresolved_raw_callbacks": {
+      "frame_bytes": 0,
+      "compiler_location": "poll_lock_provider/native/raw_callbacks.c:14:13",
+      "source": "poll_lock_provider/native/raw_callbacks.c",
+      "kind": "gcc_static_frame"
+    },
+    "ep7t_init": {
+      "frame_bytes": 24,
+      "compiler_location": "snapshot_transport/transport.c:15:6",
+      "source": "snapshot_transport/transport.c",
+      "kind": "gcc_static_frame"
+    },
+    "memcpy": {
+      "frame_bytes": 4,
+      "compiler_location": "target/memory.c:8:7",
+      "source": "target/memory.c",
+      "kind": "gcc_static_frame"
+    },
+    "memset": {
+      "frame_bytes": 0,
+      "compiler_location": "target/memory.c:18:7",
+      "source": "target/memory.c",
+      "kind": "gcc_static_frame"
+    },
+    "poll_lock_provider/bootstrap/bootstrap.c:same_domain.constprop.0": {
+      "frame_bytes": 24,
+      "compiler_location": "poll_lock_provider/bootstrap/bootstrap.c:8:13",
+      "source": "poll_lock_provider/bootstrap/bootstrap.c",
+      "kind": "gcc_static_frame"
+    },
+    "poll_lock_provider/bootstrap/native_callbacks.c:create": {
+      "frame_bytes": 12,
+      "compiler_location": "poll_lock_provider/bootstrap/native_callbacks.c:7:12",
+      "source": "poll_lock_provider/bootstrap/native_callbacks.c",
+      "kind": "gcc_static_frame"
+    },
+    "poll_lock_provider/bootstrap/native_callbacks.c:drop": {
+      "frame_bytes": 12,
+      "compiler_location": "poll_lock_provider/bootstrap/native_callbacks.c:8:12",
+      "source": "poll_lock_provider/bootstrap/native_callbacks.c",
+      "kind": "gcc_static_frame"
+    },
+    "poll_lock_provider/native/raw_callbacks.c:current": {
+      "frame_bytes": 12,
+      "compiler_location": "poll_lock_provider/native/raw_callbacks.c:11:12",
+      "source": "poll_lock_provider/native/raw_callbacks.c",
+      "kind": "gcc_static_frame"
+    },
+    "runtime/cold_bootstrap.c:installed": {
+      "frame_bytes": 20,
+      "compiler_location": "runtime/cold_bootstrap.c:13:13",
+      "source": "runtime/cold_bootstrap.c",
+      "kind": "gcc_static_frame"
+    },
+    "runtime/native_context.c:queue": {
+      "frame_bytes": 12,
+      "compiler_location": "runtime/native_context.c:7:13",
+      "source": "runtime/native_context.c",
+      "kind": "gcc_static_frame"
+    },
+    "runtime/queue_context.c:read_view": {
+      "frame_bytes": 44,
+      "compiler_location": "runtime/queue_context.c:6:13",
+      "source": "runtime/queue_context.c",
+      "kind": "gcc_static_frame"
+    },
+    "runtime/task_context.c:current_tcb": {
+      "frame_bytes": 36,
+      "compiler_location": "runtime/task_context.c:6:13",
+      "source": "runtime/task_context.c",
+      "kind": "gcc_static_frame"
+    },
+    "runtime/task_context_native.c:query": {
+      "frame_bytes": 12,
+      "compiler_location": "runtime/task_context_native.c:5:12",
+      "source": "runtime/task_context_native.c",
+      "kind": "gcc_static_frame"
+    },
+    "runtime/task_context_native.c:read_half": {
+      "frame_bytes": 0,
+      "compiler_location": "runtime/task_context_native.c:9:13",
+      "source": "runtime/task_context_native.c",
+      "kind": "gcc_static_frame"
+    },
+    "runtime/task_context_native.c:read_word": {
+      "frame_bytes": 0,
+      "compiler_location": "runtime/task_context_native.c:7:13",
+      "source": "runtime/task_context_native.c",
+      "kind": "gcc_static_frame"
+    }
+  },
+  "reachable_edges": {
+    "ep7_gcc_get_tid": [],
+    "ep7_gcc_quarantine": [],
+    "ep7_gcc_raw_sem_create": [],
+    "ep7_gcc_raw_sem_delete_unpublished": [],
+    "ep7b_abort_unpublished": [
+      {
+        "target": "poll_lock_provider/bootstrap/bootstrap.c:same_domain.constprop.0",
+        "location": "poll_lock_provider/bootstrap/bootstrap.c:15:6"
+      },
+      {
+        "target": "poll_lock_provider/bootstrap/native_callbacks.c:drop",
+        "location": "poll_lock_provider/bootstrap/bootstrap.c:16:9",
+        "indirect": true,
+        "expression": "b->native.delete_unpublished"
+      }
+    ],
+    "ep7b_mark_published": [],
+    "ep7b_prepare": [
+      {
+        "target": "memcpy",
+        "location": "<compiler-generated>"
+      },
+      {
+        "target": "memcpy",
+        "location": "<compiler-generated>"
+      },
+      {
+        "target": "poll_lock_provider/native/raw_callbacks.c:current",
+        "location": "poll_lock_provider/bootstrap/bootstrap.c:7:50",
+        "indirect": true,
+        "expression": "b->native.raw.get_tid"
+      },
+      {
+        "target": "poll_lock_provider/bootstrap/native_callbacks.c:create",
+        "location": "poll_lock_provider/bootstrap/bootstrap.c:27:9",
+        "indirect": true,
+        "expression": "n.create"
+      },
+      {
+        "target": "poll_lock_provider/bootstrap/bootstrap.c:same_domain.constprop.0",
+        "location": "poll_lock_provider/bootstrap/bootstrap.c:30:6"
+      },
+      {
+        "target": "ep7b_abort_unpublished",
+        "location": "poll_lock_provider/bootstrap/bootstrap.c:31:9"
+      },
+      {
+        "target": "ep7s_init",
+        "location": "poll_lock_provider/bootstrap/bootstrap.c:30:23"
+      },
+      {
+        "target": "ep7s_ops",
+        "location": "poll_lock_provider/bootstrap/bootstrap.c:30:72"
+      },
+      {
+        "target": "ep7p_init",
+        "location": "poll_lock_provider/bootstrap/bootstrap.c:30:72"
+      }
+    ],
+    "ep7b_unresolved_native": [
+      {
+        "target": "ep7s_unresolved_raw_callbacks",
+        "location": "poll_lock_provider/bootstrap/native_callbacks.c:9:112"
+      }
+    ],
+    "ep7cn_native_cohort_present": [
+      {
+        "target": "ep7n_far_call_present",
+        "location": "controller_sidecar/cohort.c:55:18"
+      }
+    ],
+    "ep7n_far_call_present": [],
+    "ep7n_native_current_task": [
+      {
+        "target": "ep7n_query_task",
+        "location": "runtime/task_context_native.c:14:12"
+      }
+    ],
+    "ep7n_native_queue": [
+      {
+        "target": "ep7n_query_queue",
+        "location": "runtime/task_context_native.c:17:10"
+      }
+    ],
+    "ep7n_postbuilder_cohort_present": [
+      {
+        "target": "ep7n_far_call_present",
+        "location": "target/postbuilder/cohort.c:10:9"
+      }
+    ],
+    "ep7n_query_queue": [
+      {
+        "target": "memcpy",
+        "location": "<compiler-generated>"
+      },
+      {
+        "target": "runtime/task_context_native.c:query",
+        "location": "runtime/queue_context.c:38:8",
+        "indirect": true,
+        "expression": "ops->get_tid"
+      },
+      {
+        "target": "runtime/queue_context.c:read_view",
+        "location": "runtime/queue_context.c:39:9"
+      },
+      {
+        "target": "runtime/queue_context.c:read_view",
+        "location": "runtime/queue_context.c:39:42"
+      },
+      {
+        "target": "ep7n_same_queue",
+        "location": "runtime/queue_context.c:40:9"
+      },
+      {
+        "target": "runtime/task_context_native.c:query",
+        "location": "runtime/queue_context.c:40:44",
+        "indirect": true,
+        "expression": "ops->get_tid"
+      },
+      {
+        "target": "memcpy",
+        "location": "<compiler-generated>"
+      }
+    ],
+    "ep7n_query_task": [
+      {
+        "target": "runtime/task_context_native.c:query",
+        "location": "runtime/task_context.c:20:8",
+        "indirect": true,
+        "expression": "ops->get_tid"
+      },
+      {
+        "target": "runtime/task_context.c:current_tcb",
+        "location": "runtime/task_context.c:22:9"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_half",
+        "location": "runtime/task_context.c:23:9",
+        "indirect": true,
+        "expression": "ops->read16"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_word",
+        "location": "runtime/task_context.c:24:9",
+        "indirect": true,
+        "expression": "ops->read32"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_word",
+        "location": "runtime/task_context.c:25:9",
+        "indirect": true,
+        "expression": "ops->read32"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_word",
+        "location": "runtime/task_context.c:26:9",
+        "indirect": true,
+        "expression": "ops->read32"
+      },
+      {
+        "target": "runtime/task_context_native.c:query",
+        "location": "runtime/task_context.c:29:8",
+        "indirect": true,
+        "expression": "ops->get_tid"
+      },
+      {
+        "target": "runtime/task_context.c:current_tcb",
+        "location": "runtime/task_context.c:30:9"
+      }
+    ],
+    "ep7n_same_queue": [],
+    "ep7p_init": [
+      {
+        "target": "memset",
+        "location": "ep7p.c:43:5"
+      }
+    ],
+    "ep7q_native_cohort_present": [
+      {
+        "target": "ep7n_far_call_present",
+        "location": "snapshot_transport/native/cohort.c:48:17"
+      }
+    ],
+    "ep7r_bootstrap_initialize": [
+      {
+        "target": "ep7_gcc_quarantine",
+        "location": "runtime/cold_bootstrap.c:27:54"
+      },
+      {
+        "target": "ep7r_get",
+        "location": "runtime/cold_bootstrap.c:27:19"
+      },
+      {
+        "target": "ep7n_native_current_task",
+        "location": "runtime/cold_bootstrap.c:29:9"
+      },
+      {
+        "target": "ep7_gcc_quarantine",
+        "location": "runtime/cold_bootstrap.c:31:32"
+      },
+      {
+        "target": "runtime/cold_bootstrap.c:installed",
+        "location": "runtime/cold_bootstrap.c:32:9"
+      },
+      {
+        "target": "ep7_gcc_quarantine",
+        "location": "runtime/cold_bootstrap.c:32:25"
+      },
+      {
+        "target": "ep7b_unresolved_native",
+        "location": "runtime/cold_bootstrap.c:33:9"
+      },
+      {
+        "target": "ep7b_prepare",
+        "location": "runtime/cold_bootstrap.c:33:9"
+      },
+      {
+        "target": "ep7_gcc_quarantine",
+        "location": "runtime/cold_bootstrap.c:34:9"
+      },
+      {
+        "target": "ep7r_native_environment",
+        "location": "runtime/cold_bootstrap.c:35:9"
+      },
+      {
+        "target": "ep7r_prepare",
+        "location": "runtime/cold_bootstrap.c:35:9"
+      },
+      {
+        "target": "ep7b_abort_unpublished",
+        "location": "runtime/cold_bootstrap.c:37:15"
+      },
+      {
+        "target": "ep7_gcc_quarantine",
+        "location": "runtime/cold_bootstrap.c:38:9"
+      },
+      {
+        "target": "ep7r_publish",
+        "location": "runtime/cold_bootstrap.c:36:9"
+      }
+    ],
+    "ep7r_get": [],
+    "ep7r_native_early_cohort_present": [],
+    "ep7r_native_environment": [],
+    "ep7r_prepare": [
+      {
+        "target": "ep7s_poisoned",
+        "location": "runtime/runtime.c:10:40"
+      },
+      {
+        "target": "ep7s_ops",
+        "location": "runtime/runtime.c:12:9"
+      },
+      {
+        "target": "ep7t_init",
+        "location": "runtime/runtime.c:12:9"
+      }
+    ],
+    "ep7r_publish": [
+      {
+        "target": "ep7s_poisoned",
+        "location": "runtime/runtime.c:27:41"
+      },
+      {
+        "target": "runtime/cold_bootstrap.c:installed",
+        "location": "runtime/runtime.c:28:9",
+        "indirect": true,
+        "expression": "r->env.installation_ready"
+      },
+      {
+        "target": "runtime/native_context.c:queue",
+        "location": "runtime/runtime.c:31:13",
+        "indirect": true,
+        "expression": "r->env.queue"
+      },
+      {
+        "target": "ep7b_mark_published",
+        "location": "runtime/runtime.c:34:9"
+      }
+    ],
+    "ep7s_init": [],
+    "ep7s_ops": [],
+    "ep7s_poisoned": [],
+    "ep7s_unresolved_raw_callbacks": [],
+    "ep7t_init": [
+      {
+        "target": "memset",
+        "location": "snapshot_transport/transport.c:18:28"
+      }
+    ],
+    "memcpy": [],
+    "memset": [],
+    "poll_lock_provider/bootstrap/bootstrap.c:same_domain.constprop.0": [
+      {
+        "target": "poll_lock_provider/native/raw_callbacks.c:current",
+        "location": "poll_lock_provider/bootstrap/bootstrap.c:7:50",
+        "indirect": true,
+        "expression": "b->native.raw.get_tid"
+      }
+    ],
+    "poll_lock_provider/bootstrap/native_callbacks.c:create": [
+      {
+        "target": "ep7_gcc_raw_sem_create",
+        "location": "poll_lock_provider/bootstrap/native_callbacks.c:7:70"
+      }
+    ],
+    "poll_lock_provider/bootstrap/native_callbacks.c:drop": [
+      {
+        "target": "ep7_gcc_raw_sem_delete_unpublished",
+        "location": "poll_lock_provider/bootstrap/native_callbacks.c:8:60"
+      }
+    ],
+    "poll_lock_provider/native/raw_callbacks.c:current": [
+      {
+        "target": "ep7_gcc_get_tid",
+        "location": "poll_lock_provider/native/raw_callbacks.c:11:62"
+      }
+    ],
+    "runtime/cold_bootstrap.c:installed": [
+      {
+        "target": "ep7r_native_early_cohort_present",
+        "location": "runtime/cold_bootstrap.c:19:12"
+      },
+      {
+        "target": "ep7cn_native_cohort_present",
+        "location": "runtime/cold_bootstrap.c:20:72"
+      },
+      {
+        "target": "ep7q_native_cohort_present",
+        "location": "runtime/cold_bootstrap.c:21:9"
+      },
+      {
+        "target": "ep7n_postbuilder_cohort_present",
+        "location": "runtime/cold_bootstrap.c:21:41"
+      }
+    ],
+    "runtime/native_context.c:queue": [
+      {
+        "target": "ep7n_native_queue",
+        "location": "runtime/native_context.c:8:20"
+      }
+    ],
+    "runtime/queue_context.c:read_view": [
+      {
+        "target": "runtime/task_context_native.c:read_word",
+        "location": "runtime/queue_context.c:10:9",
+        "indirect": true,
+        "expression": "ops->read32"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_word",
+        "location": "runtime/queue_context.c:11:9",
+        "indirect": true,
+        "expression": "ops->read32"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_word",
+        "location": "runtime/queue_context.c:12:9",
+        "indirect": true,
+        "expression": "ops->read32"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_half",
+        "location": "runtime/queue_context.c:13:9",
+        "indirect": true,
+        "expression": "ops->read16"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_word",
+        "location": "runtime/queue_context.c:14:9",
+        "indirect": true,
+        "expression": "ops->read32"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_word",
+        "location": "runtime/queue_context.c:16:9",
+        "indirect": true,
+        "expression": "ops->read32"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_half",
+        "location": "runtime/queue_context.c:17:9",
+        "indirect": true,
+        "expression": "ops->read16"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_word",
+        "location": "runtime/queue_context.c:18:9",
+        "indirect": true,
+        "expression": "ops->read32"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_word",
+        "location": "runtime/queue_context.c:19:9",
+        "indirect": true,
+        "expression": "ops->read32"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_word",
+        "location": "runtime/queue_context.c:20:9",
+        "indirect": true,
+        "expression": "ops->read32"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_word",
+        "location": "runtime/queue_context.c:22:9",
+        "indirect": true,
+        "expression": "ops->read32"
+      }
+    ],
+    "runtime/task_context.c:current_tcb": [
+      {
+        "target": "runtime/task_context_native.c:read_word",
+        "location": "runtime/task_context.c:9:12",
+        "indirect": true,
+        "expression": "ops->read32"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_word",
+        "location": "runtime/task_context.c:10:9",
+        "indirect": true,
+        "expression": "ops->read32"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_word",
+        "location": "runtime/task_context.c:11:9",
+        "indirect": true,
+        "expression": "ops->read32"
+      },
+      {
+        "target": "runtime/task_context_native.c:read_word",
+        "location": "runtime/task_context.c:12:9",
+        "indirect": true,
+        "expression": "ops->read32"
+      }
+    ],
+    "runtime/task_context_native.c:query": [
+      {
+        "target": "ep7_gcc_get_tid",
+        "location": "runtime/task_context_native.c:6:20"
+      }
+    ],
+    "runtime/task_context_native.c:read_half": [],
+    "runtime/task_context_native.c:read_word": []
+  },
+  "resolved_cold_callbacks": [
+    {
+      "caller": "ep7r_publish",
+      "location": "runtime/runtime.c:28:9",
+      "expression": "r->env.installation_ready",
+      "target": "runtime/cold_bootstrap.c:installed"
+    },
+    {
+      "caller": "ep7r_publish",
+      "location": "runtime/runtime.c:31:13",
+      "expression": "r->env.queue",
+      "target": "runtime/native_context.c:queue"
+    },
+    {
+      "caller": "ep7n_query_queue",
+      "location": "runtime/queue_context.c:38:8",
+      "expression": "ops->get_tid",
+      "target": "runtime/task_context_native.c:query"
+    },
+    {
+      "caller": "ep7n_query_queue",
+      "location": "runtime/queue_context.c:40:44",
+      "expression": "ops->get_tid",
+      "target": "runtime/task_context_native.c:query"
+    },
+    {
+      "caller": "runtime/queue_context.c:read_view",
+      "location": "runtime/queue_context.c:10:9",
+      "expression": "ops->read32",
+      "target": "runtime/task_context_native.c:read_word"
+    },
+    {
+      "caller": "runtime/queue_context.c:read_view",
+      "location": "runtime/queue_context.c:11:9",
+      "expression": "ops->read32",
+      "target": "runtime/task_context_native.c:read_word"
+    },
+    {
+      "caller": "runtime/queue_context.c:read_view",
+      "location": "runtime/queue_context.c:12:9",
+      "expression": "ops->read32",
+      "target": "runtime/task_context_native.c:read_word"
+    },
+    {
+      "caller": "runtime/queue_context.c:read_view",
+      "location": "runtime/queue_context.c:13:9",
+      "expression": "ops->read16",
+      "target": "runtime/task_context_native.c:read_half"
+    },
+    {
+      "caller": "runtime/queue_context.c:read_view",
+      "location": "runtime/queue_context.c:14:9",
+      "expression": "ops->read32",
+      "target": "runtime/task_context_native.c:read_word"
+    },
+    {
+      "caller": "runtime/queue_context.c:read_view",
+      "location": "runtime/queue_context.c:16:9",
+      "expression": "ops->read32",
+      "target": "runtime/task_context_native.c:read_word"
+    },
+    {
+      "caller": "runtime/queue_context.c:read_view",
+      "location": "runtime/queue_context.c:17:9",
+      "expression": "ops->read16",
+      "target": "runtime/task_context_native.c:read_half"
+    },
+    {
+      "caller": "runtime/queue_context.c:read_view",
+      "location": "runtime/queue_context.c:18:9",
+      "expression": "ops->read32",
+      "target": "runtime/task_context_native.c:read_word"
+    },
+    {
+      "caller": "runtime/queue_context.c:read_view",
+      "location": "runtime/queue_context.c:19:9",
+      "expression": "ops->read32",
+      "target": "runtime/task_context_native.c:read_word"
+    },
+    {
+      "caller": "runtime/queue_context.c:read_view",
+      "location": "runtime/queue_context.c:20:9",
+      "expression": "ops->read32",
+      "target": "runtime/task_context_native.c:read_word"
+    },
+    {
+      "caller": "runtime/queue_context.c:read_view",
+      "location": "runtime/queue_context.c:22:9",
+      "expression": "ops->read32",
+      "target": "runtime/task_context_native.c:read_word"
+    },
+    {
+      "caller": "ep7b_abort_unpublished",
+      "location": "poll_lock_provider/bootstrap/bootstrap.c:16:9",
+      "expression": "b->native.delete_unpublished",
+      "target": "poll_lock_provider/bootstrap/native_callbacks.c:drop"
+    },
+    {
+      "caller": "poll_lock_provider/bootstrap/bootstrap.c:same_domain.constprop.0",
+      "location": "poll_lock_provider/bootstrap/bootstrap.c:7:50",
+      "expression": "b->native.raw.get_tid",
+      "target": "poll_lock_provider/native/raw_callbacks.c:current"
+    },
+    {
+      "caller": "ep7b_prepare",
+      "location": "poll_lock_provider/bootstrap/bootstrap.c:7:50",
+      "expression": "b->native.raw.get_tid",
+      "target": "poll_lock_provider/native/raw_callbacks.c:current"
+    },
+    {
+      "caller": "ep7b_prepare",
+      "location": "poll_lock_provider/bootstrap/bootstrap.c:27:9",
+      "expression": "n.create",
+      "target": "poll_lock_provider/bootstrap/native_callbacks.c:create"
+    },
+    {
+      "caller": "ep7n_query_task",
+      "location": "runtime/task_context.c:20:8",
+      "expression": "ops->get_tid",
+      "target": "runtime/task_context_native.c:query"
+    },
+    {
+      "caller": "ep7n_query_task",
+      "location": "runtime/task_context.c:23:9",
+      "expression": "ops->read16",
+      "target": "runtime/task_context_native.c:read_half"
+    },
+    {
+      "caller": "ep7n_query_task",
+      "location": "runtime/task_context.c:24:9",
+      "expression": "ops->read32",
+      "target": "runtime/task_context_native.c:read_word"
+    },
+    {
+      "caller": "ep7n_query_task",
+      "location": "runtime/task_context.c:25:9",
+      "expression": "ops->read32",
+      "target": "runtime/task_context_native.c:read_word"
+    },
+    {
+      "caller": "ep7n_query_task",
+      "location": "runtime/task_context.c:26:9",
+      "expression": "ops->read32",
+      "target": "runtime/task_context_native.c:read_word"
+    },
+    {
+      "caller": "ep7n_query_task",
+      "location": "runtime/task_context.c:29:8",
+      "expression": "ops->get_tid",
+      "target": "runtime/task_context_native.c:query"
+    },
+    {
+      "caller": "runtime/task_context.c:current_tcb",
+      "location": "runtime/task_context.c:9:12",
+      "expression": "ops->read32",
+      "target": "runtime/task_context_native.c:read_word"
+    },
+    {
+      "caller": "runtime/task_context.c:current_tcb",
+      "location": "runtime/task_context.c:10:9",
+      "expression": "ops->read32",
+      "target": "runtime/task_context_native.c:read_word"
+    },
+    {
+      "caller": "runtime/task_context.c:current_tcb",
+      "location": "runtime/task_context.c:11:9",
+      "expression": "ops->read32",
+      "target": "runtime/task_context_native.c:read_word"
+    },
+    {
+      "caller": "runtime/task_context.c:current_tcb",
+      "location": "runtime/task_context.c:12:9",
+      "expression": "ops->read32",
+      "target": "runtime/task_context_native.c:read_word"
+    }
+  ],
+  "unresolved_cold_callbacks": [],
+  "recursive_reachable_edges": false,
+  "native_get_tid_instructions_checked": 30,
+  "native_get_tid_body_extra_stack_bytes": 0,
+  "root_stack": {
+    "prefix_bytes": 312,
+    "path": [
+      "ep7r_bootstrap_initialize",
+      "ep7r_publish",
+      "runtime/native_context.c:queue",
+      "ep7n_native_queue",
+      "ep7n_query_queue",
+      "runtime/queue_context.c:read_view",
+      "runtime/task_context_native.c:read_word"
+    ],
+    "complete": false,
+    "complete_stack_bound_bytes": null
+  },
+  "unknown_native_boundaries": [
+    {
+      "boundary": "exception_entry_stack_unknown",
+      "known_prefix_bytes": 96,
+      "path": [
+        "ep7r_bootstrap_initialize",
+        "ep7_gcc_quarantine"
+      ]
+    },
+    {
+      "boundary": "native_sem_delete_body_unknown",
+      "known_prefix_bytes": 164,
+      "path": [
+        "ep7r_bootstrap_initialize",
+        "ep7b_abort_unpublished",
+        "poll_lock_provider/bootstrap/native_callbacks.c:drop",
+        "ep7_gcc_raw_sem_delete_unpublished"
+      ]
+    },
+    {
+      "boundary": "native_sem_delete_body_unknown",
+      "known_prefix_bytes": 276,
+      "path": [
+        "ep7r_bootstrap_initialize",
+        "ep7b_prepare",
+        "ep7b_abort_unpublished",
+        "poll_lock_provider/bootstrap/native_callbacks.c:drop",
+        "ep7_gcc_raw_sem_delete_unpublished"
+      ]
+    },
+    {
+      "boundary": "native_sem_create_body_unknown",
+      "known_prefix_bytes": 252,
+      "path": [
+        "ep7r_bootstrap_initialize",
+        "ep7b_prepare",
+        "poll_lock_provider/bootstrap/native_callbacks.c:create",
+        "ep7_gcc_raw_sem_create"
+      ]
+    }
+  ],
+  "usr3_own_prologue_bytes": 44,
+  "original_call_frame_bytes": 4,
+  "cold_bridge_bytes": 40,
+  "known_prefix_below_usr3_entry_bytes": 400,
+  "configured_usr3_stack_bytes": 2048,
+  "complete_task_stack_bound_proven": false,
+  "capacity_remaining_bytes": null,
+  "limits": [
+    "Graph and callback mapping are only for this fixed one-shot bootstrap composition.",
+    "Per-function static frames and all child edges are summed conservatively; mutually exclusive paths are not summed together.",
+    "Native semaphore create/delete bodies, exception/IRQ stack, task initial context and other Usr3 paths remain outside the bound.",
+    "The known prefix is not an upper bound on the complete native/task stack and is not subtracted from 2048 as available headroom.",
+    "Existing assembly frame and Usr3 prologue witnesses are reused; only native get_tid is newly disassembled here.",
+    "No hardware, target code, full firmware linker or application test suite is executed."
+  ],
+  "target_linked": false,
+  "target_executed": false,
+  "firmware_built": false,
+  "hash_checks_performed": false
+}
