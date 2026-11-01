@@ -223,3 +223,9 @@ raw mode/selector为0/0，不满足COLOR冻结条件；没有伪造有效拍摄�
 最大观察新栈深48B；223B原生store容量，只有1B首次状态发布前冷BSS条件。4B flags
 投影沿用已有明确输入，不代表完整76B消息。capture与主线暂停现场不变，offset2166
 仍未产生；下一步执行类型11消息片段与请求构造，保留dispatcher和生命周期缺口。
+
+[类型11消息片段与完整请求构造](CANDIDATE_REQUEST_CONSTRUCTOR_SIM.md)现已通过：
+原发送后缀、完整接收materializer、flags分类和602a471d实际执行，共541条新指令，
+最大观察新栈深96B。68B新store容量、8B明确消息输入及2B首次激活前BSS条件；
+76B command仅映射38B，分配/完整模板复制/队列投递未执行。原生offset2166清零后，
+消费者继续6条指令停在对象+512格式halfword；下一步追6055545e格式记录生产者。
