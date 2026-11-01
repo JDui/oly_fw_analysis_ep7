@@ -83,7 +83,12 @@ static ep7r *enter(uint32_t anchor,bool admitting)
     if(chosen&&r!=pinned_runtime)fault(2);
     if(!r)return NULL; /* Pre-publication native work has no admitted sidecar users. */
     if(!ep7r_task(r,anchor,&t) || t.entry!=0x60289852u){
-        close_capture();if(!admitting)fault(3);return NULL;
+        /* Publication is not capture ownership. Startup/foreign native work
+         * cannot invalidate a sidecar that has never admitted a controller.
+         * Preserve stock behavior until that first qualified owner exists;
+         * never weaken destructive-observer protection after it is chosen. */
+        if(chosen){close_capture();if(!admitting)fault(3);}
+        return NULL;
     }
     if(chosen){
         if(t.tid!=owner.tid || t.tcb!=owner.tcb || t.entry!=owner.entry ||
