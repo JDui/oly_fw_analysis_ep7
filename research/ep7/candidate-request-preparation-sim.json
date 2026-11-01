@@ -1,0 +1,508 @@
+{
+  "scope": "Complete native request preparation and mode classification before metadata.\n\nCamera status inputs retain the explicit prepublication cold scenario. Native\nstate stores replace an overbroad synthetic FIFO guard, not firmware memory.\n",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu",
+  "cases": [
+    {
+      "symbol": "complete_native_request_preparation",
+      "status": "returned",
+      "completed": 817,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 164,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x0",
+        "d1": "0x0",
+        "d2": "0x22334455",
+        "d3": "0x33445566",
+        "a0": "0x6250f5c7",
+        "a1": "0x6005c8cc",
+        "a2": "0x19400000",
+        "a3": "0x19500000",
+        "sp": "0x190107b0",
+        "pc": "0x19000007",
+        "mdr": "0x6005c8df",
+        "psw": "0x806",
+        "lir": "0xf408e01c",
+        "lar": "0x6029bd23",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    },
+    {
+      "symbol": "native_device_mode_reset_slice",
+      "status": "returned",
+      "completed": 3,
+      "fault": null,
+      "final_pc": "0x60111599",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 0,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x0",
+        "d1": "0x55667788",
+        "d2": "0x22334455",
+        "d3": "0x33445566",
+        "a0": "0x19200000",
+        "a1": "0x19300000",
+        "a2": "0x19400000",
+        "a3": "0x19500000",
+        "sp": "0x190107b0",
+        "pc": "0x60111599",
+        "mdr": "0x13579bdf",
+        "psw": "0x801",
+        "lir": "0x12345678",
+        "lar": "0x23456789",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    },
+    {
+      "symbol": "native_mode_fallback_reset_slice",
+      "status": "returned",
+      "completed": 4,
+      "fault": null,
+      "final_pc": "0x6010b07d",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 0,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x0",
+        "d1": "0x55667788",
+        "d2": "0x22334455",
+        "d3": "0x33445566",
+        "a0": "0x19200000",
+        "a1": "0x19300000",
+        "a2": "0x19400000",
+        "a3": "0x19500000",
+        "sp": "0x190107b0",
+        "pc": "0x6010b07d",
+        "mdr": "0x13579bdf",
+        "psw": "0x801",
+        "lir": "0x12345678",
+        "lar": "0x23456789",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    },
+    {
+      "symbol": "complete_native_request_mode_classification",
+      "status": "returned",
+      "completed": 240,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 52,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x0",
+        "d1": "0x1",
+        "d2": "0x22334455",
+        "d3": "0x33445566",
+        "a0": "0x624ea821",
+        "a1": "0x6005c8cc",
+        "a2": "0x19400000",
+        "a3": "0x19500000",
+        "sp": "0x190107b0",
+        "pc": "0x19000007",
+        "mdr": "0x602a6a56",
+        "psw": "0x806",
+        "lir": "0x12345678",
+        "lar": "0x23456789",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    }
+  ],
+  "native_instructions": 1064,
+  "maximum_observed_new_stack_depth": 164,
+  "native_store_capacity_added": 101,
+  "newly_unmapped_store_bytes": 88,
+  "former_synthetic_guard_bytes_reclassified": 13,
+  "conditional_BSS_bytes_added": 16,
+  "cold_inputs": [
+    {
+      "address": "0x622351a5",
+      "bytes": 1
+    },
+    {
+      "address": "0x62235104",
+      "bytes": 1
+    },
+    {
+      "address": "0x62235124",
+      "bytes": 1
+    },
+    {
+      "address": "0x62235108",
+      "bytes": 12
+    },
+    {
+      "address": "0x622351c0",
+      "bytes": 1
+    }
+  ],
+  "complete_request_preparation": true,
+  "native_staging_member_stores": [
+    {
+      "pc": "0x602abfb2",
+      "address": "0x6223e798",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602abfc1",
+      "address": "0x6223e79a",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602abfc8",
+      "address": "0x6223e79c",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602abfce",
+      "address": "0x6223e79e",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602abfd9",
+      "address": "0x6223e7a0",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602abfe0",
+      "address": "0x6223e7a2",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602abfe6",
+      "address": "0x6223e7a4",
+      "bytes": 4,
+      "value": 0
+    },
+    {
+      "pc": "0x602abff1",
+      "address": "0x6223e7a8",
+      "bytes": 1,
+      "value": 0
+    },
+    {
+      "pc": "0x602abffa",
+      "address": "0x6223e7a9",
+      "bytes": 1,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac001",
+      "address": "0x6223e7aa",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac007",
+      "address": "0x6223e7ac",
+      "bytes": 1,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac00d",
+      "address": "0x6223e7ad",
+      "bytes": 1,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac013",
+      "address": "0x6223e7ae",
+      "bytes": 1,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac01b",
+      "address": "0x6223e7af",
+      "bytes": 1,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac022",
+      "address": "0x6223e7b0",
+      "bytes": 4,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac02b",
+      "address": "0x6223e7b4",
+      "bytes": 1,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac032",
+      "address": "0x6223e7b6",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac03b",
+      "address": "0x6223e7b8",
+      "bytes": 1,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac042",
+      "address": "0x6223e7ba",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac04a",
+      "address": "0x6223e7bc",
+      "bytes": 2,
+      "value": 3
+    },
+    {
+      "pc": "0x602ac051",
+      "address": "0x6223e7be",
+      "bytes": 1,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac079",
+      "address": "0x6223e7c0",
+      "bytes": 1,
+      "value": 1
+    },
+    {
+      "pc": "0x602ac080",
+      "address": "0x6223e7c2",
+      "bytes": 1,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac086",
+      "address": "0x6223e7c4",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac08c",
+      "address": "0x6223e7c6",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac092",
+      "address": "0x6223e7c8",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac09c",
+      "address": "0x6223e7ca",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac0a5",
+      "address": "0x6223e7cc",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac0ae",
+      "address": "0x6223e7ce",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac0b7",
+      "address": "0x6223e7d0",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac0c0",
+      "address": "0x6223e7d2",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac0c9",
+      "address": "0x6223e7d4",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac0d4",
+      "address": "0x6223e7d6",
+      "bytes": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x602ac0e7",
+      "address": "0x6223e7d8",
+      "bytes": 1,
+      "value": 0
+    }
+  ],
+  "four_native_counters_reset": true,
+  "native_mode_outputs": {
+    "offset1672_halfword": 0,
+    "offset1674_byte": 1
+  },
+  "FIFO": {
+    "address": "0x6223e7dc",
+    "bytes": 124,
+    "unchanged": true,
+    "remaining_before_guard_address": "0x6223e7d9",
+    "remaining_before_guard_bytes": 3,
+    "after_guard_bytes": 16,
+    "guards_unchanged": true
+  },
+  "capture_unchanged": true,
+  "postpopulation_resumed": false,
+  "pending_metadata": {
+    "command_pointer_offset": 60,
+    "command_pointer_value": 0,
+    "request_members": [
+      1684,
+      1686
+    ],
+    "original_metadata_claim": "0x602a7556",
+    "original_metadata_initialize": "0x602ab5e4"
+  },
+  "hash_checks_performed": false,
+  "native_api_success_stubs": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "16 status/sample bytes retain the already-declared first-publication BSS condition. They are not sensor measurements or active camera parameters; neighboring fields remain unmapped.",
+    "Complete602a4a5c and its real service refresh/staging helpers run, followed by complete602a6630. Two original mode reset slices supply8 bytes; their enclosing device tasks and lifecycle are not executed.",
+    "13 bytes of an older16-byte FIFO-before canary overlap proven original staging stores. Only those bytes become writable native state;3 remaining bytes, the124-byte FIFO and its16-byte after-guard remain unchanged.",
+    "Preparation starts from the latest paused consumer context, preserving its already-written capture fields, but does not resume it or execute whole controller dispatch.",
+    "Command+60 remainsNULL and request1684/1686 remain unproduced. Native metadata claim/initialization and publication, second population/finish, valid COLOR, residency and recovery remain unresolved."
+  ]
+}

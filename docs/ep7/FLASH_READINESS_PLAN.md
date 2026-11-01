@@ -240,3 +240,9 @@ raw mode/selector为0/0，不满足COLOR冻结条件；没有伪造有效拍摄�
 3903条指令，最大观察栈深200B；1119B store容量、27B明确冷BSS及1B单竞争者锁模型。
 原锁获取/释放与计数迁移通过，图像backing未映射；已有ID1不等于新capture代际。
 消费者实际写入格式字段后停在offset1684；下一步追1684/1686及command+60/+72来源。
+
+[完整消息参数准备与分类](CANDIDATE_REQUEST_PREPARATION_SIM.md)再完成1064条指令，
+最大观察栈深164B：完整602a4a5c、服务刷新/暂存/4计数器reset与602a6630返回。16B
+输入沿用首次状态发布前BSS，模式输入8B由原reset片段写出。修正旧FIFO前canary
+覆盖13B原厂状态的过宽边界，FIFO/剩余保护区与capture不变。下一步原metadata槽
+领取和初始化；command+60仍NULL，主线1684/1686及完整生命周期继续待证。
