@@ -1,0 +1,1039 @@
+{
+  "scope": "Execute final worker allocation/register/revoke/ACK seams with native pool code.\n\nOld constructor/conversion/processing completions are explicit bounded inputs.\nThis checks candidate lifetime ordering, not original ISP or image correctness.\n",
+  "status": "passed",
+  "candidate_build_revision": "8eedce761e4b4f8c33285df603081ced52af072a",
+  "instructions_including_boundary_returns": 24686,
+  "maximum_observed_worker_stack": 860,
+  "calls": [
+    {
+      "entry": "0x600c931a",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 1220,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 1220,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x19010724",
+      "stack_below_call_sp": 140,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x1",
+      "a0": "0x621a6310",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600c9538",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 1033,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 1033,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x19010728",
+      "stack_below_call_sp": 136,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x1",
+      "a0": "0x621a6310",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x6004b7e3",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 1367,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 1367,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x19010710",
+      "stack_below_call_sp": 160,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x1",
+      "a0": "0x621a6310",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x6004b8f6",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 892,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 892,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x19010724",
+      "stack_below_call_sp": 140,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x1",
+      "a0": "0x621a6310",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600cb9b7",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 2026,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 2026,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x19010764",
+      "stack_below_call_sp": 76,
+      "native_private_lock_calls": [],
+      "d0": "0x1",
+      "a0": "0x19504000",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600cb3d8",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2677,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010e90"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 58,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010f28"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 1108,
+          "fault": null,
+          "final_pc": "0x60022700",
+          "final_sp": "0x19010e74"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 452,
+          "fault": null,
+          "final_pc": "0x6002272f",
+          "final_sp": "0x19010e74"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 127,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010f14"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 7,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010ef8"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 8,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010f38"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2500,
+          "fault": null,
+          "final_pc": "0x603e61b8",
+          "final_sp": "0x19010f28"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 8,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010f0c"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2073,
+          "fault": null,
+          "final_pc": "0x600313ef",
+          "final_sp": "0x19010e74"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 1081,
+          "fault": null,
+          "final_pc": "0x603e6c8d",
+          "final_sp": "0x19010f28"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 1141,
+          "fault": null,
+          "final_pc": "0x60022732",
+          "final_sp": "0x19010f18"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 488,
+          "fault": null,
+          "final_pc": "0x60353cf0",
+          "final_sp": "0x19010f1c"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 8,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010f30"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 7,
+          "fault": null,
+          "final_pc": "0x603f2727",
+          "final_sp": "0x19011000"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 4,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010ff4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 8,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010ffc"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 4,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010fcc"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2060,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010f30"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 11,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010fbc"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 10,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010f30"
+        },
+        {
+          "status": "returned",
+          "completed": 6,
+          "fault": null,
+          "final_pc": "0x603f2770",
+          "final_sp": "0x19011000"
+        }
+      ],
+      "instructions": 13846,
+      "entry_sp": "0x19011000",
+      "minimum_sp": "0x19010dcc",
+      "stack_below_call_sp": 564,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 4294967246
+        },
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x1",
+      "a0": "0x0",
+      "events": [
+        {
+          "kind": "original_completion_model",
+          "entry": "0x603e2c0d"
+        },
+        {
+          "kind": "original_completion_model",
+          "entry": "0x603e611e"
+        },
+        {
+          "kind": "native_allocation_entry",
+          "requested": 15512
+        },
+        {
+          "kind": "native_allocation_return",
+          "address": "0x61bd6d40",
+          "owned_extent": 15512
+        },
+        {
+          "kind": "constructor_completion_model",
+          "stock_bytes": 15488,
+          "trailer_untouched": true,
+          "result": "0x61bd6d40"
+        },
+        {
+          "kind": "original_completion_model",
+          "entry": "0x603e62d1"
+        },
+        {
+          "kind": "original_completion_model",
+          "entry": "0x603ed4bd"
+        },
+        {
+          "kind": "original_process_completion_model",
+          "job": "0x61bd6d40",
+          "registered_token": "0100000000000000"
+        },
+        {
+          "kind": "original_color_builder_completion_model",
+          "output": "0x19506000"
+        },
+        {
+          "kind": "cleanup_contention_injected_by_native_poll",
+          "handle": 133
+        },
+        {
+          "kind": "original_completion_model",
+          "entry": "0x603e6b83"
+        },
+        {
+          "kind": "ordinary_task_progress_model",
+          "delay_units": 1,
+          "live_job_retained": true,
+          "token_retained": true,
+          "native_signal_released_contention": true
+        },
+        {
+          "kind": "native_cleanup_after_revoke",
+          "job_token_zero": true
+        },
+        {
+          "kind": "native_free_after_revoke",
+          "address": "0x61bd6d40"
+        },
+        {
+          "kind": "native_free_completed",
+          "payload_unmapped": true
+        },
+        {
+          "kind": "original_completion_model",
+          "entry": "0x603ed7e2"
+        },
+        {
+          "kind": "native_worker_wrapper_return",
+          "status": 0,
+          "original_abi_preserved": true
+        },
+        {
+          "kind": "original_completion_model",
+          "entry": "0x603f2ad0"
+        },
+        {
+          "kind": "original_completion_model",
+          "entry": "0x603eebe9"
+        },
+        {
+          "kind": "original_completion_model",
+          "entry": "0x603e4e82"
+        },
+        {
+          "kind": "original_completion_model",
+          "entry": "0x603e2c0d"
+        },
+        {
+          "kind": "ack_queue_output_model",
+          "handle": 85,
+          "packet": "0000cccc0000000000005019"
+        },
+        {
+          "kind": "original_completion_model",
+          "entry": "0x603e2c0d"
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x60022700",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 1,
+          "fault": null,
+          "final_pc": "0x60022704",
+          "final_sp": "0x19010e74"
+        }
+      ],
+      "instructions": 1,
+      "minimum_sp": "0x19010e74",
+      "native_private_lock_calls": []
+    },
+    {
+      "entry": "0x6002272f",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 1,
+          "fault": null,
+          "final_pc": "0x600cb425",
+          "final_sp": "0x19010e78"
+        }
+      ],
+      "instructions": 1,
+      "minimum_sp": "0x19010e74",
+      "native_private_lock_calls": []
+    },
+    {
+      "entry": "0x600cbd7d",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 11,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010d68"
+        },
+        {
+          "status": "returned",
+          "completed": 2319,
+          "fault": null,
+          "final_pc": "0x603b02de",
+          "final_sp": "0x19010e28"
+        }
+      ],
+      "instructions": 2330,
+      "entry_sp": "0x19010e28",
+      "minimum_sp": "0x19010ca4",
+      "stack_below_call_sp": 388,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x77887788",
+      "a0": "0x11221122",
+      "events": [
+        {
+          "kind": "original_color_builder_completion_model",
+          "output": "0x19506000"
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x60049de1",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 321,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x19010e28"
+        }
+      ],
+      "instructions": 321,
+      "entry_sp": "0x19010e28",
+      "minimum_sp": "0x19010de0",
+      "stack_below_call_sp": 72,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x0",
+      "a0": "0x621a6310",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x60049df1",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 321,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x19010d74"
+        }
+      ],
+      "instructions": 321,
+      "entry_sp": "0x19010d74",
+      "minimum_sp": "0x19010d34",
+      "stack_below_call_sp": 64,
+      "native_private_lock_calls": [
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x0",
+      "a0": "0x621a6310",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x603e6c8d",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 1,
+          "fault": null,
+          "final_pc": "0x603e6c8e",
+          "final_sp": "0x19010f28"
+        }
+      ],
+      "instructions": 1,
+      "minimum_sp": "0x19010f28",
+      "native_private_lock_calls": []
+    },
+    {
+      "entry": "0x60022732",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 1,
+          "fault": null,
+          "final_pc": "0x60022734",
+          "final_sp": "0x19010f18"
+        }
+      ],
+      "instructions": 1,
+      "minimum_sp": "0x19010f18",
+      "native_private_lock_calls": []
+    },
+    {
+      "entry": "0x60353cf0",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 1,
+          "fault": null,
+          "final_pc": "0x60353cf1",
+          "final_sp": "0x19010f1c"
+        }
+      ],
+      "instructions": 1,
+      "minimum_sp": "0x19010f1c",
+      "native_private_lock_calls": []
+    },
+    {
+      "entry": "0x603f2727",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 1,
+          "fault": null,
+          "final_pc": "0x603f272a",
+          "final_sp": "0x19011000"
+        }
+      ],
+      "instructions": 1,
+      "minimum_sp": "0x19011000",
+      "native_private_lock_calls": []
+    },
+    {
+      "entry": "0x600cbd7d",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 11,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010f40"
+        },
+        {
+          "status": "returned",
+          "completed": 1313,
+          "fault": null,
+          "final_pc": "0x603b02de",
+          "final_sp": "0x19011000"
+        }
+      ],
+      "instructions": 1324,
+      "entry_sp": "0x19011000",
+      "minimum_sp": "0x19010e7c",
+      "stack_below_call_sp": 388,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x77887788",
+      "a0": "0x11221122",
+      "events": [
+        {
+          "kind": "original_color_builder_completion_model",
+          "output": "0x19506000"
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    }
+  ],
+  "runtime_setup": {
+    "initialization": [
+      {
+        "name": "native_all_object_count_recipe_copy",
+        "status": "returned",
+        "completed": 193,
+        "fault": null,
+        "final_pc": "0x60032651",
+        "final_sp": "0x190107b0"
+      },
+      {
+        "name": "native_255_semaphore_ID_clear",
+        "status": "returned",
+        "completed": 2312,
+        "fault": null,
+        "final_pc": "0x6003567f",
+        "final_sp": "0x190107b0"
+      },
+      {
+        "name": "complete_native_132_static_semaphore_initialize",
+        "status": "returned",
+        "completed": 7274,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107b0"
+      }
+    ],
+    "native_create": {
+      "status": "returned",
+      "completed": 316,
+      "fault": null,
+      "final_pc": "0x60049bc1",
+      "final_sp": "0x190106d8",
+      "returned_d0": 133,
+      "observed_stack_depth_from_hook_sp": 328,
+      "native_get_tid_entries": 0,
+      "native_create_entries": 1,
+      "native_delete_entries": 0,
+      "native_slot_allocator_entries": 1,
+      "shared_bset_entries": 1,
+      "shared_bclr_entries": 1,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "published": {
+      "status": "returned",
+      "completed": 39737,
+      "fault": null,
+      "final_pc": "0x6011f620",
+      "final_sp": "0x190107ec",
+      "returned_d0": 287454020,
+      "observed_stack_depth_from_hook_sp": 356,
+      "native_get_tid_entries": 11,
+      "native_create_entries": 0,
+      "native_delete_entries": 0,
+      "native_slot_allocator_entries": 0,
+      "shared_bset_entries": 0,
+      "shared_bclr_entries": 0,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "runtime": 2684678156,
+    "core": 2684673032,
+    "provider": 2684678124,
+    "private_id": 133,
+    "private_object": 1645851720
+  },
+  "events": [
+    {
+      "kind": "original_completion_model",
+      "entry": "0x603e2c0d"
+    },
+    {
+      "kind": "original_completion_model",
+      "entry": "0x603e611e"
+    },
+    {
+      "kind": "native_allocation_entry",
+      "requested": 15512
+    },
+    {
+      "kind": "native_allocation_return",
+      "address": "0x61bd6d40",
+      "owned_extent": 15512
+    },
+    {
+      "kind": "constructor_completion_model",
+      "stock_bytes": 15488,
+      "trailer_untouched": true,
+      "result": "0x61bd6d40"
+    },
+    {
+      "kind": "original_completion_model",
+      "entry": "0x603e62d1"
+    },
+    {
+      "kind": "original_completion_model",
+      "entry": "0x603ed4bd"
+    },
+    {
+      "kind": "original_process_completion_model",
+      "job": "0x61bd6d40",
+      "registered_token": "0100000000000000"
+    },
+    {
+      "kind": "original_color_builder_completion_model",
+      "output": "0x19506000"
+    },
+    {
+      "kind": "cleanup_contention_injected_by_native_poll",
+      "handle": 133
+    },
+    {
+      "kind": "original_completion_model",
+      "entry": "0x603e6b83"
+    },
+    {
+      "kind": "ordinary_task_progress_model",
+      "delay_units": 1,
+      "live_job_retained": true,
+      "token_retained": true,
+      "native_signal_released_contention": true
+    },
+    {
+      "kind": "native_cleanup_after_revoke",
+      "job_token_zero": true
+    },
+    {
+      "kind": "native_free_after_revoke",
+      "address": "0x61bd6d40"
+    },
+    {
+      "kind": "native_free_completed",
+      "payload_unmapped": true
+    },
+    {
+      "kind": "original_completion_model",
+      "entry": "0x603ed7e2"
+    },
+    {
+      "kind": "native_worker_wrapper_return",
+      "status": 0,
+      "original_abi_preserved": true
+    },
+    {
+      "kind": "original_completion_model",
+      "entry": "0x603f2ad0"
+    },
+    {
+      "kind": "original_completion_model",
+      "entry": "0x603eebe9"
+    },
+    {
+      "kind": "original_completion_model",
+      "entry": "0x603e4e82"
+    },
+    {
+      "kind": "original_completion_model",
+      "entry": "0x603e2c0d"
+    },
+    {
+      "kind": "ack_queue_output_model",
+      "handle": 85,
+      "packet": "0000cccc0000000000005019"
+    },
+    {
+      "kind": "original_completion_model",
+      "entry": "0x603e2c0d"
+    },
+    {
+      "kind": "original_color_builder_completion_model",
+      "output": "0x19506000"
+    }
+  ],
+  "cpu_coefficient_writes": [
+    {
+      "axis": "H",
+      "sector": 0,
+      "offset": 706,
+      "value": -3000
+    },
+    {
+      "axis": "H",
+      "sector": 2,
+      "offset": 730,
+      "value": 2000
+    },
+    {
+      "axis": "L",
+      "sector": 2,
+      "offset": 734,
+      "value": -150
+    }
+  ],
+  "native_private_lock_operations": 23,
+  "cleanup_busy_status": -50,
+  "cleanup_progress_calls": 1,
+  "allocation": {
+    "address": "0x61bd6d40",
+    "requested": 15512,
+    "stock_bytes_preserved_before_completion_model": true,
+    "newly_requested_trailer_zeroed": true,
+    "original_pool_allocated": true,
+    "original_pool_recycled": true
+  },
+  "original_ack": {
+    "kind": "ack_queue_output_model",
+    "handle": 85,
+    "packet": "0000cccc0000000000005019"
+  },
+  "transport_entries_empty_after_ack": true,
+  "late_observer_after_free_unchanged": true,
+  "historical_probe_fixes": [
+    "By-value ep7t_ticket uses an invisible-reference argument, not three scalar ABI words.",
+    "At allocator RET, use saved stack RA rather than callee-clobbered MDR.",
+    "Process is a tail-delegated native frame; completion RET uses original b0/24 frame and603f2897.",
+    "Whole task slice changes D2 to completion status; separately verify full wrapper ABI at603f2727."
+  ],
+  "boundaries": [
+    "Production static semaphore initialization/create/publication reused; task6c/8KiB stack is an explicit handover fixture.",
+    "Snapshot/transport/wire APIs execute; descriptor delivery here is modeled, with opaque metadata and ACK handle55.",
+    "Worker preflight success and old parameter/conversion/postprocess completions modeled; no original image/metadata construction claim.",
+    "Original constructor starts and reaches actual allocator; remaining stock15488 bytes supplied by existing bounded decoder fixture.",
+    "Original processor completion invokes actual installed postbuilder site; old COLOR builder output completion modeled.",
+    "Fresh domain0 class2 pool counters/bitmap and recycled storage are explicit inputs; allocator/free and active-kernel lock instructions execute.",
+    "One real poll133 injects contention; ordinary delay completion models another participant releasing it via actual signal133.",
+    "Original job destructor/descriptor cleanup/ACK message construction execute; original ACK queue handoff is intercepted.",
+    "Observed stack includes a chosen256B processing boundary frame, excluding original processing/ISP/IRQ upper bounds.",
+    "No full photo pixels, multicore scheduling, residency ownership or recovery qualification is inferred."
+  ],
+  "hash_checks_performed": false,
+  "hardware_executed": false,
+  "installable": false
+}

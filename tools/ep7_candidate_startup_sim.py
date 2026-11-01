@@ -156,8 +156,7 @@ def inspect(directory,prefix,engine):
     require(all(cleared['registers'][name]==value for name,value in expected.items()),
             'original prefix MOV changed preserved registers')
     stack = machine.regions['stack'].data
-    require(stack[:SP-STACK-16]==initial_stack[:SP-STACK-16] and
-            stack[SP-STACK:]==initial_stack[SP-STACK:],'cold clear wrote outside its 16-byte frame')
+    require(stack==initial_stack,'original prefix MOV changed stack')
     initialized = machine.run(INIT_SITE,INIT_RESUME,overrides={'d0':0},
                               breakpoints=[syms['_ep7_gcc_quarantine']])
     returned(initialized,INIT_RESUME)
@@ -229,7 +228,7 @@ def inspect(directory,prefix,engine):
         actual_elf_code_equals_decoded_candidate=True,unchanged_implementation_inputs=True,
         engine=str(engine),hash_checks_performed=False,all_assertions_passed=True,
         original_prefix_mov=dict(result=brief(cleared),image_initialized_state_bytes=RAM_BYTES,read_only_boundary_guards=True,
-            preserved_registers_checked=sorted(expected),stack_writes_confined_to_bytes=16),
+            preserved_registers_checked=sorted(expected),stack_bytes_written=0),
         native_capture_initialize=dict(result=brief(initialized),fresh_private_state_checked=True),
         linked_cohort_functions=cohorts,corrupted_candidate_rejections=negative,
         bootstrap_creation_frontier=dict(result=brief(front),native_get_tid_executions=get_tid_calls,

@@ -1,0 +1,3082 @@
+{
+  "scope": "Join candidate MVC/editor/text with the production private lock and capture.\n\nNative GUI construction completion, mode inputs and engine delivery are explicit\ncontracts. Final candidate and original methods execute; no LCD/camera claim.\n",
+  "status": "passed",
+  "candidate_build_revision": "8eedce761e4b4f8c33285df603081ced52af072a",
+  "gui_instructions_including_modeled_returns": 443699,
+  "maximum_observed_stack_below_loop_sp": 820,
+  "calls": [
+    {
+      "entry": "0x60cfef4e",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 6,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 6,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x190107b0",
+      "stack_below_call_sp": 0,
+      "native_private_lock_calls": [],
+      "d0": "0x0",
+      "a0": "0x19210060",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600cd287",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 604,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010770"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2851,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010654"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 318,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010630"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 292,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010684"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 188,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010684"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 71,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010684"
+        },
+        {
+          "status": "returned",
+          "completed": 78,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 4402,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x19010618",
+      "stack_below_call_sp": 408,
+      "native_private_lock_calls": [],
+      "d0": "0x1",
+      "a0": "0x19200000",
+      "events": [
+        {
+          "kind": "screen_completion_model",
+          "owner": "0x19210000",
+          "return_registers": {
+            "d0": 1,
+            "d1": 1432778632,
+            "a0": 421527552,
+            "a1": 422576128
+          }
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60cfe5a0",
+          "bytes": 180,
+          "address": "0x19300000",
+          "context": "0600"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 16,
+          "address": "0x193000e0",
+          "context": "0600"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 12,
+          "address": "0x19300110",
+          "context": "0600"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 2,
+          "address": "0x19300140",
+          "context": "0600"
+        },
+        {
+          "kind": "redraw_notification_model",
+          "child": "0x19300000",
+          "mode": 1
+        }
+      ],
+      "native_entries": {
+        "factory": 1,
+        "attach": 1,
+        "find": 1,
+        "bind": 1,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600ccb33",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 1845,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 1845,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x1901071c",
+      "stack_below_call_sp": 148,
+      "native_private_lock_calls": [],
+      "d0": "0x1",
+      "a0": "0xa004fa88",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600ccc30",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 8316,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010734"
+        },
+        {
+          "status": "returned",
+          "completed": 11330,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 19646,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x19010640",
+      "stack_below_call_sp": 368,
+      "native_private_lock_calls": [],
+      "d0": "0x0",
+      "a0": "0xa004fa88",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 2,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x6004c250",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 4185,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010724"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 5390,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010764"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2354,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901072c"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 114,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010730"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 20,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010730"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 114,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010734"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 17,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010730"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 114,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010734"
+        },
+        {
+          "status": "returned",
+          "completed": 2126,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 14434,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x19010678",
+      "stack_below_call_sp": 312,
+      "native_private_lock_calls": [],
+      "d0": "0x0",
+      "a0": "0xa004fa88",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60a4ec03",
+          "bytes": 56,
+          "address": "0x19300170",
+          "context": "81fe"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14cb1"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14cd9"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14cb1"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14cd9"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14cb1"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14cd9"
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 1,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x6004d45e",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 6255,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901071c"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 5862,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010754"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 13,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010754"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 15,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010724"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 18,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010754"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 8,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010744"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 4280,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106ac"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 4637,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106b4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 63,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106b4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 176,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106b4"
+        },
+        {
+          "status": "returned",
+          "completed": 2699,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 24026,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x19010600",
+      "stack_below_call_sp": 432,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x1",
+      "a0": "0x19403004",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 426,
+          "value": 0
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60e26c03"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60ea4c1c"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60cfeca9"
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "free_model",
+          "address": "0x19300140"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 16,
+          "address": "0x193001d0",
+          "context": "0600"
+        },
+        {
+          "kind": "redraw_notification_model",
+          "child": "0x19300000",
+          "mode": 1
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 2,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600cd1a9",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2304,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105d4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 9,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105cc"
+        },
+        {
+          "status": "returned",
+          "completed": 4623,
+          "fault": null,
+          "final_pc": "0x60cfd541",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 6936,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x190104ec",
+      "stack_below_call_sp": 708,
+      "native_private_lock_calls": [],
+      "d0": "0x0",
+      "a0": "0x1901093c",
+      "events": [
+        {
+          "kind": "wheel_input_model",
+          "event": "0x9032",
+          "delta": 3
+        },
+        {
+          "kind": "original_log_model",
+          "entry": "0x60e9e127"
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600cd1ec",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2268,
+          "fault": null,
+          "final_pc": "0x60d1144d",
+          "final_sp": "0x1901073c"
+        },
+        {
+          "status": "returned",
+          "completed": 2229,
+          "fault": null,
+          "final_pc": "0x60cfd55f",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 4497,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x190106cc",
+      "stack_below_call_sp": 228,
+      "native_private_lock_calls": [],
+      "d0": "0x1",
+      "a0": "0x19130000",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 426,
+          "value": 0
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60e26c03"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60ea4c1c"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60cfeca9"
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "free_model",
+          "address": "0x193001d0"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 16,
+          "address": "0x19300200",
+          "context": "0600"
+        },
+        {
+          "kind": "redraw_notification_model",
+          "child": "0x19300000",
+          "mode": 1
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "engine_delivery_model",
+          "event": "0x9032",
+          "parameter": 1,
+          "actual_parent_call": "0x60e4d0ff",
+          "result": 1,
+          "replay_checked": true
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x6004ca80",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 6270,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901059c"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 9602,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010528"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 16878,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010548"
+        },
+        {
+          "status": "returned",
+          "completed": 8485,
+          "fault": null,
+          "final_pc": "0x60e4d101",
+          "final_sp": "0x1901063c"
+        }
+      ],
+      "instructions": 41235,
+      "entry_sp": "0x1901063c",
+      "minimum_sp": "0x1901047c",
+      "stack_below_call_sp": 448,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x1",
+      "a0": "0xa004fa88",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 3,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x6004d45e",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 6255,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105a8"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 5857,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105e0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 13,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105e0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 15,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105b0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 18,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105e0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 8,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105d0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 4280,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010538"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 4716,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010540"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 63,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010540"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 176,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010540"
+        },
+        {
+          "status": "returned",
+          "completed": 2699,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x1901063c"
+        }
+      ],
+      "instructions": 24100,
+      "entry_sp": "0x1901063c",
+      "minimum_sp": "0x1901048c",
+      "stack_below_call_sp": 432,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x1",
+      "a0": "0x19403004",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 426,
+          "value": 0
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60e26c03"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60ea4c1c"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60cfeca9"
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "free_model",
+          "address": "0x193001d0"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 16,
+          "address": "0x19300200",
+          "context": "0600"
+        },
+        {
+          "kind": "redraw_notification_model",
+          "child": "0x19300000",
+          "mode": 1
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 2,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x6004ca80",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 6270,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901059c"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 9602,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010528"
+        },
+        {
+          "status": "returned",
+          "completed": 11739,
+          "fault": null,
+          "final_pc": "0x60e4d101",
+          "final_sp": "0x1901063c"
+        }
+      ],
+      "instructions": 27611,
+      "entry_sp": "0x1901063c",
+      "minimum_sp": "0x1901047c",
+      "stack_below_call_sp": 448,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x0",
+      "a0": "0xa004fa88",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 2,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      },
+      "scenario": "same admitted event replay rejected"
+    },
+    {
+      "entry": "0x600cd1a9",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2312,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105cc"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 10,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105c4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2301,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105c4"
+        },
+        {
+          "status": "returned",
+          "completed": 2332,
+          "fault": null,
+          "final_pc": "0x60cfd541",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 6955,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x190104e4",
+      "stack_below_call_sp": 716,
+      "native_private_lock_calls": [],
+      "d0": "0x0",
+      "a0": "0x1901093c",
+      "events": [
+        {
+          "kind": "wheel_input_model",
+          "event": "0x9031",
+          "delta": 2
+        },
+        {
+          "kind": "original_log_model",
+          "entry": "0x60e9e127"
+        },
+        {
+          "kind": "original_log_model",
+          "entry": "0x60e9e050"
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600cd1ec",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2268,
+          "fault": null,
+          "final_pc": "0x60d1144d",
+          "final_sp": "0x1901073c"
+        },
+        {
+          "status": "returned",
+          "completed": 2229,
+          "fault": null,
+          "final_pc": "0x60cfd55f",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 4497,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x190106cc",
+      "stack_below_call_sp": 228,
+      "native_private_lock_calls": [],
+      "d0": "0x1",
+      "a0": "0x19130000",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 426,
+          "value": 0
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60e26c03"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60ea4c1c"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60cfeca9"
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "free_model",
+          "address": "0x19300200"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 16,
+          "address": "0x19300230",
+          "context": "0600"
+        },
+        {
+          "kind": "redraw_notification_model",
+          "child": "0x19300000",
+          "mode": 1
+        },
+        {
+          "kind": "engine_delivery_model",
+          "event": "0x9031",
+          "parameter": 2,
+          "actual_parent_call": "0x60e4d0ff",
+          "result": 1,
+          "replay_checked": false
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x6004ca80",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 6270,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901059c"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 9602,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010528"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 16878,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010548"
+        },
+        {
+          "status": "returned",
+          "completed": 7361,
+          "fault": null,
+          "final_pc": "0x60e4d101",
+          "final_sp": "0x1901063c"
+        }
+      ],
+      "instructions": 40111,
+      "entry_sp": "0x1901063c",
+      "minimum_sp": "0x1901047c",
+      "stack_below_call_sp": 448,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x1",
+      "a0": "0xa004fa88",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 3,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x6004d45e",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 6255,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105a8"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 5857,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105e0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 13,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105e0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 15,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105b0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 18,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105e0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 8,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105d0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 4280,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010538"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 4671,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010540"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 63,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010540"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 176,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010540"
+        },
+        {
+          "status": "returned",
+          "completed": 2699,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x1901063c"
+        }
+      ],
+      "instructions": 24055,
+      "entry_sp": "0x1901063c",
+      "minimum_sp": "0x1901048c",
+      "stack_below_call_sp": 432,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x1",
+      "a0": "0x19403004",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 426,
+          "value": 0
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60e26c03"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60ea4c1c"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60cfeca9"
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "free_model",
+          "address": "0x19300200"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 16,
+          "address": "0x19300230",
+          "context": "0600"
+        },
+        {
+          "kind": "redraw_notification_model",
+          "child": "0x19300000",
+          "mode": 1
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 2,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600cd1a9",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2312,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105d4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 9,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105cc"
+        },
+        {
+          "status": "returned",
+          "completed": 4623,
+          "fault": null,
+          "final_pc": "0x60cfd541",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 6944,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x190104ec",
+      "stack_below_call_sp": 708,
+      "native_private_lock_calls": [],
+      "d0": "0x0",
+      "a0": "0x1901093c",
+      "events": [
+        {
+          "kind": "wheel_input_model",
+          "event": "0x9032",
+          "delta": -2
+        },
+        {
+          "kind": "original_log_model",
+          "entry": "0x60e9e127"
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600cd1ec",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2268,
+          "fault": null,
+          "final_pc": "0x60d1144d",
+          "final_sp": "0x1901073c"
+        },
+        {
+          "status": "returned",
+          "completed": 2229,
+          "fault": null,
+          "final_pc": "0x60cfd55f",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 4497,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x190106cc",
+      "stack_below_call_sp": 228,
+      "native_private_lock_calls": [],
+      "d0": "0x1",
+      "a0": "0x19130000",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 426,
+          "value": 0
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60e26c03"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60ea4c1c"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60cfeca9"
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "free_model",
+          "address": "0x19300230"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 16,
+          "address": "0x19300260",
+          "context": "0600"
+        },
+        {
+          "kind": "redraw_notification_model",
+          "child": "0x19300000",
+          "mode": 1
+        },
+        {
+          "kind": "engine_delivery_model",
+          "event": "0x9032",
+          "parameter": 4294967295,
+          "actual_parent_call": "0x60e4d0ff",
+          "result": 1,
+          "replay_checked": false
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x6004ca80",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 6270,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901059c"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 9602,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010528"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 16878,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010548"
+        },
+        {
+          "status": "returned",
+          "completed": 8489,
+          "fault": null,
+          "final_pc": "0x60e4d101",
+          "final_sp": "0x1901063c"
+        }
+      ],
+      "instructions": 41239,
+      "entry_sp": "0x1901063c",
+      "minimum_sp": "0x1901047c",
+      "stack_below_call_sp": 448,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x1",
+      "a0": "0xa004fa88",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 3,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x6004d45e",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 6255,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105a8"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 5857,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105e0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 13,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105e0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 15,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105b0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 18,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105e0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 8,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105d0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 4280,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010538"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 4702,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010540"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 63,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010540"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 176,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010540"
+        },
+        {
+          "status": "returned",
+          "completed": 2699,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x1901063c"
+        }
+      ],
+      "instructions": 24086,
+      "entry_sp": "0x1901063c",
+      "minimum_sp": "0x1901048c",
+      "stack_below_call_sp": 432,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x1",
+      "a0": "0x19403004",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 426,
+          "value": 0
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60e26c03"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60ea4c1c"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60cfeca9"
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "free_model",
+          "address": "0x19300230"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 16,
+          "address": "0x19300260",
+          "context": "0600"
+        },
+        {
+          "kind": "redraw_notification_model",
+          "child": "0x19300000",
+          "mode": 1
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 2,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x6004c250",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 4185,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010724"
+        },
+        {
+          "status": "returned",
+          "completed": 7497,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 11682,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x19010678",
+      "stack_below_call_sp": 312,
+      "native_private_lock_calls": [],
+      "d0": "0x0",
+      "a0": "0xa004fa88",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 1,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x6004d45e",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 6255,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901071c"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 5857,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010754"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 13,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010754"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 15,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010724"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 18,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010754"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 8,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010744"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 4280,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106ac"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 4622,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106b4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 63,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106b4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 176,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106b4"
+        },
+        {
+          "status": "returned",
+          "completed": 2699,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 24006,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x19010600",
+      "stack_below_call_sp": 432,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x1",
+      "a0": "0x19403004",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 426,
+          "value": 0
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60e26c03"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60ea4c1c"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60cfeca9"
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "free_model",
+          "address": "0x19300260"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 16,
+          "address": "0x19300290",
+          "context": "0600"
+        },
+        {
+          "kind": "redraw_notification_model",
+          "child": "0x19300000",
+          "mode": 1
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 2,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600cd1a9",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2312,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105d4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 9,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105cc"
+        },
+        {
+          "status": "returned",
+          "completed": 4623,
+          "fault": null,
+          "final_pc": "0x60cfd541",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 6944,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x190104ec",
+      "stack_below_call_sp": 708,
+      "native_private_lock_calls": [],
+      "d0": "0x0",
+      "a0": "0x1901093c",
+      "events": [
+        {
+          "kind": "wheel_input_model",
+          "event": "0x9032",
+          "delta": -4
+        },
+        {
+          "kind": "original_log_model",
+          "entry": "0x60e9e127"
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600cd1ec",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2268,
+          "fault": null,
+          "final_pc": "0x60d1144d",
+          "final_sp": "0x1901073c"
+        },
+        {
+          "status": "returned",
+          "completed": 2229,
+          "fault": null,
+          "final_pc": "0x60cfd55f",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 4497,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x190106cc",
+      "stack_below_call_sp": 228,
+      "native_private_lock_calls": [],
+      "d0": "0x1",
+      "a0": "0x19130000",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 426,
+          "value": 0
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60e26c03"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60ea4c1c"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60cfeca9"
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "free_model",
+          "address": "0x19300290"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 16,
+          "address": "0x193002c0",
+          "context": "0600"
+        },
+        {
+          "kind": "redraw_notification_model",
+          "child": "0x19300000",
+          "mode": 1
+        },
+        {
+          "kind": "engine_delivery_model",
+          "event": "0x9032",
+          "parameter": 4294967295,
+          "actual_parent_call": "0x60e4d0ff",
+          "result": 1,
+          "replay_checked": false
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x6004ca80",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 6270,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901059c"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 9602,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010528"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 16876,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010548"
+        },
+        {
+          "status": "returned",
+          "completed": 8489,
+          "fault": null,
+          "final_pc": "0x60e4d101",
+          "final_sp": "0x1901063c"
+        }
+      ],
+      "instructions": 41237,
+      "entry_sp": "0x1901063c",
+      "minimum_sp": "0x1901047c",
+      "stack_below_call_sp": 448,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x1",
+      "a0": "0xa004fa88",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 3,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x6004d45e",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 6255,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105a8"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 5857,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105e0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 13,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105e0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 15,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105b0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 18,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105e0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 8,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105d0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 4280,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010538"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 4700,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010540"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 63,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010540"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 176,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010540"
+        },
+        {
+          "status": "returned",
+          "completed": 2699,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x1901063c"
+        }
+      ],
+      "instructions": 24084,
+      "entry_sp": "0x1901063c",
+      "minimum_sp": "0x1901048c",
+      "stack_below_call_sp": 432,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x1",
+      "a0": "0x19403004",
+      "events": [
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "property_input_model",
+          "property": 426,
+          "value": 0
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60e26c03"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60ea4c1c"
+        },
+        {
+          "kind": "display_output_model",
+          "entry": "0x60cfeca9"
+        },
+        {
+          "kind": "property_input_model",
+          "property": 111,
+          "value": 54
+        },
+        {
+          "kind": "free_model",
+          "address": "0x19300290"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 16,
+          "address": "0x193002c0",
+          "context": "0600"
+        },
+        {
+          "kind": "redraw_notification_model",
+          "child": "0x19300000",
+          "mode": 1
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 2,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600c9538",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 1033,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 1033,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x19010728",
+      "stack_below_call_sp": 136,
+      "native_private_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "status": 0
+        }
+      ],
+      "d0": "0x1",
+      "a0": "0x621a6310",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600cce1f",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2844,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010738"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 20,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010738"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 71,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010738"
+        },
+        {
+          "status": "returned",
+          "completed": 601,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 3536,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x190106b0",
+      "stack_below_call_sp": 256,
+      "native_private_lock_calls": [],
+      "d0": "0x0",
+      "a0": "0x0",
+      "events": [
+        {
+          "kind": "free_model",
+          "address": "0x193002c0"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 2,
+          "address": "0x193002f0",
+          "context": "0600"
+        },
+        {
+          "kind": "redraw_notification_model",
+          "child": "0x19300000",
+          "mode": 1
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 1,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x6004c206",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 1892,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190107a4"
+        },
+        {
+          "status": "returned",
+          "completed": 2,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 1894,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x190106d8",
+      "stack_below_call_sp": 216,
+      "native_private_lock_calls": [],
+      "d0": "0x0",
+      "a0": "0x19300170",
+      "events": [
+        {
+          "kind": "free_model",
+          "address": "0x19300170"
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600cd2ce",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 1382,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106bc"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 8,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901069c"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 16,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106a0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 55,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106c0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 113,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106c4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 24,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106d4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 38,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106cc"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 44,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106c8"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 99,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010718"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 16,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901071c"
+        },
+        {
+          "status": "returned",
+          "completed": 6,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 1801,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x19010670",
+      "stack_below_call_sp": 320,
+      "native_private_lock_calls": [],
+      "d0": "0x1",
+      "a0": "0x19210000",
+      "events": [
+        {
+          "kind": "free_model",
+          "address": "0x193000e0"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14c70"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14c94"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14cb1"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14cd9"
+        },
+        {
+          "kind": "free_model",
+          "address": "0x193002f0"
+        },
+        {
+          "kind": "free_model",
+          "address": "0x19300000"
+        },
+        {
+          "kind": "free_model",
+          "address": "0x19300110"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14c70"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14c94"
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 1,
+        "bulk": 1,
+        "destructor": 0,
+        "child_bulk": 1
+      }
+    },
+    {
+      "entry": "0x6004d70f",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 1863,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 1863,
+      "entry_sp": "0x190107b0",
+      "minimum_sp": "0x190106f8",
+      "stack_below_call_sp": 184,
+      "native_private_lock_calls": [],
+      "d0": "0x0",
+      "a0": "0x0",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    }
+  ],
+  "runtime_setup": {
+    "initialization": [
+      {
+        "name": "native_all_object_count_recipe_copy",
+        "status": "returned",
+        "completed": 193,
+        "fault": null,
+        "final_pc": "0x60032651",
+        "final_sp": "0x190107b0"
+      },
+      {
+        "name": "native_255_semaphore_ID_clear",
+        "status": "returned",
+        "completed": 2312,
+        "fault": null,
+        "final_pc": "0x6003567f",
+        "final_sp": "0x190107b0"
+      },
+      {
+        "name": "complete_native_132_static_semaphore_initialize",
+        "status": "returned",
+        "completed": 7274,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107b0"
+      }
+    ],
+    "native_create": {
+      "status": "returned",
+      "completed": 316,
+      "fault": null,
+      "final_pc": "0x60049bc1",
+      "final_sp": "0x190106d8",
+      "returned_d0": 133,
+      "observed_stack_depth_from_hook_sp": 328,
+      "native_get_tid_entries": 0,
+      "native_create_entries": 1,
+      "native_delete_entries": 0,
+      "native_slot_allocator_entries": 1,
+      "shared_bset_entries": 1,
+      "shared_bclr_entries": 1,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "published": {
+      "status": "returned",
+      "completed": 39737,
+      "fault": null,
+      "final_pc": "0x6011f620",
+      "final_sp": "0x190107ec",
+      "returned_d0": 287454020,
+      "observed_stack_depth_from_hook_sp": 356,
+      "native_get_tid_entries": 11,
+      "native_create_entries": 0,
+      "native_delete_entries": 0,
+      "native_slot_allocator_entries": 0,
+      "shared_bset_entries": 0,
+      "shared_bclr_entries": 0,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "runtime": 2684678156,
+    "core": 2684673032,
+    "provider": 2684678124,
+    "private_id": 133,
+    "private_object": 1645851720
+  },
+  "displays": [
+    {
+      "category": 4,
+      "label": "H 01 +0",
+      "content": "0x19300170",
+      "receipt": [
+        423636992,
+        422576496,
+        1,
+        1,
+        1,
+        54,
+        4,
+        1
+      ]
+    },
+    {
+      "category": 4,
+      "label": "H 01 +3",
+      "content": "0x19300170",
+      "receipt": [
+        423636992,
+        422576496,
+        1,
+        1,
+        1,
+        54,
+        4,
+        1
+      ]
+    },
+    {
+      "category": 4,
+      "label": "H 03 +0",
+      "content": "0x19300170",
+      "receipt": [
+        423636992,
+        422576496,
+        1,
+        1,
+        1,
+        54,
+        4,
+        1
+      ]
+    },
+    {
+      "category": 4,
+      "label": "H 03 -2",
+      "content": "0x19300170",
+      "receipt": [
+        423636992,
+        422576496,
+        1,
+        1,
+        1,
+        54,
+        4,
+        1
+      ]
+    },
+    {
+      "category": 5,
+      "label": "L 03 +0",
+      "content": "0x19300170",
+      "receipt": [
+        423636992,
+        422576496,
+        1,
+        1,
+        1,
+        54,
+        5,
+        1
+      ]
+    },
+    {
+      "category": 5,
+      "label": "L 03 -4",
+      "content": "0x19300170",
+      "receipt": [
+        423636992,
+        422576496,
+        1,
+        1,
+        1,
+        54,
+        5,
+        1
+      ]
+    }
+  ],
+  "capture": {
+    "raw_mode": 11,
+    "selector": 1,
+    "profile": 0,
+    "hue": [
+      3,
+      0,
+      -2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "lightness": [
+      0,
+      0,
+      -4,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "bytes": "000300fe0000000000000000000000fc000000000000000000"
+  },
+  "native_private_lock_operations": 46,
+  "private_lock_id": 133,
+  "shared_runtime": true,
+  "replay_rejected": true,
+  "late_refresh_after_graph_unmap": true,
+  "live_allocations": 0,
+  "boundaries": [
+    "GUI task/TCB and request278 owner completion retain the preceding owner contract",
+    "MVC construction boundary supplies container/parent/selector/viewer graph with category2/contentNULL; stock content creation/disposal not run; no direct private-state injection",
+    "property111=54 and property426=0 are explicit service inputs, not a measured camera mode",
+    "wheel count service/logs modeled; original preprocess/hash dispatch/normalization/installed veneer executed",
+    "engine body modeled to deliver at actual container callsite60e4d0f5..101 and then draw when changed",
+    "original viewer caches and branch execute; header formatting60e26c03 and two display output helpers modeled",
+    "allocation/free and two GUI locks modeled; private core lock ID133 executes original poll/signal",
+    "graph teardown completion modeled; owned content destructor, text owner cleanup and late revocation execute",
+    "observed stack includes the explicit256B engine-delivery frame, not the real engine/renderer/IRQ upper bound",
+    "capture here is the shared core freeze API; capture association, worker, photo pixels and residency retain separate evidence"
+  ],
+  "hash_checks_performed": false,
+  "hardware_executed": false,
+  "installable": false
+}

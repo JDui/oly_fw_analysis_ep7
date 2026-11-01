@@ -1,8 +1,8 @@
 # E-P7 HSL 首个离线候选
 
-2026-11-01 续推：当前采用 [fishcu 加载区状态方案](UPSTREAM_BOOT_RECOVERY_REUSE.md)，
-开发 candidate005，移除三处 prefix 修改及 CPU2 私有槽保留。下方 candidate004 和
-此前恢复门槛保留为历史记录；新方案的有限验证结果随后补入。
+2026-11-01 当前：[candidate005 已构建、定向验证并封装](CANDIDATE_005_LOADED_STATE.md)。
+复用 fishcu 加载区状态方案，启动前缀零修改、CPU2保持32槽；98项补丁和五组件包通过
+本轮离线检查。仍无E-P7实机启动/恢复验收。下方004及更早结果保留为历史。
 
 2026-11-01 后续：[当前可刷机包目标](FLASH_READINESS_PLAN.md)正在推进。
 当前候选为 **offline-candidate-004**：修复[原生接收入口绑定](CANDIDATE_MESSAGE_SIM.md)，

@@ -2,7 +2,8 @@
 """E-P7 native SD filename selection and message route, with explicit filesystem boundaries.
 
 No SD media, camera, flash backend or physical boot trigger is exercised.
-The package has already been checked by the separate shared-updater probe.
+Shared-updater execution on candidate004 is separate prior evidence; this probe
+stops at that entry and does not revalidate a newer package through the updater.
 """
 import argparse
 from dataclasses import replace
@@ -24,12 +25,20 @@ NOTIFY = {0x601e7094, 0x601e71b6, 0x601e7186, 0x601e739f}
 
 
 class SdMachine(Machine):
-    def __init__(self, code, engine, header):
+    def __init__(self, code, engine, header, excluded=()):
         self.engine = engine
         # The actual initialized-data mapping, not host-generated pattern pointers.
         source = 0x60230800 + PATTERNS - 0x61f98540
-        rows = [Region('candidate', BASE, code, 'rx'),
-                Region('stack', STACK, b'\xcc'*STACK_BYTES, 'rw', True),
+        # Reuse fishcu's bounded recovery-dependency experiment: remove the
+        # modified spans from the model rather than merely poisoning opcodes.
+        # This starts at the software SD task, not physical reset/button entry.
+        rows, cursor = [], BASE
+        for low, high in [*excluded, (BASE+len(code),BASE+len(code))]:
+            require(cursor<=low<=high<=BASE+len(code), 'excluded spans overlap or leave image')
+            if cursor<low:
+                rows.append(Region(f'candidate_{len(rows)}',cursor,code[cursor-BASE:low-BASE],'rx'))
+            cursor = high
+        rows += [Region('stack', STACK, b'\xcc'*STACK_BYTES, 'rw', True),
                 Region('data', DATA, bytes(256), 'rw', True),
                 Region('patterns', PATTERNS, code[source-BASE:source-BASE+72], 'rw', True),
                 Region('package_header', BUFFER, header, 'r'),
@@ -68,12 +77,23 @@ class SdMachine(Machine):
         return r
 
 
-def inspect(candidate, package, engine):
+def inspect(candidate, package, engine, *, excluded_layout=None):
     code = candidate.read_bytes()
     with package.open('rb') as stream:
         header = stream.read(32)
     length = package.stat().st_size
     require(len(code)==26214336 and length==111017984,'unexpected candidate/package size')
+    excluded, build_revision = [], None
+    if excluded_layout:
+        audit = json.loads(excluded_layout.read_text(encoding='utf-8-sig'))
+        build = json.loads((candidate.parent/'report.json').read_text(encoding='utf-8-sig'))
+        require(audit['status']==build['status']=='passed' and
+                audit['candidate_build_revision']==build['source_revision'], 'exclusion audit/build differs')
+        build_revision = build['source_revision']
+        excluded = sorted((int(r['start'],16),int(r['end_exclusive'],16))
+                          for r in audit['layout']['write_spans'])
+        require(len(excluded)==build['write_span_count']==101 and
+                not audit['layout']['external_prefix_spans'], 'unexpected exclusion coverage')
     for addr,expected in (
         (CLIENT,bytes.fromhex('cff0fafe68ff9f00')),
         (WORKER,bytes.fromhex('cff0f8fe98080c')),
@@ -86,7 +106,7 @@ def inspect(candidate, package, engine):
         row = struct.unpack_from('<7I',code,addr-BASE)
         require(row==(tid,0,0,entry,priority,2048,0),'SD task configuration changed')
         tasks.append(dict(row=hex(addr),id=tid,entry=hex(entry),priority=priority,stack=2048))
-    m = SdMachine(code,engine,header)
+    m = SdMachine(code,engine,header,excluded)
     patterns = [m.string(m.word(PATTERNS+i*4)) for i in range(17)]
     require(patterns[1:5]==['E142????BIN','G142????BIN','H142????BIN','W142????BIN'],
             'main update pattern group changed')
@@ -190,6 +210,10 @@ def inspect(candidate, package, engine):
             (m.regs['a0'],m.regs['d0'],m.regs['d1'])==(BUFFER,length,0),
             'SD message did not reach native shared updater mode0 unchanged')
     return dict(scope=__doc__,status='passed',tasks=tasks,patterns=patterns,
+                candidate_build_revision=build_revision,package_bytes=length,
+                modified_spans_unmapped=[dict(start=hex(lo),end_exclusive=hex(hi)) for lo,hi in excluded],
+                excluded_bytes=sum(hi-lo for lo,hi in excluded),
+                private_uncached_state_mapped=False,
                 selection=selection,searches=searches,sent=sent,notifications=notifications,
                 client_execution=stages,worker_execution=worker_stages,
                 shared_updater=dict(entry=hex(UPDATER),buffer=hex(m.regs['a0']),
@@ -202,6 +226,7 @@ def inspect(candidate, package, engine):
                         'Timer, watchdog, SD preparation, filesystem search/read, queue delivery, device preparation and notifications are modeled boundaries. Native pattern iteration, packet construction, callback ranking and receiver dispatch execute.',
                         'Message padding is copied verbatim. No original packet field is silently initialized by the probe.',
                         'Task registration does not prove which physical power/button condition starts the SD client.',
+                        'When exclusions are enabled, only this post-entry task/dispatch path avoids modified spans. Queue, filesystem and device boundary models do not prove their own independence.',
                         'Suffix 9999 is a filename selection priority; it does not change component build/version metadata.',
                         'Shared updater acceptance is separate prior evidence; no native flash, independent recovery, whole camera boot or H/L hardware behavior is proved.'])
 
@@ -211,5 +236,6 @@ if __name__=='__main__':
     parser.add_argument('--candidate',type=Path,required=True)
     parser.add_argument('--package',type=Path,required=True)
     parser.add_argument('--engine',type=Path,required=True)
+    parser.add_argument('--excluded-layout',type=Path,help='passed current residency report; unmap every modified image span')
     args = parser.parse_args()
-    print(json.dumps(inspect(args.candidate,args.package,args.engine),indent=2))
+    print(json.dumps(inspect(args.candidate,args.package,args.engine,excluded_layout=args.excluded_layout),indent=2))
