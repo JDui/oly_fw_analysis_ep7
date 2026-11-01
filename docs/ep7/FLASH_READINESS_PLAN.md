@@ -281,3 +281,10 @@ fresh查询ID2/af6037c0并登记token2。新增29312指令，最大新栈深348B
 41B原只读store开放、8B明确冷heap BSS。原空FIFO拒绝分支保留；reset先撤销旧登记、
 保留serial，但真实任务中reset的合法时机未证明。associated旧backlink尚未更新，
 下一步原node准备与COLOR population；生产内核、生命周期、驻留及恢复仍待证。
+
+[新COLOR4填充与H/L冻结](CANDIDATE_COLOR_POPULATION_SIM.md)已完成两段：新node原生入队，
+6833word模板复制后raw11/selector4，token2在第一段采样5/-3；实际API改当前设置为
+-3/2后，第二段finish仍封存5/-3且不重采样。新增89051指令，最大新栈深420B；
+27356B原store/copy容量，无新BSS。原请求/格式与固定硬件输入的离线条件仍保留，
+完整新请求生产者未执行。下一步原队列领取、selected event的backlink发布、
+source copy与job消费/释放；S3/S4、驻留与恢复资格未因此通过。

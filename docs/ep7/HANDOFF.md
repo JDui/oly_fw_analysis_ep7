@@ -7,7 +7,16 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[完整node factory与fresh登记](CANDIDATE_NODE_FACTORY_SIM.md)完成29312条新指令，
+最新：[新COLOR4完整填充与H/L冻结](CANDIDATE_COLOR_POPULATION_SIM.md)完成89051条新增
+指令，最大新栈深420B。原pending FIFO与完整602a3204将新node入队，实际caller
+prewrite/6833word复制后完整第一段读99个原属性，raw11/selector4，token2采样5/-3。
+随后实际edit+回读把当前COLOR4改为-3/2，完整第二段finish返回1，封存仍5/-3且
+没有重采样。最终回602a44ba、SP恢复；新增27356B原store/copy，无新BSS。旧capture、
+ID1和模板不变。请求/格式仍沿用最初ID1的离线状态，完整新请求未执行；旧associated
+backlink仍19510000。下一步原队列领取、selected事件发布与异步消费。候选004/
+fishcu包不变、不可安装；无SHA、固件重编译或相机操作。
+
+此前：[完整node factory与fresh登记](CANDIDATE_NODE_FACTORY_SIM.md)完成29312条新指令，
 最大观察新栈深348B。原pool3200/FIFO、完整关联池初始化接通；实际factory原生分配
 56B node→61b21fc0、associated→6223e164，候选fresh查询ID2/af6037c0并生成token2，
 返回602a4485、SP恢复。原空关联FIFO触发25002701的拒绝分支保留。实际reset hook
