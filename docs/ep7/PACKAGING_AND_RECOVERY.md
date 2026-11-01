@@ -4,7 +4,19 @@
 has now been built using the inherited fishcu workflow, without SHA checks.
 All five E-P7 components are retained. The older unchanged-stock audit below
 remains historical evidence; its “no modified image built” statement is no longer
-the current packaging status. Updater acceptance and recovery remain unproven.
+the current packaging status. Subsequent [native updater stages](CANDIDATE_UPDATER_SIM.md)
+cover actual package validation and trapped write routing; physical acceptance
+and independent recovery remain unproven. The [offline review kit](FLASH_BENCH_REVIEW.md)
+now includes the unchanged candidate, a fishcu-reconstructed five-component stock
+reference, and existing evidence. The stock reference is not a device backup.
+
+2026-11-01 targeted upstream refresh: the
+[upstream overview](https://github.com/fishcu/oly_fw_analysis/blob/539fcf1fa9eda5fdef8ede4deeab94a4691d94c3/README.md)
+and [research index](https://github.com/fishcu/oly_fw_analysis/blob/539fcf1fa9eda5fdef8ede4deeab94a4691d94c3/docs/README.md)
+describe E-P7 comparisons and point to PEN-F-specific recovery research. A read-only
+search for E-P7/boot/bootloader and review of the currently returned issue list did
+not supply E-P7 prefix-loader or independent-recovery evidence. This is a bounded
+search result, not a claim that such evidence does not exist. No messages were sent.
 
 ## Useful engineering conclusion
 

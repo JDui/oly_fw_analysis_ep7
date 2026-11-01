@@ -1,0 +1,163 @@
+{
+  "scope": "Assemble existing E-P7 research package, stock reference and bounded evidence.\n\nReuses fishcu serialization; never compiles, runs the updater or creates an\nupdater-discovery layout. This tool cannot promote a candidate to installable.\n",
+  "status": "passed",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "candidate_file": "candidate/EP7HSL-NONINSTALLABLE.research.oly",
+  "stock_reference_file": "stock-reference/EP7-STOCK-1100-REFERENCE.research.oly",
+  "candidate_bytes": 111017984,
+  "stock_reference_bytes": 111017984,
+  "firmware_bytes": 222035968,
+  "candidate_write_spans": 103,
+  "components": [
+    {
+      "kind": "0x100",
+      "address": "0x406a0000",
+      "header_build": "0x1100",
+      "payload_bytes": 26214336,
+      "model_bytes": "1420",
+      "unchanged_between_candidate_and_stock": false,
+      "native_additive_checksums_valid": true
+    },
+    {
+      "kind": "0x101",
+      "address": "0x421a0000",
+      "header_build": "0x100",
+      "payload_bytes": 26214336,
+      "model_bytes": "1420",
+      "unchanged_between_candidate_and_stock": true,
+      "native_additive_checksums_valid": true
+    },
+    {
+      "kind": "0x106",
+      "address": "0x43aa0000",
+      "header_build": "0x100",
+      "payload_bytes": 45219776,
+      "model_bytes": "1420",
+      "unchanged_between_candidate_and_stock": true,
+      "native_additive_checksums_valid": true
+    },
+    {
+      "kind": "0x10e",
+      "address": "0x0",
+      "header_build": "0x1",
+      "payload_bytes": 262080,
+      "model_bytes": "1420",
+      "unchanged_between_candidate_and_stock": true,
+      "native_additive_checksums_valid": true
+    },
+    {
+      "kind": "0x102",
+      "address": "0x467e0000",
+      "header_build": "0x100",
+      "payload_bytes": 13107136,
+      "model_bytes": "1420",
+      "unchanged_between_candidate_and_stock": true,
+      "native_additive_checksums_valid": true
+    }
+  ],
+  "files": [
+    {
+      "path": "candidate/EP7HSL-NONINSTALLABLE.research.oly",
+      "bytes": 111017984,
+      "byte_readback_equal": true
+    },
+    {
+      "path": "stock-reference/EP7-STOCK-1100-REFERENCE.research.oly",
+      "bytes": 111017984,
+      "byte_readback_equal": true
+    },
+    {
+      "path": "README.md",
+      "bytes": 1366,
+      "byte_readback_equal": true
+    },
+    {
+      "path": "FLASH_BENCH_REVIEW.md",
+      "bytes": 5699,
+      "byte_readback_equal": true
+    },
+    {
+      "path": "evidence/candidate-package-004.json",
+      "bytes": 4026,
+      "byte_readback_equal": true
+    },
+    {
+      "path": "evidence/candidate-updater-validation-observation.json",
+      "bytes": 2015,
+      "byte_readback_equal": true
+    },
+    {
+      "path": "evidence/candidate-updater-commit-sim.json",
+      "bytes": 18645,
+      "byte_readback_equal": true
+    },
+    {
+      "path": "evidence/candidate-sd-entry-sim.json",
+      "bytes": 11498,
+      "byte_readback_equal": true
+    },
+    {
+      "path": "evidence/candidate-static-kernel-sim.json",
+      "bytes": 7061,
+      "byte_readback_equal": true
+    },
+    {
+      "path": "evidence/candidate-selected-handoff-sim.json",
+      "bytes": 5602,
+      "byte_readback_equal": true
+    },
+    {
+      "path": "evidence/candidate-ui-editor-sim.json",
+      "bytes": 72122,
+      "byte_readback_equal": true
+    },
+    {
+      "path": "evidence/candidate-worker-job-sim.json",
+      "bytes": 25865,
+      "byte_readback_equal": true
+    },
+    {
+      "path": "evidence/candidate-residency-sim.json",
+      "bytes": 54503,
+      "byte_readback_equal": true
+    },
+    {
+      "path": "evidence/offline-candidate-004.json",
+      "bytes": 25415,
+      "byte_readback_equal": true
+    }
+  ],
+  "stock_reconstructed_with_fishcu": true,
+  "stock_reference_equal_to_original_input": true,
+  "candidate_copied_without_repacking": true,
+  "candidate_matches_actual_ELF_and_patch_recipes": true,
+  "evidence_snapshots": 10,
+  "existing_native_tests_reexecuted": false,
+  "native_updater_mode2_evidence_has_missing_detailed_report": true,
+  "filename_is_not_a_device_enforced_block": true,
+  "updater_discovery_layout_created": false,
+  "hash_checks_performed": false,
+  "firmware_recompiled": false,
+  "source_firmware_written": false,
+  "hardware_executed": false,
+  "installation_authorized": false,
+  "installable": false,
+  "verified_device_backup_available": false,
+  "independent_recovery_proven": false,
+  "qualification": {
+    "container": "passed_offline",
+    "updater": "conditional_native_validation_and_trapped_routes",
+    "hl_function": "conditional_native_seams_with_explicit_models",
+    "startup_residency": "unqualified_prefix_and_ownership_dependencies",
+    "physical_update_entry": "unverified",
+    "full_task_irq_stack_bounds": "unknown",
+    "physical_display_and_photo": "not_executed",
+    "recovery": "not_verified"
+  },
+  "outstanding_inputs": [
+    "E-P7 prefix-loader, cold pool/guard ownership and cache/secondary startup evidence.",
+    "Complete task/IRQ resource qualification and CPU2 reduced-pool capacity.",
+    "Verified device-specific backup and an independent recovery route covering main-startup failure.",
+    "Physical update-entry and subsequent device acceptance under separate camera-operation authorization."
+  ]
+}
