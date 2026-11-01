@@ -7,7 +7,17 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[几何服务与配置构造](CANDIDATE_GEOMETRY_SIM.md)已执行原厂service5217、controller
+最新：[设备输入转换](CANDIDATE_DEVICE_STATE_SIM.md)已执行原厂2248B/562word早期数据
+复制3379指令和8种三bit输入转换，共5027指令；600222a2读取三路GPIO bit4、
+600226bb发布8ff00198，所有输入/控制word原样恢复；6011681d产生设备列0/1/2，
+60022090前缀产生remap selector。复用旧flash_gpio研究，六个原厂remap count均0。
+显式输入0分支下，60118093采样182指令后停60022085读取9b80108c/4B，logical102；
+另一路60118545两指令停600668b4读98e00058/4B，两处shadow均未发布。早期157指令
+缺6203c794的报告保留。两个OR字节依赖已定位BSS清零，其他输入/时序未伪造。
+原几何栈及capture不变，未续geometry/population，候选仍004/不可安装。下一步在
+明确硬件输入模型下执行采样/谓词和配置；实机输入/外设时序/完整启动继续待证。
+
+此前：[几何服务与配置构造](CANDIDATE_GEOMETRY_SIM.md)已执行原厂service5217、controller
 reset前缀18、task前缀131、mode snapshot397、请求字段15+10、设备缓存4336条指令。
 147个service属性槽及117行设备缓存全部匹配已注册属性bank；后者复用启动data-copy
 来源60233034→61f9ad74，仅936B有条件映射，NAND/cache未执行。mode3由原厂调用点
