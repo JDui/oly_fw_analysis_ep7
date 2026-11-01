@@ -1,0 +1,239 @@
+{
+  "scope": "Check linked H/L bootstrap after the native domain0 static semaphore recipe.\n\nExecutes original count copy, all semaphore ID clears and all 132 static\ninitializations. Other kernel classes, tasks, queues and single-contender locks\nretain the existing explicit S2 fixtures; this is not a complete camera boot.\n",
+  "status": "passed",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "initialization": [
+    {
+      "name": "native_all_object_count_recipe_copy",
+      "status": "returned",
+      "completed": 193,
+      "fault": null,
+      "final_pc": "0x60032651",
+      "final_sp": "0x190107b0"
+    },
+    {
+      "name": "native_255_semaphore_ID_clear",
+      "status": "returned",
+      "completed": 2312,
+      "fault": null,
+      "final_pc": "0x6003567f",
+      "final_sp": "0x190107b0"
+    },
+    {
+      "name": "complete_native_132_static_semaphore_initialize",
+      "status": "returned",
+      "completed": 7274,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0"
+    }
+  ],
+  "original_static_semaphores": 132,
+  "free_IDs_initialized": 255,
+  "initial_next_ID": 133,
+  "private_ID": 133,
+  "private_object": "0x6219b448",
+  "bootstrap_prefix": {
+    "status": "breakpoint",
+    "completed": 12729,
+    "fault": null,
+    "final_pc": "0x6003057f",
+    "final_sp": "0x190106c8",
+    "returned_d0": 419497756,
+    "observed_stack_depth_from_hook_sp": 296,
+    "native_get_tid_entries": 3,
+    "native_create_entries": 0,
+    "native_delete_entries": 0,
+    "native_slot_allocator_entries": 0,
+    "shared_bset_entries": 0,
+    "shared_bclr_entries": 0,
+    "context_switch_entries": 0,
+    "task_exception_callback_entries": 0
+  },
+  "native_create": {
+    "status": "returned",
+    "completed": 316,
+    "fault": null,
+    "final_pc": "0x60049bc1",
+    "final_sp": "0x190106d8",
+    "returned_d0": 133,
+    "observed_stack_depth_from_hook_sp": 328,
+    "native_get_tid_entries": 0,
+    "native_create_entries": 1,
+    "native_delete_entries": 0,
+    "native_slot_allocator_entries": 1,
+    "shared_bset_entries": 1,
+    "shared_bclr_entries": 1,
+    "context_switch_entries": 0,
+    "task_exception_callback_entries": 0
+  },
+  "published": {
+    "status": "returned",
+    "completed": 39775,
+    "fault": null,
+    "final_pc": "0x6011f620",
+    "final_sp": "0x190107ec",
+    "returned_d0": 287454020,
+    "observed_stack_depth_from_hook_sp": 356,
+    "native_get_tid_entries": 11,
+    "native_create_entries": 0,
+    "native_delete_entries": 0,
+    "native_slot_allocator_entries": 0,
+    "shared_bset_entries": 0,
+    "shared_bclr_entries": 0,
+    "context_switch_entries": 0,
+    "task_exception_callback_entries": 0
+  },
+  "runtime": "0xa1dd6108",
+  "functions": [
+    {
+      "symbol": "_ep7p_edit",
+      "status": "returned",
+      "completed": 1220,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 1,
+      "stack_depth_from_call_sp": 140,
+      "native_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "timeout": 0,
+          "returned_status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "timeout": null,
+          "returned_status": 0
+        }
+      ],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0
+    },
+    {
+      "symbol": "_ep7p_capture",
+      "status": "returned",
+      "completed": 1033,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 1,
+      "stack_depth_from_call_sp": 136,
+      "native_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 133,
+          "timeout": 0,
+          "returned_status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 133,
+          "timeout": null,
+          "returned_status": 0
+        }
+      ],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0
+    }
+  ],
+  "original_static_objects_unchanged": true,
+  "failed_publication": {
+    "to_delete": {
+      "status": "breakpoint",
+      "completed": 36519,
+      "fault": null,
+      "final_pc": "0x60031107",
+      "final_sp": "0x19010720",
+      "returned_d0": 133,
+      "observed_stack_depth_from_hook_sp": 356,
+      "native_get_tid_entries": 6,
+      "native_create_entries": 1,
+      "native_delete_entries": 0,
+      "native_slot_allocator_entries": 1,
+      "shared_bset_entries": 1,
+      "shared_bclr_entries": 1,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "native_delete_and_quarantine": {
+      "status": "breakpoint",
+      "completed": 396,
+      "fault": null,
+      "final_pc": "0x6004a342",
+      "final_sp": "0x19010764",
+      "returned_d0": 3845,
+      "observed_stack_depth_from_hook_sp": 240,
+      "native_get_tid_entries": 0,
+      "native_create_entries": 0,
+      "native_delete_entries": 1,
+      "native_slot_allocator_entries": 0,
+      "shared_bset_entries": 3,
+      "shared_bclr_entries": 3,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "private_ID_cleared": true,
+    "original_used_count_restored": 132
+  },
+  "queue_headers": [
+    {
+      "handle": "0x4b",
+      "object": "0x621a167c",
+      "attributes": 128,
+      "maximum": 148,
+      "ring_bytes": 4864,
+      "backing": "0x1992c000",
+      "backing_mapped": false
+    },
+    {
+      "handle": "0x4c",
+      "object": "0x621a16b8",
+      "attributes": 128,
+      "maximum": 312,
+      "ring_bytes": 10112,
+      "backing": "0x19930000",
+      "backing_mapped": false
+    },
+    {
+      "handle": "0x4d",
+      "object": "0x621a16f4",
+      "attributes": 128,
+      "maximum": 300,
+      "ring_bytes": 9728,
+      "backing": "0x19934000",
+      "backing_mapped": false
+    },
+    {
+      "handle": "0xab",
+      "object": "0x621a2cfc",
+      "attributes": 128,
+      "maximum": 312,
+      "ring_bytes": 10112,
+      "backing": "0x19aac000",
+      "backing_mapped": false
+    },
+    {
+      "handle": "0x4f",
+      "object": "0x621a176c",
+      "attributes": 128,
+      "maximum": 312,
+      "ring_bytes": 10112,
+      "backing": "0x1993c000",
+      "backing_mapped": false
+    }
+  ],
+  "hash_checks_performed": false,
+  "native_api_success_stubs": false,
+  "hardware_executed": false,
+  "firmware_files_modified": false,
+  "installable": false,
+  "limits": [
+    "Native initialization executes only the original all-class count-copy fragment, semaphore ID-clear fragment and complete static semaphore initializer.",
+    "The current task, ready/pending lists, CPU/root cells, queue headers/backing identities and uncontended lock remain S2 fixtures; whole kernel startup is not claimed.",
+    "No original static semaphore changes during successful private-lock use or failure rollback. This closes the ID1-only test assumption, not all task/concurrency/loading conditions.",
+    "GUI delivery, photo pixels, cache/multicore timing, startup loading and independent recovery require separate evidence."
+  ]
+}
