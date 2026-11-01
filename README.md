@@ -1,5 +1,10 @@
 # E-P7 HSL port research / E-P7 HSL 移植研究
 
+> **2026-11-01：005 实验包出现实机启动黑屏，暂停安装和重复刷写该实验包。**
+> 用户确认更新时先常亮后快闪，关机取出更新卡、不按 OK 重开后仍黑屏，菜单/回放无反应。
+> 用户随后已通过原厂回刷恢复画面与菜单；005 的黑屏原因仍待定位，详见[事件记录](docs/ep7/BOOT_FAILURE_005.md)。
+> 下方构建、验包及模拟通过记录不代表这次真机启动通过。
+
 > **First E-P7 offline candidate compiled and linked; explicitly non-installable.**
 > **首个 E-P7 HSL 离线候选已完成整体编译、链接与解码镜像合成；安装资格和真机 HSL 尚未通过。**
 

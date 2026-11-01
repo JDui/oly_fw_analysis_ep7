@@ -1,0 +1,249 @@
+{
+  "status": "passed",
+  "stock": {
+    "image": "/repo/generated/ep7/full-input/main.decoded.bin",
+    "status": "passed",
+    "steps": [
+      {
+        "name": "native_all_class_counts",
+        "status": "returned",
+        "completed": 193,
+        "fault": null,
+        "final_pc": "0x60032651",
+        "final_sp": "0x190107f0",
+        "d0": "0x0"
+      },
+      {
+        "name": "native_boot_debug_disable",
+        "status": "returned",
+        "completed": 7,
+        "fault": null,
+        "final_pc": "0x6003265f",
+        "final_sp": "0x190107f0",
+        "d0": "0x0"
+      },
+      {
+        "name": "native_cold_heap",
+        "status": "returned",
+        "completed": 25,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0",
+        "d0": "0xb1000"
+      },
+      {
+        "name": "native_all_free_object_IDs",
+        "status": "returned",
+        "completed": 12626,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0",
+        "d0": "0x0"
+      },
+      {
+        "name": "native_pre_static_task_setup",
+        "status": "returned",
+        "completed": 3273,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0",
+        "d0": "0x600386a5"
+      },
+      {
+        "name": "native_all_static_objects",
+        "status": "returned",
+        "completed": 77237,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0",
+        "d0": "0x0"
+      }
+    ],
+    "executed_instructions": 93361,
+    "free_blocks": [
+      {
+        "address": "0x6203fc4c",
+        "bytes": 180264
+      }
+    ],
+    "free_block_bytes": 180264,
+    "selected_queues": [
+      {
+        "handle": "0x4b",
+        "object": "0x621a167c",
+        "attributes": 128,
+        "maximum": 148,
+        "ring_bytes": 4864,
+        "backing": "0x6207d174"
+      },
+      {
+        "handle": "0x4c",
+        "object": "0x621a16b8",
+        "attributes": 128,
+        "maximum": 300,
+        "ring_bytes": 9728,
+        "backing": "0x6207ab60"
+      },
+      {
+        "handle": "0x4d",
+        "object": "0x621a16f4",
+        "attributes": 128,
+        "maximum": 300,
+        "ring_bytes": 9728,
+        "backing": "0x6207854c"
+      },
+      {
+        "handle": "0x4f",
+        "object": "0x621a176c",
+        "attributes": 128,
+        "maximum": 300,
+        "ring_bytes": 9728,
+        "backing": "0x62075cc4"
+      },
+      {
+        "handle": "0xab",
+        "object": "0x621a2cfc",
+        "attributes": 128,
+        "maximum": 300,
+        "ring_bytes": 9728,
+        "backing": "0x62070260"
+      }
+    ],
+    "usr3": {
+      "tcb": "0x62193d60",
+      "tid": 45,
+      "exception_flag": 1,
+      "entry": "0x601912fb",
+      "stack_bytes": 2048,
+      "stack_low": "0x620d13d4"
+    }
+  },
+  "candidate": {
+    "image": "/repo/generated/ep7/flash-build-005/EP7HSL-NONINSTALLABLE.decoded-main.bin",
+    "status": "passed",
+    "steps": [
+      {
+        "name": "native_all_class_counts",
+        "status": "returned",
+        "completed": 193,
+        "fault": null,
+        "final_pc": "0x60032651",
+        "final_sp": "0x190107f0",
+        "d0": "0x0"
+      },
+      {
+        "name": "native_boot_debug_disable",
+        "status": "returned",
+        "completed": 7,
+        "fault": null,
+        "final_pc": "0x6003265f",
+        "final_sp": "0x190107f0",
+        "d0": "0x0"
+      },
+      {
+        "name": "native_cold_heap",
+        "status": "returned",
+        "completed": 25,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0",
+        "d0": "0xb1000"
+      },
+      {
+        "name": "native_all_free_object_IDs",
+        "status": "returned",
+        "completed": 12626,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0",
+        "d0": "0x0"
+      },
+      {
+        "name": "native_pre_static_task_setup",
+        "status": "returned",
+        "completed": 3273,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0",
+        "d0": "0x600386a5"
+      },
+      {
+        "name": "native_all_static_objects",
+        "status": "returned",
+        "completed": 77237,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0",
+        "d0": "0x0"
+      }
+    ],
+    "executed_instructions": 93361,
+    "free_blocks": [
+      {
+        "address": "0x6203fc4c",
+        "bytes": 179112
+      }
+    ],
+    "free_block_bytes": 179112,
+    "selected_queues": [
+      {
+        "handle": "0x4b",
+        "object": "0x621a167c",
+        "attributes": 128,
+        "maximum": 148,
+        "ring_bytes": 4864,
+        "backing": "0x6207d174"
+      },
+      {
+        "handle": "0x4c",
+        "object": "0x621a16b8",
+        "attributes": 128,
+        "maximum": 312,
+        "ring_bytes": 10112,
+        "backing": "0x6207a9e0"
+      },
+      {
+        "handle": "0x4d",
+        "object": "0x621a16f4",
+        "attributes": 128,
+        "maximum": 300,
+        "ring_bytes": 9728,
+        "backing": "0x620783cc"
+      },
+      {
+        "handle": "0x4f",
+        "object": "0x621a176c",
+        "attributes": 128,
+        "maximum": 312,
+        "ring_bytes": 10112,
+        "backing": "0x620759c4"
+      },
+      {
+        "handle": "0xab",
+        "object": "0x621a2cfc",
+        "attributes": 128,
+        "maximum": 312,
+        "ring_bytes": 10112,
+        "backing": "0x6206fde0"
+      }
+    ],
+    "usr3": {
+      "tcb": "0x62193d60",
+      "tid": 45,
+      "exception_flag": 1,
+      "entry": "0x601912fb",
+      "stack_bytes": 2048,
+      "stack_low": "0x620d13d4"
+    }
+  },
+  "extra_static_heap_bytes": 1152,
+  "hardware_executed": false,
+  "firmware_modified": false,
+  "hash_checks_performed": false,
+  "limits": [
+    "Resident code, CPU ID and root selection are fixtures; physical loading and cache/multicore behavior are not executed.",
+    "Only the named original initialization fragments/functions execute. No scheduler, camera task startup, capture or GUI is run.",
+    "Passing allocation rules out exhaustion in this domain0 static initialization case, not later allocation failure or a physical boot defect.",
+    "Free block sizes include allocator headers and are not a promised largest usable allocation."
+  ]
+}
