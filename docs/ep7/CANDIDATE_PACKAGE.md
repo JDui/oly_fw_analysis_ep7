@@ -10,6 +10,9 @@
 没有另写编码器或校验算法，没有运行PEN-F build.py中的SHA检查，也没有重新编译。
 [实际报告](../../research/ep7/candidate-package-004.json)保留全部未通过项。
 
+后续[原厂局部校验](CANDIDATE_PACKAGE_NATIVE_SIM.md)已实际执行并通过；下文“仅主机
+容器处理”描述本封装节点的范围，完整更新器和安装资格继续未通过。
+
 ## 实际输出与核对
 
 本地输出：`generated/ep7/research-packages/candidate-004/`，包含

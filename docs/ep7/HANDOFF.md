@@ -7,7 +7,18 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[fishcu流程五组件研究容器](CANDIDATE_PACKAGE.md)已输出到
+最新：[原厂容器解码/局部校验](CANDIDATE_PACKAGE_NATIVE_SIM.md)通过。010e完整262144B
+原生解码1228520指令，等于fishcu主机结果；main完整26214400B原生局部校验39321696
+指令返回0，A0终点21900000。头尾差异30指令返回3202；010e一字节损坏393312指令
+到6002266d错误日志入口，sum1/MDR60c95ad4，未stub日志/声称3211后缀执行。合计
+40943558指令，无SHA/固件写入/真机。原厂wrapper是5B CD，不是7B DD；首次witness
+纠正，完整main首次45s超时后仅该调用放宽180s并成功。通过后不重复大循环。
+S5完整更新器/写入/恢复、S3/S4仍待证。几何快照追踪新发现：60419d2b返回6229faf8
+的128B请求对象；60419d34从A0原生复制128B。queue17任务60409ead复制请求，60409eb6
+重置双快照，60409ebf从请求+4取producer回调、+23取mode，再60409ec4调用6041a20a。
+仅为静态来源线索，尚未执行producer。下一步追踪该请求的原厂生产者及回调指针。
+
+此前：[fishcu流程五组件研究容器](CANDIDATE_PACKAGE.md)已输出到
 generated/ep7/research-packages/candidate-004/，111017984B。直接复用oly_container的
 parse/replace_payload/reconstruct；E-P7型号1420、五组件顺序/地址/各自版本字段保留，
 后四组件完整编码字节未变。主组件对实际ELF和101处patch重建一致，共103写入跨度；

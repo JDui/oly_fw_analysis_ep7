@@ -1,0 +1,81 @@
+{
+  "scope": "Execute E-P7 local container checks on the actual offline research package.\n\nOnly the decoder and local integrity checker run. No updater write dispatcher,\nfile discovery, version admission, flash controller or recovery code is invoked.\n",
+  "status": "passed",
+  "package": "EP7HSL-NONINSTALLABLE.research.oly",
+  "package_bytes": 111017984,
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu",
+  "cases": [
+    {
+      "name": "native_decode_actual_component_010e",
+      "result": {
+        "status": "returned",
+        "completed": 1228520,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      },
+      "component_bytes": 262144,
+      "complete_component": true,
+      "decoded_payload_equal_to_host": true,
+      "header_and_trailer_unchanged": true
+    },
+    {
+      "name": "native_check_complete_modified_main",
+      "result": {
+        "status": "returned",
+        "completed": 39321696,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      },
+      "component_bytes": 26214400,
+      "returned_d0": 0,
+      "complete_component": true,
+      "checksum_read_end": "0x21900000"
+    },
+    {
+      "name": "native_reject_header_trailer_mismatch",
+      "result": {
+        "status": "returned",
+        "completed": 30,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      },
+      "returned_d0": "0x3202",
+      "in_memory_mutation_only": true
+    },
+    {
+      "name": "native_corrupt_010e_checksum_error_branch",
+      "result": {
+        "status": "breakpoint",
+        "completed": 393312,
+        "fault": null,
+        "final_pc": "0x6002266d",
+        "final_sp": "0x190107c4"
+      },
+      "mutated_payload_offset": 0,
+      "checksum_result": "0x1",
+      "stopped_before_error_logger": true,
+      "error_return_suffix_executed": false,
+      "in_memory_mutation_only": true
+    }
+  ],
+  "completed_instructions": 40943558,
+  "native_decoder_matches_host": true,
+  "native_local_main_integrity_check_passed": true,
+  "full_updater_acceptance_proven": false,
+  "flash_write_path_executed": false,
+  "native_API_success_stubs": false,
+  "hash_checks_performed": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "Native code and buffers are explicitly resident in the strict instruction model; no camera boot is claimed.",
+    "Control+4 holds the buffer and Control+16 is explicit mode1; discovery, allocation and version/model admission before this local checker are not executed.",
+    "The actual 010e component is decoded completely. The complete modified main is supplied in decoded form and checked natively; its full decoder loop is not replayed.",
+    "Corrupt010e reaches the actual logging CALL. The logger and following0x3211 return suffix are not stubbed or claimed to have executed.",
+    "Only local integrity semantics are established. Complete updater policy, write dispatch, recovery, S3/S4 and hardware qualification remain open."
+  ]
+}
