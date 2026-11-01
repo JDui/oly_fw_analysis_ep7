@@ -8,7 +8,14 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[worker分配/登记/撤销/ACK](CANDIDATE_WORKER_JOB_SIM.md)通过24,686条指令，
+最新：[最终候选加载接续/驻留](CANDIDATE_RESIDENCY_SIM.md)完成16,514条指令。原loader
+三次读取实际候选657,408B后，刚加载的清零桥清16KiB并保持ABI/guard。103个跨度
+中100个有已定位加载配方、3个prefix仍缺上游加载证明；22项已知原写区间不冲突。
+五组件8字面量有界调查未找到prefix加载者或guard初始化者；没有提升为完整所有权。
+物理cache、冷保留/池容量、完整栈与恢复继续待证。接下来整理fishcu候选和五组件
+原厂恢复参考/台架验收，不再无限扩展未改动的ISP模拟。固件和研究包均未改变。
+
+此前：[worker分配/登记/撤销/ACK](CANDIDATE_WORKER_JOB_SIM.md)通过24,686条指令，
 观察新栈860B。原allocator实际收到15512并取得domain0槽61bd6d40，新24B先清零；
 process桥登记冻结值，实际postbuilder点写出三项预期系数。真实poll133注入一次
 争用，cleanup遇−50保留job/token，经一次明确delay完成模型及真实signal后才撤销、

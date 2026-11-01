@@ -72,6 +72,13 @@ patch及落盘回读通过。它仍标记不可安装；局部/完整原厂更�
 
 ## 当前进度
 
+S4的[最终候选加载接续与有限驻留审查](CANDIDATE_RESIDENCY_SIM.md)完成：原loader取得
+实际657,408B后执行新装入清零桥，共16,514指令；16KiB清零和原接续ABI保持。
+103个跨度有100个加载归属已定位，3个prefix上游加载仍未知；22项已知原写区间无
+冲突。五组件有界调查没有找到prefix加载者或guard初始化者，未关闭完整所有权。
+当前转S5整理fishcu候选/五组件原厂恢复参考及台架清单；S4、物理cache/启动、完整
+栈和独立恢复仍不放行，不继续以无限原厂内部模拟替代这些证据。
+
 基础H/L的[worker改动链](CANDIDATE_WORKER_JOB_SIM.md)已通过24,686条指令：真实
 domain0 allocator扩为15512、新24B清零、process登记、实际postbuilder点三项系数
 及cleanup/ACK撤销顺序闭合。一次原生poll133返回−50时保留job/token，经明确进展
