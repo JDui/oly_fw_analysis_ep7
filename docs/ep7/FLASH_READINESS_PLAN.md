@@ -246,3 +246,9 @@ raw mode/selector为0/0，不满足COLOR冻结条件；没有伪造有效拍摄�
 输入沿用首次状态发布前BSS，模式输入8B由原reset片段写出。修正旧FIFO前canary
 覆盖13B原厂状态的过宽边界，FIFO/剩余保护区与capture不变。下一步原metadata槽
 领取和初始化；command+60仍NULL，主线1684/1686及完整生命周期继续待证。
+
+[原生metadata领取、发布与重用](CANDIDATE_REQUEST_METADATA_SIM.md)完成563条新指令，
+最大观察栈深56B，35B真实store容量，无新BSS。原调用者发布command及其+60指针，
+完整参数初始化返回；独立release/reclaim证明同槽重用保留旧数据和旧command引用，
+指针不能替代代际。状态生产者读到原生halfword1024后停在未知command+72，主线
+1684/1686未续接；下一步追flags来源或明确输入模型下的条件验证，保留生命周期缺口。
