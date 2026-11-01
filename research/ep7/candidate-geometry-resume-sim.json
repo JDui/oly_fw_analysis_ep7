@@ -1,0 +1,200 @@
+{
+  "scope": "Resume original geometry configuration after the cold snapshot callback.\n\nRestore its real suspended stack/registers; do not substitute a configuration\nobject or active camera dimensions. Capture population remains separate.\n",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu",
+  "cases": [
+    {
+      "gpio80_input_bit4": 0,
+      "cases": [
+        {
+          "symbol": "native_geometry_resume_after_complete_cold_snapshot",
+          "status": "memory_fault",
+          "completed": 543,
+          "fault": {
+            "kind": 1,
+            "pc": 1614970566,
+            "map": 0,
+            "address": 1646921396,
+            "size": 2,
+            "access": "read"
+          },
+          "final_pc": "0x60427ec6",
+          "final_sp": "0x19010490",
+          "stack_depth_from_call_sp": 880,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "d0_at_stop": 0,
+          "stop_registers": {
+            "d0": "0x0",
+            "d1": "0x0",
+            "d2": "0x22334455",
+            "d3": "0x0",
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0",
+            "a3": "0x622a06b4",
+            "sp": "0x19010490",
+            "pc": "0x60427ec6",
+            "mdr": "0x6005c8df",
+            "psw": "0x801",
+            "lir": "0x4fe08415",
+            "lar": "0x60427ebf",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        }
+      ],
+      "actual_suspended_stack_restored": true,
+      "snapshot_callback_completed_before_resume": true,
+      "native_snapshot_pointer_returns": [
+        "0x6229fc48"
+      ],
+      "geometry_dynamic_setter_entries": [],
+      "frontier": {
+        "status": "memory_fault",
+        "fault": {
+          "kind": 1,
+          "pc": 1614970566,
+          "map": 0,
+          "address": 1646921396,
+          "size": 2,
+          "access": "read"
+        },
+        "pc": "0x60427ec6",
+        "native_return_pc": "0x6005c8df"
+      },
+      "geometry_configuration_completed": false,
+      "capture_unchanged": true,
+      "population_resumed": false
+    },
+    {
+      "gpio80_input_bit4": 1,
+      "cases": [
+        {
+          "symbol": "native_geometry_resume_after_complete_cold_snapshot",
+          "status": "memory_fault",
+          "completed": 543,
+          "fault": {
+            "kind": 1,
+            "pc": 1614970566,
+            "map": 0,
+            "address": 1646921396,
+            "size": 2,
+            "access": "read"
+          },
+          "final_pc": "0x60427ec6",
+          "final_sp": "0x19010490",
+          "stack_depth_from_call_sp": 880,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "d0_at_stop": 0,
+          "stop_registers": {
+            "d0": "0x0",
+            "d1": "0x0",
+            "d2": "0x22334455",
+            "d3": "0x0",
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0",
+            "a3": "0x622a06b4",
+            "sp": "0x19010490",
+            "pc": "0x60427ec6",
+            "mdr": "0x6005c8df",
+            "psw": "0x801",
+            "lir": "0x4fe08415",
+            "lar": "0x60427ebf",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        }
+      ],
+      "actual_suspended_stack_restored": true,
+      "snapshot_callback_completed_before_resume": true,
+      "native_snapshot_pointer_returns": [
+        "0x6229fc48"
+      ],
+      "geometry_dynamic_setter_entries": [],
+      "frontier": {
+        "status": "memory_fault",
+        "fault": {
+          "kind": 1,
+          "pc": 1614970566,
+          "map": 0,
+          "address": 1646921396,
+          "size": 2,
+          "access": "read"
+        },
+        "pc": "0x60427ec6",
+        "native_return_pc": "0x6005c8df"
+      },
+      "geometry_configuration_completed": false,
+      "capture_unchanged": true,
+      "population_resumed": false
+    }
+  ],
+  "native_instructions": 1086,
+  "maximum_observed_new_stack_depth": 880,
+  "hash_checks_performed": false,
+  "native_api_success_stubs": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "The completed producer uses the explicitly unconfigured/no-device cold scenario. It does not supply valid active shot geometry.",
+    "Only the previously suspended configuration resumes. Population, capture allocation, task ordering and worker execution are not completed by this probe."
+  ]
+}

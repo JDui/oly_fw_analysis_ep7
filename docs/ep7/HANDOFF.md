@@ -7,7 +7,21 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[原生未配置格式与getter返回](CANDIDATE_FORMAT_SNAPSHOT_SIM.md)新增14672指令，
+最新：[冷态快照完整回调与配置续接](CANDIDATE_SNAPSHOT_OUTPUT_SIM.md)关闭原输出构造器、
+60426f83回调及6041a20a包装函数的冷态返回。两GPIO各240+85+88+199+49，共1322；
+原返回6042705e/6041a224/60409ecb均核对，最终SP1901076c。仅160B原输出成员A5，
+9个洞123/145/155/160..165仍未映射；额外10B转换store与2Bwrapper status0。121B
+原copy与源相等，4half坐标copy通过；原整数换算中间值83/74。新增冷BSS条件12B：
+fallbacka2788dec+12指针4B及未发布坐标622a094c/8B；活动writer604288f9/6028f3ef
+未执行。快照指针6229fc48，selector0002；任务后续交换/收发、上游调度切口未关闭。
+恢复原configuration栈/寄存器后，两GPIO各543，共1086，60419f58真实返回6229fc48。
+当前fault60427ec6读622a06b4/2B，MDR6005c8df；setter6042805e未进入，population
+未恢复，capture27332B不变。新观测栈880非完整上界。静态来源60425ba3的60425d03/
+60425d0d/60425d1b分别从输入+128/+144/+196写b4/c4/f4三数组，8组；调用点604270d2，
+源对象未接通。下一步追真实输入，不能补零活动数组。正式两报告和5个中间报告保留。
+候选004/fishcu五组件包未变、不可安装；无SHA/重编译/相机操作。
+
+此前：[原生未配置格式与getter返回](CANDIDATE_FORMAT_SNAPSHOT_SIM.md)新增14672指令，
 两GPIO各reset1235、producer329、device defaults5169、完整mode563、producer40。
 606a4a09/606a4a41完整reset写两个ffff、清123B/121B、设28B记录；277B原生目的。
 601f25f8完整返回，3362B原生目的，3段ROM及2段1084B二次copy合计3336B逐字节相等；
