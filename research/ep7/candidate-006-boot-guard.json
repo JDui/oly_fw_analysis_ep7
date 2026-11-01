@@ -1,0 +1,87 @@
+{
+  "status": "passed",
+  "candidate_build_revision": "a059e5ff17538aa8f95dc62d05a48545d3a2bb6a",
+  "cases": [
+    {
+      "name": "unowned_Usr3_reset_reaches_original_pool",
+      "status": "returned",
+      "completed": 611,
+      "fault": null,
+      "final_pc": "0x6029acd8",
+      "final_sp": "0x190107e0"
+    },
+    {
+      "name": "unowned_foreign_admission_remains_neutral",
+      "status": "returned",
+      "completed": 585,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107f0"
+    },
+    {
+      "name": "qualified_controller_can_still_join",
+      "status": "returned",
+      "completed": 12217,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107f0"
+    },
+    {
+      "name": "owned_foreign_reset_still_stops_with_e03",
+      "status": "breakpoint",
+      "completed": 590,
+      "fault": null,
+      "final_pc": "0x6004a342",
+      "final_sp": "0x190107a0"
+    }
+  ],
+  "terminal_signal": {
+    "native_instructions": 352,
+    "original_helper": "0x601e73e5",
+    "channel": 0,
+    "period_argument": 250,
+    "driver_boundaries": [
+      {
+        "boundary": "0x6006c888",
+        "operation": "stop",
+        "modeled_return": 0
+      },
+      {
+        "boundary": "0x6006c808",
+        "operation": "initialize",
+        "modeled_return": 0
+      },
+      {
+        "boundary": "0x6006c808",
+        "operation": "initialize",
+        "modeled_return": 0
+      },
+      {
+        "boundary": "0x6006c848",
+        "operation": "configure",
+        "modeled_return": 0,
+        "configuration": [
+          1,
+          249900,
+          50,
+          0
+        ]
+      },
+      {
+        "boundary": "0x6006c868",
+        "operation": "start",
+        "modeled_return": 0
+      }
+    ],
+    "first_reason_retained": true,
+    "terminal_hold_retained": true
+  },
+  "hardware_executed": false,
+  "hash_checks_performed": false,
+  "limits": [
+    "Usr3 reset invocation is a focused counterexample, not a traced physical boot call.",
+    "The 005 hardware stopping PC remains unknown; this does not prove its unique cause.",
+    "Bootstrap/current-task memory is a fixture; PWM drivers return modeled zero.",
+    "Physical AF signaling and successful camera boot require device observation."
+  ]
+}

@@ -1,16 +1,20 @@
 # E-P7 HSL port research / E-P7 HSL 移植研究
 
+> **2026-11-01 最新候选：[006实验SD包](docs/ep7/EXPERIMENTAL_SD_006_DELIVERY.md)。**
+> 修正未绑定拍摄任务阶段的误停机，增加复用原厂AF函数的故障提示，保留H/L编辑和照片处理。
+> 定向离线验证通过；005实机黑屏的唯一根因仍未确认，006尚待A档/COLOR条件下正常开机验收。
+
 > **2026-11-01：005 实验包出现实机启动黑屏，暂停安装和重复刷写该实验包。**
 > 用户确认更新时先常亮后快闪，关机取出更新卡、不按 OK 重开后仍黑屏，菜单/回放无反应。
 > 用户随后已通过原厂回刷恢复画面与菜单；005 的黑屏原因仍待定位，详见[事件记录](docs/ep7/BOOT_FAILURE_005.md)。
 > 下方构建、验包及模拟通过记录不代表这次真机启动通过。
 
-> **First E-P7 offline candidate compiled and linked; explicitly non-installable.**
+> **Historical first offline candidate: compiled and linked; explicitly non-installable.**
 > **首个 E-P7 HSL 离线候选已完成整体编译、链接与解码镜像合成；安装资格和真机 HSL 尚未通过。**
 
 **本地运行： [Windows / WSL / Linux QUICKSTART](docs/ep7/QUICKSTART.md)** · **[当前交接与阻塞](docs/ep7/HANDOFF.md)**
 
-最新：[离线候选结果与未通过项](docs/ep7/OFFLINE_CANDIDATE.md)。107 个实现源、101 处
+历史：[离线候选结果与未通过项](docs/ep7/OFFLINE_CANDIDATE.md)。107 个实现源、101 处
 修改、完整 ELF 与链接图已生成；产物仅用于离线研究，没有可刷升级包，不连接相机。
 当前候选003已修复[发送gate漏检](docs/ep7/CANDIDATE_QUEUE_GATE_SIM.md)，1个对象增量
 更新、106个复用；两处机器码字节修正后，异常发送路径实际返回−42并释放锁。

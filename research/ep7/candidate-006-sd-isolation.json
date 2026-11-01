@@ -1,0 +1,914 @@
+{
+  "scope": "E-P7 native SD filename selection and message route, with explicit filesystem boundaries.\n\nNo SD media, camera, flash backend or physical boot trigger is exercised.\nShared-updater execution on candidate004 is separate prior evidence; this probe\nstops at that entry and does not revalidate a newer package through the updater.\n",
+  "status": "passed",
+  "tasks": [
+    {
+      "row": "0x60039370",
+      "id": 88,
+      "entry": "0x60c95bab",
+      "priority": 45,
+      "stack": 2048
+    },
+    {
+      "row": "0x60038bc8",
+      "id": 18,
+      "entry": "0x60c96030",
+      "priority": 55,
+      "stack": 2048
+    }
+  ],
+  "patterns": [
+    "S142????BIN",
+    "E142????BIN",
+    "G142????BIN",
+    "H142????BIN",
+    "W142????BIN",
+    "A142????BIN",
+    "M142????BIN",
+    "V142????BIN",
+    "D142????BIN",
+    "T142????BIN",
+    "I142????BIN",
+    "K142????BIN",
+    "DATE????BIN",
+    "PICTURE1JPG",
+    "PICTURE2JPG",
+    "F???????BIN",
+    "N142????BIN"
+  ],
+  "candidate_build_revision": "a059e5ff17538aa8f95dc62d05a48545d3a2bb6a",
+  "package_bytes": 111017984,
+  "modified_spans_unmapped": [
+    {
+      "start": "0x60031072",
+      "end_exclusive": "0x60031078"
+    },
+    {
+      "start": "0x60036d3c",
+      "end_exclusive": "0x60036d46"
+    },
+    {
+      "start": "0x60036f93",
+      "end_exclusive": "0x60036f99"
+    },
+    {
+      "start": "0x6003b424",
+      "end_exclusive": "0x6003b428"
+    },
+    {
+      "start": "0x6003b428",
+      "end_exclusive": "0x6003b42c"
+    },
+    {
+      "start": "0x6003b460",
+      "end_exclusive": "0x6003b464"
+    },
+    {
+      "start": "0x6003b464",
+      "end_exclusive": "0x6003b468"
+    },
+    {
+      "start": "0x6003bb90",
+      "end_exclusive": "0x6003bb94"
+    },
+    {
+      "start": "0x6003bb94",
+      "end_exclusive": "0x6003bb98"
+    },
+    {
+      "start": "0x60048040",
+      "end_exclusive": "0x6004da78"
+    },
+    {
+      "start": "0x6004dc00",
+      "end_exclusive": "0x6004fc00"
+    },
+    {
+      "start": "0x600c8040",
+      "end_exclusive": "0x600cdcdf"
+    },
+    {
+      "start": "0x60191371",
+      "end_exclusive": "0x60191378"
+    },
+    {
+      "start": "0x602897d7",
+      "end_exclusive": "0x602897dd"
+    },
+    {
+      "start": "0x60289c5e",
+      "end_exclusive": "0x60289c63"
+    },
+    {
+      "start": "0x60289d02",
+      "end_exclusive": "0x60289d07"
+    },
+    {
+      "start": "0x602973bc",
+      "end_exclusive": "0x602973c3"
+    },
+    {
+      "start": "0x6029be5d",
+      "end_exclusive": "0x6029be64"
+    },
+    {
+      "start": "0x6029c692",
+      "end_exclusive": "0x6029c697"
+    },
+    {
+      "start": "0x6029ce9d",
+      "end_exclusive": "0x6029cea2"
+    },
+    {
+      "start": "0x6029ef4c",
+      "end_exclusive": "0x6029ef51"
+    },
+    {
+      "start": "0x6029f1c2",
+      "end_exclusive": "0x6029f1c9"
+    },
+    {
+      "start": "0x6029f6ba",
+      "end_exclusive": "0x6029f6c1"
+    },
+    {
+      "start": "0x602a27e4",
+      "end_exclusive": "0x602a27e9"
+    },
+    {
+      "start": "0x602a29ab",
+      "end_exclusive": "0x602a29b2"
+    },
+    {
+      "start": "0x602a2a00",
+      "end_exclusive": "0x602a2a07"
+    },
+    {
+      "start": "0x602a2a48",
+      "end_exclusive": "0x602a2a4f"
+    },
+    {
+      "start": "0x602a2ab5",
+      "end_exclusive": "0x602a2abc"
+    },
+    {
+      "start": "0x602a2cb9",
+      "end_exclusive": "0x602a2cc0"
+    },
+    {
+      "start": "0x602a2d0d",
+      "end_exclusive": "0x602a2d14"
+    },
+    {
+      "start": "0x602a31b1",
+      "end_exclusive": "0x602a31b8"
+    },
+    {
+      "start": "0x602a31c7",
+      "end_exclusive": "0x602a31cc"
+    },
+    {
+      "start": "0x602a31ea",
+      "end_exclusive": "0x602a31ef"
+    },
+    {
+      "start": "0x602a31f7",
+      "end_exclusive": "0x602a31fc"
+    },
+    {
+      "start": "0x602a4220",
+      "end_exclusive": "0x602a4227"
+    },
+    {
+      "start": "0x602a427d",
+      "end_exclusive": "0x602a4284"
+    },
+    {
+      "start": "0x602a440a",
+      "end_exclusive": "0x602a440f"
+    },
+    {
+      "start": "0x602a442c",
+      "end_exclusive": "0x602a4431"
+    },
+    {
+      "start": "0x602a443e",
+      "end_exclusive": "0x602a4443"
+    },
+    {
+      "start": "0x602a4461",
+      "end_exclusive": "0x602a4468"
+    },
+    {
+      "start": "0x602a4480",
+      "end_exclusive": "0x602a4485"
+    },
+    {
+      "start": "0x602a44a3",
+      "end_exclusive": "0x602a44a8"
+    },
+    {
+      "start": "0x602a44b5",
+      "end_exclusive": "0x602a44ba"
+    },
+    {
+      "start": "0x602a44d8",
+      "end_exclusive": "0x602a44df"
+    },
+    {
+      "start": "0x602a7ea0",
+      "end_exclusive": "0x602a7ea7"
+    },
+    {
+      "start": "0x602a8dca",
+      "end_exclusive": "0x602a8dd1"
+    },
+    {
+      "start": "0x602abe96",
+      "end_exclusive": "0x602abe9d"
+    },
+    {
+      "start": "0x602ac3de",
+      "end_exclusive": "0x602ac3e3"
+    },
+    {
+      "start": "0x602ac3f6",
+      "end_exclusive": "0x602ac3fd"
+    },
+    {
+      "start": "0x602ac4fd",
+      "end_exclusive": "0x602ac502"
+    },
+    {
+      "start": "0x602ac5a6",
+      "end_exclusive": "0x602ac5ab"
+    },
+    {
+      "start": "0x602ac5e8",
+      "end_exclusive": "0x602ac5ef"
+    },
+    {
+      "start": "0x602ac66c",
+      "end_exclusive": "0x602ac671"
+    },
+    {
+      "start": "0x602ac869",
+      "end_exclusive": "0x602ac870"
+    },
+    {
+      "start": "0x602ac8f8",
+      "end_exclusive": "0x602ac8ff"
+    },
+    {
+      "start": "0x603537f3",
+      "end_exclusive": "0x603537fa"
+    },
+    {
+      "start": "0x603b02d9",
+      "end_exclusive": "0x603b02de"
+    },
+    {
+      "start": "0x603df805",
+      "end_exclusive": "0x603df809"
+    },
+    {
+      "start": "0x603df933",
+      "end_exclusive": "0x603df937"
+    },
+    {
+      "start": "0x603dfa04",
+      "end_exclusive": "0x603dfa0b"
+    },
+    {
+      "start": "0x603dfaa1",
+      "end_exclusive": "0x603dfaa8"
+    },
+    {
+      "start": "0x603dfc67",
+      "end_exclusive": "0x603dfc6c"
+    },
+    {
+      "start": "0x603dfc9b",
+      "end_exclusive": "0x603dfca2"
+    },
+    {
+      "start": "0x603e0546",
+      "end_exclusive": "0x603e054a"
+    },
+    {
+      "start": "0x603e05c6",
+      "end_exclusive": "0x603e05cb"
+    },
+    {
+      "start": "0x603e05e2",
+      "end_exclusive": "0x603e05e6"
+    },
+    {
+      "start": "0x603ef894",
+      "end_exclusive": "0x603ef898"
+    },
+    {
+      "start": "0x603ef8b5",
+      "end_exclusive": "0x603ef8ba"
+    },
+    {
+      "start": "0x603ef8d2",
+      "end_exclusive": "0x603ef8d7"
+    },
+    {
+      "start": "0x603ef8fd",
+      "end_exclusive": "0x603ef902"
+    },
+    {
+      "start": "0x603ef91a",
+      "end_exclusive": "0x603ef91f"
+    },
+    {
+      "start": "0x603ef94c",
+      "end_exclusive": "0x603ef950"
+    },
+    {
+      "start": "0x603ef9b4",
+      "end_exclusive": "0x603ef9b8"
+    },
+    {
+      "start": "0x603f26a3",
+      "end_exclusive": "0x603f26a7"
+    },
+    {
+      "start": "0x603f2722",
+      "end_exclusive": "0x603f2727"
+    },
+    {
+      "start": "0x603f2769",
+      "end_exclusive": "0x603f2770"
+    },
+    {
+      "start": "0x603f2792",
+      "end_exclusive": "0x603f2796"
+    },
+    {
+      "start": "0x603f2890",
+      "end_exclusive": "0x603f2897"
+    },
+    {
+      "start": "0x603f28c0",
+      "end_exclusive": "0x603f28c7"
+    },
+    {
+      "start": "0x60cfd53a",
+      "end_exclusive": "0x60cfd541"
+    },
+    {
+      "start": "0x60cfd558",
+      "end_exclusive": "0x60cfd55f"
+    },
+    {
+      "start": "0x60e261d4",
+      "end_exclusive": "0x60e261d9"
+    },
+    {
+      "start": "0x60e26201",
+      "end_exclusive": "0x60e26206"
+    },
+    {
+      "start": "0x60e26226",
+      "end_exclusive": "0x60e2622b"
+    },
+    {
+      "start": "0x60e269f0",
+      "end_exclusive": "0x60e269f5"
+    },
+    {
+      "start": "0x60ea0070",
+      "end_exclusive": "0x60ea0075"
+    },
+    {
+      "start": "0x60ea00f7",
+      "end_exclusive": "0x60ea00fc"
+    },
+    {
+      "start": "0x60ea0d70",
+      "end_exclusive": "0x60ea0d75"
+    },
+    {
+      "start": "0x60ea0deb",
+      "end_exclusive": "0x60ea0df0"
+    },
+    {
+      "start": "0x60ea0e66",
+      "end_exclusive": "0x60ea0e6b"
+    },
+    {
+      "start": "0x60faadc4",
+      "end_exclusive": "0x60faadc8"
+    },
+    {
+      "start": "0x61032f10",
+      "end_exclusive": "0x61032f14"
+    },
+    {
+      "start": "0x61032fa8",
+      "end_exclusive": "0x61032fac"
+    },
+    {
+      "start": "0x610330c0",
+      "end_exclusive": "0x610330c4"
+    },
+    {
+      "start": "0x6114f334",
+      "end_exclusive": "0x6114f338"
+    },
+    {
+      "start": "0x6118957c",
+      "end_exclusive": "0x61189580"
+    },
+    {
+      "start": "0x611895a4",
+      "end_exclusive": "0x611895a8"
+    },
+    {
+      "start": "0x61189ba8",
+      "end_exclusive": "0x61189bac"
+    },
+    {
+      "start": "0x61189bac",
+      "end_exclusive": "0x61189bb0"
+    },
+    {
+      "start": "0x611a3b50",
+      "end_exclusive": "0x611a3b54"
+    },
+    {
+      "start": "0x611a3bc4",
+      "end_exclusive": "0x611a3bc8"
+    }
+  ],
+  "excluded_bytes": 55535,
+  "private_uncached_state_mapped": false,
+  "selection": [
+    {
+      "name": "E1421100BIN",
+      "attributes": 32,
+      "selected_suffix": "0x1100",
+      "cluster": 10,
+      "bytes": 100,
+      "execution": {
+        "status": "returned",
+        "completed": 200,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      }
+    },
+    {
+      "name": "E1429999BIN",
+      "attributes": 32,
+      "selected_suffix": "0x9999",
+      "cluster": 11,
+      "bytes": 111017984,
+      "execution": {
+        "status": "returned",
+        "completed": 200,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      }
+    },
+    {
+      "name": "E1421200BIN",
+      "attributes": 32,
+      "selected_suffix": "0x9999",
+      "cluster": 11,
+      "bytes": 111017984,
+      "execution": {
+        "status": "returned",
+        "completed": 133,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      }
+    },
+    {
+      "name": "E142FFFFBIN",
+      "attributes": 16,
+      "selected_suffix": "0x9999",
+      "cluster": 11,
+      "bytes": 111017984,
+      "execution": {
+        "status": "returned",
+        "completed": 18,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      }
+    },
+    {
+      "name": "E1429999BIN",
+      "attributes": 32,
+      "selected_suffix": "0x9999",
+      "cluster": 11,
+      "bytes": 111017984,
+      "execution": {
+        "status": "returned",
+        "completed": 133,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      }
+    }
+  ],
+  "searches": [
+    {
+      "pattern": "S142????BIN",
+      "folder": "DCOLYMP    ",
+      "buffer": "0xa43a3ec0"
+    },
+    {
+      "pattern": "N142????BIN",
+      "folder": "DCOLYMP    ",
+      "buffer": "0xa43a3ec0"
+    },
+    {
+      "pattern": "A142????BIN",
+      "folder": "DCOLYMP    ",
+      "buffer": "0xa43a3ec0"
+    },
+    {
+      "pattern": "M142????BIN",
+      "folder": "DCOLYMP    ",
+      "buffer": "0xa43a3ec0"
+    },
+    {
+      "pattern": "V142????BIN",
+      "folder": "DCOLYMP    ",
+      "buffer": "0xa43a3ec0"
+    },
+    {
+      "pattern": "T142????BIN",
+      "folder": "DCOLYMP    ",
+      "buffer": "0xa43a3ec0"
+    },
+    {
+      "pattern": "DATE????BIN",
+      "folder": "DCOLYMP    ",
+      "buffer": "0xa43a3ec0"
+    },
+    {
+      "pattern": "I142????BIN",
+      "folder": "DCOLYMP    ",
+      "buffer": "0xa43a3ec0"
+    },
+    {
+      "pattern": "F???????BIN",
+      "folder": "DCOLYMP    ",
+      "buffer": "0xa43a3ec0"
+    },
+    {
+      "pattern": "K142????BIN",
+      "folder": "DCOLYMP    ",
+      "buffer": "0xa43a3ec0"
+    },
+    {
+      "pattern": "E142????BIN",
+      "folder": "DCOLYMP    ",
+      "buffer": "0xa43a3ec0"
+    }
+  ],
+  "sent": [
+    {
+      "queue": 119,
+      "message": "c03e3aa400009e0600cccccc230000000100cccc9c070119ccccccccc8070119"
+    }
+  ],
+  "notifications": [
+    {
+      "entry": "0x601e739f",
+      "d0": 1,
+      "d1": 0
+    },
+    {
+      "entry": "0x601e7094",
+      "d0": 3,
+      "d1": 2
+    }
+  ],
+  "client_execution": [
+    {
+      "status": "breakpoint",
+      "completed": 4,
+      "fault": null,
+      "final_pc": "0x60022319",
+      "final_sp": "0x19010744"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 9,
+      "fault": null,
+      "final_pc": "0x60c974c0",
+      "final_sp": "0x19010744"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 6,
+      "fault": null,
+      "final_pc": "0x60c95e4a",
+      "final_sp": "0x190106c0"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 8,
+      "fault": null,
+      "final_pc": "0x60c95e0a",
+      "final_sp": "0x190106e0"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 7,
+      "fault": null,
+      "final_pc": "0x6002247c",
+      "final_sp": "0x1901072c"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 48,
+      "fault": null,
+      "final_pc": "0x60c95e7a",
+      "final_sp": "0x19010688"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 18,
+      "fault": null,
+      "final_pc": "0x6002266d",
+      "final_sp": "0x19010730"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 50,
+      "fault": null,
+      "final_pc": "0x60c95e7a",
+      "final_sp": "0x19010688"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 18,
+      "fault": null,
+      "final_pc": "0x6002266d",
+      "final_sp": "0x19010730"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 50,
+      "fault": null,
+      "final_pc": "0x60c95e7a",
+      "final_sp": "0x19010688"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 18,
+      "fault": null,
+      "final_pc": "0x6002266d",
+      "final_sp": "0x19010730"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 50,
+      "fault": null,
+      "final_pc": "0x60c95e7a",
+      "final_sp": "0x19010688"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 18,
+      "fault": null,
+      "final_pc": "0x6002266d",
+      "final_sp": "0x19010730"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 50,
+      "fault": null,
+      "final_pc": "0x60c95e7a",
+      "final_sp": "0x19010688"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 18,
+      "fault": null,
+      "final_pc": "0x6002266d",
+      "final_sp": "0x19010730"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 50,
+      "fault": null,
+      "final_pc": "0x60c95e7a",
+      "final_sp": "0x19010688"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 18,
+      "fault": null,
+      "final_pc": "0x6002266d",
+      "final_sp": "0x19010730"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 50,
+      "fault": null,
+      "final_pc": "0x60c95e7a",
+      "final_sp": "0x19010688"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 18,
+      "fault": null,
+      "final_pc": "0x6002266d",
+      "final_sp": "0x19010730"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 50,
+      "fault": null,
+      "final_pc": "0x60c95e7a",
+      "final_sp": "0x19010688"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 18,
+      "fault": null,
+      "final_pc": "0x6002266d",
+      "final_sp": "0x19010730"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 50,
+      "fault": null,
+      "final_pc": "0x60c95e7a",
+      "final_sp": "0x19010688"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 18,
+      "fault": null,
+      "final_pc": "0x6002266d",
+      "final_sp": "0x19010730"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 50,
+      "fault": null,
+      "final_pc": "0x60c95e7a",
+      "final_sp": "0x19010688"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 18,
+      "fault": null,
+      "final_pc": "0x6002266d",
+      "final_sp": "0x19010730"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 50,
+      "fault": null,
+      "final_pc": "0x60c95e7a",
+      "final_sp": "0x19010688"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 18,
+      "fault": null,
+      "final_pc": "0x6002266d",
+      "final_sp": "0x19010730"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 6,
+      "fault": null,
+      "final_pc": "0x6002247c",
+      "final_sp": "0x1901072c"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 4,
+      "fault": null,
+      "final_pc": "0x6002266d",
+      "final_sp": "0x19010730"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 24,
+      "fault": null,
+      "final_pc": "0x601e739f",
+      "final_sp": "0x19010744"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 10,
+      "fault": null,
+      "final_pc": "0x600514b6",
+      "final_sp": "0x19010718"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 11,
+      "fault": null,
+      "final_pc": "0x600513e6",
+      "final_sp": "0x1901071c"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 13,
+      "fault": null,
+      "final_pc": "0x60022319",
+      "final_sp": "0x19010744"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 5,
+      "fault": null,
+      "final_pc": "0x6002266d",
+      "final_sp": "0x19010730"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 4,
+      "fault": null,
+      "final_pc": "0x601e7094",
+      "final_sp": "0x19010700"
+    },
+    {
+      "status": "returned",
+      "completed": 2,
+      "fault": null,
+      "final_pc": "0x60c95da1",
+      "final_sp": "0x19010748"
+    }
+  ],
+  "worker_execution": [
+    {
+      "status": "breakpoint",
+      "completed": 33,
+      "fault": null,
+      "final_pc": "0x600513e6",
+      "final_sp": "0x1901074c"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 5,
+      "fault": null,
+      "final_pc": "0x6002247c",
+      "final_sp": "0x1901075c"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 7,
+      "fault": null,
+      "final_pc": "0x6006757a",
+      "final_sp": "0x19010758"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 6,
+      "fault": null,
+      "final_pc": "0x6015bafd",
+      "final_sp": "0x19010778"
+    },
+    {
+      "status": "breakpoint",
+      "completed": 24,
+      "fault": null,
+      "final_pc": "0x6002247c",
+      "final_sp": "0x1901075c"
+    },
+    {
+      "status": "returned",
+      "completed": 6,
+      "fault": null,
+      "final_pc": "0x60c964c1",
+      "final_sp": "0x19010768"
+    }
+  ],
+  "shared_updater": {
+    "entry": "0x60c964c1",
+    "buffer": "0xa43a3ec0",
+    "bytes": 111017984,
+    "mode": 0
+  },
+  "native_instructions": 1624,
+  "hash_checks_performed": false,
+  "physical_sd_executed": false,
+  "physical_boot_trigger_verified": false,
+  "installable": false,
+  "limits": [
+    "Directory entries and FAT32 object shape are explicit inputs, after filesystem pattern matching; raw card and wildcard matching are not emulated.",
+    "Timer, watchdog, SD preparation, filesystem search/read, queue delivery, device preparation and notifications are modeled boundaries. Native pattern iteration, packet construction, callback ranking and receiver dispatch execute.",
+    "Message padding is copied verbatim. No original packet field is silently initialized by the probe.",
+    "Task registration does not prove which physical power/button condition starts the SD client.",
+    "When exclusions are enabled, only this post-entry task/dispatch path avoids modified spans. Queue, filesystem and device boundary models do not prove their own independence.",
+    "Suffix 9999 is a filename selection priority; it does not change component build/version metadata.",
+    "Shared updater acceptance is separate prior evidence; no native flash, independent recovery, whole camera boot or H/L hardware behavior is proved."
+  ]
+}
