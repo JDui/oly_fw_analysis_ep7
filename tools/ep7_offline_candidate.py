@@ -117,16 +117,17 @@ def linker_script(groups, native):
     result += ['  .ep7_empty_readonly : { *(.text .text.* .rodata .rodata.*) } > CODE0',
                '  .data : { *(.data .data.*) } > PRIVATE',
                f'  {PRIVATE_SECTION} (TYPE = SHT_PROGBITS) : AT ({RAM_IMAGE_START:#x}) {{',
+               # Typed input BSS must follow an explicit data word; placing the
+               # word after BSS still triggers GNU's fatal type-change warning.
+               '    LONG(0);',
                '    __ep7_bss_start = .;',
                '    *(.bss .bss.* COMMON)', '    . = ALIGN(4);', '    __ep7_bss_end = .;',
-               # BYTE forces a loadable section; the full reserved span is zero
-               # in the decoded image and copied by the unchanged stock loader.
-               '    BYTE(0);', '    . = ORIGIN(PRIVATE) + LENGTH(PRIVATE);',
+               '    . = ORIGIN(PRIVATE) + LENGTH(PRIVATE);',
                '  } > PRIVATE', '  /DISCARD/ : { *(.comment .note.GNU-stack) }', '}',
                'ASSERT(SIZEOF(.ep7_empty_readonly) == 0, "unassigned readonly input bytes")',
                'ASSERT(SIZEOF(.data) == 0, "initialized writable data has no startup copy")',
-               'ASSERT(__ep7_bss_start == ORIGIN(PRIVATE), "BSS origin drift")',
-               'ASSERT(__ep7_bss_end < __ep7_private_uncached_end, "private RAM overflow")']
+               'ASSERT(__ep7_bss_start == ORIGIN(PRIVATE)+4, "BSS origin drift")',
+               'ASSERT(__ep7_bss_end <= __ep7_private_uncached_end, "private RAM overflow")']
     return '\n'.join(result)+'\n'
 
 
@@ -320,10 +321,11 @@ def build(decoded, prefix, out, report, reuse=None):
     private_data = binary.read_bytes()
     if private_data != bytes(RAM_BYTES):
         raise ValueError('private state initial bytes must all be zero')
-    bss_bytes = syms['__ep7_bss_end']['address']-RAM_START
+    used_bytes = syms['__ep7_bss_end']['address']-RAM_START
+    bss_bytes = syms['__ep7_bss_end']['address']-syms['__ep7_bss_start']['address']
     memory.append(dict(section=PRIVATE_SECTION,start=hex(RAM_START),end=hex(RAM_START+RAM_BYTES),
         load_address=hex(RAM_IMAGE_START),bytes=RAM_BYTES,bss_bytes=bss_bytes,
-        capacity=RAM_BYTES,remaining=RAM_BYTES-bss_bytes,noload=False,ownership_proven=False))
+        capacity=RAM_BYTES,initial_word_bytes=4,remaining=RAM_BYTES-used_bytes,noload=False,ownership_proven=False))
 
     def read(address,length):
         for start,data in blocks:
