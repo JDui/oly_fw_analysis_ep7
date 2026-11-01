@@ -1,0 +1,923 @@
+{
+  "scope": "Continue native geometry from the explicitly pre-publication array state.\n\nThe five arrays have a conditional original BSS source. Their active writer,\ncallback transport and shot inputs are not replaced with synthetic geometry.\n",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu",
+  "cases": [
+    {
+      "gpio80_input_bit4": 0,
+      "cases": [
+        {
+          "symbol": "native_geometry_with_prepublication_arrays",
+          "status": "memory_fault",
+          "completed": 305,
+          "fault": {
+            "kind": 1,
+            "pc": 1611049250,
+            "map": 0,
+            "address": 2414872316,
+            "size": 4,
+            "access": "read"
+          },
+          "final_pc": "0x6006a922",
+          "final_sp": "0x19010458",
+          "stack_depth_from_call_sp": 856,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "d0_at_stop": 5,
+          "stop_registers": {
+            "d0": "0x5",
+            "d1": "0x19010488",
+            "d2": "0x22334455",
+            "d3": "0x1901079c",
+            "a0": "0x19010484",
+            "a1": "0x19010488",
+            "a2": "0x19010484",
+            "a3": "0x190104cc",
+            "sp": "0x19010458",
+            "pc": "0x6006a922",
+            "mdr": "0x6041c6d2",
+            "psw": "0x801",
+            "lir": "0xa5f15161",
+            "lar": "0x47001180",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        }
+      ],
+      "conditional_prepublication_BSS_bytes": 72,
+      "arrays": [
+        {
+          "source": "0x622a06b4",
+          "destination": "0x190105b0",
+          "bytes": 16,
+          "elements": 8
+        },
+        {
+          "source": "0x622a06c4",
+          "destination": "0x190105c0",
+          "bytes": 16,
+          "elements": 8
+        },
+        {
+          "source": "0x622a06d4",
+          "destination": "0x190105d0",
+          "bytes": 16,
+          "elements": 8
+        },
+        {
+          "source": "0x622a06e4",
+          "destination": "0x190105e0",
+          "bytes": 16,
+          "elements": 8
+        },
+        {
+          "source": "0x622a06f4",
+          "destination": "0x190105f4",
+          "bytes": 8,
+          "elements": 8
+        }
+      ],
+      "native_array_copies": {
+        "0x60427ece": [
+          {
+            "d0": 0,
+            "d1": 0,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 2,
+            "d1": 1,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 4,
+            "d1": 2,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 6,
+            "d1": 3,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 8,
+            "d1": 4,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 10,
+            "d1": 5,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 12,
+            "d1": 6,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 14,
+            "d1": 7,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          }
+        ],
+        "0x60427ed8": [
+          {
+            "d0": 0,
+            "d1": 0,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 2,
+            "d1": 1,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 4,
+            "d1": 2,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 6,
+            "d1": 3,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 8,
+            "d1": 4,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 10,
+            "d1": 5,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 12,
+            "d1": 6,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 14,
+            "d1": 7,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          }
+        ],
+        "0x60427ede": [
+          {
+            "d0": 0,
+            "d1": 0,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 0,
+            "d1": 1,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 0,
+            "d1": 2,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 0,
+            "d1": 3,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 0,
+            "d1": 4,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 0,
+            "d1": 5,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 0,
+            "d1": 6,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 0,
+            "d1": 7,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          }
+        ],
+        "0x60427f01": [
+          {
+            "d0": 0,
+            "d1": 0,
+            "d2": 0,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 2,
+            "d1": 0,
+            "d2": 1,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 4,
+            "d1": 0,
+            "d2": 2,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 6,
+            "d1": 0,
+            "d2": 3,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 8,
+            "d1": 0,
+            "d2": 4,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 10,
+            "d1": 0,
+            "d2": 5,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 12,
+            "d1": 0,
+            "d2": 6,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 14,
+            "d1": 0,
+            "d2": 7,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          }
+        ],
+        "0x60427f06": [
+          {
+            "d0": 0,
+            "d1": 0,
+            "d2": 1,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 2,
+            "d1": 0,
+            "d2": 2,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 4,
+            "d1": 0,
+            "d2": 3,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 6,
+            "d1": 0,
+            "d2": 4,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 8,
+            "d1": 0,
+            "d2": 5,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 10,
+            "d1": 0,
+            "d2": 6,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 12,
+            "d1": 0,
+            "d2": 7,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 14,
+            "d1": 0,
+            "d2": 8,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          }
+        ]
+      },
+      "native_arrays_copied_byte_exact": true,
+      "geometry_dynamic_setter_entries": [],
+      "frontier": {
+        "status": "memory_fault",
+        "fault": {
+          "kind": 1,
+          "pc": 1611049250,
+          "map": 0,
+          "address": 2414872316,
+          "size": 4,
+          "access": "read"
+        },
+        "pc": "0x6006a922",
+        "native_return_pc": "0x6041c6d2"
+      },
+      "geometry_configuration_completed": false,
+      "capture_unchanged": true,
+      "population_resumed": false
+    },
+    {
+      "gpio80_input_bit4": 1,
+      "cases": [
+        {
+          "symbol": "native_geometry_with_prepublication_arrays",
+          "status": "memory_fault",
+          "completed": 305,
+          "fault": {
+            "kind": 1,
+            "pc": 1611049250,
+            "map": 0,
+            "address": 2414872316,
+            "size": 4,
+            "access": "read"
+          },
+          "final_pc": "0x6006a922",
+          "final_sp": "0x19010458",
+          "stack_depth_from_call_sp": 856,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "d0_at_stop": 5,
+          "stop_registers": {
+            "d0": "0x5",
+            "d1": "0x19010488",
+            "d2": "0x22334455",
+            "d3": "0x1901079c",
+            "a0": "0x19010484",
+            "a1": "0x19010488",
+            "a2": "0x19010484",
+            "a3": "0x190104cc",
+            "sp": "0x19010458",
+            "pc": "0x6006a922",
+            "mdr": "0x6041c6d2",
+            "psw": "0x801",
+            "lir": "0xa5f15161",
+            "lar": "0x47001180",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        }
+      ],
+      "conditional_prepublication_BSS_bytes": 72,
+      "arrays": [
+        {
+          "source": "0x622a06b4",
+          "destination": "0x190105b0",
+          "bytes": 16,
+          "elements": 8
+        },
+        {
+          "source": "0x622a06c4",
+          "destination": "0x190105c0",
+          "bytes": 16,
+          "elements": 8
+        },
+        {
+          "source": "0x622a06d4",
+          "destination": "0x190105d0",
+          "bytes": 16,
+          "elements": 8
+        },
+        {
+          "source": "0x622a06e4",
+          "destination": "0x190105e0",
+          "bytes": 16,
+          "elements": 8
+        },
+        {
+          "source": "0x622a06f4",
+          "destination": "0x190105f4",
+          "bytes": 8,
+          "elements": 8
+        }
+      ],
+      "native_array_copies": {
+        "0x60427ece": [
+          {
+            "d0": 0,
+            "d1": 0,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 2,
+            "d1": 1,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 4,
+            "d1": 2,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 6,
+            "d1": 3,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 8,
+            "d1": 4,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 10,
+            "d1": 5,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 12,
+            "d1": 6,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 14,
+            "d1": 7,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          }
+        ],
+        "0x60427ed8": [
+          {
+            "d0": 0,
+            "d1": 0,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 2,
+            "d1": 1,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 4,
+            "d1": 2,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 6,
+            "d1": 3,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 8,
+            "d1": 4,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 10,
+            "d1": 5,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 12,
+            "d1": 6,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 14,
+            "d1": 7,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          }
+        ],
+        "0x60427ede": [
+          {
+            "d0": 0,
+            "d1": 0,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 0,
+            "d1": 1,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 0,
+            "d1": 2,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 0,
+            "d1": 3,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 0,
+            "d1": 4,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 0,
+            "d1": 5,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 0,
+            "d1": 6,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          },
+          {
+            "d0": 0,
+            "d1": 7,
+            "d2": 0,
+            "a0": "0x190105f4",
+            "a1": "0x190105c0",
+            "a2": "0x190105b0"
+          }
+        ],
+        "0x60427f01": [
+          {
+            "d0": 0,
+            "d1": 0,
+            "d2": 0,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 2,
+            "d1": 0,
+            "d2": 1,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 4,
+            "d1": 0,
+            "d2": 2,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 6,
+            "d1": 0,
+            "d2": 3,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 8,
+            "d1": 0,
+            "d2": 4,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 10,
+            "d1": 0,
+            "d2": 5,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 12,
+            "d1": 0,
+            "d2": 6,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 14,
+            "d1": 0,
+            "d2": 7,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          }
+        ],
+        "0x60427f06": [
+          {
+            "d0": 0,
+            "d1": 0,
+            "d2": 1,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 2,
+            "d1": 0,
+            "d2": 2,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 4,
+            "d1": 0,
+            "d2": 3,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 6,
+            "d1": 0,
+            "d2": 4,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 8,
+            "d1": 0,
+            "d2": 5,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 10,
+            "d1": 0,
+            "d2": 6,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 12,
+            "d1": 0,
+            "d2": 7,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          },
+          {
+            "d0": 14,
+            "d1": 0,
+            "d2": 8,
+            "a0": "0x190105e0",
+            "a1": "0x190105d0",
+            "a2": "0x622a06e4"
+          }
+        ]
+      },
+      "native_arrays_copied_byte_exact": true,
+      "geometry_dynamic_setter_entries": [],
+      "frontier": {
+        "status": "memory_fault",
+        "fault": {
+          "kind": 1,
+          "pc": 1611049250,
+          "map": 0,
+          "address": 2414872316,
+          "size": 4,
+          "access": "read"
+        },
+        "pc": "0x6006a922",
+        "native_return_pc": "0x6041c6d2"
+      },
+      "geometry_configuration_completed": false,
+      "capture_unchanged": true,
+      "population_resumed": false
+    }
+  ],
+  "native_instructions": 610,
+  "maximum_observed_new_stack_depth": 856,
+  "hash_checks_performed": false,
+  "native_api_success_stubs": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "The72-byte arrays assume successful original BSS clearing and no prior publication. Zero is not an active shot geometry claim.",
+    "60425ba3 copies these arrays only when property9121 equals1. Its480-byte source record and callback lifetime remain unexecuted.",
+    "Population, capture allocation, real task ordering and worker execution remain incomplete."
+  ]
+}
