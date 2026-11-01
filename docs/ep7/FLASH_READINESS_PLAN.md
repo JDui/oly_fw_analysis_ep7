@@ -72,6 +72,12 @@ patch及落盘回读通过。它仍标记不可安装；局部/完整原厂更�
 
 ## 当前进度
 
+基础H/L的[GUI编辑与共享冻结](CANDIDATE_UI_EDITOR_SIM.md)已接通：443,699条GUI链
+指令、46次原生poll/signal133，实际拨轮输入将H[0]=3、H[2]=−2、L[2]=−4写入同一
+runtime，capture API冻结25B一致。重复事件拒绝，退出撤销并回收，late refresh
+在graph撤去后无访问。MVC初始NULL内容、engine投递和显示输出为显式边界，未取得
+完整原生COLOR进入、LCD或照片资格；观察栈820B非全GUI上界。继续worker及驻留。
+
 基础H/L的[原生文字控件与owner撤销](CANDIDATE_UI_OWNER_SIM.md)通过16,637条指令：
 原factory/attach/find/bind/setter、两类文字、OOM停用和cleanup/bulk/destructor
 实际执行。引用先撤销再free，释放payload撤去后无再次访问，零模型分配残留。

@@ -8,7 +8,15 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[原生文字控件与owner撤销](CANDIDATE_UI_OWNER_SIM.md)通过16,637条指令，观察
+最新：[GUI编辑与共享冻结](CANDIDATE_UI_EDITOR_SIM.md)通过443,699条GUI链指令。
+完整原预处理/最终veneer、实际container CALLS/parent桥及原viewer缓存接通；H第1区
++3、H第3区−2、L第3区−4进入同一core，原生poll/signal133共46次，capture API
+冻结25B逐项一致。同dispatch重投拒绝，退出后session/receipt撤销，内容/文字回收，
+撤去graph映射后late refresh无访问。观察栈820B含模型256B投递帧。MVC图初始
+category2/contentNULL，stock创建/销毁、engine本体及显示输出仍为明确边界；不算
+完整COLOR界面或照片通过。候选/fishcu包未变，接下来收敛worker和驻留的剩余风险。
+
+此前：[原生文字控件与owner撤销](CANDIDATE_UI_OWNER_SIM.md)通过16,637条指令，观察
 最大新栈408B。实际factory/constructor/attach/find/bind/setter建立180B文字child，
 两种H/L文字更新与上下文恢复正确；OOM关闭display资格且不重试。cleanup、bulk与
 cleanup后destructor完整返回，候选引用在原生free前撤销，释放payload即时unmap，

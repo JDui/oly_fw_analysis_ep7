@@ -20,7 +20,7 @@ from ep7_sim_probe import brief
 from penf_emulator import Region
 
 
-def inspect(directory, prefix, engine):
+def inspect(directory, prefix, engine, *, context_only=False):
     initialization = []
     static = {}
     dynamic = 0
@@ -95,6 +95,12 @@ def inspect(directory, prefix, engine):
     require(RAM_START<=core<boot<runtime<RAM_START+RAM_BYTES and
             u32(success,core)==provider and success.read(provider+16,2)==struct.pack('<H',133),
             'runtime/provider did not retain actual allocated ID133')
+    if context_only:
+        # Reuse the real static recipe/create/publication in downstream probes,
+        # without repeating this tool's already-covered edit/rollback cases.
+        return success,syms,build,dict(initialization=initialization,
+            native_create=summary(created),published=summary(published),
+            runtime=runtime,core=core,provider=provider,private_id=133,private_object=dynamic)
     settings = bytes([5]*12+[0xfd]*12)
     guarded(success,'settings',INPUT,settings)
     guarded(success,'snapshot',SNAPSHOT,b'\xcc'*25)

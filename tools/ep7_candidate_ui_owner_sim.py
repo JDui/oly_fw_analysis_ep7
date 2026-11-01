@@ -23,6 +23,7 @@ SERVICE, OWNER = 0x19200000,0x19210000
 ALLOC_BASE, TEXT = 0x19300000,0x19220000
 GENERATION = 0x19220100
 MANAGER, NEW, ALLOC, FREE, REDRAW = 0x60d37b53,0x60cfe5a0,0x60d109d1,0x60d109db,0x60d04feb
+SCALAR_NEW, SCALAR_DELETE = 0x60a4ec03,0x60a4ec17
 GUI_LOCKS = {0x60d14c70,0x60d14c94,0x60d14cb1,0x60d14cd9}
 NATIVE_ENTRIES = dict(factory=0x60d337b2,attach=0x60d02beb,find=0x60d02cc2,
     bind=0x60d0487a,set_text=0x60d4c9df,cleanup=0x60d43d4b,
@@ -37,6 +38,7 @@ class OwnerMachine(UiMachine):
         self.events=[]
         self.fail_allocation=False
         self.gui_locks=set()
+        self.boundaries={}
 
     def clone(self):
         other=copy.copy(self)
@@ -45,26 +47,35 @@ class OwnerMachine(UiMachine):
         other.allocations=copy.deepcopy(self.allocations)
         other.events=copy.deepcopy(self.events)
         other.gui_locks=set(self.gui_locks)
+        other.boundaries=dict(self.boundaries)
         return other
 
-    def call_native(self,target,mask=0,frame=0,values=None):
-        self.regions['caller']=Region('caller',CALLER,
-            b'\xdd'+struct.pack('<i',target-CALLER)+bytes([mask,frame]),'rx')
-        self.regs=dict(self.initial,pc=CALLER,sp=CALL_SP,**(values or {}))
+    def call_native(self,target,mask=0,frame=0,values=None,*,entry=None,stop=None):
+        if entry is None:
+            self.regions['caller']=Region('caller',CALLER,
+                b'\xdd'+struct.pack('<i',target-CALLER)+bytes([mask,frame]),'rx')
+            entry,stop=CALLER,CALLER+7
+        require(stop is not None,'native call needs its exact return point')
+        self.regs=dict(self.initial,pc=entry,sp=CALL_SP)
+        self.regs.update(values or {})
         original=dict(self.regs)
-        hooks={MANAGER,NEW,ALLOC,FREE,REDRAW,self.syms['_ep7_gcc_quarantine']}|GUI_LOCKS
+        hooks={MANAGER,NEW,ALLOC,FREE,REDRAW,SCALAR_NEW,SCALAR_DELETE,
+               self.syms['_ep7_gcc_quarantine']}|GUI_LOCKS|set(self.boundaries)
         pieces=[]
         first_event=len(self.events)
         retiring=target in [self.syms['ep7_native_ui_owner_'+n+'_bridge']
                            for n in ('cleanup','bulk','destructor')]
         for _ in range(100):
-            result=self.advance(CALLER+7,hooks)
+            result=self.advance(stop,hooks)
             pieces.append(result)
             if result['status']=='returned':
                 break
             pc=self.regs['pc']
             require(pc!=self.syms['_ep7_gcc_quarantine'],
                     'owner quarantined '+hex(self.regs['d0']))
+            if pc in self.boundaries:
+                self.boundaries[pc](self)
+                continue
             if pc==MANAGER:
                 require(self.regs['a0']==SERVICE and self.regs['d0']==278,
                         'unexpected screen-manager contract')
@@ -74,8 +85,8 @@ class OwnerMachine(UiMachine):
                 self.events.append(dict(kind='screen_completion_model',owner=hex(OWNER),
                                         return_registers=original_return))
                 BootState.return_from_model(self,1)
-            elif pc in (NEW,ALLOC):
-                size=self.regs['d0'] if pc==NEW else self.regs['a0']
+            elif pc in (NEW,ALLOC,SCALAR_NEW):
+                size=self.regs['d0'] if pc in (NEW,SCALAR_NEW) else self.regs['a0']
                 require(0<size<=1024,'unexpected UI allocation size '+str(size))
                 address=0 if self.fail_allocation else self.next_allocation
                 if address:
@@ -87,7 +98,7 @@ class OwnerMachine(UiMachine):
                                         address=hex(address),context=self.read(SERVICE+28,2).hex()))
                 self.regs['a0']=address
                 BootState.return_from_model(self,0)
-            elif pc==FREE:
+            elif pc in (FREE,SCALAR_DELETE):
                 if retiring:
                     require(self.word(self.syms['_ep7_native_ui_owner']+28)==0 and
                             self.read(self.syms['_ep7_native_ui_owner']+40,44)==bytes(44),
@@ -113,7 +124,7 @@ class OwnerMachine(UiMachine):
                     self.gui_locks.remove(lock)
                 self.events.append(dict(kind='single_gui_lock_model',entry=hex(pc)))
                 BootState.return_from_model(self,1)
-        require(self.regs['pc']==CALLER+7 and self.regs['sp']==CALL_SP and
+        require(self.regs['pc']==stop and self.regs['sp']==original['sp'] and
                 all(self.regs[k]==original[k] for k in ('d2','d3','a2','a3')),
                 'owner native call failed return ABI')
         require(not self.gui_locks,'modeled GUI lock retained after return')
@@ -122,9 +133,20 @@ class OwnerMachine(UiMachine):
                 require(all(self.regs[k]==v for k,v in event['return_registers'].items()),
                         'screen bridge changed original completion return registers')
         require(all(len(r['trace'])==r['completed'] for r in pieces),'owner trace truncated')
+        lock_calls=[]
+        for r in pieces:
+            for i,t in enumerate(r['trace']):
+                if t['pc'] not in (0x600370af,0x60035b62):
+                    continue
+                after=next((s for s in r['trace'][i+1:] if s['pc']==t['mdr']),None)
+                require(after is not None,'native private lock return absent from trace')
+                lock_calls.append(dict(api='poll' if t['pc']==0x600370af else 'signal',
+                                       handle=t['d0'],status=after['d0']))
+        lowest=min(t['sp'] for r in pieces for t in r['trace'])
         return dict(entry=hex(target),execution=[brief(r) for r in pieces],
                     instructions=sum(r['completed'] for r in pieces),
-                    stack_below_call_sp=CALL_SP-min(t['sp'] for r in pieces for t in r['trace']),
+                    entry_sp=hex(original['sp']),minimum_sp=hex(lowest),
+                    stack_below_call_sp=original['sp']-lowest,native_private_lock_calls=lock_calls,
                     d0=hex(self.regs['d0']),a0=hex(self.regs['a0']),events=self.events[first_event:],
                     native_entries={n:sum(t['pc']==a for r in pieces for t in r['trace'])
                                     for n,a in NATIVE_ENTRIES.items()})
@@ -135,12 +157,18 @@ class OwnerMachine(UiMachine):
         return self.call_native(self.syms[name],values={r:v&0xffffffff for r,v in zip(('d0','d1'),args)})
 
 
-def owner_context(directory,prefix,engine):
-    code,syms,build=candidate_inputs(directory,prefix)
-    m=OwnerMachine(code,engine)
+def owner_context(directory,prefix,engine,*,runtime_context=None):
+    if runtime_context is None:
+        code,syms,build=candidate_inputs(directory,prefix)
+        m=OwnerMachine(code,engine)
+        cleared=m.run(CLEAR_SITE,CLEAR_RESUME)
+        require(cleared['status']=='returned','candidate cold clear failed')
+    else:
+        base,syms,build=runtime_context
+        m=object.__new__(OwnerMachine)
+        m.engine,m.regions,m.initial=base.engine,dict(base.regions),dict(base.initial)
+        code=m.regions['candidate'].data
     m.configure(syms)
-    cleared=m.run(CLEAR_SITE,CLEAR_RESUME)
-    require(cleared['status']=='returned','candidate cold clear failed')
     m.mutate('tcb',16,struct.pack('<H',254))
     m.mutate('tcb',76,struct.pack('<I',0x60dd5067))
     m.mutate('tcb',84,struct.pack('<II',16384,STACK))
