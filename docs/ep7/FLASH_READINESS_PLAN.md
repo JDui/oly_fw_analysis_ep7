@@ -294,3 +294,10 @@ source copy与job消费/释放；S3/S4、驻留与恢复资格未因此通过。
 空队列再调用返回NULL。新增2515指令，最大新栈深208B；379B原store容量、24B冷BSS
 和1B单竞争者锁输入。token2/H/L5/-3不变。generic engine workrecord调度、活动帧
 坐标和新请求来源未关闭；下一步原event4b投递/接收与selected handler/backlink。
+
+[新节点原生event4b邮箱](CANDIDATE_SELECTED_MAILBOX_SIM.md)已接通：原冷heap、静态mailbox、
+固定消息池1和flag74的实际初始化后，完整通知回调发送实际新node，再由原接收入口
+取出并归还消息块。新增2548指令、最大新栈160B；296B原store和12B输出容量，空读
+返回-1，池余量恢复16。封存值不变。仍未执行notification clear/wait、真实任务切换、
+generic completion dispatcher或selected handler，冷heap场景不证明生产启动。
+下一步原selected handler/backlink、源复制及异步消费/释放；安装准入保持未通过。

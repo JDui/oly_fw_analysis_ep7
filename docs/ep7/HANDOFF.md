@@ -7,7 +7,15 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[原生node队列领取](CANDIDATE_NODE_SELECTION_SIM.md)完成2515条新指令，最大新栈
+最新：[新节点原生event4b邮箱](CANDIDATE_SELECTED_MAILBOX_SIM.md)完成2548条新指令，最大
+新栈深160B。原冷kernel heap、mailbox1、fixed pool1和flag74配方实际初始化后，完整
+602a3042发送新node61b21fc0，完整6020c101取回并归还块；余量16→15→16，空读返回-1。
+296B原store和12B输出容量，padding按不透明栈残留检查。封存token2/H/L及capture不变。
+通知flag仍1，未执行clear/wait、generic completion dispatcher或真实task handover。
+下一步完整selected handler及backlink发布；首次探针停60555155读6223ceac，未补值。
+候选004/fishcu包不变、不可安装；无SHA、固件重编译或相机操作。
+
+此前：[原生node队列领取](CANDIDATE_NODE_SELECTION_SIM.md)完成2515条新指令，最大新栈
 深208B。原168B engine参数、pool5900/3400与format reset接通，完整602a2d43领取
 真实新node61b21fc0，原生handles5901/3401、1280x960、格式18、序号1，FIFO计数归0。
 第二次调用返回NULL，无重复分配/pop。379B原store容量、24B明确冷BSS（特殊坐标与
