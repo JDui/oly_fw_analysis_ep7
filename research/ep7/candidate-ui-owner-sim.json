@@ -1,0 +1,762 @@
+{
+  "scope": "Run final E-P7 screen-owner hooks and original text membership/setter methods.\n\nScreen-manager completion, allocation and display notification are explicit\nboundaries. This is an offline GUI contract, not LCD or physical-camera proof.\n",
+  "status": "passed",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "total_instructions": 16637,
+  "maximum_observed_stack_below_call_sp": 408,
+  "calls": [
+    {
+      "entry": "0x60cfef4e",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 6,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 6,
+      "stack_below_call_sp": 0,
+      "d0": "0x0",
+      "a0": "0x19210060",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600cd2af",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 604,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010770"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2851,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010654"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 318,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010630"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 292,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010684"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 188,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010684"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 71,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010684"
+        },
+        {
+          "status": "returned",
+          "completed": 78,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 4402,
+      "stack_below_call_sp": 408,
+      "d0": "0x1",
+      "a0": "0x19200000",
+      "events": [
+        {
+          "kind": "screen_completion_model",
+          "owner": "0x19210000",
+          "return_registers": {
+            "d0": 1,
+            "d1": 1432778632,
+            "a0": 421527552,
+            "a1": 422576128
+          }
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60cfe5a0",
+          "bytes": 180,
+          "address": "0x19300000",
+          "context": "0600"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 16,
+          "address": "0x193000e0",
+          "context": "0600"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 12,
+          "address": "0x19300110",
+          "context": "0600"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 2,
+          "address": "0x19300140",
+          "context": "0600"
+        },
+        {
+          "kind": "redraw_notification_model",
+          "child": "0x19300000",
+          "mode": 1
+        }
+      ],
+      "native_entries": {
+        "factory": 1,
+        "attach": 1,
+        "find": 1,
+        "bind": 1,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600cdc51",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 974,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010768"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 63,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010768"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 176,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010768"
+        },
+        {
+          "status": "returned",
+          "completed": 590,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 1803,
+      "stack_below_call_sp": 208,
+      "d0": "0x1",
+      "a0": "0x19220100",
+      "events": [
+        {
+          "kind": "free_model",
+          "address": "0x19300140"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 16,
+          "address": "0x19300170",
+          "context": "0600"
+        },
+        {
+          "kind": "redraw_notification_model",
+          "child": "0x19300000",
+          "mode": 1
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 1,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      },
+      "label": "H 01 +3"
+    },
+    {
+      "entry": "0x600cdc51",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 981,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010768"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 69,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010768"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 129,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010768"
+        },
+        {
+          "status": "returned",
+          "completed": 590,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 1769,
+      "stack_below_call_sp": 208,
+      "d0": "0x1",
+      "a0": "0x19220100",
+      "events": [
+        {
+          "kind": "free_model",
+          "address": "0x19300170"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 18,
+          "address": "0x193001a0",
+          "context": "0600"
+        },
+        {
+          "kind": "redraw_notification_model",
+          "child": "0x19300000",
+          "mode": 1
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 1,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      },
+      "label": "L ALL -2"
+    },
+    {
+      "entry": "0x600cdc51",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 1673,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 1673,
+      "stack_below_call_sp": 208,
+      "d0": "0x1",
+      "a0": "0x19220100",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 1,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      },
+      "label": "L ALL -2"
+    },
+    {
+      "entry": "0x600cdc51",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 977,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010768"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 63,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010768"
+        },
+        {
+          "status": "returned",
+          "completed": 580,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 1620,
+      "stack_below_call_sp": 208,
+      "d0": "0x0",
+      "a0": "0xa1dd6bd0",
+      "events": [
+        {
+          "kind": "free_model",
+          "address": "0x193001a0"
+        },
+        {
+          "kind": "allocation_model",
+          "entry": "0x60d109d1",
+          "bytes": 16,
+          "address": "0x0",
+          "context": "0600"
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 1,
+        "bind": 0,
+        "set_text": 1,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      },
+      "scenario": "text allocation failure"
+    },
+    {
+      "entry": "0x600cdc51",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 616,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 616,
+      "stack_below_call_sp": 208,
+      "d0": "0x0",
+      "a0": "0x19200000",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      },
+      "scenario": "update after allocation failure"
+    },
+    {
+      "entry": "0x600cd2f6",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 1382,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106bc"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 8,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901069c"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 16,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106a0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 55,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106c0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 113,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106c4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 24,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106d4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 38,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106cc"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 44,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106c8"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 99,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010718"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 16,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901071c"
+        },
+        {
+          "status": "returned",
+          "completed": 6,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 1801,
+      "stack_below_call_sp": 320,
+      "d0": "0x1",
+      "a0": "0x19210000",
+      "events": [
+        {
+          "kind": "free_model",
+          "address": "0x193000e0"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14c70"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14c94"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14cb1"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14cd9"
+        },
+        {
+          "kind": "free_model",
+          "address": "0x193001a0"
+        },
+        {
+          "kind": "free_model",
+          "address": "0x19300000"
+        },
+        {
+          "kind": "free_model",
+          "address": "0x19300110"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14c70"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14c94"
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 1,
+        "bulk": 1,
+        "destructor": 0,
+        "child_bulk": 1
+      },
+      "scenario": "cleanup"
+    },
+    {
+      "entry": "0x600cdc51",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 623,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 623,
+      "stack_below_call_sp": 208,
+      "d0": "0x0",
+      "a0": "0x19200000",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      },
+      "scenario": "valid text update after cleanup"
+    },
+    {
+      "entry": "0x600cd34a",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 589,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 589,
+      "stack_below_call_sp": 224,
+      "d0": "0x0",
+      "a0": "0x60cfe5c9",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 1,
+        "child_bulk": 0
+      }
+    },
+    {
+      "entry": "0x600cd320",
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 810,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901071c"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 8,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190106fc"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 16,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010700"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 55,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010720"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 113,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010724"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 57,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901072c"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 44,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x19010728"
+        },
+        {
+          "status": "returned",
+          "completed": 16,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 1119,
+      "stack_below_call_sp": 224,
+      "d0": "0x0",
+      "a0": "0x19210060",
+      "events": [
+        {
+          "kind": "free_model",
+          "address": "0x193000e0"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14c70"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14c94"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14cb1"
+        },
+        {
+          "kind": "single_gui_lock_model",
+          "entry": "0x60d14cd9"
+        },
+        {
+          "kind": "free_model",
+          "address": "0x19300000"
+        },
+        {
+          "kind": "free_model",
+          "address": "0x19300110"
+        }
+      ],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 1,
+        "destructor": 0,
+        "child_bulk": 1
+      },
+      "scenario": "bulk"
+    },
+    {
+      "entry": "0x600cdc51",
+      "execution": [
+        {
+          "status": "returned",
+          "completed": 616,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 616,
+      "stack_below_call_sp": 208,
+      "d0": "0x0",
+      "a0": "0x19200000",
+      "events": [],
+      "native_entries": {
+        "factory": 0,
+        "attach": 0,
+        "find": 0,
+        "bind": 0,
+        "set_text": 0,
+        "cleanup": 0,
+        "bulk": 0,
+        "destructor": 0,
+        "child_bulk": 0
+      },
+      "scenario": "valid text update after bulk"
+    }
+  ],
+  "retirements": [
+    {
+      "method": "cleanup",
+      "live_allocations": 0,
+      "generation": 2,
+      "freed_payloads_unmapped": true,
+      "stale_update_rejected": true
+    },
+    {
+      "method": "bulk",
+      "live_allocations": 0,
+      "generation": 2,
+      "freed_payloads_unmapped": true,
+      "stale_update_rejected": true
+    }
+  ],
+  "original_child": "0x19300000",
+  "boundaries": [
+    "request278 completed native service/owner graph supplied explicitly",
+    "GUI task identity/16KiB stack and resident copy are explicit existing contracts",
+    "allocation/free, redraw notification and single-GUI lock operations modeled",
+    "original GUI queue/timer arrays empty; display renderer and concurrent producers not run",
+    "MVC is unregistered here; no editing receipt, LCD pixels or physical input qualification"
+  ],
+  "historical_frontier": [
+    "first cleanup stopped at original GUI lock cell61fb2a28 before explicit lock/empty-queue model",
+    "first CLI rejected a probe counter aimed at prologue60d02bfe; native CALL actually targets inner entry60d02c03 with frame32"
+  ],
+  "hash_checks_performed": false,
+  "hardware_executed": false,
+  "installable": false
+}

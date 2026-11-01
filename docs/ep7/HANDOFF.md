@@ -8,7 +8,15 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[最终GUI输入机器码](CANDIDATE_UI_INPUT_SIM.md)通过7个场景/75,479指令。
+最新：[原生文字控件与owner撤销](CANDIDATE_UI_OWNER_SIM.md)通过16,637条指令，观察
+最大新栈408B。实际factory/constructor/attach/find/bind/setter建立180B文字child，
+两种H/L文字更新与上下文恢复正确；OOM关闭display资格且不重试。cleanup、bulk与
+cleanup后destructor完整返回，候选引用在原生free前撤销，释放payload即时unmap，
+零剩余模型分配、迟到更新拒绝。request278完成图、分配/通知/单GUI锁、空原队列与
+timer是显式边界；MVC未注册，不宣称完整编辑或LCD。无固件变化，下一项编辑会话
+联通，然后worker/驻留和安装资格。
+
+此前：[最终GUI输入机器码](CANDIDATE_UI_INPUT_SIM.md)通过7个场景/75,479指令。
 完整原预处理、五处已安装JMP veneer、原halfword setter及candidate scope/dispatch
 实际执行。完整7/−4计数不丢失，所有原输入寄存器/SP和原返回PC/MDR保持；超限65
 和服务失败不留下编辑资格。engine body在原入口截停并按明确返回模型完成，未取得

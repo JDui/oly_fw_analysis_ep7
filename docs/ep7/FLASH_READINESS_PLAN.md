@@ -72,6 +72,12 @@ patch及落盘回读通过。它仍标记不可安装；局部/完整原厂更�
 
 ## 当前进度
 
+基础H/L的[原生文字控件与owner撤销](CANDIDATE_UI_OWNER_SIM.md)通过16,637条指令：
+原factory/attach/find/bind/setter、两类文字、OOM停用和cleanup/bulk/destructor
+实际执行。引用先撤销再free，释放payload撤去后无再次访问，零模型分配残留。
+观察栈408B；request278完成、分配/绘制通知、单GUI锁和空原队列为显式条件，MVC
+仍未注册。下一步编辑会话联通，不把此结果当成完整显示或安装资格。
+
 基础H/L的[最终GUI输入机器码](CANDIDATE_UI_INPUT_SIM.md)已通过7个场景：完整原厂
 预处理、五处实际JMP veneer、原全计数setter及候选dispatch包装执行，完整计数和
 原调用ABI保持；超限65与服务失败不取得编辑资格。共75,479指令，观察栈深716B，
