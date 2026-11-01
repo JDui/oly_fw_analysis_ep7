@@ -252,3 +252,10 @@ raw mode/selector为0/0，不满足COLOR冻结条件；没有伪造有效拍摄�
 完整参数初始化返回；独立release/reclaim证明同槽重用保留旧数据和旧command引用，
 指针不能替代代际。状态生产者读到原生halfword1024后停在未知command+72，主线
 1684/1686未续接；下一步追flags来源或明确输入模型下的条件验证，保留生命周期缺口。
+
+[第二段完整返回与finish拒绝](CANDIDATE_POSTPOPULATION_FINISH_SIM.md)已完成9758条
+新指令，最大观察栈深404B。两组明确flags/未知halfword模型执行原状态片段，原
+temperature片段接入sample25；11B原store容量、4B冷debug BSS及8B模型输入。第二段
+原尾部和候选finish实际返回602a44ba，SP恢复，私有锁释放。核心finish返回false，
+当前raw0/selector0和重填充token没有封存旧快照。完整输入来源、请求/调度未因此
+关闭；下一步原生COLOR设置与新capture/node代际，继续S3/S4及恢复准入。

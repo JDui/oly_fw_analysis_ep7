@@ -7,7 +7,20 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[冷态快照完整回调与配置续接](CANDIDATE_SNAPSHOT_OUTPUT_SIM.md)关闭原输出构造器、
+最新：[第二段完整返回与finish拒绝](CANDIDATE_POSTPOPULATION_FINISH_SIM.md)完成9758条
+新增指令，最大观察新栈深404B。原状态片段6029d0b0..d1cc两组显式输入各181条，
+生成1666/1684/1686=0/1/0，PC路径相同；command+72及请求+1914共6B来源未证明。
+原temperature getter/store片段8条，以明确sample25输入生成25/0/0；没有传感器
+采样/物理单位证明。新增11B原store容量、4B冷debug BSS、8B模型输入。第二段
+继续9388条，原尾部清零512B，候选finish进入一次，返回实际602a44ba且SP恢复。
+当前原生raw mode/selector0/0和重填充token不满足资格，核心finish返回false，
+旧sidecar未封存、未更换代际；capture仅offset14406新增模型值25。下一步原生
+COLOR设置与新capture/node分配。完整请求/调度/worker/驻留/恢复仍待证。前置已
+完成原metadata领取/发布/初始化，独立释放重领证明同地址保留旧数据和旧引用，
+见[CANDIDATE_REQUEST_METADATA_SIM](CANDIDATE_REQUEST_METADATA_SIM.md)。候选004/
+fishcu五组件容器不变、不可安装；没有SHA/固件重编译/相机操作。
+
+此前：[冷态快照完整回调与配置续接](CANDIDATE_SNAPSHOT_OUTPUT_SIM.md)关闭原输出构造器、
 60426f83回调及6041a20a包装函数的冷态返回。两GPIO各240+85+88+199+49，共1322；
 原返回6042705e/6041a224/60409ecb均核对，最终SP1901076c。仅160B原输出成员A5，
 9个洞123/145/155/160..165仍未映射；额外10B转换store与2Bwrapper status0。121B
