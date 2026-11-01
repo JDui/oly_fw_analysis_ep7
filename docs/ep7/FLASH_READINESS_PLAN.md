@@ -301,3 +301,10 @@ source copy与job消费/释放；S3/S4、驻留与恢复资格未因此通过。
 返回-1，池余量恢复16。封存值不变。仍未执行notification clear/wait、真实任务切换、
 generic completion dispatcher或selected handler，冷heap场景不证明生产启动。
 下一步原selected handler/backlink、源复制及异步消费/释放；安装准入保持未通过。
+
+[selected参数准备](CANDIDATE_SELECTED_PARAMETERS_SIM.md)已生成原序列/场景状态及双
+描述符，实际ID2资源查询和ROM字段进入原构造器。新增1346指令、最大新栈156B，
+84B原store容量；完整handler入口内第一参数helper返回，第二helper停metadata
++50读取（后续还需+48/+52）。8B部分capture变化保留，封存值/旧backlink不变。
+下一步追结果字段的实际生产者，不以默认值越过缺口；handler/backlink及后续异步
+生命周期仍未完成，S3/S4与安装准入不变。

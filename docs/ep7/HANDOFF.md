@@ -7,7 +7,15 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[新节点原生event4b邮箱](CANDIDATE_SELECTED_MAILBOX_SIM.md)完成2548条新指令，最大
+最新：[selected参数准备](CANDIDATE_SELECTED_PARAMETERS_SIM.md)完成1346条新指令，最大
+新栈156B。原序列reset、场景property gate及完整双描述符constructor接通，84B
+原store容量；实际ID2/handle102资源指针af43ad40、ROM6055d290、首descriptor kind10。
+实际event4b输出进入完整602a281a，602a8877已返回，602a91ee停602a92df读取metadata
+6223e450+50，+48/+50/+52结果尚缺生产者。新capture仅8B真实部分写入，封存sidecar/
+H/L、旧capture和旧backlink不变；保留原停止栈/寄存器，未补零或跳转。下一步追踪
+metadata结果写入再恢复handler。候选004/fishcu包不变、不可安装；无SHA或相机操作。
+
+此前：[新节点原生event4b邮箱](CANDIDATE_SELECTED_MAILBOX_SIM.md)完成2548条新指令，最大
 新栈深160B。原冷kernel heap、mailbox1、fixed pool1和flag74配方实际初始化后，完整
 602a3042发送新node61b21fc0，完整6020c101取回并归还块；余量16→15→16，空读返回-1。
 296B原store和12B输出容量，padding按不透明栈残留检查。封存token2/H/L及capture不变。
