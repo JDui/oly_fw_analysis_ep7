@@ -204,3 +204,10 @@ ID24/value3，1333描述、439回调、201关联规则由原生函数建立；96
 容量，无新增BSS条件；4B沿用原initialized-data配方。旧partial capture保持不变。
 未配置格式、无设备及任务调度切点仍明确保留；下一步从模板初始化/prewrite重新
 执行完整population，不能恢复属性更新前的旧帧。S3/S4和安装资格仍未整体完成。
+
+[完整第一段capture填充](CANDIDATE_FRESH_POPULATION_SIM.md)现已通过：模板重新原生
+初始化，实际602a44a3候选桥执行prewrite与6833word复制，再完成98次属性读取，
+候选sample观察器返回602a44a8。第二段实际入口随后停6006d68c读取98e0009c/4B，
+尚未finish。新增81,009指令，观察最大新栈深460B，没有新增映射或BSS条件。原生
+raw mode/selector为0/0，不满足COLOR冻结条件；没有伪造有效拍摄或新分配代际。
+下一步追第二段硬件输入和6223d41c请求对象生产者；完整生命周期与安装资格仍待证。

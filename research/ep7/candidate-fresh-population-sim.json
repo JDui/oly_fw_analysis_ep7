@@ -1,0 +1,731 @@
+{
+  "scope": "Run a fresh first capture population and its real candidate return observer.\n\nRebuild from the native template after the completed mode/geometry update. The\nsubsequent postpopulation call stops at its first unprovided register input.\n",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu",
+  "cases": [
+    {
+      "symbol": "native_template_refresh_after_geometry",
+      "status": "returned",
+      "completed": 7908,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 29664,
+      "stack_depth_from_call_sp": 460,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 1,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x73e0",
+        "d1": "0x0",
+        "d2": "0x22334455",
+        "d3": "0x33445566",
+        "a0": "0x6225882c",
+        "a1": "0x19010788",
+        "a2": "0x19400000",
+        "a3": "0x19500000",
+        "sp": "0x190107b0",
+        "pc": "0x19000007",
+        "mdr": "0x60301795",
+        "psw": "0x801",
+        "lir": "0x50605171",
+        "lar": "0x470010ec",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    },
+    {
+      "symbol": "actual_candidate_caller_prewrite_and_template_copy",
+      "status": "returned",
+      "completed": 49707,
+      "fault": null,
+      "final_pc": "0x602a7eb0",
+      "final_sp": "0x19010788",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 364,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 1,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x0",
+        "d1": "0x0",
+        "d2": "0x22334455",
+        "d3": "0x19700000",
+        "a0": "0x19706ac4",
+        "a1": "0x6225f2f0",
+        "a2": "0x19510000",
+        "a3": "0x19500000",
+        "sp": "0x19010788",
+        "pc": "0x602a7eb0",
+        "mdr": "0x602a7eb0",
+        "psw": "0x805",
+        "lir": "0x50605171",
+        "lar": "0x60300063",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    },
+    {
+      "symbol": "native_first_population_and_candidate_normal_return",
+      "status": "returned",
+      "completed": 14678,
+      "fault": null,
+      "final_pc": "0x602a44a8",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 376,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 1,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x0",
+        "d1": "0x1",
+        "d2": "0x22334455",
+        "d3": "0x33445566",
+        "a0": "0x6250f6ed",
+        "a1": "0x6005c8cc",
+        "a2": "0x19510000",
+        "a3": "0x19500000",
+        "sp": "0x190107b0",
+        "pc": "0x602a44a8",
+        "mdr": "0x6005c8df",
+        "psw": "0x801",
+        "lir": "0x50605171",
+        "lar": "0x60300063",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    },
+    {
+      "symbol": "native_second_population_register_frontier",
+      "status": "memory_fault",
+      "completed": 8716,
+      "fault": {
+        "kind": 1,
+        "pc": 1611060876,
+        "map": 0,
+        "address": 2564817052,
+        "size": 4,
+        "access": "read"
+      },
+      "final_pc": "0x6006d68c",
+      "final_sp": "0x19010750",
+      "stack_depth_from_call_sp": 420,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 2,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 1,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "d0_at_stop": 0,
+      "stop_registers": {
+        "d0": "0x0",
+        "d1": "0x4",
+        "d2": "0x22334455",
+        "d3": "0x33445566",
+        "a0": "0x19700000",
+        "a1": "0x19510000",
+        "a2": "0x0",
+        "a3": "0x19500000",
+        "sp": "0x19010750",
+        "pc": "0x6006d68c",
+        "mdr": "0x602a8de8",
+        "psw": "0x801",
+        "lir": "0x12345678",
+        "lar": "0x23456789",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    }
+  ],
+  "native_instructions": 81009,
+  "maximum_observed_new_stack_depth": 460,
+  "fresh_template_initialized": true,
+  "template_bytes": 27332,
+  "template_native_words_copied": 6833,
+  "original_failed_population_resumed": false,
+  "first_population_completed": true,
+  "candidate_normal_return_observer_entries": 1,
+  "native_property_lookups": [
+    {
+      "key": "0x810a",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x8119",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x8141",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x8161",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x8151",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x8231",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x52b1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x82a9",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x8eb9",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x9961",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x83c1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x9719",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x8871",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x8889",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x8c01",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x9761",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x8991",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x9751",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x9771",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x9781",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x9dd1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x9dea",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x8bf1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x9651",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x9661",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xe8f1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xe909",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xee11",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x8e41",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x8a61",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x76b1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x6749",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xd712",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xd721",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xa07a",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xc2da",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xc2ca",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xc0d1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xc10a",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xc36a",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x85f1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x96c1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x85f1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xe911",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x1851",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x1841",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x30d1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x3081",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x91b1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x91b1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x91b1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x91b1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x91b1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x91b1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x91b1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x91c9",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x91d9",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x91e9",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x91e9",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x91e9",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x91f9",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x9209",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x3719",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xefc9",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x3739",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xf5d1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x44c1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x69b9",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x9481",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xf6ea",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xf6ea",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xf6ea",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xf6ea",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xf6ea",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xf6ea",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xf6ea",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xf6ea",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xf6ea",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xf6ea",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xf6ea",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xf6ea",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xf7a9",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xf769",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xf7c9",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xd191",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x44f1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x4501",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0x4501",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xe2a1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xe2b1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xe2c1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xe281",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xed81",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xeee1",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xef09",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xef09",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xef19",
+      "return_pc": "0x6005e97d"
+    },
+    {
+      "key": "0xef19",
+      "return_pc": "0x6005e97d"
+    }
+  ],
+  "capture_changes_from_template": [
+    {
+      "offset": 24009,
+      "before": 0,
+      "after": 5
+    },
+    {
+      "offset": 24042,
+      "before": 0,
+      "after": 100
+    },
+    {
+      "offset": 24138,
+      "before": 0,
+      "after": 1
+    },
+    {
+      "offset": 24142,
+      "before": 0,
+      "after": 255
+    },
+    {
+      "offset": 24179,
+      "before": 0,
+      "after": 250
+    },
+    {
+      "offset": 24181,
+      "before": 0,
+      "after": 14
+    },
+    {
+      "offset": 24195,
+      "before": 0,
+      "after": 2
+    },
+    {
+      "offset": 24197,
+      "before": 0,
+      "after": 2
+    },
+    {
+      "offset": 24792,
+      "before": 0,
+      "after": 10
+    }
+  ],
+  "capture_geometry_halfwords": [
+    64000,
+    3584
+  ],
+  "raw_mode": 0,
+  "selector": 0,
+  "saturation_source": "0xf6ea",
+  "native_saturation_source_equal": true,
+  "second_population_completed": false,
+  "second_population_frontier": {
+    "status": "memory_fault",
+    "fault": {
+      "kind": 1,
+      "pc": 1611060876,
+      "map": 0,
+      "address": 2564817052,
+      "size": 4,
+      "access": "read"
+    },
+    "native_return_pc": "0x602a8de8",
+    "native_input_object": "0x6223d41c",
+    "ID_pointer_fixture": "0x19510000",
+    "register_input_provided": false,
+    "finish_observer_executed": false
+  },
+  "new_mapped_data_bytes": 0,
+  "conditional_BSS_bytes_added": 0,
+  "hash_checks_performed": false,
+  "native_api_success_stubs": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "The first population runs from the actual patched602a44a3 caller, after native template refresh and a complete new template copy. The pre-mode partial population frame is never resumed.",
+    "Controller task handover, owned node/ID/capture registry and capture capacity remain fixtures. Allocation, preceding global-current-ID load and the enclosing controller loop are not executed.",
+    "Native raw mode0 and selector0 do not qualify for H/L COLOR capture. The first normal-return observer executes; no valid frozen/sealed snapshot is manufactured.",
+    "Second population is an independent continuation probe: the native caller supplies object6223d41c, while A1 points at the same owned ID1. Its original global ID source and full request producer remain unproven.",
+    "The second function stops at the actual98e0009c register read. No counter/measurement meaning or value is invented and the finish observer has not executed.",
+    "Unconfigured format, unavailable device, active-shot validity, relay preprocessing, worker lifecycle, residency and backup/recovery remain unresolved."
+  ]
+}
