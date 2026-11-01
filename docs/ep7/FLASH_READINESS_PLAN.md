@@ -288,3 +288,9 @@ fresh查询ID2/af6037c0并登记token2。新增29312指令，最大新栈深348B
 27356B原store/copy容量，无新BSS。原请求/格式与固定硬件输入的离线条件仍保留，
 完整新请求生产者未执行。下一步原队列领取、selected event的backlink发布、
 source copy与job消费/释放；S3/S4、驻留与恢复资格未因此通过。
+
+[原生node队列领取](CANDIDATE_NODE_SELECTION_SIM.md)已完成：原engine参数与5900/3400
+两池初始化后，完整selector领取新node，原格式18准备与序号1写入，实际FIFO出队；
+空队列再调用返回NULL。新增2515指令，最大新栈深208B；379B原store容量、24B冷BSS
+和1B单竞争者锁输入。token2/H/L5/-3不变。generic engine workrecord调度、活动帧
+坐标和新请求来源未关闭；下一步原event4b投递/接收与selected handler/backlink。

@@ -7,7 +7,15 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[新COLOR4完整填充与H/L冻结](CANDIDATE_COLOR_POPULATION_SIM.md)完成89051条新增
+最新：[原生node队列领取](CANDIDATE_NODE_SELECTION_SIM.md)完成2515条新指令，最大新栈
+深208B。原168B engine参数、pool5900/3400与format reset接通，完整602a2d43领取
+真实新node61b21fc0，原生handles5901/3401、1280x960、格式18、序号1，FIFO计数归0。
+第二次调用返回NULL，无重复分配/pop。379B原store容量、24B明确冷BSS（特殊坐标与
+扩展flags）、1B单竞争者锁模型；两对dispatch disable/enable释放。封存token2/
+H/L5/-3及新旧capture不变。generic engine dispatcher仍未执行，backlink仍旧，
+下一步原event4b投递/接收与selected handler。候选004/fishcu包不变、不可安装。
+
+此前：[新COLOR4完整填充与H/L冻结](CANDIDATE_COLOR_POPULATION_SIM.md)完成89051条新增
 指令，最大新栈深420B。原pending FIFO与完整602a3204将新node入队，实际caller
 prewrite/6833word复制后完整第一段读99个原属性，raw11/selector4，token2采样5/-3。
 随后实际edit+回读把当前COLOR4改为-3/2，完整第二段finish返回1，封存仍5/-3且
