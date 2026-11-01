@@ -8,7 +8,14 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[原生共享更新器接收与路由](CANDIDATE_UPDATER_SIM.md)完成两个阶段。实际五组件
+最新：[SD软件入口](CANDIDATE_SD_ENTRY_SIM.md)完成1,624条指令。原callback取得最高
+有效后缀；原pattern wrapper在E组成功后停止G/H/W。task88构造的32B消息原样
+交付task18，真实type1分支将buffer a43a3ec0/长度111,017,984/mode0传到60c964c1。
+底层文件查找/读取、queue和设备准备为显式模型，callback的FAT32 getter与排序、
+两task的消息及分流实际执行。只读取实际包头，未重复完整解码；物理启动按键仍
+未证明，无安装文件输出。下一项基础GUI/worker及驻留资格，避免扩大文件系统模拟。
+
+此前：[原生共享更新器接收与路由](CANDIDATE_UPDATER_SIM.md)完成两个阶段。实际五组件
 111,017,984B包mode2完整解码/校验/型号分流返回0，无写入且五份decoded等于fishcu。
 首次运行后续主机地址别名断言失败，mode2明细JSON未落盘；观察记录明确保留这点。
 修正只main转换地址的断言后，commit-only重跑通过：010e先服务路由到40002800，

@@ -59,6 +59,10 @@ parser、型号分流、原写入包装器和错误传播运行原生指令。�
 
 ## 下一步
 
+随后[SD软件入口检查](CANDIDATE_SD_ENTRY_SIM.md)已接通文件后缀callback、pattern
+wrapper、原消息构造与接收分流，实际消息进入本共享函数mode0。文件系统/交付为
+显式模型，物理开机按键仍未验证，不重复本页的整包解码。
+
 封装继续沿用fishcu的parse → replace_payload → reconstruct，保留五组件与独立
 版本。该节点关闭共享更新函数的包接收和请求路由问题；SD文件选择、物理启动入口、
 flash实际写入/回读及独立恢复仍未取得资格。基础H/L的GUI/worker接入与代码/RAM
