@@ -7,7 +7,19 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[设备输入与配置分支](CANDIDATE_DEVICE_INPUTS_SIM.md)以14个明确寄存器输入关闭
+最新：[原厂冷状态与几何快照](CANDIDATE_SERVICE_STATE_SIM.md)接入RAM后缀160、诊断
+初始化799、参数前缀169、pending reset5、task reset2条指令。两条原geometry现场
+分别继续3177/3454指令，均停6041a5bb读6229fc44字节，MDR60419f58；动态setter
+未执行，capture不变。两个中间frontier报告保留。39-halfword拷贝的78B参数源
+62221998..622219e6只缺padding e1；仅该1B使用已定位BSS清零条件，合并完整有来源
+record供严格halfword读取。GPIO80=1原厂39次写入逐值/地址验证；另一分支0次。
+新增8901指令，110处store+数组共1054B。map_initializer_storage抽为共用helper，
+上游链实跑通过。前置外设时钟、完整task及属性服务后缀未执行，不能算生命周期通过。
+下一步124B双快照6229fc48及selector来源：6041a51c读旧快照/重置，6041a551轮换，
+60419529初始化指针/回调，6041a20a调用真实producer；不要自动补零活动快照。
+候选004未变/不可安装，无SHA/真机操作，最终封装仍用fishcu流程。
+
+此前：[设备输入与配置分支](CANDIDATE_DEVICE_INPUTS_SIM.md)以14个明确寄存器输入关闭
 两个采样停止点。仅切换logical GPIO80 bit4，两次native采样resume各635指令，
 bitmap/shadow为0000/0200；五引脚采样各32、完整601168ba重置各183指令，通过。
 真实1215查询305/304指令返回1/0。恢复原geometry栈/寄存器后分别继续318/321指令，

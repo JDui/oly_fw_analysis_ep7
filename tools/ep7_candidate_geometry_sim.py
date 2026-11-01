@@ -25,14 +25,9 @@ from ep7_ui_resource_origin import ROM_START,ROM_END,RAM_CACHED,RAM_UNCACHED,FLA
 from penf_emulator import Region
 
 
-def initializer_storage(machine,directory,prefix,service_prefixes=True):
-    # Reuse the existing instruction parser. Enumerate only direct stores in
-    # these reviewed original initializers, plus their two bounded loop writes.
+def map_initializer_storage(machine,directory,prefix,windows,allowed_ranges,array_ranges=(),name_prefix='geometry_state'):
+    """Map only reviewed native direct-store destinations and bounded arrays."""
     stores=[]
-    windows=[(0x6020d024,0x6020daec),(0x60421330,0x60421540)]
-    if service_prefixes:
-        windows += [(0x602ad810,0x602ad86d),(0x60421540,0x604215b4),
-                    (0x603b6297,0x603b62c8),(0x603b700e,0x603b7100)]
     for start,end in windows:
         asm=subprocess.check_output([prefix+'objdump','-D','-z','-b','binary','-m','mn10300',
             '--insn-width=16',f'--adjust-vma={BASE:#x}',f'--start-address={start:#x}',
@@ -43,20 +38,12 @@ def initializer_storage(machine,directory,prefix,service_prefixes=True):
                 continue
             width={'mov':4,'movhu':2,'movbu':1}[mn]
             address=int(match[2],16)
-            require(size==6 and (0x622a063c<=address<address+width<=0x622a0c19 or
-                    0x6223ec9c<=address<address+width<=0x6223ed54 or
-                    0xa2739688<=address<address+width<=0xa2739721 or
-                    0xa2743b94<=address<address+width<=0xa2743ba0),
+            require(size==6 and any(low<=address<address+width<=high for low,high in allowed_ranges),
                     'initializer gained an unreviewed state destination')
             stores.append(dict(pc=pc,address=address,width=width,register=match[1]))
-    require(machine.read(0x60421365,6)==bytes.fromhex('fcdcfc062a62') and
-            machine.read(0x604214ed,6)==bytes.fromhex('fcdc48082a62') and
-            machine.read(0x604214f6,3)==bytes.fromhex('2d8000'),
-            'native bounded state array initialization changed')
-    addresses=set(range(0x622a06fc,0x622a070c))|set(range(0x622a0848,0x622a08c8))
-    if service_prefixes:
-        # Original603b700e copies three24-byte records before packing the flags.
-        addresses.update(range(0xa27396d8,0xa2739720))
+    addresses=set()
+    for low,high in array_ranges:
+        addresses.update(range(low,high))
     for row in stores:
         addresses.update(range(row['address'],row['address']+row['width']))
     intervals=[]
@@ -68,9 +55,25 @@ def initializer_storage(machine,directory,prefix,service_prefixes=True):
     for low,high in intervals:
         require(not any(low<r.address+len(r.data) and r.address<high for r in machine.regions.values()),
                 'native service state overlaps an existing mapping')
-        name=f'geometry_state_{low:x}'
+        name=f'{name_prefix}_{low:x}'
         machine.regions[name]=Region(name,low,b'\xa5'*(high-low),'rw',True)
     return stores,intervals
+
+
+def initializer_storage(machine,directory,prefix,service_prefixes=True):
+    windows=[(0x6020d024,0x6020daec),(0x60421330,0x60421540)]
+    arrays=[(0x622a06fc,0x622a070c),(0x622a0848,0x622a08c8)]
+    if service_prefixes:
+        windows += [(0x602ad810,0x602ad86d),(0x60421540,0x604215b4),
+                    (0x603b6297,0x603b62c8),(0x603b700e,0x603b7100)]
+        arrays.append((0xa27396d8,0xa2739720))
+    require(machine.read(0x60421365,6)==bytes.fromhex('fcdcfc062a62') and
+            machine.read(0x604214ed,6)==bytes.fromhex('fcdc48082a62') and
+            machine.read(0x604214f6,3)==bytes.fromhex('2d8000'),
+            'native bounded state array initialization changed')
+    return map_initializer_storage(machine,directory,prefix,windows,
+        [(0x622a063c,0x622a0c19),(0x6223ec9c,0x6223ed54),
+         (0xa2739688,0xa2739721),(0xa2743b94,0xa2743ba0)],arrays)
 
 
 def prepare_request_mode(machine,syms):

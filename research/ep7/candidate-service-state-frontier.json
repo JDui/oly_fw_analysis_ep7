@@ -1,0 +1,404 @@
+{
+  "scope": "Continue both native geometry branches using witnessed cold service state.\n\nOriginal initialization slices run on independent stacks. Their enclosing\nperipheral setup and service/task lifecycle remain explicit prerequisites.\n",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu",
+  "cases": [
+    {
+      "gpio80_input_bit4": 0,
+      "cases": [
+        {
+          "symbol": "native_service_RAM_reset_suffix",
+          "status": "returned",
+          "completed": 160,
+          "fault": null,
+          "final_pc": "0x60162367",
+          "final_sp": "0x190107b0",
+          "returned_d0": 0,
+          "stack_depth_from_call_sp": 8,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0
+        },
+        {
+          "symbol": "native_diagnostic_state_initialize",
+          "status": "returned",
+          "completed": 799,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0",
+          "returned_d0": 0,
+          "stack_depth_from_call_sp": 12,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0
+        },
+        {
+          "symbol": "native_task_state_reset_slice",
+          "status": "returned",
+          "completed": 2,
+          "fault": null,
+          "final_pc": "0x60169018",
+          "final_sp": "0x190107b0",
+          "returned_d0": 0,
+          "stack_depth_from_call_sp": 0,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0
+        },
+        {
+          "symbol": "native_geometry_resume_with_cold_service_state",
+          "status": "memory_fault",
+          "completed": 34,
+          "fault": {
+            "kind": 1,
+            "pc": 1612076714,
+            "map": 0,
+            "address": 1646402068,
+            "size": 1,
+            "access": "read"
+          },
+          "final_pc": "0x601656aa",
+          "final_sp": "0x190103c8",
+          "stack_depth_from_call_sp": 1012,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "d0_at_stop": 0,
+          "stop_registers": {
+            "d0": "0x0",
+            "d1": "0x0",
+            "d2": "0x22334455",
+            "d3": "0x0",
+            "a0": "0x62221a0c",
+            "a1": "0x601aa1e8",
+            "a2": "0x0",
+            "a3": "0x190104d1",
+            "sp": "0x190103c8",
+            "pc": "0x601656aa",
+            "mdr": "0x601656aa",
+            "psw": "0x806",
+            "lir": "0xc9ae085a",
+            "lar": "0x601175a7",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        }
+      ],
+      "mapped_state_bytes": 901,
+      "mapped_state_ranges": [
+        [
+          "0x622210dc",
+          "0x62221104"
+        ],
+        [
+          "0x622211d4",
+          "0x622211e3"
+        ],
+        [
+          "0x622211e4",
+          "0x622211e6"
+        ],
+        [
+          "0x622211ec",
+          "0x622211ff"
+        ],
+        [
+          "0x62221200",
+          "0x62221202"
+        ],
+        [
+          "0x62221204",
+          "0x62221208"
+        ],
+        [
+          "0x6222120c",
+          "0x6222121c"
+        ],
+        [
+          "0x62221230",
+          "0x6222123e"
+        ],
+        [
+          "0x6222125c",
+          "0x62221263"
+        ],
+        [
+          "0x62221264",
+          "0x62221570"
+        ],
+        [
+          "0x62221d80",
+          "0x62221d82"
+        ]
+      ],
+      "source_direct_stores": 34,
+      "cold_service_state_supplied": true,
+      "complete_service_initializer_executed": false,
+      "complete_task_startup_executed": false,
+      "geometry_configuration_passed": false,
+      "geometry_dynamic_setter_executed": false,
+      "capture_unchanged": true
+    },
+    {
+      "gpio80_input_bit4": 1,
+      "cases": [
+        {
+          "symbol": "native_service_RAM_reset_suffix",
+          "status": "returned",
+          "completed": 160,
+          "fault": null,
+          "final_pc": "0x60162367",
+          "final_sp": "0x190107b0",
+          "returned_d0": 0,
+          "stack_depth_from_call_sp": 8,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0
+        },
+        {
+          "symbol": "native_diagnostic_state_initialize",
+          "status": "returned",
+          "completed": 799,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0",
+          "returned_d0": 0,
+          "stack_depth_from_call_sp": 12,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0
+        },
+        {
+          "symbol": "native_task_state_reset_slice",
+          "status": "returned",
+          "completed": 2,
+          "fault": null,
+          "final_pc": "0x60169018",
+          "final_sp": "0x190107b0",
+          "returned_d0": 0,
+          "stack_depth_from_call_sp": 0,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0
+        },
+        {
+          "symbol": "native_geometry_resume_with_cold_service_state",
+          "status": "memory_fault",
+          "completed": 12,
+          "fault": {
+            "kind": 1,
+            "pc": 1612059632,
+            "map": 0,
+            "address": 1646399552,
+            "size": 2,
+            "access": "read"
+          },
+          "final_pc": "0x601613f0",
+          "final_sp": "0x190103cc",
+          "stack_depth_from_call_sp": 996,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "d0_at_stop": 0,
+          "stop_registers": {
+            "d0": "0x0",
+            "d1": "0x0",
+            "d2": "0x22334455",
+            "d3": "0x0",
+            "a0": "0xa272bce8",
+            "a1": "0x601aa1e8",
+            "a2": "0x0",
+            "a3": "0x190104d1",
+            "sp": "0x190103cc",
+            "pc": "0x601613f0",
+            "mdr": "0x601655fc",
+            "psw": "0x801",
+            "lir": "0xc9ae085a",
+            "lar": "0x601175a7",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        }
+      ],
+      "mapped_state_bytes": 901,
+      "mapped_state_ranges": [
+        [
+          "0x622210dc",
+          "0x62221104"
+        ],
+        [
+          "0x622211d4",
+          "0x622211e3"
+        ],
+        [
+          "0x622211e4",
+          "0x622211e6"
+        ],
+        [
+          "0x622211ec",
+          "0x622211ff"
+        ],
+        [
+          "0x62221200",
+          "0x62221202"
+        ],
+        [
+          "0x62221204",
+          "0x62221208"
+        ],
+        [
+          "0x6222120c",
+          "0x6222121c"
+        ],
+        [
+          "0x62221230",
+          "0x6222123e"
+        ],
+        [
+          "0x6222125c",
+          "0x62221263"
+        ],
+        [
+          "0x62221264",
+          "0x62221570"
+        ],
+        [
+          "0x62221d80",
+          "0x62221d82"
+        ]
+      ],
+      "source_direct_stores": 34,
+      "cold_service_state_supplied": true,
+      "complete_service_initializer_executed": false,
+      "complete_task_startup_executed": false,
+      "geometry_configuration_passed": false,
+      "geometry_dynamic_setter_executed": false,
+      "capture_unchanged": true
+    }
+  ],
+  "population_resumed": false,
+  "hash_checks_performed": false,
+  "native_api_success_stubs": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "The6016227a RAM suffix is independent of preceding peripheral clock/acquire/configure/release calls, which are not executed. Its cold values are an explicit lifecycle scenario, not active hardware measurements.",
+    "The60163bc8 diagnostic initializer executes completely. The60169011 task reset is a two-instruction slice; its preceding task helpers and following queue registration are unexecuted prerequisites.",
+    "Only reviewed direct-store destinations and bounded arrays are mapped from A5. Unknown adjacent state remains unmapped.",
+    "Both original configuration frames resume after real device sampling/predicates. Partial capture is unchanged and no completion or successful dynamic update is forged.",
+    "Upstream board/GPIO and conditional BSS/ROM inputs remain; complete boot, real peripheral effects, scheduling and installation qualification are not established."
+  ]
+}
