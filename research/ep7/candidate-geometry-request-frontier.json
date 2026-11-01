@@ -1,0 +1,896 @@
+{
+  "scope": "Trace native geometry service initialization and its configuration producer.\n\nReuse the observed capture-population frontier. Only original initializer write\ndestinations become writable state; gaps remain unmapped, not a zero-filled heap.\nThis is an independent service-call scenario, not the complete startup schedule.\n",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu",
+  "service_initialization_passed": true,
+  "configuration_producer_passed": false,
+  "cases": [
+    {
+      "symbol": "native_geometry_service_initializer",
+      "status": "returned",
+      "completed": 5217,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 36,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "cached_property_cells": 147,
+      "native_pointer_getters": 148
+    },
+    {
+      "symbol": "native_request_mode_fields_produce",
+      "status": "returned",
+      "completed": 15,
+      "fault": null,
+      "final_pc": "0x602add5b",
+      "final_sp": "0x190107b0",
+      "returned_d0": 1,
+      "stack_depth_from_call_sp": 0,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0
+    },
+    {
+      "symbol": "native_request_mode_fields_consume",
+      "status": "returned",
+      "completed": 10,
+      "fault": null,
+      "final_pc": "0x6042273c",
+      "final_sp": "0x190107b0",
+      "returned_d0": 1,
+      "stack_depth_from_call_sp": 0,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0
+    },
+    {
+      "symbol": "native_geometry_configuration_producer",
+      "status": "memory_fault",
+      "completed": 1168,
+      "fault": {
+        "kind": 1,
+        "pc": 1616206976,
+        "map": 0,
+        "address": 1646521634,
+        "size": 1,
+        "access": "read"
+      },
+      "final_pc": "0x60555c80",
+      "final_sp": "0x19010464",
+      "stack_depth_from_call_sp": 872,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "d0_at_stop": 0,
+      "stop_registers": {
+        "d0": "0x0",
+        "d1": "0x0",
+        "d2": "0x22334455",
+        "d3": "0x1901079c",
+        "a0": "0x190104ce",
+        "a1": "0x6005c8cc",
+        "a2": "0x19010530",
+        "a3": "0x190104cc",
+        "sp": "0x19010464",
+        "pc": "0x60555c80",
+        "mdr": "0x604277a4",
+        "psw": "0x800",
+        "lir": "0xa5f15161",
+        "lar": "0x47001180",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    }
+  ],
+  "request_mode_source": {
+    "address": "0x19b00000",
+    "bytes": 48,
+    "initial_fill": "a5",
+    "native_request_fields": [
+      1,
+      0,
+      1
+    ],
+    "controller_inputs": {
+      "0x6223ed08": 0,
+      "0x6223eca3": 0,
+      "0x6223ed28": 0
+    },
+    "controller_inputs_are_fixture": true,
+    "allocation_executed": false,
+    "queue_transport_executed": false,
+    "complete_request_handler_executed": false
+  },
+  "mapped_state_bytes": 877,
+  "mapped_state_ranges": [
+    [
+      "0x622a0644",
+      "0x622a0654"
+    ],
+    [
+      "0x622a067c",
+      "0x622a067f"
+    ],
+    [
+      "0x622a0680",
+      "0x622a0682"
+    ],
+    [
+      "0x622a0695",
+      "0x622a0696"
+    ],
+    [
+      "0x622a0698",
+      "0x622a069d"
+    ],
+    [
+      "0x622a06fc",
+      "0x622a0714"
+    ],
+    [
+      "0x622a0760",
+      "0x622a0765"
+    ],
+    [
+      "0x622a0766",
+      "0x622a0767"
+    ],
+    [
+      "0x622a0768",
+      "0x622a076b"
+    ],
+    [
+      "0x622a076c",
+      "0x622a0779"
+    ],
+    [
+      "0x622a077c",
+      "0x622a0780"
+    ],
+    [
+      "0x622a0781",
+      "0x622a0782"
+    ],
+    [
+      "0x622a0784",
+      "0x622a078d"
+    ],
+    [
+      "0x622a078e",
+      "0x622a0793"
+    ],
+    [
+      "0x622a0838",
+      "0x622a083f"
+    ],
+    [
+      "0x622a0840",
+      "0x622a08c8"
+    ],
+    [
+      "0x622a08c9",
+      "0x622a08cb"
+    ],
+    [
+      "0x622a0960",
+      "0x622a0969"
+    ],
+    [
+      "0x622a096a",
+      "0x622a0972"
+    ],
+    [
+      "0x622a0974",
+      "0x622a097f"
+    ],
+    [
+      "0x622a0980",
+      "0x622a098a"
+    ],
+    [
+      "0x622a098c",
+      "0x622a0990"
+    ],
+    [
+      "0x622a09a4",
+      "0x622a0a4c"
+    ],
+    [
+      "0x622a0a50",
+      "0x622a0bcc"
+    ],
+    [
+      "0x622a0bd0",
+      "0x622a0bd4"
+    ],
+    [
+      "0x622a0bd8",
+      "0x622a0be4"
+    ],
+    [
+      "0x622a0be8",
+      "0x622a0c00"
+    ],
+    [
+      "0x622a0c18",
+      "0x622a0c19"
+    ],
+    [
+      "0xa2743b94",
+      "0xa2743b97"
+    ],
+    [
+      "0xa2743b98",
+      "0xa2743b9a"
+    ],
+    [
+      "0xa2743b9c",
+      "0xa2743ba0"
+    ]
+  ],
+  "native_cached_properties": {
+    "0x622a09a4": {
+      "key": "0x9451",
+      "pointer": "0x624b7c14"
+    },
+    "0x622a09a8": {
+      "key": "0xa03a",
+      "pointer": "0x624b7c44"
+    },
+    "0x622a09ac": {
+      "key": "0xc59a",
+      "pointer": "0x624b8528"
+    },
+    "0x622a09b0": {
+      "key": "0xc10a",
+      "pointer": "0x624b83a0"
+    },
+    "0x622a09b4": {
+      "key": "0xc36a",
+      "pointer": "0x624b84ac"
+    },
+    "0x622a09b8": {
+      "key": "0xa07a",
+      "pointer": "0x624b7c64"
+    },
+    "0x622a09bc": {
+      "key": "0xc2ca",
+      "pointer": "0x624b845c"
+    },
+    "0x622a09c0": {
+      "key": "0xc0ca",
+      "pointer": "0x624b8380"
+    },
+    "0x622a09c4": {
+      "key": "0xc2ea",
+      "pointer": "0x624b846c"
+    },
+    "0x622a09c8": {
+      "key": "0xc2da",
+      "pointer": "0x624b8464"
+    },
+    "0x622a09cc": {
+      "key": "0xce0a",
+      "pointer": "0x624b8734"
+    },
+    "0x622a09d0": {
+      "key": "0xc0ba",
+      "pointer": "0x624b8378"
+    },
+    "0x622a09d4": {
+      "key": "0xc57a",
+      "pointer": "0x624b8518"
+    },
+    "0x622a09d8": {
+      "key": "0xc4ba",
+      "pointer": "0x624b84cc"
+    },
+    "0x622a09dc": {
+      "key": "0xc12a",
+      "pointer": "0x624b83b0"
+    },
+    "0x622a09e0": {
+      "key": "0xc54a",
+      "pointer": "0x624b8500"
+    },
+    "0x622a09e4": {
+      "key": "0xa05a",
+      "pointer": "0x624b7c54"
+    },
+    "0x622a09e8": {
+      "key": "0xce2a",
+      "pointer": "0x624b873c"
+    },
+    "0x622a09ec": {
+      "key": "0x9fea",
+      "pointer": "0x624b7c24"
+    },
+    "0x622a09f0": {
+      "key": "0xa06a",
+      "pointer": "0x624b7c5c"
+    },
+    "0x622a09f4": {
+      "key": "0xd0aa",
+      "pointer": "0x624b8754"
+    },
+    "0x622a09f8": {
+      "key": "0xd07a",
+      "pointer": "0x624b874c"
+    },
+    "0x622a09fc": {
+      "key": "0xcdb1",
+      "pointer": "0x624b871c"
+    },
+    "0x622a0a00": {
+      "key": "0xcdca",
+      "pointer": "0x624b8724"
+    },
+    "0x622a0a04": {
+      "key": "0xcdda",
+      "pointer": "0x624b872c"
+    },
+    "0x622a0a08": {
+      "key": "0xc0d1",
+      "pointer": "0x624b8388"
+    },
+    "0x622a0a0c": {
+      "key": "0xc35a",
+      "pointer": "0x624b84a4"
+    },
+    "0x622a0a10": {
+      "key": "0xd0ca",
+      "pointer": "0x624b875c"
+    },
+    "0x622a0a14": {
+      "key": "0xd0da",
+      "pointer": "0x624b8764"
+    },
+    "0x622a0a18": {
+      "key": "0xc531",
+      "pointer": "0x624b84f8"
+    },
+    "0x622a0a1c": {
+      "key": "0xa081",
+      "pointer": "0x624b7c6c"
+    },
+    "0x622a0a20": {
+      "key": "0x1ef1",
+      "pointer": "0x624b69ac"
+    },
+    "0x622a0a24": {
+      "key": "0xc0e1",
+      "pointer": "0x624b8390"
+    },
+    "0x622a0a28": {
+      "key": "0xa091",
+      "pointer": "0x624b7c74"
+    },
+    "0x622a0a2c": {
+      "key": "0xc0f1",
+      "pointer": "0x624b8398"
+    },
+    "0x622a0a30": {
+      "key": "0xa04a",
+      "pointer": "0x624b7c4c"
+    },
+    "0x622a0a34": {
+      "key": "0xc56a",
+      "pointer": "0x624b8510"
+    },
+    "0x622a0a38": {
+      "key": "0xc5aa",
+      "pointer": "0x624b8530"
+    },
+    "0x622a0a3c": {
+      "key": "0xc55a",
+      "pointer": "0x624b8508"
+    },
+    "0x622a0a40": {
+      "key": "0xa02a",
+      "pointer": "0x624b7c3c"
+    },
+    "0x622a0a44": {
+      "key": "0xc58a",
+      "pointer": "0x624b8520"
+    },
+    "0x622a0a48": {
+      "key": "0xc4da",
+      "pointer": "0x624b84d4"
+    },
+    "0x622a0a50": {
+      "key": "0x80a1",
+      "pointer": "0x624ea7d8"
+    },
+    "0x622a0a54": {
+      "key": "0x97a9",
+      "pointer": "0x6250f2db"
+    },
+    "0x622a0a58": {
+      "key": "0x8e81",
+      "pointer": "0x6250f1da"
+    },
+    "0x622a0a5c": {
+      "key": "0x30fa",
+      "pointer": "0x624ea428"
+    },
+    "0x622a0a60": {
+      "key": "0x30ea",
+      "pointer": "0x624ea426"
+    },
+    "0x622a0a64": {
+      "key": "0x310a",
+      "pointer": "0x624ea42a"
+    },
+    "0x622a0a68": {
+      "key": "0x8d21",
+      "pointer": "0x6250f1bb"
+    },
+    "0x622a0a6c": {
+      "key": "0x6761",
+      "pointer": "0x624ea690"
+    },
+    "0x622a0a70": {
+      "key": "0xdd51",
+      "pointer": "0x6250f4a7"
+    },
+    "0x622a0a74": {
+      "key": "0x9132",
+      "pointer": "0x6250f20e"
+    },
+    "0x622a0a78": {
+      "key": "0x9891",
+      "pointer": "0x6250f2ec"
+    },
+    "0x622a0a7c": {
+      "key": "0x80ca",
+      "pointer": "0x624ea7dc"
+    },
+    "0x622a0a80": {
+      "key": "0x8281",
+      "pointer": "0x624ea815"
+    },
+    "0x622a0a84": {
+      "key": "0x8291",
+      "pointer": "0x624ea816"
+    },
+    "0x622a0a88": {
+      "key": "0x80ea",
+      "pointer": "0x624ea7e0"
+    },
+    "0x622a0a8c": {
+      "key": "0x85f1",
+      "pointer": "0x62509d7d"
+    },
+    "0x622a0a90": {
+      "key": "0x3781",
+      "pointer": "0x624ea43e"
+    },
+    "0x622a0a94": {
+      "key": "0xddf1",
+      "pointer": "0x6250f4c2"
+    },
+    "0x622a0a98": {
+      "key": "0x96c1",
+      "pointer": "0x6250f2c2"
+    },
+    "0x622a0a9c": {
+      "key": "0x97c1",
+      "pointer": "0x6250f2dd"
+    },
+    "0x622a0aa0": {
+      "key": "0x96da",
+      "pointer": "0x6250f2c4"
+    },
+    "0x622a0aa4": {
+      "key": "0xe921",
+      "pointer": "0x6250f5c8"
+    },
+    "0x622a0aa8": {
+      "key": "0x9dd1",
+      "pointer": "0x6250f352"
+    },
+    "0x622a0aac": {
+      "key": "0x9dea",
+      "pointer": "0x6250f354"
+    },
+    "0x622a0ab0": {
+      "key": "0x93f1",
+      "pointer": "0x6250f271"
+    },
+    "0x622a0ab4": {
+      "key": "0xe9e1",
+      "pointer": "0x6250f5d6"
+    },
+    "0x622a0ab8": {
+      "key": "0x8d91",
+      "pointer": "0x6250f1c2"
+    },
+    "0x622a0abc": {
+      "key": "0x9481",
+      "pointer": "0x6250f278"
+    },
+    "0x622a0ac0": {
+      "key": "0xedca",
+      "pointer": "0x6250f6a8"
+    },
+    "0x622a0ac4": {
+      "key": "0xeee1",
+      "pointer": "0x6250f6e9"
+    },
+    "0x622a0ac8": {
+      "key": "0xef09",
+      "pointer": "0x6250f6eb"
+    },
+    "0x622a0acc": {
+      "key": "0xef19",
+      "pointer": "0x6250f6ed"
+    },
+    "0x622a0ad0": {
+      "key": "0xeed1",
+      "pointer": "0x6250f6e8"
+    },
+    "0x622a0ad4": {
+      "key": "0x8372",
+      "pointer": "0x624ea81e"
+    },
+    "0x622a0ad8": {
+      "key": "0x83c1",
+      "pointer": "0x624ea828"
+    },
+    "0x622a0adc": {
+      "key": "0x8081",
+      "pointer": "0x624ea7d6"
+    },
+    "0x622a0ae0": {
+      "key": "0x9361",
+      "pointer": "0x6250f265"
+    },
+    "0x622a0ae4": {
+      "key": "0x1d41",
+      "pointer": "0x624ea412"
+    },
+    "0x622a0ae8": {
+      "key": "0xf101",
+      "pointer": "0x6250f769"
+    },
+    "0x622a0aec": {
+      "key": "0xc011",
+      "pointer": "0x6250f3c4"
+    },
+    "0x622a0af0": {
+      "key": "0x9699",
+      "pointer": "0x6250f2bf"
+    },
+    "0x622a0af4": {
+      "key": "0x50f1",
+      "pointer": "0x624ea4aa"
+    },
+    "0x622a0af8": {
+      "key": "0xf811",
+      "pointer": "0x624b88c0"
+    },
+    "0x622a0afc": {
+      "key": "0x8bea",
+      "pointer": "0x6250f1a6"
+    },
+    "0x622a0b00": {
+      "key": "0x80ba",
+      "pointer": "0x624ea7da"
+    },
+    "0x622a0b04": {
+      "key": "0x9121",
+      "pointer": "0x6250f20d"
+    },
+    "0x622a0b08": {
+      "key": "0xc021",
+      "pointer": "0x6250f3c5"
+    },
+    "0x622a0b0c": {
+      "key": "0x9681",
+      "pointer": "0x6250f2be"
+    },
+    "0x622a0b10": {
+      "key": "0xf931",
+      "pointer": "0x6250f940"
+    },
+    "0x622a0b14": {
+      "key": "0xf941",
+      "pointer": "0x6250f941"
+    },
+    "0x622a0b18": {
+      "key": "0x3091",
+      "pointer": "0x624ea422"
+    },
+    "0x622a0b1c": {
+      "key": "0x91b1",
+      "pointer": "0x6250f23f"
+    },
+    "0x622a0b20": {
+      "key": "0x91e9",
+      "pointer": "0x6250f248"
+    },
+    "0x622a0b24": {
+      "key": "0x72c2",
+      "pointer": "0x624ea7a0"
+    },
+    "0x622a0b28": {
+      "key": "0x91f9",
+      "pointer": "0x6250f24b"
+    },
+    "0x622a0b2c": {
+      "key": "0x9209",
+      "pointer": "0x6250f24c"
+    },
+    "0x622a0b30": {
+      "key": "0xe911",
+      "pointer": "0x6250f5c7"
+    },
+    "0x622a0b34": {
+      "key": "0xf021",
+      "pointer": "0x6250f717"
+    },
+    "0x622a0b38": {
+      "key": "0xde11",
+      "pointer": "0x6250f4c6"
+    },
+    "0x622a0b3c": {
+      "key": "0x810a",
+      "pointer": "0x624ea7e4"
+    },
+    "0x622a0b40": {
+      "key": "0x949a",
+      "pointer": "0x6250f27a"
+    },
+    "0x622a0b44": {
+      "key": "0x9a9a",
+      "pointer": "0x6250f318"
+    },
+    "0x622a0b48": {
+      "key": "0x8c61",
+      "pointer": "0x6250f1b5"
+    },
+    "0x622a0b4c": {
+      "key": "0x50e1",
+      "pointer": "0x624ea4a9"
+    },
+    "0x622a0b50": {
+      "key": "0xf161",
+      "pointer": "0x6250f772"
+    },
+    "0x622a0b54": {
+      "key": "0x8551",
+      "pointer": "0x624ea8d1"
+    },
+    "0x622a0b58": {
+      "key": "0xf061",
+      "pointer": "0x6250f733"
+    },
+    "0x622a0b5c": {
+      "key": "0xf072",
+      "pointer": "0x6250f73c"
+    },
+    "0x622a0b60": {
+      "key": "0xf031",
+      "pointer": "0x6250f718"
+    },
+    "0x622a0b64": {
+      "key": "0xea51",
+      "pointer": "0x6250f5de"
+    },
+    "0x622a0b68": {
+      "key": "0x28a1",
+      "pointer": "0x624ea417"
+    },
+    "0x622a0b6c": {
+      "key": "0x8131",
+      "pointer": "0x624ea7e8"
+    },
+    "0x622a0b70": {
+      "key": "0x8e41",
+      "pointer": "0x6250f1d5"
+    },
+    "0x622a0b74": {
+      "key": "0xf0c1",
+      "pointer": "0x6250f762"
+    },
+    "0x622a0b78": {
+      "key": "0x8e5a",
+      "pointer": "0x6250f1d6"
+    },
+    "0x622a0b7c": {
+      "key": "0x93d1",
+      "pointer": "0x6250f270"
+    },
+    "0x622a0b80": {
+      "key": "0x8e01",
+      "pointer": "0x6250f1d1"
+    },
+    "0x622a0b84": {
+      "key": "0x8df1",
+      "pointer": "0x6250f1d0"
+    },
+    "0x622a0b88": {
+      "key": "0x4501",
+      "pointer": "0x624ea468"
+    },
+    "0x622a0b8c": {
+      "key": "0xee71",
+      "pointer": "0x6250f6b9"
+    },
+    "0x622a0b90": {
+      "key": "0xee81",
+      "pointer": "0x6250f6ba"
+    },
+    "0x622a0b94": {
+      "key": "0xee91",
+      "pointer": "0x6250f6bb"
+    },
+    "0x622a0b98": {
+      "key": "0x80da",
+      "pointer": "0x624ea7de"
+    },
+    "0x622a0b9c": {
+      "key": "0x9aba",
+      "pointer": "0x6250f31c"
+    },
+    "0x622a0ba0": {
+      "key": "0x5351",
+      "pointer": "0x624ea521"
+    },
+    "0x622a0ba4": {
+      "key": "0x536a",
+      "pointer": "0x624ea522"
+    },
+    "0x622a0ba8": {
+      "key": "0x83a1",
+      "pointer": "0x624ea822"
+    },
+    "0x622a0bac": {
+      "key": "0x9e01",
+      "pointer": "0x6250f357"
+    },
+    "0x622a0bb0": {
+      "key": "0x9b21",
+      "pointer": "0x6250f325"
+    },
+    "0x622a0bb4": {
+      "key": "0x81aa",
+      "pointer": "0x624ea802"
+    },
+    "0x622a0bb8": {
+      "key": "0x94a1",
+      "pointer": "0x6250f27c"
+    },
+    "0x622a0bbc": {
+      "key": "0x8181",
+      "pointer": "0x624ea7ff"
+    },
+    "0x622a0bc0": {
+      "key": "0x94ba",
+      "pointer": "0x6250f27e"
+    },
+    "0x622a0bc4": {
+      "key": "0x8171",
+      "pointer": "0x624ea7fe"
+    },
+    "0x622a0bc8": {
+      "key": "0x8391",
+      "pointer": "0x624ea821"
+    },
+    "0x622a0bd0": {
+      "key": "0x7ea1",
+      "pointer": "0x624ea7bb"
+    },
+    "0x622a0bd8": {
+      "key": "0x8eb9",
+      "pointer": "0x6250f1df"
+    },
+    "0x622a0bdc": {
+      "key": "0x9961",
+      "pointer": "0x6250f304"
+    },
+    "0x622a0be0": {
+      "key": "0x8121",
+      "pointer": "0x624ea7e7"
+    },
+    "0x622a0be8": {
+      "key": "0x85b1",
+      "pointer": "0x624ea8d7"
+    },
+    "0x622a0bec": {
+      "key": "0x53f1",
+      "pointer": "0x624ea536"
+    },
+    "0x622a0bf0": {
+      "key": "0x5402",
+      "pointer": "0x624ea538"
+    },
+    "0x622a0bf4": {
+      "key": "0x5412",
+      "pointer": "0x624ea53a"
+    },
+    "0x622a0bf8": {
+      "key": "0x6771",
+      "pointer": "0x624ea696"
+    },
+    "0x622a0bfc": {
+      "key": "0x6782",
+      "pointer": "0x624ea698"
+    }
+  },
+  "capture_unchanged": true,
+  "population_resumed": false,
+  "geometry_dynamic_setter_executed": false,
+  "hash_checks_performed": false,
+  "native_api_success_stubs": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "Property/runtime/capture fixtures and conditional template BSS remain inherited. No complete boot, task scheduling or real NVM/calibration input.",
+    "Only witnessed initializer destinations and two bounded arrays are admitted with A5 input; adjacent unknown state stays unmapped, including guard-like readable padding.",
+    "60421330 and its pointer-cache helper execute; zero geometry values are cold reset state, not a claim about an active shot.",
+    "Optional request mode uses original producer/consumer slices and explicit single-request controller branch inputs; its allocation, queue transport, enclosing service transitions and complete handler are not executed.",
+    "6042760c executes on an independent fresh stack using D0=0 from its original caller. The enclosing semaphore/task loop and configuration inputs remain incomplete.",
+    "Partial capture is unchanged; no completion observer, successful dynamic update, full population or worker execution is inferred from service initialization."
+  ]
+}

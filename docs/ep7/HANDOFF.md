@@ -7,7 +7,18 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[原厂模板复制与population](CANDIDATE_POPULATION_SIM.md)已通过copy并定位动态状态
+最新：[几何服务与配置构造](CANDIDATE_GEOMETRY_SIM.md)已执行原厂service5217、controller
+reset前缀18、task前缀131、mode snapshot397、请求字段15+10、设备缓存4336条指令。
+147个service属性槽及117行设备缓存全部匹配已注册属性bank；后者复用启动data-copy
+来源60233034→61f9ad74，仅936B有条件映射，NAND/cache未执行。mode3由原厂调用点
+产生，三份24B快照来自ROM fallback60533564。请求controller inputs仍为明确fixture，
+完整handler/任务时序未执行。配置6042760c推进1920指令停601168ee读a272bcde，
+查询1215/返回601654dc，尚未进入6042805e动态setter；capture不变，population未续接。
+四个中间frontier报告保留；当前脚本严格固定预期fault。下一步601168ba/6011681d
+设备状态初始化及8ff00198/设备表来源。不要直接补零或把reset尺寸用作拍摄值。
+候选仍004/不可安装，无重编译/SHA/相机操作；S3未整体完成。
+
+此前：[原厂模板复制与population](CANDIDATE_POPULATION_SIM.md)已通过copy并定位动态状态
 停止点，候选仍004。新增capture配置ROM60096f98..600be008共1084条，经同一原厂
 packer581230指令打包到624ea400/153008字节，再64545指令注册；总2293条不同索引。
 真实CALL602a7ea0[f0],20执行prewrite一次及6833word复制，49697指令到602a7eb0，
