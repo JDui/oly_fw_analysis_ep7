@@ -197,3 +197,10 @@ ID24/value3，1333描述、439回调、201关联规则由原生函数建立；96
 改变12个标量及8b54暂存记录，C011与暂存均为3；partial capture未改变。共享RAM
 别名、3B冷BSS与18B原initialized-data条件明确保留；真实模式事件、post-hook注册、
 资源队列清理仍待证。下一步刷新原快照并以新栈重跑6042760c，旧失败配置不续接。
+
+[新快照与完整几何构造](CANDIDATE_RECONFIGURED_GEOMETRY_SIM.md)现已通过：完成原生
+曲线和模块初始化，快照offset9实际由0变3；新栈6042760c查表匹配第4行/key3，执行
+动态setter并以19个word发布76B配置，完整返回且SP恢复。新增1062B均为原生写入
+容量，无新增BSS条件；4B沿用原initialized-data配方。旧partial capture保持不变。
+未配置格式、无设备及任务调度切点仍明确保留；下一步从模板初始化/prewrite重新
+执行完整population，不能恢复属性更新前的旧帧。S3/S4和安装资格仍未整体完成。

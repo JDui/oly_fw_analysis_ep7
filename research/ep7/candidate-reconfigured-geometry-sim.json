@@ -1,0 +1,675 @@
+{
+  "scope": "Refresh the native snapshot after ID24 propagation, then construct geometry.\n\nOnly reviewed native writes receive new storage. The scenario still has no\navailable device and an unconfigured format; a completed call is not a shot.\n",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu",
+  "gpio80_input_bit4": 0,
+  "cases": [
+    {
+      "symbol": "native_geometry_curve_initialize",
+      "status": "returned",
+      "completed": 2860,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 56,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x0",
+        "d1": "0x10",
+        "d2": "0x22334455",
+        "d3": "0x33445566",
+        "a0": "0x62295a92",
+        "a1": "0x6005c8cc",
+        "a2": "0x19400000",
+        "a3": "0x19500000",
+        "sp": "0x190107b0",
+        "pc": "0x19000007",
+        "mdr": "0x603fbe41",
+        "psw": "0x801",
+        "lir": "0xe0f4e014",
+        "lar": "0x603fe0a8",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    },
+    {
+      "symbol": "native_geometry_submodule_initialize",
+      "status": "returned",
+      "completed": 734,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 16,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x0",
+        "d1": "0x6229a36c",
+        "d2": "0x22334455",
+        "d3": "0x33445566",
+        "a0": "0x6229a334",
+        "a1": "0x6229a36c",
+        "a2": "0x19400000",
+        "a3": "0x19500000",
+        "sp": "0x190107b0",
+        "pc": "0x19000007",
+        "mdr": "0x6040b7bb",
+        "psw": "0x801",
+        "lir": "0xa5f15161",
+        "lar": "0x47001180",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    },
+    {
+      "symbol": "native_geometry_device_reset_member",
+      "status": "returned",
+      "completed": 2,
+      "fault": null,
+      "final_pc": "0x6016995a",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 0,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x0",
+        "d1": "0x55667788",
+        "d2": "0x22334455",
+        "d3": "0x33445566",
+        "a0": "0x19200000",
+        "a1": "0x19300000",
+        "a2": "0x19400000",
+        "a3": "0x19500000",
+        "sp": "0x190107b0",
+        "pc": "0x6016995a",
+        "mdr": "0x13579bdf",
+        "psw": "0x801",
+        "lir": "0x12345678",
+        "lar": "0x23456789",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    },
+    {
+      "symbol": "native_snapshot_task_prefix_again",
+      "status": "returned",
+      "completed": 92,
+      "fault": null,
+      "final_pc": "0x60409e74",
+      "final_sp": "0x1901076c",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 76,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x0",
+        "d1": "0x190107a0",
+        "d2": "0x22334455",
+        "d3": "0x605446c4",
+        "a0": "0x6229fb0c",
+        "a1": "0x190107a0",
+        "a2": "0x19400000",
+        "a3": "0x6229faf8",
+        "sp": "0x1901076c",
+        "pc": "0x60409e74",
+        "mdr": "0x60409e62",
+        "psw": "0x800",
+        "lir": "0xa5f15161",
+        "lar": "0x47001180",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    },
+    {
+      "symbol": "native_snapshot_callback_after_public_setting",
+      "status": "returned",
+      "completed": 7110,
+      "fault": null,
+      "final_pc": "0x60409ecb",
+      "final_sp": "0x1901076c",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 676,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 3,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x0",
+        "d1": "0x0",
+        "d2": "0x22334455",
+        "d3": "0x605446c4",
+        "a0": "0x6229fc48",
+        "a1": "0x6005c8cc",
+        "a2": "0x19400000",
+        "a3": "0x6229faf8",
+        "sp": "0x1901076c",
+        "pc": "0x60409ecb",
+        "mdr": "0x6041a305",
+        "psw": "0x806",
+        "lir": "0x22165f0",
+        "lar": "0x60428b73",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    },
+    {
+      "symbol": "native_fresh_geometry_configuration",
+      "status": "returned",
+      "completed": 18007,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 196864,
+      "stack_depth_from_call_sp": 1136,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 4,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x30100",
+        "d1": "0x0",
+        "d2": "0x22334455",
+        "d3": "0x33445566",
+        "a0": "0x622a0760",
+        "a1": "0x1901075c",
+        "a2": "0x19400000",
+        "a3": "0x19500000",
+        "sp": "0x190107b0",
+        "pc": "0x19000007",
+        "mdr": "0x60427761",
+        "psw": "0x80000805",
+        "lir": "0x50605171",
+        "lar": "0x60427773",
+        "mdrq": "0xffffffff",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    }
+  ],
+  "native_instructions": 28805,
+  "maximum_observed_new_stack_depth": 1136,
+  "native_store_bytes_added": 1062,
+  "conditional_BSS_bytes_added": 0,
+  "conditional_initialized_data": {
+    "address": "0x61fa0638",
+    "source": "0x602388f8",
+    "bytes": 4,
+    "halfwords": [
+      295,
+      85
+    ],
+    "physical_startup_copy_executed": false
+  },
+  "curve": {
+    "address": "0x62295ab2",
+    "bytes": 104,
+    "header": [
+      14,
+      0
+    ],
+    "x": [
+      1116,
+      1194,
+      1280,
+      1365,
+      1450,
+      1536,
+      1621,
+      1706,
+      1792,
+      1877,
+      1962,
+      2048,
+      2133,
+      2218,
+      2304,
+      2389,
+      2474,
+      2560,
+      2645,
+      2730,
+      2816,
+      2901,
+      2986,
+      3072,
+      3157
+    ],
+    "y": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "property_sources": [
+      "0x1a4a",
+      "0x193a"
+    ],
+    "native_initialization_completed": true
+  },
+  "submodule_native_store_ranges": [
+    [
+      "0x622959d8",
+      "0x622959d9"
+    ],
+    [
+      "0x6229a0f8",
+      "0x6229a100"
+    ],
+    [
+      "0x6229a10c",
+      "0x6229a10e"
+    ],
+    [
+      "0x6229a110",
+      "0x6229a132"
+    ],
+    [
+      "0x6229a138",
+      "0x6229a13e"
+    ],
+    [
+      "0x6229a149",
+      "0x6229a14e"
+    ],
+    [
+      "0x6229a150",
+      "0x6229a162"
+    ],
+    [
+      "0x6229a164",
+      "0x6229a37a"
+    ],
+    [
+      "0x6229a37c",
+      "0x6229a382"
+    ],
+    [
+      "0x6229a384",
+      "0x6229a389"
+    ],
+    [
+      "0x6229a38c",
+      "0x6229a392"
+    ],
+    [
+      "0x6229a394",
+      "0x6229a398"
+    ],
+    [
+      "0x6229a39c",
+      "0x6229a3a4"
+    ],
+    [
+      "0xa2740fbc",
+      "0xa2740fbd"
+    ],
+    [
+      "0xa2740fbe",
+      "0xa2740fc9"
+    ],
+    [
+      "0xa2740fcc",
+      "0xa2740fd0"
+    ]
+  ],
+  "snapshot": {
+    "address": "0x6229fc48",
+    "bytes": 124,
+    "changes": [
+      {
+        "offset": 9,
+        "before": 0,
+        "after": 3
+      }
+    ],
+    "native_cache_equal": true,
+    "callback_and_wrapper_returned": true
+  },
+  "native_table_lookup": {
+    "entry": "0x603fca0a",
+    "requested_key": 3,
+    "table": "0x60541326",
+    "row_bytes": 70,
+    "key_offset": 68,
+    "matched_index": 4
+  },
+  "geometry_dynamic_setter_entries": 1,
+  "geometry_configuration_completed": true,
+  "geometry_output_stores": [
+    {
+      "pc": "0x60428586",
+      "address": "0x622a0654",
+      "width": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x60428591",
+      "address": "0x622a0656",
+      "width": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x6042859c",
+      "address": "0x622a0658",
+      "width": 1,
+      "value": 0
+    },
+    {
+      "pc": "0x604285a6",
+      "address": "0x622a065a",
+      "width": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x604285af",
+      "address": "0x622a065c",
+      "width": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x604285b8",
+      "address": "0x622a065e",
+      "width": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x604285c0",
+      "address": "0x622a0660",
+      "width": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x604285c9",
+      "address": "0x622a0662",
+      "width": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x604285d2",
+      "address": "0x622a0664",
+      "width": 1,
+      "value": 0
+    },
+    {
+      "pc": "0x604285db",
+      "address": "0x622a0665",
+      "width": 1,
+      "value": 0
+    },
+    {
+      "pc": "0x604285e4",
+      "address": "0x622a0666",
+      "width": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x604285ed",
+      "address": "0x622a0668",
+      "width": 1,
+      "value": 3
+    },
+    {
+      "pc": "0x604285fe",
+      "address": "0x622a0669",
+      "width": 1,
+      "value": 0
+    },
+    {
+      "pc": "0x60428607",
+      "address": "0x622a066a",
+      "width": 1,
+      "value": 0
+    },
+    {
+      "pc": "0x60428618",
+      "address": "0x622a066c",
+      "width": 4,
+      "value": 7
+    },
+    {
+      "pc": "0x60428620",
+      "address": "0x622a0670",
+      "width": 2,
+      "value": 0
+    },
+    {
+      "pc": "0x60428629",
+      "address": "0x622a0676",
+      "width": 2,
+      "value": 512
+    },
+    {
+      "pc": "0x60428632",
+      "address": "0x622a0672",
+      "width": 2,
+      "value": 1024
+    },
+    {
+      "pc": "0x6042863b",
+      "address": "0x622a0674",
+      "width": 2,
+      "value": 1536
+    },
+    {
+      "pc": "0x60428644",
+      "address": "0x622a067a",
+      "width": 2,
+      "value": 32768
+    },
+    {
+      "pc": "0x6042864d",
+      "address": "0x622a0678",
+      "width": 2,
+      "value": 0
+    }
+  ],
+  "skipped_alternative_store_pcs": [
+    "0x604285f5"
+  ],
+  "configuration_publication": {
+    "destination": "0x622a0714",
+    "source": "0x19010710",
+    "bytes": 76,
+    "native_word_stores": 19,
+    "source_equal": true,
+    "data": "0000000000000004d9040006000d00020000000000020002000200000000000000000000000000000004000000000000000e00fa640000000000000090000000204e00000000000000010300"
+  },
+  "capture_unchanged": true,
+  "population_resumed": false,
+  "old_failed_geometry_frame_resumed": false,
+  "hash_checks_performed": false,
+  "native_api_success_stubs": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "The previous complete public ID24 setting is followed by a new snapshot and fresh6042760c stack. No suspended zero-mode geometry frame is resumed.",
+    "The task prefix and snapshot dispatch reuse explicit receive/log scheduling cut points. The enclosing task loop, queue delivery and live mode-event ordering are not executed.",
+    "Full curve and submodule initializers execute on poisoned reviewed write storage. Four constant bytes retain the known initialized-data ROM recipe; no physical startup copy or active calibration is claimed.",
+    "The inherited format is unconfigured and the native availability state says no device. The complete configuration and dynamic setter return prove this conditional call path, not valid active shot dimensions.",
+    "D0 at the final return is the last copied configuration word; it is not interpreted as a success or error code.",
+    "The previous capture remains untouched. Fresh capture population, worker ownership/lifecycle, backup/recovery and installability remain pending."
+  ]
+}
