@@ -1,0 +1,39 @@
+{
+  "status": "incomplete_model_frontier_not_firmware_failure",
+  "candidate": "006-r2",
+  "source_probe": "generated/ep7/probe_color_construction_006.py",
+  "existing_probes_reused": [
+    "ep7_candidate_ui_owner_sim.owner_context",
+    "ep7_candidate_static_kernel_sim.inspect",
+    "ep7_candidate_kernel_static_init_sim.run_case"
+  ],
+  "actual_constructor_entry": "ep7_native_mvc_gui_entry_bridge -> stock60e5dae9",
+  "native_progress": [
+    "selector array expansion 4 to 6",
+    "native C++ singleton construction",
+    "native mutex wait path"
+  ],
+  "stop": {
+    "pc": "0x600324bf",
+    "access": "write",
+    "address": "0x00000000",
+    "reason": "synthetic current TCB wait-list links at +40/+44 are absent"
+  },
+  "caller_chain": [
+    "0x60768501",
+    "0x60a4e9d2",
+    "0x60037d68",
+    "0x600324dd"
+  ],
+  "explicit_boundaries": [
+    "synthetic completed request278 owner",
+    "GUI task identity and ready state",
+    "mode54 and zero property results",
+    "modeled allocation and GUI locks",
+    "incomplete C++ runtime initialization/scheduler"
+  ],
+  "changed_firmware": false,
+  "whole_COLOR_construction_passed": false,
+  "hash_checks_performed": false,
+  "conclusion": "Do not repair this stop by fabricating native wait completion. The missing scheduler/runtime state is not the physical camera stop PC."
+}

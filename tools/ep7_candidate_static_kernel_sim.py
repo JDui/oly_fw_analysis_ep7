@@ -20,7 +20,7 @@ from ep7_sim_probe import brief
 from penf_emulator import Region
 
 
-def inspect(directory, prefix, engine, *, context_only=False):
+def inspect(directory, prefix, engine, *, context_only=False, candidate_override=None):
     initialization = []
     static = {}
     dynamic = 0
@@ -72,7 +72,8 @@ def inspect(directory, prefix, engine, *, context_only=False):
             [('native_all_object_count_recipe_copy',counts),('native_255_semaphore_ID_clear',cleared),
              ('complete_native_132_static_semaphore_initialize',initialized)])
 
-    base, front, syms, build, queues = bootstrap_context(directory,prefix,engine,prepare_kernel=prepare)
+    base, front, syms, build, queues = bootstrap_context(directory,prefix,engine,prepare_kernel=prepare,
+        candidate_override=candidate_override)
     success = base.clone()
     created = success.resume(front['registers'],front['registers']['mdr'],full_trace=True,limit=3000)
     require(created['status']=='returned' and created['registers']['d0']==133 and

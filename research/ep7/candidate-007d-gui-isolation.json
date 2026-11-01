@@ -1,0 +1,323 @@
+{
+  "kind": "startup_diagnostic_not_HL_release",
+  "diagnostic_id": "007D",
+  "source_candidate": "006-r2",
+  "compiled_source_revision": "a059e5ff17538aa8f95dc62d05a48545d3a2bb6a",
+  "existing_compiled_code_reused": true,
+  "new_compilation_performed": false,
+  "gui_patch_sites_restored": 22,
+  "restored_GUI_patch_spans": [
+    {
+      "site": "0x60cfd53a",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600cd1cd",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60cfd558",
+      "bytes": 7,
+      "kind": "wide_call",
+      "target": "0x600cd210",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60e261d4",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600cc950",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60e26201",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600cc96e",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60e26226",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600cc98c",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60e269f0",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x600cc9aa",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60ea0070",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x6004cc62",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60ea00f7",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x6004cc80",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60ea0d70",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x6004cc9e",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60ea0deb",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x6004ccbc",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60ea0e66",
+      "bytes": 5,
+      "kind": "short_call_via_veneer",
+      "target": "0x6004ccda",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x60faadc4",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x600cd2ab",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x61032f10",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x600cd346",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x61032fa8",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x600cd2f2",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x610330c0",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x600cd31c",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x6114f334",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x6004d818",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x6118957c",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x6004ca98",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x611895a4",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x600cc900",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x61189ba8",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x6004d476",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x61189bac",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x600cc928",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x611a3b50",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x600cc899",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    },
+    {
+      "site": "0x611a3bc4",
+      "bytes": 4,
+      "kind": "function_pointer_word",
+      "target": "0x600cc8d8",
+      "load_stage": "section6",
+      "upstream_load_path_qualified": true
+    }
+  ],
+  "retained_patch_sites": 76,
+  "entire_GUI_section_equals_stock": true,
+  "all_bytes_outside_GUI_section_equal_006": true,
+  "boot_prefix_unchanged": true,
+  "private_state_initialization_unchanged": true,
+  "HL_editor_enabled": false,
+  "black_screen_root_cause_confirmed": false,
+  "black_screen_fixed": false,
+  "package_bytes": 111017984,
+  "component_count": 5,
+  "all_native_additive_checksums_valid": true,
+  "component_metadata_preserved": true,
+  "other_four_encoded_components_unchanged": true,
+  "restore_equals_official_input": true,
+  "hash_checks_performed": false,
+  "native_full_decode_and_checksum_passed": false,
+  "physical_flash_performed": false,
+  "full_device_boot_verified": false,
+  "independent_recovery_proven": false,
+  "workflow": "fishcu oly_container.parse -> replace_payload -> reconstruct",
+  "startup_validation": {
+    "status": "passed",
+    "native_static_semaphores": 132,
+    "private_semaphore_id": 133,
+    "native_initialization": [
+      {
+        "name": "native_all_object_count_recipe_copy",
+        "status": "returned",
+        "completed": 193,
+        "fault": null,
+        "final_pc": "0x60032651",
+        "final_sp": "0x190107b0"
+      },
+      {
+        "name": "native_255_semaphore_ID_clear",
+        "status": "returned",
+        "completed": 2312,
+        "fault": null,
+        "final_pc": "0x6003567f",
+        "final_sp": "0x190107b0"
+      },
+      {
+        "name": "complete_native_132_static_semaphore_initialize",
+        "status": "returned",
+        "completed": 7274,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107b0"
+      }
+    ],
+    "native_create": {
+      "status": "returned",
+      "completed": 316,
+      "fault": null,
+      "final_pc": "0x60049bc1",
+      "final_sp": "0x190106d8",
+      "returned_d0": 133,
+      "observed_stack_depth_from_hook_sp": 328,
+      "native_get_tid_entries": 0,
+      "native_create_entries": 1,
+      "native_delete_entries": 0,
+      "native_slot_allocator_entries": 1,
+      "shared_bset_entries": 1,
+      "shared_bclr_entries": 1,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "published": {
+      "status": "returned",
+      "completed": 39737,
+      "fault": null,
+      "final_pc": "0x6011f620",
+      "final_sp": "0x190107ec",
+      "returned_d0": 287454020,
+      "observed_stack_depth_from_hook_sp": 356,
+      "native_get_tid_entries": 11,
+      "native_create_entries": 0,
+      "native_delete_entries": 0,
+      "native_slot_allocator_entries": 0,
+      "shared_bset_entries": 0,
+      "shared_bclr_entries": 0,
+      "context_switch_entries": 0,
+      "task_exception_callback_entries": 0
+    },
+    "disabled_GUI_cohorts": [
+      {
+        "symbol": "_ep7i_native_cohort_present",
+        "status": "returned",
+        "completed": 12,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0",
+        "returned_d0": 0
+      },
+      {
+        "symbol": "_ep7m_native_cohort_present",
+        "status": "returned",
+        "completed": 10,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0",
+        "returned_d0": 0
+      },
+      {
+        "symbol": "_ep7u_native_cohort_present",
+        "status": "returned",
+        "completed": 6,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0",
+        "returned_d0": 0
+      }
+    ],
+    "neutral_COLOR4_snapshot": "03000000000000000000000000000000000000000000000000",
+    "freeze": {
+      "status": "returned",
+      "completed": 1033,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0"
+    },
+    "hardware_executed": false,
+    "full_boot_executed": false,
+    "hash_checks_performed": false,
+    "limits": [
+      "Native semaphore creation/publication and neutral capture execute against the exact 007D bytes.",
+      "Current task, ready lists, queue objects/backing identities and uncontended shared lock remain explicit fixtures.",
+      "Whole camera startup, physical cache/multicore behavior, display and photo output are not simulated.",
+      "Original GUI section is restored as bytes; its full construction/scheduling is not executed."
+    ]
+  },
+  "output": "generated/ep7/flash-packages/EP7HSL-007D-GUI-ISOLATION",
+  "zip": "generated/ep7/flash-packages/EP7HSL-007D-GUI-ISOLATION-SD.zip",
+  "zip_bytes": 79073551,
+  "zip_members": 4,
+  "zip_CRC_and_readback_passed": true
+}

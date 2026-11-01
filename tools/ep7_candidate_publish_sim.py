@@ -102,9 +102,9 @@ def unpublished(machine,syms):
     require(u32(machine,syms['_ep7_native_runtime_slot'])==0,'failed bootstrap published a runtime')
 
 
-def bootstrap_context(directory,prefix,engine,prepare_kernel=None):
+def bootstrap_context(directory,prefix,engine,prepare_kernel=None,*,candidate_override=None):
     """Reach the real create boundary, then supply the explicit S2 kernel fixture."""
-    data,syms,build = candidate_inputs(directory,prefix)
+    data,syms,build = candidate_inputs(directory,prefix) if candidate_override is None else candidate_override
     base = Machine(data,engine)
     if prepare_kernel is not None:
         queues = fixture(base)

@@ -25,7 +25,7 @@ def u32(machine, address):
     return int.from_bytes(machine.read(address, 4), 'little')
 
 
-def run_case(path, engine):
+def run_case(path, engine, *, context_only=False):
     data = path.read_bytes()
     require(len(data) == 26214336, 'unsupported decoded main length')
     machine = Machine(data, engine)
@@ -92,7 +92,7 @@ def run_case(path, engine):
             maximum=maximum, ring_bytes=ring, backing=hex(backing)))
     task_table = u32(machine, ROOT+204)
     task = u32(machine, task_table+4*(0x2d-1))
-    return dict(image=str(path), status='passed', steps=steps,
+    report = dict(image=str(path), status='passed', steps=steps,
         executed_instructions=sum(s['completed'] for s in steps),
         free_blocks=free_blocks, free_block_bytes=sum(b['bytes'] for b in free_blocks),
         selected_queues=queues, usr3=dict(tcb=hex(task),
@@ -100,6 +100,7 @@ def run_case(path, engine):
             exception_flag=int.from_bytes(machine.read(task+48,2),'little'),
             entry=hex(u32(machine,task+76)), stack_bytes=u32(machine,task+84),
             stack_low=hex(u32(machine,task+88))))
+    return (machine, report) if context_only else report
 
 
 def inspect(stock, candidate, engine):
