@@ -7,7 +7,20 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[原厂诊断缓冲区与格式记录](CANDIDATE_FORMAT_RECORD_SIM.md)新增55234指令，
+最新：[冷态历史缩放回退](CANDIDATE_HISTORY_SIM.md)新增220指令，两GPIO各selector19、
+fallback91。仅a273104a/2B和a2731148/4B使用原厂BSS/alias条件；原60309e4f计算
+槽0指针a2731098并写回producer栈，6030407e从原分支返回16.16单位倍率65536。
+完整活动记录未构造，其他4896B历史payload仍未映射。当前严格fault47001070读
+a271ca80/4B，MDR601f6916；601f6903真实调用47001052复制16B，停在第一项源读取。
+新最大观测栈652非完整上界。capture不变，geometry/population未恢复，候选004/
+fishcu包未变、不可安装。历史记录+176来自6030c095内输入+332，成功后6030992a/
+60309a48才更新索引，均未执行。16B缓存写入601f66f7的唯一直接调用点60293a9f：
+60293a65从外层对象构造11B字段，缓存偏移4/9/10/11/15为未显式写入的栈字节。
+下一步追该外层对象与缓存发布，不能整块补零；活动历史构造仍为独立待证。
+正式report固定倍率/16B复制/frontier，保留selector及cold两份历史报告。初次新增
+witness长度笔误已改成证据自身长度；无SHA、重编译或相机操作。
+
+此前：[原厂诊断缓冲区与格式记录](CANDIDATE_FORMAT_RECORD_SIM.md)新增55234指令，
 两GPIO输入分别为cold suffix26872、record reset prefix240、producer resume505。
 60556bb2原现场继续至60556b1e完整返回；原厂分配60022700/600228b6取得CPU0 big
 槽0/1的61bd6d40、61bdad80，各16384B，stride4040。counter2/bitmap3、2048条记录
