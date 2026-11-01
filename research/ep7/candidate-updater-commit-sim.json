@@ -1,0 +1,745 @@
+{
+  "scope": "E-P7 shared updater: native package validation, trapped commit requests.\n\nReuses fishcu's container implementation and the existing strict GNU engine.\nOnly console output, firmware-service delivery and flash-backend calls are\nmodeled. No device, filesystem discovery, physical write or recovery is tested.\n",
+  "controls": [
+    {
+      "name": "valid_main_sd_mode",
+      "mode": 0,
+      "returned": true,
+      "result": "0x0",
+      "completed_instructions": 2570,
+      "final": {
+        "status": "returned",
+        "completed": 4,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      },
+      "calls": [
+        {
+          "status": "breakpoint",
+          "completed": 482,
+          "fault": null,
+          "final_pc": "0x6002247c",
+          "final_sp": "0x19010558"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 1903,
+          "fault": null,
+          "final_pc": "0x6002247c",
+          "final_sp": "0x19010584"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 108,
+          "fault": null,
+          "final_pc": "0x6002247c",
+          "final_sp": "0x19010584"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 49,
+          "fault": null,
+          "final_pc": "0x600c4f35",
+          "final_sp": "0x19010568"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 7,
+          "fault": null,
+          "final_pc": "0x6002247c",
+          "final_sp": "0x19010570"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 17,
+          "fault": null,
+          "final_pc": "0x6002247c",
+          "final_sp": "0x19010584"
+        },
+        {
+          "status": "returned",
+          "completed": 4,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107f0"
+        }
+      ],
+      "write_requests": [
+        {
+          "kind": "flash_backend",
+          "entry": "0x600c4f35",
+          "source": "0x20000000",
+          "destination": "0x806a0000",
+          "bytes": 320,
+          "backend_mode": 1,
+          "component_kind": "0x100",
+          "model_result": "0x0"
+        }
+      ],
+      "diagnostics": [
+        {
+          "entry": "0x6002247c",
+          "text": "[firmup]DeSecramble\n",
+          "value": "0x1"
+        },
+        {
+          "entry": "0x6002247c",
+          "text": "[firmup]...USR Gets\n",
+          "value": "0x0"
+        },
+        {
+          "entry": "0x6002247c",
+          "text": "[firmup]TYPE_FIRMUP_WRITE_USR\n",
+          "value": "0x1"
+        },
+        {
+          "entry": "0x6002247c",
+          "text": "[firmup]...USR_FIRMUP_END\n",
+          "value": "0x0"
+        },
+        {
+          "entry": "0x6002247c",
+          "text": "[firmup]TYPE_FIRMUP_WRITE_OK\n",
+          "value": "0x0"
+        }
+      ],
+      "callee_saved_restored": true
+    },
+    {
+      "name": "wrong_model_rejected",
+      "mode": 2,
+      "returned": true,
+      "result": "0x3202",
+      "completed_instructions": 2380,
+      "final": {
+        "status": "returned",
+        "completed": 1896,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      },
+      "calls": [
+        {
+          "status": "breakpoint",
+          "completed": 484,
+          "fault": null,
+          "final_pc": "0x6002247c",
+          "final_sp": "0x19010558"
+        },
+        {
+          "status": "returned",
+          "completed": 1896,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107f0"
+        }
+      ],
+      "write_requests": [],
+      "diagnostics": [
+        {
+          "entry": "0x6002247c",
+          "text": "[firmup]DeSecramble\n",
+          "value": "0x1"
+        }
+      ],
+      "callee_saved_restored": true
+    },
+    {
+      "name": "late_checksum_error_before_any_write",
+      "mode": 0,
+      "returned": true,
+      "result": "0x3211",
+      "completed_instructions": 4296,
+      "final": {
+        "status": "returned",
+        "completed": 5,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      },
+      "calls": [
+        {
+          "status": "breakpoint",
+          "completed": 509,
+          "fault": null,
+          "final_pc": "0x6002247c",
+          "final_sp": "0x19010558"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 1903,
+          "fault": null,
+          "final_pc": "0x6002247c",
+          "final_sp": "0x19010584"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 34,
+          "fault": null,
+          "final_pc": "0x6002247c",
+          "final_sp": "0x19010558"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 1809,
+          "fault": null,
+          "final_pc": "0x6002266d",
+          "final_sp": "0x19010548"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 21,
+          "fault": null,
+          "final_pc": "0x6002266d",
+          "final_sp": "0x1901055c"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 3,
+          "fault": null,
+          "final_pc": "0x6002247c",
+          "final_sp": "0x19010558"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 12,
+          "fault": null,
+          "final_pc": "0x6002266d",
+          "final_sp": "0x19010588"
+        },
+        {
+          "status": "returned",
+          "completed": 5,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107f0"
+        }
+      ],
+      "write_requests": [],
+      "diagnostics": [
+        {
+          "entry": "0x6002247c",
+          "text": "[firmup]DeSecramble\n",
+          "value": "0x1"
+        },
+        {
+          "entry": "0x6002247c",
+          "text": "[firmup]...USR Gets\n",
+          "value": "0x0"
+        },
+        {
+          "entry": "0x6002247c",
+          "text": "[firmup]DeSecramble\n",
+          "value": "0x1"
+        },
+        {
+          "entry": "0x6002266d",
+          "text": "sum",
+          "value": "0x1000000"
+        },
+        {
+          "entry": "0x6002266d",
+          "text": "check_error_status : ",
+          "value": "0x3211"
+        },
+        {
+          "entry": "0x6002247c",
+          "text": "[firmup]...checksum_error\n",
+          "value": "0x0"
+        },
+        {
+          "entry": "0x6002266d",
+          "text": "[firmup]...usr_checksum_error",
+          "value": "0x3211"
+        }
+      ],
+      "callee_saved_restored": true
+    }
+  ],
+  "hash_checks_performed": false,
+  "hardware_executed": false,
+  "physical_writes_executed": false,
+  "installable": false,
+  "status": "passed",
+  "package_bytes": 111017984,
+  "component_count": 5,
+  "native_validation": {
+    "executed": false,
+    "source": "fishcu host-decoded actual package",
+    "native_validation_claim": false
+  },
+  "trapped_commit": {
+    "mode": 1,
+    "returned": true,
+    "result": "0x0",
+    "completed_instructions": 1556,
+    "final": {
+      "status": "returned",
+      "completed": 4,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107f0"
+    },
+    "calls": [
+      {
+        "status": "breakpoint",
+        "completed": 658,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 104,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 114,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 130,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 106,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 52,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 44,
+        "fault": null,
+        "final_pc": "0x60054cfb",
+        "final_sp": "0x19010554"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 54,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 52,
+        "fault": null,
+        "final_pc": "0x600c4f35",
+        "final_sp": "0x19010568"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 7,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010570"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 14,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 52,
+        "fault": null,
+        "final_pc": "0x600c4f35",
+        "final_sp": "0x19010568"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 7,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010570"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 13,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 52,
+        "fault": null,
+        "final_pc": "0x600c4f35",
+        "final_sp": "0x19010568"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 7,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010570"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 13,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 49,
+        "fault": null,
+        "final_pc": "0x600c4f35",
+        "final_sp": "0x19010568"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 7,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010570"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 17,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "returned",
+        "completed": 4,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      }
+    ],
+    "write_requests": [
+      {
+        "kind": "firmware_service",
+        "entry": "0x60054cfb",
+        "source": "0x25d20420",
+        "destination": "0x40002800",
+        "bytes": 219136,
+        "command": 128,
+        "task": 9,
+        "reply": 36,
+        "submode": 2,
+        "model_result": "0x0"
+      },
+      {
+        "kind": "flash_backend",
+        "entry": "0x600c4f35",
+        "source": "0x25d60000",
+        "destination": "0x467e0000",
+        "bytes": 13107200,
+        "backend_mode": 1,
+        "component_kind": "0x102",
+        "model_result": "0x0"
+      },
+      {
+        "kind": "flash_backend",
+        "entry": "0x600c4f35",
+        "source": "0x23200000",
+        "destination": "0x43aa0000",
+        "bytes": 45219840,
+        "backend_mode": 1,
+        "component_kind": "0x106",
+        "model_result": "0x0"
+      },
+      {
+        "kind": "flash_backend",
+        "entry": "0x600c4f35",
+        "source": "0x21900000",
+        "destination": "0x421a0000",
+        "bytes": 26214400,
+        "backend_mode": 1,
+        "component_kind": "0x101",
+        "model_result": "0x0"
+      },
+      {
+        "kind": "flash_backend",
+        "entry": "0x600c4f35",
+        "source": "0x20000000",
+        "destination": "0x806a0000",
+        "bytes": 26214400,
+        "backend_mode": 1,
+        "component_kind": "0x100",
+        "model_result": "0x0"
+      }
+    ],
+    "diagnostics": [
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]...USR Gets\n",
+        "value": "0x0"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]...OSD Gets\n",
+        "value": "0x1"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]...RESCOM Gets\n",
+        "value": "0x6"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]...LUKE Gets\n",
+        "value": "0xe"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]...PIC Gets\n",
+        "value": "0x2"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]TYPE_FIRMUP_WRITE_LUKE\n",
+        "value": "0x80000"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]TYPE_FIRMUP_WRITE_PIC\n",
+        "value": "0x4"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]...USR_FIRMUP_END\n",
+        "value": "0x0"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]TYPE_FIRMUP_WRITE_RESCOM\n",
+        "value": "0x2000"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]...USR_FIRMUP_END\n",
+        "value": "0x0"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]TYPE_FIRMUP_WRITE_OSD\n",
+        "value": "0x2"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]...USR_FIRMUP_END\n",
+        "value": "0x0"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]TYPE_FIRMUP_WRITE_USR\n",
+        "value": "0x1"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]...USR_FIRMUP_END\n",
+        "value": "0x0"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]TYPE_FIRMUP_WRITE_OK\n",
+        "value": "0x0"
+      }
+    ],
+    "callee_saved_restored": true
+  },
+  "backend_failure": {
+    "mode": 1,
+    "returned": true,
+    "result": "0x3102",
+    "completed_instructions": 1333,
+    "final": {
+      "status": "returned",
+      "completed": 11,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107f0"
+    },
+    "calls": [
+      {
+        "status": "breakpoint",
+        "completed": 658,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 104,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 114,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 130,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 106,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 52,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 44,
+        "fault": null,
+        "final_pc": "0x60054cfb",
+        "final_sp": "0x19010554"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 54,
+        "fault": null,
+        "final_pc": "0x6002247c",
+        "final_sp": "0x19010584"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 52,
+        "fault": null,
+        "final_pc": "0x600c4f35",
+        "final_sp": "0x19010568"
+      },
+      {
+        "status": "breakpoint",
+        "completed": 8,
+        "fault": null,
+        "final_pc": "0x6002266d",
+        "final_sp": "0x19010574"
+      },
+      {
+        "status": "returned",
+        "completed": 11,
+        "fault": null,
+        "final_pc": "0x19000007",
+        "final_sp": "0x190107f0"
+      }
+    ],
+    "write_requests": [
+      {
+        "kind": "firmware_service",
+        "entry": "0x60054cfb",
+        "source": "0x25d20420",
+        "destination": "0x40002800",
+        "bytes": 219136,
+        "command": 128,
+        "task": 9,
+        "reply": 36,
+        "submode": 2,
+        "model_result": "0x0"
+      },
+      {
+        "kind": "flash_backend",
+        "entry": "0x600c4f35",
+        "source": "0x25d60000",
+        "destination": "0x467e0000",
+        "bytes": 13107200,
+        "backend_mode": 1,
+        "component_kind": "0x102",
+        "model_result": "0x3102"
+      }
+    ],
+    "diagnostics": [
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]...USR Gets\n",
+        "value": "0x0"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]...OSD Gets\n",
+        "value": "0x1"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]...RESCOM Gets\n",
+        "value": "0x6"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]...LUKE Gets\n",
+        "value": "0xe"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]...PIC Gets\n",
+        "value": "0x2"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]TYPE_FIRMUP_WRITE_LUKE\n",
+        "value": "0x80000"
+      },
+      {
+        "entry": "0x6002247c",
+        "text": "[firmup]TYPE_FIRMUP_WRITE_PIC\n",
+        "value": "0x4"
+      },
+      {
+        "entry": "0x6002266d",
+        "text": "[firmup]flashmem_write_error",
+        "value": "0x3102"
+      }
+    ],
+    "callee_saved_restored": true
+  },
+  "commit_only": true,
+  "full_native_decode_and_checksum": false,
+  "native_decoded_bytes_equal_to_fishcu": null,
+  "original_component_versions_preserved": true,
+  "updater_entry": "0x60c964c1",
+  "model_boundaries": [
+    "0x6002247c",
+    "0x6002266d",
+    "0x60054cfb",
+    "0x600c4f35",
+    "0x601e7094",
+    "0x601e71b6"
+  ],
+  "limits": [
+    "Shared updater is entered by a synthetic CALL with explicit resident code/buffers; physical SD/USB entry is not tested.",
+    "Console calls and notifications return modeled zero. Backend and service requests are recorded then return the specified model result.",
+    "No erase, program, readback, firmware-service receiver, device boot, recovery or H/L runtime behavior is established here.",
+    "Commit-only run: real buffers are host-decoded by fishcu. No native validation is claimed for this invocation.",
+    "Shared updater acceptance does not establish all checks in the earlier SD/USB clients or installable status."
+  ]
+}

@@ -8,7 +8,15 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[新COLOR4捕获交接契约](CANDIDATE_SELECTED_HANDOFF_SIM.md)通过55,434条指令，
+最新：[原生共享更新器接收与路由](CANDIDATE_UPDATER_SIM.md)完成两个阶段。实际五组件
+111,017,984B包mode2完整解码/校验/型号分流返回0，无写入且五份decoded等于fishcu。
+首次运行后续主机地址别名断言失败，mode2明细JSON未落盘；观察记录明确保留这点。
+修正只main转换地址的断言后，commit-only重跑通过：010e先服务路由到40002800，
+再0102/0106/0101/main四次flash请求，main最后到806a0000；首次flash错误3102
+阻止后续三次请求。所有写出口截获，未执行物理更新。下一步SD文件选择/入口、
+基础GUI/worker及驻留资格；不重跑已完成整包校验，不自动升级安装资格。
+
+此前：[新COLOR4捕获交接契约](CANDIDATE_SELECTED_HANDOFF_SIM.md)通过55,434条指令，
 最大新栈368B。旧backlink拒绝，原厂两条发布指令后实际ID2/af6037c0复制冻结5/-3；
 patched FIFO第二位置入/出队保持值，原prewrite候选撤销后同元素出队但scope全零。
 只开放原backlink4B写权限，无新输入值；两份capture不变。selected handler的原曝光/

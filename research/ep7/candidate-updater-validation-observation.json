@@ -1,0 +1,35 @@
+{
+  "scope": "Retained execution observation from the first full native updater run; not a reconstructed per-instruction report.",
+  "date": "2026-11-01",
+  "package": "generated/ep7/research-packages/candidate-004/EP7HSL-NONINSTALLABLE.research.oly",
+  "package_bytes": 111017984,
+  "updater_entry": "0x60c964c1",
+  "native_mode": 2,
+  "native_validation_stage": "passed",
+  "native_return": 0,
+  "component_count": 5,
+  "all_native_decoded_buffers_equal_to_fishcu": true,
+  "no_write_request_during_validation": true,
+  "completed_instructions": null,
+  "full_native_validation_report_retained": false,
+  "full_attempt_exit_code": 1,
+  "full_attempt_failed_after_validation": true,
+  "failure": "Host assertion 'component flash route differs' incorrectly expected every ordinary component address to receive the main component alias conversion.",
+  "execution_evidence": {
+    "terminal_session": 60102,
+    "validation_completion_marker": "E-P7: validation returned; tracing commit requests without writing",
+    "marker_location": "tools/ep7_candidate_updater_sim.py, after expect_return(mode2, 0), no-write assertion and equality of all five decoded native buffers with fishcu parse output",
+    "subsequent_failure": "ValueError: component flash route differs",
+    "interpretation": "The completion marker is emitted only after the actual full validation and byte comparisons pass. The later route assertion failure means the aggregate first run failed. It does not undo the successful validation stage, and no missing trace counters are invented."
+  },
+  "followup": {
+    "corrected_rule": "Original 60067102 converts main 406a0000 to 806a0000; 421a0000, 43aa0000 and 467e0000 remain unchanged.",
+    "targeted_rerun_report": "research/ep7/candidate-updater-commit-sim.json",
+    "native_validation_repeated": false,
+    "targeted_rerun_uses_host_decoded_real_package": true
+  },
+  "hash_checks_performed": false,
+  "hardware_executed": false,
+  "physical_writes_executed": false,
+  "installable": false
+}

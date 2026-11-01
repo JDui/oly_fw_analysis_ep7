@@ -72,6 +72,11 @@ patch及落盘回读通过。它仍标记不可安装；局部/完整原厂更�
 
 ## 当前进度
 
+S5的[共享更新器接收与路由](CANDIDATE_UPDATER_SIM.md)已取得阶段证据：实际五组件包
+mode2完整通过，后续mode1的五项写入分流和错误3102停止传播也通过。第一次完整
+运行在已通过validation之后被主机别名断言拒绝；修正后只重跑commit，阶段结果与
+缺失的mode2明细报告分别记录。物理SD/USB入口、写入/回读和恢复仍未验证。
+
 基础H/L的[新捕获交接契约](CANDIDATE_SELECTED_HANDOFF_SIM.md)已通过：实际新node的
 原生backlink发布后，候选取得COLOR4冻结5/-3；延迟FIFO保持ID2与值，prewrite撤销
 后同元素正常出队但scope中性。未重演selected handler的原曝光/格式处理，未知
