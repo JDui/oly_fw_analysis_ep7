@@ -72,6 +72,11 @@ patch及落盘回读通过。它仍标记不可安装；局部/完整原厂更�
 
 ## 当前进度
 
+基础H/L的[新捕获交接契约](CANDIDATE_SELECTED_HANDOFF_SIM.md)已通过：实际新node的
+原生backlink发布后，候选取得COLOR4冻结5/-3；延迟FIFO保持ID2与值，prewrite撤销
+后同元素正常出队但scope中性。未重演selected handler的原曝光/格式处理，未知
+metadata保持未填；没有把契约检查算作完整照片或并发生命周期通过。
+
 首版收敛后的[生产静态信号量检查](CANDIDATE_STATIC_KERNEL_SIM.md)已通过：实际原厂
 132行初始化后，候选取得ID133并发布runtime，H/L编辑/冻结使用原生poll/signal133；
 发布失配只回收自己的133，原132对象及used计数保留。关闭此前S2的ID1专用夹具

@@ -8,7 +8,14 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[生产静态信号量后的私有锁](CANDIDATE_STATIC_KERNEL_SIM.md)已通过。执行原厂60B
+最新：[新COLOR4捕获交接契约](CANDIDATE_SELECTED_HANDOFF_SIM.md)通过55,434条指令，
+最大新栈368B。旧backlink拒绝，原厂两条发布指令后实际ID2/af6037c0复制冻结5/-3；
+patched FIFO第二位置入/出队保持值，原prewrite候选撤销后同元素出队但scope全零。
+只开放原backlink4B写权限，无新输入值；两份capture不变。selected handler的原曝光/
+格式处理是明确完成边界，没有补metadata或宣称完整handler通过。后续按首版收敛
+检查改动的GUI/worker消费边；S4驻留、物理更新入口和恢复继续保留。
+
+此前：[生产静态信号量后的私有锁](CANDIDATE_STATIC_KERNEL_SIM.md)已通过。执行原厂60B
 计数复制、255个ID清除和完整132行静态初始化后，候选取得ID133/6219b448，成功
 发布runtime；COLOR4编辑/冻结的原生poll/signal均使用133。queue4c失配时原生回收
 同一ID、used恢复132，全部原厂静态对象不变。修正的是测试的ID1假设，固件004未变。
