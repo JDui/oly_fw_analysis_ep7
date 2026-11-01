@@ -35,6 +35,11 @@ S3 的功能范围沿用现有四 COLOR profile 易失 H/L 实现；持久化仍
 当前已知未通过项继续以 [OFFLINE_CANDIDATE](OFFLINE_CANDIDATE.md) 的列表为准。
 备份/恢复缺失不阻止继续离线工作，也不会被模拟结果自动视为解决。
 
+S5可独立推进的[五组件研究容器](CANDIDATE_PACKAGE.md)现已生成，111,017,984字节。
+直接复用fishcu容器流程，E-P7元数据与四个未修改组件逐字节保留，主组件实际ELF/
+patch及落盘回读通过。它仍标记不可安装；局部/完整原厂更新器、恢复与S3/S4资格
+尚未因此关闭。下一步执行原厂局部校验路径。
+
 ## 当前进度
 
 S1 已完成：[实际候选启动前缀](CANDIDATE_STARTUP_SIM.md)通过冷清零、capture 初始化、

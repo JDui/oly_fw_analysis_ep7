@@ -2,6 +2,11 @@
 
 ## Current prebuild work
 
+2026-11-01: candidate004 now also has a [five-component research container](CANDIDATE_PACKAGE.md),
+using the inherited fishcu parse/replace/reconstruct flow. It preserves E-P7
+metadata and the four unchanged components; it remains unqualified for installation.
+The historical build results below refer to the decoded candidate stage.
+
 2026-10-31: the first [non-installable offline candidate](OFFLINE_CANDIDATE.md)
 has been compiled, linked and synthesized as a decoded main image. All 107
 implementation sources, 101 patches and 109 external bindings participate.

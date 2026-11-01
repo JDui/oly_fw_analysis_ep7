@@ -7,7 +7,16 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[原厂冷状态与几何快照](CANDIDATE_SERVICE_STATE_SIM.md)接入RAM后缀160、诊断
+最新：[fishcu流程五组件研究容器](CANDIDATE_PACKAGE.md)已输出到
+generated/ep7/research-packages/candidate-004/，111017984B。直接复用oly_container的
+parse/replace_payload/reconstruct；E-P7型号1420、五组件顺序/地址/各自版本字段保留，
+后四组件完整编码字节未变。主组件对实际ELF和101处patch重建一致，共103写入跨度；
+parse/落盘回读通过，2组件/错误型号/换序三负控制拒绝。无SHA/重编译/相机操作。
+产物名EP7HSL-NONINSTALLABLE.research.oly，不建DCOLYMP；命名不是设备强制拒绝。
+S5仅容器子项通过，完整更新器/恢复和S3/S4均仍待证。下一步可独立执行原厂局部
+校验器；处理链仍从下述124B几何快照producer继续，未放弃S3。
+
+此前：[原厂冷状态与几何快照](CANDIDATE_SERVICE_STATE_SIM.md)接入RAM后缀160、诊断
 初始化799、参数前缀169、pending reset5、task reset2条指令。两条原geometry现场
 分别继续3177/3454指令，均停6041a5bb读6229fc44字节，MDR60419f58；动态setter
 未执行，capture不变。两个中间frontier报告保留。39-halfword拷贝的78B参数源

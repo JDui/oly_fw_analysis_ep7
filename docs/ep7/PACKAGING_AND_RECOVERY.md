@@ -1,5 +1,11 @@
 # E-P7 packaging, updater and recovery feasibility — bounded stock audit
 
+2026-11-01 update: the [candidate004 research container](CANDIDATE_PACKAGE.md)
+has now been built using the inherited fishcu workflow, without SHA checks.
+All five E-P7 components are retained. The older unchanged-stock audit below
+remains historical evidence; its “no modified image built” statement is no longer
+the current packaging status. Updater acceptance and recovery remain unproven.
+
 ## Useful engineering conclusion
 
 Packaging is not currently a demonstrated cryptographic roadblock: the exact E-P71.1 file can be decoded/re-encoded byte-identically and every observed component checksum can be independently recomputed. E-P7 native code itself contains the matching additive-sum check and local main-checksum failure0x3211. **This does not prove absence of authentication elsewhere, acceptance of modified code, or a recoverable device.** The highest-risk remaining installation gates are E-P7-specific updater acceptance/physical entry and recovery after main corruption, not writing another generic packer.
