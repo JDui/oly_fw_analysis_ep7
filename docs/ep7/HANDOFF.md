@@ -7,7 +7,22 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[格式模块发布与状态](CANDIDATE_FORMAT_STATE_SIM.md)执行cold RAM前缀33、core前缀11、
+最新：[原厂诊断缓冲区与格式记录](CANDIDATE_FORMAT_RECORD_SIM.md)新增55234指令，
+两GPIO输入分别为cold suffix26872、record reset prefix240、producer resume505。
+60556bb2原现场继续至60556b1e完整返回；原厂分配60022700/600228b6取得CPU0 big
+槽0/1的61bd6d40、61bdad80，各16384B，stride4040。counter2/bitmap3、2048条记录
+初始化逐字节核对，64B slot guard未映射。依赖16B空池/空指针BSS和临时pre-kernel
+锁寄存器模型，后者已移除；真实占用/启动顺序/并发仍未证明。格式reset606d4593只
+到606d4645，五halfword从a2788cf6到a2788cec，原getter再复制五项到producer栈。
+源仅7B补入明确BSS初态，其余3B为真实冷store；目标7B及额外8B状态从A5开始。
+日志实际写入init字符串、timestamp1234与参数0，游标[1,0]；计时寄存器9890014c
+输入3fffedcb是明示固定模型。当前严格fault6030b752读a273104a/2B，MDR60309e5c；
+60309e4f/6030b745按索引选择a2731098起的5份980B历史记录。下一步追源初始化与
+发布，不直接补零索引和活动记录。最大新增栈深564非完整上界，capture不变，
+geometry/population未恢复。候选004/fishcu包未变、不可安装。正式report与历史
+frontier保留；没有SHA、重编译或相机操作。
+
+此前：[格式模块发布与状态](CANDIDATE_FORMAT_STATE_SIM.md)执行cold RAM前缀33、core前缀11、
 2af4原生掩码复制45、完整606bbffc发布2768、48槽cache1586、6字段mode刷新300；
 原snapshot producer再推进447指令。两GPIO分支总10380，新增观测栈580非完整上界。
 13个原生字符串325B核对通过，48指针匹配原属性bank，6个字段由实际getter产生。

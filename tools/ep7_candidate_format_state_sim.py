@@ -98,7 +98,8 @@ def prepare_mode_fields(machine, directory, prefix, syms, property_records):
         getter_keys=[hex(r['d0']&0xffff) for r in modes['trace'] if r['pc']==0x6005e971])
 
 
-def format_context(directory, prefix, engine, without_mode_fields=False, without_core_prefix=False):
+def format_context(directory, prefix, engine, without_mode_fields=False, without_core_prefix=False,
+                   diagnostic_setup=None):
     upstream, contexts = snapshot_context(directory,prefix,engine)
     syms = contexts['upstream']['upstream']['upstream']['syms']
     rows, outputs = [], []
@@ -116,6 +117,9 @@ def format_context(directory, prefix, engine, without_mode_fields=False, without
         require(machine.read(0xa2788ca8,1) == b'\0' and
                 machine.read(0xa2788cac,4) == struct.pack('<I',0xa2788cb0),
                 'native cold prefix did not reset readiness and publish its state pointer')
+        diagnostic_result,diagnostics = None,None
+        if diagnostic_setup is not None:
+            diagnostic_result,diagnostics = diagnostic_setup(machine,syms,cold)
         core = None
         core_bytes = 0
         if not without_core_prefix:
@@ -145,6 +149,8 @@ def format_context(directory, prefix, engine, without_mode_fields=False, without
         initialized = call_prefix(machine,0x606bbffc,0,4,CALLER+7,limit=10000)
         result_ok(machine,initialized,CALLER+7,CALL_SP)
         setup = [stage('native_format_module_cold_RAM_prefix',cold),
+                 *([stage('native_diagnostic_buffer_allocation_and_cold_suffix',diagnostic_result)]
+                   if diagnostic_result is not None else []),
                  *([stage('native_format_core_initialization_prefix',core)] if core is not None else []),
                  stage('native_debug_mask_property_copy_prefix',masks),
                  stage('native_format_module_publish',initialized)]
@@ -200,22 +206,25 @@ def format_context(directory, prefix, engine, without_mode_fields=False, without
             format_parameter_record=machine.read(0xa2788aa4,10).hex() if record_produced else None,
             complete_format_core_initializer_executed=False,complete_mode_refresh_executed=False,
             complete_format_getter_executed=False,
-            native_cold_prefix_completed=True,complete_cold_initializer_executed=False,
-            diagnostic_buffer_allocations_executed=False,
+            native_cold_prefix_completed=True,complete_cold_initializer_executed=diagnostics is not None,
+            diagnostic_buffer_allocations_executed=diagnostics is not None,diagnostic_buffers=diagnostics,
             native_module_publication_completed=initialized['status']=='returned',
             snapshot_producer_completed=bool(produced is not None and produced['status']=='returned'),
             frontier=dict(status=last['status'],fault=last['fault'],
                 pc=hex(last['registers']['pc']),native_return_pc=hex(last['registers']['mdr'])),
             capture_unchanged=True,geometry_consumer_resumed=False))
         outputs.append(dict(machine=machine,configuration_result=context['configuration_result'],
-            configuration_stack=context['configuration_stack'],producer_result=produced))
+            configuration_stack=context['configuration_stack'],producer_result=produced,
+            diagnostic_result=diagnostic_result,diagnostic_buffers=diagnostics))
     report = dict(scope=__doc__,candidate_build_revision=upstream['candidate_build_revision'],
         engine=str(engine),cases=rows,
         native_instructions=sum(c['completed'] for row in rows for c in row['cases']),
         maximum_observed_new_stack_depth=max(c['stack_depth_from_call_sp'] for row in rows for c in row['cases']),
         population_resumed=False,hash_checks_performed=False,native_api_success_stubs=False,
         firmware_files_modified=False,hardware_executed=False,installable=False,
-        limits=['Cold60556b1e is executed only to60556bb2 before two diagnostic-buffer allocations. Its complete initializer and allocation ownership are not claimed.',
+        limits=[('Cold60556b1e is executed only to60556bb2 before two diagnostic-buffer allocations. Its complete initializer and allocation ownership are not claimed.'
+                 if diagnostic_setup is None else
+                 'The original cold prefix and suffix execute continuously through two native fixed-pool allocations under explicit fresh-BSS and temporary pre-kernel lock conditions; complete startup ordering/ownership remains unproven.'),
             'Debug masks come from the original2af4 property and native getter/copy, not from forcibly disabling logs.',
             'The606bbffc publication helper executes independently; its ready byte does not prove initialization of all downstream format records or the complete startup schedule.',
             'Only reviewed native direct stores, one indirect byte and13 bounded ROM strings are mapped from A5. Unknown neighboring fields remain unmapped.',
