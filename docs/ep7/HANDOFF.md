@@ -7,7 +7,19 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[冷态历史缩放回退](CANDIDATE_HISTORY_SIM.md)新增220指令，两GPIO各selector19、
+最新：[未就绪设备冷态坐标回退](CANDIDATE_OPTICS_COLD_SIM.md)新增736指令，两GPIO各
+presence初始化94、两个type reset88、原缓存copy28、原回退101、producer继续57。
+600f767d完整执行，四标志0，f8c1/f101指针6250f915/6250f769；原始caller片段两次
+601f27ea完整返回，type2826、period500/287。50B原生store目的初值A5；另16B缓存
+只在首次帧发布前使用明确BSS/alias条件，未伪造活动帧或补其5B栈来源。601f8ded
+真实device NULL/type0/变换不可用，601f8974原样复制两halfword55004c00=(85,76)。
+当前fault6065e79c读a2788ab2/2B，MDR6065e77c；已定位606a4a41原生reset写ffff，
+606a4a09从6065c09a被调用。下一步执行该reset，不能补零该格式字段。新栈深676
+非完整上界，capture不变、geometry/population未恢复。活动对象回调6029350a/
+602935e3及60553f2e池分配已静态追踪，所需帧字段仍缺完整来源。候选004/fishcu包
+不变、不可安装；无SHA、重编译或相机操作。正式报告由后续格式节点同一次运行验证。
+
+此前：[冷态历史缩放回退](CANDIDATE_HISTORY_SIM.md)新增220指令，两GPIO各selector19、
 fallback91。仅a273104a/2B和a2731148/4B使用原厂BSS/alias条件；原60309e4f计算
 槽0指针a2731098并写回producer栈，6030407e从原分支返回16.16单位倍率65536。
 完整活动记录未构造，其他4896B历史payload仍未映射。当前严格fault47001070读
