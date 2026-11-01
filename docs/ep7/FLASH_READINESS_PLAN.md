@@ -259,3 +259,10 @@ temperature片段接入sample25；11B原store容量、4B冷debug BSS及8B模型�
 原尾部和候选finish实际返回602a44ba，SP恢复，私有锁释放。核心finish返回false，
 当前raw0/selector0和重填充token没有封存旧快照。完整输入来源、请求/调度未因此
 关闭；下一步原生COLOR设置与新capture/node代际，继续S3/S4及恢复准入。
+
+[原生COLOR4设置与回读](CANDIDATE_COLOR_PROPERTY_SIM.md)已完整返回：显式公开111=64
+由原setter解包11/4/0，43次raw pair及依赖后返回0，原getter回读64。新增269966
+指令、最大观察栈深756B；147B真实store容量、6B冷BSS，原两资源header和信号量5e
+单行初始化完成，两次wait/signal均释放。旧capture/sidecar未改变；下一步原新
+capture/node分配和COLOR填充。新增S4具体任务：原domain0有132个静态信号量、下个
+自动ID133，须建立独立完整原配置上下文验证私有runtime，不能沿用S2的ID1假设。

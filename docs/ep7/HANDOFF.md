@@ -7,7 +7,17 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[第二段完整返回与finish拒绝](CANDIDATE_POSTPOPULATION_FINISH_SIM.md)完成9758条
+最新：[原生COLOR4公开设置与回读](CANDIDATE_COLOR_PROPERTY_SIM.md)完成269966条新增
+指令，最大观察新栈深756B。完整602afa11接显式111=64输入，原解包111/908/973为
+11/4/0，43次raw pair及全部依赖后返回0；完整602afa81回读64。原603dc386 reset、
+603dc8f8两资源header及ROM信号量5e单行初始化完成；147B原store、6B明确冷BSS。
+两次wait/signal配对、count回1、逻辑锁释放。只有9481/f6b1/8b91及8b54两位置变化，
+旧capture/sidecar不变。原kernel semaphore recipe为next133/used132，当前S2仅
+next2/used1的私有ID1 fixture尚未替换；单行5e初始化不等于完整启动，需独立验证
+真实静态配置后的私有ID分配。下一步新capture/node分配及COLOR两段填充，不给旧
+token补造代际。候选004/fishcu包不变、不可安装；无SHA/固件重编译/相机操作。
+
+此前：[第二段完整返回与finish拒绝](CANDIDATE_POSTPOPULATION_FINISH_SIM.md)完成9758条
 新增指令，最大观察新栈深404B。原状态片段6029d0b0..d1cc两组显式输入各181条，
 生成1666/1684/1686=0/1/0，PC路径相同；command+72及请求+1914共6B来源未证明。
 原temperature getter/store片段8条，以明确sample25输入生成25/0/0；没有传感器

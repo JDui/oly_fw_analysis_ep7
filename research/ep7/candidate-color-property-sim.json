@@ -1,0 +1,480 @@
+{
+  "scope": "Execute the public COLOR4 setter, native dependencies and composite getter.\n\nReuse the existing descriptor/callback/dependency registries. Two original\nresource headers and one static semaphore are initialized from their real\ncallers/ROM row; complete kernel startup and fresh capture remain unqualified.\n",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu",
+  "cases": [
+    {
+      "symbol": "native_resource_reconfiguration_reset",
+      "status": "returned",
+      "completed": 30,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 12,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x0",
+        "d1": "0xa269fe80",
+        "d2": "0x22334455",
+        "d3": "0x33445566",
+        "a0": "0xa269fe7c",
+        "a1": "0xa269fe80",
+        "a2": "0x19400000",
+        "a3": "0x19500000",
+        "sp": "0x190107b0",
+        "pc": "0x19000007",
+        "mdr": "0x603dc396",
+        "psw": "0x801",
+        "lir": "0xa5f15161",
+        "lar": "0x47001180",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    },
+    {
+      "symbol": "native_two_resource_headers_initialize",
+      "status": "returned",
+      "completed": 107,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 255,
+      "stack_depth_from_call_sp": 20,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0xff",
+        "d1": "0xd56ca000",
+        "d2": "0x22334455",
+        "d3": "0x33445566",
+        "a0": "0xa269fed8",
+        "a1": "0xa269fef8",
+        "a2": "0x19400000",
+        "a3": "0x19500000",
+        "sp": "0x190107b0",
+        "pc": "0x19000007",
+        "mdr": "0x0",
+        "psw": "0x802",
+        "lir": "0x12345678",
+        "lar": "0x23456789",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    },
+    {
+      "symbol": "native_static_semaphore5e_initialize_iteration",
+      "status": "returned",
+      "completed": 53,
+      "fault": null,
+      "final_pc": "0x60032aad",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 0,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x0",
+        "d1": "0x0",
+        "d2": "0x6003df9c",
+        "d3": "0x33445566",
+        "a0": "0x6219ae5c",
+        "a1": "0x6219ae64",
+        "a2": "0x60039f7c",
+        "a3": "0x6003e110",
+        "sp": "0x190107b0",
+        "pc": "0x60032aad",
+        "mdr": "0x60032aa2",
+        "psw": "0x801",
+        "lir": "0x50605171",
+        "lar": "0x60032a99",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    },
+    {
+      "symbol": "complete_native_public_COLOR4_set",
+      "status": "returned",
+      "completed": 267254,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 0,
+      "stack_depth_from_call_sp": 756,
+      "native_lock_calls": [
+        {
+          "api": "poll",
+          "handle": 94,
+          "timeout": 4294967295,
+          "returned_status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 94,
+          "timeout": null,
+          "returned_status": 0
+        },
+        {
+          "api": "poll",
+          "handle": 94,
+          "timeout": 4294967295,
+          "returned_status": 0
+        },
+        {
+          "api": "signal",
+          "handle": 94,
+          "timeout": null,
+          "returned_status": 0
+        }
+      ],
+      "native_get_tid_entries": 4,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x0",
+        "d1": "0x2",
+        "d2": "0x22334455",
+        "d3": "0x33445566",
+        "a0": "0x0",
+        "a1": "0x8ff00004",
+        "a2": "0x19400000",
+        "a3": "0x19500000",
+        "sp": "0x190107b0",
+        "pc": "0x19000007",
+        "mdr": "0x602b14aa",
+        "psw": "0x80000801",
+        "lir": "0xa1805030",
+        "lar": "0x60031b33",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    },
+    {
+      "symbol": "native_composite_COLOR4_readback",
+      "status": "returned",
+      "completed": 2522,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0",
+      "returned_d0": 64,
+      "stack_depth_from_call_sp": 172,
+      "native_lock_calls": [],
+      "native_get_tid_entries": 0,
+      "context_switch_entries": 0,
+      "native_lookup_entries": 0,
+      "native_enqueue_entries": 0,
+      "native_pop_entries": 0,
+      "native_copy_entries": 0,
+      "native_raw_send_entries": 0,
+      "native_raw_receive_entries": 0,
+      "native_receive_index_block_entries": 0,
+      "named_send_entries": 0,
+      "notification_entries": 0,
+      "native_flag_set_entries": 0,
+      "stop_registers": {
+        "d0": "0x40",
+        "d1": "0x40",
+        "d2": "0x22334455",
+        "d3": "0x33445566",
+        "a0": "0x604bad3c",
+        "a1": "0x62245f04",
+        "a2": "0x19400000",
+        "a3": "0x19500000",
+        "sp": "0x190107b0",
+        "pc": "0x19000007",
+        "mdr": "0x602b9eb4",
+        "psw": "0x800",
+        "lir": "0x45f048f0",
+        "lar": "0x60022f92",
+        "mdrq": "0x0",
+        "extra15": "0x0",
+        "extra16": "0x0",
+        "extra17": "0x0",
+        "extra18": "0x0",
+        "extra19": "0x0",
+        "extra20": "0x0",
+        "extra21": "0x0",
+        "extra22": "0x0",
+        "extra23": "0x0",
+        "extra24": "0x0",
+        "extra25": "0x0",
+        "extra26": "0x0",
+        "extra27": "0x0",
+        "extra28": "0x0",
+        "extra29": "0x0",
+        "extra30": "0x0",
+        "extra31": "0x0"
+      }
+    }
+  ],
+  "native_instructions": 269966,
+  "maximum_observed_new_stack_depth": 756,
+  "native_store_capacity_added": 147,
+  "conditional_BSS_bytes_added": 6,
+  "public_setting": {
+    "id": 111,
+    "requested_value": 64,
+    "native_set_return": 0,
+    "native_get_return": 64,
+    "raw_member_pairs": [
+      [
+        111,
+        11
+      ],
+      [
+        908,
+        4
+      ],
+      [
+        973,
+        0
+      ]
+    ],
+    "raw_typed_writes": [
+      {
+        "key": "0x9481",
+        "value": 11
+      },
+      {
+        "key": "0xf6b1",
+        "value": 4
+      },
+      {
+        "key": "0xf731",
+        "value": 0
+      }
+    ],
+    "raw_pair_helper_calls": 43,
+    "complete_setter": true,
+    "GUI_event_executed": false
+  },
+  "resource_headers": [
+    {
+      "address": "0xa269fe84",
+      "mapped_members": [
+        [
+          0,
+          54
+        ],
+        [
+          80,
+          2
+        ]
+      ],
+      "capacity": 4096,
+      "available": 4096,
+      "backing_mapped": false
+    },
+    {
+      "address": "0xa269fed8",
+      "mapped_members": [
+        [
+          0,
+          54
+        ],
+        [
+          80,
+          2
+        ]
+      ],
+      "capacity": 4096,
+      "available": 4096,
+      "backing_mapped": false
+    }
+  ],
+  "native_semaphore": {
+    "handle": "0x5e",
+    "source": "0x60039f7c",
+    "object": "0x6219ae58",
+    "attributes": 0,
+    "initial_count": 1,
+    "maximum": 1,
+    "final_count": 1,
+    "wait_calls": 2,
+    "signal_calls": 2,
+    "actual_static_initializer_iteration": true,
+    "full_kernel_initialize": false
+  },
+  "original_kernel_semaphore_recipe": {
+    "next_automatic_id": 133,
+    "used_count": 132,
+    "inherited_probe_counts": [
+      1,
+      1
+    ],
+    "original_counts_installed": false,
+    "private_runtime_id_production_qualified": false
+  },
+  "property_changes": [
+    {
+      "key": "0x8b54",
+      "changed": [
+        {
+          "offset": 444,
+          "before": 0,
+          "after": 11
+        },
+        {
+          "offset": 3632,
+          "before": 0,
+          "after": 4
+        }
+      ]
+    },
+    {
+      "key": "0x8b91",
+      "changed": [
+        {
+          "offset": 0,
+          "before": 1,
+          "after": 0
+        }
+      ]
+    },
+    {
+      "key": "0x9481",
+      "changed": [
+        {
+          "offset": 0,
+          "before": 0,
+          "after": 11
+        }
+      ]
+    },
+    {
+      "key": "0xf6b1",
+      "changed": [
+        {
+          "offset": 0,
+          "before": 0,
+          "after": 4
+        }
+      ]
+    }
+  ],
+  "capture_unchanged": true,
+  "sidecar_unchanged": true,
+  "fresh_capture_allocated": false,
+  "active_COLOR_capture_qualified": false,
+  "hash_checks_performed": false,
+  "native_api_success_stubs": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "Public111=64 is an explicit API input. Native reverse translation, composite unpack, raw writes, dependency callbacks and readback execute; GUI input delivery and NVM persistence are not qualified.",
+    "Two original resource constructors map only56 actual store bytes each, preserving holes and unmapped payload backing. Resource reconfiguration and native locks complete in the inherited single-contender model.",
+    "Only the exact semaphore5e ROM-row iteration executes. Other static semaphores, whole kernel startup and tasks remain outside this probe; no raw wait/signal return is replaced.",
+    "The original kernel recipe has132 used semaphores and next automatic ID133. The inherited S2 fixture has one private semaphore and next ID2; selected static-row initialization does not establish production allocation or boot ordering.",
+    "Six BSS bytes explicitly mean disabled resource debug and no published first resource request. Active cancellation/free, competing owners and running task exclusion remain unproven.",
+    "The completed public setting does not regenerate a capture. The prior capture and unsealed sidecar stay unchanged; fresh native allocation/generation and new two-stage population remain next.",
+    "Input provenance, asynchronous worker/lifetime, code/RAM residency and backup/recovery remain unresolved."
+  ]
+}
