@@ -116,7 +116,8 @@ def linker_script(groups, native):
         result += [f'  .ep7_code{i} : {{', *rows, f'  }} > CODE{i}']
     result += ['  .ep7_empty_readonly : { *(.text .text.* .rodata .rodata.*) } > CODE0',
                '  .data : { *(.data .data.*) } > PRIVATE',
-               f'  {PRIVATE_SECTION} : AT ({RAM_IMAGE_START:#x}) {{', '    __ep7_bss_start = .;',
+               f'  {PRIVATE_SECTION} (TYPE = SHT_PROGBITS) : AT ({RAM_IMAGE_START:#x}) {{',
+               '    __ep7_bss_start = .;',
                '    *(.bss .bss.* COMMON)', '    . = ALIGN(4);', '    __ep7_bss_end = .;',
                # BYTE forces a loadable section; the full reserved span is zero
                # in the decoded image and copied by the unchanged stock loader.
