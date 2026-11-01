@@ -7,7 +7,19 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[未就绪设备冷态坐标回退](CANDIDATE_OPTICS_COLD_SIM.md)新增736指令，两GPIO各
+最新：[原生未配置格式与getter返回](CANDIDATE_FORMAT_SNAPSHOT_SIM.md)新增14672指令，
+两GPIO各reset1235、producer329、device defaults5169、完整mode563、producer40。
+606a4a09/606a4a41完整reset写两个ffff、清123B/121B、设28B记录；277B原生目的。
+601f25f8完整返回，3362B原生目的，3段ROM及2段1084B二次copy合计3336B逐字节相等；
+原对齐对象指针a2682d00，稀疏成员+9432/+35604 reset。仅+1092/1093这2B通信状态
+与旧mode295的1B沿用明确冷BSS条件。606d47fc完整返回，10次属性查询，新增9B目的
+及7处store均核对。原6065e658/60556934格式getter返回60427f7d，150B栈记录含
+121B空payload与+146状态2，表示未配置格式。当前fault60427f9c写6229fb98/2B，
+MDR60427f86；下一步映射原输出成员并继续，勿认定有效活动格式。新栈深500，上游
+676，均非上界。capture不变，geometry/population未恢复；候选004/fishcu包不变、
+不可安装。两中间报告保留，正式断言与下一输出节点一起运行，无SHA或相机操作。
+
+此前：[未就绪设备冷态坐标回退](CANDIDATE_OPTICS_COLD_SIM.md)新增736指令，两GPIO各
 presence初始化94、两个type reset88、原缓存copy28、原回退101、producer继续57。
 600f767d完整执行，四标志0，f8c1/f101指针6250f915/6250f769；原始caller片段两次
 601f27ea完整返回，type2826、period500/287。50B原生store目的初值A5；另16B缓存

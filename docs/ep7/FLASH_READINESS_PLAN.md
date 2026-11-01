@@ -156,3 +156,9 @@ partial capture保持不变，population尚未恢复；下一步追踪设备状�
 之前的BSS条件，未把活动帧中5B栈来源当作零。原厂两halfword复制保持(85,76)，
 之后停6065e79c读取a2788ab2；该格式字段有原生reset写ffff，下一步执行其来源。
 活动帧/镜头校准仍未通过；完整快照、geometry/population与S3仍未完成。
+
+[原生未配置格式与getter返回](CANDIDATE_FORMAT_SNAPSHOT_SIM.md)新增14672指令：完整
+格式reset写ffff，完整设备默认初始化复制3336B，完整模式刷新通过。原格式getter
+返回60427f7d，150B记录的状态2表示未配置；不能当成有效格式。新增冷BSS条件仅
+设备通信2B与刷新前旧mode295的1B。当前到服务输出6229fb98的首项store，下一步
+为已审查的原输出成员提供写入空间。完整快照及geometry/population尚未完成。
