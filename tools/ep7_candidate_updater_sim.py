@@ -80,6 +80,9 @@ class Updater(Machine):
             self.regs = result['registers']
             completed += result['completed']
             rows.append(brief(result))
+            if completed >= 100000000:
+                print(f'E-P7 updater mode{mode}: {completed:,} instructions; '
+                      f'{result["status"]} at {self.regs["pc"]:#x}', file=sys.stderr, flush=True)
             if result['status'] == 'instruction_limit' and completed < 1200000000:
                 continue
             if result['status'] != 'breakpoint':
@@ -204,6 +207,7 @@ def inspect(package, stock_decoded, engine, *, controls_only=False, commit_only=
     require(all(state.regions[f'component_{i}'].data==b.header+b.payload+b.trailer
                 for i,b in enumerate(blocks)), 'commit modified the validated source buffers')
     return dict(report, status='passed', package_bytes=len(raw), component_count=len(blocks),
+        input_package=str(package),
         native_validation=validated, trapped_commit=committed, backend_failure=failed,
         commit_only=commit_only,full_native_decode_and_checksum=not commit_only,
         native_decoded_bytes_equal_to_fishcu=None if commit_only else True,
