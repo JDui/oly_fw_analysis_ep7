@@ -7,7 +7,16 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[原生COLOR4公开设置与回读](CANDIDATE_COLOR_PROPERTY_SIM.md)完成269966条新增
+最新：[实际候选入口的新capture分配](CANDIDATE_CAPTURE_ALLOCATION_SIM.md)完成7716条
+新指令，最大观察新栈深280B。原信号量19、25槽capture池1500和选定ID2 flag reset
+执行后，实际602a4480候选入口完整执行准入及注册表分配，返回ID2/af6037c0；原生
+handles为2/102/1501、flags5，旧ID1/capture/sidecar不变。509B原store容量，其中
+10B纠正旧夹具保护区与真实下一行的重叠，另1B明确冷BSS。602a3151检查点逻辑锁
+均释放；独立续接停603dbd40读下一池3200的a269e9c4，该暂停现场信号量19仍持有。
+node heap/associated/fresh未进入；下一步原pool3200与FIFO初始化，再接完整node
+与COLOR填充。候选004/fishcu包不变、不可安装；无SHA/固件重编译/相机操作。
+
+此前：[原生COLOR4公开设置与回读](CANDIDATE_COLOR_PROPERTY_SIM.md)完成269966条新增
 指令，最大观察新栈深756B。完整602afa11接显式111=64输入，原解包111/908/973为
 11/4/0，43次raw pair及全部依赖后返回0；完整602afa81回读64。原603dc386 reset、
 603dc8f8两资源header及ROM信号量5e单行初始化完成；147B原store、6B明确冷BSS。

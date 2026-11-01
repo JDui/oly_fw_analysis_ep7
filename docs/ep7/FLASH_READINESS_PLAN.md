@@ -266,3 +266,11 @@ temperature片段接入sample25；11B原store容量、4B冷debug BSS及8B模型�
 单行初始化完成，两次wait/signal均释放。旧capture/sidecar未改变；下一步原新
 capture/node分配和COLOR填充。新增S4具体任务：原domain0有132个静态信号量、下个
 自动ID133，须建立独立完整原配置上下文验证私有runtime，不能沿用S2的ID1假设。
+
+[实际候选入口的新capture分配](CANDIDATE_CAPTURE_ALLOCATION_SIM.md)已接通：原信号量19、
+池1500及选定ID2 reset后，实际602a4480入口完整执行准入和注册表分配，取得ID2与
+af6037c0、handles2/102/1501。新增7716指令，最大观察栈深280B；509B原store容量，
+其中10B来自旧夹具保护区重叠修正，另1B冷BSS。旧ID1/capture/sidecar保持不变。
+分配完成检查点锁已释放；独立续接停pool3200 header读取，其信号量19仍在持有。
+下一步原pool3200、FIFO、node heap/关联对象与fresh登记；完整node和COLOR填充
+尚未完成，S3/S4、驻留与恢复准入继续保留。
