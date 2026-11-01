@@ -1,0 +1,196 @@
+{
+  "scope": "Check 007D receiver task entry to the first native wait boundary.\n\nThis isolates immediate layout rejection/poll spinning. It does not run the\nscheduler, wake a task, simulate Bluetooth, or reproduce a hardware reset.\nReuses the existing native engine, bootstrap and queue-initialization fixtures.\n",
+  "status": "passed",
+  "compiled_revision": "a059e5ff17538aa8f95dc62d05a48545d3a2bb6a",
+  "input_diagnostic": "007D",
+  "exact_diagnostic_bytes_checked": true,
+  "native_queue_initialization": [
+    {
+      "handle": "0x4c",
+      "status": "returned",
+      "completed": 34,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0"
+    },
+    {
+      "handle": "0x4d",
+      "status": "returned",
+      "completed": 34,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0"
+    },
+    {
+      "handle": "0xab",
+      "status": "returned",
+      "completed": 34,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0"
+    },
+    {
+      "handle": "0x4f",
+      "status": "returned",
+      "completed": 34,
+      "fault": null,
+      "final_pc": "0x19000007",
+      "final_sp": "0x190107b0"
+    }
+  ],
+  "cases": [
+    {
+      "task_id": "0x21",
+      "entry": "0x603ef892",
+      "configured_stack_bytes": 4752,
+      "outcomes": [
+        {
+          "image": "stock",
+          "status": "returned",
+          "completed": 1389,
+          "fault": null,
+          "final_pc": "0x603eebf3",
+          "final_sp": "0x19011140",
+          "raw_receives": [
+            {
+              "handle": "0x4c",
+              "timeout": "0x0",
+              "destination": "0x19011158"
+            },
+            {
+              "handle": "0x4d",
+              "timeout": "0x0",
+              "destination": "0x19011158"
+            }
+          ],
+          "wait_boundary": "0x603eebf3",
+          "observed_stack_depth": 548,
+          "private_state_unchanged": true
+        },
+        {
+          "image": "007D",
+          "status": "returned",
+          "completed": 6965,
+          "fault": null,
+          "final_pc": "0x603eebf3",
+          "final_sp": "0x19011134",
+          "raw_receives": [
+            {
+              "handle": "0x4c",
+              "timeout": "0x0",
+              "destination": "0x1901114c"
+            },
+            {
+              "handle": "0x4d",
+              "timeout": "0x0",
+              "destination": "0x1901114c"
+            }
+          ],
+          "wait_boundary": "0x603eebf3",
+          "observed_stack_depth": 868,
+          "private_state_unchanged": true
+        }
+      ]
+    },
+    {
+      "task_id": "0x57",
+      "entry": "0x603ef94a",
+      "configured_stack_bytes": 4096,
+      "outcomes": [
+        {
+          "image": "stock",
+          "status": "returned",
+          "completed": 487,
+          "fault": null,
+          "final_pc": "0x600343d7",
+          "final_sp": "0x19010e28",
+          "raw_receives": [
+            {
+              "handle": "0xab",
+              "timeout": "0xffffffff",
+              "destination": "0x19010ec8"
+            }
+          ],
+          "wait_boundary": "0x600343d7",
+          "observed_stack_depth": 556,
+          "private_state_unchanged": true
+        },
+        {
+          "image": "007D",
+          "status": "returned",
+          "completed": 3242,
+          "fault": null,
+          "final_pc": "0x600343d7",
+          "final_sp": "0x19010d44",
+          "raw_receives": [
+            {
+              "handle": "0xab",
+              "timeout": "0xffffffff",
+              "destination": "0x19010ebc"
+            }
+          ],
+          "wait_boundary": "0x600343d7",
+          "observed_stack_depth": 876,
+          "private_state_unchanged": true
+        }
+      ]
+    },
+    {
+      "task_id": "0x6c",
+      "entry": "0x603f26a1",
+      "configured_stack_bytes": 8192,
+      "outcomes": [
+        {
+          "image": "stock",
+          "status": "returned",
+          "completed": 498,
+          "fault": null,
+          "final_pc": "0x600343d7",
+          "final_sp": "0x19011e24",
+          "raw_receives": [
+            {
+              "handle": "0x4f",
+              "timeout": "0xffffffff",
+              "destination": "0x19011ec4"
+            }
+          ],
+          "wait_boundary": "0x600343d7",
+          "observed_stack_depth": 560,
+          "private_state_unchanged": true
+        },
+        {
+          "image": "007D",
+          "status": "returned",
+          "completed": 3254,
+          "fault": null,
+          "final_pc": "0x600343d7",
+          "final_sp": "0x19011d40",
+          "raw_receives": [
+            {
+              "handle": "0x4f",
+              "timeout": "0xffffffff",
+              "destination": "0x19011eb8"
+            }
+          ],
+          "wait_boundary": "0x600343d7",
+          "observed_stack_depth": 880,
+          "private_state_unchanged": true
+        }
+      ]
+    }
+  ],
+  "immediate_receiver_layout_rejection_observed": false,
+  "hash_checks_performed": false,
+  "hardware_executed": false,
+  "firmware_modified": false,
+  "full_boot_executed": false,
+  "limits": [
+    "The image, actual task entry instructions and original queue APIs execute; tasks stop at their first native wait boundary.",
+    "Current TCB, task handover, stacks, kernel roots and ready/lock state remain explicit fixtures.",
+    "Bootstrap uses the existing ID1-only semaphore fixture; the prior static-ID133 test is not rerun or substituted.",
+    "Queue initialization executes original code against fixture backing; static allocation is not repeated.",
+    "The original trace-enable mask is explicitly zero; logging output is not modeled.",
+    "Actual task suspension, scheduling, wakeup, messages, cache/multicore behavior and hardware reset causes are outside this check.",
+    "A pass rules out immediate layout rejection in these fixture paths only, not a whole-camera boot defect."
+  ]
+}
