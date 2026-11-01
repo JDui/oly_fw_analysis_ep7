@@ -1,0 +1,624 @@
+{
+  "scope": "Run candidate GUI preprocessing, five installed wheel veneers and dispatch scope.\n\nThe original wheel service receives explicit count/status inputs. Its physical\nproducer, GUI engine body, widget ownership/rendering and pixels are not tested.\n",
+  "status": "passed",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "cases": [
+    {
+      "source_event": "0x9031",
+      "delta": 7,
+      "service_status": 0,
+      "native_preprocessor_result": 0,
+      "admitted": true,
+      "services": [
+        {
+          "selector": 1,
+          "count": 7,
+          "status": 0,
+          "return_pc": "0x60ea0055"
+        }
+      ],
+      "veneer": [
+        {
+          "site": "0x60ea0070",
+          "return_pc": "0x60ea0075",
+          "full_count": 7,
+          "original_registers_preserved": true
+        }
+      ],
+      "scope_after_preprocess": "01000000fe000000000002196750dd6000000119004000003c09011931900000319000000200000011000000000000000700000002000000010000000100000000000000",
+      "engine_inputs": [
+        {
+          "event": "0x9031",
+          "parameter": 2,
+          "extra": 17,
+          "machine": "0x19130000",
+          "admitted": true
+        }
+      ],
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2304,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105cc"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 10,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105c4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 3,
+          "fault": null,
+          "final_pc": "0x60ea0070",
+          "final_sp": "0x190105cc"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2282,
+          "fault": null,
+          "final_pc": "0x60ea0075",
+          "final_sp": "0x190105cc"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 16,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105c4"
+        },
+        {
+          "status": "returned",
+          "completed": 2332,
+          "fault": null,
+          "final_pc": "0x60cfd541",
+          "final_sp": "0x190107b0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2268,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901073c"
+        },
+        {
+          "status": "returned",
+          "completed": 2229,
+          "fault": null,
+          "final_pc": "0x60cfd55f",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 11444,
+      "maximum_stack_below_loop_sp": 716,
+      "final_scope_idle": true
+    },
+    {
+      "source_event": "0x9032",
+      "delta": -4,
+      "service_status": 0,
+      "native_preprocessor_result": 0,
+      "admitted": true,
+      "services": [
+        {
+          "selector": 0,
+          "count": -4,
+          "status": 0,
+          "return_pc": "0x60ea00dd"
+        }
+      ],
+      "veneer": [
+        {
+          "site": "0x60ea00f7",
+          "return_pc": "0x60ea00fc",
+          "full_count": -4,
+          "original_registers_preserved": true
+        }
+      ],
+      "scope_after_preprocess": "01000000fe000000000002196750dd6000000119004000003c0901193290000032900000ffffffff1100000000001319fcffffff02000000010000000100000000000000",
+      "engine_inputs": [
+        {
+          "event": "0x9032",
+          "parameter": 4294967295,
+          "extra": 17,
+          "machine": "0x19130000",
+          "admitted": true
+        }
+      ],
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2312,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105d4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 9,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105cc"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 3,
+          "fault": null,
+          "final_pc": "0x60ea00f7",
+          "final_sp": "0x190105d4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2284,
+          "fault": null,
+          "final_pc": "0x60ea00fc",
+          "final_sp": "0x190105d4"
+        },
+        {
+          "status": "returned",
+          "completed": 2336,
+          "fault": null,
+          "final_pc": "0x60cfd541",
+          "final_sp": "0x190107b0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2268,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901073c"
+        },
+        {
+          "status": "returned",
+          "completed": 2229,
+          "fault": null,
+          "final_pc": "0x60cfd55f",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 11441,
+      "maximum_stack_below_loop_sp": 708,
+      "final_scope_idle": true
+    },
+    {
+      "source_event": "0x904f",
+      "delta": 7,
+      "service_status": 0,
+      "native_preprocessor_result": 0,
+      "admitted": true,
+      "services": [
+        {
+          "selector": 2,
+          "count": 7,
+          "status": 0,
+          "return_pc": "0x60ea0d57"
+        }
+      ],
+      "veneer": [
+        {
+          "site": "0x60ea0d70",
+          "return_pc": "0x60ea0d75",
+          "full_count": 7,
+          "original_registers_preserved": true
+        }
+      ],
+      "scope_after_preprocess": "01000000fe000000000002196750dd6000000119004000003c0901194f900000319000000200000011000000000013190700000002000000010000000100000000000000",
+      "engine_inputs": [
+        {
+          "event": "0x9031",
+          "parameter": 2,
+          "extra": 17,
+          "machine": "0x19130000",
+          "admitted": true
+        }
+      ],
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2312,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105d0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 9,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105c8"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 3,
+          "fault": null,
+          "final_pc": "0x60ea0d70",
+          "final_sp": "0x190105d0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2279,
+          "fault": null,
+          "final_pc": "0x60ea0d75",
+          "final_sp": "0x190105d0"
+        },
+        {
+          "status": "returned",
+          "completed": 2343,
+          "fault": null,
+          "final_pc": "0x60cfd541",
+          "final_sp": "0x190107b0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2268,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901073c"
+        },
+        {
+          "status": "returned",
+          "completed": 2229,
+          "fault": null,
+          "final_pc": "0x60cfd55f",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 11443,
+      "maximum_stack_below_loop_sp": 712,
+      "final_scope_idle": true
+    },
+    {
+      "source_event": "0x9051",
+      "delta": 7,
+      "service_status": 0,
+      "native_preprocessor_result": 0,
+      "admitted": true,
+      "services": [
+        {
+          "selector": 4,
+          "count": 7,
+          "status": 0,
+          "return_pc": "0x60ea0dd2"
+        }
+      ],
+      "veneer": [
+        {
+          "site": "0x60ea0deb",
+          "return_pc": "0x60ea0df0",
+          "full_count": 7,
+          "original_registers_preserved": true
+        }
+      ],
+      "scope_after_preprocess": "01000000fe000000000002196750dd6000000119004000003c09011951900000319000000200000011000000000013190700000002000000010000000100000000000000",
+      "engine_inputs": [
+        {
+          "event": "0x9031",
+          "parameter": 2,
+          "extra": 17,
+          "machine": "0x19130000",
+          "admitted": true
+        }
+      ],
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2312,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105d0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 9,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105c8"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 3,
+          "fault": null,
+          "final_pc": "0x60ea0deb",
+          "final_sp": "0x190105d0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2282,
+          "fault": null,
+          "final_pc": "0x60ea0df0",
+          "final_sp": "0x190105d0"
+        },
+        {
+          "status": "returned",
+          "completed": 2343,
+          "fault": null,
+          "final_pc": "0x60cfd541",
+          "final_sp": "0x190107b0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2268,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901073c"
+        },
+        {
+          "status": "returned",
+          "completed": 2229,
+          "fault": null,
+          "final_pc": "0x60cfd55f",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 11446,
+      "maximum_stack_below_loop_sp": 712,
+      "final_scope_idle": true
+    },
+    {
+      "source_event": "0x9050",
+      "delta": 7,
+      "service_status": 0,
+      "native_preprocessor_result": 0,
+      "admitted": true,
+      "services": [
+        {
+          "selector": 3,
+          "count": 7,
+          "status": 0,
+          "return_pc": "0x60ea0e4d"
+        }
+      ],
+      "veneer": [
+        {
+          "site": "0x60ea0e66",
+          "return_pc": "0x60ea0e6b",
+          "full_count": 7,
+          "original_registers_preserved": true
+        }
+      ],
+      "scope_after_preprocess": "01000000fe000000000002196750dd6000000119004000003c09011950900000329000000100000011000000000013190700000002000000010000000100000000000000",
+      "engine_inputs": [
+        {
+          "event": "0x9032",
+          "parameter": 1,
+          "extra": 17,
+          "machine": "0x19130000",
+          "admitted": true
+        }
+      ],
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2312,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105d0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 9,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105c8"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 3,
+          "fault": null,
+          "final_pc": "0x60ea0e66",
+          "final_sp": "0x190105d0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2283,
+          "fault": null,
+          "final_pc": "0x60ea0e6b",
+          "final_sp": "0x190105d0"
+        },
+        {
+          "status": "returned",
+          "completed": 2340,
+          "fault": null,
+          "final_pc": "0x60cfd541",
+          "final_sp": "0x190107b0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2268,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901073c"
+        },
+        {
+          "status": "returned",
+          "completed": 2229,
+          "fault": null,
+          "final_pc": "0x60cfd55f",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 11444,
+      "maximum_stack_below_loop_sp": 712,
+      "final_scope_idle": true
+    },
+    {
+      "source_event": "0x9032",
+      "delta": 65,
+      "service_status": 0,
+      "native_preprocessor_result": 0,
+      "admitted": false,
+      "services": [
+        {
+          "selector": 0,
+          "count": 65,
+          "status": 0,
+          "return_pc": "0x60ea00dd"
+        }
+      ],
+      "veneer": [
+        {
+          "site": "0x60ea00f7",
+          "return_pc": "0x60ea00fc",
+          "full_count": 65,
+          "original_registers_preserved": true
+        }
+      ],
+      "scope_after_preprocess": "01000000fe000000000002196750dd6000000119004000003c09011932900000329000000100000011000000000013194100000000000000010000000000000000000000",
+      "engine_inputs": [
+        {
+          "event": "0x9032",
+          "parameter": 1,
+          "extra": 17,
+          "machine": "0x19130000",
+          "admitted": false
+        }
+      ],
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2312,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105d4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 9,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105cc"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 3,
+          "fault": null,
+          "final_pc": "0x60ea00f7",
+          "final_sp": "0x190105d4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2285,
+          "fault": null,
+          "final_pc": "0x60ea00fc",
+          "final_sp": "0x190105d4"
+        },
+        {
+          "status": "returned",
+          "completed": 2317,
+          "fault": null,
+          "final_pc": "0x60cfd541",
+          "final_sp": "0x190107b0"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2232,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x1901073c"
+        },
+        {
+          "status": "returned",
+          "completed": 2219,
+          "fault": null,
+          "final_pc": "0x60cfd55f",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 11377,
+      "maximum_stack_below_loop_sp": 708,
+      "final_scope_idle": true
+    },
+    {
+      "source_event": "0x9032",
+      "delta": 3,
+      "service_status": 1,
+      "native_preprocessor_result": 1,
+      "admitted": false,
+      "services": [
+        {
+          "selector": 0,
+          "count": 3,
+          "status": 1,
+          "return_pc": "0x60ea00dd"
+        }
+      ],
+      "veneer": [
+        {
+          "site": "0x60ea00f7",
+          "return_pc": "0x60ea00fc",
+          "full_count": 3,
+          "original_registers_preserved": true
+        }
+      ],
+      "scope_after_preprocess": "01000000fe000000000002196750dd6000000119004000003c09011932900000329000000100000011000000000013190300000000000000010000000000000000000000",
+      "engine_inputs": [],
+      "execution": [
+        {
+          "status": "breakpoint",
+          "completed": 2312,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105d4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 9,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105cc"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 3,
+          "fault": null,
+          "final_pc": "0x60ea00f7",
+          "final_sp": "0x190105d4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 2279,
+          "fault": null,
+          "final_pc": "0x60ea00fc",
+          "final_sp": "0x190105d4"
+        },
+        {
+          "status": "breakpoint",
+          "completed": 48,
+          "fault": null,
+          "final_pc": "0x18030000",
+          "final_sp": "0x190105e0"
+        },
+        {
+          "status": "returned",
+          "completed": 2233,
+          "fault": null,
+          "final_pc": "0x60cfd541",
+          "final_sp": "0x190107b0"
+        }
+      ],
+      "instructions": 6884,
+      "maximum_stack_below_loop_sp": 708,
+      "final_scope_idle": true
+    }
+  ],
+  "executed_instructions_including_boundary_returns": 75479,
+  "maximum_observed_stack_below_loop_sp": 716,
+  "native_preprocessing_executed": true,
+  "native_wheel_setter_executed": true,
+  "GUI_engine_body_executed": false,
+  "hash_checks_performed": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "The initialized GUI task is an explicit domain0/ID254/16KiB-stack fixture. Native current-task reads and candidate installation cohorts execute; dynamic task creation and scheduler ownership are not proved.",
+    "Original preprocessors, event normalization, five final installed JMP veneers, native count setter and candidate scope methods execute. Only the wheel virtual service count/status and logs are modeled.",
+    "The nonmodal GUI flags are explicit zero inputs; alternate modal/filter paths are not covered.",
+    "The original engine entry receives real candidate arguments, then returns a modeled result. Widget ownership, H/L editing, drawing and LCD acceptance need separate evidence.",
+    "Observed stack depth is this executed chain only; it is not a whole GUI task/IRQ upper bound.",
+    "No firmware rebuild, package change, SHA or camera operation."
+  ]
+}

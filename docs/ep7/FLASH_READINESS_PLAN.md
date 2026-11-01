@@ -72,6 +72,11 @@ patch及落盘回读通过。它仍标记不可安装；局部/完整原厂更�
 
 ## 当前进度
 
+基础H/L的[最终GUI输入机器码](CANDIDATE_UI_INPUT_SIM.md)已通过7个场景：完整原厂
+预处理、五处实际JMP veneer、原全计数setter及候选dispatch包装执行，完整计数和
+原调用ABI保持；超限65与服务失败不取得编辑资格。共75,479指令，观察栈深716B，
+engine body为明确返回边界。未证明完整widget/显示或总GUI栈，继续其余关键风险。
+
 S5的[SD软件入口](CANDIDATE_SD_ENTRY_SIM.md)已执行1,624条指令：原callback选择
 最高有效后缀，原11组pattern wrapper、task88消息构造和task18接收分流接通，
 实际32B消息将111,017,984B长度及buffer传到共享更新器mode0。SD读取/队列交付等

@@ -8,7 +8,14 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[SD软件入口](CANDIDATE_SD_ENTRY_SIM.md)完成1,624条指令。原callback取得最高
+最新：[最终GUI输入机器码](CANDIDATE_UI_INPUT_SIM.md)通过7个场景/75,479指令。
+完整原预处理、五处已安装JMP veneer、原halfword setter及candidate scope/dispatch
+实际执行。完整7/−4计数不丢失，所有原输入寄存器/SP和原返回PC/MDR保持；超限65
+和服务失败不留下编辑资格。engine body在原入口截停并按明确返回模型完成，未取得
+完整parent/widget/显示资格。动态GUI任务/非modal状态为fixture；最大新栈716B
+仅是该链观察值。无重编译/包变化/相机操作，继续基础功能及驻留风险。
+
+此前：[SD软件入口](CANDIDATE_SD_ENTRY_SIM.md)完成1,624条指令。原callback取得最高
 有效后缀；原pattern wrapper在E组成功后停止G/H/W。task88构造的32B消息原样
 交付task18，真实type1分支将buffer a43a3ec0/长度111,017,984/mode0传到60c964c1。
 底层文件查找/读取、queue和设备准备为显式模型，callback的FAT32 getter与排序、
