@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit final E-P7 placement and execute load -> cold clear with actual bytes.
+"""Audit E-P7 placement and original load -> image-initialized private state.
 
 The boot prefix is an explicit resident input. Only lower storage transfers are
 modeled; code banks begin as poison and are not supplied as resident firmware.
@@ -17,8 +17,8 @@ from ep7_candidate_startup_sim import CLEAR_SITE, CLEAR_RESUME, require
 from ep7_early_load_probe import BEGIN, END, LOW, HIGH, UNCACHED, READS, EXPECTED_READS
 from ep7_installation_manifest import BASE, load_region
 from ep7_load_regions import EARLY, SECTIONS
-from ep7_offline_candidate import RAM_START, RAM_BYTES
-from ep7_ram_ownership import FENCES, KERNEL
+from ep7_offline_candidate import RAM_IMAGE_START, RAM_START, RAM_BYTES, PRIVATE_SECTION
+from ep7_ram_ownership import KERNEL
 from ep7_sim_probe import brief
 from oly_container import parse
 from penf_emulator import Region, execute
@@ -51,13 +51,15 @@ def placement(data, stock, build):
             start, end = int(row['start'], 16), int(row['end'], 16)
             spans.append(dict(start=hex(start), end_exclusive=hex(end), bytes=end-start,
                 kind=row['section'], load=load_region(start, end-start)))
-    require(len(spans) == 103, 'final write-span inventory changed')
+        elif row['section'] == PRIVATE_SECTION:
+            spans.append(dict(start=hex(RAM_IMAGE_START), end_exclusive=hex(RAM_IMAGE_START+RAM_BYTES),
+                bytes=RAM_BYTES, kind=PRIVATE_SECTION, load=load_region(RAM_IMAGE_START,RAM_BYTES)))
+    require(len(spans) == 101, 'final write-span inventory changed')
     prefixes = [r for r in spans if not r['load']['loader_path_identified']]
-    require([r['start'] for r in prefixes] == ['0x600201fe', '0x600229b9', '0x60022c28'],
-            'boot-prefix dependency changed')
-    require(data[0x600229b9-BASE:0x600229bb-BASE] == bytes.fromhex('801f') and
-            data[0x60022c28-BASE:0x60022c2a-BASE] == bytes.fromhex('8f1f'),
-            'actual final pool reservation operands changed')
+    require(not prefixes and data[:LOW-BASE] == stock[:LOW-BASE], 'boot prefix must remain original')
+    require(data[0x600229b9-BASE:0x600229bb-BASE] == bytes.fromhex('8020') and
+            data[0x60022c28-BASE:0x60022c2a-BASE] == bytes.fromhex('8f20'),
+            'original pool capacity changed')
 
     # These are the established finite original write recipes, not an inventory
     # of every indirect/DMA write in the firmware. Count an arena as owned too.
@@ -73,7 +75,7 @@ def placement(data, stock, build):
     writes += [(f'kernel_arena_{i}', lo, lo+size) for i, (_, lo, size) in enumerate(KERNEL)]
     protected = [(r['section'], cached(int(r['start'], 16)), cached(int(r['end'], 16)))
                  for r in build['layout'] if r['section'].startswith('.ep7_code')]
-    protected.append(('reserved_pool_payload', cached(RAM_START), cached(RAM_START)+RAM_BYTES))
+    protected.append(('image_initialized_state', RAM_IMAGE_START, RAM_IMAGE_START+RAM_BYTES))
     checked = []
     for name, lo, hi in writes:
         normalized = (cached(lo), cached(hi))
@@ -84,25 +86,18 @@ def placement(data, stock, build):
     guard_table = 0x60026f38
     require(data[guard_table-BASE:guard_table-BASE+112] ==
             stock[guard_table-BASE:guard_table-BASE+112], 'guard table was modified')
-    fence = FENCES[3]
-    require(struct.unpack_from('<4I', data, guard_table-BASE+48) == fence,
-            'big-pool guard recipe differs')
-    last_payload = fence[0]+127*(fence[1]+64)
-    require(last_payload == cached(RAM_START), 'reserved payload is not global slot127')
-    bss = next(r for r in build['layout'] if r['section'] == '.bss')
+    private = next(r for r in build['layout'] if r['section'] == PRIVATE_SECTION)
     return dict(write_spans=spans, span_counts_by_stage=dict(Counter(r['load']['stage'] for r in spans)),
         identified_loader_spans=len(spans)-len(prefixes), external_prefix_spans=len(prefixes),
         known_original_write_ranges=checked, known_recipe_collision_count=0,
-        private_ram=dict(start=hex(RAM_START), bytes=RAM_BYTES, linked_bss_bytes=bss['bytes'],
-            unused_reserved_bytes=RAM_BYTES-bss['bytes'], original_domain=2, original_slot=31,
-            original_global_slot=127, candidate_native_slot_count=31,
-            preserved_guard_start=hex(last_payload+fence[1]), preserved_guard_bytes=64,
-            expected_guard_word=hex(fence[3] | 127), guard_table_unchanged=True,
-            guard_initialization_identified=False, late_reservation_is_invalid=True),
+        private_ram=dict(start=hex(RAM_START),image_address=hex(RAM_IMAGE_START),bytes=RAM_BYTES,
+            linked_bss_bytes=private['bss_bytes'],unused_reserved_bytes=private['remaining'],
+            initialized_by_original_early_copy=True, cpu2_pool_slots=32,
+            pool_reservation_required=False, guard_table_unchanged=True),
         all_indirect_or_DMA_writers_excluded=False, ownership_qualified=False)
 
 
-def loaded_clear(data, engine):
+def loaded_state(data, engine):
     diagnostic_source = 0x6002e020 + (0x61b213a4-0x61b20fe0)
     diagnostic = data[diagnostic_source-BASE:diagnostic_source-BASE+4]
     require(diagnostic == bytes(4), 'original initialized diagnostic switch changed')
@@ -111,9 +106,6 @@ def loaded_clear(data, engine):
         Region('loaded', LOW, b'\xa5'*(HIGH-LOW), 'rx', True),
         Region('uncached_load_alias', UNCACHED, b'\xa5'*(HIGH-LOW), 'rw', False, 'loaded'),
         Region('stack', STACK, b'\xcc'*2048, 'rw', True),
-        Region('private', RAM_START, b'\xa5'*RAM_BYTES, 'rw', True),
-        Region('private_before', RAM_START-64, b'\x5a'*64),
-        Region('private_after', RAM_START+RAM_BYTES, b'\x5a'*64),
         Region('load_end', 0x6218d980, bytes(4), 'rw', True),
         Region('next_copy_end', 0x6218d984, struct.pack('<I', 0x6025eb50)),
         Region('cold_ready_flags', 0x8ff00058, bytes(3)),
@@ -163,31 +155,31 @@ def loaded_clear(data, engine):
                           actual_return_instruction=hex(native_return)))
         registers = dict(registers, pc=native_return, d0=0)
     require(result['status'] == 'returned' and registers['pc'] == CLEAR_SITE and len(reads) == 3,
-            'load did not reach actual clear hook')
+            'load did not reach original prefix continuation')
     require(memory['loaded'].data == data[LOW-BASE:HIGH-BASE], 'loaded bytes differ from final candidate')
     require(registers['sp'] == SP and memory['load_end'].data == struct.pack('<I', HIGH),
             'original load return/frame changed')
-    require(memory['private'].data == b'\xa5'*RAM_BYTES, 'private RAM changed before clear hook')
+    state_offset = RAM_IMAGE_START-LOW
+    require(memory['loaded'].data[state_offset:state_offset+RAM_BYTES] == bytes(RAM_BYTES),
+            'original loader did not initialize the complete private state')
     before, old_stack = dict(registers), memory['stack'].data
-    result = run(CLEAR_RESUME, 20000)
-    require(result['status'] == 'returned' and result['fault'] is None, 'loaded clear failed: '+str(brief(result)))
+    result = run(CLEAR_RESUME, 20)
+    require(result['status'] == 'returned' and result['fault'] is None, 'original continuation failed: '+str(brief(result)))
     require(result['registers'] == dict(before, pc=CLEAR_RESUME, d0=0x6025eb50),
-            'loaded clear did not preserve original MOV semantics and registers')
-    require(memory['private'].data == bytes(RAM_BYTES), 'loaded clear missed private bytes')
-    require(memory['loaded'].data == data[LOW-BASE:HIGH-BASE], 'clear changed loaded code')
+            'original MOV semantics and registers changed')
+    require(memory['loaded'].data == data[LOW-BASE:HIGH-BASE], 'original MOV changed loaded bytes')
     stack = memory['stack'].data
-    require(stack[:SP-STACK-16] == old_stack[:SP-STACK-16] and stack[SP-STACK:] == old_stack[SP-STACK:],
-            'clear changed stack outside its 16-byte frame')
+    require(stack == old_stack, 'original MOV changed stack')
     return dict(reads=reads, engine_chunks=chunks,
         instructions=sum(r['completed'] for r in chunks),
         original_load_executed=True, exact_final_loaded_bytes=True,
         loaded_bytes=HIGH-LOW, candidate_code_banks_preloaded_by_harness=False,
         execution_regions=['resident_prefix_assumption', 'loaded'],
-        actual_clear_hook=hex(CLEAR_SITE), actual_resume=hex(CLEAR_RESUME),
-        private_poison_untouched_before_hook=True, cleared_bytes=RAM_BYTES,
+        original_mov=hex(CLEAR_SITE), actual_resume=hex(CLEAR_RESUME),
+        private_state_started_poisoned=True, image_initialized_bytes=RAM_BYTES,
         original_next_copy_end=hex(0x6025eb50), all_other_registers_restored=True,
-        clear_frame_bytes=16, stack_pointer=hex(SP),
-        canaries_readonly_and_unchanged=True,
+        new_clear_hook_required=False, stack_pointer=hex(SP),
+        state_shares_original_load_alias=True, continuation_stack_unchanged=True,
         storage_transfer_is_model=True, prefix_loader_executed=False,
         hardware_cache_or_MPU_executed=False)
 
@@ -215,20 +207,20 @@ def literal_survey(stock_path, decoded_stock):
 
 def inspect(stock_path, decoded, directory, prefix, engine):
     data, build, count = check_candidate(decoded, directory, prefix)
-    require(count == 103, 'candidate package span inventory changed')
+    require(count == 101, 'candidate package span inventory changed')
     stock_data = decoded.read_bytes()
     layout = placement(data, stock_data, build)
-    execution = loaded_clear(data, engine)
-    survey = literal_survey(stock_path, stock_data)
+    execution = loaded_state(data, engine)
     return dict(scope=__doc__, status='passed',
         candidate_build_revision=build['source_revision'], layout=layout,
-        actual_load_and_clear=execution, bounded_component_survey=survey,
+        actual_load_and_initialize=execution,
+        historical_component_survey='research/ep7/candidate-residency-sim.json',
         hash_checks_performed=False, firmware_rebuilt=False, firmware_written=False,
         hardware_executed=False, installable=False, installation_authorized=False,
         remaining_conditions=[
-            'Reset/upstream loading of the three changed prefix spans is unproved; the prefix is explicitly resident in this test.',
+            'The entire boot prefix remains original. It is resident input here; physical reset is not emulated.',
             'The two code-bank interiors have finite reference and load evidence, not exhaustive ownership or physical execute/cache qualification.',
-            'CPU2 last-slot reservation must precede all allocation. Real cold pool initialization, guard initialization, bypass writers and one-slot capacity remain unqualified.',
+            'CPU2 pool capacity and prefix instructions remain original; no private pool reservation or cold-clear hook remains.',
             'Known copy/clear/arena intervals do not collide. This does not exclude unknown or indirect later writes, resets or DMA.',
             'Lower storage success and coherent cached/uncached aliases are explicit models; the earlier failing-read evidence is unchanged.',
             'Whole task/IRQ stack bounds, physical startup/display/photo behavior and independent recovery remain unproved.'])

@@ -13,6 +13,7 @@ import subprocess
 import tempfile
 
 from ep7_offline_candidate import BASE, CODE, ELF_NAME, IMAGE_NAME, RAM_START, RAM_BYTES
+from ep7_offline_candidate import RAM_IMAGE_START, PRIVATE_SECTION
 from ep7_offline_candidate import check_sources_at_revision, sections, symbols
 from ep7_sim_probe import brief
 from penf_emulator import Region, execute
@@ -43,11 +44,12 @@ def candidate_inputs(directory, prefix):
     elf = directory/ELF_NAME
     syms = symbols(prefix,elf)
     allocated = [s for s in sections(prefix,elf) if 'ALLOC' in s['flags'] and s['size']]
-    require({s['name'] for s in allocated}=={'.ep7_code0','.ep7_code1','.bss'},
+    require({s['name'] for s in allocated}=={'.ep7_code0','.ep7_code1',PRIVATE_SECTION},
             'candidate allocated sections changed')
-    bss = next(s for s in allocated if s['name']=='.bss')
-    require(bss['address']==RAM_START and bss['size']<=RAM_BYTES and 'CONTENTS' not in bss['flags'],
-            'candidate BSS no longer matches the cold-clear fixture')
+    private = next(s for s in allocated if s['name']==PRIVATE_SECTION)
+    require((private['address'],private['load_address'],private['size'])==
+            (RAM_START,RAM_IMAGE_START,RAM_BYTES) and {'CONTENTS','LOAD','DATA'}<=private['flags'],
+            'candidate initialized state layout changed')
     with tempfile.TemporaryDirectory(prefix='ep7-candidate-code-') as tmp:
         for i,(low,high) in enumerate(CODE):
             section = next(s for s in allocated if s['name']==f'.ep7_code{i}')
@@ -58,6 +60,11 @@ def candidate_inputs(directory, prefix):
             block = path.read_bytes()
             require(len(block)==section['size'] and data[low-BASE:low-BASE+len(block)]==block,
                     'candidate decoded bytes differ from the actual linked ELF')
+        path = Path(tmp)/'private.bin'
+        subprocess.run([prefix+'objcopy','-O','binary','-j',PRIVATE_SECTION,str(elf),str(path)],check=True)
+        require(path.read_bytes()==bytes(RAM_BYTES)==
+                data[RAM_IMAGE_START-BASE:RAM_IMAGE_START-BASE+RAM_BYTES],
+                'private initialization differs between ELF and decoded image')
     for name in (*COHORTS,'_ep7_gcc_quarantine','_ep7_native_runtime_slot',
                  '_ep7_controller_sidecar_unresolved','ep7_capture_far_60289c5e'):
         require(name in syms, 'missing linked symbol '+name)
@@ -76,7 +83,10 @@ class Machine:
         self.engine = engine
         rows = [Region('candidate',BASE,data,'rx'),
             Region('private_before',RAM_START-64,b'\x5a'*64),
-            Region('private',RAM_START,b'\xa5'*RAM_BYTES,'rw',True),
+            # Resident-runtime fixture uses the actual initialization bytes.
+            # The residency probe separately executes the original loader from
+            # poisoned memory with shared cached/uncached backing storage.
+            Region('private',RAM_START,data[RAM_IMAGE_START-BASE:RAM_IMAGE_START-BASE+RAM_BYTES],'rw',True),
             Region('private_after',RAM_START+RAM_BYTES,b'\x5a'*64),
             Region('stack_before',STACK-64,b'\x5a'*64),
             Region('stack',STACK,b'\xcc'*STACK_BYTES,'rw',True),
@@ -141,10 +151,10 @@ def inspect(directory,prefix,engine):
     initial_stack = machine.regions['stack'].data
     cleared = machine.run(CLEAR_SITE,CLEAR_RESUME)
     returned(cleared,CLEAR_RESUME)
-    require(machine.regions['private'].data==bytes(RAM_BYTES),'cold clear missed private payload bytes')
+    require(machine.regions['private'].data==bytes(RAM_BYTES),'image-initialized private bytes changed')
     expected = dict(machine.initial,d0=0xa1f98540)
     require(all(cleared['registers'][name]==value for name,value in expected.items()),
-            'linked cold clear changed preserved registers')
+            'original prefix MOV changed preserved registers')
     stack = machine.regions['stack'].data
     require(stack[:SP-STACK-16]==initial_stack[:SP-STACK-16] and
             stack[SP-STACK:]==initial_stack[SP-STACK:],'cold clear wrote outside its 16-byte frame')
@@ -170,7 +180,7 @@ def inspect(directory,prefix,engine):
         cohorts.append(dict(symbol=name,address=hex(syms[name]),result=brief(result),returned_d0=1))
 
     negative = []
-    for name,address,value in [('_ep7r_native_early_cohort_present',0x600229ba,b'\x20'),
+    for name,address,value in [('_ep7r_native_early_cohort_present',0x600229ba,b'\x1f'),
         ('_ep7cn_native_cohort_present',syms['ep7_capture_far_60289c5e']+26,
          bytes([data[syms['ep7_capture_far_60289c5e']+26-BASE]^1]))]:
         case = baseline.clone()
@@ -218,7 +228,7 @@ def inspect(directory,prefix,engine):
         candidate_object_revision=build.get('object_source_revision',build['source_revision']),
         actual_elf_code_equals_decoded_candidate=True,unchanged_implementation_inputs=True,
         engine=str(engine),hash_checks_performed=False,all_assertions_passed=True,
-        cold_clear=dict(result=brief(cleared),private_bytes_zeroed=RAM_BYTES,read_only_boundary_guards=True,
+        original_prefix_mov=dict(result=brief(cleared),image_initialized_state_bytes=RAM_BYTES,read_only_boundary_guards=True,
             preserved_registers_checked=sorted(expected),stack_writes_confined_to_bytes=16),
         native_capture_initialize=dict(result=brief(initialized),fresh_private_state_checked=True),
         linked_cohort_functions=cohorts,corrupted_candidate_rejections=negative,

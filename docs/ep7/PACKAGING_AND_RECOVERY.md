@@ -1,5 +1,9 @@
 # E-P7 packaging, updater and recovery feasibility — bounded stock audit
 
+2026-11-01 续推：当前采用 [fishcu 加载区状态方案](UPSTREAM_BOOT_RECOVERY_REUSE.md)，
+开发 candidate005，移除三处 prefix 修改及 CPU2 私有槽保留。下方 candidate004 和
+此前恢复门槛保留为历史记录；新方案的有限验证结果随后补入。
+
 2026-11-01 update: the [candidate004 research container](CANDIDATE_PACKAGE.md)
 has now been built using the inherited fishcu workflow, without SHA checks.
 All five E-P7 components are retained. The older unchanged-stock audit below

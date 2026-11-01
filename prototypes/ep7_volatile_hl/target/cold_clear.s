@@ -1,4 +1,6 @@
-/* Candidate at600201fe, entered by JMP with the original startup SP.
+/* Historical candidate001..004 implementation, excluded from sources.txt.
+ * Candidate005 uses image-initialized state and leaves600201fe unchanged.
+ * Candidate at600201fe, entered by JMP with the original startup SP.
  * Linker must bind an aligned, exclusively reserved16KiB uncached payload.
  * No C, RTOS, allocator, CALL/MDR, loop-register or existing BSS dependency.
  * Preserve register/PSW state, replay original MOV, resume60020204.

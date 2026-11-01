@@ -11,7 +11,7 @@ import struct
 
 from ep7_candidate_startup_sim import candidate_inputs, require
 from ep7_installation_manifest import BASE, inspect_stock
-from ep7_offline_candidate import CODE, ELF_NAME, replacement, sections
+from ep7_offline_candidate import CODE, ELF_NAME, RAM_IMAGE_START, RAM_BYTES, replacement, sections
 from oly_container import parse, reconstruct, replace_payload
 
 
@@ -56,6 +56,10 @@ def check_candidate(stock_decoded, directory, prefix):
                 'reviewed candidate code region differs')
         expected[low-BASE:end-BASE] = data[low-BASE:end-BASE]
         spans.append((low, end))
+    require(original[RAM_IMAGE_START-BASE:RAM_IMAGE_START-BASE+RAM_BYTES]==b'\xff'*RAM_BYTES,
+            'reviewed private storage preimage differs')
+    expected[RAM_IMAGE_START-BASE:RAM_IMAGE_START-BASE+RAM_BYTES] = bytes(RAM_BYTES)
+    spans.append((RAM_IMAGE_START,RAM_IMAGE_START+RAM_BYTES))
     symbols = {name: dict(address=address) for name, address in addresses.items()}
     for row in manifest['patches']:
         value, _ = replacement(row, symbols)
@@ -66,6 +70,7 @@ def check_candidate(stock_decoded, directory, prefix):
     require(all(left[1] <= right[0] for left, right in zip(spans, spans[1:])),
             'candidate write spans overlap')
     require(bytes(expected) == data, 'candidate differs from the linked code and declared patches')
+    require(data[:0x60030000-BASE] == original[:0x60030000-BASE], 'boot prefix must remain original')
     return data, build, len(spans)
 
 

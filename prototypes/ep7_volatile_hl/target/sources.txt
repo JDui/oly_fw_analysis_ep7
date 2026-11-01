@@ -62,7 +62,6 @@ snapshot_transport/owned_io.c
 snapshot_transport/producer.c
 snapshot_transport/transport.c
 snapshot_transport/wire.c
-target/cold_clear.s
 target/far_call.c
 target/get_tid_bridge.s
 target/memory.c

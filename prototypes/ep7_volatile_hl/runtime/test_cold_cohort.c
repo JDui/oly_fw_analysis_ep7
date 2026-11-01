@@ -29,7 +29,7 @@ int main(void)
     unsigned char *call=(void *)(uintptr_t)0x60191371;
     call[0]=0xdd;put32(0x60191372,(uint32_t)(uintptr_t)bootstrap-0x60191371u);call[5]=0;call[6]=4;
     unsigned char *alloc=(void *)(uintptr_t)0x600229b9,*free_bound=(void *)(uintptr_t)0x60022c28;
-    alloc[0]=0x80;alloc[1]=31;free_bound[0]=0x8f;free_bound[1]=31;
+    alloc[0]=0x80;alloc[1]=32;free_bound[0]=0x8f;free_bound[1]=32;
     assert(ep7r_native_early_cohort_present());
     put32(0x62234fc0,33);assert(!ep7r_native_early_cohort_present());put32(0x62234fc0,0);negatives++;
     for(unsigned i=0;i<sizeof sites/sizeof sites[0];i++){

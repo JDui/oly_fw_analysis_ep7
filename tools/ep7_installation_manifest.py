@@ -170,7 +170,9 @@ def inspect_stock(decoded):
     source = (CORE/'runtime/cold_cohort.c').read_text(); names = aliases(source)
     spans = [(int(p,16), names[n], int(size)) for p,n,size in re.findall(
         r'\{(0x[0-9a-f]+),(\w+),(\d+)\}', source)]
-    if {pc for pc,_,_ in spans} != set(inline) or len(spans) != 5:
+    # The old cold-clear JMP and two pool-bound edits were removed when state
+    # moved into the existing loaded image. Retain the other reviewed spans.
+    if {pc for pc,_,_ in spans} != set(inline)-{0x600201fe} or len(spans) != 4:
         raise ValueError('inline spans differ from reviewed cold cohort')
     for pc, target, size in spans:
         old = bytes.fromhex(inline[pc]['original'])
@@ -178,15 +180,17 @@ def inspect_stock(decoded):
             raise ValueError('inline span length changed')
         add(pc, old, 'inline_jump', 'cold', dict(encoding='JMP32_NOP_suffix',
             target_symbol=target, nop_count=size-5), 'research/ep7/cold-bootstrap.json')
-    for pc, old, new in [(0x600229b9,'8020','801f'),(0x60022c28,'8f20','8f1f')]:
-        add(pc, bytes.fromhex(old), 'pool_bound', 'cold', dict(encoding='literal',hex=new),
-            'research/ep7/cold-bootstrap.json')
+    for pc, old in [(0x600201fe,inline[0x600201fe]['original']),
+                    (0x600229b9,'8020'),(0x60022c28,'8f20')]:
+        value = bytes.fromhex(old)
+        if data[pc-BASE:pc-BASE+len(value)] != value:
+            raise ValueError('original prefix differs at '+hex(pc))
     patches.sort(key=lambda row:int(row['site'],16))
     for left, right in zip(patches, patches[1:]):
         if int(left['site'],16)+left['bytes'] > int(right['site'],16):
             raise ValueError('overlapping installation entries '+left['site']+' '+right['site'])
     expected = dict(short_call_via_veneer=36, wide_call=32, function_pointer_word=11,
-                    stack_frame=9, queue_capacity=6, inline_jump=5, pool_bound=2)
+                    stack_frame=9, queue_capacity=6, inline_jump=4)
     if dict(Counter(r['kind'] for r in patches)) != expected:
         raise ValueError('installation inventory changed; review declared cohort coverage')
     return dict(patches=patches, count_by_kind=expected,
@@ -293,7 +297,7 @@ def main():
         firmware_modified=False, firmware_built=False, hash_checks_performed=False,
         limits=['Enumerates currently declared hooks; does not prove native caller/alias/lifetime closure.',
                 'Binding evidence references existing investigations; only patch preimages and load-table rows are freshly compared here.',
-                'Three boot-prefix edits have no qualified upstream load path yet.',
+                'All declared edits have identified ordinary load paths; the boot prefix remains original.',
                 'Executable/RAM placement, cache visibility, complete stack bounds and cold installer ordering remain unqualified.',
                 'A mapped stock symbol does not approve its ABI or runtime domain beyond its existing evidence.',
                 'No candidate image, linker output, packer, emulator run or device operation is produced.'])

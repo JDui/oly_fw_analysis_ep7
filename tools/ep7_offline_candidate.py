@@ -12,14 +12,15 @@ from pathlib import Path
 from ep7_installation_manifest import BASE, ROOT, implementation_sources, inspect_objects, inspect_stock
 from ep7_native_bindings import bindings
 
-CODE = ((0x60048040, 0x6004ffc0), (0x600c8040, 0x600cffc0))
-RAM_START, RAM_BYTES = 0xa1dd4d00, 0x4000
+CODE = ((0x60048040, 0x6004dc00), (0x600c8040, 0x600cffc0))
+RAM_IMAGE_START, RAM_START, RAM_BYTES = 0x6004dc00, 0xa004dc00, 0x2000
+PRIVATE_SECTION = '.ep7_private'
 ELF_NAME = 'EP7HSL-NONINSTALLABLE.elf'
 IMAGE_NAME = 'EP7HSL-NONINSTALLABLE.decoded-main.bin'
 LIMITS = [
     'Both executable regions are unqualified placement assumptions, not proven free space.',
-    'Private RAM uses the proposed pool payload; ownership and cold reservation timing remain unqualified.',
-    'Three boot-prefix edits have no qualified upstream load path.',
+    'Private state occupies an image-initialized loaded tail with one uncached access alias; all-writer ownership remains unproved.',
+    'The boot prefix and all CPU2 pool slots remain original; no new prefix loader or pool reservation is required.',
     'Early copy failure, secondary CPU ordering and cache visibility remain unresolved.',
     'Full capture/alias retirement, queue/task lifetime, cancellation and GUI exclusion remain unresolved.',
     'Complete task/IRQ stack bounds remain unknown; .su data are local function measurements only.',
@@ -99,12 +100,9 @@ def layout(prefix, objects):
 
 
 def linker_script(groups, native):
-    if native['__ep7_private_uncached_start']['address'] is not None or \
-       native['__ep7_private_uncached_start']['proposed_address'] != RAM_START:
-        raise ValueError('private RAM assumption changed; review the offline layout')
     result = ['/* NON-INSTALLABLE: region ownership and startup remain unqualified. */',
               'OUTPUT_FORMAT("elf32-mn10300")', 'OUTPUT_ARCH(mn10300)',
-              'ENTRY(ep7_native_cold_clear)', 'MEMORY {']
+              'ENTRY(ep7_native_cold_bootstrap_bridge)', 'MEMORY {']
     for i, (start, end) in enumerate(CODE):
         result.append(f'  CODE{i} (rx) : ORIGIN = {start:#x}, LENGTH = {end-start:#x}')
     result += [f'  PRIVATE (rw) : ORIGIN = {RAM_START:#x}, LENGTH = {RAM_BYTES:#x}', '}',
@@ -118,13 +116,16 @@ def linker_script(groups, native):
         result += [f'  .ep7_code{i} : {{', *rows, f'  }} > CODE{i}']
     result += ['  .ep7_empty_readonly : { *(.text .text.* .rodata .rodata.*) } > CODE0',
                '  .data : { *(.data .data.*) } > PRIVATE',
-               '  .bss (NOLOAD) : {', '    __ep7_bss_start = .;',
+               f'  {PRIVATE_SECTION} : AT ({RAM_IMAGE_START:#x}) {{', '    __ep7_bss_start = .;',
                '    *(.bss .bss.* COMMON)', '    . = ALIGN(4);', '    __ep7_bss_end = .;',
+               # BYTE forces a loadable section; the full reserved span is zero
+               # in the decoded image and copied by the unchanged stock loader.
+               '    BYTE(0);', '    . = ORIGIN(PRIVATE) + LENGTH(PRIVATE);',
                '  } > PRIVATE', '  /DISCARD/ : { *(.comment .note.GNU-stack) }', '}',
                'ASSERT(SIZEOF(.ep7_empty_readonly) == 0, "unassigned readonly input bytes")',
                'ASSERT(SIZEOF(.data) == 0, "initialized writable data has no startup copy")',
                'ASSERT(__ep7_bss_start == ORIGIN(PRIVATE), "BSS origin drift")',
-               'ASSERT(__ep7_bss_end <= __ep7_private_uncached_end, "private RAM overflow")']
+               'ASSERT(__ep7_bss_end < __ep7_private_uncached_end, "private RAM overflow")']
     return '\n'.join(result)+'\n'
 
 
@@ -219,6 +220,8 @@ def build(decoded, prefix, out, report, reuse=None):
         # Keep the existing 64-byte front/back guard outside the emitted region.
         if stock[start-BASE:end-BASE] != b'\xff'*(end-start):
             raise ValueError('assumed code region no longer contains the expected FF bytes')
+    if stock[RAM_IMAGE_START-BASE:RAM_IMAGE_START-BASE+RAM_BYTES] != b'\xff'*RAM_BYTES:
+        raise ValueError('image-initialized private region no longer contains expected FF bytes')
     sources = implementation_sources()
     if reuse is None:
         print(f'Compiling {len(sources)} implementation sources for the whole candidate...',flush=True)
@@ -288,7 +291,7 @@ def build(decoded, prefix, out, report, reuse=None):
         if syms[name]['address'] != expected:
             raise ValueError('linked native binding drift: '+name)
     allocated = [s for s in sections(prefix,elf) if 'ALLOC' in s['flags'] and s['size']]
-    if {s['name'] for s in allocated} != {'.ep7_code0','.ep7_code1','.bss'}:
+    if {s['name'] for s in allocated} != {'.ep7_code0','.ep7_code1',PRIVATE_SECTION}:
         raise ValueError('unexpected allocated output sections')
     memory = []
     blocks = []
@@ -307,11 +310,19 @@ def build(decoded, prefix, out, report, reuse=None):
         blocks.append((start,data))
         memory.append(dict(section=section['name'],start=hex(start),end=hex(start+len(data)),
             bytes=len(data),capacity=end-start,remaining=end-start-len(data),ownership_proven=False))
-    bss = next(s for s in allocated if s['name'] == '.bss')
-    if bss['address'] != RAM_START or bss['size'] > RAM_BYTES or 'CONTENTS' in bss['flags']:
-        raise ValueError('private BSS must be bounded NOLOAD at the assumed RAM origin')
-    memory.append(dict(section='.bss',start=hex(RAM_START),end=hex(RAM_START+bss['size']),
-        bytes=bss['size'],capacity=RAM_BYTES,remaining=RAM_BYTES-bss['size'],noload=True,ownership_proven=False))
+    private = next(s for s in allocated if s['name'] == PRIVATE_SECTION)
+    if (private['address'],private['load_address'],private['size']) != \
+            (RAM_START,RAM_IMAGE_START,RAM_BYTES) or not {'CONTENTS','LOAD','DATA'} <= private['flags']:
+        raise ValueError('private state must be loadable at its exact cached/uncached coordinates')
+    binary = out/'private.bin'
+    subprocess.run([prefix+'objcopy','-O','binary','-j',PRIVATE_SECTION,str(elf),str(binary)],check=True)
+    private_data = binary.read_bytes()
+    if private_data != bytes(RAM_BYTES):
+        raise ValueError('private state initial bytes must all be zero')
+    bss_bytes = syms['__ep7_bss_end']['address']-RAM_START
+    memory.append(dict(section=PRIVATE_SECTION,start=hex(RAM_START),end=hex(RAM_START+RAM_BYTES),
+        load_address=hex(RAM_IMAGE_START),bytes=RAM_BYTES,bss_bytes=bss_bytes,
+        capacity=RAM_BYTES,remaining=RAM_BYTES-bss_bytes,noload=False,ownership_proven=False))
 
     def read(address,length):
         for start,data in blocks:
@@ -328,6 +339,7 @@ def build(decoded, prefix, out, report, reuse=None):
             check_veneer(row,syms,read)
     print('Synthesizing the non-installable decoded image and checking final branch encodings...',flush=True)
     spans = [(start,data,'code') for start,data in blocks]
+    spans.append((RAM_IMAGE_START,private_data,'image_initialized_state'))
     patch_rows = []
     branches = []
     for row in manifest['patches']:
@@ -372,13 +384,15 @@ def build(decoded, prefix, out, report, reuse=None):
         global_implementation_definitions=inventory['global_definition_count'],
         native_binding_count=len(bindings()), unresolved_symbols=[],
         unlinked_text_data_bss=inventory['unlinked_text_data_bss'],layout=memory,
-        entry_symbol='ep7_native_cold_clear',entry_address=hex(syms['ep7_native_cold_clear']['address']),
+        entry_symbol='ep7_native_cold_bootstrap_bridge',entry_address=hex(syms['ep7_native_cold_bootstrap_bridge']['address']),
         entry_is_not_a_boot_proof=True,patch_count=len(patch_rows),patches=patch_rows,
         original_patch_span_bytes=manifest['total_original_span_bytes'],
         patch_count_by_kind=manifest['count_by_kind'],patch_count_by_stage=manifest['count_by_stage'],
         patch_targets_checked=len(targets),linked_veneers_checked=36,gnu_decoded_branches_checked=len(branches),
         candidate_length=len(candidate),changed_bytes=changed,write_span_count=len(spans),
         undeclared_bytes_unchanged=True,candidate_readback_equal=True,stock_input_unchanged=True,
+        boot_prefix_unchanged=candidate[:0x60030000-BASE]==stock[:0x60030000-BASE],
+        state_initialized_by_original_loader=True,cpu2_pool_capacity=32,
         toolchain=dict(compiler=inventory['compiler'],
             linker=subprocess.check_output([prefix+'ld','--version'],text=True).splitlines()[0]),
         artifacts=dict(elf=ELF_NAME,map='EP7HSL-NONINSTALLABLE.map',image=IMAGE_NAME,
@@ -412,8 +426,8 @@ def main():
         hardware_executed=False,updater_container_generated=False,hash_checks_performed=False,
         source_revision=args.source_revision,
         stock_length_expected=26214336,limits=LIMITS,
-        ram_binding_override=dict(symbol='__ep7_private_uncached_start',official_address=None,
-            offline_assumption=hex(RAM_START),production_binding_table_unchanged=True),
+        private_storage=dict(access_alias=hex(RAM_START),image_address=hex(RAM_IMAGE_START),
+            bytes=RAM_BYTES,method='fishcu loaded-section initialized state; E-P7-specific placement'),
         evidence='docs/ep7/OFFLINE_CANDIDATE.md')
     save(out/'report.json',report)
     try:

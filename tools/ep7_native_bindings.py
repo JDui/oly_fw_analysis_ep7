@@ -50,7 +50,6 @@ def bindings():
     add('continuation', 'ep7_queue_kernel_gate', dict(
         delete_gate_continue=0x60031078, receive_gate_continue=0x60036d46,
         receive_gate_error=0x60036e17, send_gate_continue=0x60036f99, send_gate_error=0x600370a3))
-    add('continuation', 'ep7_load_regions', dict(boot_after_clear=0x60020204))
 
     add('function', 'ep7_ui_mvc_lifetime', dict(
         mvc_gui_entry=0x60e5dae9, mvc_gui_exit=0x60e5db01,
@@ -99,10 +98,6 @@ def bindings():
         ui_wheel_2_call=0x60ea0d70, ui_wheel_3_call=0x60ea0e66, ui_wheel_4_call=0x60ea0deb))
     add('instruction_address', 'ep7_ui_input_binding', dict(
         ui_preprocess_call=0x60cfd53a, ui_dispatch_call=0x60cfd558))
-    # Assembly reads this data word directly; it is NOT a function or a GCC name.
-    rows['ep7_stock_boot_next_copy_end_unresolved'] = dict(
-        address=0x6218d984, kind='assembly_word_address', evidence='tools/ep7_load_regions.py')
-    # Deliberately no final address. It must come from a qualified linker layout.
-    rows['__ep7_private_uncached_start'] = dict(address=None, proposed_address=0xa1dd4d00,
-        kind='placement_required', evidence='docs/ep7/RAM_OWNERSHIP_AND_BUDGET.md')
+    # Private storage is a linker-owned, image-initialized section. It no longer
+    # consumes a native pool slot or references a prefix clear continuation.
     return rows
