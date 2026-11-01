@@ -50,7 +50,8 @@ class OwnerMachine(UiMachine):
         other.boundaries=dict(self.boundaries)
         return other
 
-    def call_native(self,target,mask=0,frame=0,values=None,*,entry=None,stop=None):
+    def call_native(self,target,mask=0,frame=0,values=None,*,entry=None,stop=None,
+                    preserved=('d2','d3','a2','a3')):
         if entry is None:
             self.regions['caller']=Region('caller',CALLER,
                 b'\xdd'+struct.pack('<i',target-CALLER)+bytes([mask,frame]),'rx')
@@ -125,7 +126,7 @@ class OwnerMachine(UiMachine):
                 self.events.append(dict(kind='single_gui_lock_model',entry=hex(pc)))
                 BootState.return_from_model(self,1)
         require(self.regs['pc']==stop and self.regs['sp']==original['sp'] and
-                all(self.regs[k]==original[k] for k in ('d2','d3','a2','a3')),
+                all(self.regs[k]==original[k] for k in preserved),
                 'owner native call failed return ABI')
         require(not self.gui_locks,'modeled GUI lock retained after return')
         for event in self.events[first_event:]:

@@ -8,7 +8,15 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[GUI编辑与共享冻结](CANDIDATE_UI_EDITOR_SIM.md)通过443,699条GUI链指令。
+最新：[worker分配/登记/撤销/ACK](CANDIDATE_WORKER_JOB_SIM.md)通过24,686条指令，
+观察新栈860B。原allocator实际收到15512并取得domain0槽61bd6d40，新24B先清零；
+process桥登记冻结值，实际postbuilder点写出三项预期系数。真实poll133注入一次
+争用，cleanup遇−50保留job/token，经一次明确delay完成模型及真实signal后才撤销、
+进入原job析构/池free。payload即时unmap后正常返回，ACK先退休ticket再构造消息，
+迟到observer不读旧job。原stock构造/转换/处理与ACK交付为边界；真实kernel/池初态、
+任务交接仍为fixture。无固件/包变化；继续代码与私有RAM启动驻留的集中审查。
+
+此前：[GUI编辑与共享冻结](CANDIDATE_UI_EDITOR_SIM.md)通过443,699条GUI链指令。
 完整原预处理/最终veneer、实际container CALLS/parent桥及原viewer缓存接通；H第1区
 +3、H第3区−2、L第3区−4进入同一core，原生poll/signal133共46次，capture API
 冻结25B逐项一致。同dispatch重投拒绝，退出后session/receipt撤销，内容/文字回收，

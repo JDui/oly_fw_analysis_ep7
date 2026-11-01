@@ -72,6 +72,13 @@ patch及落盘回读通过。它仍标记不可安装；局部/完整原厂更�
 
 ## 当前进度
 
+基础H/L的[worker改动链](CANDIDATE_WORKER_JOB_SIM.md)已通过24,686条指令：真实
+domain0 allocator扩为15512、新24B清零、process登记、实际postbuilder点三项系数
+及cleanup/ACK撤销顺序闭合。一次原生poll133返回−50时保留job/token，经明确进展
+模型后重试，原free才回收槽0；迟到observer在job撤去后保持中性。原stock构造/
+处理、任务交接、fresh池和ACK交付仍有模型条件，860B非完整栈上界。下一项集中
+审查代码/私有RAM的启动驻留，避免继续展开所有未改动的ISP内部流程。
+
 基础H/L的[GUI编辑与共享冻结](CANDIDATE_UI_EDITOR_SIM.md)已接通：443,699条GUI链
 指令、46次原生poll/signal133，实际拨轮输入将H[0]=3、H[2]=−2、L[2]=−4写入同一
 runtime，capture API冻结25B一致。重复事件拒绝，退出撤销并回收，late refresh
