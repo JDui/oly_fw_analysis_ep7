@@ -7,7 +7,16 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[实际候选入口的新capture分配](CANDIDATE_CAPTURE_ALLOCATION_SIM.md)完成7716条
+最新：[完整node factory与fresh登记](CANDIDATE_NODE_FACTORY_SIM.md)完成29312条新指令，
+最大观察新栈深348B。原pool3200/FIFO、完整关联池初始化接通；实际factory原生分配
+56B node→61b21fc0、associated→6223e164，候选fresh查询ID2/af6037c0并生成token2，
+返回602a4485、SP恢复。原空关联FIFO触发25002701的拒绝分支保留。实际reset hook
+先撤销旧sidecar、保留serial，再重建25槽；这是显式reset场景，真实调度合法性待证。
+新增308B store容量（36B旧canary重叠修正）、41B原只读store开放、8B CPU0小heap
+冷BSS。旧capture/ID1注册表不变；associated旧backlink仍19510000，需真实发布。
+下一步node准备与COLOR两段填充。候选004/fishcu包不变、不可安装；无SHA或相机操作。
+
+此前：[实际候选入口的新capture分配](CANDIDATE_CAPTURE_ALLOCATION_SIM.md)完成7716条
 新指令，最大观察新栈深280B。原信号量19、25槽capture池1500和选定ID2 flag reset
 执行后，实际602a4480候选入口完整执行准入及注册表分配，返回ID2/af6037c0；原生
 handles为2/102/1501、flags5，旧ID1/capture/sidecar不变。509B原store容量，其中

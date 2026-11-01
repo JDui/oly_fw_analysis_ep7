@@ -274,3 +274,10 @@ af6037c0、handles2/102/1501。新增7716指令，最大观察栈深280B；509B�
 分配完成检查点锁已释放；独立续接停pool3200 header读取，其信号量19仍在持有。
 下一步原pool3200、FIFO、node heap/关联对象与fresh登记；完整node和COLOR填充
 尚未完成，S3/S4、驻留与恢复准入继续保留。
+
+[完整node factory与fresh登记](CANDIDATE_NODE_FACTORY_SIM.md)现已返回：原pool3200/FIFO、
+关联reset hook和完整25槽初始化后，实际factory取得node61b21fc0、associated6223e164，
+fresh查询ID2/af6037c0并登记token2。新增29312指令，最大新栈深348B；308B store容量、
+41B原只读store开放、8B明确冷heap BSS。原空FIFO拒绝分支保留；reset先撤销旧登记、
+保留serial，但真实任务中reset的合法时机未证明。associated旧backlink尚未更新，
+下一步原node准备与COLOR population；生产内核、生命周期、驻留及恢复仍待证。
