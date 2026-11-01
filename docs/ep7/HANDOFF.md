@@ -7,7 +7,20 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[原厂请求与快照字段](CANDIDATE_SNAPSHOT_SIM.md)执行128B原厂0501请求构造299、
+最新：[格式模块发布与状态](CANDIDATE_FORMAT_STATE_SIM.md)执行cold RAM前缀33、core前缀11、
+2af4原生掩码复制45、完整606bbffc发布2768、48槽cache1586、6字段mode刷新300；
+原snapshot producer再推进447指令。两GPIO分支总10380，新增观测栈580非完整上界。
+13个原生字符串325B核对通过，48指针匹配原属性bank，6个字段由实际getter产生。
+60693455的7处store生成10B记录a2788aa4=00000000010001000000；这些默认属性值
+不是实机格式。当前严格fault606d673a读a2788cec/2B，MDR60664e1e。它要从对象
+a2788cb0+60复制5halfword；606d4593有+70到+60复制，606d18bf附近有+80到+60复制。
+下一步追源记录/更新，勿直接补零活动字段。新增映射706B，仅idle字节a2788cbf使用
+明确BSS/alias条件。冷reset停60556bb2前，两份16384B诊断buffer分配未运行；核心
+6065bff0只到6065c01e，mode刷新只到606d4898，完整启动未证明。format_context保留
+configuration原栈/寄存器和producer新停止现场。候选004/fishcu包未变、不可安装；
+geometry/population未恢复、capture不变。保存4个中间frontier与正式report。
+
+此前：[原厂请求与快照字段](CANDIDATE_SNAPSHOT_SIM.md)执行128B原厂0501请求构造299、
 请求复制215、任务前缀92、分发/producer前缀4832条指令，各GPIO分支均通过字段构造
 6042661b返回与124B缓存复制一致性；完整producer/wrapper未返回。新接通service38、
 157槽清零164/147槽注册4889、相机状态RAM后缀20、16项history初始化138。总21374，

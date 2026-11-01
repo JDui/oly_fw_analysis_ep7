@@ -1,0 +1,1318 @@
+{
+  "scope": "Run original format-module state initialization before resuming its getter.\n\nThe60556b1e RAM prefix stops before two diagnostic-buffer allocations. The\nmodule publication helper executes independently; full startup is not claimed.\n",
+  "candidate_build_revision": "0b874fa6aa6389d972acacaf67e0db6b729d8a13",
+  "engine": "/work/ep7-mn103-sim-87ffb882-complete/build/ep7-mn103-mulqu",
+  "cases": [
+    {
+      "gpio80_input_bit4": 0,
+      "cases": [
+        {
+          "symbol": "native_format_module_cold_RAM_prefix",
+          "status": "returned",
+          "completed": 33,
+          "fault": null,
+          "final_pc": "0x60556bb2",
+          "final_sp": "0x190107ac",
+          "returned_d0": 1,
+          "stack_depth_from_call_sp": 4,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "stop_registers": {
+            "d0": "0x1",
+            "d1": "0x55667788",
+            "d2": "0x22334455",
+            "d3": "0x33445566",
+            "a0": "0x19200000",
+            "a1": "0x19300000",
+            "a2": "0x19400000",
+            "a3": "0x19500000",
+            "sp": "0x190107ac",
+            "pc": "0x60556bb2",
+            "mdr": "0x19000007",
+            "psw": "0x801",
+            "lir": "0x12345678",
+            "lar": "0x23456789",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        },
+        {
+          "symbol": "native_format_core_initialization_prefix",
+          "status": "returned",
+          "completed": 11,
+          "fault": null,
+          "final_pc": "0x6065c01e",
+          "final_sp": "0x190107ac",
+          "returned_d0": 1,
+          "stack_depth_from_call_sp": 4,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "stop_registers": {
+            "d0": "0x1",
+            "d1": "0x55667788",
+            "d2": "0x22334455",
+            "d3": "0x33445566",
+            "a0": "0x19200000",
+            "a1": "0x19300000",
+            "a2": "0x19400000",
+            "a3": "0x19500000",
+            "sp": "0x190107ac",
+            "pc": "0x6065c01e",
+            "mdr": "0x6065c01e",
+            "psw": "0x801",
+            "lir": "0x12345678",
+            "lar": "0x23456789",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        },
+        {
+          "symbol": "native_debug_mask_property_copy_prefix",
+          "status": "returned",
+          "completed": 45,
+          "fault": null,
+          "final_pc": "0x606bb57f",
+          "final_sp": "0x190107b0",
+          "returned_d0": 0,
+          "stack_depth_from_call_sp": 24,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "stop_registers": {
+            "d0": "0x0",
+            "d1": "0x0",
+            "d2": "0x0",
+            "d3": "0x33445566",
+            "a0": "0x624b6a5c",
+            "a1": "0x6005c8cc",
+            "a2": "0x19400000",
+            "a3": "0x19500000",
+            "sp": "0x190107b0",
+            "pc": "0x606bb57f",
+            "mdr": "0x6005c8df",
+            "psw": "0x801",
+            "lir": "0x12345678",
+            "lar": "0x23456789",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        },
+        {
+          "symbol": "native_format_module_publish",
+          "status": "returned",
+          "completed": 2768,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0",
+          "returned_d0": 1,
+          "stack_depth_from_call_sp": 108,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "stop_registers": {
+            "d0": "0x1",
+            "d1": "0x0",
+            "d2": "0x22334455",
+            "d3": "0x33445566",
+            "a0": "0xa2787fd5",
+            "a1": "0x60719d3e",
+            "a2": "0x19400000",
+            "a3": "0x19500000",
+            "sp": "0x190107b0",
+            "pc": "0x19000007",
+            "mdr": "0x6066dc20",
+            "psw": "0x801",
+            "lir": "0xf04541f0",
+            "lar": "0x60022f57",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        },
+        {
+          "symbol": "native_format_property_cache_initialize",
+          "status": "returned",
+          "completed": 1586,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0",
+          "returned_d0": 1649472736,
+          "stack_depth_from_call_sp": 28,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "stop_registers": {
+            "d0": "0x6250f4e0",
+            "d1": "0x0",
+            "d2": "0x22334455",
+            "d3": "0x33445566",
+            "a0": "0x6250f4e0",
+            "a1": "0x6005c8cc",
+            "a2": "0x19400000",
+            "a3": "0x19500000",
+            "sp": "0x190107b0",
+            "pc": "0x19000007",
+            "mdr": "0x6005c8df",
+            "psw": "0x801",
+            "lir": "0x12345678",
+            "lar": "0x23456789",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        },
+        {
+          "symbol": "native_format_mode_fields_refresh_prefix",
+          "status": "returned",
+          "completed": 300,
+          "fault": null,
+          "final_pc": "0x606d4898",
+          "final_sp": "0x190107ac",
+          "returned_d0": 0,
+          "stack_depth_from_call_sp": 40,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "stop_registers": {
+            "d0": "0x0",
+            "d1": "0x0",
+            "d2": "0x22334455",
+            "d3": "0x33445566",
+            "a0": "0xa2788cb0",
+            "a1": "0x6",
+            "a2": "0x19400000",
+            "a3": "0x19500000",
+            "sp": "0x190107ac",
+            "pc": "0x606d4898",
+            "mdr": "0x6005c8df",
+            "psw": "0x806",
+            "lir": "0x12345678",
+            "lar": "0x23456789",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        },
+        {
+          "symbol": "native_snapshot_resume_with_format_module",
+          "status": "memory_fault",
+          "completed": 447,
+          "fault": {
+            "kind": 1,
+            "pc": 1617782586,
+            "map": 0,
+            "address": 2725809388,
+            "size": 2,
+            "access": "read"
+          },
+          "final_pc": "0x606d673a",
+          "final_sp": "0x190105a8",
+          "stack_depth_from_call_sp": 580,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "d0_at_stop": -1569157968,
+          "stop_registers": {
+            "d0": "0xa2788cb0",
+            "d1": "0xfffffffb",
+            "d2": "0x0",
+            "d3": "0x5",
+            "a0": "0x190105c0",
+            "a1": "0xa2788cec",
+            "a2": "0x190106a8",
+            "a3": "0xa2788aa4",
+            "sp": "0x190105a8",
+            "pc": "0x606d673a",
+            "mdr": "0x60664e1e",
+            "psw": "0x802",
+            "lir": "0x22161f0",
+            "lar": "0x606d673e",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        }
+      ],
+      "mapped_state_bytes": 496,
+      "source_direct_stores": 81,
+      "format_core_prefix_completed": true,
+      "format_core_mapped_bytes": 11,
+      "diagnostic_string_records": 13,
+      "diagnostic_string_bytes": 325,
+      "debug_mask_source": "0x624b6a5c",
+      "debug_masks": "000000000000000000000000000000000000000000000000",
+      "mode_refresh": {
+        "mapped_state_bytes": 199,
+        "source_direct_stores": 48,
+        "bindings": {
+          "0xa2788e08": {
+            "key": "0x84d1",
+            "pointer": "0x624ea8b0"
+          },
+          "0xa2788e0c": {
+            "key": "0x88b2",
+            "pointer": "0x62509dd0"
+          },
+          "0xa2788e10": {
+            "key": "0x9a41",
+            "pointer": "0x6250f314"
+          },
+          "0xa2788e14": {
+            "key": "0x9121",
+            "pointer": "0x6250f20d"
+          },
+          "0xa2788e18": {
+            "key": "0x69f1",
+            "pointer": "0x624ea6ec"
+          },
+          "0xa2788e1c": {
+            "key": "0xe8d9",
+            "pointer": "0x6250f5c3"
+          },
+          "0xa2788e20": {
+            "key": "0x3081",
+            "pointer": "0x624ea421"
+          },
+          "0xa2788e24": {
+            "key": "0x8c61",
+            "pointer": "0x6250f1b5"
+          },
+          "0xa2788e28": {
+            "key": "0xc021",
+            "pointer": "0x6250f3c5"
+          },
+          "0xa2788e2c": {
+            "key": "0x8de1",
+            "pointer": "0x6250f1ca"
+          },
+          "0xa2788e30": {
+            "key": "0x8551",
+            "pointer": "0x624ea8d1"
+          },
+          "0xa2788e34": {
+            "key": "0x6761",
+            "pointer": "0x624ea690"
+          },
+          "0xa2788e38": {
+            "key": "0x8481",
+            "pointer": "0x624ea8aa"
+          },
+          "0xa2788e3c": {
+            "key": "0x8df1",
+            "pointer": "0x6250f1d0"
+          },
+          "0xa2788e40": {
+            "key": "0x8e01",
+            "pointer": "0x6250f1d1"
+          },
+          "0xa2788e44": {
+            "key": "0x8081",
+            "pointer": "0x624ea7d6"
+          },
+          "0xa2788e48": {
+            "key": "0xee71",
+            "pointer": "0x6250f6b9"
+          },
+          "0xa2788e4c": {
+            "key": "0x83c1",
+            "pointer": "0x624ea828"
+          },
+          "0xa2788e50": {
+            "key": "0x8372",
+            "pointer": "0x624ea81e"
+          },
+          "0xa2788e54": {
+            "key": "0xe951",
+            "pointer": "0x6250f5cb"
+          },
+          "0xa2788e58": {
+            "key": "0x18b1",
+            "pointer": "0x624ea40d"
+          },
+          "0xa2788e5c": {
+            "key": "0x8c31",
+            "pointer": "0x6250f1b0"
+          },
+          "0xa2788e60": {
+            "key": "0x8391",
+            "pointer": "0x624ea821"
+          },
+          "0xa2788e64": {
+            "key": "0x85b1",
+            "pointer": "0x624ea8d7"
+          },
+          "0xa2788e68": {
+            "key": "0x99e1",
+            "pointer": "0x6250f30c"
+          },
+          "0xa2788e6c": {
+            "key": "0x8c42",
+            "pointer": "0x6250f1b2"
+          },
+          "0xa2788e70": {
+            "key": "0xece2",
+            "pointer": "0x6250f628"
+          },
+          "0xa2788e74": {
+            "key": "0x55f2",
+            "pointer": "0x624ea5c0"
+          },
+          "0xa2788e78": {
+            "key": "0xeee1",
+            "pointer": "0x6250f6e9"
+          },
+          "0xa2788e7c": {
+            "key": "0xef09",
+            "pointer": "0x6250f6eb"
+          },
+          "0xa2788e80": {
+            "key": "0xef19",
+            "pointer": "0x6250f6ed"
+          },
+          "0xa2788e84": {
+            "key": "0x9331",
+            "pointer": "0x6250f262"
+          },
+          "0xa2788e88": {
+            "key": "0x96e2",
+            "pointer": "0x6250f2c6"
+          },
+          "0xa2788e8c": {
+            "key": "0x9731",
+            "pointer": "0x6250f2cd"
+          },
+          "0xa2788e90": {
+            "key": "0xf0c1",
+            "pointer": "0x6250f762"
+          },
+          "0xa2788e94": {
+            "key": "0x5101",
+            "pointer": "0x624ea4ab"
+          },
+          "0xa2788e98": {
+            "key": "0x5391",
+            "pointer": "0x624ea525"
+          },
+          "0xa2788e9c": {
+            "key": "0x53a1",
+            "pointer": "0x624ea526"
+          },
+          "0xa2788ea0": {
+            "key": "0x5651",
+            "pointer": "0x624ea5c8"
+          },
+          "0xa2788ea4": {
+            "key": "0x53c2",
+            "pointer": "0x624ea52e"
+          },
+          "0xa2788ea8": {
+            "key": "0x53b2",
+            "pointer": "0x624ea528"
+          },
+          "0xa2788eac": {
+            "key": "0x8791",
+            "pointer": "0x62509db0"
+          },
+          "0xa2788eb0": {
+            "key": "0x5642",
+            "pointer": "0x624ea5c6"
+          },
+          "0xa2788eb4": {
+            "key": "0x9a31",
+            "pointer": "0x6250f313"
+          },
+          "0xa2788eb8": {
+            "key": "0x85c1",
+            "pointer": "0x624ea8d8"
+          },
+          "0xa2788ebc": {
+            "key": "0xf8c1",
+            "pointer": "0x6250f915"
+          },
+          "0xa2788ec0": {
+            "key": "0xde11",
+            "pointer": "0x6250f4c6"
+          },
+          "0xa2788ec4": {
+            "key": "0xde84",
+            "pointer": "0x6250f4e0"
+          }
+        },
+        "conditional_BSS_bytes": 1,
+        "mode_fields": "000000000000",
+        "getter_keys": [
+          "0x8c61",
+          "0xc021",
+          "0x8de1",
+          "0x8551",
+          "0x6761",
+          "0x8481"
+        ]
+      },
+      "native_cold_prefix_completed": true,
+      "complete_cold_initializer_executed": false,
+      "diagnostic_buffer_allocations_executed": false,
+      "native_module_publication_completed": true,
+      "snapshot_producer_completed": false,
+      "frontier": {
+        "status": "memory_fault",
+        "fault": {
+          "kind": 1,
+          "pc": 1617782586,
+          "map": 0,
+          "address": 2725809388,
+          "size": 2,
+          "access": "read"
+        },
+        "pc": "0x606d673a",
+        "native_return_pc": "0x60664e1e"
+      },
+      "capture_unchanged": true,
+      "geometry_consumer_resumed": false
+    },
+    {
+      "gpio80_input_bit4": 1,
+      "cases": [
+        {
+          "symbol": "native_format_module_cold_RAM_prefix",
+          "status": "returned",
+          "completed": 33,
+          "fault": null,
+          "final_pc": "0x60556bb2",
+          "final_sp": "0x190107ac",
+          "returned_d0": 1,
+          "stack_depth_from_call_sp": 4,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "stop_registers": {
+            "d0": "0x1",
+            "d1": "0x55667788",
+            "d2": "0x22334455",
+            "d3": "0x33445566",
+            "a0": "0x19200000",
+            "a1": "0x19300000",
+            "a2": "0x19400000",
+            "a3": "0x19500000",
+            "sp": "0x190107ac",
+            "pc": "0x60556bb2",
+            "mdr": "0x19000007",
+            "psw": "0x801",
+            "lir": "0x12345678",
+            "lar": "0x23456789",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        },
+        {
+          "symbol": "native_format_core_initialization_prefix",
+          "status": "returned",
+          "completed": 11,
+          "fault": null,
+          "final_pc": "0x6065c01e",
+          "final_sp": "0x190107ac",
+          "returned_d0": 1,
+          "stack_depth_from_call_sp": 4,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "stop_registers": {
+            "d0": "0x1",
+            "d1": "0x55667788",
+            "d2": "0x22334455",
+            "d3": "0x33445566",
+            "a0": "0x19200000",
+            "a1": "0x19300000",
+            "a2": "0x19400000",
+            "a3": "0x19500000",
+            "sp": "0x190107ac",
+            "pc": "0x6065c01e",
+            "mdr": "0x6065c01e",
+            "psw": "0x801",
+            "lir": "0x12345678",
+            "lar": "0x23456789",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        },
+        {
+          "symbol": "native_debug_mask_property_copy_prefix",
+          "status": "returned",
+          "completed": 45,
+          "fault": null,
+          "final_pc": "0x606bb57f",
+          "final_sp": "0x190107b0",
+          "returned_d0": 0,
+          "stack_depth_from_call_sp": 24,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "stop_registers": {
+            "d0": "0x0",
+            "d1": "0x0",
+            "d2": "0x0",
+            "d3": "0x33445566",
+            "a0": "0x624b6a5c",
+            "a1": "0x6005c8cc",
+            "a2": "0x19400000",
+            "a3": "0x19500000",
+            "sp": "0x190107b0",
+            "pc": "0x606bb57f",
+            "mdr": "0x6005c8df",
+            "psw": "0x801",
+            "lir": "0x12345678",
+            "lar": "0x23456789",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        },
+        {
+          "symbol": "native_format_module_publish",
+          "status": "returned",
+          "completed": 2768,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0",
+          "returned_d0": 1,
+          "stack_depth_from_call_sp": 108,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "stop_registers": {
+            "d0": "0x1",
+            "d1": "0x0",
+            "d2": "0x22334455",
+            "d3": "0x33445566",
+            "a0": "0xa2787fd5",
+            "a1": "0x60719d3e",
+            "a2": "0x19400000",
+            "a3": "0x19500000",
+            "sp": "0x190107b0",
+            "pc": "0x19000007",
+            "mdr": "0x6066dc20",
+            "psw": "0x801",
+            "lir": "0xf04541f0",
+            "lar": "0x60022f57",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        },
+        {
+          "symbol": "native_format_property_cache_initialize",
+          "status": "returned",
+          "completed": 1586,
+          "fault": null,
+          "final_pc": "0x19000007",
+          "final_sp": "0x190107b0",
+          "returned_d0": 1649472736,
+          "stack_depth_from_call_sp": 28,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "stop_registers": {
+            "d0": "0x6250f4e0",
+            "d1": "0x0",
+            "d2": "0x22334455",
+            "d3": "0x33445566",
+            "a0": "0x6250f4e0",
+            "a1": "0x6005c8cc",
+            "a2": "0x19400000",
+            "a3": "0x19500000",
+            "sp": "0x190107b0",
+            "pc": "0x19000007",
+            "mdr": "0x6005c8df",
+            "psw": "0x801",
+            "lir": "0x12345678",
+            "lar": "0x23456789",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        },
+        {
+          "symbol": "native_format_mode_fields_refresh_prefix",
+          "status": "returned",
+          "completed": 300,
+          "fault": null,
+          "final_pc": "0x606d4898",
+          "final_sp": "0x190107ac",
+          "returned_d0": 0,
+          "stack_depth_from_call_sp": 40,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "stop_registers": {
+            "d0": "0x0",
+            "d1": "0x0",
+            "d2": "0x22334455",
+            "d3": "0x33445566",
+            "a0": "0xa2788cb0",
+            "a1": "0x6",
+            "a2": "0x19400000",
+            "a3": "0x19500000",
+            "sp": "0x190107ac",
+            "pc": "0x606d4898",
+            "mdr": "0x6005c8df",
+            "psw": "0x806",
+            "lir": "0x12345678",
+            "lar": "0x23456789",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        },
+        {
+          "symbol": "native_snapshot_resume_with_format_module",
+          "status": "memory_fault",
+          "completed": 447,
+          "fault": {
+            "kind": 1,
+            "pc": 1617782586,
+            "map": 0,
+            "address": 2725809388,
+            "size": 2,
+            "access": "read"
+          },
+          "final_pc": "0x606d673a",
+          "final_sp": "0x190105a8",
+          "stack_depth_from_call_sp": 580,
+          "native_lock_calls": [],
+          "native_get_tid_entries": 0,
+          "context_switch_entries": 0,
+          "native_lookup_entries": 0,
+          "native_enqueue_entries": 0,
+          "native_pop_entries": 0,
+          "native_copy_entries": 0,
+          "native_raw_send_entries": 0,
+          "native_raw_receive_entries": 0,
+          "native_receive_index_block_entries": 0,
+          "named_send_entries": 0,
+          "notification_entries": 0,
+          "native_flag_set_entries": 0,
+          "d0_at_stop": -1569157968,
+          "stop_registers": {
+            "d0": "0xa2788cb0",
+            "d1": "0xfffffffb",
+            "d2": "0x0",
+            "d3": "0x5",
+            "a0": "0x190105c0",
+            "a1": "0xa2788cec",
+            "a2": "0x190106a8",
+            "a3": "0xa2788aa4",
+            "sp": "0x190105a8",
+            "pc": "0x606d673a",
+            "mdr": "0x60664e1e",
+            "psw": "0x802",
+            "lir": "0x22161f0",
+            "lar": "0x606d673e",
+            "mdrq": "0x0",
+            "extra15": "0x0",
+            "extra16": "0x0",
+            "extra17": "0x0",
+            "extra18": "0x0",
+            "extra19": "0x0",
+            "extra20": "0x0",
+            "extra21": "0x0",
+            "extra22": "0x0",
+            "extra23": "0x0",
+            "extra24": "0x0",
+            "extra25": "0x0",
+            "extra26": "0x0",
+            "extra27": "0x0",
+            "extra28": "0x0",
+            "extra29": "0x0",
+            "extra30": "0x0",
+            "extra31": "0x0"
+          }
+        }
+      ],
+      "mapped_state_bytes": 496,
+      "source_direct_stores": 81,
+      "format_core_prefix_completed": true,
+      "format_core_mapped_bytes": 11,
+      "diagnostic_string_records": 13,
+      "diagnostic_string_bytes": 325,
+      "debug_mask_source": "0x624b6a5c",
+      "debug_masks": "000000000000000000000000000000000000000000000000",
+      "mode_refresh": {
+        "mapped_state_bytes": 199,
+        "source_direct_stores": 48,
+        "bindings": {
+          "0xa2788e08": {
+            "key": "0x84d1",
+            "pointer": "0x624ea8b0"
+          },
+          "0xa2788e0c": {
+            "key": "0x88b2",
+            "pointer": "0x62509dd0"
+          },
+          "0xa2788e10": {
+            "key": "0x9a41",
+            "pointer": "0x6250f314"
+          },
+          "0xa2788e14": {
+            "key": "0x9121",
+            "pointer": "0x6250f20d"
+          },
+          "0xa2788e18": {
+            "key": "0x69f1",
+            "pointer": "0x624ea6ec"
+          },
+          "0xa2788e1c": {
+            "key": "0xe8d9",
+            "pointer": "0x6250f5c3"
+          },
+          "0xa2788e20": {
+            "key": "0x3081",
+            "pointer": "0x624ea421"
+          },
+          "0xa2788e24": {
+            "key": "0x8c61",
+            "pointer": "0x6250f1b5"
+          },
+          "0xa2788e28": {
+            "key": "0xc021",
+            "pointer": "0x6250f3c5"
+          },
+          "0xa2788e2c": {
+            "key": "0x8de1",
+            "pointer": "0x6250f1ca"
+          },
+          "0xa2788e30": {
+            "key": "0x8551",
+            "pointer": "0x624ea8d1"
+          },
+          "0xa2788e34": {
+            "key": "0x6761",
+            "pointer": "0x624ea690"
+          },
+          "0xa2788e38": {
+            "key": "0x8481",
+            "pointer": "0x624ea8aa"
+          },
+          "0xa2788e3c": {
+            "key": "0x8df1",
+            "pointer": "0x6250f1d0"
+          },
+          "0xa2788e40": {
+            "key": "0x8e01",
+            "pointer": "0x6250f1d1"
+          },
+          "0xa2788e44": {
+            "key": "0x8081",
+            "pointer": "0x624ea7d6"
+          },
+          "0xa2788e48": {
+            "key": "0xee71",
+            "pointer": "0x6250f6b9"
+          },
+          "0xa2788e4c": {
+            "key": "0x83c1",
+            "pointer": "0x624ea828"
+          },
+          "0xa2788e50": {
+            "key": "0x8372",
+            "pointer": "0x624ea81e"
+          },
+          "0xa2788e54": {
+            "key": "0xe951",
+            "pointer": "0x6250f5cb"
+          },
+          "0xa2788e58": {
+            "key": "0x18b1",
+            "pointer": "0x624ea40d"
+          },
+          "0xa2788e5c": {
+            "key": "0x8c31",
+            "pointer": "0x6250f1b0"
+          },
+          "0xa2788e60": {
+            "key": "0x8391",
+            "pointer": "0x624ea821"
+          },
+          "0xa2788e64": {
+            "key": "0x85b1",
+            "pointer": "0x624ea8d7"
+          },
+          "0xa2788e68": {
+            "key": "0x99e1",
+            "pointer": "0x6250f30c"
+          },
+          "0xa2788e6c": {
+            "key": "0x8c42",
+            "pointer": "0x6250f1b2"
+          },
+          "0xa2788e70": {
+            "key": "0xece2",
+            "pointer": "0x6250f628"
+          },
+          "0xa2788e74": {
+            "key": "0x55f2",
+            "pointer": "0x624ea5c0"
+          },
+          "0xa2788e78": {
+            "key": "0xeee1",
+            "pointer": "0x6250f6e9"
+          },
+          "0xa2788e7c": {
+            "key": "0xef09",
+            "pointer": "0x6250f6eb"
+          },
+          "0xa2788e80": {
+            "key": "0xef19",
+            "pointer": "0x6250f6ed"
+          },
+          "0xa2788e84": {
+            "key": "0x9331",
+            "pointer": "0x6250f262"
+          },
+          "0xa2788e88": {
+            "key": "0x96e2",
+            "pointer": "0x6250f2c6"
+          },
+          "0xa2788e8c": {
+            "key": "0x9731",
+            "pointer": "0x6250f2cd"
+          },
+          "0xa2788e90": {
+            "key": "0xf0c1",
+            "pointer": "0x6250f762"
+          },
+          "0xa2788e94": {
+            "key": "0x5101",
+            "pointer": "0x624ea4ab"
+          },
+          "0xa2788e98": {
+            "key": "0x5391",
+            "pointer": "0x624ea525"
+          },
+          "0xa2788e9c": {
+            "key": "0x53a1",
+            "pointer": "0x624ea526"
+          },
+          "0xa2788ea0": {
+            "key": "0x5651",
+            "pointer": "0x624ea5c8"
+          },
+          "0xa2788ea4": {
+            "key": "0x53c2",
+            "pointer": "0x624ea52e"
+          },
+          "0xa2788ea8": {
+            "key": "0x53b2",
+            "pointer": "0x624ea528"
+          },
+          "0xa2788eac": {
+            "key": "0x8791",
+            "pointer": "0x62509db0"
+          },
+          "0xa2788eb0": {
+            "key": "0x5642",
+            "pointer": "0x624ea5c6"
+          },
+          "0xa2788eb4": {
+            "key": "0x9a31",
+            "pointer": "0x6250f313"
+          },
+          "0xa2788eb8": {
+            "key": "0x85c1",
+            "pointer": "0x624ea8d8"
+          },
+          "0xa2788ebc": {
+            "key": "0xf8c1",
+            "pointer": "0x6250f915"
+          },
+          "0xa2788ec0": {
+            "key": "0xde11",
+            "pointer": "0x6250f4c6"
+          },
+          "0xa2788ec4": {
+            "key": "0xde84",
+            "pointer": "0x6250f4e0"
+          }
+        },
+        "conditional_BSS_bytes": 1,
+        "mode_fields": "000000000000",
+        "getter_keys": [
+          "0x8c61",
+          "0xc021",
+          "0x8de1",
+          "0x8551",
+          "0x6761",
+          "0x8481"
+        ]
+      },
+      "native_cold_prefix_completed": true,
+      "complete_cold_initializer_executed": false,
+      "diagnostic_buffer_allocations_executed": false,
+      "native_module_publication_completed": true,
+      "snapshot_producer_completed": false,
+      "frontier": {
+        "status": "memory_fault",
+        "fault": {
+          "kind": 1,
+          "pc": 1617782586,
+          "map": 0,
+          "address": 2725809388,
+          "size": 2,
+          "access": "read"
+        },
+        "pc": "0x606d673a",
+        "native_return_pc": "0x60664e1e"
+      },
+      "capture_unchanged": true,
+      "geometry_consumer_resumed": false
+    }
+  ],
+  "native_instructions": 10380,
+  "maximum_observed_new_stack_depth": 580,
+  "population_resumed": false,
+  "hash_checks_performed": false,
+  "native_api_success_stubs": false,
+  "firmware_files_modified": false,
+  "hardware_executed": false,
+  "installable": false,
+  "limits": [
+    "Cold60556b1e is executed only to60556bb2 before two diagnostic-buffer allocations. Its complete initializer and allocation ownership are not claimed.",
+    "Debug masks come from the original2af4 property and native getter/copy, not from forcibly disabling logs.",
+    "The606bbffc publication helper executes independently; its ready byte does not prove initialization of all downstream format records or the complete startup schedule.",
+    "Only reviewed native direct stores, one indirect byte and13 bounded ROM strings are mapped from A5. Unknown neighboring fields remain unmapped.",
+    "Optional48-slot original property cache and six-field mode refresh execute independently. One idle predicate byte assumes original BSS clear/alias identity; the refresh stops before its remaining fields and service queries.",
+    "Optional6065bff0 core prefix executes six RAM stores and the original one-instruction606a46cf helper, then stops before606baeb0 and the remaining core initializers.",
+    "Original snapshot producer registers and stack resume only after native publication. Geometry consumer and capture population remain unresumed."
+  ]
+}
