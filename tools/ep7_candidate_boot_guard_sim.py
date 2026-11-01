@@ -61,12 +61,14 @@ def inspect(directory, prefix, engine):
     # Execute our entry and the ORIGINAL AF helper. Only the hardware-driver
     # boundaries return modeled zero; do not claim clocks, PWM or LEDs worked.
     led = base.clone()
+    require(led.read(0x601e73ce,5) == bytes.fromhex('cd1700c01c'),
+            'original AF helper call target/mask/frame changed')
     reason = 0xf03
     entered = led.run(quarantine, 0x601e73e5, overrides=dict(d0=reason), full_trace=True)
     require(entered['status'] == 'returned' and entered['registers']['d0'] == 0 and
             entered['registers']['d1'] == 250 and entered['registers']['sp'] == SP-28 and
             int.from_bytes(led.read(syms['_ep7_terminal_reason'],4),'little') == reason,
-            'terminal helper arguments, native frame or retained reason differ')
+            'terminal helper arguments, native frame or retained reason differ: '+str(brief(entered))+' '+str(entered['registers']))
     pwm = {0x6006c808:'initialize', 0x6006c888:'stop',
            0x6006c848:'configure', 0x6006c868:'start'}
     regs = entered['registers']

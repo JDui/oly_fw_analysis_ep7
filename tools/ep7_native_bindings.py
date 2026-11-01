@@ -46,6 +46,7 @@ def bindings():
     add('function', 'ep7_cleanup_delay', dict(task_delay=0x600313ef))
     add('function', 'ep7_remaining_far_calls', dict(color_builder=0x603b0068))
     add('function', 'ep7_bootstrap_entry', dict(bootstrap_original=0x6011f620))
+    add('function', 'ep7_candidate_boot_guard_sim', dict(terminal_af=0x601e73e5))
     add('continuation', 'ep7_capture_native_binding', dict(capture_init_continue=0x602897dd))
     add('continuation', 'ep7_queue_kernel_gate', dict(
         delete_gate_continue=0x60031078, receive_gate_continue=0x60036d46,

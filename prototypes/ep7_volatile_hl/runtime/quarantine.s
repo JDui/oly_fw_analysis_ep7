@@ -29,7 +29,7 @@ _ep7_gcc_quarantine:
   * PWM using its normal service path. The helper's return value is irrelevant. */
  clr d0
  mov 250,d1
- call 0x601e73e5,[d2,d3],28
+ call ep7_stock_terminal_af_unresolved,[d2,d3],28
 .Lhold:
  and 0xf7ff,psw
 .Lquarantined:
