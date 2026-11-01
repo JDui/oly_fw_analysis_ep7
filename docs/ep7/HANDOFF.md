@@ -7,7 +7,18 @@
 [推进计划](FLASH_READINESS_PLAN.md)保留完整目标；下面 10 月 31 日的“编译阶段完成”
 不表示当前目标完成。
 
-最新：[原厂容器解码/局部校验](CANDIDATE_PACKAGE_NATIVE_SIM.md)通过。010e完整262144B
+最新：[原厂请求与快照字段](CANDIDATE_SNAPSHOT_SIM.md)执行128B原厂0501请求构造299、
+请求复制215、任务前缀92、分发/producer前缀4832条指令，各GPIO分支均通过字段构造
+6042661b返回与124B缓存复制一致性；完整producer/wrapper未返回。新接通service38、
+157槽清零164/147槽注册4889、相机状态RAM后缀20、16项history初始化138。总21374，
+新增观测栈深280，非完整上界。当前严格fault60556934读取a2788ca8/1B，MDR60427f7d。
+格式模块原厂60556b1e重置置0、606bbffc在四helper后置1；0分支是缺省格式，1分支
+6065e658才取模块状态，不能伪造1或把冷缺省当实机尺寸。保留四个中间frontier报告。
+configuration原栈/寄存器在snapshot_context输出中保留，capture不变；没有resume
+geometry/population。任务receive/log仍为明确切口，原BSS只供126B条件初态。候选004
+及fishcu研究容器未变、不可安装；下一步格式模块生命周期与完整producer续接。
+
+此前：[原厂容器解码/局部校验](CANDIDATE_PACKAGE_NATIVE_SIM.md)通过。010e完整262144B
 原生解码1228520指令，等于fishcu主机结果；main完整26214400B原生局部校验39321696
 指令返回0，A0终点21900000。头尾差异30指令返回3202；010e一字节损坏393312指令
 到6002266d错误日志入口，sum1/MDR60c95ad4，未stub日志/声称3211后缀执行。合计
