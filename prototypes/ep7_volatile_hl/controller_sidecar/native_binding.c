@@ -5,6 +5,9 @@
 #include "native.h"
 #include "../runtime/runtime.h"
 #include "../snapshot_transport/native/producer.h"
+#ifndef EP7CN_HOST_FIXTURE
+#include "../native_hsl/editor.h"
+#endif
 #include <string.h>
 #ifndef EP7CN_HOST_FIXTURE
 _Static_assert(sizeof(uintptr_t)==4,"target-only capture source");
@@ -174,6 +177,11 @@ void ep7cn_population(uint32_t node,unsigned finish)
     r=enter((uint32_t)(uintptr_t)&anchor,true);if(!r)return;
     s=state();if(!ep7c_resolve_live(&ep7_controller_sidecar_unresolved,s,node,&token)){leave();return;}
     bool read=prefix(s,node,token,&v);
+#ifndef EP7CN_HOST_FIXTURE
+    /* Read the captured COLOR selector, not the GUI's current profile. The
+     * existing sample operation freezes these values into this image only. */
+    if(!finish && read && v.raw_mode==11 && !ep7h_load_profile(r->boot->core,v.selector))read=false;
+#endif
     if(finish)(void)ep7c_finish_population(&ep7_controller_sidecar_unresolved,s,node,token,read?&v:NULL,true);
     else (void)ep7c_sample_population(&ep7_controller_sidecar_unresolved,s,node,token,read?&v:NULL,true,r->boot->core);
     leave();

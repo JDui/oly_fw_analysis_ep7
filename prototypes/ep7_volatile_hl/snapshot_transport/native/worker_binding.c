@@ -43,6 +43,8 @@ void ep7q_worker_cleanup_entry(uint32_t descriptor,uint32_t w)
 {
     ep7q_worker_context context={0};ep7q_worker_args args;
     if(!admit(EP7Q_WORKER_CLEANUP,w,descriptor,&context,&args)){
+        if(context.stack.bytes==(const unsigned char *)(uintptr_t)context.stack.low &&
+           ep7q_worker_legacy_cleanup_layout(&context.stack,w,descriptor))return;
         ep7q_owned_context_lost();return;
     }
     while(!ep7j_revoke((ep7j_scope *)(uintptr_t)args.scope,context.core)){

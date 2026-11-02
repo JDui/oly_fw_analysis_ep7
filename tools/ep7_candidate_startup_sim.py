@@ -14,7 +14,7 @@ import tempfile
 
 from ep7_offline_candidate import BASE, CODE, ELF_NAME, IMAGE_NAME, RAM_START, RAM_BYTES
 from ep7_offline_candidate import RAM_IMAGE_START, PRIVATE_SECTION
-from ep7_offline_candidate import check_sources_at_revision, sections, symbols
+from ep7_offline_candidate import check_candidate_sources, sections, symbols
 from ep7_sim_probe import brief
 from penf_emulator import Region, execute
 
@@ -25,8 +25,7 @@ INIT_SITE, INIT_RESUME = 0x602897d7, 0x602897dd
 BOOT_SITE, ORIGINAL_BOOT = 0x60191371, 0x6011f620
 CREATE = 0x6003057f
 COHORTS = ('_ep7r_native_early_cohort_present','_ep7cn_native_cohort_present',
-           '_ep7q_native_cohort_present','_ep7n_postbuilder_cohort_present',
-           '_ep7i_native_cohort_present','_ep7m_native_cohort_present','_ep7u_native_cohort_present')
+           '_ep7q_native_cohort_present','_ep7n_postbuilder_cohort_present')
 
 
 def require(condition, message):
@@ -38,7 +37,7 @@ def candidate_inputs(directory, prefix):
     report = json.loads((directory/'report.json').read_text(encoding='utf-8'))
     require(report['status']=='passed' and report['whole_candidate_linked'] and
             report['decoded_candidate_synthesized'], 'candidate build did not pass')
-    check_sources_at_revision(report['source_revision'])
+    check_candidate_sources(directory,report)
     data = (directory/IMAGE_NAME).read_bytes()
     require(len(data)==26214336, 'candidate decoded length changed')
     elf = directory/ELF_NAME
@@ -65,8 +64,10 @@ def candidate_inputs(directory, prefix):
         require(path.read_bytes()==bytes(RAM_BYTES)==
                 data[RAM_IMAGE_START-BASE:RAM_IMAGE_START-BASE+RAM_BYTES],
                 'private initialization differs between ELF and decoded image')
-    for name in (*COHORTS,'_ep7_gcc_quarantine','_ep7_native_runtime_slot',
-                 '_ep7_controller_sidecar_unresolved','ep7_capture_far_60289c5e'):
+    required=(('ep7h_set_bridge','_ep7h_snapshot') if report.get('implementation')=='native_hsl_transport' else
+              (*COHORTS,'_ep7_gcc_quarantine','_ep7_native_runtime_slot',
+               '_ep7_controller_sidecar_unresolved','ep7_capture_far_60289c5e'))
+    for name in required:
         require(name in syms, 'missing linked symbol '+name)
     return data,{name:row['address'] for name,row in syms.items()},report
 

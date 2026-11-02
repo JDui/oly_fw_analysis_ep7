@@ -54,7 +54,8 @@ def placement(data, stock, build):
         elif row['section'] == PRIVATE_SECTION:
             spans.append(dict(start=hex(RAM_IMAGE_START), end_exclusive=hex(RAM_IMAGE_START+RAM_BYTES),
                 bytes=RAM_BYTES, kind=PRIVATE_SECTION, load=load_region(RAM_IMAGE_START,RAM_BYTES)))
-    require(len(spans) == 101, 'final write-span inventory changed')
+    require(len(spans) == build['patch_count']+3 and len(build['layout']) == 3,
+            'final write-span inventory differs from declared patches and three loaded regions')
     prefixes = [r for r in spans if not r['load']['loader_path_identified']]
     require(not prefixes and data[:LOW-BASE] == stock[:LOW-BASE], 'boot prefix must remain original')
     require(data[0x600229b9-BASE:0x600229bb-BASE] == bytes.fromhex('8020') and
@@ -207,7 +208,7 @@ def literal_survey(stock_path, decoded_stock):
 
 def inspect(stock_path, decoded, directory, prefix, engine):
     data, build, count = check_candidate(decoded, directory, prefix)
-    require(count == 101, 'candidate package span inventory changed')
+    require(count == build['patch_count']+3, 'candidate package span inventory changed')
     stock_data = decoded.read_bytes()
     layout = placement(data, stock_data, build)
     execution = loaded_state(data, engine)

@@ -1,0 +1,16 @@
+{
+  "status": "test_expectation_corrected",
+  "initial_candidate": "generated/ep7/flash-build-010",
+  "initial_probe": "tools/ep7_candidate_terminal_signal_sim.py",
+  "failure": "100ms mode did not match the probe's incorrect linear PWM expectation",
+  "stock_instructions": "0x601e7440..0x601e745a",
+  "correct_period_configuration": "(15686 // (1000 // mode) // 4) * 255",
+  "correct_values": {"50": 49980, "100": 99960, "250": 249900},
+  "firmware_source_change_needed": false,
+  "initial_and_final_decoded_image_bytes_equal": true,
+  "final_candidate": "generated/ep7/flash-build-010-r2",
+  "final_terminal_signal_probe_status": "passed",
+  "snapshot_action": "Create final flash-build-010-r2 so the corrected validation script is captured; retain the original snapshot.",
+  "hardware_executed": false,
+  "hash_checks_performed": false
+}

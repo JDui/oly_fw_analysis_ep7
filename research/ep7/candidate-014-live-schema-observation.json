@@ -1,0 +1,101 @@
+{
+  "scope": "Build1100 native color snapshot schema correction and exact five-slot ownership joins for candidate 014",
+  "hash_checks_performed": false,
+  "hardware_executed": false,
+  "production_sources_modified_by_this_observation": false,
+  "candidate_013_schema_correction": {
+    "supersedes": "candidate-013-live-route-observation.json compact_converter field names only; native addresses and S-copy observation remain usable",
+    "incorrect_assumption": "The local 3096-byte compact bytes 2116/2117 were treated as raw picture mode 11 and COLOR profile 1..4",
+    "actual_fields": [
+      {"compact_offset": 2116, "processing_parameters_offset": 5532, "native_name": "ucLvHdrType", "native_label_address": "0x6142ebbf"},
+      {"compact_offset": 2117, "processing_parameters_offset": 5536, "native_name": "ucColorCreatorHue", "native_label_address": "0x6142ebd3"},
+      {"compact_offset": 2118, "processing_parameters_offset": 5537, "native_name": "chColorCreatorSat", "native_label_address": "0x6142ebe7"},
+      {"compact_offset": 2119, "processing_parameters_offset": 5538, "native_name": "chColorCreator2Saturation[0..11]", "native_label_address": "0x6142ebfb"}
+    ],
+    "native_label_reader": "0x603f09ef..0x603f0a34 loads these exact processing parameter fields and native labels",
+    "independent_capture_converter_evidence": "0x603e6664 clears parameters+5532, 0x603e666b onward copies capture+24056/+24057 to parameters+5536/+5537; these are not capture+24053 raw mode or capture+24083 COLOR selector",
+    "request_header_correction": "0x60354cb9 copies job header halfwords +12/+14 to request +8/+10; 0x60354f69 copies parameters+5532 to request+1809, not request raw mode +10",
+    "why_013_simulation_did_not_validate_real_schema": {
+      "reported_pass": "research/ep7/candidate-013-transport.json",
+      "frozen_fixture_source": "generated/ep7/flash-build-013-r1/source-snapshot/tools/ep7_candidate_native_transport_sim.py",
+      "fixture_statement": "write(COMPACT+2116,bytes((11,2,0)))",
+      "effect": "The fixture manufactured the same wrong field meanings as the implementation. CPU execution and comparison passed the conditional and copied H/L, but did not establish that native firmware ever supplies mode 11/profile 2 in those bytes.",
+      "claim_invalidated": "The 013 compact-forward simulation pass is not evidence of native COLOR profile selection or real-time preview correctness.",
+      "claims_not_invalidated": "It still demonstrates its bounded copied-byte/CPU behavior for that artificial input. Capture-owner JPEG behavior and other separately tested seams are not rejected by this schema correction."
+    }
+  },
+  "true_native_five_slot_owner": {
+    "base_uncached": "0xa2731098",
+    "base_cached_alias": "0x62731098",
+    "stride_bytes": 980,
+    "slot_count": 5,
+    "current_acquired_index_address": "0xa273104c",
+    "getter": "0x60309eb9 with D0=1 returns base+980*current_acquired_index",
+    "raw_mode_offset": 941,
+    "COLOR_selector_offset": 944,
+    "native_S_offset": 704,
+    "native_S_element_bytes": 2,
+    "native_S_count": 12,
+    "rejected_nearby_selector_guess": "slot+703 is not the COLOR selector; actual descriptor+36 is copied from slot+944"
+  },
+  "raw_mode_and_selector_producer_join": [
+    {"stage": "typed descriptors", "evidence": "0x604e2260 key 0x9481 resolves to pointer cell 0xa27354a0; 0x604e2380 key 0xf6b1 resolves to pointer cell 0xa27354fc"},
+    {"stage": "typed byte getters", "evidence": "0x6031c098 returns **0xa27354a0 (raw mode); 0x6031c2e6 returns **0xa27354fc (COLOR selector), with no lookup/remapping"},
+    {"stage": "coherent native tuple", "evidence": "0x6031c191 publishes raw mode to 0xa2735461 and COLOR selector to 0xa2735464; 0x6031c1fe copies the cached tuple when 0xa2735460==0 or reads those same getters directly otherwise. Tuple+0 is raw mode and tuple+3 is COLOR selector."},
+    {"stage": "68-byte source block", "evidence": "0x60303f63 loads control block 0x62039ed8 into A2, 0x60303f79/0x60303f86 pass it as A1 to 0x6032646c/0x603263c7; 0x60326497/0x603263d5 call tuple getter with A0=A1+29"},
+    {"stage": "native queue publication", "evidence": "0x60326462 calls 0x6030da2f with the 68-byte source block; 0x6030da2f copies all 68 bytes into the existing eight-entry queue at 0x62039f4c with native write index 0x6203a16c"},
+    {"stage": "native queue consumption", "evidence": "0x6030b1a4 copies all 68 bytes from the queue selected by native read index 0x6203a16d, then advances it using 0x6030da8d"},
+    {"stage": "five-slot ownership", "evidence": "0x6030cbf9 consumes the 68-byte block into caller SP+60, keeping A2 as that source; 0x6030cc39..0x6030cc4f copies 68 bytes to 0xa2731098+980*selected_index+912. Thus tuple+0 becomes slot+941 and tuple+3 becomes slot+944."}
+  ],
+  "source_copy_precedes_native_S_sampling": {
+    "source_copy": "0x6030cc39..0x6030cc4f copies 68 bytes to slot+912",
+    "publish_acquired_state": "After the copy, 0x6030cce2..0x6030cce8 calls 0x6030a675(index,1)",
+    "S_acquisition": "0x6032cbd2..0x6032cbd6 requires native state 1; 0x6032cbe7..0x6032cbf0 changes it to 2; 0x6032cbf8 calls 0x6030ba2b, which passes the same current slot to 0x6030bccc at 0x6030bb19",
+    "S_getter_loop": "0x6030bd54..0x6030bd70 calls typed key 0xf6ea for indices 0..11 and stores halfwords at slot+704",
+    "sampling_consequence": "After that S loop, slot+944 is the selector owned by the same already-acquired slot. H/L may be frozen using that selector without rereading current GUI state.",
+    "skip_branch": "0x6030bcd9 skips the entire S acquisition when slot+180 bit 0x4000 is set. A caller wrapper must preserve that skip and must not refresh the H/L row on that branch."
+  },
+  "native_descriptor_and_local_compact_join": {
+    "builder": "0x6031578f",
+    "actual_S_owner": "0x603157c5 calls 0x60309eb9(D0=1), saving the actual current acquired slot in original SP+4",
+    "descriptor_mapping": [
+      {"slot_offset": 700, "descriptor_offset": 33, "meaning": "Live HDR-related selector"},
+      {"slot_offset": 701, "descriptor_offset": 34, "meaning": "ColorCreatorHue"},
+      {"slot_offset": 702, "descriptor_offset": 35, "meaning": "ColorCreatorSat"},
+      {"slot_offset": 944, "descriptor_offset": 36, "meaning": "COLOR profile selector"},
+      {"slot_offset": 704, "descriptor_offset": 37, "meaning": "12 native S halfwords narrowed to bytes"}
+    ],
+    "exact_copy_addresses": "0x603158e6..0x603158f5 maps slot+700/+701/+702; 0x603158f8..0x60315905 maps slot+941+3 to descriptor+36; 0x6031590b..0x60315917 copies S to descriptor+37",
+    "local_compact_note": "The native helper uses descriptor+36 as COLOR-S presence/profile metadata, but the local 3096-byte compact fields 2116/2117 do not preserve raw mode/profile meanings. Avoid inferring a native schema from adjacent S bytes."
+  },
+  "PENF_equivalent_per_frame_transport_seam": {
+    "native_caller": "0x603118d6",
+    "owner_acquisition": "0x603118de calls 0x60309eb9(D0=1), 0x603118e3 saves acquired five-slot pointer at original SP+8",
+    "job_pointer": "Original SP+16 contains the native job base loaded from the native job table, and is copied to SP+3152 before the setter",
+    "proof_job_value_is_pointer": "0x60353cf5 is only D0->A0,+4; 0x60353cfb is only D0->A0,+36. They do not dereference or look up a handle.",
+    "setter_call": "0x603119bb: 7-byte CALL 0x603220ea,[d2,d3,a2,a3],48",
+    "resume": "0x603119c2",
+    "successful_return": "D0 narrowed to uint16 is zero",
+    "recommended_transport": "Mirror PEN-F hl_compact_to_job: preserve the native setter result/context, on success copy the frozen row from original SP+8 acquired slot into original SP+16 job+15488, then resume 0x603119c2. This avoids a second identity for transient 3096-byte compact buffers and avoids late current-profile reads.",
+    "continuous_preview_limit": "These static joins prove native ownership and job population, not actual camera scheduling of continuous LiveView. Device verification of real-time H/L remains required."
+  },
+  "evidence_files": [
+    "generated/ep7/dis-mcon-capture-color2.txt",
+    "generated/ep7/dis-request-header.txt",
+    "generated/ep7/dis-slot-rawmapping.txt",
+    "generated/ep7/dis-rawmode-to-job.txt",
+    "generated/ep7/dis-slot-rawtuple-entry.txt",
+    "generated/ep7/dis-modeblock-publish.txt",
+    "generated/ep7/dis-slot-modebuild.txt",
+    "generated/ep7/dis-slot-mode-copyin.txt",
+    "generated/ep7/dis-slot-mode-copyout.txt",
+    "generated/ep7/dis-slot-cap-acquire.txt",
+    "generated/ep7/dis-slot-fullbuild.txt",
+    "generated/ep7/dis-slot-build-source.txt",
+    "generated/ep7/dis-slot-descriptor-fill.txt",
+    "generated/ep7/dis-slot-acquire-header.txt",
+    "generated/ep7/dis-compact-first-end.txt",
+    "generated/ep7/dis-job-handle-api.txt",
+    "patches/hsl/pen-f/src/editor_storage/image_transport.s"
+  ]
+}

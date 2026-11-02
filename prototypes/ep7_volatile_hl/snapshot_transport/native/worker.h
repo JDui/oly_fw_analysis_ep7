@@ -8,6 +8,10 @@ typedef struct { uint32_t descriptor,scope; } ep7q_worker_args;
  * native_return is the linked self-authored wrapper label, not a stock address. */
 bool ep7q_worker_layout(const ep7q_stack *,uint32_t w,unsigned stage,
                        uint32_t actual_descriptor,uint32_t native_return,ep7q_worker_args *);
+/* Exact unwrapped stock 0x2002 worker route, with a neutral trailer only.
+ * A failed owned layout must never become a generic stock-cleanup fallback. */
+bool ep7q_worker_legacy_cleanup_layout(const ep7q_stack *,uint32_t w,
+                                      uint32_t actual_descriptor);
 typedef struct {
     ep7q_stack stack;
     ep7t *transport;

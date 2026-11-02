@@ -1,0 +1,83 @@
+{
+  "scope": "Check the stock 0x2002 worker cleanup route in actual candidate instructions.\n\nReuse the native bootstrap/lock engine and task fixture. Original dispatcher and\nsecondary worker CALLs construct real frames; the old processing bodies remain\nexplicit completion boundaries. This is not a full boot or message-origin test.\nNo SHA, peripheral access or firmware modification is performed.\n",
+  "status": "passed",
+  "input_image": "/repo/generated/ep7/flash-packages/EP7HSL-007D-GUI-ISOLATION/007D.decoded-main.bin",
+  "candidate_build_revision": "a059e5ff17538aa8f95dc62d05a48545d3a2bb6a",
+  "expectation": "retained_007D_defect",
+  "legacy_cleanup_fixed": false,
+  "cases": [
+    {
+      "name": "neutral_stock_0x2002",
+      "dispatcher": {
+        "status": "returned",
+        "completed": 2,
+        "fault": null,
+        "final_pc": "0x603ede1f",
+        "final_sp": "0x19010fd4"
+      },
+      "secondary_call": {
+        "status": "returned",
+        "completed": 2,
+        "fault": null,
+        "final_pc": "0x603f2800",
+        "final_sp": "0x19010f9c"
+      },
+      "status": "breakpoint",
+      "completed": 840,
+      "fault": null,
+      "final_pc": "0x6004a342",
+      "final_sp": "0x19010ef8",
+      "quarantine_reached": true,
+      "quarantine_reason": 5,
+      "original_cleanup_reached": false,
+      "descriptor_trailer": "000000000000000000000000"
+    },
+    {
+      "name": "legacy_frame_with_nonzero_trailer_rejected",
+      "status": "breakpoint",
+      "completed": 840,
+      "fault": null,
+      "final_pc": "0x6004a342",
+      "final_sp": "0x19010ef8",
+      "quarantine_reached": true,
+      "quarantine_reason": 5,
+      "original_cleanup_reached": false,
+      "descriptor_trailer": "453754310100000000000000"
+    },
+    {
+      "name": "corrupted_wrapped_route_return_rejected",
+      "status": "breakpoint",
+      "completed": 840,
+      "fault": null,
+      "final_pc": "0x6004a342",
+      "final_sp": "0x19010e9c",
+      "quarantine_reached": true,
+      "quarantine_reason": 5,
+      "original_cleanup_reached": false,
+      "descriptor_trailer": "000000000000000000000000"
+    }
+  ],
+  "stock_route": {
+    "dispatch_code": "0x2002",
+    "dispatch_call": "0x603f271a",
+    "secondary_call": "0x603edeb3",
+    "cleanup_call": "0x603f28c0",
+    "cleanup_frame_return_offsets": {
+      "24": "0x603f28c7",
+      "80": "0x603edeb8",
+      "124": "0x603f271f"
+    },
+    "saved_descriptor_offset": 92,
+    "saved_original_code_offset": 104,
+    "descriptor_offset": 128
+  },
+  "hash_checks_performed": false,
+  "hardware_executed": false,
+  "full_boot_executed": false,
+  "limits": [
+    "Native static bootstrap/private semaphore creation and publication execute with existing task/kernel fixtures.",
+    "Dispatcher and secondary worker CALLs create actual native frames; old preflight/job body completion is explicit model input.",
+    "No real 0x2002 startup message, scheduler, ISP, hardware reset cause or full device boot was observed.",
+    "The corrupted wrapped-route check has no registered job; the separate worker probe validates owned allocation/revocation."
+  ]
+}

@@ -59,8 +59,10 @@ bool ep7q_worker_context_unresolved(unsigned stage,uint32_t w,ep7q_worker_contex
 {
     ep7r *r=ep7r_get(&ep7_native_runtime_slot);ep7n_task t;
     *out=(ep7q_worker_context){0};
+    /* Shared stock allocation has no owned job yet; failed task admission must
+     * fall back to its native allocator. Other stages retain cleanup protection. */
     if(stage<EP7Q_WORKER_ENTER || stage>EP7Q_WORKER_CLEANUP ||
-       !current(r,w,&t,true) || t.entry!=0x603f26a1u)return false;
+       !current(r,w,&t,stage!=EP7Q_WORKER_ALLOCATE) || t.entry!=0x603f26a1u)return false;
     out->stack=mapped(&t);out->transport=&r->transport;out->core=r->boot->core;
     out->wait_context=r;out->wait_cleanup=ep7r_progress;return true;
 }

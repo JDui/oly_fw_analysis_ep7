@@ -1,0 +1,23 @@
+{
+  "status": "bounded_probe_completed",
+  "candidate_directory": "generated/ep7/flash-build-009",
+  "probe_script": "generated/ep7/probe_ui_009.py",
+  "recorded_after_run": true,
+  "candidate_changes_during_probe": false,
+  "hardware_executed": false,
+  "hash_checks_performed": false,
+  "hardware_crash_reproduced": false,
+  "stages": [
+    {"name": "native_selector_created", "instructions": 5331, "selector": "0x19300170", "categories": 6},
+    {"name": "native_event_selected_curve", "instructions": 29925, "category": 3},
+    {"name": "native_curve_viewer_with_modeled_outputs", "instructions": 18375},
+    {"name": "native_event_advanced_to_H", "instructions": 32348, "category": 4}
+  ],
+  "limits": [
+    "Observed successful scratch probe recorded without repeating the unchanged run.",
+    "Actual selector constructor/initializer and stock curve construction executed; outer MVC graph started as a fixture at category2/contentNULL.",
+    "Current task, settings, allocator and scheduler include explicit modeled boundaries.",
+    "Header 0x60e26c03 and display outputs 0x60ea4c1c/0x60cfeca9 are modeled; full physical rendering is not covered.",
+    "This is a bounded observation on 009, not runtime acceptance evidence for 010 or an identified hardware root cause."
+  ]
+}

@@ -66,7 +66,7 @@ def load_region(pc, length):
     raise ValueError('patch outside enumerated load regions: '+hex(pc))
 
 
-def inspect_stock(decoded):
+def inspect_legacy_stock(decoded):
     data = decoded.read_bytes()
     if len(data) != 26214336:
         raise ValueError('unsupported decoded main length')
@@ -122,39 +122,20 @@ def inspect_stock(decoded):
     pipeline, _, frames, words = declared_rows()
     for row in pipeline:
         add_call(*row, 'pipeline')
-    for group, spec in GROUPS.items():
+    for group in ('postbuilder',):
+        spec=GROUPS[group]
         for pc, target, mask, frame in group_rows(group):
             add_call(pc, target, 2, mask, frame, group, spec['original'], 'tools/ep7_remaining_far_calls.py')
-    source = (CORE/'ui_native/cohort.c').read_text()
-    names = aliases(source)
-    wide_ui = re.findall(r'\bcall\((ep7_stock_\w+),([a-z]+),(0x[0-9a-f]+),(\d+)\)', source)
-    if len(wide_ui) != 2:
-        raise ValueError('unexpected UI wide CALL count')
-    for name, target, mask, frame in wide_ui:
-        add_call(native['_'+name]['address'], names[target], 4, int(mask,16), int(frame), 'input')
     add_call(0x60191371, 'ep7_native_cold_bootstrap_bridge', 4, 0, 4, 'bootstrap')
-
-    table_witnesses = {}
-    for module in witness_modules(['ui_owner_binding', 'ui_mvc_lifetime',
-                                   'ui_viewer_join', 'ui_input_binding', 'ui_selector_storage']):
-        for pc, fmt, values in module.CHECKS:
-            packed = struct.pack(fmt, *values)
-            for offset in range(0, len(packed)-3, 4):
-                table_witnesses[pc+offset] = (packed[offset:offset+4], 'tools/'+module.__name__+'.py')
-    word_pattern = re.compile(r'(ep7_stock_\w+)(?:\[(\d+)(?:/(\d+))?\])?'
-                             r'(?:==|!=)\(uint32_t\)\(uintptr_t\)(\w+)')
-    for relative, group, count in [('ui_owner/cohort.c','owner',4), ('ui_mvc/cohort.c','mvc',5),
-                                   ('ui_native/cohort.c','input',1), ('ui_selector/selector.c','selector',1)]:
-        source = (CORE/relative).read_text(); names = aliases(source)
-        rows = [r for r in word_pattern.findall(source) if r[3] in names]
-        if len(rows) != count:
-            raise ValueError('unexpected pointer-word cohort '+relative)
-        for name, numerator, divisor, target in rows:
-            index = int(numerator or '0')//int(divisor or '1')
-            pc = native['_'+name]['address']+4*index
-            old, evidence = table_witnesses[pc]
-            add(pc, old, 'function_pointer_word', group,
-                dict(encoding='absolute_le32', target_symbol=names[target]), evidence)
+    from ep7_native_hsl import CALLS, POINTERS, JUMPS
+    for pc,target,original,mask,frame in CALLS:
+        add_call(pc,target,4,mask,frame,'native_hsl',original,'tools/ep7_native_hsl.py')
+    for pc,target,original in POINTERS:
+        add(pc,struct.pack('<I',original),'function_pointer_word','native_hsl',
+            dict(encoding='absolute_le32',target_symbol=target),'tools/ep7_native_hsl.py')
+    for pc,target,old in JUMPS:
+        add(pc,bytes.fromhex(old),'inline_jump','native_hsl',
+            dict(encoding='JMP32_NOP_suffix',target_symbol=target,nop_count=0),'tools/ep7_native_hsl.py')
     for pc, value in frames:
         old = value+12 if value < 0 else value-12
         add(pc, b'\xfa\xfe'+old.to_bytes(2,'little',signed=True), 'stack_frame', 'pipeline',
@@ -189,8 +170,8 @@ def inspect_stock(decoded):
     for left, right in zip(patches, patches[1:]):
         if int(left['site'],16)+left['bytes'] > int(right['site'],16):
             raise ValueError('overlapping installation entries '+left['site']+' '+right['site'])
-    expected = dict(short_call_via_veneer=36, wide_call=32, function_pointer_word=11,
-                    stack_frame=9, queue_capacity=6, inline_jump=4)
+    expected = dict(short_call_via_veneer=27, wide_call=32, function_pointer_word=3,
+                    stack_frame=9, queue_capacity=6, inline_jump=7)
     if dict(Counter(r['kind'] for r in patches)) != expected:
         raise ValueError('installation inventory changed; review declared cohort coverage')
     return dict(patches=patches, count_by_kind=expected,
@@ -201,6 +182,60 @@ def inspect_stock(decoded):
         native_bindings={name:{**row,'address':hex(row['address']) if row['address'] is not None else None,
             **({'proposed_address':hex(row['proposed_address'])} if 'proposed_address' in row else {})}
             for name,row in sorted(native.items())})
+
+
+def inspect_stock(decoded):
+    """Native HSL transport only; historical queue/runtime hooks stay stock."""
+    from ep7_native_hsl import CALLS, POINTERS, JUMPS
+    from ep7_native_transport import PATCHES as TRANSPORT_PATCHES
+    from ep7_native_live import PATCHES as LIVE_PATCHES
+    data = decoded.read_bytes()
+    if len(data) != 26214336:
+        raise ValueError('unsupported decoded main length')
+    for pc, fmt, values in LOAD_CHECKS:
+        if struct.unpack_from(fmt, data, pc-BASE) != values:
+            raise ValueError('ordinary load table changed at '+hex(pc))
+    patches = []
+    def add(pc, old, kind, recipe, evidence):
+        if data[pc-BASE:pc-BASE+len(old)] != old:
+            raise ValueError('stock bytes differ at '+hex(pc))
+        patches.append(dict(site=hex(pc),bytes=len(old),original_hex=old.hex(),
+            kind=kind,group='native_hsl',replacement=recipe,evidence=evidence,
+            load=load_region(pc,len(old))))
+    for pc,target,original,mask,frame in CALLS:
+        old=b'\xdd'+struct.pack('<i',original-pc)+bytes([mask,frame])
+        add(pc,old,'wide_call',dict(encoding='CALL32',target_symbol=target,
+            mask=mask,frame=frame),'tools/ep7_native_hsl.py')
+    for pc,target,original in POINTERS:
+        add(pc,struct.pack('<I',original),'function_pointer_word',
+            dict(encoding='absolute_le32',target_symbol=target),'tools/ep7_native_hsl.py')
+    for pc,target,old in JUMPS:
+        add(pc,bytes.fromhex(old),'inline_jump',dict(encoding='JMP32_NOP_suffix',
+            target_symbol=target,nop_count=0),'tools/ep7_native_hsl.py')
+    for row in (*TRANSPORT_PATCHES,*LIVE_PATCHES):
+        old=bytes.fromhex(row['original_hex']); encoding=row['encoding']
+        recipe=dict(encoding=encoding)
+        if encoding=='literal':
+            recipe['hex']=row['literal_hex']; kind='native_literal'
+        else:
+            recipe['target_symbol']=row['target']
+            kind='wide_call' if encoding=='CALL32' else 'inline_jump'
+            if encoding=='CALL32':recipe.update(mask=row['mask'],frame=row['frame'])
+            else:recipe['nop_count']=len(old)-5
+        evidence=('tools/ep7_native_live.py' if row in LIVE_PATCHES else 'tools/ep7_native_transport.py')
+        add(row['site'],old,kind,recipe,evidence)
+    patches.sort(key=lambda r:int(r['site'],16))
+    for left,right in zip(patches,patches[1:]):
+        if int(left['site'],16)+left['bytes']>int(right['site'],16):
+            raise ValueError('overlapping native HSL patches')
+    counts=dict(Counter(r['kind'] for r in patches))
+    counts.setdefault('short_call_via_veneer',0)
+    return dict(patches=patches,count_by_kind=counts,
+        count_by_stage=dict(Counter(r['load']['stage'] for r in patches)),
+        total_patch_entries=len(patches),total_original_span_bytes=sum(r['bytes'] for r in patches),
+        ordinary_load_table_rows_checked=len(LOAD_CHECKS),patch_ranges_nonoverlapping=True,
+        unknown_boot_prefix_loader_sites=[r['site'] for r in patches if not r['load']['loader_path_identified']],
+        native_bindings=bindings(), architecture='native_hsl_transport')
 
 
 def implementation_sources():

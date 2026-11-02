@@ -1,0 +1,59 @@
+{
+  "status": "observed_with_open_live_join",
+  "scope": "Build1100 native generic borrowed COLOR host-job branch omitted by 013",
+  "stock_input": "generated/ep7/full-input/main.decoded.bin",
+  "facts": {
+    "selector": "0x603b0252",
+    "borrowed_owner_field": "request+1524",
+    "generic_call_site": "0x603b027c",
+    "generic_packer": "0x603afb94",
+    "original_hex": "cd18f9f050",
+    "native_mask": "0xf0",
+    "native_frame": 80,
+    "resume": "0x603b0281",
+    "native_execution_gate": "setup+60 bit0x10000000",
+    "record_count": 12,
+    "record_stride": 24,
+    "H_output": "706+24*k",
+    "L_output": "710+24*k",
+    "control_output": 976,
+    "H_source_halfword": 12,
+    "L_source_halfword": 16,
+    "H_packing_witnesses": [
+      "0x603afc48",
+      "0x603afc4e",
+      "0x603afc55"
+    ],
+    "L_packing_witnesses": [
+      "0x603afc59",
+      "0x603afc5e",
+      "0x603afc63"
+    ],
+    "control_witness": "0x603afcb7",
+    "host_job_request_callback": "0x60355fd4",
+    "host_job_request_offset": 11364,
+    "host_request_construction": [
+      "0x60368890 resource acquire",
+      "0x60366f79 -> 0x60355409",
+      "0x60354cba callback",
+      "0x60354d14 -> 0x60354d1a borrowed pointer"
+    ],
+    "borrowed_pointer_transfer": "compact+1268 -> params+4716 -> job+4752; selected stage acquire -> job+13252 -> request+1524",
+    "selector_after_generic": "0x603b0281 checks setup+56; nonzero clears *(setup+56)+5760, then 0x603b0342 returns; no COLOR record/control overwrite in this tail"
+  },
+  "minimal_extension": [
+    "Add observer after native generic packer with original f0/80 frame and full register restoration.",
+    "Observer must explicitly guard packed rawmode11; prior03d9 implicitly supplied this guard.",
+    "Keep actual60355fd4/16operation-backlink admission before reading15512byte job tail.",
+    "Keep borrowed table publication and native lifetime unchanged."
+  ],
+  "limits": [
+    "No independent native continuous LiveView caller was established.",
+    "Generic packer only executes when its native bit0x10000000 gate is true; source of that native flag not fully joined.",
+    "No recommendation to force an unqualified dirty flag or use current GUI settings for an unknown request.",
+    "Future packer simulation is not hardware continuous preview acceptance."
+  ],
+  "hash_checks_performed": false,
+  "hardware_executed": false,
+  "production_sources_modified": false
+}

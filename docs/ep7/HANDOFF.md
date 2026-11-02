@@ -1,6 +1,99 @@
 # E-P7 研究检查点 / 恢复研究
 
-**2026-11-01 最新：007D实机启动失败，暂停安装及重复测试。** 用户报告安装后首次
+**2026-11-02：014 最终 r2 已构建、通过定向验证并完成 SD 包交付。** 用户确认 013 的半透明小块正常、JPEG H/L 正确，但标题仅描边，退出 OK／切换 COLOR 组后仍无取景变化。014 说明见 [EXPERIMENTAL_SD_014.md](EXPERIMENTAL_SD_014.md)。
+
+013 的 compact+2116／2117 实为 LiveHDRType／ColorCreatorHue，不能作为 raw mode／COLOR 组号；旧模拟手造 HDR=11 重复了错误假设。014 移除 `60324376` 挂点，沿原厂 68B 发布队列确认五个 980B owner 的 raw mode+941、selector+944、S+704，在 `6030bb19` 原生 S 获取后冻结 H1，在 `603119bb` 原生逐帧 setter 成功后复制同一 owner 行到 job+15488。保留 skip／失败语义和各 owner 冻结，普通及 borrowed COLOR 两个 builder 都传递 H/L；borrowed 桥保留 MDR 原始返回现场。标题 layer2 改为 CLUT6/54 的白4／黑16／黑16，保留已实机有效的半透明背景和原生整页清理。
+
+最终候选 `generated/ep7/flash-build-014-r2/`：8 源完整重编、18 补丁、BSS752B，代码两区2038B／2017B；源码／工具快照与最终 ELF／候选字节一致。原生取景 owner 10项、捕获／COLOR传递10项、三轴文字／背景及类别清理、48色区H/L读写及原生bank保存召回、加载驻留通过；旧011的75个公共runtime挂点恢复原厂。五组件封装、实际新包的原生mode1五组件路由／后端错误停止通过。构建阶段无 SHA，不重复完整mode2，未写相机／SD；本轮按用户要求提交源码并发布 014 实验版。014 连续实时调度、真实ISP像素、屏幕显示和拍摄完成仍待机身验收，不能以这些离线模型代替。
+
+交付 `generated/ep7/flash-packages/EP7HSL-014-EXPERIMENTAL/EP7HSL-014-EXPERIMENTAL-SD.zip`，79,082,111B（发布时加入中英双语说明后重新封装，固件内容未变）。install 与原厂 restore-stock 文件回读、ZIP CRC／内容一致性通过；证据绑定实际 r2 的完整构建报告，报告在 `research/ep7/candidate-014-*.json`。下方 013 及更早均为历史；013 的字段解释与预览模拟结论已撤销。
+
+**历史 013 交付记录（字段判断错误，见上方修正）：** 当时在 native `60324071` 正向 S-copy 后 `60324376` 尝试传递 H1 到 job24B尾部；保留012捕获/clone/JPEG路径。标题96×40短条，layer1 CLUT1（原厂资源5/53为ARGB88000000）+layer2文字；两个owner observer更新后调用current root整页invalidate，hidden category两层不绘。
+
+最终候选 `generated/ep7/flash-build-013-r1/`：6源完整重编、16补丁、BSS632B；当前源码/工具快照一致。
+11项实际传递检查、原有H1bank读写保存召回、native文字/背景提交、两更新入口整页damage、加载驻留通过；
+五组件封装、原生mode1路由/错误停止、文件回读和ZIP CRC/内容一致性通过，无SHA/不重复mode2。
+交付 `generated/ep7/flash-packages/EP7HSL-013-EXPERIMENTAL/EP7HSL-013-EXPERIMENTAL-SD.zip`，82,769,029B。
+静态路线记录在 `research/ep7/candidate-013-live-route-observation.json` 并附最终native-hsl证据：
+actual native CALL入口是603220ea而非完整入口603220e5；forward更新成功后会重置ops/stage，没有已观察到的Sat同值跳过门槛，无需伪改Sat强制更新。
+连续LiveView的GUI→调度入口仍未独立闭合，不能把compact/CPU模拟当实时取景验收。半透明实际混合、切页残留和实时效果待013上机。
+本轮没有写相机/SD、没有提交或推送；下方012及更早为历史。
+
+**2026-11-02：012 重做原生图像传递与标题重绘。** 011 实机删除键切轴、数值和轮廓有效，预设保存目前正常；文字退出重进后可见但切轴不刷新，H/L 取景与 JPEG 无效果，所有色彩模式均在图片保存完成时卡死。012 撤下旧公共 runtime、队列和清理钩子，沿用 PEN-F 原生 capture→job 思路，以 25 个捕获槽、一个临时 clone、两个原生转换器及 job 24B 尾部传递 H/L；取消旧 state33／精确 stage／任务注册门槛。构造分配和清零明确覆盖尾部，后置 COLOR builder 只修改 H/L 通道。标题透明显示，切轴通过当前 GUI root 触发整页重绘，不保留页面 owner 指针。见 [012 说明](EXPERIMENTAL_SD_012.md)。最终交付状态另见下段；以下 011/010 为历史。
+
+012 最终候选 `generated/ep7/flash-build-012/`：6 源完整重编、15 处补丁，
+BSS 632B；011 的 75 个旧 runtime 安装位置已逐字节还原，原 runtime/AF trap 符号未链接。
+最终候选的 H1 读写/原厂 bank 保存召回、8 项原生传递检查、Sat/Hue/Lum 原生文字布局、
+原生整页 damage region、加载驻留均通过。COLOR builder 与原厂对照只改 H/L 两个通道，
+两个原生 MMIO 上传循环写入完整 292B，非 COLOR 复用槽中和通过；像素与调度仍为边界。
+五组件封装、原生 mode1 路由/后端错误停止、文件回读与 ZIP CRC/内容一致性通过；未做 SHA 或重复 mode2。
+交付 `generated/ep7/flash-packages/EP7HSL-012-EXPERIMENTAL/EP7HSL-012-EXPERIMENTAL-SD.zip`，
+82,767,304B，含安装、原厂返回、说明及绑定最终构建的证据。没有写入相机/SD。
+屏幕刷新、连续实时取景、JPEG 像素和保存后稳定性仍待 012 实机验收。
+
+**2026-11-02：011 改为原厂同色轮 HSL 与 H1 设置保存。** 用户要求下一版直接具备 PEN-F 式切轴及保存效果；009 已能启动，曲线页立即卡死，后续 AF 反馈为“极快闪”。011 撤下旧的 22 处 GUI 扩展钩子，恢复四类原厂页面，删除键 S→L→H，原厂 INFO/ALL 与拨轮保留；按 E-P7 保留 ±5。H/L 写入原厂 ACTIVE part-1，拍摄按捕获的 COLOR 组冻结并应用 CPU 系数。详见 [011 说明](EXPERIMENTAL_SD_011.md)。离线检查与真实屏幕、关机保存、成片验收必须区分；下方 010 仍为历史诊断说明。
+
+
+011 最终构建为 `generated/ep7/flash-build-011/`，70 源全部重编、84 处补丁；
+最终候选的同色轮/H1/CPU 定向模拟与加载驻留检查通过，22 处旧 GUI 钩子已逐字节核对为原厂内容。
+五组件封装、原生 mode1 路由及后端错误停止、文件回读与 ZIP CRC/内容一致性通过；
+未做 SHA，也未重复完整 mode2。交付
+`generated/ep7/flash-packages/EP7HSL-011-EXPERIMENTAL/EP7HSL-011-EXPERIMENTAL-SD.zip`，
+82,797,815B；内含 install、restore-stock、说明与最终候选证据。没有写入相机或 SD 卡。
+真实显示、曲线页稳定性、正常关机后的参数保存与 JPEG 效果仍待机身验收。
+
+**2026-11-02：010 仅增加 AF 分组诊断，曲线故障根因仍未知。**
+相对 009 的固件实现源码只改 `runtime/quarantine.s`。采用原厂支持的 255/100/50/250
+四种模式区分显示文字、输入、页面相关及其余终止原因，保留第一个完整错误号和停机保护。
+详见[010 说明](EXPERIMENTAL_SD_010.md)。不能把诊断版描述为 H/L 或曲线修复。
+
+最终 `flash-build-010-r2` 完整编译 106 源、98 补丁；灯控四模式/六个其他错误选择、
+首次错误保留/重入、加载驻留通过。五组件 111,017,984B 封装和原生 mode1 路由/错误
+停止通过，全部 flash 请求截获；未做 SHA、完整 mode2 或实机操作。
+交付 `generated/ep7/flash-packages/EP7HSL-010-EXPERIMENTAL/EP7HSL-010-EXPERIMENTAL-SD.zip`，
+82,799,452B，文件回读及 ZIP CRC/内容一致性通过。010 未经实机验证，曲线根因仍待
+新的 AF 模式反馈；不要重复已经通过的离线检查替代这项缺失证据。
+
+009 新增定向观察记录 `candidate-009-native-curve-observation.json`：真实 selector
+创建、原厂曲线创建/选择、部分 viewer 及曲线→H 执行通过。外层 MVC graph、设置、
+调度及 header/display 输出仍有模型；这不是实机故障复现或完整 GUI 验收。
+初版 010 灯控探针的 100ms 预期值有误，原厂 PWM 使用整数除法后乘 255，实际配置为
+99960（50ms 为 49980），不是线性减 100。仅修正探针，在 `flash-build-010-r2/`
+记录最终输入；初版源码快照及 `candidate-010-signal-probe-correction.json` 保留。
+
+**2026-11-02 最新现场：009 成功刷入并启动，色轮/曲线功能仍失败。** 用户确认
+只有 S，不能调 H/L；一切换到高光／阴影曲线页面即卡死重启，AF 灯均匀连续闪。
+并非修改曲线数值后才触发。当前未取得终止码；固定周期 AF 提示不编码错误编号。
+原 GUI editor 探针的六项 selector 和初始 contentNULL 是 fixture，未覆盖真实构造；
+新增定向观察只部分关闭该缺口。下方“009 尚未实机”为历史交付状态。
+
+**2026-11-02 最新现场：008 仍黑屏、启动约十秒反复重启。** 用户确认刷前是 NAT＋A，
+回刷原厂后正常。008 暂停重复安装；下方“尚待上机”及 007D 恢复状态为历史信息。
+009 已修正共用 constructor 分配入口对未接管调用的误停机：ALLOCATE 的 context
+拒绝应中性回退，CLEANUP 等保护保留。见[009 说明](EXPERIMENTAL_SD_009.md)。
+现场停止 PC/复位原因未知，不把这一源码缺陷直接认定为唯一根因。
+
+009 完成 106 源整编/链接；实际 008 非 H/L 分配在真实 get_tid=-25、另一 CPU 域
+两个条件下均复现 fault3，009 均按 15,488B 进入原厂 allocator，CLEANUP 仍保持 fault3。
+最终候选 cold-startup（仅分配反例，非完整启动）、worker-job、residency 三项通过，
+原 H/L 15,512B/注册/撤销/释放/ACK 通过。五组件容器和原生 mode1 五路请求/后端错误
+停止通过，全部写请求截获；未执行 mode2 全量重验、SHA 或相机操作。
+交付：`generated/ep7/flash-packages/EP7HSL-009-EXPERIMENTAL/`，其中
+`EP7HSL-009-EXPERIMENTAL-SD.zip` 为 82,814,078B，含 install、restore-stock 及证据。
+文件与 ZIP 回读通过；该交付时点 009 尚未实机，现已确认能启动。源码与工具输入快照保存在 `flash-build-009/`，
+当前 Git revision 仍仅为基线，未提交的原 008 改动均保留。
+
+**2026-11-02：008 已编译、定向验证并生成 SD 包，修正原厂 `0x2002` worker 路径误停机，见
+[008 说明](EXPERIMENTAL_SD_008.md)。** 实际007D指令的定向探针复现缺少H/L scope却
+进入强制清理保护，错误码5；这尚非机身唯一根因证明。用户确认约十秒重启一次，
+已回刷原厂且正常。后续保持NAT＋A基线；005/006/007D不重复安装。
+
+008 交付目录：`generated/ep7/flash-packages/EP7HSL-008-EXPERIMENTAL/`；同目录下
+`EP7HSL-008-EXPERIMENTAL-SD.zip` 为82,811,941B，包含install与restore-stock。
+三项最终候选运行时探针、五组件封装、原生mode1路由及ZIP回读通过；未重复GUI、SD入口、
+完整mode2检查，未执行相机操作。源码改动未提交，实际输入留存于构建目录source-snapshot。
+
+**2026-11-01 历史：007D实机启动失败，暂停安装及重复测试。** 用户报告安装后首次
 启动能显示蓝牙图标、手机能连接，很快自动重启；此后黑屏反复重启且蓝牙不再出现。
 这是现场观察，没有停止PC、复位原因或看门狗证据；本次AF状态及007D后的原厂恢复
 结果尚未提供。不能把006的AF熄灭/已恢复状态复制为007D事实。

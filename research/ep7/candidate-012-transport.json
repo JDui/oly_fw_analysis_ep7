@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "candidate_directory": "/repo/generated/ep7/flash-build-012",
+  "hash_checks_performed": false,
+  "hardware_executed": false,
+  "cases": [
+    "native_H1_snapshot_at_capture_last_getter",
+    "both_native_S_converter_seams_frozen_values",
+    "native_temporary_clone_arguments_and_sidecar",
+    "constructor15512_and_native_memset40",
+    "actual_COLOR_builder_CPU_HL_lanes_stockS_unchanged",
+    "native_COLOR_upload_both_MMIO_windows",
+    "unknown_owner_neutral",
+    "reused_non_COLOR_capture_neutral_without_H1_reads"
+  ],
+  "capture_instructions": 1419,
+  "color_instructions": 2150,
+  "max_capture_stack": 196,
+  "max_color_stack": 192,
+  "limits": [
+    "Settings RAM and capture/job owners are explicit fixtures.",
+    "Last unrelated property getter is modeled; H1 getter/decoder and native COLOR builder/memset execute.",
+    "Native MMIO writes target explicit RAM windows; no ISP pixels or full capture scheduling is emulated."
+  ]
+}

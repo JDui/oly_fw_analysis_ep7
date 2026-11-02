@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "candidate_directory": "/repo/generated/ep7/flash-build-014-r2",
+  "hash_checks_performed": false,
+  "hardware_executed": false,
+  "source_snapshot_equals_current_sources": true,
+  "actual_elf_code_equals_decoded_candidate": true,
+  "cases": [
+    "native_dequeued_tuple68_copy_real_mode941_selector944",
+    "native_S_loop_then_actual_ACTIVE_H1_snapshot",
+    "native_acquisition_full_register_SP_MDR_PSW_preservation",
+    "two_native_owners_and_later_edit_freeze",
+    "native_full_compact_setter_real_HDR_Creator_schema_and_S",
+    "native_setter_full_register_SP_MDR_PSW_preservation",
+    "frozen_live_job_to_native_COLOR_CPU_lanes_stock_S_unchanged",
+    "native_skip_keeps_owner_row",
+    "non_COLOR_and_unknown_owner_neutral",
+    "failed_setter_retains_row_and_native_return"
+  ],
+  "acquisition_instructions": 1713,
+  "setter_instructions": 4810,
+  "color_instructions": 2162,
+  "limits": [
+    "68-byte dequeued tuple and native RAM owners/settings/job are explicit fixtures.",
+    "Unrelated acquisition conversion and Sat typed getter are serviced boundaries; native S loop, H1 getter, setter/converters and CPU execute.",
+    "No ISP pixels, full live scheduling, physical storage or hardware acceptance is emulated."
+  ]
+}

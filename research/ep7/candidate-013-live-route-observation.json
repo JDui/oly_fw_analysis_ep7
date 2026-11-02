@@ -1,0 +1,86 @@
+{
+  "scope": "Bounded build1100 compact image-parameter and update-route observation for 013; no continuous LiveView execution claim",
+  "status": "observed_with_open_join",
+  "camera_execution_performed": false,
+  "hash_checks_performed": false,
+  "012_user_feedback": {
+    "saved_JPEG_H_L_effect_confirmed": true,
+    "native_S_realtime_preview_confirmed": true,
+    "H_L_realtime_preview_confirmed": false
+  },
+  "compact_converter": {
+    "entry": "0x60324071",
+    "native_frame": "[d2,d3,a2,a3],56",
+    "direction_argument": "D0: zero copies compact to job parameters; nonzero copies job parameters to compact",
+    "direction_test": "0x6032407a..0x6032407e",
+    "reverse_branch": "0x603244af",
+    "compact_raw_mode_offset": 2116,
+    "compact_COLOR_selector_offset": 2117,
+    "compact_MONO_selector_offset": 2118,
+    "compact_S_offset": 2119,
+    "parameter_raw_mode_offset": 5532,
+    "parameter_COLOR_selector_offset": 5536,
+    "parameter_S_offset": 5538,
+    "forward_H_L_hook_seam": "0x60324376",
+    "forward_only_hook_reason": "Located after the forward S-copy loop; does not run in the reverse/query branch"
+  },
+  "compact_update_wrapper": {
+    "CALLS_full_entry": "0x603220e5",
+    "native_CALL_body": "0x603220ea",
+    "native_frame": "[d2,d3,a2,a3],48",
+    "converter_call": "0x60322155",
+    "forward_callers": ["0x603119bb", "0x6031b48a", "0x6031344c"],
+    "reverse_callers": ["0x60312ceb", "0x6032848d"],
+    "caller_603119bb": {
+      "routine": "0x603118d6",
+      "logger_string": "<set_imgprm at 0x604e1750",
+      "callers": ["0x6032b3db", "0x6032b9cb"],
+      "compact_extent": 3096
+    },
+    "caller_6031344c": {
+      "routine": "0x6031339b",
+      "logger_string": "<set_imgprm_recview at 0x604e1800"
+    },
+    "caller_6031b48a": {
+      "logger_string": "<set_imgprm_ovf at 0x604e2100"
+    }
+  },
+  "forward_submission_check": {
+    "forward_success_to_submit": ["0x603119d6", "0x6031348f"],
+    "submit_wrapper": "0x60322215",
+    "job_reinitialization_call": "0x60322217 -> 0x60353d02",
+    "native_resource_reset": "0x60353d06 -> 0x60350947",
+    "native_operation_reset": "0x60353d0d -> 0x60354804",
+    "stage_index_reset": "0x60353d15 sets job+11312 to zero",
+    "error_cancel_reset": "0x60353d1d and0x60353d2c zero job+11316/+11318",
+    "next_stage_dispatch": "0x60354214..0x6035428e uses index/count, cancel/error and callback pointer",
+    "S_value_equality_or_memcmp_gate_found_in_reviewed_forward_submit_path": false,
+    "extra_force_update_justified_by_reviewed_forward_submit_path": false,
+    "boundary": "This is a bounded static check of the already-entered forward/submit path. It does not prove every GUI notification reaches it, or recursively classify every mode/resource callback."
+  },
+  "excluded_false_joins": [
+    "0x6031187a value915 and neighboring922 are source-line arguments to error reporter0x60061808/event39000f09, not demonstrated public-S getters",
+    "0x60708d46 and0x60708d86 belong to a5836-byte character mapping table rooted0x60708620, not COLOR parameter-ID arrays",
+    "0x60c66da7 is play_exif_get_default_raw, not continuous LiveView"
+  ],
+  "limits": [
+    "The source native CALL entry is five bytes after its full CALLS entry; scanning only0x603220e5 misses five real callers.",
+    "0x60321f75 copies the existing job header to a small header object; it is not itself the full compact-parameter reverse converter.",
+    "The compact forward transport is a concrete missing route, but the reviewed callers do not independently prove continuous LiveView scheduling.",
+    "No forced native update command or arbitrary unknown-request/current-profile H1 fallback is justified by this observation.",
+    "Actual continuous H/L preview remains camera acceptance. JPEG H/L is already user-confirmed on012."
+  ],
+  "local_disassembly": [
+    "generated/ep7/dis-live_compactcaller.txt",
+    "generated/ep7/dis-live_compactfull.txt",
+    "generated/ep7/dis-live_caller1.txt",
+    "generated/ep7/dis-live_caller2.txt",
+    "generated/ep7/dis-live_caller3.txt",
+    "generated/ep7/dis-live_caller4.txt",
+    "generated/ep7/dis-live_caller5.txt",
+    "generated/ep7/dis-live_setcallerA.txt",
+    "generated/ep7/dis-live_setcallerB.txt",
+    "generated/ep7/dis-live_idtable.txt",
+    "generated/ep7/dis-live_idtable2.txt"
+  ]
+}

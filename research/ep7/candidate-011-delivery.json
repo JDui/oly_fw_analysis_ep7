@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "delivery": "/repo/generated/ep7/flash-packages/EP7HSL-011-EXPERIMENTAL",
+  "archive": "EP7HSL-011-EXPERIMENTAL-SD.zip",
+  "archive_bytes": 82797815,
+  "file_count": 8,
+  "file_readbacks_equal": true,
+  "zip_crc_and_contents_verified": true,
+  "native_updater_full_validation": false,
+  "native_commit_routing_passed": true,
+  "host_container_validation_passed": true,
+  "hardware_validated": false,
+  "camera_write_executed": false,
+  "hash_checks_performed": false
+}

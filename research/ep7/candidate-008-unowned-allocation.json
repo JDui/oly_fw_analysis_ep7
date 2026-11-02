@@ -1,0 +1,254 @@
+{
+  "scope": "Check unowned constructor allocation in the actual linked candidate.\n\nThe original non-H/L wrapper/constructor CALLs and get_tid API execute. CPU and\ntask context flags are explicit fixtures, not observed startup state. Native\nallocation completion is modeled only after checking its original size/input.\nNo SHA, camera access or full startup simulation is performed.\n",
+  "status": "passed",
+  "input_image": "/repo/generated/ep7/flash-build-008/EP7HSL-NONINSTALLABLE.decoded-main.bin",
+  "candidate_build_revision": "c9944c688590bacea5e471841041f499074477c5",
+  "expectation": "retained008_unowned_allocation_defect",
+  "unowned_allocation_fixed": false,
+  "cases": [
+    {
+      "name": "ordinary_domain0_original_task",
+      "status": "returned",
+      "completed": 635,
+      "fault": null,
+      "final_pc": "0x60022700",
+      "final_sp": "0x19010334",
+      "quarantine_reached": false,
+      "quarantine_reason": null,
+      "native_get_tid_results": [
+        0,
+        0
+      ],
+      "native_allocator_reached": true,
+      "private_state_unchanged": true,
+      "original_request_bytes": 15488,
+      "allocator_completion_model": true,
+      "native_pointer_result_preserved": true,
+      "modeled_pointer_result": "0x61bd6d40",
+      "completion": {
+        "status": "returned",
+        "completed": 12,
+        "fault": null,
+        "final_pc": "0x603537fa",
+        "final_sp": "0x190103d4"
+      }
+    },
+    {
+      "name": "native_get_tid_refused",
+      "status": "breakpoint",
+      "completed": 205,
+      "fault": null,
+      "final_pc": "0x6004a342",
+      "final_sp": "0x19010318",
+      "quarantine_reached": true,
+      "quarantine_reason": 3,
+      "native_get_tid_results": [
+        -25
+      ],
+      "native_allocator_reached": false,
+      "private_state_unchanged": false
+    },
+    {
+      "name": "other_cpu_original_task",
+      "status": "breakpoint",
+      "completed": 595,
+      "fault": null,
+      "final_pc": "0x6004a342",
+      "final_sp": "0x19010318",
+      "quarantine_reached": true,
+      "quarantine_reason": 3,
+      "native_get_tid_results": [
+        0,
+        0
+      ],
+      "native_allocator_reached": false,
+      "private_state_unchanged": false
+    }
+  ],
+  "owned_cleanup_context_rejection": {
+    "status": "breakpoint",
+    "completed": 174,
+    "fault": null,
+    "final_pc": "0x6004a342",
+    "final_sp": "0x190103ac",
+    "quarantine_reason": 3
+  },
+  "constructor_callers": [
+    {
+      "window_start": "0x60321ea2",
+      "window_end_exclusive": "0x60321eb4",
+      "call_site": "0x60321ea8",
+      "target": "0x603537eb",
+      "register_mask": "0xf0",
+      "frame_bytes": 44,
+      "kind19_worker_call": false,
+      "local_disassembly": [
+        "60321ea2:\t3d                                              \tmov\tsp,a1",
+        "60321ea3:\t58 20                                           \tmov\t(32,sp),d0",
+        "60321ea5:\t21 24                                           \tadd\t36,a1",
+        "60321ea7:\t9c                                              \tmov\ta3,a0",
+        "60321ea8:\tdd 43 19 03 00 f0 2c                            \tcall\t0x603537eb,[d2,d3,a2,a3],44",
+        "60321eaf:\t5c 1c                                           \tmov\t(28,sp),a0",
+        "60321eb1:\tf8 10 04                                        \tmov\td0,(4,a0)"
+      ]
+    },
+    {
+      "window_start": "0x603e39b1",
+      "window_end_exclusive": "0x603e39d3",
+      "call_site": "0x603e39c7",
+      "target": "0x603537eb",
+      "register_mask": "0xf0",
+      "frame_bytes": 44,
+      "kind19_worker_call": false,
+      "local_disassembly": [
+        "603e39b1:\tf1 e0                                           \tmov\td0,a0",
+        "603e39b3:\tf0 40                                           \tmovbu\t(a0),d0",
+        "603e39b5:\t21 34                                           \tadd\t52,a1",
+        "603e39b7:\tf8 92 4a                                        \tmovbu\td0,(74,sp)",
+        "603e39ba:\tf0 40                                           \tmovbu\t(a0),d0",
+        "603e39bc:\t98                                              \tmov\ta2,a0",
+        "603e39bd:\tf8 92 4b                                        \tmovbu\td0,(75,sp)",
+        "603e39c0:\t00                                              \tclr\td0",
+        "603e39c1:\tf8 92 4d                                        \tmovbu\td0,(77,sp)",
+        "603e39c4:\tf8 92 4e                                        \tmovbu\td0,(78,sp)",
+        "603e39c7:\tdd 24 fe f6 ff f0 2c                            \tcall\t0x603537eb,[d2,d3,a2,a3],44",
+        "603e39ce:\t42 28                                           \tmov\td0,(40,sp)",
+        "603e39d0:\tf8 bd 34                                        \tmovhu\t(52,sp),d1"
+      ]
+    },
+    {
+      "window_start": "0x603e6d39",
+      "window_end_exclusive": "0x603e6d4b",
+      "call_site": "0x603e6d3e",
+      "target": "0x603537eb",
+      "register_mask": "0xf0",
+      "frame_bytes": 44,
+      "kind19_worker_call": false,
+      "local_disassembly": [
+        "603e6d39:\t3d                                              \tmov\tsp,a1",
+        "603e6d3a:\t21 0c                                           \tadd\t12,a1",
+        "603e6d3c:\t98                                              \tmov\ta2,a0",
+        "603e6d3d:\t00                                              \tclr\td0",
+        "603e6d3e:\tdd ad ca f6 ff f0 2c                            \tcall\t0x603537eb,[d2,d3,a2,a3],44",
+        "603e6d45:\tf8 13 24                                        \tmov\td0,(36,a3)",
+        "603e6d48:\tf8 bd 0c                                        \tmovhu\t(12,sp),d1"
+      ]
+    },
+    {
+      "window_start": "0x603ebca7",
+      "window_end_exclusive": "0x603ebcb9",
+      "call_site": "0x603ebcac",
+      "target": "0x603537eb",
+      "register_mask": "0xf0",
+      "frame_bytes": 44,
+      "kind19_worker_call": false,
+      "local_disassembly": [
+        "603ebca7:\t3d                                              \tmov\tsp,a1",
+        "603ebca8:\t21 0c                                           \tadd\t12,a1",
+        "603ebcaa:\t98                                              \tmov\ta2,a0",
+        "603ebcab:\t00                                              \tclr\td0",
+        "603ebcac:\tdd 3f 7b f6 ff f0 2c                            \tcall\t0x603537eb,[d2,d3,a2,a3],44",
+        "603ebcb3:\tf8 13 24                                        \tmov\td0,(36,a3)",
+        "603ebcb6:\tf8 bd 0c                                        \tmovhu\t(12,sp),d1"
+      ]
+    },
+    {
+      "window_start": "0x603f0e5b",
+      "window_end_exclusive": "0x603f0e6d",
+      "call_site": "0x603f0e60",
+      "target": "0x603537eb",
+      "register_mask": "0xf0",
+      "frame_bytes": 44,
+      "kind19_worker_call": false,
+      "local_disassembly": [
+        "603f0e5b:\t3d                                              \tmov\tsp,a1",
+        "603f0e5c:\t21 10                                           \tadd\t16,a1",
+        "603f0e5e:\t98                                              \tmov\ta2,a0",
+        "603f0e5f:\t00                                              \tclr\td0",
+        "603f0e60:\tdd 8b 29 f6 ff f0 2c                            \tcall\t0x603537eb,[d2,d3,a2,a3],44",
+        "603f0e67:\tf8 13 24                                        \tmov\td0,(36,a3)",
+        "603f0e6a:\tf8 bd 10                                        \tmovhu\t(16,sp),d1"
+      ]
+    },
+    {
+      "window_start": "0x603f2839",
+      "window_end_exclusive": "0x603f284b",
+      "call_site": "0x603f283e",
+      "target": "0x603537eb",
+      "register_mask": "0xf0",
+      "frame_bytes": 44,
+      "kind19_worker_call": true,
+      "local_disassembly": [
+        "603f2839:\t3d                                              \tmov\tsp,a1",
+        "603f283a:\t21 0c                                           \tadd\t12,a1",
+        "603f283c:\t98                                              \tmov\ta2,a0",
+        "603f283d:\t00                                              \tclr\td0",
+        "603f283e:\tdd ad 0f f6 ff f0 2c                            \tcall\t0x603537eb,[d2,d3,a2,a3],44",
+        "603f2845:\tf8 13 24                                        \tmov\td0,(36,a3)",
+        "603f2848:\tf8 bd 0c                                        \tmovhu\t(12,sp),d1"
+      ]
+    },
+    {
+      "window_start": "0x603f2bb5",
+      "window_end_exclusive": "0x603f2bc6",
+      "call_site": "0x603f2bb9",
+      "target": "0x603537eb",
+      "register_mask": "0xf0",
+      "frame_bytes": 44,
+      "kind19_worker_call": false,
+      "local_disassembly": [
+        "603f2bb5:\t5c 0c                                           \tmov\t(12,sp),a0",
+        "603f2bb7:\t99                                              \tmov\ta2,a1",
+        "603f2bb8:\t00                                              \tclr\td0",
+        "603f2bb9:\tdd 32 0c f6 ff f0 2c                            \tcall\t0x603537eb,[d2,d3,a2,a3],44",
+        "603f2bc0:\t42 3c                                           \tmov\td0,(60,sp)",
+        "603f2bc2:\tf0 62                                           \tmovhu\t(a2),d0",
+        "603f2bc4:\ta0 00                                           \tcmp\t0,d0"
+      ]
+    },
+    {
+      "window_start": "0x6060dbcd",
+      "window_end_exclusive": "0x6060dbef",
+      "call_site": "0x6060dbe3",
+      "target": "0x603537eb",
+      "register_mask": "0xf0",
+      "frame_bytes": 44,
+      "kind19_worker_call": false,
+      "local_disassembly": [
+        "6060dbcd:\t00                                              \tclr\td0",
+        "6060dbce:\tf8 52 14                                        \tmovbu\td0,(20,a2)",
+        "6060dbd1:\tf8 52 15                                        \tmovbu\td0,(21,a2)",
+        "6060dbd4:\tf8 52 16                                        \tmovbu\td0,(22,a2)",
+        "6060dbd7:\tf8 52 18                                        \tmovbu\td0,(24,a2)",
+        "6060dbda:\tf8 52 17                                        \tmovbu\td0,(23,a2)",
+        "6060dbdd:\t80 06                                           \tmov\t6,d0",
+        "6060dbdf:\tf8 52 1e                                        \tmovbu\td0,(30,a2)",
+        "6060dbe2:\t00                                              \tclr\td0",
+        "6060dbe3:\tdd 08 5c d4 ff f0 2c                            \tcall\t0x603537eb,[d2,d3,a2,a3],44",
+        "6060dbea:\tf1 e8                                           \tmov\td2,a0",
+        "6060dbec:\tf8 10 0c                                        \tmov\td0,(12,a0)"
+      ]
+    }
+  ],
+  "constructor_callers_locally_disassembled": 8,
+  "exercised_original_route": {
+    "wrapper": "0x603e6d04",
+    "start": "0x603e6d39",
+    "constructor_call": "0x603e6d3e",
+    "constructor": "0x603537eb",
+    "allocation_hook": "0x603537f3",
+    "original_allocator": "0x60022700"
+  },
+  "hash_checks_performed": false,
+  "hardware_executed": false,
+  "full_boot_executed": false,
+  "limits": [
+    "The existing native bootstrap/private semaphore publication executes with explicit task/kernel fixtures.",
+    "Eight GNU-decoded local parameter-setup/CALL windows establish shared-constructor uses, not a complete CFG or their startup scheduling.",
+    "The exercised non-H/L constructor route uses original CALL frames and native get_tid; CPU1/current task and unavailable-context flags are fixture inputs.",
+    "No evidence establishes that the camera boot actually invokes this constructor in these rejected contexts.",
+    "Native pool allocation completion is modeled after checking the unchanged15488-byte request; actual RET and candidate pointer-result return execute.",
+    "ENTER/PROCESS/CLEANUP admission policies are outside the allocation-only fix; one failed-context CLEANUP check retains fault3.",
+    "Full boot, cache/IRQ/multicore timing, reset cause and photo processing require hardware evidence."
+  ]
+}

@@ -17,6 +17,7 @@ RAM_IMAGE_START, RAM_START, RAM_BYTES = 0x6004dc00, 0xa004dc00, 0x2000
 PRIVATE_SECTION = '.ep7_private'
 ELF_NAME = 'EP7HSL-NONINSTALLABLE.elf'
 IMAGE_NAME = 'EP7HSL-NONINSTALLABLE.decoded-main.bin'
+SNAPSHOT_PATHS = ('prototypes/ep7_volatile_hl', 'tools', 'research/ep7/cold-bootstrap.json')
 LIMITS = [
     'Both executable regions are unqualified placement assumptions, not proven free space.',
     'Private state occupies an image-initialized loaded tail with one uncached access alias; all-writer ownership remains unproved.',
@@ -24,7 +25,7 @@ LIMITS = [
     'Early copy failure, secondary CPU ordering and cache visibility remain unresolved.',
     'Full capture/alias retirement, queue/task lifetime, cancellation and GUI exclusion remain unresolved.',
     'Complete task/IRQ stack bounds remain unknown; .su data are local function measurements only.',
-    'H/L persistence is excluded; this is the existing volatile implementation.',
+    'H/L uses native ACTIVE part-1 records; power-cycle persistence and rendered camera output still require hardware acceptance.',
     'No updater acceptance, recovery, camera execution, image-quality or display acceptance is established.',
 ]
 
@@ -102,7 +103,7 @@ def layout(prefix, objects):
 def linker_script(groups, native):
     result = ['/* NON-INSTALLABLE: region ownership and startup remain unqualified. */',
               'OUTPUT_FORMAT("elf32-mn10300")', 'OUTPUT_ARCH(mn10300)',
-              'ENTRY(ep7_native_cold_bootstrap_bridge)', 'MEMORY {']
+              'ENTRY(ep7h_set_bridge)', 'MEMORY {']
     for i, (start, end) in enumerate(CODE):
         result.append(f'  CODE{i} (rx) : ORIGIN = {start:#x}, LENGTH = {end-start:#x}')
     result += [f'  PRIVATE (rw) : ORIGIN = {RAM_START:#x}, LENGTH = {RAM_BYTES:#x}', '}',
@@ -214,6 +215,62 @@ def check_sources_at_revision(revision):
         raise ValueError('build inputs differ from recorded revision: '+', '.join(changed))
 
 
+def snapshot_git(*args):
+    return subprocess.check_output(['git','--no-optional-locks','-c',f'safe.directory={ROOT}',
+        '-c','core.autocrlf=true','-c','core.safecrlf=false','-C',str(ROOT),*args])
+
+
+def snapshot_paths():
+    # Include manifest witness modules and the JSON it reads, not only compiler
+    # inputs. Git excludes generated binaries and Python caches from this set.
+    paths = snapshot_git('ls-files','-z','--cached','--others','--exclude-standard',
+                         '--',*SNAPSHOT_PATHS).decode('utf-8').split('\0')
+    return sorted(set(path for path in paths if path))
+
+
+def snapshot_source_path(relative):
+    path = ROOT/relative
+    if Path(relative).is_absolute() or not path.resolve().is_relative_to(ROOT.resolve()) or not path.is_file():
+        raise ValueError('invalid source snapshot input: '+relative)
+    return path
+
+
+def capture_source_snapshot(out, revision):
+    if not re.fullmatch(r'[0-9a-f]{40}', revision):
+        raise ValueError('expected a full recorded Git revision')
+    paths = snapshot_paths()
+    changed = snapshot_git('diff','--name-only','-z',revision,'--',*SNAPSHOT_PATHS).decode('utf-8').split('\0')
+    added = snapshot_git('ls-files','-z','--others','--exclude-standard','--',*SNAPSHOT_PATHS).decode('utf-8').split('\0')
+    destination = out/'source-snapshot'
+    destination.mkdir()
+    for relative in paths:
+        target = destination/relative
+        target.parent.mkdir(parents=True,exist_ok=True)
+        target.write_bytes(snapshot_source_path(relative).read_bytes())
+    return dict(source_tree_dirty=any(changed) or any(added),
+        source_revision_is_baseline=True,
+        source_changes_from_baseline=sorted(set(path for path in (*changed,*added) if path)),
+        source_snapshot=dict(directory='source-snapshot', paths=paths,
+                             comparison='byte-for-byte; no hashes'))
+
+
+def check_candidate_sources(directory, report):
+    snapshot = report.get('source_snapshot')
+    if snapshot is None:
+        if report.get('source_tree_dirty'):
+            raise ValueError('dirty candidate has no source snapshot')
+        check_sources_at_revision(report['source_revision'])
+        return
+    if snapshot['directory'] != 'source-snapshot' or snapshot['paths'] != snapshot_paths():
+        raise ValueError('source snapshot input inventory changed')
+    destination = directory/'source-snapshot'
+    for relative in snapshot['paths']:
+        source = snapshot_source_path(relative)
+        saved = destination/relative
+        if not saved.resolve().is_relative_to(destination.resolve()) or not saved.is_file() or saved.read_bytes() != source.read_bytes():
+            raise ValueError('source differs from candidate snapshot: '+relative)
+
+
 def build(decoded, prefix, out, report, reuse=None):
     print('Checking stock input and declared installation manifest...',flush=True)
     manifest = inspect_stock(decoded)
@@ -231,6 +288,8 @@ def build(decoded, prefix, out, report, reuse=None):
         report['objects_reused'] = 0
     else:
         previous = json.loads((reuse/'report.json').read_text(encoding='utf-8'))
+        if previous.get('source_tree_dirty'):
+            raise ValueError('dirty candidate object reuse is unsupported; reuse a clean build or compile all sources')
         if not previous['whole_candidate_compiled']:
             raise ValueError('cached build did not finish compiling all implementation objects')
         changed = changed_build_inputs(previous['source_revision'])
@@ -387,11 +446,12 @@ def build(decoded, prefix, out, report, reuse=None):
         global_implementation_definitions=inventory['global_definition_count'],
         native_binding_count=len(bindings()), unresolved_symbols=[],
         unlinked_text_data_bss=inventory['unlinked_text_data_bss'],layout=memory,
-        entry_symbol='ep7_native_cold_bootstrap_bridge',entry_address=hex(syms['ep7_native_cold_bootstrap_bridge']['address']),
+        entry_symbol='ep7h_set_bridge',entry_address=hex(syms['ep7h_set_bridge']['address']),
+        implementation='native_hsl_transport',
         entry_is_not_a_boot_proof=True,patch_count=len(patch_rows),patches=patch_rows,
         original_patch_span_bytes=manifest['total_original_span_bytes'],
         patch_count_by_kind=manifest['count_by_kind'],patch_count_by_stage=manifest['count_by_stage'],
-        patch_targets_checked=len(targets),linked_veneers_checked=36,gnu_decoded_branches_checked=len(branches),
+        patch_targets_checked=len(targets),linked_veneers_checked=manifest['count_by_kind']['short_call_via_veneer'],gnu_decoded_branches_checked=len(branches),
         candidate_length=len(candidate),changed_bytes=changed,write_span_count=len(spans),
         undeclared_bytes_unchanged=True,candidate_readback_equal=True,stock_input_unchanged=True,
         boot_prefix_unchanged=candidate[:0x60030000-BASE]==stock[:0x60030000-BASE],
@@ -411,13 +471,16 @@ def main():
     parser.add_argument('--output',type=Path,required=True,help='new or empty dedicated output directory')
     parser.add_argument('--reuse-objects-from',type=Path,
                         help='reuse checked unchanged objects; refresh changed C/ASM with the existing compiler')
+    parser.add_argument('--allow-dirty',action='store_true',
+                        help='snapshot working-tree inputs and verify exact bytes before/after build and later use')
     args = parser.parse_args()
     out, decoded = args.output.resolve(), args.decoded.resolve()
     if out == decoded.parent or decoded.is_relative_to(out):
         parser.error('output must be separate from stock input')
     if out.exists() and any(out.iterdir()):
         parser.error('output must be empty; existing artifacts are never overwritten')
-    check_sources_at_revision(args.source_revision)
+    if not args.allow_dirty:
+        check_sources_at_revision(args.source_revision)
     out.mkdir(parents=True,exist_ok=True)
     (out/'NONINSTALLABLE.txt').write_text(
         'NON-INSTALLABLE RESEARCH CANDIDATE. DO NOT FLASH.\n'
@@ -432,10 +495,14 @@ def main():
         private_storage=dict(access_alias=hex(RAM_START),image_address=hex(RAM_IMAGE_START),
             bytes=RAM_BYTES,method='fishcu loaded-section initialized state; E-P7-specific placement'),
         evidence='docs/ep7/OFFLINE_CANDIDATE.md')
+    if args.allow_dirty:
+        report.update(capture_source_snapshot(out,args.source_revision))
+        check_candidate_sources(out,report)
     save(out/'report.json',report)
     try:
         build(decoded,args.tool_prefix,out,report,
               args.reuse_objects_from.resolve() if args.reuse_objects_from else None)
+        check_candidate_sources(out,report)
     except Exception as error:
         report.update(status='failed',error=str(error))
         save(out/'report.json',report)
