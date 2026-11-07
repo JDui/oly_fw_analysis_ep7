@@ -32,7 +32,7 @@ def json_bytes(value):
 
 
 def deliver(stock, decoded, candidate, validated_package, native_report, prefix, out, release='005'):
-    require(release in ('005','006','008','009','010','011','012','013','014'), 'unsupported experimental release')
+    require(release in ('005','006','008','009','010','011','012','013','014','015'), 'unsupported experimental release')
     archive_name = f'EP7HSL-{release}-EXPERIMENTAL-SD.zip'
     guide = ROOT/f'docs/ep7/EXPERIMENTAL_SD_{release}.md'
     evidence_names = tuple(name.replace('005',release) for name in EVIDENCE)
@@ -48,6 +48,8 @@ def deliver(stock, decoded, candidate, validated_package, native_report, prefix,
         evidence_names = ('candidate-011-native-hsl.json', 'candidate-011-residency.json')
     elif release in ('012','013','014'):
         evidence_names = (f'candidate-{release}-native-hsl.json', f'candidate-{release}-residency.json')
+    elif release == '015':
+        evidence_names = ('candidate-015-strength.json',)
     destination = out.resolve()
     require(not destination.exists(), 'SD delivery output must be new')
     for source in (stock, decoded, candidate, validated_package, native_report):
@@ -69,7 +71,7 @@ def deliver(stock, decoded, candidate, validated_package, native_report, prefix,
         # decoder. package() below checks every NEW component additive sum and
         # byte roundtrip; this run executes native mode1 routing/error stops on
         # the actual fishcu-decoded candidate buffers. Do not relabel it as mode2.
-        require(release in ('006','008','009','010','011','012','013','014') and native['commit_only'] is True and
+        require(release in ('006','008','009','010','011','012','013','014','015') and native['commit_only'] is True and
                 native['native_validation']['executed'] is False and
                 native['native_validation']['native_validation_claim'] is False,
                 'release does not permit recorded host-validation/native-routing evidence')
@@ -104,7 +106,7 @@ def deliver(stock, decoded, candidate, validated_package, native_report, prefix,
                 if release == '005' else build)
     require(all(json.loads(blob)['candidate_build_revision']==previous['source_revision']
                 for blob in evidence.values()), 'candidate evidence revisions differ')
-    if release in ('008','009','010','011','012','013','014'):
+    if release in ('008','009','010','011','012','013','014','015'):
         # Dirty builds may share a baseline revision. The runner must attach
         # the actual build report/path when executing each final candidate
         # probe; a matching baseline alone is not evidence of identical input.
@@ -136,7 +138,7 @@ def deliver(stock, decoded, candidate, validated_package, native_report, prefix,
         source_snapshot_build_directory=(str(candidate.resolve()/'source-snapshot')
                                          if 'source_snapshot' in build else None),
         source_snapshot_included_in_sd_archive=False,
-        runtime_evidence_bound_to_final_build_report=release in ('008','009','010','011','012','013','014'),
+        runtime_evidence_bound_to_final_build_report=release in ('008','009','010','011','012','013','014','015'),
         runtime_evidence_files=list(evidence_names),
         relinked_decoded_main_equal_to_runtime_tested_candidate=True,
         final_container_equal_to_native_routing_input=True,
@@ -157,7 +159,7 @@ def deliver(stock, decoded, candidate, validated_package, native_report, prefix,
         limits=['Ready for manual experimental SD testing is an artifact status, not proven camera boot or recoverability.',
                 'The user reported SD update and stock recovery on this E-P7 after the 005 incident; this candidate has not booted on hardware.',
                 'The stock return file requires a functioning update path and is not an independent rescue image or device backup.',
-                (f'{release} stores H/L in native ACTIVE part-1 settings and feeds image-owned snapshots; this candidate still requires physical acceptance.' if release in ('011','012','013','014') else
+                (f'{release} stores H/L in native ACTIVE part-1 settings and feeds image-owned snapshots; this candidate still requires physical acceptance.' if release in ('011','012','013','014','015') else
                  'H/L is volatile. Four COLOR profiles and the existing CPU processing path are included; hardware display/photo acceptance is outstanding.'),
                 ('008 reruns only legacy-worker, worker-job and residency probes against the final candidate; GUI and SD-entry probes were not repeated.'
                  if release=='008' else
@@ -216,6 +218,12 @@ def deliver(stock, decoded, candidate, validated_package, native_report, prefix,
             native_queue_and_task_paths_restored=True,
             display_hardware_verified=False,preview_hardware_verified=False,
             JPEG_effect_hardware_verified=False)
+    if release == '015':
+        report.update(artifact_type='functional_sd_test_package', diagnostic_only=False,
+            value_range=[-5,5],
+            H_L_strength='Steps 4 and 5 use the PEN-F coefficients for steps 5 and 7, with sign retained',
+            existing_presets_at_steps_4_and_5_change=True,
+            preview_hardware_verified=False, JPEG_effect_hardware_verified=False)
     files = {INSTALL:install_bytes, RESTORE:reference,
              'README.md':guide.read_bytes(), 'manifest.json':json_bytes(report),
              'evidence/native-updater.json':json_bytes(native),
@@ -254,7 +262,7 @@ if __name__=='__main__':
     parser.add_argument('--native-report',type=Path,required=True)
     parser.add_argument('--tool-prefix',required=True)
     parser.add_argument('--out',type=Path,required=True)
-    parser.add_argument('--release',choices=('005','006','008','009','010','011','012','013','014'),default='005')
+    parser.add_argument('--release',choices=('005','006','008','009','010','011','012','013','014','015'),default='005')
     args = parser.parse_args()
     print(json.dumps(deliver(args.stock,args.decoded_stock,args.candidate,args.validated_package,
         args.native_report,args.tool_prefix,args.out,args.release),indent=2))

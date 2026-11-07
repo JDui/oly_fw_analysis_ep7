@@ -96,7 +96,8 @@ def inspect(directory,engine):
     processed=native(0x603b02d9,0x603b02de,regs)
     base=baseline.read(OUT,3400);data=m.read(OUT,3400)
     bins=[0,2,4,6,8,10,1,3,5,7,9,11]
-    hlut=[5000,4000,3000,2000,1000,0,-1000,-2000,-3000,-4000,-5000];llut=[-200,-150,-100,-50,-25,0,25,50,100,150,200]
+    hlut=[7000,5000,3000,2000,1000,0,-1000,-2000,-3000,-5000,-7000]
+    llut=[-300,-200,-100,-50,-25,0,25,50,100,200,300]
     allowed=set()
     for k,i in enumerate(bins):
      for off,val,lut in [(706+24*k,H[i],hlut),(710+24*k,L[i],llut)]:

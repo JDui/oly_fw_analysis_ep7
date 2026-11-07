@@ -18,9 +18,9 @@
 
 ### 当前版本
 
-最新版本为 **EP7HSL 014 EXPERIMENTAL**，请在本仓库 [Releases](https://github.com/JDui/oly_fw_analysis_ep7/releases) 下载 `EP7HSL-014-EXPERIMENTAL-SD.zip`。
+最新版本为 **EP7HSL 015 EXPERIMENTAL**，请在本仓库 [Releases](https://github.com/JDui/oly_fw_analysis_ep7/releases) 下载 `EP7HSL-015-EXPERIMENTAL-SD.zip`。
 
-三轴切换、数值调节和设置保存已有前序版本的实机反馈，012/013 保存的 JPEG H/L 效果已获确认。014 修正 H/L 实时取景的参数来源和轴标题填充，已完成定向离线检查与封装检查；**014 的实时取景、标题显示、切页清理和 JPEG 仍待该版本的实机确认**。具体范围见 [014 版本说明](https://github.com/JDui/oly_fw_analysis_ep7/blob/EP7/docs/ep7/EXPERIMENTAL_SD_014.md)。
+014 实机反馈显示实时取景与 JPEG 的 H/L 效果偏弱。015 保留 ±1 至 ±3 的细调力度，增强 ±4 和 ±5，已有 COLOR 预设可继续使用。015 已通过定向模拟与封装检查，实际画面幅度待机身确认。详见 [015 版本说明](docs/ep7/EXPERIMENTAL_SD_015.md)。
 
 ### SD 卡刷入
 
@@ -41,7 +41,7 @@
 3. **前拨轮选择色区，后拨轮调节数值**；INFO 切换单色区 / ALL。H/L 范围为 **−5～+5**，四个 COLOR 组分别保存参数。
 4. 短按 OK 退出；长按 OK 复位当前轴，H/L 复位为 0。重新开机默认显示 S，切到 H/L 可查看保存值。
 
-建议先对同一场景拍摄 H/L=0 与修改参数后的 JPEG 作比较，并检查正常关机后设置是否保留。014 的实时取景效果请以实际机身表现为准。
+建议先对同一场景拍摄 H/L=0 与修改参数后的 JPEG 作比较，并检查正常关机后设置是否保留。015 的实时取景效果请以实际机身表现为准。
 
 ### 来源与研究资料
 
@@ -65,9 +65,9 @@ If you happened to find this project, consider it a lucky find. Please avoid wid
 
 ### Current release
 
-The latest version is **EP7HSL 014 EXPERIMENTAL**. Download `EP7HSL-014-EXPERIMENTAL-SD.zip` from this repository's [Releases](https://github.com/JDui/oly_fw_analysis_ep7/releases).
+The latest version is **EP7HSL 015 EXPERIMENTAL**. Download `EP7HSL-015-EXPERIMENTAL-SD.zip` from this repository's [Releases](https://github.com/JDui/oly_fw_analysis_ep7/releases).
 
-Axis switching, value adjustment, and settings persistence have on-camera feedback from earlier versions; JPEG H/L effects were confirmed for 012/013. Version 014 corrects the H/L live-view parameter source and axis-title fill, and has passed targeted offline and packaging checks. **Live view, title rendering, page cleanup, and JPEG output still require on-camera confirmation for version 014 itself.** See the [014 notes](https://github.com/JDui/oly_fw_analysis_ep7/blob/EP7/docs/ep7/EXPERIMENTAL_SD_014.md) for the verification scope.
+On-camera feedback for 014 reported subtle H/L changes in live view and JPEGs. Version 015 preserves fine adjustment at ±1 through ±3 and strengthens ±4 and ±5. Existing COLOR presets remain usable. Targeted simulation and package checks passed. Visual strength on 015 awaits camera confirmation. See the [015 notes](docs/ep7/EXPERIMENTAL_SD_015.md).
 
 ### Installing from an SD card
 
@@ -88,7 +88,7 @@ To return to stock, replace the modified firmware on the card with **`restore-st
 3. Use the **front dial to select a color sector and the rear dial to change its value**. INFO switches between a single sector and ALL. H/L values range from **−5 to +5**, with separate settings for each of the four COLOR profiles.
 4. Press OK briefly to exit; hold OK to reset the current axis, with H/L resetting to 0. After restarting, the editor defaults to S; switch to H/L to view the saved values.
 
-Start by comparing JPEGs of the same scene with H/L at zero and with adjusted values, then check persistence after a normal shutdown. Judge version 014's live-view behavior on the actual camera.
+Start by comparing JPEGs of the same scene with H/L at zero and with adjusted values, then check persistence after a normal shutdown. Judge version 015's live-view behavior on the actual camera.
 
 ### Attribution and research
 

@@ -81,8 +81,11 @@ void ep7h_transport_apply(const unsigned char *setup)
      * Constructor and converters own the tail; no stage/task guessing is needed.
      * Preserve S and all other output fields, including control and calibration.
      */
-    static const int16_t hue[11]={5000,4000,3000,2000,1000,0,-1000,-2000,-3000,-4000,-5000};
-    static const int16_t lum[11]={-200,-150,-100,-50,-25,0,25,50,100,150,200};
+    /* Keep the 11-position editor. Use the PEN-F coefficients for steps
+     * 0..3 directly, then use its steps 5 and 7 at our steps 4 and 5.
+     */
+    static const int16_t hue[11]={7000,5000,3000,2000,1000,0,-1000,-2000,-3000,-5000,-7000};
+    static const int16_t lum[11]={-300,-200,-100,-50,-25,0,25,50,100,200,300};
     static const unsigned char bins[12]={0,2,4,6,8,10,1,3,5,7,9,11};
     const int8_t *hl=(const int8_t *)(job+15488u);
     for(unsigned k=0;k<12;k++) {

@@ -1,5 +1,7 @@
 # E-P7 研究检查点 / 恢复研究
 
+**2026-11-07：当前交付为 [015 H/L 增强试用版](EXPERIMENTAL_SD_015.md)。** 014 实机反馈取景与 JPEG 的 H/L 变化偏弱。015 增强 ±4、±5，保留 ±1 至 ±3 的细调力度。取景、成片系数模拟与 SD 封装检查通过，015 实际画面幅度待实机确认。下文 014 及更早记录为历史。
+
 **2026-11-02：014 最终 r2 已构建、通过定向验证并完成 SD 包交付。** 用户确认 013 的半透明小块正常、JPEG H/L 正确，但标题仅描边，退出 OK／切换 COLOR 组后仍无取景变化。014 说明见 [EXPERIMENTAL_SD_014.md](EXPERIMENTAL_SD_014.md)。
 
 013 的 compact+2116／2117 实为 LiveHDRType／ColorCreatorHue，不能作为 raw mode／COLOR 组号；旧模拟手造 HDR=11 重复了错误假设。014 移除 `60324376` 挂点，沿原厂 68B 发布队列确认五个 980B owner 的 raw mode+941、selector+944、S+704，在 `6030bb19` 原生 S 获取后冻结 H1，在 `603119bb` 原生逐帧 setter 成功后复制同一 owner 行到 job+15488。保留 skip／失败语义和各 owner 冻结，普通及 borrowed COLOR 两个 builder 都传递 H/L；borrowed 桥保留 MDR 原始返回现场。标题 layer2 改为 CLUT6/54 的白4／黑16／黑16，保留已实机有效的半透明背景和原生整页清理。
