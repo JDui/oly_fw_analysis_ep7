@@ -6,6 +6,12 @@
 
 本项目参考 [fishcu/oly_fw_analysis](https://github.com/fishcu/oly_fw_analysis) 的研究与实现，对奥林巴斯 **E-P7（EP7）** 固件进行逆向与修改。目前已实现 **H（色相）、S（饱和度）、L（明度）三个可切换的色轮**，沿用机身原有色彩转盘的操作方式，为各个色区增加 H/L 调节。
 
+### 最低限度改造与稳定性
+
+这是基于 E-P7 原厂 1.1 的最低限度改造固件。改动集中在原厂 COLOR 色轮的轴切换、每色区 H/L 参数的保存与应用，并沿用原厂色轮界面、COLOR 预设和拨轮操作。打开 COLOR 色轮调节页面后，**每按一次删除键（垃圾桶键）切换一个色轮，顺序为饱和度 S → 明度 L → 色相 H → 饱和度 S**。切换后用前拨轮选色区、后拨轮调整当前轴。
+
+据机身实测反馈，已测试场景中的固件运行非常稳定。015 在此基础上增强了 H/L 高档位的调整力度，实际画面幅度仍待该版本的机身确认。
+
 ### 机型限制与风险
 
 > **固件仅面向奥林巴斯 E-P7，基于原厂 1.1 / build 1100。不兼容 PEN-F、OM PEN、OM-3，以及其他带色彩转盘的机型。请勿跨机型刷入。**
@@ -52,6 +58,12 @@
 ## English
 
 This project reverse-engineers and modifies **Olympus E-P7 (EP7)** firmware, drawing on the research and implementation in [fishcu/oly_fw_analysis](https://github.com/fishcu/oly_fw_analysis). It now implements **three switchable color wheels: H (Hue), S (Saturation), and L (Lightness)**, extending the camera's existing color-wheel controls with per-color H/L adjustments.
+
+### Minimal modification and stability
+
+This is a minimal modification of stock E-P7 firmware 1.1. The changes focus on switching axes in the stock COLOR wheel and storing and applying per-color H/L values. The firmware retains the stock wheel interface, COLOR profiles, and dial controls. Open the COLOR wheel adjustment page and **press Delete (the trash button) once per wheel to cycle Saturation S → Lightness L → Hue H → Saturation S**. Use the front dial to select a color sector and the rear dial to adjust the active axis.
+
+On-camera feedback reports very stable operation in the scenarios tested. Version 015 builds on that work by strengthening H/L at the highest settings. The visual strength of those settings still awaits camera confirmation for 015.
 
 ### Compatibility and risk
 
