@@ -10,7 +10,7 @@ from ep7_highlight_gamma import target_table_source
 
 def build(prefix, baseline, out, release=None, *, rec_hdr=False):
     if release is None:
-        release = '025' if rec_hdr else '023'
+        release = '026' if rec_hdr else '023'
     if len(release) != 3 or not release.isascii() or not release.isdigit():
         raise ValueError('release must be three ASCII digits')
     image = (baseline / builder.IMAGE_NAME).read_bytes()
@@ -103,7 +103,7 @@ if __name__ == '__main__':
     parser.add_argument('--prefix', required=True)
     parser.add_argument('--baseline', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
-    parser.add_argument('--release', help='BODY version suffix (023, or 025 with --rec-hdr)')
+    parser.add_argument('--release', help='BODY version suffix (023, or 026 with --rec-hdr)')
     parser.add_argument('--rec-hdr', action='store_true',
                         help='include the non-installable Rec HDR capture experiment')
     args = parser.parse_args()

@@ -26,7 +26,10 @@ DESCRIPTORS = 0x19318000
 RELEASE_SERVICE = 0x1931C000
 RELEASE_METHODS = 0x1931C100
 RELEASE_CALL = 0x1931D000
+COMPOSER_REPLY = 0x1931E000
 RELEASE_ENABLED = 0x6233B844
+ACTIVE_RELEASE = 0x61FACCE0
+STILL_ENABLED = 0x61FACD00
 PROPERTY_MAP = 0x604D6C14
 PROPERTY_CACHE = 0xA2699CB4
 BRACKET_INDEX_CACHE = 0xA269BB20
@@ -40,7 +43,8 @@ KEY_RELEASE = 0x01000007
 WRAPPED_KEY = 0x0100002E
 HDR_ACTION_CALL, HDR_ACTION_RETURN = 0x60CE03BB, 0x60CE03C0
 STOCK_HDR_RESUME = 0x60CE3B9B
-CAPTURE_ENTRY, CAPTURE_STARTED, CAPTURE_REPLY = 0x609018FC, 0x60953B92, 0x60953C1A
+CAPTURE_ENTRY, CAPTURE_REPLY = 0x60904471, 0x60953C1A
+STANDBY_TRIGGER = 0x60934CB7
 
 
 class Replay(UiMachine):
@@ -82,6 +86,7 @@ class Replay(UiMachine):
             0x6076AAD2: lambda: self.ret(self.state),
             0x6076A167: lambda: self.ret(0),   # Sequence observer service.
             0x609557A2: lambda: self.ret(0),
+            0x60A326B3: self.acknowledge_capture,
         }
         self.add('return', HOOK_RETURN, bytes(8), 'rx')
         self.add('event', EVENT, bytes(32))
@@ -93,6 +98,8 @@ class Replay(UiMachine):
         self.add('release_methods', RELEASE_METHODS, bytes(216) + pack('<I', RELEASE_CALL))
         self.add('ui_release_flags', RELEASE_ENABLED, pack('<II', 1, 0))
         self.add('interval_ui_flags', 0x61FB0AC0, bytes(4))
+        self.add('active_release', ACTIVE_RELEASE, pack('<I', 1))
+        self.add('still_enabled', STILL_ENABLED, pack('<I', 1))
         self.add('bracket_limit', BRACKET_LIMIT, bytes(2))
         self.add('native_sequence', SEQUENCE, bytes(0x24))
         self.add('inhibit', 0x62257B04, bytes(1))
@@ -109,8 +116,10 @@ class Replay(UiMachine):
             self.word_set(NATIVE_VALIDATE + 4 * sid, node)
             self.word_set(node, (0x604CDA08, 0x604CDA30)[index])
         self.word_set(COMPOSER + 104, EVENT)
+        self.word_set(COMPOSER + 172, COMPOSER_REPLY)
         self.word_set(COMPOSER + 2832, SHOOTER)
-        self.word_set(SHOOTER + 728, 2)  # Native release permission.
+        self.word_set(SHOOTER, 0x60B49240)  # Original still-shooting vtable.
+        self.word_set(SHOOTER + 788, 17)    # Original STANDBY trigger selector.
         for sid, value in ((5, 0), (24, 3), (600, 0), (1487, 1), (1494, 0)):
             self.set_property(sid, value)
         self.word_set(0x622A0A8C, PROPERTIES + 4 * 1494)
@@ -146,6 +155,16 @@ class Replay(UiMachine):
         require(self.regs['a0'] == RELEASE_SERVICE and command in (0, 1), 'unexpected ctrlRelease call')
         self.release_commands.append(command)
         self.regs.update(d0=0, pc=self.regs['mdr'])
+
+    def acknowledge_capture(self):
+        require(self.regs['a0'] == COMPOSER_REPLY and self.regs['d0'] == 1007 and
+                self.regs['d1'] == 0 and self.regs['a1'] == self.word(EVENT+28),
+                'native dispatcher did not acknowledge the submitted event')
+        self.ret(0)
+
+    def capture(self):
+        return self.replay(CAPTURE_ENTRY, mask=0xF0, frame=40,
+                           stop=(STANDBY_TRIGGER, CAPTURE_REPLY), registers=dict(a0=COMPOSER))
 
     def set_property(self, sid, value):
         key, index = unpack('<HH', self.read(PROPERTY_MAP + 4 * sid, 4))
@@ -211,7 +230,7 @@ class Replay(UiMachine):
         return self.regs['d0']
 
 
-def inspect(directory, engine, prior=None):
+def inspect(directory, engine, prior_024=None, prior_025=None):
     report = json.loads((directory / 'report.json').read_text(encoding='utf-8'))
     image = (directory / report['image']).read_bytes()
     m = Replay(image, engine)
@@ -243,16 +262,16 @@ def inspect(directory, engine, prior=None):
             'marked request changed the stock event ABI')
 
     drive_results = []
-    replay_capture = dict(frame=4, stop=(CAPTURE_STARTED, CAPTURE_REPLY), registers=dict(a0=COMPOSER))
     for drive, first_curtain, electronic, shutter in ((0, 0, 0, 0), (12, 1, 0, 1), (24, 0, 1, 2)):
         m.drive = drive
         m.set_property(24, 6 if electronic else 3)
         m.set_property(166, first_curtain)
         m.set_property(764, electronic)
-        reached = m.replay(CAPTURE_ENTRY, **replay_capture)
-        require(reached == CAPTURE_STARTED and m.hdr_settings() == (1, 4, 4) and m.word(TRIGGER) & 1,
+        reached = m.capture()
+        require(reached == STANDBY_TRIGGER and m.hdr_settings() == (1, 4, 4) and m.word(TRIGGER) & 1,
                 f'marked drive {drive} stopped at {reached:#x} with '
                 f'capture settings={m.hdr_settings()} and trigger={m.word(TRIGGER):#x}')
+        require(m.word(SHOOTER+728) == 0, 'Rec armed the interval session')
         require((m.word(SEQUENCE) & 0x10208) == 0x208 | (electronic << 16),
                 'native sequence did not combine HDR with the selected shutter')
 
@@ -260,7 +279,7 @@ def inspect(directory, engine, prior=None):
             m.replay(0x6095057D, mask=0xE0, frame=24, registers=dict(a0=SHOOTER))
             require(m.read(BRACKET_LIMIT, 2) == pack('<H', 4), 'native bracket limit is not four')
             require(m.native_value(0x6042888C, 0) == 1, 'native exposure logic did not select HDR')
-            require(m.replay(CAPTURE_ENTRY, **replay_capture) == CAPTURE_REPLY and
+            require(m.capture() == CAPTURE_REPLY and
                     m.hdr_settings() == (1, 4, 4), 'second Rec request replaced the active sequence')
 
         m.word_set(SP+4, CONTROLLER)
@@ -280,13 +299,18 @@ def inspect(directory, engine, prior=None):
         drive_results.append(dict(drive=drive, controller_shutter=shutter))
 
     m.state = 5  # An ordinary physical half-press already owns READY_TRIG2.
-    reached = m.replay(CAPTURE_ENTRY, **replay_capture)
+    reached = m.capture()
     require(reached == CAPTURE_REPLY and m.hdr_settings() == (0, 0, 0) and m.word(TRIGGER) == 0,
             'Rec took over a half-pressed physical shutter')
 
     m.state = 1
+    m.word_set(STILL_ENABLED, 0)
+    require(m.capture() == CAPTURE_REPLY and m.hdr_settings() == (0, 0, 0) and m.word(TRIGGER) == 0,
+            'Rec armed a shot while still release was disabled')
+    m.word_set(STILL_ENABLED, 1)
+
     m.word_set(0x8050, 1)
-    require(m.replay(CAPTURE_ENTRY, **replay_capture) == CAPTURE_REPLY and
+    require(m.capture() == CAPTURE_REPLY and
             m.hdr_settings() == (0, 0, 0) and m.word(TRIGGER) == 0,
             'Rec armed a shot outside the synchronous settings core')
     m.word_set(0x8050, 0)
@@ -296,7 +320,9 @@ def inspect(directory, engine, prior=None):
     require(len(m.shots) == 1, 'Rec queued a request during interval shooting')
     m.word_set(EVENT, 0x60A7DD24)  # Original one-shot event class.
     sequence = m.word(SEQUENCE)
-    require(m.replay(CAPTURE_ENTRY, **replay_capture) == CAPTURE_STARTED and
+    require(m.capture() == CAPTURE_REPLY, 'stock one-shot ran without an interval session')
+    m.word_set(SHOOTER+728, 2)
+    require(m.capture() == STANDBY_TRIGGER and
             m.hdr_settings() == (0, 0, 0) and m.word(SEQUENCE) == sequence,
             'stock interval request acquired the HDR settings')
     m.replay(0x609452BB, mid=True, stop=(0x609452C2,), registers=dict(a0=SHOOTER, d0=1))
@@ -304,22 +330,33 @@ def inspect(directory, engine, prior=None):
             'stock trigger clear acquired the HDR settings')
     result = dict(status='passed', rec_menu_option=True, single_request=True,
                 ui_release_enabled_through_rec=True, stock_hdr_dispatch_preserved=True,
+                native_standby_trigger_reached=True, interval_bit_left_clear=True,
+                still_release_disable_respected=True,
                 drive_results=drive_results, native_electronic_bracket_limit=4, native_hdr_ae=True,
                 trigger_clear_restore=True, ordinary_electronic_bracket_limit=1,
                 overlapping_requests_rejected=True, non_owner_core_rejected=True,
                 stock_one_shot_unchanged=True,
                 hash_checks_performed=False, hardware_executed=False,
-                boundary='Native instruction replay covers release admission, sequence, bracket limit, '
-                         'HDR AE eligibility and shutter selection. UI services, RTOS, heap, '
-                         'typed-property resolution and transport are modeled.')
-    if prior is not None:
-        previous = json.loads((prior / 'report.json').read_text(encoding='utf-8'))
+                boundary='Native replay covers event dispatch to the standby trigger, HDR AE eligibility, '
+                         'sequence and shutter selection. UI services, RTOS, heap, typed-property resolution '
+                         'and transport are modeled.')
+    if prior_024 is not None:
+        previous = json.loads((prior_024 / 'report.json').read_text(encoding='utf-8'))
         require(previous['release'] == '024', 'expected the original 024 firmware')
-        legacy = Replay((prior / previous['image']).read_bytes(), engine)
+        legacy = Replay((prior_024 / previous['image']).read_bytes(), engine)
         legacy.rec_key(KEY_PRESS)
         require(legacy.release_commands == [1] and legacy.release_enabled_on_submit == [0] and
                 legacy.word(RELEASE_ENABLED) == 0, 'original 024 release-lock regression did not reproduce')
         result['original_024_release_disable_reproduced'] = True
+    if prior_025 is not None:
+        previous = json.loads((prior_025 / 'report.json').read_text(encoding='utf-8'))
+        require(previous['release'] == '025', 'expected the original 025 firmware')
+        legacy = Replay((prior_025 / previous['image']).read_bytes(), engine)
+        legacy.rec_key(KEY_PRESS)
+        require(len(legacy.shots) == 1 and legacy.word(RELEASE_ENABLED) == 1 and
+                legacy.capture() == CAPTURE_REPLY and legacy.hdr_settings() == (0, 0, 0) and
+                legacy.word(TRIGGER) == 0, 'original 025 interval-gate rejection did not reproduce')
+        result['original_025_interval_gate_rejection_reproduced'] = True
     return result
 
 
@@ -329,7 +366,8 @@ if __name__ == '__main__':
     parser.add_argument('--engine', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--prior-024', type=Path, help='reproduce the original 024 release-lock regression')
+    parser.add_argument('--prior-025', type=Path, help='reproduce the original 025 interval-gate rejection')
     args = parser.parse_args()
-    result = json.dumps(inspect(args.candidate, args.engine, args.prior_024), indent=2) + '\n'
+    result = json.dumps(inspect(args.candidate, args.engine, args.prior_024, args.prior_025), indent=2) + '\n'
     args.out.write_text(result, encoding='utf-8')
     print(result, end='')

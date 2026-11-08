@@ -40,9 +40,10 @@ def configure(recipe, image):
         'ep7rec_native_interval_guard': 0x60769BEE,
         'ep7rec_native_busy_guard': 0x60769C04,
         'ep7rec_native_one_shot': 0x60953AB0,
+        'ep7rec_native_interval_admission': 0x60954C33,
+        'ep7rec_native_interval_admission_resume': 0x60953B5D,
         'ep7rec_native_capture_state': 0x6076AAD2,
         'ep7rec_native_capture_standby': 0x60953B6F,
-        'ep7rec_native_capture_other_state': 0x60953BA6,
         'ep7rec_native_capture_reply': 0x60953C1A,
         'ep7rec_native_silent_continue': 0x60968A4B,
         'ep7rec_native_silent_block': 0x60968ADB,
@@ -59,6 +60,6 @@ def configure(recipe, image):
     recipe.jumps += [
         (0x60CE3B96, '96823c201c', 'rec_hdr_press'),
         (0x609018FC, 'fa20100bddb0210500b020', 'rec_hdr_event'),
-        (0x60953B64, 'dd6e6fe1ff0000a001c939', 'rec_hdr_admission'),
+        (0x60953B54, '5c108002cddb108004', 'rec_hdr_admission'),
         (0x60968A44, 'a000c805cc9300', 'rec_hdr_silent_guard'),
     ]

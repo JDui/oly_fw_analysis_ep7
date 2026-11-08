@@ -101,14 +101,14 @@ ep7dr_rec_hdr_event_bridge:
  call ep7rec_native_one_shot,[d2,a2,a3],32
  ret [],4
 
-/* This seam follows the native permission guard. A marked request requires
- * standby so it cannot take over a physical half-press already in progress. */
+/* The native one-shot gate is the interval-session bit. Rec uses the normal
+ * still release checks in ep7rec_begin and enters the same standby handler. */
 .global ep7dr_rec_hdr_admission_bridge
 ep7dr_rec_hdr_admission_bridge:
+ mov (32,sp),d0
+ cmp .Lrec_take_return,d0
+ bne .Linterval_admission
  call ep7rec_native_capture_state,[],0
- mov (32,sp),d1
- cmp .Lrec_take_return,d1
- bne .Lstock_admission
  cmp 1,d0
  bne .Lreply
  mov (16,sp),d0
@@ -118,12 +118,11 @@ ep7dr_rec_hdr_admission_bridge:
  jmp ep7rec_native_capture_standby
 .Lreply:
  jmp ep7rec_native_capture_reply
-.Lstock_admission:
- cmp 1,d0
- bne .Lother_state
- jmp ep7rec_native_capture_standby
-.Lother_state:
- jmp ep7rec_native_capture_other_state
+.Linterval_admission:
+ mov (16,sp),a0
+ mov 2,d0
+ call ep7rec_native_interval_admission,[d2],4
+ jmp ep7rec_native_interval_admission_resume
 
 /* Native silent eligibility excludes every bracket kind. Admit HDR's kind
  * for the Rec-owned capture and continue with all other native checks. */

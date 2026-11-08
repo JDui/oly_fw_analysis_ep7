@@ -39,6 +39,15 @@ static int effective_settings_available(void)
            *(volatile const uint32_t *)0x8050u == 0;
 }
 
+static int still_release_enabled(uint32_t owner)
+{
+    /* setCtrlReleaseStatus supplies the same active and still enables used
+     * by the physical shutter. Bit 2 belongs to the interval session. */
+    return *(volatile const uint32_t *)0x61facce0u &&
+           *(volatile const uint32_t *)0x61facd00u &&
+           !(*(volatile const uint32_t *)(owner + 728u) & 2u);
+}
+
 static int selected_single_drive(uint32_t drive)
 {
     uint32_t electronic = ep7rec_get(ELECTRONIC_SHUTTER);
@@ -65,7 +74,7 @@ static int restore_capture_settings(void)
 int ep7rec_begin(uint32_t owner)
 {
     if (!owner || ep7rec_owner || !effective_settings_available() ||
-        ep7rec_settings_inhibit() || (ep7rec_get_trigger() & 1))
+        !still_release_enabled(owner) || ep7rec_settings_inhibit() || (ep7rec_get_trigger() & 1))
         return 0;
 
     uint32_t scene = ep7rec_get(SCENE_PROGRAM);
