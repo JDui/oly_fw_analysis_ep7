@@ -148,23 +148,17 @@ ep7dr_rec_hdr_standby_bridge:
 .Lstock_standby_guard:
  jmp ep7rec_native_standby_guard
 
-/* Native silent eligibility excludes every bracket kind. Admit HDR's kind
- * for the Rec-owned capture and continue with all other native checks. */
-.global ep7dr_rec_hdr_silent_guard_bridge
-ep7dr_rec_hdr_silent_guard_bridge:
- cmp 0,d0
- beq .Lsilent_continue
- cmp 4,d0
- bne .Lsilent_block
- mov (_ep7rec_owner),d0
- cmp 0,d0
- beq .Lsilent_block
- cmp d0,a2
- bne .Lsilent_block
-.Lsilent_continue:
- jmp ep7rec_native_silent_continue
-.Lsilent_block:
- jmp ep7rec_native_silent_block
+/* The original frame-count comparison has reached the burst limit. Leave
+ * the native stop request in place and drop only Rec's simulated key state. */
+.global ep7dr_rec_hdr_burst_limit_bridge
+ep7dr_rec_hdr_burst_limit_bridge:
+ mov a0,a2
+ add -4,sp
+ mov a0,d0
+ call _ep7rec_at_burst_limit,[],0
+ mov a2,a0
+ call ep7rec_native_stop_burst,[a2],8
+ ret [a2],12
 
 /* The stock reset runs on both standby exit and capture abort. Retain its
  * trigger clear and preserve the caller's MDR across the C helper. */
@@ -208,7 +202,7 @@ ep7dr_rec_hdr_version_body_bridge:
  cmp 0x00000031,d0
  bne .Lbody_stock
  mov (_ep7rec_status),d0
- cmp 12,d0
+ cmp 13,d0
  bhi .Lbody_default
  asl 4,d0
  mov _ep7rec_version_labels,a1
@@ -279,6 +273,13 @@ _ep7rec_full_release:
  mov (a0),a1
  mov (4452,a1),a1
  calls (a1)
+ ret [],4
+
+.global _ep7rec_sync_release_keys
+_ep7rec_sync_release_keys:
+ add -4,sp
+ mov d0,a0
+ call ep7rec_native_sync_release_keys,[d2,a2],12
  ret [],4
 
 .section .rodata

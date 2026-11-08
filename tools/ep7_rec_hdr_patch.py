@@ -35,6 +35,8 @@ def configure(recipe, image):
         'ep7rec_native_unlatch_release': 0x60955F63,
         'ep7rec_native_get_release_event': 0x60955FA2,
         'ep7rec_native_set_release_event': 0x60955F7A,
+        'ep7rec_native_sync_release_keys': 0x6095AF39,
+        'ep7rec_native_stop_burst': 0x6094F064,
         'ep7rec_native_normalize_key': 0x60CC9A05,
         'ep7rec_native_subapp_active': 0x60CE0AA2,
         'ep7rec_native_key_continue': 0x60CE3B9B,
@@ -51,8 +53,6 @@ def configure(recipe, image):
         'ep7rec_native_capture_standby': 0x60953B6F,
         'ep7rec_native_standby_guard': 0x60962715,
         'ep7rec_native_capture_reply': 0x60953C1A,
-        'ep7rec_native_silent_continue': 0x60968A4B,
-        'ep7rec_native_silent_block': 0x60968ADB,
     })
     recipe.pointers += [(0x604CDA34, '6cae4c60', 'rec_hdr_options')]
     recipe.literals += [(0x604CDA3C, '1800', '1a00')]
@@ -65,10 +65,10 @@ def configure(recipe, image):
         (0x60953B9D, 'dd78eb00002008', 'rec_hdr_standby', 0x20, 8),
         (0x6093434E, 'ddb1c402000000', 'rec_hdr_clear', 0, 0),
         (0x6093251D, 'dd9d91e3ff000c', 'rec_hdr_idle', 0, 12),
+        (0x60932CE2, 'dd82c301002008', 'rec_hdr_burst_limit', 0x20, 8),
     ]
     recipe.jumps += [
         (0x60CE3B96, '96823c201c', 'rec_hdr_press'),
         (0x609018FC, 'fa20100bddb0210500b020', 'rec_hdr_event'),
         (0x60953B54, '5c108002cddb108004', 'rec_hdr_admission'),
-        (0x60968A44, 'a000c805cc9300', 'rec_hdr_silent_guard'),
     ]

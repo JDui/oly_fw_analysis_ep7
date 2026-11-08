@@ -57,6 +57,8 @@ status_addr=None
 rec_labels='vKQDCMPTFSLW' if int(report['release'])>=28 else 'vKQDCMPTF'
 if int(report['release']) >= 29:
     rec_labels += 'R'
+if int(report['release']) >= 30:
+    rec_labels += 'U'
 if status_symbol:
     symbols=json.loads((args.candidate/'symbols.json').read_text())
     status_addr=int(symbols[status_symbol]['address'],16)

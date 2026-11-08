@@ -14,7 +14,7 @@ enum {
     SINGLE_SILENT = 30,
     ATT_CONTINUOUS = 8,
     ATT_HDR = 512,
-    ATT_SILENT = 65536,
+    ATT_SILENT_BURST = 65536,
     HDR1 = 1,
     HDR_BRACKET = 4,
     HDR1_FRAMES = 4,
@@ -38,11 +38,12 @@ void ep7rec_publish_sequence(uint32_t sequence);
 void ep7rec_latch_release(unsigned bits);
 void ep7rec_unlatch_release(unsigned bits);
 void ep7rec_full_release(uint32_t owner, unsigned operation);
+void ep7rec_sync_release_keys(uint32_t owner);
 uint32_t ep7rec_get_release_event(void);
 void ep7rec_set_release_event(unsigned event);
 
-/* Shared with the native silent-shutter guard, on the shooting task. */
-uint32_t ep7rec_owner;
+/* Only the shooting task owns the temporary HDR settings. */
+static uint32_t ep7rec_owner;
 static uint32_t release_queued;
 static uint32_t previous_release_event;
 
@@ -57,6 +58,7 @@ enum {
     REC_RELEASE_LOCKED,
     REC_BUSY,
     REC_RELEASE_QUEUED,
+    REC_BURST_FINISHED,
 };
 
 volatile uint32_t ep7rec_status;
@@ -74,6 +76,7 @@ const uint16_t ep7rec_version_labels[][8] = {
     [REC_RELEASE_LOCKED] = u"1.1L" EP7HL_REC_RELEASE_SUFFIX,
     [REC_BUSY] = u"1.1W" EP7HL_REC_RELEASE_SUFFIX,
     [REC_RELEASE_QUEUED] = u"1.1R" EP7HL_REC_RELEASE_SUFFIX,
+    [REC_BURST_FINISHED] = u"1.1U" EP7HL_REC_RELEASE_SUFFIX,
 };
 
 static int effective_settings_available(void)
@@ -159,9 +162,11 @@ int ep7rec_begin(uint32_t owner)
     if (ep7rec_get(CONTINUOUS) == 1 && ep7rec_get(HDR_COMPOSITE) == HDR1 &&
         ep7rec_get(BRACKET_KIND) == HDR_BRACKET && ep7rec_get(BRACKET_FRAMES) == HDR1_FRAMES) {
         uint32_t sequence = ep7rec_judge_sequence(owner);
-        uint32_t mask = ATT_HDR | ATT_CONTINUOUS | ATT_SILENT;
-        uint32_t required = ATT_HDR | ATT_CONTINUOUS | (drive == SINGLE_SILENT ? ATT_SILENT : 0);
-        if ((sequence & mask) == required) {
+        /* Silent H/L is an automatic burst route. The shutter controller
+         * reads property 764 separately, so HDR must use the native HDR route
+         * with that property intact, including for the electronic shutter. */
+        uint32_t mask = ATT_HDR | ATT_CONTINUOUS | ATT_SILENT_BURST;
+        if ((sequence & mask) == (ATT_HDR | ATT_CONTINUOUS)) {
             ep7rec_publish_sequence(sequence);
             ep7rec_status = REC_TRIGGER;
             return 1;
@@ -201,15 +206,26 @@ void ep7rec_after_standby_guard(uint32_t owner)
         ep7rec_end(owner);
         return;
     }
-    /* Same pending half/full request as native ctrlRelease's immediate-shot
-     * path. The silent burst also uses the native Trig2KeyIn event kind
-     * when it chooses the exposure count. */
+    /* The one-shot standby request only queues half-press. Keep a full
+     * release pending through AF and the native HDR exposure sequence. */
     previous_release_event = ep7rec_get_release_event();
     ep7rec_set_release_event(FULL_PRESS_EVENT);
     ep7rec_latch_release(RELEASE_DOWN_HISTORY);
     ep7rec_full_release(owner, SET_FULL_RELEASE);
     release_queued = 1;
     ep7rec_status = REC_RELEASE_QUEUED;
+}
+
+void ep7rec_at_burst_limit(uint32_t owner)
+{
+    if (ep7rec_owner != owner || !release_queued)
+        return;
+    /* The next end-of-capture step rebuilds history from the event kind.
+     * Resample the physical keys so it cannot rearm Rec's synthetic press. */
+    ep7rec_full_release(owner, CLEAR_FULL_RELEASE);
+    ep7rec_sync_release_keys(owner);
+    release_queued = 0;
+    ep7rec_status = REC_BURST_FINISHED;
 }
 
 void ep7rec_on_trigger_reset(uint32_t owner)
