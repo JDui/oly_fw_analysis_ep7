@@ -36,6 +36,8 @@ def configure(recipe, image):
         'ep7rec_native_sync_release_keys': 0x6095AF39,
         'ep7rec_native_read_key': 0x602FCA52,
         'ep7rec_native_release_from_ready': 0x609630AC,
+        'ep7rec_native_lens_query': 0x601F0120,
+        'ep7rec_native_fcs_ready_resume': 0x6065E142,
         'ep7rec_native_af_exec': 0x60557126,
         'ep7rec_native_caf_exec': 0x6055710D,
         'ep7rec_native_stop_burst': 0x6094F064,
@@ -77,4 +79,5 @@ def configure(recipe, image):
         (0x60CE3B96, '96823c201c', 'rec_hdr_press'),
         (0x609018FC, 'fa20100bddb0210500b020', 'rec_hdr_event'),
         (0x60953B54, '5c108002cddb108004', 'rec_hdr_admission'),
+        (0x6065E139, '8200dde51fb9ff0004', 'rec_hdr_fcs_ready'),
     ]

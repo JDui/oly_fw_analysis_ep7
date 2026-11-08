@@ -59,6 +59,8 @@ if int(report['release']) >= 29:
     rec_labels += 'R'
 if int(report['release']) >= 30:
     rec_labels += 'U'
+if int(report['release']) >= 32:
+    rec_labels += 'N'
 if status_symbol:
     symbols=json.loads((args.candidate/'symbols.json').read_text())
     status_addr=int(symbols[status_symbol]['address'],16)

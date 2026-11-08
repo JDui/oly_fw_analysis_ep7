@@ -65,6 +65,7 @@ enum {
     REC_BUSY,
     REC_RELEASE_QUEUED,
     REC_BURST_FINISHED,
+    REC_FOCUS_SKIPPED,
 };
 
 volatile uint32_t ep7rec_status;
@@ -83,6 +84,7 @@ const uint16_t ep7rec_version_labels[][8] = {
     [REC_BUSY] = u"1.1W" EP7HL_REC_RELEASE_SUFFIX,
     [REC_RELEASE_QUEUED] = u"1.1R" EP7HL_REC_RELEASE_SUFFIX,
     [REC_BURST_FINISHED] = u"1.1U" EP7HL_REC_RELEASE_SUFFIX,
+    [REC_FOCUS_SKIPPED] = u"1.1N" EP7HL_REC_RELEASE_SUFFIX,
 };
 
 static int effective_settings_available(void)
@@ -135,11 +137,11 @@ static int restore_capture_settings(void)
 
 static void queue_full_release(uint32_t owner)
 {
+    ep7rec_release_queued = 1;
+    ep7rec_status = REC_RELEASE_QUEUED;
     ep7rec_set_release_event(FULL_PRESS_EVENT);
     ep7rec_latch_release(RELEASE_DOWN_HISTORY);
     ep7rec_full_release(owner, SET_FULL_RELEASE);
-    ep7rec_release_queued = 1;
-    ep7rec_status = REC_RELEASE_QUEUED;
 }
 
 static void release_rec_keys(uint32_t owner)

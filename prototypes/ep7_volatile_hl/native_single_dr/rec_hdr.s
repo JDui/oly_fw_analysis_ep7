@@ -144,6 +144,29 @@ ep7dr_rec_hdr_standby_bridge:
 .Lstock_standby_guard:
  jmp ep7rec_native_standby_guard
 
+/* FCS starts its own still-release readiness request. Returning zero here
+ * makes the native caller publish no AF and send readiness without a focus
+ * target. TEXP can query eligibility before the FCS result is published. */
+.global ep7dr_rec_hdr_fcs_ready_bridge
+ep7dr_rec_hdr_fcs_ready_bridge:
+ mov (_ep7rec_release_queued),d3
+ cmp 0,d3
+ beq .Lstock_fcs_ready
+ cmp 0x1100,d0
+ beq .Lskip_fcs_af
+ cmp 0x1200,d0
+ bne .Lstock_fcs_ready
+.Lskip_fcs_af:
+ mov 14,d0 /* REC_FOCUS_SKIPPED */
+ mov d0,(_ep7rec_status)
+ clr d0
+ ret [d2,d3,a2],36
+.Lstock_fcs_ready:
+ mov d0,d2
+ clr d0
+ call ep7rec_native_lens_query,[],4
+ jmp ep7rec_native_fcs_ready_resume
+
 /* Keep native AE and readiness. While Rec owns the release, the exposure
  * task's AF eligibility and continuous AF queries use their disabled result. */
 .global ep7dr_rec_hdr_af_exec_bridge
@@ -217,7 +240,7 @@ ep7dr_rec_hdr_version_body_bridge:
  cmp 0x00000031,d0
  bne .Lbody_stock
  mov (_ep7rec_status),d0
- cmp 13,d0
+ cmp 14,d0
  bhi .Lbody_default
  asl 4,d0
  mov _ep7rec_version_labels,a1

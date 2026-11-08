@@ -161,8 +161,9 @@ def deliver(args):
     require(len(release)==3 and release.isascii() and release.isdigit(), 'bad release')
     require(release not in ('024', '025', '026', '027', '028', '029'),
             '024 through 029 have known Rec HDR failures')
-    require(args.rec_hdr or release not in ('030', '031'), 'Rec HDR releases need --rec-hdr')
-    require(not args.rec_hdr or release >= '031', 'current Rec HDR SD packaging requires 031 or later')
+    require(release != '031', '031 has a confirmed S-AF Rec HDR regression')
+    require(args.rec_hdr or release not in ('030', '032'), 'Rec HDR releases need --rec-hdr')
+    require(not args.rec_hdr or release >= '032', 'current Rec HDR SD packaging requires 032 or later')
     strategy = 'rec_hdr_lab' if args.rec_hdr else 'highlight_mapping_only'
     require(tested['strategy'] == strategy, 'candidate strategy differs from the requested package')
     out = args.out.resolve()

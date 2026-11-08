@@ -370,6 +370,59 @@ class Replay(UiMachine):
         self.replay(0x60429C56, mask=0xF0, frame=16)
         return self.regs['d0'] == 1
 
+    def still_ready_requests_af(self):
+        # S-AF mode 1, an AF-capable lens and the native still release-ready
+        # command. Run the FCS state transition and inspect the packet before
+        # it enters the lens engine. No focus-success callback is injected.
+        focus_state = self.read(FOCUS_ENGINE, 320)
+        ready_request = self.read(READY_REQUEST, 64)
+        self.write(FOCUS_ENGINE, bytes(320))
+        self.write(FOCUS_ENGINE + 13, b'\x01')
+        self.write(FOCUS_ENGINE + 68, b'\x02')
+        self.write(FOCUS_ENGINE + 168, b'\x01')
+        self.write(READY_REQUEST, bytes(64))
+        self.word_set(READY_REQUEST + 32, 1)
+        self.write(READY_REQUEST + 37, b'\x01')
+        self.add('fcs_lens_flags', 0xA2787A48, pack('<H', 1) + bytes(6))
+        self.add('fcs_property_ptrs', 0xA2788E20, bytes(0xB4))
+        self.add('fcs_debug_flags', 0x622C5430, bytes(8))
+        self.add('fcs_caf_state', 0x622BEA80, bytes(1))
+
+        def lens_present():
+            self.regs['a0'] = FOCUS_ENGINE
+            self.ret(0)
+
+        capture_shells = self.shells
+        self.shells = {**capture_shells, 0x601F0120: lens_present,
+                       0x601F057C: lambda: self.ret(1),  # Lens accepts AF.
+                       0x60690BEE: lambda: self.ret(1),  # Lens readiness.
+                       0x60663783: lambda: self.ret(2)}  # Lens control type.
+        # Model services around the FCS policy and packet construction.
+        for service in (0x605573A9, 0x60557378, 0x60557608, 0x6005E971,
+                        0x6065F518, 0x606920A4, 0x60692130, 0x6065FA74,
+                        0x606D47FC, 0x606D7255, 0x606D73D1, 0x606D6A5B,
+                        0x606D380A, 0x6065E2D7, 0x606D2E0E, 0x606D2FB8,
+                        0x606D44C6, 0x606D250B, 0x606D2542, 0x606D24EF,
+                        0x606BA198, 0x606BA9A6, 0x606A4874, 0x606604C2,
+                        0x6065F270, 0x6065F288, 0x60428E2C):
+            self.shells[service] = lambda: self.ret(0)
+        try:
+            self.replay(0x606C3CFA, mask=0xF0, frame=64, stop=(0x6065CC8C,),
+                        registers=dict(a0=FOCUS_ENGINE, a1=READY_REQUEST))
+            packet = self.regs['a0']
+            requested = self.read(packet + 80, 1)
+            require(self.read(packet, 2) == pack('<H', 0x1100) and
+                    requested == self.read(FOCUS_ENGINE + 49, 1) and
+                    requested in (b'\x00', b'\x01'), 'invalid FCS still-ready packet')
+            if requested == b'\x00':
+                require(self.native_value(0x60556E94, 0, mask=0, frame=4) == 1,
+                        'FCS still release requires a focus result after skipping AF')
+            return requested == b'\x01'
+        finally:
+            self.shells = capture_shells
+            self.write(FOCUS_ENGINE, focus_state)
+            self.write(READY_REQUEST, ready_request)
+
     def check_metering_without_focus(self):
         # Follow native TakeReady past the AF decision to its AE-only command.
         capture_shells = self.shells
@@ -609,6 +662,8 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, p
         require(not m.ready_requests_af(), 'Rec allowed a new autofocus request')
         if not electronic:
             if drive == 0:
+                require(not m.still_ready_requests_af() and m.word(status) == 14,
+                        'Rec still-ready packet enabled the S-AF lens drive')
                 m.check_metering_without_focus()
             require(m.finish_focus() == 20 and m.hdr_settings() == HDR1,
                     'native TakeReady completion did not select READY_TRIG2 with HDR')
@@ -637,6 +692,7 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, p
                 (m.word(SEQUENCE) & 0x10209) == 0 and m.drive == drive and m.word(status) == 8,
                 'HDR state leaked after cleanup')
         if electronic:
+            require(m.still_ready_requests_af(), 'Rec left the native still-ready AF disabled')
             require(m.ready_requests_af(), 'Rec left ordinary shutter autofocus disabled')
             require(m.native_value(0x60429CDB, 0, mask=0, frame=4) == 1,
                     'Rec left the native continuous AF classifier disabled')
@@ -694,6 +750,7 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, p
                 interval_bit_left_clear=True,
                 still_release_disable_respected=True,
                 drive_results=drive_results, native_electronic_bracket_limit=4, native_hdr_ae=True,
+                native_saf_ready_packet_without_focus=True,
                 native_ae_only_ready_from_standby=True, native_hdr_exposure_handoff=True,
                 native_ready_finish_hdr_with_half_press_held=True,
                 ordinary_autofocus_allowed_after_rec=True,
@@ -705,7 +762,8 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, p
                 overlapping_requests_rejected=True, non_owner_core_rejected=True,
                 stock_one_shot_unchanged=True,
                 hash_checks_performed=False, hardware_executed=False,
-                boundary='Native replay covers event dispatch, AE-only readiness, held half-press, shutter selection, '
+                boundary='Native replay covers event dispatch, the S-AF still-ready command through FCS packet '
+                          'construction, AE-only readiness, held half-press, shutter selection, '
                           'HDR capture routing, the fourth-frame release and the native electronic HDR '
                           'StartCombine event at its transport boundary. Sensor callbacks and the '
                           'return to standby are modeled. Lens, buffer, media, RTOS, UI, heap, '
