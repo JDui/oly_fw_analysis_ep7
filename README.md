@@ -4,11 +4,17 @@
 
 ## 中文说明
 
-本项目参考 [fishcu/oly_fw_analysis](https://github.com/fishcu/oly_fw_analysis) 的研究与实现，对奥林巴斯 **E-P7（EP7）** 固件进行逆向与修改。目前已实现 **H（色相）、S（饱和度）、L（明度）三个可切换的色轮**，沿用机身原有色彩转盘的操作方式，为各个色区增加 H/L 调节。
+本项目以奥林巴斯 **E-P7 原厂 1.1 固件**为基础，核心目标是**借助现代图像处理算法提升机内成像能力**，同时保留熟悉的按键、拨轮和拍摄流程。高光压制改善高反差场景的 JPEG 亮部层次，HSL 色轮提供各色区的色相、饱和度和明度调节。
+
+### 机内直出动态范围对比
+
+**上方为奥林巴斯原厂固件，下方为本项目固件。** 下方灯罩及受光区域保留了更多亮部层次，暗处的人偶和包装也能看见细节。
+
+![高反差场景对比，上为奥林巴斯原厂固件，下为本项目固件。Olympus stock firmware above, EP7HSL below.](docs/ep7/images/dynamic-range-stock-vs-ep7hsl.jpg)
 
 ### 项目原则与稳定性
 
-本项目以 E-P7 原厂 1.1 为基础，尽可能保留原生逻辑，用最低限度的改造提升机内 JPEG 直出效果。HSL 色轮和高光压制分别扩展原厂色轮与曲线，沿用机身原有操作及处理流程。改动集中在原厂 COLOR 色轮的轴切换、每色区 H/L 参数的保存与应用，并沿用原厂色轮界面、COLOR 预设和拨轮操作。打开 COLOR 色轮调节页面后，**每按一次删除键（垃圾桶键）切换一个色轮，顺序为饱和度 S → 明度 L → 色相 H → 饱和度 S**。切换后用前拨轮选色区、后拨轮调整当前轴。
+HSL 色轮沿用原厂界面与 COLOR 预设，各色区的 H/L 参数独立保存。打开 COLOR 色轮调节页面后，**每按一次删除键（垃圾桶键）切换一个色轮，顺序为饱和度 S → 明度 L → 色相 H → 饱和度 S**。切换后用前拨轮选色区、后拨轮调整当前轴。
 
 已有版本在已测试的机身场景中运行非常稳定。023 新增高光过渡调整，实机直出效果仍待确认。
 
@@ -69,11 +75,15 @@ GitHub Releases 中的最新公开试用包为 **EP7HSL 023 EXPERIMENTAL**。下
 
 ## English
 
-This project reverse-engineers and modifies **Olympus E-P7 (EP7)** firmware, drawing on the research and implementation in [fishcu/oly_fw_analysis](https://github.com/fishcu/oly_fw_analysis). It now implements **three switchable color wheels: H (Hue), S (Saturation), and L (Lightness)**, extending the camera's existing color-wheel controls with per-color H/L adjustments.
+EP7HSL builds on stock **Olympus E-P7 firmware 1.1**. Its goal is to **improve the camera's straight-out-of-camera image quality with modern image-processing algorithms** while keeping the familiar buttons, dials, and shooting workflow. Highlight compression improves bright-tone gradation in high-contrast JPEGs, and the HSL wheels add per-color hue, saturation, and lightness controls.
+
+### In-camera dynamic range
+
+The comparison shows **Olympus stock firmware above and EP7HSL below**. The lower image retains more gradation in and around the lit display cases, with details still visible in the darker figures and boxes. [View the comparison](#机内直出动态范围对比)
 
 ### Project principles and stability
 
-The project improves straight-out-of-camera JPEGs with minimal changes to stock E-P7 firmware 1.1. The HSL wheels and highlight compression extend the original color and tone controls while retaining the camera’s native workflow. The changes focus on switching axes in the stock COLOR wheel and storing and applying per-color H/L values. The firmware retains the stock wheel interface, COLOR profiles, and dial controls. Open the COLOR wheel adjustment page and **press Delete (the trash button) once per wheel to cycle Saturation S → Lightness L → Hue H → Saturation S**. Use the front dial to select a color sector and the rear dial to adjust the active axis.
+The HSL wheels use the stock wheel interface and COLOR profiles, with separate H/L values for each color sector. Open the COLOR wheel adjustment page and **press Delete (the trash button) once per wheel to cycle Saturation S → Lightness L → Hue H → Saturation S**. Use the front dial to select a color sector and the rear dial to adjust the active axis.
 
 Earlier versions ran very stably in the camera scenarios tested. Version 023 refines highlight roll-off and awaits on-camera JPEG confirmation.
 
