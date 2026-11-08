@@ -6,11 +6,11 @@
 
 本项目参考 [fishcu/oly_fw_analysis](https://github.com/fishcu/oly_fw_analysis) 的研究与实现，对奥林巴斯 **E-P7（EP7）** 固件进行逆向与修改。目前已实现 **H（色相）、S（饱和度）、L（明度）三个可切换的色轮**，沿用机身原有色彩转盘的操作方式，为各个色区增加 H/L 调节。
 
-### 最低限度改造与稳定性
+### 项目原则与稳定性
 
-这是基于 E-P7 原厂 1.1 的最低限度改造固件。改动集中在原厂 COLOR 色轮的轴切换、每色区 H/L 参数的保存与应用，并沿用原厂色轮界面、COLOR 预设和拨轮操作。打开 COLOR 色轮调节页面后，**每按一次删除键（垃圾桶键）切换一个色轮，顺序为饱和度 S → 明度 L → 色相 H → 饱和度 S**。切换后用前拨轮选色区、后拨轮调整当前轴。
+本项目以 E-P7 原厂 1.1 为基础，尽可能保留原生逻辑，用最低限度的改造提升机内 JPEG 直出效果。HSL 色轮和高光压制分别扩展原厂色轮与曲线，沿用机身原有操作及处理流程。改动集中在原厂 COLOR 色轮的轴切换、每色区 H/L 参数的保存与应用，并沿用原厂色轮界面、COLOR 预设和拨轮操作。打开 COLOR 色轮调节页面后，**每按一次删除键（垃圾桶键）切换一个色轮，顺序为饱和度 S → 明度 L → 色相 H → 饱和度 S**。切换后用前拨轮选色区、后拨轮调整当前轴。
 
-据机身实测反馈，已测试场景中的固件运行非常稳定。015 在此基础上增强了 H/L 高档位的调整力度，实际画面幅度仍待该版本的机身确认。
+已有版本在已测试的机身场景中运行非常稳定。023 新增高光过渡调整，实机直出效果仍待确认。
 
 ### 机型限制与风险
 
@@ -24,9 +24,9 @@
 
 ### 当前版本
 
-最新版本为 **EP7HSL 015 EXPERIMENTAL**，请在本仓库 [Releases](https://github.com/JDui/oly_fw_analysis_ep7/releases) 下载 `EP7HSL-015-EXPERIMENTAL-SD.zip`。
+最新版本为 **EP7HSL 023 EXPERIMENTAL**，请在本仓库 [Releases](https://github.com/JDui/oly_fw_analysis_ep7/releases) 下载 `EP7HSL-023-EXPERIMENTAL-SD.zip`。
 
-014 实机反馈显示实时取景与 JPEG 的 H/L 效果偏弱。015 保留 ±1 至 ±3 的细调力度，增强 ±4 和 ±5，已有 COLOR 预设可继续使用。015 已通过定向模拟与封装检查，实际画面幅度待机身确认。详见 [015 版本说明](docs/ep7/EXPERIMENTAL_SD_015.md)。
+023 保留 015 的 HSL 色轮，加入两档高光压制，并调整亮部过渡以减轻前序试用版出现的色阶。机身版本显示为 **1.1v023**。定向离线与封装验证已通过，实机 JPEG 效果待确认。[023 版本说明](docs/ep7/EXPERIMENTAL_SD_023.md)
 
 ### SD 卡刷入
 
@@ -47,7 +47,17 @@
 3. **前拨轮选择色区，后拨轮调节数值**；INFO 切换单色区 / ALL。H/L 范围为 **−5～+5**，四个 COLOR 组分别保存参数。
 4. 短按 OK 退出；长按 OK 复位当前轴，H/L 复位为 0。重新开机默认显示 S，切到 H/L 可查看保存值。
 
-建议先对同一场景拍摄 H/L=0 与修改参数后的 JPEG 作比较，并检查正常关机后设置是否保留。015 的实时取景效果请以实际机身表现为准。
+建议先对同一场景拍摄 H/L=0 与修改参数后的 JPEG 作比较，并检查正常关机后设置是否保留。023 的实时取景效果请以实际机身表现为准。
+
+### 高光压制（HDR200 / HDR400）
+
+这两档参考富士 **DR200 / DR400** 保留亮部细节的思路。它们通过单帧 JPEG 的 RGB Gamma 曲线压低亮端、放缓向白点的过渡。在天空、白衣和逆光等反差大的场景中，亮部有机会保留更多纹理和渐变，从而改善 JPEG 直出的有效动态范围与观感。HDR400 的压制强于 HDR200。档位数字代表曲线力度，实际改善取决于场景和曝光。相机沿用原厂曝光、ISO、采集增益和 RAW 采集流程，曲线的作用范围限于前级仍保留的亮部信息。[富士 DR 参考](https://app.fujifilm-dsc.com/en/manual/x-m5/x-m5_manual_en_s_f.pdf)
+
+1. 将前方色彩控制拨杆切到 **COLOR**，选用 **COLOR 1–4** 中的任一组。使用原厂曲线拨盘进入**高光／阴影**曲线页。
+2. 按 **INFO** 循环切页，顺序是 **高光／阴影 → Midtone（中间调）→ HDR → 高光／阴影**。从高光／阴影页连续按两次即可进入 HDR 页。
+3. 在 HDR 页转动前拨轮或后拨轮，选择 **OFF**（原厂映射）、**HDR200**（温和压制）或 **HDR400**（更强压制）。方括号标出当前档位。短按 OK 退出，长按 OK 将当前 HDR 档位复位为 OFF。
+4. 半按快门观察取景，再拍摄一张 JPEG 查看亮部。可用相同构图、ISO、快门、光圈、白平衡和原厂曲线，依次拍摄 OFF、200 和 400，比较天空、白色物体上的纹理及明暗交界处的过渡。
+5. HSL 色轮继续用删除键切轴。原厂高光、阴影和 Midtone 仍可在各自页面调整。HDR 页上的 V/P 是取景和拍摄选表诊断码，含义见 [023 版本说明](docs/ep7/EXPERIMENTAL_SD_023.md)。
 
 ### 来源与研究资料
 
@@ -59,11 +69,11 @@
 
 This project reverse-engineers and modifies **Olympus E-P7 (EP7)** firmware, drawing on the research and implementation in [fishcu/oly_fw_analysis](https://github.com/fishcu/oly_fw_analysis). It now implements **three switchable color wheels: H (Hue), S (Saturation), and L (Lightness)**, extending the camera's existing color-wheel controls with per-color H/L adjustments.
 
-### Minimal modification and stability
+### Project principles and stability
 
-This is a minimal modification of stock E-P7 firmware 1.1. The changes focus on switching axes in the stock COLOR wheel and storing and applying per-color H/L values. The firmware retains the stock wheel interface, COLOR profiles, and dial controls. Open the COLOR wheel adjustment page and **press Delete (the trash button) once per wheel to cycle Saturation S → Lightness L → Hue H → Saturation S**. Use the front dial to select a color sector and the rear dial to adjust the active axis.
+The project improves straight-out-of-camera JPEGs with minimal changes to stock E-P7 firmware 1.1. The HSL wheels and highlight compression extend the original color and tone controls while retaining the camera’s native workflow. The changes focus on switching axes in the stock COLOR wheel and storing and applying per-color H/L values. The firmware retains the stock wheel interface, COLOR profiles, and dial controls. Open the COLOR wheel adjustment page and **press Delete (the trash button) once per wheel to cycle Saturation S → Lightness L → Hue H → Saturation S**. Use the front dial to select a color sector and the rear dial to adjust the active axis.
 
-On-camera feedback reports very stable operation in the scenarios tested. Version 015 builds on that work by strengthening H/L at the highest settings. The visual strength of those settings still awaits camera confirmation for 015.
+Earlier versions ran very stably in the camera scenarios tested. Version 023 refines highlight roll-off and awaits on-camera JPEG confirmation.
 
 ### Compatibility and risk
 
@@ -77,9 +87,9 @@ If you happened to find this project, consider it a lucky find. Please avoid wid
 
 ### Current release
 
-The latest version is **EP7HSL 015 EXPERIMENTAL**. Download `EP7HSL-015-EXPERIMENTAL-SD.zip` from this repository's [Releases](https://github.com/JDui/oly_fw_analysis_ep7/releases).
+The latest version is **EP7HSL 023 EXPERIMENTAL**. Download `EP7HSL-023-EXPERIMENTAL-SD.zip` from this repository's [Releases](https://github.com/JDui/oly_fw_analysis_ep7/releases).
 
-On-camera feedback for 014 reported subtle H/L changes in live view and JPEGs. Version 015 preserves fine adjustment at ±1 through ±3 and strengthens ±4 and ±5. Existing COLOR presets remain usable. Targeted simulation and package checks passed. Visual strength on 015 awaits camera confirmation. See the [015 notes](docs/ep7/EXPERIMENTAL_SD_015.md).
+Version 023 retains the 015 HSL wheels and adds two highlight compression levels with a revised roll-off aimed at reducing banding seen in earlier trials. The camera displays **1.1v023**. Targeted offline and package checks passed. JPEG output still awaits on-camera confirmation. [Version 023 notes](docs/ep7/EXPERIMENTAL_SD_023.md)
 
 ### Installing from an SD card
 
@@ -100,7 +110,17 @@ To return to stock, replace the modified firmware on the card with **`restore-st
 3. Use the **front dial to select a color sector and the rear dial to change its value**. INFO switches between a single sector and ALL. H/L values range from **−5 to +5**, with separate settings for each of the four COLOR profiles.
 4. Press OK briefly to exit; hold OK to reset the current axis, with H/L resetting to 0. After restarting, the editor defaults to S; switch to H/L to view the saved values.
 
-Start by comparing JPEGs of the same scene with H/L at zero and with adjusted values, then check persistence after a normal shutdown. Judge version 015's live-view behavior on the actual camera.
+Start by comparing JPEGs of the same scene with H/L at zero and with adjusted values, then check persistence after a normal shutdown. Judge version 023's live-view behavior on the actual camera.
+
+### Highlight compression (HDR200 / HDR400)
+
+The two levels take their cues from Fujifilm **DR200 / DR400** for retaining highlight detail. A single-frame RGB gamma curve compresses bright tones and softens the transition to white in the camera JPEG. This can retain more texture and gradation in bright skies, white clothing, and backlit scenes, improving usable JPEG dynamic range and rendering. HDR400 applies stronger compression than HDR200. The labels indicate curve strength, and the visible effect depends on the scene and exposure. Exposure, ISO, capture gain, and RAW capture follow the stock workflow. The curve works with highlight detail still present at that stage. [Fujifilm DR reference](https://app.fujifilm-dsc.com/en/manual/x-m5/x-m5_manual_en_s_f.pdf)
+
+1. Set the front color-control lever to **COLOR** and select any profile from **COLOR 1–4**. Use the camera's original curve control to open the **Highlight & Shadow** page.
+2. Press **INFO** to cycle **Highlight & Shadow → Midtone → HDR → Highlight & Shadow**. From Highlight & Shadow, press INFO twice to reach HDR.
+3. On the HDR page, turn either dial to choose **OFF** (stock mapping), **HDR200** (moderate compression), or **HDR400** (stronger compression). Brackets show the selected level. Press OK briefly to exit or hold OK to reset the HDR level to OFF.
+4. Half-press the shutter to check live view, then take a JPEG and inspect the highlights. For a comparison, shoot OFF, 200, and 400 with the same framing, ISO, shutter speed, aperture, white balance, and stock curve settings. Compare texture and transitions in bright skies and white objects.
+5. Delete still switches axes on the HSL wheel. The original Highlight, Shadow, and Midtone controls remain on their respective pages. The HDR page's V/P codes identify the live-view and capture curve selection. [Version 023 notes](docs/ep7/EXPERIMENTAL_SD_023.md)
 
 ### Attribution and research
 

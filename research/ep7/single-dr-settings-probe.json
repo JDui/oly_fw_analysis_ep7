@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "level_cells": [
+    894,
+    963,
+    966,
+    969,
+    1672,
+    998,
+    1001,
+    1004,
+    1675
+  ],
+  "color1_level_before_reset": 1,
+  "color2_level_before_reset": 2,
+  "bank2_bytes_round_tripped": 14152,
+  "ordinary_reset_default": 3200,
+  "color2_reset_default": 3,
+  "neighbor_h1_ids": [
+    927,
+    939
+  ],
+  "native_instruction_totals": {
+    "0x602cc0d0": 1045,
+    "0x602cc0a7": 468,
+    "0x602cc03a": 467022,
+    "0x602cbffe": 934044,
+    "0x602b960d": 275830,
+    "0x602b9778": 451
+  },
+  "hash_checks_performed": false,
+  "hardware_executed": false,
+  "limits": [
+    "Probe-only tags, explicit stock-initialized settings RAM and CPU0 aliases.",
+    "Whole native bank copies and the 626-item ordinary reset run.",
+    "COLOR2 is one actual reset-list row executed by the native loop.",
+    "No full GUI lifecycle, scheduling, power-cycle or group-7 backend write."
+  ]
+}
