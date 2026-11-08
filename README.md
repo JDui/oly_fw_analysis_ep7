@@ -1,143 +1,113 @@
-# Olympus E-P7 HSL / 奥林巴斯 E-P7 HSL 固件
+# Olympus E-P7 HSL / 奥林巴斯 E-P7 直出增强固件
 
-[中文](#中文说明) · [English](#english) · [下载 / Releases](https://github.com/JDui/oly_fw_analysis_ep7/releases)
+[中文](#中文) · [English](#english) · [下载 / Releases](https://github.com/JDui/oly_fw_analysis_ep7/releases)
 
-## 中文说明
+## 中文
 
-本项目以奥林巴斯 **E-P7 原厂 1.1 固件**为基础，核心目标是**借助现代图像处理算法提升机内成像能力**，同时保留熟悉的按键、拨轮和拍摄流程。高光压制改善高反差场景的 JPEG 亮部层次，HSL 色轮提供各色区的色相、饱和度和明度调节。
+### 项目特点
 
-### 机内直出动态范围对比
+EP7HSL 基于奥林巴斯 E-P7 原厂 1.1（build 1100）固件，以最低限度的改动提升机内 JPEG 直出。HSL 色轮、高光压制和 Rec 多帧合成都沿用原有的操作入口。普通快门仍可半按对焦、全按单拍。
 
-**上方为奥林巴斯原厂固件，下方为本项目固件。** 下方灯罩及受光区域保留了更多亮部层次，暗处的人偶和包装也能看见细节。
+**固件已经在实际 E-P7 机身上经过功能验证和稳定性测试，在已测试的场景中运行稳定。** Rec 四帧合成已在 030 上实拍成功。最新 032 对 Rec 沿用现有焦点的修正已通过定向离线回放，具体实机覆盖见各版记录。[030 实机记录](docs/ep7/EXPERIMENTAL_SD_030.md) · [032 验证记录](docs/ep7/EXPERIMENTAL_SD_032.md)
 
-![高反差场景对比，上为奥林巴斯原厂固件，下为本项目固件。Olympus stock firmware above, EP7HSL below.](docs/ep7/images/dynamic-range-stock-vs-ep7hsl.jpg)
+### 效果对比
 
-### 项目原则与稳定性
+**上方是奥林巴斯原厂固件直出，下方是 EP7HSL 直出。** 看下图的灯罩和受光区域，下方保留了更多亮部过渡，暗处的人偶和包装也能看见细节。
 
-HSL 色轮沿用原厂界面与 COLOR 预设，各色区的 H/L 参数独立保存。打开 COLOR 色轮调节页面后，**每按一次删除键（垃圾桶键）切换一个色轮，顺序为饱和度 S → 明度 L → 色相 H → 饱和度 S**。切换后用前拨轮选色区、后拨轮调整当前轴。
+![上为原厂固件，下为 EP7HSL 的机内直出对比](docs/ep7/images/dynamic-range-stock-vs-ep7hsl.jpg)
 
-已有版本在已测试的机身场景中运行非常稳定。023 新增高光过渡调整，实机直出效果仍待确认。
+### 功能介绍
 
-### 机型限制与风险
+| 功能 | 用途 |
+| --- | --- |
+| **HSL 色轮转盘** | 在原厂 COLOR 色轮内分别调整各色区的色相、饱和度和明度，四组 COLOR 预设分别保存。 |
+| **HDR200 / HDR400 高光增强** | 用单张 JPEG 的曲线压住高光，保留仍有信息的亮部纹理和渐变。200 较温和，400 更强。 |
+| **Rec 四帧合成** | 按一次 Rec 拍摄并合成四帧，使用类似手机多帧 HDR 的工作方式，直接保存合成 JPEG。支持静音电子快门。 |
 
-> **固件仅面向奥林巴斯 E-P7，基于原厂 1.1 / build 1100。不兼容 PEN-F、OM PEN、OM-3，以及其他带色彩转盘的机型。请勿跨机型刷入。**
->
-> 目前我手里只有 E-P7，无法对其他机型进行实机验证或开发；外观、菜单或功能相似不代表固件兼容。
->
-> **刷机有风险，操作需谨慎。** 这是非官方实验固件，可能导致黑屏、重启、功能异常，甚至相机无法使用。请自行评估并承担刷写风险。附带原厂返回文件，但回刷依赖相机更新入口仍可用，不保证能够救砖。
+### 使用说明
 
-能刷到这个项目算是运气好。请不要大肆宣传、推广或引流，大家小范围内使用，解决自己的色彩问题就好。
+#### SD 卡刷入
 
-### 当前版本
+**仅限奥林巴斯 E-P7 原厂 1.1。** PEN-F、OM PEN、OM-3 和其他机型均不兼容。目前只有 E-P7 可供开发和验证。刷机有风险，可能造成黑屏、重启或相机无法使用。原厂返回文件需要机身更新入口仍可用。欢迎小范围使用，请勿大规模推广。
 
-GitHub Releases 中的最新公开试用包为 **EP7HSL 023 EXPERIMENTAL**。下载 `EP7HSL-023-EXPERIMENTAL-SD.zip`。[Releases](https://github.com/JDui/oly_fw_analysis_ep7/releases)
+1. 下载并解压 `EP7HSL-032-EXPERIMENTAL-SD.zip`，准备电量充足的电池。直接使用 SD 卡刷入即可，拍摄档位和图像模式保持当前设置。[下载页](https://github.com/JDui/oly_fw_analysis_ep7/releases/tag/ep7hsl-032)
+2. 将 `install` 内的 `DCOLYMP` 文件夹复制到 SD 卡根目录，得到 `SD:/DCOLYMP/E1429999.BIN`。
+3. 相机关机后插卡，**按住 OK 开机**，指示灯开始后松开 OK。更新过程中保持供电和卡就位。
+4. AF 指示灯由常亮转为快速闪烁后关机，取出更新卡，再正常开机。首次使用 Rec 前，机身固件版本显示 **1.1v032**。
+5. 如需恢复原厂 1.1，改用 `restore-stock` 内的 `DCOLYMP`，按同样步骤刷入。每次更新卡上只放一套 `DCOLYMP`。
 
-023 保留 015 的 HSL 色轮，加入两档高光压制，并调整亮部过渡以减轻前序试用版出现的色阶。机身版本显示为 **1.1v023**。定向离线与封装验证已通过，实机 JPEG 效果待确认。[023 版本说明](docs/ep7/EXPERIMENTAL_SD_023.md)
+#### HSL 色轮
 
-032 本地 SD 试用版让 P/A/S/M 的 Rec HDR1 走原厂无 AF 的拍摄准备分支，修正 031 在 S-AF 下反复对焦的问题。可以先用实体快门半按对焦，保持半按再按 Rec。HDR 使用当前单张驱动的快门类型。[032 试用说明](docs/ep7/EXPERIMENTAL_SD_032.md)
+将色彩控制拨杆切到 **COLOR**，进入原厂色轮页面。**每按一次删除键（垃圾桶键），按 S 饱和度 → L 明度 → H 色相 → S 的顺序切换色轮。** 前拨轮选色区，后拨轮调整数值，INFO 在单色区与 ALL 之间切换。H/L 范围为 −5 至 +5。短按 OK 退出，长按 OK 复位当前轴。
 
-### SD 卡刷入
+#### DR200 / DR400 高光压制
 
-以下是本项目在 E-P7 上采用的 SD 更新方式，不是官方安装流程。
+1. 进入 **COLOR 1–4** 中任一预设，使用原厂曲线拨盘进入高光／阴影页。
+2. 从高光／阴影页按两次 **INFO**，经过中间调页进入 **HDR** 页。再按一次回到高光／阴影页。
+3. 转动任一拨轮选择 **OFF**、**HDR200** 或 **HDR400**。短按 OK 退出，长按 OK 回到 OFF。
+4. 半按快门观察取景，拍摄 JPEG 查看亮部细节。可固定构图和曝光分别拍三档对照。
 
-1. 确认机型为 **E-P7**，使用充足电量的电池，先备份 SD 卡上的照片和需要保留的设置。刷入前将拍摄模式设为 **A**、图像模式设为 **Natural（NAT）**。
-2. 解压下载的 ZIP。把 **`install` 目录里面的 `DCOLYMP` 文件夹**复制到 SD 卡根目录，最终路径应为 **`SD:/DCOLYMP/E1429999.BIN`**。不要把 `install` 文件夹整体放到卡根目录，也不要混入原厂返回文件。
-3. 相机关机后插入更新卡，**按住 OK 键开机**，指示灯开始后松开 OK。更新过程中保持供电，不要取卡。
-4. 等待 AF 指示灯从**常亮转为快速闪烁**的完成指示，再拨到 OFF。指示不符时，不要把任意等待时长当作更新已完成。
-5. 关机后取出更新卡，**不按 OK** 正常开机。先确认画面、菜单和拍摄正常，再进入 COLOR 色轮测试。再次使用该卡前，请移除更新文件，避免误触发更新。
+#### Rec 按钮多帧合成
 
-如需返回原厂，使用包内 **`restore-stock/DCOLYMP/E1429999.BIN`** 替换卡上的修改固件，按相同步骤更新。安装文件和原厂返回文件同名，**每次卡上只放一套 `DCOLYMP`**，不要混用。
+1. 在 **P / A / S / M** 任一拍摄档，将 **按钮功能 → Rec（◎功能）** 分配给菜单里现有的 **HDR** 选项。这个选项用来启动新加入的四帧合成。
+2. 选择机械单张、防震单张或**静音电子单张（♥）**。如需静音多帧拍摄，选择静音电子单张即可。
+3. 回到取景，用实体快门半按对焦。可以保持半按，按一次 **Rec** 启动四帧合成。直接按 Rec 时，032 设计为沿用镜头当前焦点。
+4. 持稳相机，等相机完成合成和写卡，再到回放查看合成 JPEG。用普通快门全按可以继续拍普通单张。
 
-### 色轮操作
+### 致谢
 
-1. 将机身色彩控制拨杆切到 **COLOR**，按原厂操作进入色轮调节页面。
-2. 在色轮页面按**删除键（垃圾桶键）**，循环切换 **S → L → H → S**，标题对应 **Sat / Lum / Hue**。
-3. **前拨轮选择色区，后拨轮调节数值**；INFO 切换单色区 / ALL。H/L 范围为 **−5～+5**，四个 COLOR 组分别保存参数。
-4. 短按 OK 退出；长按 OK 复位当前轴，H/L 复位为 0。重新开机默认显示 S，切到 H/L 可查看保存值。
-
-建议先对同一场景拍摄 H/L=0 与修改参数后的 JPEG 作比较，并检查正常关机后设置是否保留。023 的实时取景效果请以实际机身表现为准。
-
-### 高光压制（HDR200 / HDR400）
-
-这两档参考富士 **DR200 / DR400** 保留亮部细节的思路。它们通过单帧 JPEG 的 RGB Gamma 曲线压低亮端、放缓向白点的过渡。在天空、白衣和逆光等反差大的场景中，亮部有机会保留更多纹理和渐变，从而改善 JPEG 直出的有效动态范围与观感。HDR400 的压制强于 HDR200。档位数字代表曲线力度，实际改善取决于场景和曝光。相机沿用原厂曝光、ISO、采集增益和 RAW 采集流程，曲线的作用范围限于前级仍保留的亮部信息。[富士 DR 参考](https://app.fujifilm-dsc.com/en/manual/x-m5/x-m5_manual_en_s_f.pdf)
-
-1. 将前方色彩控制拨杆切到 **COLOR**，选用 **COLOR 1–4** 中的任一组。使用原厂曲线拨盘进入**高光／阴影**曲线页。
-2. 按 **INFO** 循环切页，顺序是 **高光／阴影 → Midtone（中间调）→ HDR → 高光／阴影**。从高光／阴影页连续按两次即可进入 HDR 页。
-3. 在 HDR 页转动前拨轮或后拨轮，选择 **OFF**（原厂映射）、**HDR200**（温和压制）或 **HDR400**（更强压制）。方括号标出当前档位。短按 OK 退出，长按 OK 将当前 HDR 档位复位为 OFF。
-4. 半按快门观察取景，再拍摄一张 JPEG 查看亮部。可用相同构图、ISO、快门、光圈、白平衡和原厂曲线，依次拍摄 OFF、200 和 400，比较天空、白色物体上的纹理及明暗交界处的过渡。
-5. HSL 色轮继续用删除键切轴。原厂高光、阴影和 Midtone 仍可在各自页面调整。HDR 页上的 V/P 是取景和拍摄选表诊断码，含义见 [023 版本说明](docs/ep7/EXPERIMENTAL_SD_023.md)。
-
-### 来源与研究资料
-
-感谢原项目 [fishcu/oly_fw_analysis](https://github.com/fishcu/oly_fw_analysis) 的逆向研究、工具和 PEN-F HSL 实现参考。本仓库保留原项目历史、署名与已有许可说明；**原项目的 PEN-F 固件不能用于 E-P7，本项目固件也不能用于 PEN-F**。
-
-[E-P7 研究资料](https://github.com/JDui/oly_fw_analysis_ep7/blob/EP7/docs/ep7/README.md) · [当前研究状态](https://github.com/JDui/oly_fw_analysis_ep7/blob/EP7/docs/ep7/HANDOFF.md) · [工具与复现](https://github.com/JDui/oly_fw_analysis_ep7/blob/EP7/REPRODUCING.md) · [权利、许可与来源](https://github.com/JDui/oly_fw_analysis_ep7/blob/EP7/RIGHTS-AND-PROVENANCE.md)
+感谢 fishcu 的固件逆向研究、工具和 PEN-F HSL 实现，也感谢参与 E-P7 实机试拍和稳定性测试的用户。[上游项目](https://github.com/fishcu/oly_fw_analysis) · [E-P7 研究文档](docs/ep7/README.md) · [权利与来源](RIGHTS-AND-PROVENANCE.md)
 
 ## English
 
-EP7HSL builds on stock **Olympus E-P7 firmware 1.1**. Its goal is to **improve the camera's straight-out-of-camera image quality with modern image-processing algorithms** while keeping the familiar buttons, dials, and shooting workflow. Highlight compression improves bright-tone gradation in high-contrast JPEGs, and the HSL wheels add per-color hue, saturation, and lightness controls.
+### Project features
 
-### In-camera dynamic range
+EP7HSL builds on stock Olympus E-P7 firmware 1.1 (build 1100). It improves straight-out-of-camera JPEGs with minimal changes to the original controls and workflow. Half-pressing the shutter still focuses, and fully pressing it still takes a single shot.
 
-The comparison shows **Olympus stock firmware above and EP7HSL below**. The lower image retains more gradation in and around the lit display cases, with details still visible in the darker figures and boxes. [View the comparison](#机内直出动态范围对比)
+**The firmware has undergone functional and stability testing on a physical E-P7 and ran reliably in the scenarios tested.** Rec four-frame capture was demonstrated on camera with 030. The 032 change to reuse the current focus passed targeted offline replay. [030 camera results](docs/ep7/EXPERIMENTAL_SD_030.md) · [032 validation record](docs/ep7/EXPERIMENTAL_SD_032.md)
 
-### Project principles and stability
+### Image comparison
 
-The HSL wheels use the stock wheel interface and COLOR profiles, with separate H/L values for each color sector. Open the COLOR wheel adjustment page and **press Delete (the trash button) once per wheel to cycle Saturation S → Lightness L → Hue H → Saturation S**. Use the front dial to select a color sector and the rear dial to adjust the active axis.
+**Stock Olympus firmware is shown above and EP7HSL below.** The lower image shows more gradation in the lit areas while keeping details visible in the darker figures and packaging. [View the comparison](#效果对比)
 
-Earlier versions ran very stably in the camera scenarios tested. Version 023 refines highlight roll-off and awaits on-camera JPEG confirmation.
+### Features
 
-### Compatibility and risk
+| Feature | What it does |
+| --- | --- |
+| **HSL color wheels** | Adjust hue, saturation, and lightness per color sector in the stock COLOR editor. The four COLOR profiles store their settings separately. |
+| **HDR200 / HDR400 highlight enhancement** | Compress highlights in a single JPEG to retain texture and gradation where detail remains. 200 is gentler and 400 is stronger. |
+| **Rec four-frame capture** | One press captures and merges four frames into a JPEG, with a workflow similar to smartphone multi-frame HDR. Supports silent electronic shutter. |
 
-> **This firmware is exclusively for the Olympus E-P7, based on stock firmware 1.1 / build 1100. It is incompatible with the PEN-F, OM PEN, OM-3, and all other color-wheel camera models. Never flash it onto another model.**
->
-> I only own an E-P7, so I cannot develop or verify firmware on other camera models. Similar controls, menus, or features do not imply firmware compatibility.
->
-> **Flashing firmware carries risk. Proceed with caution.** This is unofficial experimental firmware and may cause a black screen, reboot loops, malfunction, or an unusable camera. Assess and accept these risks before proceeding. A stock return file is included, but restoring it requires a working update path and is not a guaranteed unbricking method.
+### How to use
 
-If you happened to find this project, consider it a lucky find. Please avoid widespread publicity, promotion, or driving traffic here. Keep its use within a small circle to address your own color-control needs.
+#### Install from SD card
 
-### Current release
+**Olympus E-P7 with stock firmware 1.1 only.** PEN-F, OM PEN, OM-3, and other models are incompatible. The E-P7 is the only body available for development and testing. Flashing can cause a black screen, reboot loops, or an unusable camera. Stock restoration requires a working update path. Please keep use within a small circle.
 
-The latest public SD trial package on GitHub is **EP7HSL 023 EXPERIMENTAL**. Download `EP7HSL-023-EXPERIMENTAL-SD.zip`. [Releases](https://github.com/JDui/oly_fw_analysis_ep7/releases)
+1. Download and extract `EP7HSL-032-EXPERIMENTAL-SD.zip` and use a sufficiently charged battery. Install directly from SD with your current shooting and picture settings. [Download](https://github.com/JDui/oly_fw_analysis_ep7/releases/tag/ep7hsl-032)
+2. Copy `DCOLYMP` from inside `install` to the SD card root, yielding `SD:/DCOLYMP/E1429999.BIN`.
+3. Insert the card with the camera off. **Hold OK while powering on** and release it when the indicator starts. Keep the camera powered and the card inserted during the update.
+4. When the AF indicator changes from steady illumination to rapid flashing, power off, remove the update card, and power on normally. The body initially displays **1.1v032** before Rec is used.
+5. To restore stock 1.1, use `DCOLYMP` from `restore-stock` and repeat the same update procedure. Keep one update folder on the card at a time.
 
-Version 023 retains the 015 HSL wheels and adds two highlight compression levels with a revised roll-off aimed at reducing banding seen in earlier trials. The camera displays **1.1v023**. Targeted offline and package checks passed. JPEG output still awaits on-camera confirmation. [Version 023 notes](docs/ep7/EXPERIMENTAL_SD_023.md)
+#### HSL wheels
 
-In the local 032 SD trial, Rec HDR1 uses the native readiness path that skips autofocus in P/A/S/M. This addresses the repeated S-AF hunting observed in 031. You can half-press the shutter to focus and keep it held while pressing Rec. HDR uses the shutter selected for single-frame shooting. [032 trial guide](docs/ep7/EXPERIMENTAL_SD_032.md)
+Set the front lever to **COLOR** and open the stock color wheel. **Each press of Delete cycles S (Saturation) → L (Lightness) → H (Hue) → S.** Use the front dial to select a sector and the rear dial to adjust it. INFO switches between one sector and ALL. H/L ranges from −5 to +5. Press OK briefly to exit or hold OK to reset the active axis.
 
-### Installing from an SD card
+#### DR200 / DR400 highlight compression
 
-This is the SD update method used by this project on the E-P7, not an official installation procedure.
+1. Select any **COLOR 1–4** profile and open the stock Highlight & Shadow curve page.
+2. Press **INFO** twice to pass Midtone and reach the **HDR** page. The next press returns to Highlight & Shadow.
+3. Turn either dial to choose **OFF**, **HDR200**, or **HDR400**. Press OK briefly to exit or hold OK to reset to OFF.
+4. Half-press the shutter to check live view, then take a JPEG to inspect the highlights. Compare all three levels with the same framing and exposure.
 
-1. Confirm that the camera is an **E-P7**, use a sufficiently charged battery, and back up photos on the SD card and any settings you need. Before flashing, select **A** shooting mode and **Natural (NAT)** picture mode.
-2. Extract the ZIP. Copy the **`DCOLYMP` folder inside `install`** to the SD card root. The resulting path must be **`SD:/DCOLYMP/E1429999.BIN`**. Do not copy the enclosing `install` folder to the root or mix in the stock return file.
-3. With the camera switched off, insert the update card. **Hold OK while switching the camera on**, then release OK once the indicator starts. Keep power connected and leave the card inserted throughout the update.
-4. Wait for the AF indicator to change from **steady illumination to rapid flashing**, indicating completion, then switch the camera OFF. If the indicator behaves differently, do not assume an arbitrary elapsed time means completion.
-5. Remove the update card with the camera off, then switch on normally **without holding OK**. Check the display, menus, and shooting before testing COLOR mode. Remove the update files before reusing the card to avoid an unintended update.
+#### Multi-frame capture with Rec
 
-To return to stock, replace the modified firmware on the card with **`restore-stock/DCOLYMP/E1429999.BIN`** from the package and repeat the same procedure. The two firmware files have the same name: keep **only one `DCOLYMP` set** on the card at a time.
+1. In **P / A / S / M**, go to **Button Function → Rec** and assign the existing **HDR** option. That assignment starts the new four-frame capture.
+2. Select mechanical single, anti-shock single, or **silent electronic single (♥)** drive. Select silent electronic single for silent multi-frame capture.
+3. In live view, half-press the physical shutter to focus. You can hold the half-press and press **Rec** once to start the merge. A direct Rec press in 032 is designed to use the lens's current focus.
+4. Keep the camera steady until merging and card writing finish, then review the merged JPEG. A full press of the regular shutter still takes a single shot.
 
-### Using the color wheels
+### Acknowledgments
 
-1. Set the camera's color-control switch to **COLOR** and open the color-wheel adjustment page using the normal camera controls.
-2. On that page, press the **Delete (trash) button** to cycle **S → L → H → S**, labeled **Sat / Lum / Hue**.
-3. Use the **front dial to select a color sector and the rear dial to change its value**. INFO switches between a single sector and ALL. H/L values range from **−5 to +5**, with separate settings for each of the four COLOR profiles.
-4. Press OK briefly to exit; hold OK to reset the current axis, with H/L resetting to 0. After restarting, the editor defaults to S; switch to H/L to view the saved values.
-
-Start by comparing JPEGs of the same scene with H/L at zero and with adjusted values, then check persistence after a normal shutdown. Judge version 023's live-view behavior on the actual camera.
-
-### Highlight compression (HDR200 / HDR400)
-
-The two levels take their cues from Fujifilm **DR200 / DR400** for retaining highlight detail. A single-frame RGB gamma curve compresses bright tones and softens the transition to white in the camera JPEG. This can retain more texture and gradation in bright skies, white clothing, and backlit scenes, improving usable JPEG dynamic range and rendering. HDR400 applies stronger compression than HDR200. The labels indicate curve strength, and the visible effect depends on the scene and exposure. Exposure, ISO, capture gain, and RAW capture follow the stock workflow. The curve works with highlight detail still present at that stage. [Fujifilm DR reference](https://app.fujifilm-dsc.com/en/manual/x-m5/x-m5_manual_en_s_f.pdf)
-
-1. Set the front color-control lever to **COLOR** and select any profile from **COLOR 1–4**. Use the camera's original curve control to open the **Highlight & Shadow** page.
-2. Press **INFO** to cycle **Highlight & Shadow → Midtone → HDR → Highlight & Shadow**. From Highlight & Shadow, press INFO twice to reach HDR.
-3. On the HDR page, turn either dial to choose **OFF** (stock mapping), **HDR200** (moderate compression), or **HDR400** (stronger compression). Brackets show the selected level. Press OK briefly to exit or hold OK to reset the HDR level to OFF.
-4. Half-press the shutter to check live view, then take a JPEG and inspect the highlights. For a comparison, shoot OFF, 200, and 400 with the same framing, ISO, shutter speed, aperture, white balance, and stock curve settings. Compare texture and transitions in bright skies and white objects.
-5. Delete still switches axes on the HSL wheel. The original Highlight, Shadow, and Midtone controls remain on their respective pages. The HDR page's V/P codes identify the live-view and capture curve selection. [Version 023 notes](docs/ep7/EXPERIMENTAL_SD_023.md)
-
-### Attribution and research
-
-Thanks to [fishcu/oly_fw_analysis](https://github.com/fishcu/oly_fw_analysis) for the original reverse-engineering work, tools, and PEN-F HSL implementation reference. Upstream history, attribution, and existing license notices are retained. **Upstream PEN-F firmware cannot be used on the E-P7, and this project's firmware cannot be used on the PEN-F.**
-
-[E-P7 research](https://github.com/JDui/oly_fw_analysis_ep7/blob/EP7/docs/ep7/README.md) · [Research status](https://github.com/JDui/oly_fw_analysis_ep7/blob/EP7/docs/ep7/HANDOFF.md) · [Tools and reproduction](https://github.com/JDui/oly_fw_analysis_ep7/blob/EP7/REPRODUCING.md) · [Rights, licenses, and provenance](https://github.com/JDui/oly_fw_analysis_ep7/blob/EP7/RIGHTS-AND-PROVENANCE.md)
+Thanks to fishcu for the firmware research, tools, and PEN-F HSL reference, and to the users who tested shooting and stability on the E-P7. [Upstream project](https://github.com/fishcu/oly_fw_analysis) · [E-P7 research](docs/ep7/README.md) · [Rights and provenance](RIGHTS-AND-PROVENANCE.md)
