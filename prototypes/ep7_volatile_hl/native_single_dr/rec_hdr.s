@@ -116,12 +116,15 @@ ep7dr_rec_hdr_admission_bridge:
  bne .Linterval_admission
  call ep7rec_native_capture_state,[],0
  cmp 1,d0
- bne .Lreply
+ bne .Lnot_standby
  mov (16,sp),d0
  call _ep7rec_begin,[],0
  cmp 1,d0
  bne .Lreply
  jmp ep7rec_native_capture_standby
+.Lnot_standby:
+ mov 9,d0 /* REC_NOT_STANDBY */
+ mov d0,(_ep7rec_status)
 .Lreply:
  jmp ep7rec_native_capture_reply
 .Linterval_admission:
@@ -181,7 +184,7 @@ ep7dr_rec_hdr_version_body_bridge:
  cmp 0x00000031,d0
  bne .Lbody_stock
  mov (_ep7rec_status),d0
- cmp 8,d0
+ cmp 11,d0
  bhi .Lbody_default
  asl 4,d0
  mov _ep7rec_version_labels,a1

@@ -32,17 +32,31 @@ void ep7rec_publish_sequence(uint32_t sequence);
 uint32_t ep7rec_owner;
 
 /* Last Rec milestone for the BODY version display. No capture decisions use it. */
+enum {
+    REC_CONTEXT = 4,
+    REC_MODE,
+    REC_PROPERTIES,
+    REC_TRIGGER,
+    REC_CLEANED,
+    REC_NOT_STANDBY,
+    REC_RELEASE_LOCKED,
+    REC_BUSY,
+};
+
 volatile uint32_t ep7rec_status;
 const uint16_t ep7rec_version_labels[][8] = {
     u"1.1v" EP7HL_REC_RELEASE_SUFFIX,
     u"1.1K" EP7HL_REC_RELEASE_SUFFIX, /* Recognized press. */
     u"1.1Q" EP7HL_REC_RELEASE_SUFFIX, /* Event prepared for posting. */
     u"1.1D" EP7HL_REC_RELEASE_SUFFIX, /* Marked event dispatched. */
-    u"1.1C" EP7HL_REC_RELEASE_SUFFIX, /* Synchronous settings unavailable. */
-    u"1.1M" EP7HL_REC_RELEASE_SUFFIX, /* Single-drive or settings conflict. */
-    u"1.1P" EP7HL_REC_RELEASE_SUFFIX, /* Property write or sequence rejected. */
-    u"1.1T" EP7HL_REC_RELEASE_SUFFIX, /* HDR scope armed, calling native trigger. */
-    u"1.1F" EP7HL_REC_RELEASE_SUFFIX, /* Native trigger cleanup restored settings. */
+    [REC_CONTEXT] = u"1.1C" EP7HL_REC_RELEASE_SUFFIX,
+    [REC_MODE] = u"1.1M" EP7HL_REC_RELEASE_SUFFIX,
+    [REC_PROPERTIES] = u"1.1P" EP7HL_REC_RELEASE_SUFFIX,
+    [REC_TRIGGER] = u"1.1T" EP7HL_REC_RELEASE_SUFFIX,
+    [REC_CLEANED] = u"1.1F" EP7HL_REC_RELEASE_SUFFIX,
+    [REC_NOT_STANDBY] = u"1.1S" EP7HL_REC_RELEASE_SUFFIX,
+    [REC_RELEASE_LOCKED] = u"1.1L" EP7HL_REC_RELEASE_SUFFIX,
+    [REC_BUSY] = u"1.1W" EP7HL_REC_RELEASE_SUFFIX,
 };
 
 static int effective_settings_available(void)
@@ -55,10 +69,10 @@ static int effective_settings_available(void)
 
 static int still_release_enabled(uint32_t owner)
 {
-    /* setCtrlReleaseStatus supplies the same active and still enables used
-     * by the physical shutter. Mask 0x2 belongs to the interval session. */
+    /* The stock AUTO_RELEASE_ENABLE command sets _activeRelease. Its
+     * _isTakePicture field requests an immediate shot and is normally zero.
+     * Mask 0x2 belongs to the interval session. */
     return *(volatile const uint32_t *)0x61facce0u &&
-           *(volatile const uint32_t *)0x61facd00u &&
            !(*(volatile const uint32_t *)(owner + 728u) & 2u);
 }
 
@@ -90,11 +104,16 @@ static int restore_capture_settings(void)
 
 int ep7rec_begin(uint32_t owner)
 {
-    if (!owner || ep7rec_owner || !still_release_enabled(owner) ||
-        ep7rec_settings_inhibit() || (ep7rec_get_trigger() & 1))
+    if (!owner || ep7rec_owner || ep7rec_settings_inhibit() || (ep7rec_get_trigger() & 1)) {
+        ep7rec_status = REC_BUSY;
         return 0;
+    }
+    if (!still_release_enabled(owner)) {
+        ep7rec_status = REC_RELEASE_LOCKED;
+        return 0;
+    }
     if (!effective_settings_available()) {
-        ep7rec_status = 4;
+        ep7rec_status = REC_CONTEXT;
         return 0;
     }
 
@@ -103,7 +122,7 @@ int ep7rec_begin(uint32_t owner)
     if (scene < 3 || scene > 6 || ep7rec_get(CONTINUOUS) != 0 ||
         ep7rec_get(HDR_COMPOSITE) != 0 || ep7rec_get(BRACKET_KIND) != 0 ||
         ep7rec_get(BRACKET_FRAMES) != 0 || !selected_single_drive(drive)) {
-        ep7rec_status = 5;
+        ep7rec_status = REC_MODE;
         return 0;
     }
 
@@ -121,12 +140,12 @@ int ep7rec_begin(uint32_t owner)
         uint32_t required = ATT_HDR | ATT_CONTINUOUS | (drive == SINGLE_SILENT ? ATT_SILENT : 0);
         if ((sequence & mask) == required) {
             ep7rec_publish_sequence(sequence);
-            ep7rec_status = 7;
+            ep7rec_status = REC_TRIGGER;
             return 1;
         }
     }
 
-    ep7rec_status = 6;
+    ep7rec_status = REC_PROPERTIES;
     if (restore_capture_settings())
         ep7rec_owner = 0;
     return 0;
@@ -140,5 +159,5 @@ void ep7rec_end(uint32_t owner, uint32_t cleared_trigger_bits)
 
     ep7rec_owner = 0;
     ep7rec_publish_sequence(ep7rec_judge_sequence(owner));
-    ep7rec_status = 8;
+    ep7rec_status = REC_CLEANED;
 }

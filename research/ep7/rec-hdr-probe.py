@@ -30,7 +30,8 @@ COMPOSER_REPLY = 0x1931E000
 MEDIA_SERVICE, MEDIA_METHODS, MEDIA_READY = 0x1931F000, 0x1931F100, 0x1931F200
 RELEASE_ENABLED = 0x6233B844
 ACTIVE_RELEASE = 0x61FACCE0
-STILL_ENABLED = 0x61FACD00
+TAKE_PICTURE_REQUEST = 0x61FACD00
+SET_RELEASE_STATUS = 0x60950AEA
 CAPTURE_STATE = 0x61FA748C
 PROPERTY_MAP = 0x604D6C14
 PROPERTY_CACHE = 0xA2699CB4
@@ -104,8 +105,9 @@ class Replay(UiMachine):
         self.add('media_methods', MEDIA_METHODS, bytes(196) + pack('<I', MEDIA_READY))
         self.add('ui_release_flags', RELEASE_ENABLED, pack('<II', 1, 0))
         self.add('interval_ui_flags', 0x61FB0AC0, bytes(4))
-        self.add('active_release', ACTIVE_RELEASE, pack('<I', 1))
-        self.add('still_enabled', STILL_ENABLED, pack('<I', 1))
+        self.add('active_release', ACTIVE_RELEASE, bytes(4))
+        self.add('release_settings', 0x61FACCF8, bytes(24))
+        self.add('release_movie_mode', 0x61FA73AC, bytes(4))
         self.add('capture_state', CAPTURE_STATE, pack('<I', 1))
         self.add('still_mode', 0x61FA73A0, pack('<I', 1))
         self.add('touch_movie', 0x61FA7360, bytes(4))
@@ -114,7 +116,6 @@ class Replay(UiMachine):
         self.add('capture_busy', 0x61FA7480, bytes(4))
         self.add('camera_error', 0x61FA71E8, bytes(4))
         self.add('release_mode', 0x61FACCDC, bytes(1))
-        self.add('movie_release', 0x61FACCF8, bytes(4))
         self.add('release_conflicts', 0x61FACD3C, bytes(8))
         self.add('bracket_limit', BRACKET_LIMIT, bytes(2))
         self.add('native_sequence', SEQUENCE, bytes(0x24))
@@ -143,6 +144,16 @@ class Replay(UiMachine):
         self.select_drive(0)
         self.word_set(0x622A0A8C, PROPERTIES + 4 * 1494)
         self.word_set(0x622A0B30, PROPERTIES + 4 * 600)
+
+    def set_release(self, enabled, *, take_picture=0):
+        # AUTO_RELEASE_ENABLE registers the shutter keys with no immediate
+        # take-picture request (60cd1e77, 60cd209c, 60789a82..60789abd).
+        keys = (0x02000100, 0x02000101) if enabled else (0, 0)
+        self.write(SP+4, pack('<4I', *keys, 0, 0))
+        self.replay(SET_RELEASE_STATUS, mask=0xA0, frame=44,
+                    registers=dict(a0=SHOOTER, d0=int(enabled), d1=take_picture, a1=0))
+        require(self.regs['sp'] == SP and self.word(ACTIVE_RELEASE) == int(enabled) and
+                self.word(TAKE_PICTURE_REQUEST) == take_picture, 'native ctrlRelease state differs')
 
     def add(self, name, address, data, permissions='rw'):
         self.regions[name] = Region(name, address, data, permissions, 'w' in permissions)
@@ -269,10 +280,11 @@ class Replay(UiMachine):
         return self.regs['d0']
 
 
-def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None):
+def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, prior_027=None):
     report = json.loads((directory / 'report.json').read_text(encoding='utf-8'))
     image = (directory / report['image']).read_bytes()
     m = Replay(image, engine)
+    m.set_release(True)
     symbols = json.loads((directory / 'symbols.json').read_text(encoding='utf-8'))
     status = int(symbols[report['rec_hdr']['body_status_symbol']]['address'], 16)
     require(m.native_value(0x602B9F70, 48) == len(REC_OPTIONS) + 1, 'Rec picker count differs')
@@ -322,15 +334,16 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None):
             require(m.read(BRACKET_LIMIT, 2) == pack('<H', 4), 'native bracket limit is not four')
             require(m.native_value(0x6042888C, 0) == 1, 'native exposure logic did not select HDR')
             require(m.capture() == CAPTURE_REPLY and
-                    m.hdr_settings() == HDR1, 'second Rec request replaced the active sequence')
+                    m.hdr_settings() == HDR1 and m.word(status) == 11,
+                    'second Rec request replaced the active sequence')
 
         m.word_set(SP+4, CONTROLLER)
         m.replay(0x602A47A7, mid=True, stop=(0x602A47FF,), registers=dict(a0=CONTROLLER))
         require(m.read(CONTROLLER+1998, 1) == bytes([shutter]),
                 'controller selected a different shutter')
 
-        clear = 0x609452BB if drive != 24 else 0x6093434E
-        m.replay(clear, mid=True, stop=(clear+7,), registers=dict(a0=SHOOTER, d0=1 if drive != 24 else 15))
+        clear, bits = (0x6093434E, 15) if electronic else (0x609452BB, 1)
+        m.replay(clear, mid=True, stop=(clear+7,), registers=dict(a0=SHOOTER, d0=bits))
         require(m.hdr_settings() == NO_HDR and m.word(TRIGGER) == 0 and
                 (m.word(SEQUENCE) & 0x10209) == 0 and m.drive == drive and m.word(status) == 8,
                 'HDR state leaked after cleanup')
@@ -343,14 +356,15 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None):
     m.word_set(CAPTURE_STATE, 5)  # A physical half-press already owns READY_TRIG2.
     reached = m.capture()
     require(reached == CAPTURE_REPLY and m.hdr_settings() == NO_HDR and m.word(TRIGGER) == 0 and
-            m.word(status) == 3,
+            m.word(status) == 9,
             'Rec took over a half-pressed physical shutter')
 
     m.word_set(CAPTURE_STATE, 1)
-    m.word_set(STILL_ENABLED, 0)
-    require(m.capture() == CAPTURE_REPLY and m.hdr_settings() == NO_HDR and m.word(TRIGGER) == 0,
+    m.set_release(False)
+    require(m.capture() == CAPTURE_REPLY and m.hdr_settings() == NO_HDR and
+            m.word(TRIGGER) == 0 and m.word(status) == 10,
             'Rec armed a shot while still release was disabled')
-    m.word_set(STILL_ENABLED, 1)
+    m.set_release(True)
 
     m.word_set(0x8050, 1)
     require(m.capture() == CAPTURE_REPLY and m.word(status) == 4 and
@@ -381,6 +395,7 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None):
                 ui_release_enabled_through_rec=True, stock_hdr_dispatch_preserved=True,
                 native_standby_trigger_reached=True, native_standby_guard_passed=True,
                 single_drive_properties_from_stock_table=True,
+                native_release_enable_with_no_take_picture_request=True,
                 interval_bit_left_clear=True,
                 still_release_disable_respected=True,
                 drive_results=drive_results, native_electronic_bracket_limit=4, native_hdr_ae=True,
@@ -403,6 +418,7 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None):
         previous = json.loads((prior_025 / 'report.json').read_text(encoding='utf-8'))
         require(previous['release'] == '025', 'expected the original 025 firmware')
         legacy = Replay((prior_025 / previous['image']).read_bytes(), engine)
+        legacy.set_release(True, take_picture=1)
         legacy.rec_key(KEY_PRESS)
         require(len(legacy.shots) == 1 and legacy.word(RELEASE_ENABLED) == 1 and
                 legacy.capture() == CAPTURE_REPLY and legacy.hdr_settings() == NO_HDR and
@@ -412,12 +428,28 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None):
         previous = json.loads((prior_026 / 'report.json').read_text(encoding='utf-8'))
         require(previous['release'] == '026', 'expected the original 026 firmware')
         legacy = Replay((prior_026 / previous['image']).read_bytes(), engine)
+        legacy.set_release(True, take_picture=1)
         legacy.rec_key(KEY_PRESS)
         for drive in (0, 12, 30):
             legacy.select_drive(drive)
             require(legacy.capture() == CAPTURE_REPLY and legacy.hdr_settings() == NO_HDR and
                     legacy.word(TRIGGER) == 0, f'026 did not reject native single drive {drive}')
         result['original_026_stock_single_rejection_reproduced'] = True
+    if prior_027 is not None:
+        previous = json.loads((prior_027 / 'report.json').read_text(encoding='utf-8'))
+        require(previous['release'] == '027', 'expected the original 027 firmware')
+        prior_symbols = json.loads((prior_027 / 'symbols.json').read_text(encoding='utf-8'))
+        prior_status = int(prior_symbols[previous['rec_hdr']['body_status_symbol']]['address'], 16)
+        legacy = Replay((prior_027 / previous['image']).read_bytes(), engine)
+        legacy.set_release(True)
+        legacy.rec_key(KEY_PRESS)
+        require(len(legacy.shots) == 1 and legacy.capture() == CAPTURE_REPLY and
+                legacy.word(prior_status) == 3 and legacy.hdr_settings() == NO_HDR and
+                legacy.word(TRIGGER) == 0, '027 did not reproduce the reported D rejection')
+        legacy.set_release(True, take_picture=1)
+        require(legacy.capture() == STANDBY_ADVANCE and legacy.hdr_settings() == HDR1,
+                '027 did not distinguish the take-picture request field')
+        result['original_027_d_reproduced_with_native_release_enable'] = True
     return result
 
 
@@ -429,8 +461,9 @@ if __name__ == '__main__':
     parser.add_argument('--prior-024', type=Path, help='reproduce the original 024 release-lock regression')
     parser.add_argument('--prior-025', type=Path, help='reproduce the original 025 interval-gate rejection')
     parser.add_argument('--prior-026', type=Path, help='reproduce 026 on native single-drive properties')
+    parser.add_argument('--prior-027', type=Path, help='reproduce 027 with stock shutter enabled and no shot requested')
     args = parser.parse_args()
     result = json.dumps(inspect(args.candidate, args.engine, args.prior_024, args.prior_025,
-                                args.prior_026), indent=2) + '\n'
+                                args.prior_026, args.prior_027), indent=2) + '\n'
     args.out.write_text(result, encoding='utf-8')
     print(result, end='')

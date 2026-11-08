@@ -54,6 +54,7 @@ def set_text(m):
 m.boundaries={0x60d7ef32:resolve,0x60d4c9df:set_text}
 status_symbol=report.get('rec_hdr',{}).get('body_status_symbol')
 status_addr=None
+rec_labels='vKQDCMPTFSLW' if int(report['release'])>=28 else 'vKQDCMPTF'
 if status_symbol:
     symbols=json.loads((args.candidate/'symbols.json').read_text())
     status_addr=int(symbols[status_symbol]['address'],16)
@@ -65,7 +66,8 @@ for start,stop,field,widget,body in (
         (0x60d7f2d4,0x60d7f2eb,308,19,False)):
     inputs=[('1.1',0),('',0),('2.3',0)]
     if status_addr is not None:
-        inputs += [('1.1',4),('1.1',8),('1.1',9),('2.3',3)] if body else [('1.1',3)]
+        inputs += [('1.1',4),('1.1',len(rec_labels)-1),('1.1',len(rec_labels)),
+                   ('2.3',3)] if body else [('1.1',3)]
     for original,status in inputs:
         if status_addr is not None:
             word(status_addr,status)
@@ -75,8 +77,8 @@ for start,stop,field,widget,body in (
         texts.clear()
         row=m.call_native(start,entry=start,stop=stop,values={'a3':VIEWER},preserved=())
         expected=report['displayed_body_version'] if body and original=='1.1' else original
-        if body and original=='1.1' and 0<status<9:
-            expected=expected.replace('v','vKQDCMPTF'[status],1)
+        if body and original=='1.1' and 0<status<len(rec_labels):
+            expected=expected.replace('v',rec_labels[status],1)
         assert texts==[(WIDGETS+4*widget,expected)],(hex(start),texts)
         assert m.read(RECORD,1004)==before, 'original fixed-size transport record changed'
         cases.append(dict(site=hex(start),before=original,rec_status=status,displayed=expected,
