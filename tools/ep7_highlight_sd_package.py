@@ -159,9 +159,10 @@ def deliver(args):
     tested = read_json(args.tested/'report.json')
     release = tested['release']
     require(len(release)==3 and release.isascii() and release.isdigit(), 'bad release')
-    require(release not in ('024', '025', '026', '027'), '024 through 027 have known Rec HDR failures')
-    require(args.rec_hdr or release != '028', 'release 028 needs --rec-hdr')
-    require(not args.rec_hdr or release >= '028', 'Rec HDR SD packaging requires 028 or later')
+    require(release not in ('024', '025', '026', '027', '028'),
+            '024 through 028 have known Rec HDR failures')
+    require(args.rec_hdr or release != '029', 'release 029 needs --rec-hdr')
+    require(not args.rec_hdr or release >= '029', 'Rec HDR SD packaging requires 029 or later')
     strategy = 'rec_hdr_lab' if args.rec_hdr else 'highlight_mapping_only'
     require(tested['strategy'] == strategy, 'candidate strategy differs from the requested package')
     out = args.out.resolve()

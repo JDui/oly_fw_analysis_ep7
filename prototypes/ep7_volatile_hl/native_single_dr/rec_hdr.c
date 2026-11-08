@@ -18,6 +18,14 @@ enum {
     HDR1 = 1,
     HDR_BRACKET = 4,
     HDR1_FRAMES = 4,
+    SHOOTING_CURRENT = 788,
+    SHOOTING_NEXT = 792,
+    STANDBY = 17,
+    READY = 22,
+    RELEASE_DOWN_HISTORY = 5,
+    FULL_PRESS_EVENT = 4,
+    SET_FULL_RELEASE = 0x40000100,
+    CLEAR_FULL_RELEASE = 0x20000100,
 };
 
 uint32_t ep7rec_get(unsigned property);
@@ -27,9 +35,16 @@ uint32_t ep7rec_settings_inhibit(void);
 uint32_t ep7rec_get_trigger(void);
 uint32_t ep7rec_judge_sequence(uint32_t owner);
 void ep7rec_publish_sequence(uint32_t sequence);
+void ep7rec_latch_release(unsigned bits);
+void ep7rec_unlatch_release(unsigned bits);
+void ep7rec_full_release(uint32_t owner, unsigned operation);
+uint32_t ep7rec_get_release_event(void);
+void ep7rec_set_release_event(unsigned event);
 
 /* Shared with the native silent-shutter guard, on the shooting task. */
 uint32_t ep7rec_owner;
+static uint32_t release_queued;
+static uint32_t previous_release_event;
 
 /* Last Rec milestone for the BODY version display. No capture decisions use it. */
 enum {
@@ -41,6 +56,7 @@ enum {
     REC_NOT_STANDBY,
     REC_RELEASE_LOCKED,
     REC_BUSY,
+    REC_RELEASE_QUEUED,
 };
 
 volatile uint32_t ep7rec_status;
@@ -57,6 +73,7 @@ const uint16_t ep7rec_version_labels[][8] = {
     [REC_NOT_STANDBY] = u"1.1S" EP7HL_REC_RELEASE_SUFFIX,
     [REC_RELEASE_LOCKED] = u"1.1L" EP7HL_REC_RELEASE_SUFFIX,
     [REC_BUSY] = u"1.1W" EP7HL_REC_RELEASE_SUFFIX,
+    [REC_RELEASE_QUEUED] = u"1.1R" EP7HL_REC_RELEASE_SUFFIX,
 };
 
 static int effective_settings_available(void)
@@ -74,6 +91,11 @@ static int still_release_enabled(uint32_t owner)
      * Mask 0x2 belongs to the interval session. */
     return *(volatile const uint32_t *)0x61facce0u &&
            !(*(volatile const uint32_t *)(owner + 728u) & 2u);
+}
+
+static uint32_t selector(uint32_t owner, unsigned offset)
+{
+    return *(const uint32_t *)(owner + offset);
 }
 
 static int selected_single_drive(uint32_t drive)
@@ -104,7 +126,8 @@ static int restore_capture_settings(void)
 
 int ep7rec_begin(uint32_t owner)
 {
-    if (!owner || ep7rec_owner || ep7rec_settings_inhibit() || (ep7rec_get_trigger() & 1)) {
+    if (!owner || ep7rec_owner || ep7rec_settings_inhibit() || ep7rec_get_trigger() ||
+        selector(owner, SHOOTING_CURRENT) != STANDBY || selector(owner, SHOOTING_NEXT) != STANDBY) {
         ep7rec_status = REC_BUSY;
         return 0;
     }
@@ -151,13 +174,50 @@ int ep7rec_begin(uint32_t owner)
     return 0;
 }
 
-void ep7rec_end(uint32_t owner, uint32_t cleared_trigger_bits)
+void ep7rec_end(uint32_t owner)
 {
-    if (!ep7rec_owner || ep7rec_owner != owner || !(cleared_trigger_bits & 1) ||
-        !effective_settings_available() || !restore_capture_settings())
+    if (!ep7rec_owner || ep7rec_owner != owner)
+        return;
+    if (release_queued) {
+        ep7rec_unlatch_release(RELEASE_DOWN_HISTORY);
+        ep7rec_full_release(owner, CLEAR_FULL_RELEASE);
+        if (ep7rec_get_release_event() == FULL_PRESS_EVENT)
+            ep7rec_set_release_event(previous_release_event);
+        release_queued = 0;
+    }
+    if (!effective_settings_available() || !restore_capture_settings())
         return;
 
     ep7rec_owner = 0;
     ep7rec_publish_sequence(ep7rec_judge_sequence(owner));
     ep7rec_status = REC_CLEANED;
+}
+
+void ep7rec_after_standby_guard(uint32_t owner)
+{
+    if (ep7rec_owner != owner)
+        return;
+    if (selector(owner, SHOOTING_NEXT) != READY) {
+        ep7rec_end(owner);
+        return;
+    }
+    /* Same pending half/full request as native ctrlRelease's immediate-shot
+     * path. The silent burst also uses the native Trig2KeyIn event kind
+     * when it chooses the exposure count. */
+    previous_release_event = ep7rec_get_release_event();
+    ep7rec_set_release_event(FULL_PRESS_EVENT);
+    ep7rec_latch_release(RELEASE_DOWN_HISTORY);
+    ep7rec_full_release(owner, SET_FULL_RELEASE);
+    release_queued = 1;
+    ep7rec_status = REC_RELEASE_QUEUED;
+}
+
+void ep7rec_on_trigger_reset(uint32_t owner)
+{
+    /* The normal exit from STANDBY clears the native trigger mask before
+     * entering READY. This reset is part of starting the Rec sequence. */
+    if (ep7rec_owner == owner && release_queued &&
+        selector(owner, SHOOTING_CURRENT) == STANDBY && selector(owner, SHOOTING_NEXT) == READY)
+        return;
+    ep7rec_end(owner);
 }

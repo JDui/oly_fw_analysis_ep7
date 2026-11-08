@@ -133,6 +133,21 @@ ep7dr_rec_hdr_admission_bridge:
  call ep7rec_native_interval_admission,[d2],4
  jmp ep7rec_native_interval_admission_resume
 
+/* Keep native admission and roll back the Rec scope if it refused the shot. */
+.global ep7dr_rec_hdr_standby_bridge
+ep7dr_rec_hdr_standby_bridge:
+ mov (40,sp),d1
+ cmp .Lrec_take_return,d1
+ bne .Lstock_standby_guard
+ mov a0,a2
+ add -4,sp
+ call ep7rec_native_standby_guard,[a2],8
+ mov a2,d0
+ call _ep7rec_after_standby_guard,[],0
+ ret [a2],12
+.Lstock_standby_guard:
+ jmp ep7rec_native_standby_guard
+
 /* Native silent eligibility excludes every bracket kind. Admit HDR's kind
  * for the Rec-owned capture and continue with all other native checks. */
 .global ep7dr_rec_hdr_silent_guard_bridge
@@ -151,9 +166,8 @@ ep7dr_rec_hdr_silent_guard_bridge:
 .Lsilent_block:
  jmp ep7rec_native_silent_block
 
-/* Both terminal paths clear the native trigger bit. Restore the effective
- * mode before that bit can admit another release. The original leaf returns
- * via MDR, so keep the caller's MDR across the C helper. */
+/* The stock reset runs on both standby exit and capture abort. Retain its
+ * trigger clear and preserve the caller's MDR across the C helper. */
 .global ep7dr_rec_hdr_clear_bridge
 ep7dr_rec_hdr_clear_bridge:
  add -20,sp
@@ -162,9 +176,8 @@ ep7dr_rec_hdr_clear_bridge:
  mov a1,(12,sp)
  mov mdr,d1
  mov d1,(16,sp)
- mov d0,d1
  mov a0,d0
- call _ep7rec_end,[],0
+ call _ep7rec_on_trigger_reset,[],0
  mov (16,sp),d1
  mov d1,mdr
  mov (4,sp),d0
@@ -172,6 +185,17 @@ ep7dr_rec_hdr_clear_bridge:
  mov (12,sp),a1
  add 20,sp
  jmp ep7rec_native_clear_trigger
+
+/* Native entrySTANDBY has inspected the previous sequence and is about to
+ * publish standby and check for new shutter input. */
+.global ep7dr_rec_hdr_idle_bridge
+ep7dr_rec_hdr_idle_bridge:
+ add -4,sp
+ mov a3,d0
+ call _ep7rec_end,[],0
+ add 4,sp
+ mov 1,d0
+ jmp ep7rec_native_set_capture_state
 
 /* The native BODY wire fields are word-aligned and eight bytes wide.
  * Select a read-only, seven-character label for the last Rec attempt. */
@@ -184,7 +208,7 @@ ep7dr_rec_hdr_version_body_bridge:
  cmp 0x00000031,d0
  bne .Lbody_stock
  mov (_ep7rec_status),d0
- cmp 11,d0
+ cmp 12,d0
  bhi .Lbody_default
  asl 4,d0
  mov _ep7rec_version_labels,a1
@@ -230,6 +254,32 @@ _ep7rec_judge_sequence:
 .global _ep7rec_publish_sequence
 _ep7rec_publish_sequence:
  jmp ep7rec_native_publish_sequence
+
+.global _ep7rec_latch_release
+_ep7rec_latch_release:
+ jmp ep7rec_native_latch_release
+
+.global _ep7rec_unlatch_release
+_ep7rec_unlatch_release:
+ jmp ep7rec_native_unlatch_release
+
+.global _ep7rec_get_release_event
+_ep7rec_get_release_event:
+ jmp ep7rec_native_get_release_event
+
+.global _ep7rec_set_release_event
+_ep7rec_set_release_event:
+ jmp ep7rec_native_set_release_event
+
+.global _ep7rec_full_release
+_ep7rec_full_release:
+ add -4,sp
+ mov d0,a0
+ mov d1,d0
+ mov (a0),a1
+ mov (4452,a1),a1
+ calls (a1)
+ ret [],4
 
 .section .rodata
 .balign 4

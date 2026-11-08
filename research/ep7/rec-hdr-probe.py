@@ -28,6 +28,11 @@ RELEASE_METHODS = 0x1931C100
 RELEASE_CALL = 0x1931D000
 COMPOSER_REPLY = 0x1931E000
 MEDIA_SERVICE, MEDIA_METHODS, MEDIA_READY = 0x1931F000, 0x1931F100, 0x1931F200
+NOTIFY_EVENT, NOTIFY_QUEUE, NOTIFY_METHODS, NOTIFY_SEND = (
+    0x19320000, 0x19320100, 0x19320200, 0x19320300)
+AE_SERVICE = 0x19320400
+CAPTURE_BUFFER = 0x19320600
+CAPTURE_JOB = 0x19320700
 RELEASE_ENABLED = 0x6233B844
 ACTIVE_RELEASE = 0x61FACCE0
 TAKE_PICTURE_REQUEST = 0x61FACD00
@@ -39,6 +44,9 @@ BRACKET_INDEX_CACHE = 0xA269BB20
 BRACKET_LIMIT = 0x61FACCE8
 SEQUENCE = 0x61FACD64
 TRIGGER = 0x61FACD84
+RELEASE_HISTORY = 0x61FACD88
+RELEASE_EVENT = 0x61FACD8C
+FULL_RELEASE_FLAGS = SHOOTER + 464
 READ_SETTING = 0x602AFA81
 NATIVE_VALIDATE = 0x62248528
 KEY_PRESS = 0x01000006
@@ -48,6 +56,7 @@ HDR_ACTION_CALL, HDR_ACTION_RETURN = 0x60CE03BB, 0x60CE03C0
 STOCK_HDR_RESUME = 0x60CE3B9B
 CAPTURE_ENTRY, CAPTURE_REPLY = 0x60904471, 0x60953C1A
 STANDBY_ADVANCE, STANDBY_REFUSED = 0x60962780, 0x60962752
+STANDBY_GUARD_RETURN = 0x60953BA4
 NO_HDR = (0, 0, 0, 0)
 HDR1 = (1, 4, 4, 1)
 
@@ -87,11 +96,39 @@ class Replay(UiMachine):
             0x60954C42: lambda: self.ret(0),   # Capture debug logger.
             0x602F94C5: lambda: self.ret(3),   # Ordinary P/A/S/M capture context.
             0x602ECF25: lambda: self.ret(0),   # Storage readiness API.
+            0x602CDDA2: lambda: self.ret(0),   # No storage-slot error flags.
+            0x602CBC5D: self.reset_release_setting,
             MEDIA_READY: self.ready_media,
+            NOTIFY_SEND: self.capture_notify,
             0x6094D3C9: self.ready_media,     # Native media capacity check.
             0x6076A167: lambda: self.ret(0),   # Sequence observer service.
             0x609557A2: lambda: self.ret(0),
             0x60A326B3: self.acknowledge_capture,
+            0x60877995: lambda: self.ret(0),   # Retire the lens ready timer.
+            0x6087793E: lambda: self.ret(1),   # Lens ready service accepted the request.
+            0x6087AC7B: lambda: self.ret(0),   # No pending lens timer.
+            0x6087DDB9: lambda: self.ret(0),   # Stop the lens ready timer.
+            0x6087E402: lambda: self.ret(0),   # Change the lens service timer phase.
+            0x60875637: lambda: self.ret(0),   # End the lens ready wait.
+            0x6087AC82: lambda: self.ret(0),   # Idle lens command slot.
+            0x608779C9: lambda: self.ret(0),   # No conflicting lens request.
+            0x60874603: lambda: self.ret(1),   # AF is ready for exposure.
+            0x6087BB59: lambda: self.ret(1),   # Lens service permits TakeReady.
+            0x60874BC8: lambda: self.ret(0),   # Send the lens readiness request.
+            0x60874B0D: lambda: self.ret(0),   # Send the lens capture-preparation request.
+            0x602F7DA3: lambda: self.ret(0),   # Publish the ready indication.
+            0x602EA74C: lambda: self.ret(0),   # No auxiliary ready notification.
+            0x60889900: lambda: self.ret(0),   # Successful AE result read.
+            0x6088A5BB: lambda: self.ret(0),   # AE service accepts next phase.
+            0x6088A17E: lambda: self.ret(0),   # No pending review abort.
+            0x6088A721: lambda: self.ret(0),   # Apply a native AE service command.
+            0x6088A752: lambda: self.ret(0),   # Reset a native AE service flag.
+            0x6091170E: lambda: self.ret(0),   # AE service mode notification.
+            0x60886492: lambda: self.ret(0),   # Lens has no pending request.
+            0x6082EF00: lambda: self.ret(1),   # One capture buffer is available.
+            0x6082F6B2: self.allocate_capture_job,
+            0x608FE29A: lambda: self.ret(0),   # Capture observer registration.
+            0x6083A1B4: lambda: self.ret(0),   # Reset the capture service counters.
         }
         self.add('return', HOOK_RETURN, bytes(8), 'rx')
         self.add('event', EVENT, bytes(32))
@@ -103,22 +140,40 @@ class Replay(UiMachine):
         self.add('release_methods', RELEASE_METHODS, bytes(216) + pack('<I', RELEASE_CALL))
         self.add('media_service', MEDIA_SERVICE, pack('<I', MEDIA_METHODS))
         self.add('media_methods', MEDIA_METHODS, bytes(196) + pack('<I', MEDIA_READY))
+        self.add('notify_event', NOTIFY_EVENT, bytes(40))
+        self.add('notify_queue', NOTIFY_QUEUE, pack('<I', NOTIFY_METHODS))
+        self.add('notify_methods', NOTIFY_METHODS, bytes(4) + pack('<I', NOTIFY_SEND))
+        self.add('ae_service', AE_SERVICE, bytes(256))
+        self.add('capture_buffer', CAPTURE_BUFFER, bytes(4))
+        self.add('capture_job', CAPTURE_JOB, bytes(4))
         self.add('ui_release_flags', RELEASE_ENABLED, pack('<II', 1, 0))
         self.add('interval_ui_flags', 0x61FB0AC0, bytes(4))
         self.add('active_release', ACTIVE_RELEASE, bytes(4))
         self.add('release_settings', 0x61FACCF8, bytes(24))
+        self.add('capture_debug_state', 0x61FACD10, bytes(12))
+        self.add('capture_notifications', 0x61FACD38, bytes(4))
         self.add('release_movie_mode', 0x61FA73AC, bytes(4))
-        self.add('capture_state', CAPTURE_STATE, pack('<I', 1))
+        self.add('capture_state', CAPTURE_STATE, pack('<I', 1) + bytes(0x7C))
         self.add('still_mode', 0x61FA73A0, pack('<I', 1))
         self.add('touch_movie', 0x61FA7360, bytes(4))
+        self.add('capture_continue_state', 0x61FA7358, bytes(4))
         self.add('media_block', 0x61FA727C, bytes(4))
         self.add('release_cancel', 0x61FA7428, bytes(4))
-        self.add('capture_busy', 0x61FA7480, bytes(4))
+        self.add('capture_busy', 0x61FA7480, bytes(12))
         self.add('camera_error', 0x61FA71E8, bytes(4))
         self.add('release_mode', 0x61FACCDC, bytes(1))
         self.add('release_conflicts', 0x61FACD3C, bytes(8))
         self.add('bracket_limit', BRACKET_LIMIT, bytes(2))
         self.add('native_sequence', SEQUENCE, bytes(0x24))
+        self.add('release_history', RELEASE_HISTORY, bytes(8))
+        self.add('capture_log_flags', 0x61FACCEC, bytes(4))
+        self.add('ready_service_state', 0x622CB16C, bytes(0x130))
+        self.add('ready_service_result', 0x61FA7418, bytes(4))
+        self.add('capture_mode_state', 0x61FA72E4, bytes(4))
+        self.add('capture_ready_state', 0x61FA7260, bytes(12))
+        self.add('capture_af_mode', 0x61FA73BC, bytes(4))
+        self.add('lens_drive_state', 0x61FA8FD4, bytes(4))
+        self.add('capture_finish_flags', 0x61FA7420, bytes(8))
         self.add('inhibit', 0x62257B04, bytes(1))
         self.add('property_cache_init', 0xA269BF68, bytes(1))
         self.add('property_cache', PROPERTY_CACHE, bytes(1769 * 4))
@@ -137,6 +192,13 @@ class Replay(UiMachine):
         self.word_set(COMPOSER + 2832, SHOOTER)
         self.word_set(SHOOTER, 0x60B49240)  # Original still-shooting vtable.
         self.word_set(SHOOTER + 640, MEDIA_SERVICE)
+        self.word_set(SHOOTER + 336, NOTIFY_QUEUE)
+        self.word_set(SHOOTER + 672, AE_SERVICE)
+        self.word_set(SHOOTER + 584, CAPTURE_BUFFER)
+        self.word_set(SHOOTER + 592, CAPTURE_JOB)
+        self.word_set(AE_SERVICE+184, AE_SERVICE)
+        self.word_set(AE_SERVICE+204, AE_SERVICE)
+        self.word_set(SHOOTER + 240, 1)  # Stock standby enables release flags.
         self.write(SHOOTER + 788, pack('<II', 17, 17))  # Stock standby selectors.
         self.word_set(SHOOTER + 808, 1)  # Stock constructor and release cleanup set this flag.
         for sid, value in ((5, 0), (24, 3), (600, 0), (1494, 0)):
@@ -211,10 +273,51 @@ class Replay(UiMachine):
         require(self.regs['a0'] == expected, 'unexpected media service receiver')
         self.regs.update(d0=1, pc=self.regs['mdr'])
 
-    def capture(self):
+    def reset_release_setting(self):
+        require(self.regs['d0'] == 4510 and self.regs['d1'] == 0xFFFFFFFF,
+                'unexpected release service setting write')
+        self.ret(0)
+
+    def allocate_capture_job(self):
+        require(self.regs['a0'] == CAPTURE_BUFFER, 'unexpected capture buffer service')
+        self.regs['a0'] = CAPTURE_JOB
+        self.ret(0)
+
+    def capture(self, *, complete_guard=False):
+        stops = ((STANDBY_GUARD_RETURN, CAPTURE_REPLY) if complete_guard else
+                 (STANDBY_ADVANCE, CAPTURE_REPLY, STANDBY_REFUSED))
         return self.replay(CAPTURE_ENTRY, mask=0xF0, frame=40,
-                           stop=(STANDBY_ADVANCE, CAPTURE_REPLY, STANDBY_REFUSED),
+                           stop=stops,
                            registers=dict(a0=COMPOSER))
+
+    def exit_standby(self):
+        self.replay(0x60934334, mask=0x20, frame=8, registers=dict(a0=SHOOTER))
+
+    def finish_focus(self):
+        # Execute the stock READY entry and the actual TakeReadyFinish callback.
+        # The lens service fixture accepts the native metering and focus request.
+        self.replay(0x6093137E, registers=dict(a0=SHOOTER))
+        require(self.word(0x61FA7418) == 1, 'native TakeReady request did not start')
+        self.replay(0x60963EB9, registers=dict(a0=SHOOTER))
+        return self.word(SHOOTER+792)
+
+    def start_exposure(self):
+        # Stop just before the original lens/sensor service calls. Silent
+        # auto-capture takes a frame count, while continuous HDR uses the limit.
+        self.replay(0x609319A8, registers=dict(a0=SHOOTER))
+        if self.drive == 30:
+            require(self.word(SHOOTER+792) == 15, 'silent HDR did not select TAKE_PICTURE_AUTO')
+            self.replay(0x60954FAB, stop=(0x60962D06,), registers=dict(a0=SHOOTER))
+            require(self.word(self.regs['sp']+4) == 4, 'silent exposure request did not carry four frames')
+        else:
+            require(self.word(SHOOTER+792) == 14, 'native READY_TRIG2 did not select TAKE_PICTURE_CONT')
+            self.replay(0x609336C7, stop=(0x60962E3A,), registers=dict(a0=SHOOTER))
+            require(self.regs['a1'] == CAPTURE_JOB, 'continuous HDR did not receive a capture buffer')
+        require(self.word(self.regs['sp']+8) == 1 and self.read(BRACKET_LIMIT, 2) == pack('<H', 4),
+                'native exposure handoff did not prepare a four-frame HDR job')
+
+    def restore_standby(self):
+        self.replay(0x609324F7, stop=(0x6093253F,), registers=dict(a0=SHOOTER))
 
     def set_property(self, sid, value):
         key, index = unpack('<HH', self.read(PROPERTY_MAP + 4 * sid, 4))
@@ -243,8 +346,13 @@ class Replay(UiMachine):
         self.ret(0)
 
     def allocate_event(self):
-        require(self.regs['d0'] == 32, 'native one-shot allocation size changed')
-        self.regs['a0'] = EVENT
+        size = self.regs['d0']
+        if self.regs['mdr'] == 0x6079141B:
+            require(size == 32, 'native one-shot allocation size changed')
+            self.regs['a0'] = EVENT
+        else:
+            require(28 <= size <= 40, 'unexpected capture notification allocation')
+            self.regs['a0'] = NOTIFY_EVENT
         self.ret(0)
 
     def virtual_no_reply_pointer(self):
@@ -255,6 +363,11 @@ class Replay(UiMachine):
         self.shots.append(self.read(EVENT, 32))
         self.release_enabled_on_submit.append(self.word(RELEASE_ENABLED))
         self.ret(0)
+
+    def capture_notify(self):
+        require(self.regs['a0'] == NOTIFY_QUEUE and self.regs['a1'] == NOTIFY_EVENT,
+                'unexpected native capture notification')
+        self.regs.update(d0=0, pc=self.regs['mdr'])
 
     def replay(self, target, *, mask=0, frame=0, stop=None, registers=None, mid=False):
         if mid:
@@ -280,7 +393,8 @@ class Replay(UiMachine):
         return self.regs['d0']
 
 
-def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, prior_027=None):
+def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, prior_027=None,
+            prior_028=None):
     report = json.loads((directory / 'report.json').read_text(encoding='utf-8'))
     image = (directory / report['image']).read_bytes()
     m = Replay(image, engine)
@@ -320,9 +434,9 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, p
     for drive, electronic, shutter in ((0, 0, 0), (12, 0, 1), (30, 1, 2)):
         m.select_drive(drive)
         require(m.hdr_settings() == NO_HDR, 'native single drive did not start unbracketed')
-        reached = m.capture()
-        require(reached == STANDBY_ADVANCE and m.word(SHOOTER+792) == 22 and
-                m.hdr_settings() == HDR1 and m.word(TRIGGER) & 1 and m.word(status) == 7,
+        reached = m.capture(complete_guard=True)
+        require(reached == STANDBY_GUARD_RETURN and m.word(SHOOTER+792) == 22 and
+                m.hdr_settings() == HDR1 and m.word(TRIGGER) & 1 and m.word(status) == 12,
                 f'marked drive {drive} stopped at {reached:#x} with '
                 f'capture settings={m.hdr_settings()} and trigger={m.word(TRIGGER):#x}')
         require(m.word(SHOOTER+728) == 0, 'Rec armed the interval session')
@@ -330,8 +444,6 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, p
                 'native sequence did not combine HDR with the selected shutter')
 
         if electronic:
-            m.replay(0x6095057D, mask=0xE0, frame=24, registers=dict(a0=SHOOTER))
-            require(m.read(BRACKET_LIMIT, 2) == pack('<H', 4), 'native bracket limit is not four')
             require(m.native_value(0x6042888C, 0) == 1, 'native exposure logic did not select HDR')
             require(m.capture() == CAPTURE_REPLY and
                     m.hdr_settings() == HDR1 and m.word(status) == 11,
@@ -342,16 +454,26 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, p
         require(m.read(CONTROLLER+1998, 1) == bytes([shutter]),
                 'controller selected a different shutter')
 
-        clear, bits = (0x6093434E, 15) if electronic else (0x609452BB, 1)
-        m.replay(clear, mid=True, stop=(clear+7,), registers=dict(a0=SHOOTER, d0=bits))
+        m.exit_standby()
+        require(m.hdr_settings() == HDR1 and m.word(TRIGGER) == 0 and
+                m.word(RELEASE_HISTORY) & 5 == 5 and m.word(RELEASE_EVENT) == 4 and
+                m.word(FULL_RELEASE_FLAGS) & 0x100,
+                'native standby exit discarded the Rec release')
+        require(m.finish_focus() == 20 and m.hdr_settings() == HDR1,
+                'native focus completion did not select READY_TRIG2 with HDR')
+        m.start_exposure()
+        require(m.hdr_settings() == HDR1, 'the exposure request lost its HDR recipe')
+        m.restore_standby()
         require(m.hdr_settings() == NO_HDR and m.word(TRIGGER) == 0 and
+                m.word(RELEASE_HISTORY) & 5 == 0 and m.word(RELEASE_EVENT) == 0 and
+                m.word(FULL_RELEASE_FLAGS) & 0x100 == 0 and
                 (m.word(SEQUENCE) & 0x10209) == 0 and m.drive == drive and m.word(status) == 8,
                 'HDR state leaked after cleanup')
         if electronic:
             m.replay(0x6095057D, mask=0xE0, frame=24, registers=dict(a0=SHOOTER))
             require(m.read(BRACKET_LIMIT, 2) == pack('<H', 1), 'ordinary capture is still bracketed')
             require(m.native_value(0x6042888C, 0) == 0, 'ordinary exposure still selects HDR')
-        drive_results.append(dict(drive=drive, controller_shutter=shutter))
+        drive_results.append(dict(drive=drive, controller_shutter=shutter, native_hdr_frames=4))
 
     m.word_set(CAPTURE_STATE, 5)  # A physical half-press already owns READY_TRIG2.
     reached = m.capture()
@@ -399,13 +521,15 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, p
                 interval_bit_left_clear=True,
                 still_release_disable_respected=True,
                 drive_results=drive_results, native_electronic_bracket_limit=4, native_hdr_ae=True,
-                trigger_clear_restore=True, ordinary_electronic_bracket_limit=1,
+                native_focus_complete_reached=True, native_hdr_exposure_handoff=True,
+                standby_restores_single_capture=True, ordinary_electronic_bracket_limit=1,
                 overlapping_requests_rejected=True, non_owner_core_rejected=True,
                 stock_one_shot_unchanged=True,
                 hash_checks_performed=False, hardware_executed=False,
-                boundary='Native replay covers event dispatch through the standby state selection, HDR AE eligibility, '
-                          'sequence and shutter selection. UI services, RTOS, heap, typed-property resolution, '
-                          'media readiness and transport are modeled.')
+                boundary='Native replay covers event dispatch, focus completion, HDR AE eligibility, shutter '
+                          'selection and the four-frame request up to the lens/sensor service call. A modeled '
+                          'return to standby exercises restoration. Lens, buffer, media, RTOS, UI, heap, '
+                          'typed-property resolution and transport services are modeled.')
     if prior_024 is not None:
         previous = json.loads((prior_024 / 'report.json').read_text(encoding='utf-8'))
         require(previous['release'] == '024', 'expected the original 024 firmware')
@@ -450,6 +574,19 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, p
         require(legacy.capture() == STANDBY_ADVANCE and legacy.hdr_settings() == HDR1,
                 '027 did not distinguish the take-picture request field')
         result['original_027_d_reproduced_with_native_release_enable'] = True
+    if prior_028 is not None:
+        previous = json.loads((prior_028 / 'report.json').read_text(encoding='utf-8'))
+        require(previous['release'] == '028', 'expected the original 028 firmware')
+        legacy = Replay((prior_028 / previous['image']).read_bytes(), engine)
+        legacy.set_release(True)
+        legacy.rec_key(KEY_PRESS)
+        require(legacy.capture(complete_guard=True) == STANDBY_GUARD_RETURN and
+                legacy.word(SHOOTER+792) == 22 and legacy.hdr_settings() == HDR1,
+                '028 did not start the standby to READY transition')
+        legacy.exit_standby()
+        require(legacy.hdr_settings() == NO_HDR and legacy.word(RELEASE_HISTORY) & 4 == 0 and
+                legacy.finish_focus() == 21, '028 did not reproduce the wait for full release')
+        result['original_028_cleared_hdr_before_focus_and_waited_for_full_release'] = True
     return result
 
 
@@ -462,8 +599,9 @@ if __name__ == '__main__':
     parser.add_argument('--prior-025', type=Path, help='reproduce the original 025 interval-gate rejection')
     parser.add_argument('--prior-026', type=Path, help='reproduce 026 on native single-drive properties')
     parser.add_argument('--prior-027', type=Path, help='reproduce 027 with stock shutter enabled and no shot requested')
+    parser.add_argument('--prior-028', type=Path, help='reproduce the original 028 stall after focusing')
     args = parser.parse_args()
     result = json.dumps(inspect(args.candidate, args.engine, args.prior_024, args.prior_025,
-                                args.prior_026, args.prior_027), indent=2) + '\n'
+                                args.prior_026, args.prior_027, args.prior_028), indent=2) + '\n'
     args.out.write_text(result, encoding='utf-8')
     print(result, end='')

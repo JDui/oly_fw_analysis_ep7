@@ -55,6 +55,8 @@ m.boundaries={0x60d7ef32:resolve,0x60d4c9df:set_text}
 status_symbol=report.get('rec_hdr',{}).get('body_status_symbol')
 status_addr=None
 rec_labels='vKQDCMPTFSLW' if int(report['release'])>=28 else 'vKQDCMPTF'
+if int(report['release']) >= 29:
+    rec_labels += 'R'
 if status_symbol:
     symbols=json.loads((args.candidate/'symbols.json').read_text())
     status_addr=int(symbols[status_symbol]['address'],16)

@@ -28,7 +28,7 @@ GitHub Releases 中的最新公开试用包为 **EP7HSL 023 EXPERIMENTAL**。下
 
 023 保留 015 的 HSL 色轮，加入两档高光压制，并调整亮部过渡以减轻前序试用版出现的色阶。机身版本显示为 **1.1v023**。定向离线与封装验证已通过，实机 JPEG 效果待确认。[023 版本说明](docs/ep7/EXPERIMENTAL_SD_023.md)
 
-028 SD 试用版修正原厂启用快门后 Rec 仍被拒绝的问题。P/A/S/M 的 Rec HDR1 沿用当前单张驱动的快门类型，机身版本页可查看触发进度。028 待实机验收。[028 试用说明](docs/ep7/EXPERIMENTAL_SD_028.md)
+029 本地 SD 试用版修正 028 的 Rec 对焦后停住问题。P/A/S/M 的 Rec HDR1 沿用当前单张驱动的快门类型。机身版本页可查看触发进度，实际成片待实机验收。[029 试用说明](docs/ep7/EXPERIMENTAL_SD_029.md)
 
 ### SD 卡刷入
 
@@ -93,7 +93,7 @@ The latest public SD trial package on GitHub is **EP7HSL 023 EXPERIMENTAL**. Dow
 
 Version 023 retains the 015 HSL wheels and adds two highlight compression levels with a revised roll-off aimed at reducing banding seen in earlier trials. The camera displays **1.1v023**. Targeted offline and package checks passed. JPEG output still awaits on-camera confirmation. [Version 023 notes](docs/ep7/EXPERIMENTAL_SD_023.md)
 
-The local 028 SD trial package addresses Rec HDR rejection after the stock shutter enable command. Rec HDR1 uses the selected shutter in P/A/S/M. The BODY version page reports the latest Rec stage. On-camera validation is pending. [028 trial guide](docs/ep7/EXPERIMENTAL_SD_028.md)
+The local 029 SD trial package addresses the Rec HDR stall after focusing in 028. Rec HDR1 uses the shutter selected for single-frame shooting in P/A/S/M. The BODY version page reports the latest Rec stage. Image output awaits on-camera validation. [029 trial guide](docs/ep7/EXPERIMENTAL_SD_029.md)
 
 ### Installing from an SD card
 
