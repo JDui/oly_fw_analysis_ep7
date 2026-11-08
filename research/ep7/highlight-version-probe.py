@@ -52,22 +52,34 @@ def set_text(m):
     m.write(HOOK_RETURN,b'\xdf\xf0\x18'+b'\xcb'*5)
     m.regs.update(pc=HOOK_RETURN,d0=1)
 m.boundaries={0x60d7ef32:resolve,0x60d4c9df:set_text}
+status_symbol=report.get('rec_hdr',{}).get('body_status_symbol')
+status_addr=None
+if status_symbol:
+    symbols=json.loads((args.candidate/'symbols.json').read_text())
+    status_addr=int(symbols[status_symbol]['address'],16)
 cases=[]
 for start,stop,field,widget,body in (
         (0x60d7f25c,0x60d7f278,940,26,True),
         (0x60d7f2bd,0x60d7f2d4,300,18,True),
         (0x60d7f278,0x60d7f28f,948,27,False),
         (0x60d7f2d4,0x60d7f2eb,308,19,False)):
-    for original in ('1.1','','2.3'):
+    inputs=[('1.1',0),('',0),('2.3',0)]
+    if status_addr is not None:
+        inputs += [('1.1',4),('1.1',8),('1.1',9),('2.3',3)] if body else [('1.1',3)]
+    for original,status in inputs:
+        if status_addr is not None:
+            word(status_addr,status)
         m.write(RECORD+field,(original+'\0').encode('utf-16le').ljust(8,b'\0'))
         before=m.read(RECORD,1004)
         word(CALL_SP+4,RECORD)
         texts.clear()
         row=m.call_native(start,entry=start,stop=stop,values={'a3':VIEWER},preserved=())
         expected=report['displayed_body_version'] if body and original=='1.1' else original
+        if body and original=='1.1' and 0<status<9:
+            expected=expected.replace('v','vKQDCMPTF'[status],1)
         assert texts==[(WIDGETS+4*widget,expected)],(hex(start),texts)
         assert m.read(RECORD,1004)==before, 'original fixed-size transport record changed'
-        cases.append(dict(site=hex(start),before=original,displayed=expected,
+        cases.append(dict(site=hex(start),before=original,rec_status=status,displayed=expected,
                           instructions=row['instructions']))
 result=dict(status='passed',displayed_body_version=report['displayed_body_version'],
     cases=cases,native_renderer_sites_executed=True,fixed_wire_buffer_unchanged=True,

@@ -50,6 +50,8 @@ def configure(recipe, image):
     })
     recipe.pointers += [(0x604CDA34, '6cae4c60', 'rec_hdr_options')]
     recipe.literals += [(0x604CDA3C, '1800', '1a00')]
+    recipe.calls = [(site, before, 'rec_hdr_version_body' if target == 'version_body' else target,
+                     mask, frame) for site, before, target, mask, frame in recipe.calls]
     recipe.calls += [
         (0x607913CB, 'dd2388fdff0008', 'rec_hdr_sdk_guard', 0, 8),
         (0x6079142B, 'dddc40feff0004', 'rec_hdr_create', 0, 4),

@@ -19,6 +19,8 @@ ep7dr_rec_hdr_press_bridge:
  bhi .Lrestore_stock_key
  cmp 0x01000006,d0
  bne .Lkey_consumed
+ mov 1,d0
+ mov d0,(_ep7rec_status)
  mov 40,d0
  call ep7rec_native_subapp_active,[d2,d3],12
  cmp 0,d0
@@ -80,6 +82,8 @@ ep7dr_rec_hdr_create_bridge:
  call ep7rec_native_create_event,[],4
  mov ep7rec_event_methods,d0
  mov d0,(a0)
+ mov 2,d0
+ mov d0,(_ep7rec_status)
  mov 1007,d0
  ret [],4
 .Lstock_event_create:
@@ -94,6 +98,8 @@ ep7dr_rec_hdr_event_bridge:
  mov (a1),d0
  cmp ep7rec_event_methods,d0
  bne .Lstock_event
+ mov 3,d0
+ mov d0,(_ep7rec_status)
  call ep7rec_native_one_shot,[d2,a2,a3],32
 .Lrec_take_return:
  ret [],4
@@ -163,6 +169,27 @@ ep7dr_rec_hdr_clear_bridge:
  mov (12,sp),a1
  add 20,sp
  jmp ep7rec_native_clear_trigger
+
+/* The native BODY wire fields are word-aligned and eight bytes wide.
+ * Select a read-only, seven-character label for the last Rec attempt. */
+.global ep7dr_rec_hdr_version_body_bridge
+ep7dr_rec_hdr_version_body_bridge:
+ mov (a1),d0
+ cmp 0x002e0031,d0
+ bne .Lbody_stock
+ mov (4,a1),d0
+ cmp 0x00000031,d0
+ bne .Lbody_stock
+ mov (_ep7rec_status),d0
+ cmp 8,d0
+ bhi .Lbody_default
+ asl 4,d0
+ mov _ep7rec_version_labels,a1
+ add d0,a1
+.Lbody_stock:
+ jmp ep7dr_stock_version_set_text_unresolved
+.Lbody_default:
+ jmp ep7dr_version_body_bridge
 
 .global _ep7rec_get
 _ep7rec_get:
