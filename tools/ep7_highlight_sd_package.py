@@ -9,6 +9,7 @@ import copy
 import json
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import zipfile
 
@@ -39,12 +40,13 @@ def elf_bytes(prefix, elf, section):
         return out.read_bytes()
 
 
-def audit_overlay(baseline, candidate, tested, reference_package, stock, prefix):
+def audit_overlay(baseline, candidate, tested, reference_package, stock, prefix, *,
+                  strategy='highlight_mapping_only'):
     old = read_json(baseline/'report.json')
     report = read_json(candidate/'report.json')
     tested_report = read_json(tested/'report.json')
-    require(report['strategy'] == tested_report['strategy'] == 'highlight_mapping_only',
-            'not the rendering-only candidate')
+    require(report['strategy'] == tested_report['strategy'] == strategy,
+            'candidate strategy differs from the requested package')
     data = (candidate/report['image']).read_bytes()
     require(data == (tested/tested_report['image']).read_bytes(),
             'fresh final build differs from the candidate covered by runtime probes')
@@ -111,7 +113,7 @@ def audit_overlay(baseline, candidate, tested, reference_package, stock, prefix)
     patches = {row['site']: row for row in view['patches']}
     for row in report['patches']:
         site, size = int(row['site'],16), len(bytes.fromhex(row['after']))
-        patches[row['site']] = dict(site=row['site'], bytes=size, kind='highlight_overlay',
+        patches[row['site']] = dict(site=row['site'], bytes=size, kind=strategy,
                                     load_stage=load_region(site,size)['stage'])
     view['patches'] = list(patches.values())
     view['patch_count'] = len(patches)
@@ -125,9 +127,41 @@ def audit_overlay(baseline, candidate, tested, reference_package, stock, prefix)
         layout=layout, hash_checks_performed=False, hardware_executed=False)
 
 
+def runtime_evidence(args, build):
+    directory = args.tested
+    names = ('replay.json', 'settings-probe.json', 'ui-probe-core0.json',
+             'ui-probe-core1.json', 'version-probe.json')
+    if args.rec_hdr:
+        directory = args.build.resolve()
+        probes = (('rec-hdr-probe.py', 'rec-hdr-replay.json'),
+                  ('highlight-version-probe.py', 'version-probe.json'))
+        names = tuple(name for _, name in probes)
+        for script, name in probes:
+            print(f"{build['release']}: replaying {script} on the final build", flush=True)
+            subprocess.run([sys.executable, '-B', str(ROOT/'research/ep7'/script),
+                            '--candidate', str(directory), '--engine', str(args.engine.resolve()),
+                            '--out', str(directory/name)], check=True, stdout=subprocess.DEVNULL)
+
+    evidence = {}
+    for name in names:
+        blob = (directory/name).read_bytes()
+        result = json.loads(blob)
+        require(result['status'] == 'passed' and result['hash_checks_performed'] is False,
+                'runtime evidence failed: '+name)
+        if name == 'version-probe.json':
+            require(result['displayed_body_version'] == build['displayed_body_version'],
+                    'tested BODY version differs')
+        evidence['evidence/'+name] = blob
+    return evidence
+
+
 def deliver(args):
-    release = read_json(args.tested/'report.json')['release']
+    tested = read_json(args.tested/'report.json')
+    release = tested['release']
     require(len(release)==3 and release.isascii() and release.isdigit(), 'bad release')
+    require((release == '024') == args.rec_hdr, 'release 024 and --rec-hdr must be selected together')
+    strategy = 'rec_hdr_lab' if args.rec_hdr else 'highlight_mapping_only'
+    require(tested['strategy'] == strategy, 'candidate strategy differs from the requested package')
     out = args.out.resolve()
     require(not out.exists(), 'delivery output must be new')
     require(not args.build.exists(), 'final build output must be new')
@@ -137,10 +171,12 @@ def deliver(args):
     stock = args.decoded_stock.read_bytes()
     require(blocks[0].payload == stock and len(raw) == 111017984 and reconstruct(blocks) == raw,
             'stock source/decoded main/container roundtrip differs')
-    print(f'{release}: building unchanged-exposure highlight candidate', flush=True)
-    build_highlight(args.prefix, args.baseline.resolve(), args.build.resolve(),release)
+    print(f'{release}: building {strategy} candidate', flush=True)
+    build_highlight(args.prefix, args.baseline.resolve(), args.build.resolve(), release,
+                    rec_hdr=args.rec_hdr)
     data, build, audit = audit_overlay(args.baseline, args.build, args.tested,
-                                      args.reference, stock, args.prefix)
+                                      args.reference, stock, args.prefix, strategy=strategy)
+    runtime = runtime_evidence(args, build)
     print(f'{release}: checking original loader with poisoned destination memory', flush=True)
     residency = dict(status='passed', original_loader=loaded_state(data,args.engine),
                      placement=audit['layout'], hash_checks_performed=False, hardware_executed=False)
@@ -170,14 +206,8 @@ def deliver(args):
         'evidence/residency.json': json_bytes(residency),
         'evidence/native-updater.json': json_bytes(native),
         'evidence/build.json': json_bytes(build),
+        **runtime,
     }
-    for name in ('replay.json','settings-probe.json','ui-probe-core0.json',
-                 'ui-probe-core1.json','version-probe.json'):
-        blob = (args.tested/name).read_bytes()
-        result = json.loads(blob)
-        require(result['status'] == 'passed' and result['hash_checks_performed'] is False,
-                'runtime evidence failed')
-        evidence['evidence/'+name] = blob
     inputs = [path for path in (ROOT/'prototypes/ep7_volatile_hl/native_single_dr').iterdir()
               if path.suffix in ('.h','.c','.s')]
     inputs += [ROOT/'tools'/name for name in ('ep7_highlight_candidate.py','ep7_highlight_gamma.py',
@@ -186,6 +216,8 @@ def deliver(args):
     inputs += [ROOT/'research/ep7'/name for name in ('highlight-candidate-probe.py',
         'highlight-version-probe.py','single-dr-curve-ui-probe.py',
         'single-dr-settings-candidate-probe.py')]
+    if args.rec_hdr:
+        inputs += [ROOT/'tools/ep7_rec_hdr_patch.py', ROOT/'research/ep7/rec-hdr-probe.py']
     snapshot = args.build/'highlight-source-snapshot'
     for source in inputs:
         target = snapshot/source.relative_to(ROOT)
@@ -194,12 +226,11 @@ def deliver(args):
         require(target.read_bytes() == source.read_bytes(), 'source snapshot differs')
     manifest = dict(status='passed', release=release, camera='E-P7', base='1.1 / build1100',
         displayed_body_version=build['displayed_body_version'],
-        strategy='highlight_mapping_only', manual_sd_test_package_ready=True,
-        package_creation_authorization='User explicitly requested: 给我新的固件',
+        strategy=strategy, manual_sd_test_package_ready=True,
         install_file='install/DCOLYMP/E1429999.BIN', stock_return_file='restore-stock/DCOLYMP/E1429999.BIN',
         bytes_per_firmware=len(packed), source_build=str(args.build),
         source_snapshot=str(snapshot), baseline='015', retained_015_HSL=True,
-        exposure_iso_gain_unchanged=True, raw_capture_path_unchanged=True,
+        exposure_iso_gain_unchanged=build['exposure_iso_gain_unchanged'],
         host_all_component_additive_checksums_passed=True, native_mode1_routing_passed=True,
         native_full_mode2_decode_repeated=False, final_equals_runtime_tested_image=True,
         camera_write_executed=False, physical_boot_verified=False, physical_save_verified=False,
@@ -209,6 +240,14 @@ def deliver(args):
                 'Native storage/backend/service successes are model boundaries; actual writes are trapped.',
                 'The stock return file needs a working updater and is not independent recovery.',
                 'Curve strength does not establish a measured EV or dynamic range improvement.'])
+    if args.rec_hdr:
+        manifest['rec_hdr'] = {key: build['rec_hdr'][key] for key in
+                               ('button_sid', 'function', 'native_recipe', 'frames', 'shutter', 'scope')}
+        manifest['rec_hdr']['camera_capture_verified'] = False
+        manifest['limits'].append('Rec HDR replay models UI services, RTOS, heap and transport. '
+                                  'Full exposure, composition and cleanup on camera await validation.')
+    else:
+        manifest['raw_capture_path_unchanged'] = True
     files = {manifest['install_file']:packed, manifest['stock_return_file']:raw,
              'README.md':(ROOT/f'docs/ep7/EXPERIMENTAL_SD_{release}.md').read_bytes(),
              'manifest.json':json_bytes(manifest), **evidence}
@@ -240,5 +279,6 @@ if __name__ == '__main__':
     for name in ('stock','decoded-stock','baseline','tested','reference','build','out','engine'):
         parser.add_argument('--'+name,type=Path,required=True)
     parser.add_argument('--prefix',required=True)
+    parser.add_argument('--rec-hdr', action='store_true', help='package the 024 Rec HDR candidate')
     args = parser.parse_args()
     print(json.dumps(deliver(args),indent=2))

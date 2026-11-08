@@ -237,13 +237,30 @@ def inspect(directory, engine):
     reached = m.replay(CAPTURE_ENTRY, **replay_capture)
     require(reached == CAPTURE_REPLY and m.hdr_settings() == (0, 0, 0) and m.word(TRIGGER) == 0,
             'Rec took over a half-pressed physical shutter')
+
+    m.state = 1
+    m.word_set(0x8050, 1)
+    require(m.replay(CAPTURE_ENTRY, **replay_capture) == CAPTURE_REPLY and
+            m.hdr_settings() == (0, 0, 0) and m.word(TRIGGER) == 0,
+            'Rec armed a shot outside the synchronous settings core')
+    m.word_set(0x8050, 0)
+
     m.interval = 1
     m.rec_key(KEY_PRESS)
     require(len(m.shots) == 1, 'Rec queued a request during interval shooting')
+    m.word_set(EVENT, 0x60A7DD24)  # Original one-shot event class.
+    sequence = m.word(SEQUENCE)
+    require(m.replay(CAPTURE_ENTRY, **replay_capture) == CAPTURE_STARTED and
+            m.hdr_settings() == (0, 0, 0) and m.word(SEQUENCE) == sequence,
+            'stock interval request acquired the HDR settings')
+    m.replay(0x609452BB, mid=True, stop=(0x609452C2,), registers=dict(a0=SHOOTER, d0=1))
+    require(m.word(TRIGGER) == 0 and m.word(SEQUENCE) == sequence,
+            'stock trigger clear acquired the HDR settings')
     return dict(status='passed', rec_menu_option=True, single_request=True,
                 drive_results=drive_results, native_electronic_bracket_limit=4, native_hdr_ae=True,
                 trigger_clear_restore=True, ordinary_electronic_bracket_limit=1,
-                overlapping_requests_rejected=True,
+                overlapping_requests_rejected=True, non_owner_core_rejected=True,
+                stock_one_shot_unchanged=True,
                 hash_checks_performed=False, hardware_executed=False,
                 boundary='Native instruction replay covers release admission, sequence, bracket limit, '
                          'HDR AE eligibility and shutter selection. UI services, RTOS, heap, '
