@@ -9,6 +9,7 @@ import argparse
 import json
 import subprocess
 from pathlib import Path
+from types import SimpleNamespace
 
 from ep7_offline_candidate import BASE, IMAGE_NAME, RAM_IMAGE_START, RAM_START
 from ep7_offline_candidate import replacement, save, sections, symbols
@@ -128,11 +129,20 @@ LITERALS = [
 ]
 
 
-def build(prefix, baseline, out):
+def overlay_recipe():
+    return SimpleNamespace(stem=STEM, modules=MODULES, defines=list(DEFINES), entry=ENTRY,
+                           strategy=STRATEGY, native=dict(NATIVE), calls=list(CALLS),
+                           jumps=list(JUMPS), pointers=list(POINTERS), literals=list(LITERALS),
+                           table_source=target_table_source)
+
+
+def build(prefix, baseline, out, *, recipe=None):
+    if recipe is None:
+        recipe = overlay_recipe()
     image = bytearray((baseline / IMAGE_NAME).read_bytes())
     old_symbols = json.loads((baseline / 'symbols.json').read_text(encoding='utf-8'))
     old_addresses = {name: int(row['address'], 16) for name, row in old_symbols.items()}
-    bindings = dict(NATIVE, **{name: old_addresses[name] for name in
+    bindings = dict(recipe.native, **{name: old_addresses[name] for name in
                               ('_ep7h_stock_value', '_ep7h_active_get', '_ep7h_active_set')},
                     ep7dr_015_clone_bridge=old_addresses['ep7h_capture_clone_bridge'])
     bindings.update({f'ep7dr_stock_ui_{name}_unresolved': address
@@ -142,16 +152,16 @@ def build(prefix, baseline, out):
         raise ValueError('expected the existing build 015 decoded candidate and symbol map')
 
     out.mkdir(parents=True, exist_ok=True)
-    (out / 'single_dr_gamma_tables.inc').write_text(target_table_source(image), encoding='ascii')
+    (out / 'single_dr_gamma_tables.inc').write_text(recipe.table_source(image), encoding='ascii')
     gcc_include = subprocess.check_output([prefix + 'gcc', '-print-file-name=include'],
                                           text=True).strip()
     common = ['-mno-setlb', '-mno-liw']
     c_flags = ['-std=c11', '-O2', '-Wall', '-Wextra', '-Werror', '-ffreestanding',
                '-fno-builtin', '-fstack-usage', '-nostdinc', '-I' + str(INCLUDE),
-               '-I' + gcc_include, '-I' + str(out), *DEFINES]
+               '-I' + gcc_include, '-I' + str(out), *recipe.defines]
     objects = []
     for source in sorted(SOURCE.iterdir()):
-        if source.stem not in MODULES or source.suffix not in ('.c', '.s'):
+        if source.stem not in recipe.modules or source.suffix not in ('.c', '.s'):
             continue
         obj = out / (source.name + '.o')
         flags = c_flags if source.suffix == '.c' else []
@@ -160,7 +170,7 @@ def build(prefix, baseline, out):
         objects.append(str(obj))
 
     script = out / 'single-dr.ld'
-    script.write_text(f'OUTPUT_ARCH(mn10300)\nENTRY({ENTRY})\n' +
+    script.write_text(f'OUTPUT_ARCH(mn10300)\nENTRY({recipe.entry})\n' +
                       ''.join(f'{name} = {address:#x};\n' for name, address in bindings.items()) +
                       f'''SECTIONS {{
     .ep7dr_code {CODE_START:#x} : {{ *(.text .text.* .rodata .rodata.*) }}
@@ -172,8 +182,8 @@ ASSERT(SIZEOF(.data) == 0, "unexpected initialized mutable state")
 ASSERT(ADDR(.ep7dr_code) + SIZEOF(.ep7dr_code) <= {CODE_END:#x}, "code overflow")
 ASSERT(ADDR(.ep7dr_state) + SIZEOF(.ep7dr_state) <= {STATE_END:#x}, "state overflow")
 ''', encoding='ascii')
-    elf = out / (STEM + '.elf')
-    subprocess.run([prefix + 'ld', '-T', str(script), '-Map', str(out / (STEM + '.map')),
+    elf = out / (recipe.stem + '.elf')
+    subprocess.run([prefix + 'ld', '-T', str(script), '-Map', str(out / (recipe.stem + '.map')),
                     '-o', str(elf), *objects], check=True)
     syms = symbols(prefix, elf)
     save(out / 'symbols.json', {name: dict(row, address=hex(row['address']))
@@ -200,28 +210,28 @@ ASSERT(ADDR(.ep7dr_state) + SIZEOF(.ep7dr_state) <= {STATE_END:#x}, "state overf
 
     overlay(CODE_START, b'\xff' * len(code_bytes), code_bytes)
     patches = []
-    for site, before, target, *args in CALLS + JUMPS + POINTERS:
-        recipe = {'target_symbol': f'ep7dr_{target}_bridge'}
+    for site, before, target, *args in recipe.calls + recipe.jumps + recipe.pointers:
+        instruction = {'target_symbol': f'ep7dr_{target}_bridge'}
         size = len(bytes.fromhex(before))
         if args:
-            recipe.update(encoding='CALL32', mask=args[0], frame=args[1])
+            instruction.update(encoding='CALL32', mask=args[0], frame=args[1])
         elif size == 4:
-            recipe.update(encoding='absolute_le32')
+            instruction.update(encoding='absolute_le32')
         else:
-            recipe.update(encoding='JMP32_NOP_suffix', nop_count=size - 5)
-        row = dict(site=hex(site), bytes=size, replacement=recipe)
+            instruction.update(encoding='JMP32_NOP_suffix', nop_count=size - 5)
+        row = dict(site=hex(site), bytes=size, replacement=instruction)
         after, _ = replacement(row, syms)
         overlay(site, bytes.fromhex(before), after)
         patches.append(dict(site=hex(site), before=before, after=after.hex(),
-                            target=recipe['target_symbol']))
-    for site, before, after in LITERALS:
+                            target=instruction['target_symbol']))
+    for site, before, after in recipe.literals:
         overlay(site, bytes.fromhex(before), bytes.fromhex(after))
         patches.append(dict(site=hex(site), before=before, after=after))
 
-    output = out / (STEM + '.decoded-main.bin')
+    output = out / (recipe.stem + '.decoded-main.bin')
     output.write_bytes(image)
     save(out / 'report.json', dict(
-        status='NON-INSTALLABLE laboratory decoded image', baseline='015', strategy=STRATEGY,
+        status='NON-INSTALLABLE laboratory decoded image', baseline='015', strategy=recipe.strategy,
         image=output.name, code=dict(address=hex(CODE_START), bytes=len(code_bytes)),
         state=dict(address=hex(state['address']), bytes=state['size']), patches=patches,
         limits=['Loaded code padding and uncached RAM ownership are unqualified on-camera.',

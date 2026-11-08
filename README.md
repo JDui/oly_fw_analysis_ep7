@@ -24,9 +24,11 @@
 
 ### 当前版本
 
-最新版本为 **EP7HSL 023 EXPERIMENTAL**，请在本仓库 [Releases](https://github.com/JDui/oly_fw_analysis_ep7/releases) 下载 `EP7HSL-023-EXPERIMENTAL-SD.zip`。
+最新 SD 卡试用包为 **EP7HSL 023 EXPERIMENTAL**，请在本仓库 [Releases](https://github.com/JDui/oly_fw_analysis_ep7/releases) 下载 `EP7HSL-023-EXPERIMENTAL-SD.zip`。
 
 023 保留 015 的 HSL 色轮，加入两档高光压制，并调整亮部过渡以减轻前序试用版出现的色阶。机身版本显示为 **1.1v023**。定向离线与封装验证已通过，实机 JPEG 效果待确认。[023 版本说明](docs/ep7/EXPERIMENTAL_SD_023.md)
+
+024 开发里程碑为 P/A/S/M 加入 Rec 一键 HDR1 和电子快门。候选已做定向离线回放，机身验收待完成。[024 实验说明](docs/ep7/REC_HDR_024.md)
 
 ### SD 卡刷入
 
@@ -87,9 +89,11 @@ If you happened to find this project, consider it a lucky find. Please avoid wid
 
 ### Current release
 
-The latest version is **EP7HSL 023 EXPERIMENTAL**. Download `EP7HSL-023-EXPERIMENTAL-SD.zip` from this repository's [Releases](https://github.com/JDui/oly_fw_analysis_ep7/releases).
+The latest SD trial package is **EP7HSL 023 EXPERIMENTAL**. Download `EP7HSL-023-EXPERIMENTAL-SD.zip` from this repository's [Releases](https://github.com/JDui/oly_fw_analysis_ep7/releases).
 
 Version 023 retains the 015 HSL wheels and adds two highlight compression levels with a revised roll-off aimed at reducing banding seen in earlier trials. The camera displays **1.1v023**. Targeted offline and package checks passed. JPEG output still awaits on-camera confirmation. [Version 023 notes](docs/ep7/EXPERIMENTAL_SD_023.md)
+
+Milestone 024 adds one-press Rec HDR1 and electronic shutter support for that capture in P/A/S/M. The candidate passed targeted offline replay and awaits on-camera validation. [024 laboratory notes](docs/ep7/REC_HDR_024.md)
 
 ### Installing from an SD card
 
