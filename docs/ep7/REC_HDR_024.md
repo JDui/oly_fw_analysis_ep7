@@ -1,5 +1,7 @@
 # EP7HSL 024 Rec HDR 实验里程碑
 
+以下为 024 历史记录。实机确认其 Rec 入口会留下快门释放锁，修订见 [025 说明](EXPERIMENTAL_SD_025.md)。
+
 基于 E-P7 原厂 1.1（build 1100）和 023 的高光曲线。SD 卡安装与回刷见 [024 试用说明](EXPERIMENTAL_SD_024.md)。
 
 ## 操作
@@ -17,7 +19,7 @@ Rec 的 HDR 功能适用待机的单张驱动。拍摄中、快门已半按或�
 
 ## 离线复现与结果
 
-在现有 GNU MN10300 工具环境下运行。`--engine` 指向本地构建的严格 MN10300 指令回放器。
+在 024 源码版本及现有 GNU MN10300 工具环境下运行。`--engine` 指向本地构建的严格 MN10300 指令回放器。
 
 ```sh
 python3 -B tools/ep7_highlight_candidate.py \

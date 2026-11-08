@@ -23,6 +23,10 @@ CONTROLLER = 0x19314000
 KEY_PACKET = 0x19315000
 PROPERTIES = 0x19316000
 DESCRIPTORS = 0x19318000
+RELEASE_SERVICE = 0x1931C000
+RELEASE_METHODS = 0x1931C100
+RELEASE_CALL = 0x1931D000
+RELEASE_ENABLED = 0x6233B844
 PROPERTY_MAP = 0x604D6C14
 PROPERTY_CACHE = 0xA2699CB4
 BRACKET_INDEX_CACHE = 0xA269BB20
@@ -33,7 +37,9 @@ READ_SETTING = 0x602AFA81
 NATIVE_VALIDATE = 0x62248528
 KEY_PRESS = 0x01000006
 KEY_RELEASE = 0x01000007
-HDR_ACTION = 0x60CE3B96
+WRAPPED_KEY = 0x0100002E
+HDR_ACTION_CALL, HDR_ACTION_RETURN = 0x60CE03BB, 0x60CE03C0
+STOCK_HDR_RESUME = 0x60CE3B9B
 CAPTURE_ENTRY, CAPTURE_STARTED, CAPTURE_REPLY = 0x609018FC, 0x60953B92, 0x60953C1A
 
 
@@ -43,15 +49,21 @@ class Replay(UiMachine):
         self.regions['stack'] = replace(self.regions['stack'], data=bytes(16384))
         self.regions['stack_after'] = replace(self.regions['stack_after'], address=STACK+16384)
         self.shots = []
+        self.release_commands = []
+        self.release_enabled_on_submit = []
+        self.subapp_active = False
         self.drive = 0
         self.interval = 0
         self.state = 1
         self.typed_keys = {}
         self.shells = {
             READ_SETTING: self.setting,
+            RELEASE_CALL: self.control_release,
             0x60CFBC8A: lambda: self.ret(0),   # UI logger.
+            0x60CFBD9C: lambda: self.ret(0),
+            0x60CFD297: self.resolve_release_service,
+            0x60CE0AA2: self.current_subapp,
             0x60CCBFF5: lambda: self.ret(0),   # Current app state.
-            0x60CD20E9: lambda: self.ret(1),   # Still-view admission.
             0x60CCAC3E: lambda: self.ret(0),   # Key-state notification.
             0x6005D924: self.resolve_typed_key,
             0x6005E65A: lambda: self.ret(0),   # Typed write protection service.
@@ -77,6 +89,10 @@ class Replay(UiMachine):
         self.add('shooter', SHOOTER, bytes(800))
         self.add('controller', CONTROLLER, bytes(2400))
         self.add('key_packet', KEY_PACKET, bytes(24))
+        self.add('release_service', RELEASE_SERVICE, pack('<I', RELEASE_METHODS))
+        self.add('release_methods', RELEASE_METHODS, bytes(216) + pack('<I', RELEASE_CALL))
+        self.add('ui_release_flags', RELEASE_ENABLED, pack('<II', 1, 0))
+        self.add('interval_ui_flags', 0x61FB0AC0, bytes(4))
         self.add('bracket_limit', BRACKET_LIMIT, bytes(2))
         self.add('native_sequence', SEQUENCE, bytes(0x24))
         self.add('inhibit', 0x62257B04, bytes(1))
@@ -109,10 +125,27 @@ class Replay(UiMachine):
     def hdr_settings(self):
         return tuple(self.word(PROPERTIES + 4 * sid) for sid in (600, 1494, 5))
 
-    def rec_key(self, key):
-        self.word_set(KEY_PACKET, key)
-        self.replay(HDR_ACTION, mask=0xA0, frame=44, registers=dict(d0=14, a1=KEY_PACKET))
+    def rec_key(self, key, *, wrapped=False):
+        packet = (WRAPPED_KEY, key) if wrapped else (key, 0)
+        self.write(KEY_PACKET, pack('<II', *packet))
+        self.replay(HDR_ACTION_CALL, mid=True, stop=(HDR_ACTION_RETURN,),
+                    registers=dict(d0=14, a1=KEY_PACKET))
         require(self.regs['sp'] == SP, 'Rec action changed the UI stack')
+
+    def current_subapp(self):
+        require(self.regs['d0'] == 40, 'unexpected stock HDR subapp selector')
+        self.ret(int(self.subapp_active))
+
+    def resolve_release_service(self):
+        require(self.regs['a0'] == 0x60F41C40, 'unexpected UI service')
+        self.regs['a0'] = RELEASE_SERVICE
+        self.ret(0)
+
+    def control_release(self):
+        command = self.regs['d0']
+        require(self.regs['a0'] == RELEASE_SERVICE and command in (0, 1), 'unexpected ctrlRelease call')
+        self.release_commands.append(command)
+        self.regs.update(d0=0, pc=self.regs['mdr'])
 
     def set_property(self, sid, value):
         key, index = unpack('<HH', self.read(PROPERTY_MAP + 4 * sid, 4))
@@ -151,6 +184,7 @@ class Replay(UiMachine):
     def enqueue(self):
         require(self.regs['a1'] == EVENT, 'native constructor did not return its event')
         self.shots.append(self.read(EVENT, 32))
+        self.release_enabled_on_submit.append(self.word(RELEASE_ENABLED))
         self.ret(0)
 
     def replay(self, target, *, mask=0, frame=0, stop=None, registers=None, mid=False):
@@ -177,7 +211,7 @@ class Replay(UiMachine):
         return self.regs['d0']
 
 
-def inspect(directory, engine):
+def inspect(directory, engine, prior=None):
     report = json.loads((directory / 'report.json').read_text(encoding='utf-8'))
     image = (directory / report['image']).read_bytes()
     m = Replay(image, engine)
@@ -187,9 +221,21 @@ def inspect(directory, engine):
     require(m.native_value(0x602B9F70, 47) == len(REC_OPTIONS), 'AEL picker was widened')
     require(m.native_value(0x60CC885C, 473, mask=0xC0) == 14, 'native HDR action differs')
 
-    for key in (KEY_PRESS, 0x01000008, KEY_RELEASE):
-        m.rec_key(key)
+    m.rec_key(KEY_PRESS, wrapped=True)
+    m.rec_key(0x01000008)
+    m.rec_key(KEY_RELEASE)
+    m.subapp_active = True
+    m.rec_key(KEY_PRESS)
+    m.subapp_active = False
     require(len(m.shots) == 1, 'Rec press did not produce exactly one request')
+    require(not m.release_commands and m.release_enabled_on_submit == [1] and
+            m.word(RELEASE_ENABLED) == 1, 'Rec changed the stock shutter release lock')
+    m.write(KEY_PACKET, pack('<II', WRAPPED_KEY, 0x01000004))
+    m.replay(HDR_ACTION_CALL, mid=True, stop=(STOCK_HDR_RESUME,),
+             registers=dict(d0=14, d1=0x1357, a1=KEY_PACKET))
+    require((m.regs['d2'], m.regs['d1'], m.regs['a2'], m.regs['a0']) ==
+            (14, 0x1357, KEY_PACKET, m.regs['sp'] + 28),
+            'non-Rec HDR action changed its original inputs')
     event = m.shots[0]
     vtable, number = unpack('<IH', event[:6])
     require(vtable != 0x60A7DD24 and number == 1007 and
@@ -256,7 +302,8 @@ def inspect(directory, engine):
     m.replay(0x609452BB, mid=True, stop=(0x609452C2,), registers=dict(a0=SHOOTER, d0=1))
     require(m.word(TRIGGER) == 0 and m.word(SEQUENCE) == sequence,
             'stock trigger clear acquired the HDR settings')
-    return dict(status='passed', rec_menu_option=True, single_request=True,
+    result = dict(status='passed', rec_menu_option=True, single_request=True,
+                ui_release_enabled_through_rec=True, stock_hdr_dispatch_preserved=True,
                 drive_results=drive_results, native_electronic_bracket_limit=4, native_hdr_ae=True,
                 trigger_clear_restore=True, ordinary_electronic_bracket_limit=1,
                 overlapping_requests_rejected=True, non_owner_core_rejected=True,
@@ -265,6 +312,15 @@ def inspect(directory, engine):
                 boundary='Native instruction replay covers release admission, sequence, bracket limit, '
                          'HDR AE eligibility and shutter selection. UI services, RTOS, heap, '
                          'typed-property resolution and transport are modeled.')
+    if prior is not None:
+        previous = json.loads((prior / 'report.json').read_text(encoding='utf-8'))
+        require(previous['release'] == '024', 'expected the original 024 firmware')
+        legacy = Replay((prior / previous['image']).read_bytes(), engine)
+        legacy.rec_key(KEY_PRESS)
+        require(legacy.release_commands == [1] and legacy.release_enabled_on_submit == [0] and
+                legacy.word(RELEASE_ENABLED) == 0, 'original 024 release-lock regression did not reproduce')
+        result['original_024_release_disable_reproduced'] = True
+    return result
 
 
 if __name__ == '__main__':
@@ -272,7 +328,8 @@ if __name__ == '__main__':
     parser.add_argument('--candidate', type=Path, required=True)
     parser.add_argument('--engine', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--prior-024', type=Path, help='reproduce the original 024 release-lock regression')
     args = parser.parse_args()
-    result = json.dumps(inspect(args.candidate, args.engine), indent=2) + '\n'
+    result = json.dumps(inspect(args.candidate, args.engine, args.prior_024), indent=2) + '\n'
     args.out.write_text(result, encoding='utf-8')
     print(result, end='')

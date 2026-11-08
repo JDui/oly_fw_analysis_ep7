@@ -31,8 +31,9 @@ def configure(recipe, image):
         'ep7rec_native_publish_sequence': 0x609466B2,
         'ep7rec_native_get_trigger': 0x609607F6,
         'ep7rec_native_clear_trigger': 0x609607FF,
-        'ep7rec_native_key_record': 0x60CE09DE,
-        'ep7rec_native_key_continue': 0x60CE3BFD,
+        'ep7rec_native_normalize_key': 0x60CC9A05,
+        'ep7rec_native_subapp_active': 0x60CE0AA2,
+        'ep7rec_native_key_continue': 0x60CE3B9B,
         'ep7rec_native_key_return': 0x60CE3C0A,
         'ep7rec_native_submit': 0x607913AB,
         'ep7rec_native_create_event': 0x60775507,
@@ -56,7 +57,7 @@ def configure(recipe, image):
         (0x609452BB, 'dd44b501000000', 'rec_hdr_clear', 0, 0),
     ]
     recipe.jumps += [
-        (0x60CE3BF6, '8188cde6cdc00c', 'rec_hdr_press'),
+        (0x60CE3B96, '96823c201c', 'rec_hdr_press'),
         (0x609018FC, 'fa20100bddb0210500b020', 'rec_hdr_event'),
         (0x60953B64, 'dd6e6fe1ff0000a001c939', 'rec_hdr_admission'),
         (0x60968A44, 'a000c805cc9300', 'rec_hdr_silent_guard'),

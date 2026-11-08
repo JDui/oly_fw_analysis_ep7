@@ -1,16 +1,27 @@
 .text
 
-/* The stock HDR action has already passed the still-view admission check.
- * D0 is the normalized key event and D2 is its native action. */
+/* D0 is the action and A1 is the shooting-view input packet. Intercept before
+ * the stock HDR subapp disables releases until its own exit handler runs. */
 .global ep7dr_rec_hdr_press_bridge
 ep7dr_rec_hdr_press_bridge:
- cmp 14,d2
+ cmp 14,d0
  bne .Lstock_key
+ mov d1,(28,sp)
+ mov a1,a2
+ mov (a2),d0
+ mov d0,(4,sp)
+ mov (4,a2),d0
+ mov d0,(8,sp)
+ call ep7rec_native_normalize_key,[d2],4
  cmp 0x01000006,d0
- bcs .Lstock_key
+ bcs .Lrestore_stock_key
  cmp 0x01000009,d0
- bhi .Lstock_key
+ bhi .Lrestore_stock_key
  cmp 0x01000006,d0
+ bne .Lkey_consumed
+ mov 40,d0
+ call ep7rec_native_subapp_active,[d2,d3],12
+ cmp 0,d0
  bne .Lkey_consumed
  mov 24,d0
  call ep7rec_native_get,[],4
@@ -22,10 +33,15 @@ ep7dr_rec_hdr_press_bridge:
 .Lrec_submit_return:
 .Lkey_consumed:
  jmp ep7rec_native_key_return
+.Lrestore_stock_key:
+ mov (28,sp),d1
+ mov a2,a1
+ mov 14,d0
 .Lstock_key:
- mov d0,d1
- mov d2,d0
- call ep7rec_native_key_record,[d2,d3],12
+ mov a1,a2
+ mov d0,d2
+ mov sp,a0
+ add 28,a0
  jmp ep7rec_native_key_continue
 
 /* The native one-shot API is also used by the interval timer. The Rec caller

@@ -159,7 +159,9 @@ def deliver(args):
     tested = read_json(args.tested/'report.json')
     release = tested['release']
     require(len(release)==3 and release.isascii() and release.isdigit(), 'bad release')
-    require((release == '024') == args.rec_hdr, 'release 024 and --rec-hdr must be selected together')
+    require(release != '024', 'release 024 has a known shutter lock; use 025 or later')
+    require(args.rec_hdr or release != '025', 'release 025 needs --rec-hdr')
+    require(not args.rec_hdr or release >= '025', 'Rec HDR SD packaging requires 025 or later')
     strategy = 'rec_hdr_lab' if args.rec_hdr else 'highlight_mapping_only'
     require(tested['strategy'] == strategy, 'candidate strategy differs from the requested package')
     out = args.out.resolve()
@@ -279,6 +281,6 @@ if __name__ == '__main__':
     for name in ('stock','decoded-stock','baseline','tested','reference','build','out','engine'):
         parser.add_argument('--'+name,type=Path,required=True)
     parser.add_argument('--prefix',required=True)
-    parser.add_argument('--rec-hdr', action='store_true', help='package the 024 Rec HDR candidate')
+    parser.add_argument('--rec-hdr', action='store_true', help='package a corrected Rec HDR candidate')
     args = parser.parse_args()
     print(json.dumps(deliver(args),indent=2))
