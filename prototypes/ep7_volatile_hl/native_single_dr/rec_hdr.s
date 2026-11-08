@@ -107,24 +107,20 @@ ep7dr_rec_hdr_event_bridge:
  call ep7rec_native_one_shot,[d2,a2,a3],32
  ret [],4
 
-/* The native one-shot gate is the interval-session bit. Rec uses the normal
- * still release checks in ep7rec_begin and enters the same standby handler. */
+/* The native one-shot gate is the interval-session bit. The Rec request
+ * uses the normal still release checks in ep7rec_begin. */
 .global ep7dr_rec_hdr_admission_bridge
 ep7dr_rec_hdr_admission_bridge:
  mov (32,sp),d0
  cmp .Lrec_take_return,d0
  bne .Linterval_admission
  call ep7rec_native_capture_state,[],0
- cmp 1,d0
- bne .Lnot_standby
+ mov d0,d1
  mov (16,sp),d0
  call _ep7rec_begin,[],0
  cmp 1,d0
  bne .Lreply
  jmp ep7rec_native_capture_standby
-.Lnot_standby:
- mov 9,d0 /* REC_NOT_STANDBY */
- mov d0,(_ep7rec_status)
 .Lreply:
  jmp ep7rec_native_capture_reply
 .Linterval_admission:
@@ -147,6 +143,25 @@ ep7dr_rec_hdr_standby_bridge:
  ret [a2],12
 .Lstock_standby_guard:
  jmp ep7rec_native_standby_guard
+
+/* Keep native AE and readiness. While Rec owns the release, the exposure
+ * task's AF eligibility and continuous AF queries use their disabled result. */
+.global ep7dr_rec_hdr_af_exec_bridge
+ep7dr_rec_hdr_af_exec_bridge:
+ mov (_ep7rec_release_queued),d0
+ cmp 0,d0
+ bne .Lno_af
+ jmp ep7rec_native_af_exec
+
+.global ep7dr_rec_hdr_caf_exec_bridge
+ep7dr_rec_hdr_caf_exec_bridge:
+ mov (_ep7rec_release_queued),d1
+ cmp 0,d1
+ bne .Lno_af
+ jmp ep7rec_native_caf_exec
+.Lno_af:
+ clr d0
+ ret [],4
 
 /* The original frame-count comparison has reached the burst limit. Leave
  * the native stop request in place and drop only Rec's simulated key state. */
@@ -253,17 +268,22 @@ _ep7rec_publish_sequence:
 _ep7rec_latch_release:
  jmp ep7rec_native_latch_release
 
-.global _ep7rec_unlatch_release
-_ep7rec_unlatch_release:
- jmp ep7rec_native_unlatch_release
-
-.global _ep7rec_get_release_event
-_ep7rec_get_release_event:
- jmp ep7rec_native_get_release_event
-
 .global _ep7rec_set_release_event
 _ep7rec_set_release_event:
  jmp ep7rec_native_set_release_event
+
+.global _ep7rec_read_key
+_ep7rec_read_key:
+ add -4,sp
+ call ep7rec_native_read_key,[d2],8
+ ret [],4
+
+.global _ep7rec_release_from_ready
+_ep7rec_release_from_ready:
+ add -4,sp
+ mov d0,a0
+ call ep7rec_native_release_from_ready,[],0
+ ret [],4
 
 .global _ep7rec_full_release
 _ep7rec_full_release:

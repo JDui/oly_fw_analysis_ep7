@@ -161,8 +161,8 @@ def deliver(args):
     require(len(release)==3 and release.isascii() and release.isdigit(), 'bad release')
     require(release not in ('024', '025', '026', '027', '028', '029'),
             '024 through 029 have known Rec HDR failures')
-    require(args.rec_hdr or release != '030', 'release 030 needs --rec-hdr')
-    require(not args.rec_hdr or release >= '030', 'Rec HDR SD packaging requires 030 or later')
+    require(args.rec_hdr or release not in ('030', '031'), 'Rec HDR releases need --rec-hdr')
+    require(not args.rec_hdr or release >= '031', 'current Rec HDR SD packaging requires 031 or later')
     strategy = 'rec_hdr_lab' if args.rec_hdr else 'highlight_mapping_only'
     require(tested['strategy'] == strategy, 'candidate strategy differs from the requested package')
     out = args.out.resolve()
@@ -245,7 +245,7 @@ def deliver(args):
                 'Curve strength does not establish a measured EV or dynamic range improvement.'])
     if args.rec_hdr:
         manifest['rec_hdr'] = {key: build['rec_hdr'][key] for key in
-                               ('button_sid', 'function', 'native_recipe', 'frames', 'shutter', 'scope')}
+                               ('button_sid', 'function', 'native_recipe', 'frames', 'shutter', 'focus', 'scope')}
         manifest['rec_hdr']['camera_capture_verified'] = False
         manifest['limits'].append('Rec HDR replay models UI services, RTOS, heap and transport. '
                                   'Full exposure, composition and cleanup on camera await validation.')

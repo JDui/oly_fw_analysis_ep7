@@ -21,7 +21,13 @@ enum {
     SHOOTING_CURRENT = 788,
     SHOOTING_NEXT = 792,
     STANDBY = 17,
+    READY_TRIG2 = 20,
+    READY_FINISH = 21,
     READY = 22,
+    CAPTURE_STANDBY = 1,
+    CAPTURE_READY_FINISH = 4,
+    HALF_PRESS_KEY = 0x02000100,
+    FULL_PRESS_KEY = 0x02000101,
     RELEASE_DOWN_HISTORY = 5,
     FULL_PRESS_EVENT = 4,
     SET_FULL_RELEASE = 0x40000100,
@@ -36,16 +42,16 @@ uint32_t ep7rec_get_trigger(void);
 uint32_t ep7rec_judge_sequence(uint32_t owner);
 void ep7rec_publish_sequence(uint32_t sequence);
 void ep7rec_latch_release(unsigned bits);
-void ep7rec_unlatch_release(unsigned bits);
 void ep7rec_full_release(uint32_t owner, unsigned operation);
 void ep7rec_sync_release_keys(uint32_t owner);
-uint32_t ep7rec_get_release_event(void);
 void ep7rec_set_release_event(unsigned event);
+uint32_t ep7rec_read_key(unsigned key);
+void ep7rec_release_from_ready(uint32_t owner);
 
 /* Only the shooting task owns the temporary HDR settings. */
 static uint32_t ep7rec_owner;
-static uint32_t release_queued;
-static uint32_t previous_release_event;
+/* The exposure task reads this from the uncached overlay state. */
+volatile uint32_t ep7rec_release_queued;
 
 /* Last Rec milestone for the BODY version display. No capture decisions use it. */
 enum {
@@ -54,7 +60,7 @@ enum {
     REC_PROPERTIES,
     REC_TRIGGER,
     REC_CLEANED,
-    REC_NOT_STANDBY,
+    REC_CAPTURE_STATE,
     REC_RELEASE_LOCKED,
     REC_BUSY,
     REC_RELEASE_QUEUED,
@@ -72,7 +78,7 @@ const uint16_t ep7rec_version_labels[][8] = {
     [REC_PROPERTIES] = u"1.1P" EP7HL_REC_RELEASE_SUFFIX,
     [REC_TRIGGER] = u"1.1T" EP7HL_REC_RELEASE_SUFFIX,
     [REC_CLEANED] = u"1.1F" EP7HL_REC_RELEASE_SUFFIX,
-    [REC_NOT_STANDBY] = u"1.1S" EP7HL_REC_RELEASE_SUFFIX,
+    [REC_CAPTURE_STATE] = u"1.1S" EP7HL_REC_RELEASE_SUFFIX,
     [REC_RELEASE_LOCKED] = u"1.1L" EP7HL_REC_RELEASE_SUFFIX,
     [REC_BUSY] = u"1.1W" EP7HL_REC_RELEASE_SUFFIX,
     [REC_RELEASE_QUEUED] = u"1.1R" EP7HL_REC_RELEASE_SUFFIX,
@@ -127,10 +133,47 @@ static int restore_capture_settings(void)
            ep7rec_get(BRACKET_FRAMES) != HDR1_FRAMES;
 }
 
-int ep7rec_begin(uint32_t owner)
+static void queue_full_release(uint32_t owner)
 {
+    ep7rec_set_release_event(FULL_PRESS_EVENT);
+    ep7rec_latch_release(RELEASE_DOWN_HISTORY);
+    ep7rec_full_release(owner, SET_FULL_RELEASE);
+    ep7rec_release_queued = 1;
+    ep7rec_status = REC_RELEASE_QUEUED;
+}
+
+static void release_rec_keys(uint32_t owner)
+{
+    ep7rec_full_release(owner, CLEAR_FULL_RELEASE);
+    ep7rec_sync_release_keys(owner);
+    ep7rec_release_queued = 0;
+}
+
+void ep7rec_end(uint32_t owner)
+{
+    if (!ep7rec_owner || ep7rec_owner != owner)
+        return;
+    if (ep7rec_release_queued)
+        release_rec_keys(owner);
+    if (!effective_settings_available() || !restore_capture_settings())
+        return;
+
+    ep7rec_owner = 0;
+    ep7rec_publish_sequence(ep7rec_judge_sequence(owner));
+    ep7rec_status = REC_CLEANED;
+}
+
+/* Return 1 to continue through stock standby admission. A completed half
+ * press instead uses the stock READY_FINISH full-press transition here. */
+int ep7rec_begin(uint32_t owner, unsigned capture_state)
+{
+    if (capture_state != CAPTURE_STANDBY && capture_state != CAPTURE_READY_FINISH) {
+        ep7rec_status = REC_CAPTURE_STATE;
+        return 0;
+    }
+    unsigned expected = capture_state == CAPTURE_STANDBY ? STANDBY : READY_FINISH;
     if (!owner || ep7rec_owner || ep7rec_settings_inhibit() || ep7rec_get_trigger() ||
-        selector(owner, SHOOTING_CURRENT) != STANDBY || selector(owner, SHOOTING_NEXT) != STANDBY) {
+        selector(owner, SHOOTING_CURRENT) != expected || selector(owner, SHOOTING_NEXT) != expected) {
         ep7rec_status = REC_BUSY;
         return 0;
     }
@@ -140,6 +183,11 @@ int ep7rec_begin(uint32_t owner)
     }
     if (!effective_settings_available()) {
         ep7rec_status = REC_CONTEXT;
+        return 0;
+    }
+    if (expected == READY_FINISH &&
+        (ep7rec_read_key(HALF_PRESS_KEY) != 0 || ep7rec_read_key(FULL_PRESS_KEY) == 0)) {
+        ep7rec_status = REC_CAPTURE_STATE;
         return 0;
     }
 
@@ -169,6 +217,13 @@ int ep7rec_begin(uint32_t owner)
         if ((sequence & mask) == (ATT_HDR | ATT_CONTINUOUS)) {
             ep7rec_publish_sequence(sequence);
             ep7rec_status = REC_TRIGGER;
+            if (expected == READY_FINISH) {
+                queue_full_release(owner);
+                ep7rec_release_from_ready(owner);
+                if (selector(owner, SHOOTING_NEXT) != READY_TRIG2)
+                    ep7rec_end(owner);
+                return 0;
+            }
             return 1;
         }
     }
@@ -179,25 +234,6 @@ int ep7rec_begin(uint32_t owner)
     return 0;
 }
 
-void ep7rec_end(uint32_t owner)
-{
-    if (!ep7rec_owner || ep7rec_owner != owner)
-        return;
-    if (release_queued) {
-        ep7rec_unlatch_release(RELEASE_DOWN_HISTORY);
-        ep7rec_full_release(owner, CLEAR_FULL_RELEASE);
-        if (ep7rec_get_release_event() == FULL_PRESS_EVENT)
-            ep7rec_set_release_event(previous_release_event);
-        release_queued = 0;
-    }
-    if (!effective_settings_available() || !restore_capture_settings())
-        return;
-
-    ep7rec_owner = 0;
-    ep7rec_publish_sequence(ep7rec_judge_sequence(owner));
-    ep7rec_status = REC_CLEANED;
-}
-
 void ep7rec_after_standby_guard(uint32_t owner)
 {
     if (ep7rec_owner != owner)
@@ -206,25 +242,17 @@ void ep7rec_after_standby_guard(uint32_t owner)
         ep7rec_end(owner);
         return;
     }
-    /* The one-shot standby request only queues half-press. Keep a full
-     * release pending through AF and the native HDR exposure sequence. */
-    previous_release_event = ep7rec_get_release_event();
-    ep7rec_set_release_event(FULL_PRESS_EVENT);
-    ep7rec_latch_release(RELEASE_DOWN_HISTORY);
-    ep7rec_full_release(owner, SET_FULL_RELEASE);
-    release_queued = 1;
-    ep7rec_status = REC_RELEASE_QUEUED;
+    /* Keep the full release pending through metering and the HDR burst. */
+    queue_full_release(owner);
 }
 
 void ep7rec_at_burst_limit(uint32_t owner)
 {
-    if (ep7rec_owner != owner || !release_queued)
+    if (ep7rec_owner != owner || !ep7rec_release_queued)
         return;
     /* The next end-of-capture step rebuilds history from the event kind.
      * Resample the physical keys so it cannot rearm Rec's synthetic press. */
-    ep7rec_full_release(owner, CLEAR_FULL_RELEASE);
-    ep7rec_sync_release_keys(owner);
-    release_queued = 0;
+    release_rec_keys(owner);
     ep7rec_status = REC_BURST_FINISHED;
 }
 
@@ -232,7 +260,7 @@ void ep7rec_on_trigger_reset(uint32_t owner)
 {
     /* The normal exit from STANDBY clears the native trigger mask before
      * entering READY. This reset is part of starting the Rec sequence. */
-    if (ep7rec_owner == owner && release_queued &&
+    if (ep7rec_owner == owner && ep7rec_release_queued &&
         selector(owner, SHOOTING_CURRENT) == STANDBY && selector(owner, SHOOTING_NEXT) == READY)
         return;
     ep7rec_end(owner);

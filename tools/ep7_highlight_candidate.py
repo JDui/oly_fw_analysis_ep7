@@ -10,7 +10,7 @@ from ep7_highlight_gamma import target_table_source
 
 def build(prefix, baseline, out, release=None, *, rec_hdr=False):
     if release is None:
-        release = '030' if rec_hdr else '023'
+        release = '031' if rec_hdr else '023'
     if len(release) != 3 or not release.isascii() or not release.isdigit():
         raise ValueError('release must be three ASCII digits')
     image = (baseline / builder.IMAGE_NAME).read_bytes()
@@ -91,6 +91,7 @@ def build(prefix, baseline, out, release=None, *, rec_hdr=False):
     if rec_hdr:
         report.update(rec_hdr=dict(button_sid=48, function=473, native_recipe='HDR1', frames=4,
                                    request='native single capture', shutter='selected single drive',
+                                   focus='use current focus',
                                    scope='P/A/S/M', body_status_symbol='_ep7rec_status',
                                    installable=False))
     builder.save(out / 'report.json', report)
@@ -105,7 +106,7 @@ if __name__ == '__main__':
     parser.add_argument('--prefix', required=True)
     parser.add_argument('--baseline', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
-    parser.add_argument('--release', help='BODY version suffix (023, or 030 with --rec-hdr)')
+    parser.add_argument('--release', help='BODY version suffix (023, or 031 with --rec-hdr)')
     parser.add_argument('--rec-hdr', action='store_true',
                         help='include the non-installable Rec HDR capture experiment')
     args = parser.parse_args()

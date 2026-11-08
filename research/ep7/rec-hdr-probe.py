@@ -38,6 +38,8 @@ COMBINE_CONTROLLER = 0x19321000
 RECORD_SERVICE = 0x19321200
 COMBINE_EVENT = 0x19321300
 OUTPUT_METADATA = 0x19321400
+FOCUS_ENGINE = 0x19321500
+READY_SEQUENCE, READY_REQUEST = 0x19321700, 0x19321800
 FRAME_JOBS = tuple(CAPTURE_JOB + 32 * index for index in range(4))
 OUTPUT_JOB = CAPTURE_JOB + 128
 RELEASE_ENABLED = 0x6233B844
@@ -78,6 +80,7 @@ class Replay(UiMachine):
         self.release_commands = []
         self.release_enabled_on_submit = []
         self.burst_stops = 0
+        self.half_held = False
         self.capture_job = CAPTURE_JOB
         self.subapp_active = False
         self.interval = 0
@@ -145,6 +148,7 @@ class Replay(UiMachine):
             0x6082F49B: self.allocate_output_job,
             0x608FE29A: lambda: self.ret(0),   # Capture observer registration.
             0x6083A1B4: lambda: self.ret(0),   # Reset the capture service counters.
+            0x60557498: lambda: self.ret(0),   # Focus-engine debug output.
         }
         self.add('return', HOOK_RETURN, bytes(8), 'rx')
         self.add('event', EVENT, bytes(32))
@@ -165,6 +169,14 @@ class Replay(UiMachine):
         self.add('combine_controller', COMBINE_CONTROLLER, bytes(276))
         self.add('combine_event', COMBINE_EVENT, bytes(44))
         self.add('combine_debug_flags', 0x61FACBD4, bytes(2))
+        self.add('focus_engine', FOCUS_ENGINE, bytes(320))
+        self.add('focus_engine_enabled', 0xA2788CA8, pack('<II', 1, FOCUS_ENGINE))
+        self.add('ready_sequence', READY_SEQUENCE, bytes(16))
+        self.add('ready_request', READY_REQUEST, bytes(64))
+        self.add('exposure_focus_mode', 0x622A063C, bytes(0x50))
+        self.add('exposure_ready_state', 0x622A076C, bytes(0x240))
+        self.add('exposure_ready_gate', 0x622A0A68, bytes(4))
+        self.add('exposure_focus_gate', 0x622A0B34, bytes(4))
         self.add('ui_release_flags', RELEASE_ENABLED, pack('<II', 1, 0))
         self.add('interval_ui_flags', 0x61FB0AC0, bytes(4))
         self.add('active_release', ACTIVE_RELEASE, bytes(4))
@@ -315,7 +327,7 @@ class Replay(UiMachine):
 
     def physical_shutter(self):
         require(self.regs['d0'] in (0x02000100, 0x02000101), 'unexpected key query')
-        self.ret(1)  # Neither physical shutter contact is held.
+        self.ret(int(self.regs['d0'] == 0x02000101 or not self.half_held))
 
     def stop_exposures(self):
         require(self.regs['a0'] == TAKE_SERVICE, 'unexpected burst stop receiver')
@@ -340,6 +352,49 @@ class Replay(UiMachine):
         self.replay(0x60963EB9, registers=dict(a0=SHOOTER))
         return self.word(SHOOTER+792)
 
+    def hold_half_press(self):
+        # Use the stock release sample and ready handlers for a completed S-AF half-press.
+        self.half_held = True
+        self.replay(0x6095AF39, mask=0xA0, frame=12, registers=dict(a0=SHOOTER))
+        self.exit_standby()
+        require(self.finish_focus() == 21, 'physical half-press did not complete readiness')
+        self.replay(0x6093179A, registers=dict(a0=SHOOTER))
+        require(self.word(CAPTURE_STATE) == 4 and self.word(SHOOTER+788) == 21 and
+                self.word(SHOOTER+792) == 21 and self.word(RELEASE_EVENT) == 1,
+                'stock READY_FINISH did not retain the half-press')
+
+    def ready_requests_af(self):
+        # The native exposure-side judge combines FCS need_afae and chk_af_exec.
+        self.write(FOCUS_ENGINE + 49, b'\x01')
+        self.shells[0x60556F30] = lambda: self.ret(1)
+        self.replay(0x60429C56, mask=0xF0, frame=16)
+        return self.regs['d0'] == 1
+
+    def check_metering_without_focus(self):
+        # Follow native TakeReady past the AF decision to its AE-only command.
+        capture_shells = self.shells
+        self.shells = {**capture_shells, **{
+            0x6040E7A4: lambda: self.ret(0),  # Exposure service clock.
+            0x603F3AFB: lambda: self.ret(0),  # Clear a pending phase-detect plan.
+            0x60555C80: lambda: self.ret(0),  # Sensor available for ordinary readiness.
+            0x6005E971: lambda: self.ret(0),  # Native exposure readiness parameters.
+        }}
+        self.write(FOCUS_ENGINE+5, b'\x01\x02')
+        self.write(FOCUS_ENGINE+51, b'\x01')
+        self.write(FOCUS_ENGINE+168, b'\x01')
+        self.write(0x622A063E, b'\x05')  # Exercise the native continuous AF classifier.
+        self.write(READY_SEQUENCE+2, b'\x01\x01')
+        self.replay(0x604226E2, mask=0xB0, frame=28, stop=(0x6042295A, 0x60422979, 0x60422966),
+                    registers=dict(a0=READY_SEQUENCE, a1=READY_REQUEST))
+        require(self.regs['pc'] == 0x6042295A and self.regs['d0'] == 0x050F,
+                'Rec readiness did not choose the native AE-only command')
+        self.write(READY_SEQUENCE+2, b'\x04')
+        self.write(READY_SEQUENCE+6, b'\x01')
+        self.replay(0x604255B2, mask=0xF0, frame=16, stop=(CALLER+7, 0x60425690),
+                    registers=dict(a0=READY_SEQUENCE))
+        require(self.regs['pc'] == CALLER+7, 'Rec issued a follow-up lens focus command')
+        self.shells = capture_shells
+
     def start_exposure(self):
         # All shutters use the stock HDR capture job, including silent single.
         self.replay(0x609319A8, registers=dict(a0=SHOOTER))
@@ -347,7 +402,8 @@ class Replay(UiMachine):
         self.replay(0x609336C7, stop=(0x60962E3A,), registers=dict(a0=SHOOTER))
         require(self.regs['a1'] == CAPTURE_JOB, 'continuous HDR did not receive a capture buffer')
         require(self.word(self.regs['sp']+8) == 1 and self.read(BRACKET_LIMIT, 2) == pack('<H', 4),
-                'native exposure handoff did not prepare a four-frame HDR job')
+                f'drive {self.drive} exposure handoff had HDR={self.word(self.regs["sp"]+8)} '
+                f'and limit={int.from_bytes(self.read(BRACKET_LIMIT, 2), "little")}')
 
     def finish_exposure(self, completed):
         # Drive the real TKPC_TakePictureDone handler after the sensor's
@@ -376,7 +432,7 @@ class Replay(UiMachine):
         self.replay(0x6095AF0C, mask=0xA0, frame=12, registers=dict(a0=SHOOTER))
 
     def selects_end_wait(self):
-        self.replay(0x6094A4BA, mask=0xB0, frame=20, stop=(CALLER+7, 0x6094A85D),
+        self.replay(0x6094A4BA, mask=0xB0, frame=20, stop=(CALLER+7, 0x6094A85D, 0x6094A985),
                     registers=dict(a0=SHOOTER))
         return self.word(SHOOTER+792) == 29
 
@@ -412,8 +468,8 @@ class Replay(UiMachine):
 
     def setting(self):
         sid = self.regs['d0']
-        require(sid in (478, 3008, 3281, 15206), f'unexpected setting {sid}')
-        self.ret({478: self.interval, 3008: 0, 3281: self.drive, 15206: 0}[sid])
+        require(sid in (16, 478, 3008, 3281, 15206), f'unexpected setting {sid}')
+        self.ret({16: 3, 478: self.interval, 3008: 0, 3281: self.drive, 15206: 0}[sid])
 
     def resolve_typed_key(self):
         sid = self.typed_keys.get(self.regs['d0'])
@@ -512,15 +568,23 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, p
             m.read(vtable, 72) == pack('<18I', *EVENT_METHODS),
             'marked request changed the stock event ABI')
 
+    require(m.ready_requests_af(), 'ordinary capture did not allow the native AF request')
     drive_results = []
     for drive, electronic, shutter in ((0, 0, 0), (12, 0, 1), (30, 1, 2)):
         m.select_drive(drive)
         require(m.hdr_settings() == NO_HDR, 'native single drive did not start unbracketed')
+        if electronic:
+            m.hold_half_press()
+            m.rec_key(KEY_PRESS)
+            require(len(m.shots) == 2 and m.word(status) == 2,
+                    'held half-press prevented the Rec request from being posted')
         reached = m.capture(complete_guard=True)
-        require(reached == STANDBY_GUARD_RETURN and m.word(SHOOTER+792) == 22 and
-                m.hdr_settings() == HDR1 and m.word(TRIGGER) & 1 and m.word(status) == 12,
+        expected = (CAPTURE_REPLY, 20, 0) if electronic else (STANDBY_GUARD_RETURN, 22, 1)
+        require((reached, m.word(SHOOTER+792), m.word(TRIGGER)) == expected and
+                m.hdr_settings() == HDR1 and m.word(status) == 12,
                 f'marked drive {drive} stopped at {reached:#x} with '
-                f'capture settings={m.hdr_settings()} and trigger={m.word(TRIGGER):#x}')
+                f'capture settings={m.hdr_settings()}, next={m.word(SHOOTER+792)}, '
+                f'trigger={m.word(TRIGGER):#x}, status={m.word(status)}')
         require(m.word(SHOOTER+728) == 0, 'Rec armed the interval session')
         require((m.word(SEQUENCE) & 0x10208) == 0x208,
                 'Rec HDR took the native Silent H/L burst route')
@@ -536,13 +600,18 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, p
         require(m.read(CONTROLLER+1998, 1) == bytes([shutter]),
                 'controller selected a different shutter')
 
-        m.exit_standby()
+        if not electronic:
+            m.exit_standby()
         require(m.hdr_settings() == HDR1 and m.word(TRIGGER) == 0 and
                 m.word(RELEASE_HISTORY) & 5 == 5 and m.word(RELEASE_EVENT) == 4 and
                 m.word(FULL_RELEASE_FLAGS) & 0x100,
-                'native standby exit discarded the Rec release')
-        require(m.finish_focus() == 20 and m.hdr_settings() == HDR1,
-                'native focus completion did not select READY_TRIG2 with HDR')
+                'native readiness discarded the Rec release')
+        require(not m.ready_requests_af(), 'Rec allowed a new autofocus request')
+        if not electronic:
+            if drive == 0:
+                m.check_metering_without_focus()
+            require(m.finish_focus() == 20 and m.hdr_settings() == HDR1,
+                    'native TakeReady completion did not select READY_TRIG2 with HDR')
         m.start_exposure()
         require(m.hdr_settings() == HDR1, 'the exposure request lost its HDR recipe')
         if electronic:
@@ -553,30 +622,37 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, p
                 'Rec released the simulated shutter before the fourth frame')
         m.finish_exposure(4)
         m.rebuild_release_history()
-        require(m.burst_stops == previous_stops + 1 and m.word(RELEASE_EVENT) == 2 and
-                m.word(RELEASE_HISTORY) & 5 == 0 and m.word(FULL_RELEASE_FLAGS) & 0x100 == 0 and
+        physical_event = 1 if electronic else 2
+        require(m.burst_stops == previous_stops + 1 and m.word(RELEASE_EVENT) == physical_event and
+                m.word(RELEASE_HISTORY) & 5 == int(m.half_held) and m.word(FULL_RELEASE_FLAGS) & 0x100 == 0 and
                 m.hdr_settings() == HDR1 and m.word(status) == 13,
                 'native burst completion did not release the shutter and retain the HDR recipe')
-        require(m.selects_end_wait(), 'native end handler is still waiting for the shutter')
+        require(m.selects_end_wait(), 'native end handler is still waiting for another shutter event')
         if electronic:
             m.request_hdr_compose()
         m.restore_standby()
         require(m.hdr_settings() == NO_HDR and m.word(TRIGGER) == 0 and
-                m.word(RELEASE_HISTORY) & 5 == 0 and m.word(RELEASE_EVENT) == 2 and
+                m.word(RELEASE_HISTORY) & 5 == int(m.half_held) and m.word(RELEASE_EVENT) == physical_event and
                 m.word(FULL_RELEASE_FLAGS) & 0x100 == 0 and
                 (m.word(SEQUENCE) & 0x10209) == 0 and m.drive == drive and m.word(status) == 8,
                 'HDR state leaked after cleanup')
         if electronic:
+            require(m.ready_requests_af(), 'Rec left ordinary shutter autofocus disabled')
+            require(m.native_value(0x60429CDB, 0, mask=0, frame=4) == 1,
+                    'Rec left the native continuous AF classifier disabled')
+            m.half_held = False
+            m.replay(0x6095AF39, mask=0xA0, frame=12, registers=dict(a0=SHOOTER))
             m.replay(0x6095057D, mask=0xE0, frame=24, registers=dict(a0=SHOOTER))
             require(m.read(BRACKET_LIMIT, 2) == pack('<H', 1), 'ordinary capture is still bracketed')
             require(m.native_value(0x6042888C, 0) == 0, 'ordinary exposure still selects HDR')
-        drive_results.append(dict(drive=drive, controller_shutter=shutter, native_hdr_frames=4))
+        drive_results.append(dict(drive=drive, controller_shutter=shutter, native_hdr_frames=4,
+                                  half_press_held=bool(electronic)))
 
-    m.word_set(CAPTURE_STATE, 5)  # A physical half-press already owns READY_TRIG2.
+    m.word_set(CAPTURE_STATE, 5)  # An ordinary full press already owns READY_TRIG2.
     reached = m.capture()
     require(reached == CAPTURE_REPLY and m.hdr_settings() == NO_HDR and m.word(TRIGGER) == 0 and
             m.word(status) == 9,
-            'Rec took over a half-pressed physical shutter')
+            'Rec took over an ordinary full press')
 
     m.word_set(CAPTURE_STATE, 1)
     m.set_release(False)
@@ -599,7 +675,7 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, p
 
     m.interval = 1
     m.rec_key(KEY_PRESS)
-    require(len(m.shots) == 1, 'Rec queued a request during interval shooting')
+    require(len(m.shots) == 2, 'Rec queued a request during interval shooting')
     m.word_set(EVENT, 0x60A7DD24)  # Original one-shot event class.
     sequence = m.word(SEQUENCE)
     require(m.capture() == CAPTURE_REPLY, 'stock one-shot ran without an interval session')
@@ -618,16 +694,18 @@ def inspect(directory, engine, prior_024=None, prior_025=None, prior_026=None, p
                 interval_bit_left_clear=True,
                 still_release_disable_respected=True,
                 drive_results=drive_results, native_electronic_bracket_limit=4, native_hdr_ae=True,
-                native_focus_complete_reached=True, native_hdr_exposure_handoff=True,
+                native_ae_only_ready_from_standby=True, native_hdr_exposure_handoff=True,
+                native_ready_finish_hdr_with_half_press_held=True,
+                ordinary_autofocus_allowed_after_rec=True,
                 native_fourth_frame_released_rec_keys=True,
-                native_end_wait_selected_without_physical_press=True,
+                native_end_wait_selected_without_extra_shutter_input=True,
                 native_electronic_hdr_jobs_collected=4,
                 native_electronic_hdr_composition_submitted=True,
                 standby_restores_single_capture=True, ordinary_electronic_bracket_limit=1,
                 overlapping_requests_rejected=True, non_owner_core_rejected=True,
                 stock_one_shot_unchanged=True,
                 hash_checks_performed=False, hardware_executed=False,
-                boundary='Native replay covers event dispatch, focus completion, shutter selection, '
+                boundary='Native replay covers event dispatch, AE-only readiness, held half-press, shutter selection, '
                           'HDR capture routing, the fourth-frame release and the native electronic HDR '
                           'StartCombine event at its transport boundary. Sensor callbacks and the '
                           'return to standby are modeled. Lens, buffer, media, RTOS, UI, heap, '
